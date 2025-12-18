@@ -15,6 +15,7 @@ const assignmentRoutes = require('./routes/assignmentRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const codeExecutionRoutes = require('./routes/codeExecutionRoutes');
 const leadRoutes = require('./routes/leadRoutes');
+const liveClassRoutes = require('./routes/liveClassRoutes');
 
 connectDB();
 
@@ -55,6 +56,7 @@ app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/why-us', require('./routes/whyUsRoutes'));
+app.use('/api/live-classes', liveClassRoutes);
 
 app.get('/', (req, res) => {
     res.send('ThinkSkool API is running');

@@ -14,6 +14,7 @@ const notificationSchema = new mongoose.Schema({
             'course_enrolled',
             'course_updated',
             'submission_received',
+            'live_class_started',
             'general'
         ],
         required: true

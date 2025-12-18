@@ -3,15 +3,45 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
+import { io } from 'socket.io-client';
+
+const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
+  withCredentials: true,
+  transports: ['websocket']
+});
 
 const ClassroomPage = () => {
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
+  const [activeLiveClass, setActiveLiveClass] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchClassroomData();
+    fetchActiveLiveClass();
+
+    socket.on('liveClass:started', (liveClass) => {
+      setActiveLiveClass(liveClass);
+    });
+
+    socket.on('liveClass:ended', (classId) => {
+      setActiveLiveClass(prev => (prev?._id === classId ? null : prev));
+    });
+
+    return () => {
+      socket.off('liveClass:started');
+      socket.off('liveClass:ended');
+    };
   }, []);
+
+  const fetchActiveLiveClass = async () => {
+    try {
+      const res = await api.get('/live-classes/active');
+      setActiveLiveClass(res.data);
+    } catch (error) {
+      console.error('Failed to fetch active live class:', error);
+    }
+  };
 
   const fetchClassroomData = async () => {
     try {
@@ -51,36 +81,46 @@ const ClassroomPage = () => {
       </motion.div>
 
       {/* Live Class Banner */}
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="mb-10 bg-gradient-to-r from-[#fca96d] to-orange-500 rounded-2xl p-0.5 shadow-xl shadow-[#fca96d]/10"
-      >
-        <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
-              <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
-                <PlayCircle className="text-red-500 w-6 h-6" />
+      {activeLiveClass && (
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="mb-10 bg-gradient-to-r from-[#fca96d] to-orange-500 rounded-2xl p-0.5 shadow-xl shadow-[#fca96d]/10"
+        >
+          <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
+                  <PlayCircle className="text-red-500 w-6 h-6" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
+                <p className="text-sm font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
               </div>
             </div>
-            <div>
-              <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
-              <p className="text-sm font-medium text-slate-500 font-['Inter']">Data Structures & Algorithms: Graph Theory</p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-4 font-['Outfit']">
-            <div className="text-right hidden md:block">
-              <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
-              <p className="text-slate-900 font-black">10:00 AM</p>
+            <div className="flex items-center gap-4 font-['Outfit']">
+              <div className="text-right hidden md:block">
+                <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+                <p className="text-slate-900 font-black">
+                  {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+              <a
+                href={activeLiveClass.meetingLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest cursor-pointer"
+              >
+                Join Now <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
+              </a>
             </div>
-            <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest">
-              Join Now <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
-            </button>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
 
       {/* Current Lessons */}
       <div className="mb-8 font-['Inter']">

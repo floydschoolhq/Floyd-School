@@ -39,7 +39,7 @@ const CodingLabPage = () => {
         stdin: stdin
       });
 
-      const result = response.data;
+      const result = response.data.data || response.data;
       const newOutput = [
         { type: 'info', content: `Execution completed in ${result.time}s` }
       ];

@@ -28,13 +28,13 @@ exports.executeCode = async (req, res) => {
         let attempts = 0;
         const maxAttempts = 15; // Increased for complex builds
 
-        while (result.status.id <= 2 && attempts < maxAttempts) {
+        while (result?.status?.id <= 2 && attempts < maxAttempts) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             result = await judge0Service.getSubmission(submission.token);
             attempts++;
         }
 
-        console.log(`[CodeExecution:executeCode] Finished with status: ${result.status.description}`);
+        console.log(`[CodeExecution:executeCode] Finished with status: ${result?.status?.description || 'Unknown'}`);
 
         // Emit Socket.io event for real-time update
         const io = req.app.get('io');

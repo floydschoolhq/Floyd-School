@@ -11,6 +11,16 @@ class Judge0Service {
         try {
             const encode = (str) => str ? Buffer.from(str).toString('base64') : '';
 
+            const data = {
+                language_id: languageId,
+                source_code: encode(sourceCode),
+                stdin: encode(stdin)
+            };
+
+            if (expectedOutput) {
+                data.expected_output = encode(expectedOutput);
+            }
+
             const options = {
                 method: 'POST',
                 url: `${this.baseURL}/submissions`,
@@ -20,12 +30,7 @@ class Judge0Service {
                     'X-RapidAPI-Key': this.apiKey,
                     'X-RapidAPI-Host': this.host
                 },
-                data: {
-                    language_id: languageId,
-                    source_code: encode(sourceCode),
-                    stdin: encode(stdin),
-                    expected_output: encode(expectedOutput)
-                }
+                data
             };
 
             const response = await axios.request(options);
