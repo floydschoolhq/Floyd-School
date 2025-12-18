@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiPhone, FiCalendar, FiX, FiArrowLeft } from 'react-icons/fi';
 // Make sure this path and the baseURL inside it are correct!
-import api from '../api/axios'; 
+import api from '../api/axios';
 import { LampContainer } from './ui/lamp';
 
 // --- Modal Component (No changes needed here) ---
@@ -64,8 +64,8 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                     <FiX className="w-6 h-6" />
                 </button>
 
-                <h3 className="text-2xl font-bold text-white mb-4">Book Your Demo Call</h3>
-                <p className="text-gray-300 mb-6">Enter your details and select a preferred date/time.</p>
+                <h3 className="text-2xl font-black text-white mb-4 font-['Outfit']">Book Your Demo Call</h3>
+                <p className="text-gray-300 mb-6 font-medium font-['Inter']">Enter your details and select a preferred date/time.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Name Input */}
@@ -107,13 +107,12 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                             required
                         />
                     </div>
-                    
 
-                    {/* Submit Button */}
+
                     <button
                         type="submit"
-                        className="w-full inline-flex justify-center items-center space-x-2 px-6 py-3 mt-4 rounded-lg text-lg font-bold transition-all duration-300 transform shadow-md"
-                        style={{ backgroundColor: '#FF8C00', color: '#1F2937' }}
+                        className="w-full inline-flex justify-center items-center space-x-2 px-6 py-3 mt-4 rounded-lg text-sm font-black transition-all duration-300 transform shadow-md uppercase tracking-widest font-['Outfit']"
+                        style={{ backgroundColor: '#fca96d', color: '#1F2937' }}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                     >
@@ -131,14 +130,14 @@ const Contact = () => {
     const [isSubmitting, setIsSubmitting] = useState(false); // New state for loading/disable button
 
     // Function to handle the actual booking submission
-    const handleBooking = async ({ name, date ,email }) => {
+    const handleBooking = async ({ name, date, email }) => {
         setIsSubmitting(true);
         try {
-            const response = await api.post('/contact/book-demo', { name, date ,email });
-            
+            const response = await api.post('/contact/book-demo', { name, date, email });
+
             // Success response from backend
             alert(`🎉 Success! ${response.data.message}\nYour booking details:\nName: ${name}\nDate: ${new Date(date).toLocaleString()}\n email:${email}`);
-            
+
         } catch (error) {
             console.error('Booking failed:', error);
             const errorMessage = error.response?.data?.message || 'Failed to book demo. Please check the server status.';
@@ -190,31 +189,30 @@ const Contact = () => {
                     >
                         {/* Back Button */}
                         <a
-                            href="/" 
+                            href="/"
                             className="absolute top-4 left-4 md:top-8 md:left-8 text-white hover:text-blue-400 transition duration-300 p-3 rounded-full bg-gray-700/50 hover:bg-gray-700 z-10"
                             aria-label="Go back to home"
                         >
                             <FiArrowLeft className="text-2xl" />
                         </a>
 
-                        {/* Header/Text content */}
                         <motion.h2
-                            className="text-sm uppercase tracking-widest font-semibold text-blue-400 mb-2"
+                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#fca96d] mb-4 font-['Outfit']"
                             variants={itemVariants}
                         >
-                            CONTACT
+                            Global Partners
                         </motion.h2>
                         <motion.h1
-                            className="text-4xl md:text-5xl font-extrabold mb-6"
+                            className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white font-['Outfit']"
                             variants={itemVariants}
                         >
-                            Contact Us
+                            Strategic <span className="text-[#fca96d]">Inquiries</span>
                         </motion.h1>
                         <motion.p
-                            className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto"
+                            className="text-sm md:text-base text-gray-400 mb-12 max-w-2xl mx-auto font-medium leading-relaxed font-['Inter']"
                             variants={itemVariants}
                         >
-                            Whether you’re a school looking to integrate STEM education or a student eager to learn, our team is ready to help.
+                            Partner with ThinkSkool to redefine the boundaries of technical education and empower the next generation of global engineering talent.
                         </motion.p>
 
                         {/* Contact Details Grid */}
@@ -254,12 +252,11 @@ const Contact = () => {
                             </motion.div>
                         </motion.div>
 
-                        {/* Button: Book a Demo Call */}
                         <motion.button
                             onClick={() => setIsModalOpen(true)}
-                            className="inline-flex items-center space-x-3 px-10 py-4 rounded-full text-xl font-bold transition-all duration-300 transform shadow-lg"
-                            style={{ backgroundColor: '#FF8C00', color: '#1F2937' }}
-                            whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(255, 140, 0, 0.4)" }}
+                            className="inline-flex items-center space-x-3 px-10 py-4 rounded-full text-[10px] uppercase tracking-widest font-black transition-all duration-300 transform shadow-lg font-['Outfit']"
+                            style={{ backgroundColor: '#fca96d', color: '#1F2937' }}
+                            whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(252, 169, 109, 0.4)" }}
                             whileTap={{ scale: 0.95 }}
                             variants={itemVariants}
                             disabled={isSubmitting} // Disable while submitting

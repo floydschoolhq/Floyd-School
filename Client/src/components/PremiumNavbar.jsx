@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown, FaUserCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
+import { PortalContext } from './Context/PortalProvider';
 
 const PremiumNavbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
+    const { user } = useContext(PortalContext);
 
     // Detect scroll for navbar background change
     useEffect(() => {
@@ -19,14 +22,22 @@ const PremiumNavbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const handleBookSession = () => {
+        if (!user) {
+            navigate('/student/signup');
+        } else {
+            setIsModalOpen(true);
+        }
+    };
+
     const navItems = [
         {
             name: 'For School Students',
             hasDropdown: true,
             subItems: [
-                { name: 'Our Programs', link: '#programs' },
-                { name: 'Coding Lab', link: '#ecosystem' },
-                { name: 'Success Stories', link: '#testimonials' }
+                { name: 'Foundational Mastery', link: '#programs' },
+                { name: 'Innovation Lab', link: '#ecosystem' },
+                { name: 'Student Excellence', link: '#testimonials' }
             ]
         },
         {
@@ -34,24 +45,36 @@ const PremiumNavbar = () => {
             hasDropdown: true,
             subItems: [
                 { name: 'Career Support', link: '#career' },
-                { name: 'Mentorship', link: '#faculty' }
+                { name: 'Faculty', link: '#faculty' }
             ]
         },
     ];
 
     return (
         <>
+            {/* Top Banner - Tech Expert Call to Action - Now Opaque */}
+            <div className="fixed top-0 left-0 right-0 z-[60] bg-white border-b border-slate-100 h-9 flex items-center overflow-hidden shadow-sm">
+                <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
+                    <Sparkles size={14} className="text-[#fca96d]" />
+                    <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">Master Industry-Standard Engineering</span>
+                    <a href="#programs" className="text-[#fca96d] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
+                        Explore Curriculum
+                        <ArrowRight size={14} />
+                    </a>
+                </div>
+            </div>
+
             <motion.nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? 'bg-white shadow-sm border-b border-slate-100'
-                    : 'bg-white border-b border-transparent'
+                className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                    ? 'bg-white/80 backdrop-blur-md shadow-md border-b border-slate-200'
+                    : 'bg-white border-b border-slate-100'
                     }`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-20">
+                    <div className="flex items-center justify-between h-16">
 
                         {/* Logo Section */}
                         <div
@@ -59,21 +82,21 @@ const PremiumNavbar = () => {
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             {/* Simple Logo Icon */}
-                            <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-lg bg-[#fca96d] flex items-center justify-center">
                                 <span className="text-white font-bold text-lg">TS</span>
                             </div>
 
                             {/* Logo Text */}
-                            <h1 className="text-xl font-bold tracking-tight text-slate-800">
-                                think<span className="text-orange-500">skool</span>
+                            <h1 className="text-xl font-black tracking-tight text-slate-800 font-['Outfit']">
+                                think<span className="text-[#fca96d]">skool</span>
                             </h1>
                         </div>
 
                         {/* Desktop Navigation - Clean & Simple */}
                         <div className="hidden md:flex items-center gap-8">
                             {navItems.map((item) => (
-                                <div key={item.name} className="relative group cursor-pointer h-20 flex items-center">
-                                    <div className="flex items-center gap-1 text-slate-600 group-hover:text-orange-500 font-medium transition-colors">
+                                <div key={item.name} className="relative group cursor-pointer h-16 flex items-center">
+                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#fca96d] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
                                         <span>{item.name}</span>
                                         {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-200" />}
                                     </div>
@@ -86,7 +109,7 @@ const PremiumNavbar = () => {
                                                     <a
                                                         key={idx}
                                                         href={sub.link}
-                                                        className="block px-4 py-3 text-sm text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-colors font-medium border-l-2 border-transparent hover:border-orange-500"
+                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#fca96d]/10 hover:text-[#fca96d] transition-colors border-l-2 border-transparent hover:border-[#fca96d] font-['Outfit']"
                                                     >
                                                         {sub.name}
                                                     </a>
@@ -101,20 +124,26 @@ const PremiumNavbar = () => {
                         {/* Right Actions */}
                         <div className="hidden md:flex items-center gap-4">
                             <button
-                                onClick={() => setIsModalOpen(true)}
-                                className="px-5 py-2 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                                onClick={handleBookSession}
+                                className="px-5 py-2 text-[10px] font-black text-white bg-slate-900 rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
                             >
                                 Book Free Session
                             </button>
                             <button
-                                onClick={() => navigate('/classroom')}
-                                className="px-5 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+                                onClick={() => {
+                                    if (user) {
+                                        navigate('/student');
+                                    } else {
+                                        navigate('/student/login');
+                                    }
+                                }}
+                                className="px-5 py-2 text-[10px] font-black text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors uppercase tracking-widest font-['Outfit']"
                             >
                                 My Classroom
                             </button>
                             <button
                                 onClick={() => navigate('/profile')}
-                                className="p-2 text-slate-600 hover:text-slate-900 transition-colors"
+                                className="p-2 text-slate-400 hover:text-slate-900 transition-colors"
                             >
                                 <FaUserCircle size={28} />
                             </button>
@@ -153,11 +182,11 @@ const PremiumNavbar = () => {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                         >
-                            <div className="p-4 flex flex-col gap-2">
+                            <div className="p-4 flex flex-col gap-2 font-['Outfit']">
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
-                                        className="w-full text-left px-4 py-3 text-slate-700 font-medium rounded-lg hover:bg-orange-50 hover:text-orange-600 transition-colors flex justify-between items-center"
+                                        className="w-full text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#fca96d]/10 hover:text-[#fca96d] transition-colors flex justify-between items-center"
                                     >
                                         {item.name}
                                         {item.hasDropdown && <FaChevronDown size={12} />}
@@ -166,7 +195,7 @@ const PremiumNavbar = () => {
                                 <div className="h-px bg-slate-100 my-2" />
                                 <button
                                     onClick={() => navigate('/classroom')}
-                                    className="w-full text-center px-4 py-3 text-slate-700 font-semibold border border-slate-300 rounded-lg hover:bg-slate-50"
+                                    className="w-full text-center px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50"
                                 >
                                     My Classroom
                                 </button>

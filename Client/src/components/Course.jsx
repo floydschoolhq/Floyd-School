@@ -10,8 +10,8 @@ const Course = () => {
             title: "AI & Machine Learning",
             icon: Cpu,
             description: "Students explore how AI identifies patterns and makes predictions. They train simple models and understand how intelligent systems respond to different inputs.",
-            color: "text-orange-500",
-            bg: "bg-orange-50",
+            color: "text-[#fca96d]",
+            bg: "bg-[#fca96d]/10",
         },
         {
             title: "Cybersecurity",
@@ -31,8 +31,8 @@ const Course = () => {
             title: "Web/App Development",
             icon: Code,
             description: "Students learn the structure of digital products by designing basic web layouts and understanding how user interfaces connect logically.",
-            color: "text-orange-600",
-            bg: "bg-orange-50",
+            color: "text-[#fca96d]",
+            bg: "bg-[#fca96d]/10",
         },
     ];
 

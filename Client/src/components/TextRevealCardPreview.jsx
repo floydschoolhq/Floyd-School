@@ -31,7 +31,7 @@ export function TextRevealCardPreview() {
             {/* Floating Icons representing Vision & Motive */}
             <FloatingIcon icon={FaRobot} color="text-cyan-400" top="15%" left="15%" delay={0} />
             <FloatingIcon icon={FaBrain} color="text-purple-400" top="15%" right="15%" delay={1} />
-            <FloatingIcon icon={FaRocket} color="text-orange-400" bottom="15%" left="20%" delay={2} />
+            <FloatingIcon icon={FaRocket} color="text-[#fca96d]" bottom="15%" left="20%" delay={2} />
             <FloatingIcon icon={FaLaptopCode} color="text-green-400" bottom="15%" right="20%" delay={3} />
 
             {/* Cloud Shaped Course Cards - Floating One-Liners */}

@@ -6,33 +6,27 @@ export const GradientCard = ({
     children,
     className,
     gradient = "from-blue-500 via-purple-500 to-pink-500",
-    glowColor = "rgba(59, 130, 246, 0.5)"
 }) => {
     return (
         <motion.div
             className={cn(
-                "relative p-6 rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-slate-800 overflow-hidden",
+                "relative p-8 rounded-[2rem] bg-white border border-slate-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden group",
                 className
             )}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            whileHover={{
+                y: -6,
+                shadow: "0 30px 60px -12px rgba(0,0,0,0.1), 0 18px 36px -18px rgba(0,0,0,0.05)",
+                transition: { duration: 0.4, ease: "easeOut" }
+            }}
         >
-            {/* Gradient border effect */}
+            {/* Subtle Gradient Accent */}
             <div className={cn(
-                "absolute inset-0 bg-gradient-to-r opacity-20 blur-xl",
+                "absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b opacity-100 transition-all duration-500 group-hover:w-2",
                 gradient
             )} />
 
-            {/* Glow effect */}
-            <div
-                className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                style={{
-                    background: `radial-gradient(circle at center, ${glowColor}, transparent 70%)`
-                }}
-            />
-
             {/* Content */}
-            <div className="relative z-10">
+            <div className="relative z-10 font-['Inter']">
                 {children}
             </div>
         </motion.div>
@@ -41,29 +35,26 @@ export const GradientCard = ({
 
 export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
     return (
-        <GradientCard gradient={gradient} className="group">
-            <div className="flex items-center justify-between">
-                <div>
-                    <p className="text-sm text-slate-400 mb-1">{title}</p>
-                    <h3 className="text-3xl font-bold text-white">{value}</h3>
-                    {change && (
-                        <p className={cn(
-                            "text-sm mt-2",
-                            change > 0 ? "text-green-400" : "text-red-400"
-                        )}>
-                            {change > 0 ? "+" : ""}{change}% from last month
-                        </p>
-                    )}
-                </div>
-                {Icon && (
-                    <div className={cn(
-                        "p-4 rounded-xl bg-gradient-to-br",
-                        gradient
+        <GradientCard gradient={gradient} className="flex items-center justify-between p-7">
+            <div className="flex-1">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-400 mb-2 font-['Outfit']">{title}</p>
+                <h3 className="text-4xl font-black text-slate-900 tracking-tighter font-['Outfit']">{value}</h3>
+                {change && (
+                    <p className={cn(
+                        "text-[10px] mt-2 font-black uppercase tracking-widest flex items-center gap-1",
+                        change > 0 ? "text-emerald-500" : "text-rose-500"
                     )}>
-                        <Icon className="w-8 h-8 text-white" />
-                    </div>
+                        {change > 0 ? "↑" : "↓"} {Math.abs(change)}% Growth
+                    </p>
                 )}
             </div>
+            {Icon && (
+                <div className={cn(
+                    "p-4 rounded-2xl bg-slate-50 text-slate-900 border border-slate-100 group-hover:bg-slate-900 group-hover:text-white transition-all duration-500 group-hover:scale-110 shadow-sm"
+                )}>
+                    <Icon className="w-6 h-6" />
+                </div>
+            )}
         </GradientCard>
     );
 };

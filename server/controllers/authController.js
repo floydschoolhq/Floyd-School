@@ -13,7 +13,7 @@ const generateToken = (id) => {
 // @route   POST /api/auth/signup
 // @access  Public
 const registerUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     try {
         const userExists = await User.findOne({ email });
@@ -26,7 +26,7 @@ const registerUser = async (req, res) => {
             name,
             email,
             password,
-            role,
+            role: 'student',
         });
 
         if (user) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaCheckCircle, FaSpinner } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../api/axios';
 
 const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
     const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
@@ -14,7 +14,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
         setErrorMsg('');
 
         try {
-            await axios.post('http://localhost:5000/api/leads', {
+            await api.post('/leads', {
                 ...formData,
                 source,
                 type: 'counseling'
@@ -51,10 +51,10 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                         className="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="bg-slate-900 p-6 text-white flex justify-between items-start">
+                        <div className="bg-slate-900 p-6 text-white flex justify-between items-start font-['Outfit']">
                             <div>
-                                <h3 className="text-xl font-bold mb-1">Book a Free Session</h3>
-                                <p className="text-slate-400 text-sm">Get expert guidance for your future.</p>
+                                <h3 className="text-xl font-black mb-1 uppercase tracking-tight">Book a Free Session</h3>
+                                <p className="text-slate-400 text-sm font-medium">Get expert guidance for your future.</p>
                             </div>
                             <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
                                 <FaTimes />
@@ -80,32 +80,32 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-1">Name</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Name</label>
                                         <input
                                             type="text"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-orange-500 transition-colors"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#fca96d] transition-colors font-['Inter'] font-medium"
                                             placeholder="Enter your name"
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-1">Email</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Email</label>
                                         <input
                                             type="email"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-orange-500 transition-colors"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#fca96d] transition-colors font-['Inter'] font-medium"
                                             placeholder="Enter your email"
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-1">Phone Number</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Phone Number</label>
                                         <input
                                             type="tel"
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-orange-500 transition-colors"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#fca96d] transition-colors font-['Inter'] font-medium"
                                             placeholder="+91 98765 43210"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -115,9 +115,9 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
-                                        className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20"
+                                        className="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/10 uppercase tracking-widest text-xs font-['Outfit'] active:scale-95"
                                     >
-                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : 'Book Free Session'}
+                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : 'Confirm Registration'}
                                     </button>
                                 </form>
                             )}

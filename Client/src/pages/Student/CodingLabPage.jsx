@@ -110,23 +110,21 @@ const CodingLabPage = () => {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col">
+    <div className="h-screen bg-slate-950 flex flex-col font-['Inter']">
       {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 px-6 py-4">
+      <div className="bg-slate-900 border-b border-slate-800 px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-1">
-              Cloud-Based Coding Lab
+            <h1 className="text-xl font-black text-white mb-1 tracking-tight font-['Outfit']">
+              Elite <span className="text-[#fca96d]">Coding Laboratory</span>
             </h1>
-            <p className="text-sm text-slate-400">
-              Write, compile, and execute code in 12+ languages
-            </p>
+            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] font-['Outfit']"> High-Performance Cloud Execution Environment </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {isConnected && (
-              <div className="flex items-center gap-2 px-3 py-1 bg-green-500/20 border border-green-500/50 rounded-full">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs text-green-400">Live</span>
+              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg font-['Outfit']">
+                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
+                <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Compiler Edge</span>
               </div>
             )}
             <LanguageSelector
@@ -138,47 +136,47 @@ const CodingLabPage = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="bg-slate-900/60 backdrop-blur-sm border-b border-slate-800 px-6 py-3">
+      <div className="bg-slate-900/50 backdrop-blur-md border-b border-slate-800 px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02, y: -1 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleRunCode}
               disabled={isRunning}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-slate-700 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 font-['Outfit']"
             >
-              <Play className="w-4 h-4" />
-              {isRunning ? 'Running...' : 'Run Code'}
+              <Play className="w-4 h-4 fill-white" />
+              {isRunning ? 'Executing...' : 'Run Integration'}
             </motion.button>
 
             <button
               onClick={handleSaveCode}
-              className="flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all"
             >
               <Save className="w-4 h-4" />
-              Save
+              Store
             </button>
 
             <button
               onClick={handleLoadCode}
-              className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all"
             >
               <Upload className="w-4 h-4" />
-              Load
+              Restore
             </button>
 
             <button
               onClick={handleResetCode}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-xl font-bold text-xs uppercase tracking-widest transition-all border border-rose-500/20"
             >
               <RotateCcw className="w-4 h-4" />
-              Reset
+              Revert
             </button>
           </div>
 
-          <div className="text-sm text-slate-400">
-            Language: <span className="text-sky-400 font-semibold">{selectedLanguage.name}</span>
+          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 font-['Outfit']">
+            Active Engine: <span className="text-[#fca96d]">{selectedLanguage.name}</span>
           </div>
         </div>
       </div>
@@ -215,13 +213,17 @@ const CodingLabPage = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-slate-900/60 backdrop-blur-sm border-t border-slate-800 px-6 py-2">
-        <div className="flex items-center justify-between text-xs text-slate-400">
-          <div>
-            Powered by Judge0 API • Monaco Editor
+      <div className="bg-slate-900 border-t border-slate-800 px-6 py-2 font-['Outfit']">
+        <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-500">
+          <div className="flex items-center gap-4">
+            <span>Powered by Judge0 Core</span>
+            <span className="w-1 h-1 bg-slate-700 rounded-full" />
+            <span>Monaco Enterprise Engine</span>
           </div>
-          <div>
-            {user?.name} • {selectedLanguage.name}
+          <div className="flex items-center gap-2">
+            <span className="text-[#fca96d] font-['Outfit']">{user?.name}</span>
+            <span className="text-slate-700">/</span>
+            <span>{selectedLanguage.name}</span>
           </div>
         </div>
       </div>

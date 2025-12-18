@@ -19,8 +19,8 @@ const ClassroomPage = () => {
         api.get('/courses'),
         api.get('/assignments')
       ]);
-      setCourses(coursesRes.data);
-      setAssignments(assignmentsRes.data);
+      setCourses(Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data);
+      setAssignments(Array.isArray(assignmentsRes.data) ? assignmentsRes.data : assignmentsRes.data.data);
     } catch (error) {
       console.error('Failed to fetch classroom data:', error);
     } finally {
@@ -30,62 +30,64 @@ const ClassroomPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="text-slate-900 text-xl font-black animate-pulse">Initializing Framework...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
+    <div className="min-h-screen bg-slate-50 p-6 relative">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 font-['Inter']"
       >
-        <h1 className="text-4xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-600">
-          My Classroom Resources
+        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
+          My Classroom <span className="text-[#fca96d]">Resources</span>
         </h1>
-        <p className="text-slate-400">Access your lessons, assignments, and recordings</p>
+        <p className="text-sm font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
       </motion.div>
 
       {/* Live Class Banner */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="mb-10 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-1 shadow-lg shadow-orange-500/20"
+        className="mb-10 bg-gradient-to-r from-[#fca96d] to-orange-500 rounded-2xl p-0.5 shadow-xl shadow-[#fca96d]/10"
       >
-        <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="relative">
               <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
-              <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center border border-red-500">
+              <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
                 <PlayCircle className="text-red-500 w-6 h-6" />
               </div>
             </div>
             <div>
-              <h3 className="text-white text-xl font-bold">Live Class in Session</h3>
-              <p className="text-slate-300">Data Structures & Algorithms: Graph Theory</p>
+              <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
+              <p className="text-sm font-medium text-slate-500 font-['Inter']">Data Structures & Algorithms: Graph Theory</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 font-['Outfit']">
             <div className="text-right hidden md:block">
-              <p className="text-xs text-slate-400 uppercase font-bold">Started at</p>
-              <p className="text-white font-mono">10:00 AM</p>
+              <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+              <p className="text-slate-900 font-black">10:00 AM</p>
             </div>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2 transition-all">
-              Join Now <span className="bg-white/20 px-2 py-0.5 rounded text-xs ml-2">LIVE</span>
+            <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest">
+              Join Now <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
             </button>
           </div>
         </div>
       </motion.div>
 
       {/* Current Lessons */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-sky-400" />
+      <div className="mb-8 font-['Inter']">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+          <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
+            <BookOpen className="w-5 h-5" />
+          </div>
           Current Lessons
         </h2>
         <div className="grid grid-cols-1 gap-4">
@@ -104,19 +106,19 @@ const ClassroomPage = () => {
                       : 'bg-green-500'
                       }`} />
                     <div>
-                      <h3 className="font-semibold text-white text-lg">{course.title}</h3>
-                      <p className="text-sm text-slate-300">{course.instructor?.name}</p>
+                      <h3 className="font-bold text-slate-800 text-lg tracking-tight">{course.title}</h3>
+                      <p className="text-xs font-medium text-slate-500">{course.instructor?.name}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <div className="text-sm text-slate-400">Progress</div>
-                      <div className="text-lg font-bold text-sky-400">
+                      <div className="text-[10px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
+                      <div className="text-lg font-black text-[#fca96d]">
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-lg font-medium transition-colors">
-                      View
+                    <button className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-bold transition-colors">
+                      Continue
                     </button>
                   </div>
                 </div>
@@ -125,18 +127,20 @@ const ClassroomPage = () => {
           ))}
           {courses.length === 0 && (
             <div className="text-center py-12 text-slate-400">
-              <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p>No lessons available yet</p>
+              <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-30" />
+              <p className="font-medium italic text-sm">No curriculum units assigned yet.</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Assignments */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-purple-400" />
-          Assignments
+      <div className="mb-8 font-['Inter']">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+          <div className="p-2 bg-purple-50 rounded-lg text-purple-500">
+            <FileText className="w-5 h-5" />
+          </div>
+          Technical Assignments
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {assignments.map((assignment, index) => (
@@ -146,19 +150,19 @@ const ClassroomPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GradientCard gradient="from-purple-500 via-pink-500 to-rose-500">
+              <GradientCard gradient="from-purple-500 to-indigo-500">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-white mb-1">{assignment.title}</h3>
-                    <p className="text-sm text-slate-300 mb-2">{assignment.course?.title}</p>
-                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
+                    <p className="text-xs font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
+                    <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                       <Clock className="w-3 h-3" />
                       Due: {new Date(assignment.dueDate).toLocaleDateString()}
                     </div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${assignment.status === 'published'
-                    ? 'bg-orange-500/20 text-orange-400'
-                    : 'bg-green-500/20 text-green-400'
+                  <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-tighter ${assignment.status === 'published'
+                    ? 'bg-orange-50 text-orange-600 border border-orange-100'
+                    : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                     }`}>
                     {assignment.status}
                   </span>
@@ -168,26 +172,28 @@ const ClassroomPage = () => {
           ))}
           {assignments.length === 0 && (
             <div className="col-span-full text-center py-12 text-slate-400">
-              <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p>No assignments available</p>
+              <FileText className="w-16 h-16 mx-auto mb-4 opacity-30" />
+              <p className="font-medium italic text-sm">No active assignments found.</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Class Recordings */}
-      <div>
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-          <PlayCircle className="w-6 h-6 text-emerald-400" />
-          Recent Class Recordings
+      <div className="mb-10 font-['Inter']">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+          <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
+            <PlayCircle className="w-5 h-5" />
+          </div>
+          Integration Sessions
         </h2>
-        <GradientCard gradient="from-emerald-500 via-teal-500 to-cyan-500">
+        <GradientCard gradient="from-emerald-500 to-cyan-500">
           <div className="text-center py-8">
-            <PlayCircle className="w-12 h-12 mx-auto mb-3 text-white/70" />
-            <p className="text-white font-medium mb-2">Class Recordings</p>
-            <p className="text-sm text-slate-300 mb-4">Access recorded sessions and lectures</p>
-            <button className="px-6 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg font-medium transition-colors">
-              View All Recordings
+            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#fca96d] opacity-50" />
+            <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
+            <p className="text-sm font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
+            <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10">
+              Browse Archive
             </button>
           </div>
         </GradientCard>

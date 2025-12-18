@@ -24,6 +24,14 @@ const leadSchema = new mongoose.Schema({
         type: String, // 'footer', 'hero', 'popup'
         default: 'unknown'
     },
+    topic: {
+        type: String, // 'Full Stack', 'Data Science', etc.
+        trim: true
+    },
+    experience: {
+        type: String, // 'Class 6-7', etc.
+        trim: true
+    },
     status: {
         type: String,
         enum: ['new', 'contacted', 'converted', 'closed'],

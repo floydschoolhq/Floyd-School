@@ -1,25 +1,32 @@
 const judge0Service = require('../services/judge0Service');
 
-// Execute code
+// @desc    Execute code
+// @route   POST /api/execute
+// @access  Private
 exports.executeCode = async (req, res) => {
     try {
         const { sourceCode, languageId, stdin, expectedOutput } = req.body;
 
-        console.log('Code execution request:', { languageId, codeLength: sourceCode?.length });
-
         if (!sourceCode || !languageId) {
-            return res.status(400).json({ message: 'Source code and language ID are required' });
+            return res.status(400).json({
+                success: false,
+                message: 'Source code and language ID are required for execution'
+            });
         }
 
+        console.log(`[CodeExecution:executeCode] Initializing for LanguageID: ${languageId}`);
+
         // Submit code to Judge0
-        console.log('Submitting to Judge0...');
         const submission = await judge0Service.submitCode(sourceCode, languageId, stdin, expectedOutput);
-        console.log('Submission created:', submission.token);
+
+        if (!submission?.token) {
+            throw new Error('Judge0 failed to return submission token');
+        }
 
         // Poll for result
         let result = await judge0Service.getSubmission(submission.token);
         let attempts = 0;
-        const maxAttempts = 10;
+        const maxAttempts = 15; // Increased for complex builds
 
         while (result.status.id <= 2 && attempts < maxAttempts) {
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -27,61 +34,75 @@ exports.executeCode = async (req, res) => {
             attempts++;
         }
 
-        console.log('Execution completed:', result.status.description);
+        console.log(`[CodeExecution:executeCode] Finished with status: ${result.status.description}`);
 
         // Emit Socket.io event for real-time update
         const io = req.app.get('io');
-        if (io) {
+        if (io && req.user?._id) {
             io.to(req.user._id.toString()).emit('code:result', {
                 token: submission.token,
-                result: result
+                status: result.status,
+                stdout: result.stdout
             });
         }
 
-        res.json({
-            token: submission.token,
-            status: result.status,
-            stdout: result.stdout,
-            stderr: result.stderr,
-            compile_output: result.compile_output,
-            time: result.time,
-            memory: result.memory,
-            language: judge0Service.getLanguageById(languageId)
+        res.status(200).json({
+            success: true,
+            data: {
+                token: submission.token,
+                status: result.status,
+                stdout: result.stdout,
+                stderr: result.stderr,
+                compile_output: result.compile_output,
+                time: result.time,
+                memory: result.memory,
+                language: judge0Service.getLanguageById(languageId)
+            }
         });
     } catch (error) {
-        console.error('Code execution error:', error.message);
-        console.error('Error stack:', error.stack);
-        res.status(500).json({ message: 'Code execution failed', error: error.message });
+        console.error(`[CodeExecution:executeCode] Error: ${error.message}`);
+        res.status(500).json({
+            success: false,
+            message: 'Code execution failed during processing',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 };
 
-// Get supported languages
+// @desc    Get supported languages
+// @route   GET /api/execute/languages
+// @access  Public
 exports.getLanguages = async (req, res) => {
     try {
         const languages = await judge0Service.getSupportedLanguages();
-        res.json(languages);
+        res.status(200).json({ success: true, count: languages.length, data: languages });
     } catch (error) {
-        console.error('Get languages error:', error);
-        res.status(500).json({ message: 'Failed to fetch languages', error: error.message });
+        console.error(`[CodeExecution:getLanguages] Error: ${error.message}`);
+        res.status(500).json({ success: false, message: 'Failed to fetch supported languages' });
     }
 };
 
-// Get submission status
+// @desc    Get submission status
+// @route   GET /api/execute/status/:token
+// @access  Private
 exports.getSubmissionStatus = async (req, res) => {
     try {
         const { token } = req.params;
         const result = await judge0Service.getSubmission(token);
 
-        res.json({
-            status: result.status,
-            stdout: result.stdout,
-            stderr: result.stderr,
-            compile_output: result.compile_output,
-            time: result.time,
-            memory: result.memory
+        res.status(200).json({
+            success: true,
+            data: {
+                status: result.status,
+                stdout: result.stdout,
+                stderr: result.stderr,
+                compile_output: result.compile_output,
+                time: result.time,
+                memory: result.memory
+            }
         });
     } catch (error) {
-        console.error('Get submission error:', error);
-        res.status(500).json({ message: 'Failed to get submission status', error: error.message });
+        console.error(`[CodeExecution:getSubmissionStatus] Error: ${error.message}`);
+        res.status(500).json({ success: false, message: 'Failed to retrieve submission status' });
     }
 };

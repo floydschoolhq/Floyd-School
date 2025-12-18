@@ -1,91 +1,187 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaCode, FaChalkboardTeacher, FaComments, FaArrowRight, FaRobot, FaChartLine, FaUserTie, FaCloud } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaCode, FaArrowRight, FaRobot, FaChartLine, FaUserTie, FaCloud, FaCheckCircle, FaTimes } from 'react-icons/fa';
+
+const FEATURES = [
+    {
+        title: "Chatbot Support",
+        miniTitle: "Neural Core Integration",
+        icon: <FaRobot />,
+        desc: "24/7 Continuous learning assistance.",
+        color: "text-slate-900",
+        bg: "bg-slate-100",
+        details: [
+            { label: "Contextual AI", desc: "Trained on our specific curriculum and your code repo." },
+            { label: "Instant Debugging", desc: "Real-time error identification and resolution steps." },
+            { label: "suggestive Path", desc: "Suggests specific modules to review based on mistakes." }
+        ]
+    },
+    {
+        title: "Built-in Coding IDE",
+        miniTitle: "Cloud Deployment Terminal",
+        icon: <FaCode />,
+        desc: "Practice directly on the platform with no setup.",
+        color: "text-[#fca96d]",
+        bg: "bg-[#fca96d]/10",
+        details: [
+            { label: "Zero-Config", desc: "Start coding instantly with no local environment setup." },
+            { label: "Multi-Language", desc: "Full support for JS, Python, C++, and Java." },
+            { label: "Cloud Compilers", desc: "Low-latency execution on high-performance nodes." }
+        ]
+    },
+    {
+        title: "Progress Monitoring",
+        miniTitle: "Performance Vector Analytics",
+        icon: <FaChartLine />,
+        desc: "Real-time interactions available to school admins and parents.",
+        color: "text-black",
+        bg: "bg-slate-200",
+        details: [
+            { label: "Precision Metrics", desc: "Track every module and quiz with granular accuracy." },
+            { label: "Stakeholder Dash", desc: "Dedicated portals for admins and parents." },
+            { label: "Predictive Engines", desc: "Identifies learning bottlenecks before they occur." }
+        ]
+    },
+    {
+        title: "Expert Guidance",
+        miniTitle: "Human Intelligence Tier",
+        icon: <FaUserTie />,
+        desc: "1:1 technical support and code reviews.",
+        color: "text-[#fca96d]",
+        bg: "bg-[#fca96d]/20",
+        details: [
+            { label: "Mentorship", desc: "Weekly dedicated sessions with industry leads." },
+            { label: "Code Review", desc: "High-level architectural feedback on your projects." },
+            { label: "Career Strategy", desc: "Direct access to FAANG hiring managers." }
+        ]
+    },
+    {
+        title: "Secure Cloud",
+        miniTitle: "Fortified Infrastructure",
+        icon: <FaCloud />,
+        desc: "Safe & private student learning space.",
+        color: "text-slate-700",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Private Sandbox", desc: "Dedicated, isolated environment for every student." },
+            { label: "Persistent Sync", desc: "Access your workspace from any device globally." },
+            { label: "Enterprise Security", desc: "Protected by industry-leading encryption protocols." }
+        ]
+    }
+];
 
 const StudentEcosystem = () => {
+    const [selectedFeature, setSelectedFeature] = useState(null);
+
     return (
-        <section className="bg-slate-50 py-24 border-t border-slate-200">
+        <section className="bg-slate-50 py-24 border-t border-slate-100 font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <p className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4">Everything You Need</p>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
-                        Complete <span className="text-orange-500">Student Ecosystem</span>
+                    <p className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
+                        Proprietary <span className="text-[#fca96d]">Learning</span> Ecosystem
                     </h2>
-                    <p className="text-base text-slate-500 max-w-2xl mx-auto">
-                        Tools designed to help you focus on learning, building, and growing.
+                    <p className="text-slate-500 font-medium max-w-2xl mx-auto text-sm leading-relaxed">
+                        A cohesive suite of advanced engineering tools engineered to accelerate your path from conceptual understanding to technical excellence.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                    {[
-                        {
-                            title: "Chatbot Support",
-                            icon: <FaRobot />,
-                            desc: "24/7 Continuous learning assistance.",
-                            color: "text-slate-900",
-                            bg: "bg-slate-100"
-                        },
-                        {
-                            title: "Built-in Coding IDE",
-                            icon: <FaCode />,
-                            desc: "Practice directly on the platform with no setup.",
-                            color: "text-orange-500",
-                            bg: "bg-orange-50"
-                        },
-                        {
-                            title: "Progress Monitoring",
-                            icon: <FaChartLine />,
-                            desc: "Real-time interactions available to school admins and parents.",
-                            color: "text-black",
-                            bg: "bg-slate-200"
-                        },
-                        {
-                            title: "Mentor Access",
-                            icon: <FaUserTie />,
-                            desc: "1:1 expert guidance throughout learning.",
-                            color: "text-orange-600",
-                            bg: "bg-orange-100"
-                        },
-                        {
-                            title: "Secure Cloud",
-                            icon: <FaCloud />,
-                            desc: "Safe & private student learning space.",
-                            color: "text-slate-700",
-                            bg: "bg-slate-50"
-                        }
-                    ].map((feature, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {FEATURES.map((feature, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{
-                                delay: index * 0.1,
-                                type: "spring",
-                                stiffness: 200,
-                                damping: 20
-                            }}
-                            whileHover={{
-                                y: -15,
-                                scale: 1.02,
-                                transition: { type: "spring", stiffness: 300 }
-                            }}
-                            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-slate-100 group cursor-pointer"
+                            transition={{ delay: index * 0.1 }}
+                            whileHover={{ y: -10 }}
+                            onClick={() => setSelectedFeature(feature)}
+                            className="bg-white rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 border border-slate-50 group cursor-pointer"
                         >
-                            <div className={`w-16 h-16 ${feature.bg} rounded-xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                            <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-500`}>
                                 {feature.icon}
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2">{feature.title}</h3>
-                            <p className="text-slate-500 leading-relaxed mb-6 text-sm">
+                            <h3 className="text-xl font-black text-slate-900 mb-3 font-['Outfit'] tracking-tight">{feature.title}</h3>
+                            <p className="text-slate-500 leading-relaxed mb-6 text-xs font-medium">
                                 {feature.desc}
                             </p>
-                            <a href="#" className={`font-bold flex items-center gap-2 ${feature.color} text-sm group-hover:gap-3 transition-all`}>
-                                Learn more <FaArrowRight size={12} />
-                            </a>
+                            <div className={`font-black flex items-center gap-2 ${feature.color} text-[10px] uppercase tracking-widest group-hover:gap-3 transition-all font-['Outfit']`}>
+                                Learn more <FaArrowRight size={10} />
+                            </div>
                         </motion.div>
                     ))}
                 </div>
             </div>
+
+            {/* Feature Deep Dive Modal */}
+            <AnimatePresence>
+                {selectedFeature && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md"
+                        onClick={() => setSelectedFeature(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden relative shadow-2xl"
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <div className="p-10 relative">
+                                <button
+                                    onClick={() => setSelectedFeature(null)}
+                                    className="absolute top-8 right-8 w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"
+                                >
+                                    <FaTimes />
+                                </button>
+
+                                <div className="flex items-center gap-6 mb-10">
+                                    <div className={`w-16 h-16 ${selectedFeature.bg} rounded-2xl flex items-center justify-center text-4xl ${selectedFeature.color}`}>
+                                        {selectedFeature.icon}
+                                    </div>
+                                    <div>
+                                        <p className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-1 font-['Outfit']">
+                                            {selectedFeature.miniTitle}
+                                        </p>
+                                        <h3 className="text-3xl font-black text-slate-900 font-['Outfit'] tracking-tight">
+                                            {selectedFeature.title}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6 mb-10">
+                                    {selectedFeature.details.map((detail, idx) => (
+                                        <div key={idx} className="flex items-start gap-4 group">
+                                            <div className="mt-1 flex-shrink-0">
+                                                <FaCheckCircle className="text-[#fca96d]/40 group-hover:text-[#fca96d] transition-colors" size={16} />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-black text-slate-900 mb-1 font-['Outfit']">{detail.label}</h4>
+                                                <p className="text-xs text-slate-500 font-medium leading-relaxed">{detail.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="pt-8 border-t border-slate-50 flex items-center justify-between">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-['Outfit']">
+                                        Architected for Excellence
+                                    </p>
+                                    <button
+                                        onClick={() => setSelectedFeature(null)}
+                                        className="bg-slate-900 hover:bg-[#fca96d] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 font-['Outfit']"
+                                    >
+                                        Return to Ecosystem
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

@@ -12,48 +12,96 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const seedCourses = [
     {
-        title: "Artificial Intelligence & ML",
+        title: "AI & Machine Learning",
         description: "Master the future with deep learning, neural networks, and real-world AI applications. Build your own AI models from scratch.",
         category: "AI",
         icon: "Brain",
-        color: "text-orange-500",
+        color: "text-purple-500",
         rating: "4.9",
         duration: "12 Weeks",
-        tags: ["Python", "TensorFlow", "Deep Learning"],
-        difficulty: "Advanced"
+        tags: ["Python", "TensorFlow", "Generative AI"],
+        difficulty: "Advanced",
+        deliveryDetails: {
+            inSchool: {
+                bootcamp: "7 Days intensive bootcamp",
+                postBootcamp: "Join our paid subscription for regular in-depth training"
+            },
+            online: {
+                tutor: "1:1 dedicated tutor for doubt clearing",
+                lectures: "Live and recorded interactive video lectures",
+                chatSupport: "24/7 After class chat support with mentors",
+                reporting: "Weekly comprehensive progress reports and PTM"
+            }
+        }
     },
     {
-        title: "Full Stack Web Development",
-        description: "Become a complete developer. Learn React, Node.js, and modern database technologies to build scalable web applications.",
-        category: "Web Development",
-        icon: "Globe",
-        color: "text-slate-900",
-        rating: "4.8",
-        duration: "24 Weeks",
-        tags: ["MERN Stack", "DevOps", "System Design"],
-        difficulty: "Intermediate"
-    },
-    {
-        title: "Cybersecurity & Ethical Hacking",
+        title: "Cyber Security",
         description: "Protect the digital world. Learn penetration testing, network security, and cryptography from industry experts.",
         category: "Other",
         icon: "Shield",
-        color: "text-black",
-        rating: "4.9",
+        color: "text-blue-500",
+        rating: "4.8",
         duration: "16 Weeks",
-        tags: ["Network Security", "Ethical Hacking", "Cryptography"],
-        difficulty: "Advanced"
+        tags: ["Hacking", "NetSec", "Linux"],
+        difficulty: "Advanced",
+        deliveryDetails: {
+            inSchool: {
+                bootcamp: "7 Days security bootcamp",
+                postBootcamp: "Enroll in the full certification program"
+            },
+            online: {
+                tutor: "Expert mentor for personalized guidance",
+                lectures: "Hands-on virtual lab sessions",
+                chatSupport: "Slack/Discord community for 24/7 help",
+                reporting: "Performance analytics and regular feedback"
+            }
+        }
     },
     {
-        title: "IoT & Robotics Masterclass",
+        title: "IoT & Robotics",
         description: "Bridge the physical and digital worlds. Design, build, and program your own smart devices and robots.",
         category: "Robotics",
         icon: "Cpu",
-        color: "text-orange-600",
+        color: "text-emerald-500",
         rating: "4.7",
         duration: "12 Weeks",
         tags: ["Arduino", "Raspberry Pi", "Sensors"],
-        difficulty: "Beginner"
+        difficulty: "Intermediate",
+        deliveryDetails: {
+            inSchool: {
+                bootcamp: "7 Days hardware-focused bootcamp",
+                postBootcamp: "Advanced robotics lab access with subscription"
+            },
+            online: {
+                tutor: "Project-based 1:1 support",
+                lectures: "Step-by-step hardware assembly guides",
+                chatSupport: "Integrated technical support system",
+                reporting: "Milestone-based progress tracking"
+            }
+        }
+    },
+    {
+        title: "Development (Web/App)",
+        description: "Stay ahead in a digital-first world. Learn React, Node.js, and mobile app frameworks to build the next big thing.",
+        category: "Web Development",
+        icon: "Globe",
+        color: "text-slate-600",
+        rating: "4.9",
+        duration: "20 Weeks",
+        tags: ["React/Next.js", "App Dev", "Cloud"],
+        difficulty: "Intermediate",
+        deliveryDetails: {
+            inSchool: {
+                bootcamp: "7 Days coding sprint",
+                postBootcamp: "Real-world project development phase"
+            },
+            online: {
+                tutor: "Senior dev for code reviews",
+                lectures: "Intensive architecture deep-dives",
+                chatSupport: "Direct dev channel access",
+                reporting: "Career readiness and code quality reports"
+            }
+        }
     }
 ];
 
@@ -124,6 +172,22 @@ const seedMasterclasses = [
         students: 600
     }
 ];
+
+const seedWhyUs = {
+    mainTitle: "WHY US",
+    video: {
+        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+        speakerName: "Our Mentors",
+        speakerRole: "ThinkSkool Visionary",
+        caption: "Join the revolution in student learning and tech empowerment."
+    },
+    features: [
+        { title: "Expert Mentorship", icon: "Users", color: "text-blue-500" },
+        { title: "Project Based Learning", icon: "BookOpen", color: "text-orange-500" },
+        { title: "Industry Recognition", icon: "Award", color: "text-emerald-500" }
+    ]
+};
 
 const seedDB = async () => {
     try {

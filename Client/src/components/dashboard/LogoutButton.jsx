@@ -9,16 +9,16 @@ export const LogoutButton = ({ className = '' }) => {
 
     const handleLogout = () => {
         logout();
-        navigate('/role');
+        navigate('/');
     };
 
     return (
         <button
             onClick={handleLogout}
-            className={`flex items-center gap-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 hover:text-red-300 rounded-lg font-medium transition-colors ${className}`}
+            className={`flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-xs uppercase tracking-widest transition-all ${className}`}
         >
             <LogOut className="w-4 h-4" />
-            Logout
+            Sign Out
         </button>
     );
 };

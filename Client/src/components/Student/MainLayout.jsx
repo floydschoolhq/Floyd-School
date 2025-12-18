@@ -2,27 +2,12 @@ import React, { useContext } from "react";
 import { PortalContext } from "../Context/PortalProvider";
 import StudentSidebar from "./StudentSidebar";
 import ChatSupport from "./ChatSupport";
-import { Menu, User, Users } from "lucide-react";
+import { Menu, User } from "lucide-react";
 
 const MainLayout = ({ children }) => {
   const usePortal = () => useContext(PortalContext);
   const { isSidebarOpen, setIsSidebarOpen, system } = usePortal();
 
-  const RoleSwitcher = () => {
-    const { system, switchRole } = usePortal();
-    const targetRole = system === 'student' ? 'parent' : 'student';
-    const targetIcon = system === 'student' ? Users : User;
-
-    return (
-      <button
-        onClick={switchRole}
-        className="flex items-center space-x-2 p-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
-      >
-        {React.createElement(targetIcon, { className: "w-4 h-4 text-blue-600" })}
-        <span>Switch to {targetRole.charAt(0).toUpperCase() + targetRole.slice(1)} View</span>
-      </button>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -40,25 +25,29 @@ const MainLayout = ({ children }) => {
       {/* Main Content Area */}
       <div className="md:ml-64 transition-all duration-300">
         {/* Header/Navbar */}
-        <header className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-100 p-4 md:p-6 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 p-4 md:px-8 md:py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-6">
             <button
-              className="md:hidden p-2 text-gray-700 rounded-full hover:bg-gray-100"
+              className="md:hidden p-2 text-slate-600 rounded-full hover:bg-slate-50"
               onClick={() => setIsSidebarOpen(true)}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-800">
+            <h1 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">
               {usePortal().currentView.replace(/([A-Z])/g, ' $1').trim()}
             </h1>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <RoleSwitcher /> {/* <-- Role Switcher Added Here */}
-            <div className={`p-2 rounded-full ${system === 'student' ? 'bg-blue-100 text-blue-700' : 'bg-indigo-100 text-indigo-700'}`}>
-              <User className="w-5 h-5" />
+          <div className="flex items-center space-x-6 font-['Inter']">
+            <div className="flex items-center gap-3 pl-6 border-l border-slate-100">
+              <div className="text-right hidden sm:block">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>
+                <p className="text-sm font-black text-slate-900 leading-none font-['Outfit']">{usePortal().user?.name}</p>
+              </div>
+              <div className={`p-2 rounded-xl border ${system === 'student' ? 'bg-slate-50 border-slate-100 text-[#fca96d]' : 'bg-slate-50 border-slate-100 text-indigo-500'}`}>
+                <User className="w-5 h-5" />
+              </div>
             </div>
-            <span className="text-sm font-medium text-gray-700 hidden sm:inline">{usePortal().user?.name}</span>
           </div>
         </header>
 

@@ -3,8 +3,8 @@
 import React from "react";
 
 export const Card = ({ title, children, className = '' }) => (
-  <div className={`bg-white p-6 rounded-xl shadow-lg border border-gray-100 ${className}`}>
-    <h3 className="text-xl font-semibold text-gray-800 mb-4">{title}</h3>
+  <div className={`bg-white p-6 rounded-xl shadow-lg border border-gray-100 font-['Inter'] ${className}`}>
+    <h3 className="text-xl font-black text-gray-800 mb-4 tracking-tight font-['Outfit']">{title}</h3>
     {children}
   </div>
 );
@@ -40,28 +40,28 @@ export const ProgressRing = ({ percentage, color }) => {
           style={{ transition: 'stroke-dashoffset 0.5s' }}
         />
       </svg>
-      <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-gray-800">
+      <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-black text-gray-800 font-['Outfit']">
         {percentage}%
       </span>
     </div>
   );
 };
 
-export 
-const NavLink = ({ icon: Icon, title, view, currentView, setView }) => (
-  <button
-    onClick={() => setView(view)}
-    className={`
-      flex items-center w-full p-3 rounded-xl transition duration-150 
+export
+  const NavLink = ({ icon: Icon, title, view, currentView, setView }) => (
+    <button
+      onClick={() => setView(view)}
+      className={`
+      flex items-center w-full p-4 rounded-xl transition duration-200 group font-['Outfit']
       ${currentView === view
-        ? 'bg-blue-600 text-white shadow-md'
-        : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
-      }
+          ? 'bg-[#fca96d] text-white shadow-lg shadow-[#fca96d]/20'
+          : 'text-slate-500 hover:bg-slate-50 hover:text-[#fca96d]'
+        }
     `}
-  >
-    <Icon className="w-5 h-5 mr-3" />
-    <span className="text-sm font-medium">{title}</span>
-  </button>
-);
+    >
+      <Icon className={`w-5 h-5 mr-3 transition-colors ${currentView === view ? 'text-white' : 'text-slate-400 group-hover:text-[#fca96d]'}`} />
+      <span className="text-sm font-black tracking-tight">{title}</span>
+    </button>
+  );
 
 

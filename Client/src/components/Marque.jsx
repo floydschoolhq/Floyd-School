@@ -1,30 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Simple SVG Logos for the ticker
-const GoogleLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">G</span>oogle</span>;
-const MicrosoftLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-red-500">M</span>icrosoft</span>;
-const AmazonLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1">amazon</span>;
-const AdobeLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-red-500">A</span>dobe</span>;
-const SamsungLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-800">SAMSUNG</span></span>;
-const WalmartLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">Walmart</span></span>;
-const UberLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1">Uber</span>;
+// Technology & Skill Focus Logos
+const ReactLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-cyan-500">React</span></span>;
+const NodeLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-600">Node.js</span></span>;
+const PythonLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">Python</span></span>;
+const AIMLLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-purple-600">AI/ML</span></span>;
+const CloudLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-[#fca96d]">Cloud</span></span>;
+const WebDevLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-600">Web Dev</span></span>;
+const MobileLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-500">Mobile</span></span>;
 
 const logos = [
-  { id: 1, component: GoogleLogo },
-  { id: 2, component: MicrosoftLogo },
-  { id: 3, component: AmazonLogo },
-  { id: 4, component: AdobeLogo },
-  { id: 5, component: SamsungLogo },
-  { id: 6, component: WalmartLogo },
-  { id: 7, component: UberLogo },
+  { id: 1, component: ReactLogo },
+  { id: 2, component: NodeLogo },
+  { id: 3, component: PythonLogo },
+  { id: 4, component: AIMLLogo },
+  { id: 5, component: CloudLogo },
+  { id: 6, component: WebDevLogo },
+  { id: 7, component: MobileLogo },
 ];
 
 const Marque = () => {
   return (
     <div className="w-full bg-white py-12 border-b border-slate-100">
       <div className="text-center mb-8">
-        <p className="text-slate-500 font-semibold tracking-wide uppercase text-sm">Our Alumni Work At</p>
+        <p className="text-slate-500 font-semibold tracking-wide uppercase text-sm">Technologies We Master</p>
       </div>
 
       <div className="relative w-full overflow-hidden">

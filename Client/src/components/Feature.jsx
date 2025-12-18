@@ -32,7 +32,7 @@ const NewWayVisual = () => (
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-10 right-10 text-orange-500/20 text-6xl"
+          className="absolute top-10 right-10 text-[#fca96d]/20 text-6xl"
         >
           <FaGamepad />
         </motion.div>

@@ -1,12 +1,9 @@
-import { User, LogIn, LogOutIcon } from 'lucide-react';
+import { User, LogIn, LogOutIcon, ArrowRight } from 'lucide-react';
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../../api/axios';
-import { DottedGlowBackground } from '../../components/ui/dotted-background';
 import { PortalContext } from '../../components/Context/PortalProvider';
-
-const LOGO_BLUE = '#007FFF';
-const LOGO_ORANGE = '#FF8C00';
 
 const StudentLoginPage = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +13,7 @@ const StudentLoginPage = () => {
   const { updateUser } = useContext(PortalContext);
 
   const handleExit = () => {
-    navigate('/role');
+    navigate('/');
   };
 
   const handleSubmit = async (e) => {
@@ -35,7 +32,6 @@ const StudentLoginPage = () => {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userInfo', JSON.stringify(response.data));
 
-      // Update context with user data
       if (updateUser) {
         updateUser(response.data);
       }
@@ -50,90 +46,104 @@ const StudentLoginPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 flex items-center justify-center p-4 overflow-hidden">
-      <DottedGlowBackground
-        className="absolute inset-0"
-        opacity={0.5}
-        gap={20}
-        radius={1.2}
-        colorDarkVar="--color-neutral-700"
-        glowColorDarkVar="--color-sky-600"
-        speedMin={0.2}
-        speedMax={0.8}
-      />
-
-      <div className="relative z-10 w-full max-w-md p-8 bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800">
-        <header className="flex justify-between items-center mb-8 pb-4 border-b border-slate-700">
-          <div className="text-2xl font-extrabold cursor-pointer" onClick={handleExit}>
-            <span className="text-blue-500">think</span>
-            <span className="text-yellow-500">skool</span>
-          </div>
-          <button
-            onClick={handleExit}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold cursor-pointer text-slate-300 bg-slate-800 rounded-full hover:bg-red-900/50 hover:text-red-400 transition duration-300"
-          >
-            <LogOutIcon className="w-4 h-4" />
-          </button>
-        </header>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <div className="flex items-center justify-center space-x-3 pb-4">
-            <User className="text-sky-400 w-6 h-6" />
-            <h3 className="text-2xl font-bold text-white">Student Login</h3>
-          </div>
-
-          <div className="space-y-4">
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-300"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-300"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={!email || !password || isSubmitting}
-            className={`flex items-center justify-center gap-2 p-3 font-semibold text-white rounded-lg transition-all duration-300 
-                            ${(!email || !password || isSubmitting)
-                ? 'bg-slate-700 cursor-not-allowed'
-                : 'bg-gradient-to-r from-sky-600 to-blue-600 hover:shadow-xl hover:shadow-sky-500/50 hover:scale-[1.02]'
-              }
-                        `}
-          >
-            {isSubmitting ? (
-              <>
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Logging in...
-              </>
-            ) : (
-              <><LogIn className="w-5 h-5" /> Log In as Student</>
-            )}
-          </button>
-
-          <div className="text-center mt-4">
-            <p className="text-sm text-slate-400">
-              Don't have an account?{' '}
-              <Link to="/student/signup" className="text-sky-400 font-semibold hover:text-sky-300 hover:underline">
-                Sign Up
-              </Link>
-            </p>
-          </div>
-        </form>
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden font-['Inter']">
+      {/* Dynamic Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#fca96d]/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px]"></div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 w-full max-w-md"
+      >
+        <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1),0_30px_60px_-15px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)] border border-slate-100 relative overflow-hidden group">
+          {/* Top Decorative Line */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#fca96d] to-transparent"></div>
+
+          <header className="flex justify-between items-center mb-10">
+            <div className="flex items-center gap-2 cursor-pointer group/logo" onClick={handleExit}>
+              <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-lg group-hover/logo:scale-110 transition-transform duration-300">
+                <span className="text-white font-black text-xl font-['Outfit']">TS</span>
+              </div>
+              <h1 className="text-2xl font-black tracking-tighter text-slate-800 font-['Outfit']">
+                think<span className="text-[#fca96d]">skool</span>
+              </h1>
+            </div>
+          </header>
+
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="text-left">
+              <h3 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-2">Access <span className="text-[#fca96d]">Classroom</span></h3>
+              <p className="text-slate-500 text-sm font-medium tracking-wide first-letter:uppercase">Secure gateway to elite engineering resources</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="group">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Deployment Identity</label>
+                <input
+                  type="email"
+                  placeholder="name@university.edu"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#fca96d] focus:ring-4 focus:ring-[#fca96d]/10 transition-all duration-300 font-medium shadow-inner"
+                />
+              </div>
+              <div className="group">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Credential Key</label>
+                <input
+                  type="password"
+                  placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#fca96d] focus:ring-4 focus:ring-[#fca96d]/10 transition-all duration-300 font-medium shadow-inner"
+                />
+              </div>
+            </div>
+
+            <motion.button
+              type="submit"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={!email || !password || isSubmitting}
+              className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-[11px] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
+                ${(!email || !password || isSubmitting)
+                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
+                  : 'bg-slate-900 text-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]'
+                }
+              `}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {isSubmitting ? (
+                  <>
+                    <div className="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                    Authenticating Transmissions...
+                  </>
+                ) : (
+                  <>Initialize Framework <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" /></>
+                )}
+              </span>
+            </motion.button>
+
+            <div className="text-center pt-4 border-t border-slate-50">
+              <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                Terminals offline? <Link to="/student/signup" className="text-[#fca96d] hover:text-[#e05a2b] transition-colors ml-1">Establish New Identity</Link>
+              </p>
+            </div>
+          </form>
+        </div>
+
+        {/* Floating Back Link */}
+        <button
+          onClick={handleExit}
+          className="mt-8 mx-auto flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors bg-white rounded-full shadow-sm hover:shadow-md border border-slate-100"
+        >
+          <LogOutIcon size={12} className="rotate-180" /> Return to Base
+        </button>
+      </motion.div>
     </div>
   );
 };

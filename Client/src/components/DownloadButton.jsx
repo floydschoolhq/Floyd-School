@@ -42,12 +42,12 @@ const DownloadButton = () => {
             <Tooltip text="Download catalog">
                 <button
                     onClick={handleDownload}
-                    className="p-4 flex items-center gap-2 rounded-full text-white transition duration-150 shadow-xl hover:shadow-2xl hover:scale-105 transform cursor-pointer"
+                    className="p-3 flex items-center gap-2 rounded-full text-white transition duration-150 shadow-xl hover:shadow-2xl hover:scale-105 transform cursor-pointer"
                     style={{ backgroundColor: customOrange }}
                     aria-label="Download Brochure"
                 >
-                    <DownloadCloudIcon className="w-6 h-6" />
-                    <span className="font-semibold md:block hidden">Download Brochure</span>
+                    <DownloadCloudIcon className="w-5 h-5" />
+                    <span className="font-semibold text-sm md:block hidden">Download Brochure</span>
                 </button>
             </Tooltip>
         </div>

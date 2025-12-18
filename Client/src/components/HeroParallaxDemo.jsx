@@ -24,7 +24,7 @@ export function HeroParallaxDemo() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
                 <div className="md:w-1/2">
                     <h2 className="text-4xl font-black text-slate-900 mb-6">
-                        Get Recognized with <span className="text-orange-500">Industry Standard</span> Certificates
+                        Get Recognized with <span className="text-[#fca96d]">Industry Standard</span> Certificates
                     </h2>
                     <p className="text-lg text-slate-500 mb-8 leading-relaxed">
                         Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from ThinkSkool and our partners.
@@ -37,7 +37,7 @@ export function HeroParallaxDemo() {
                     <div className="relative w-full max-w-md aspect-[4/3] bg-white rounded-xl shadow-2xl border border-slate-200 p-8 flex items-center justify-center">
                         {/* Abstract Certificate Placeholder */}
                         <div className="text-center border-4 border-double border-slate-100 p-8 w-full h-full flex flex-col justify-center">
-                            <div className="w-16 h-16 bg-orange-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <div className="w-16 h-16 bg-[#fca96d]/20 rounded-full mx-auto mb-4 flex items-center justify-center">
                                 <span className="text-3xl">🏆</span>
                             </div>
                             <h3 className="text-2xl font-serif text-slate-800 mb-2">Certificate of Completion</h3>

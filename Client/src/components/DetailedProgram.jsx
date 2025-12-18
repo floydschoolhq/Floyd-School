@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Brain, ShieldCheck, Cpu, Globe, Star, Clock, ArrowRight, Code, Terminal, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 
 const IconMap = {
     'Brain': Brain,
@@ -17,17 +17,22 @@ const DetailedProgram = () => {
     const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedCourse, setSelectedCourse] = useState(null);
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/courses');
-                // Ensure we have icons by defaulting if missing
-                const formattedCourses = res.data.map(c => ({
-                    ...c,
-                    Icon: IconMap[c.icon] || Code
-                }));
-                setCourses(formattedCourses);
+                const res = await api.get('/courses');
+                if (Array.isArray(res.data)) {
+                    const formattedCourses = res.data.map(c => ({
+                        ...c,
+                        Icon: IconMap[c.icon] || Code
+                    }));
+                    setCourses(formattedCourses);
+                } else {
+                    console.error("Courses data is not an array:", res.data);
+                    setCourses([]);
+                }
                 setLoading(false);
             } catch (err) {
                 console.error("Failed to fetch courses", err);
@@ -38,147 +43,213 @@ const DetailedProgram = () => {
         fetchCourses();
     }, []);
 
-    return (
-        <div className="min-h-screen bg-slate-50 py-24 relative" id="programs">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    const getIcon = (iconName, colorClass) => {
+        const IconComponent = IconMap[iconName] || Code;
+        return <IconComponent size={24} className={colorClass} />;
+    };
 
+    return (
+        <section id="programs" className="relative bg-white py-24 overflow-hidden font-['Inter']">
+            {/* Background Decorative Elements */}
+            <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#fca96d]/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-20">
-                    <p className="text-orange-500 font-bold uppercase tracking-widest text-sm mb-4">Upskill Yourself</p>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
-                        Explore Our <span className="text-orange-500">Top Rated</span> Courses
-                    </h2>
-                    <p className="text-base text-slate-500 max-w-2xl mx-auto">
-                        Industry relevant curriculum designed by experts from MAANG. Start your journey today.
-                    </p>
+                <div className="text-center mb-16">
+                    <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']"
+                    >
+                        Elite Pedagogical Framework
+                    </motion.p>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']"
+                    >
+                        Specialized <span className="text-[#fca96d]">Engineering</span> Tracks
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-slate-500 max-w-2xl mx-auto text-sm font-medium leading-relaxed"
+                    >
+                        Architecting professional competence through immersive technical mastery and expert-led innovation labs.
+                    </motion.p>
                 </div>
 
-                {/* Course Grid */}
+                {/* Cards Grid */}
                 {loading ? (
                     <div className="text-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-                        <p className="mt-4 text-slate-500">Loading courses...</p>
-                    </div>
-                ) : courses.length === 0 ? (
-                    <div className="text-center py-20 text-slate-500">
-                        No courses available at the moment.
+                        <div className="inline-block w-8 h-8 border-[3px] border-slate-100 border-t-[#fca96d] rounded-full animate-spin"></div>
+                        <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-slate-400 font-['Outfit']">Accessing Course Nodes...</p>
                     </div>
                 ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {courses.map((course, index) => (
                             <motion.div
-                                key={index}
-                                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                key={course._id || index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{
-                                    delay: index * 0.1,
-                                    type: "spring",
-                                    stiffness: 100,
-                                    damping: 15
-                                }}
-                                whileHover={{
-                                    y: -12,
-                                    scale: 1.02,
-                                    transition: { type: "spring", stiffness: 400, damping: 25 }
-                                }}
-                                className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-2xl border border-slate-200 transition-all cursor-pointer group"
+                                transition={{ delay: index * 0.1 }}
+                                whileHover={{ y: -8 }}
+                                onClick={() => setSelectedCourse(course)}
+                                className="group relative bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 cursor-pointer overflow-hidden"
                             >
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className={`w-14 h-14 rounded-xl ${course.color.replace('text', 'bg')}/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                                        <course.Icon className={`text-3xl ${course.color}`} />
+                                {/* Hover Gradient */}
+                                <div className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${course.color?.includes('purple') ? 'from-purple-500/5' :
+                                        course.color?.includes('blue') ? 'from-blue-500/5' :
+                                            'from-[#fca96d]/5'
+                                    } to-transparent`} />
+
+                                <div className="relative z-10">
+                                    <div className={`w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-slate-100`}>
+                                        {getIcon(course.icon, course.color)}
                                     </div>
-                                    <div className="flex items-center gap-1 bg-orange-50 px-2 py-1 rounded-md border border-orange-100">
-                                        <Star className="text-orange-400 w-4 h-4 fill-current" />
-                                        <span className="text-slate-700 font-bold text-sm">{course.rating}</span>
+
+                                    <div className="flex items-center gap-1 mb-3">
+                                        {[...Array(5)].map((_, i) => (
+                                            <Star key={i} size={10} className={i < Math.floor(course.rating) ? "text-[#fca96d] fill-[#fca96d]" : "text-slate-200"} />
+                                        ))}
+                                        <span className="text-[10px] font-black text-slate-400 ml-1 font-['Outfit']">{course.rating}</span>
                                     </div>
-                                </div>
 
-                                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-500 transition-colors">
-                                    {course.title}
-                                </h3>
-                                <p className="text-slate-500 text-sm mb-4 line-clamp-3">
-                                    {course.description}
-                                </p>
+                                    <h3 className="text-xl font-black text-slate-900 mb-3 tracking-tight font-['Outfit'] group-hover:text-[#fca96d] transition-colors">
+                                        {course.title}
+                                    </h3>
 
-                                <div className="flex items-center gap-4 text-slate-400 text-xs font-semibold uppercase tracking-wider mb-6">
-                                    <span className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4" /> {course.duration}
-                                    </span>
-                                </div>
+                                    <p className="text-slate-500 text-xs mb-6 line-clamp-2 leading-relaxed font-medium">
+                                        {course.description}
+                                    </p>
 
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {course.tags && course.tags.map((tag, i) => (
-                                        <span key={i} className="px-3 py-1 bg-slate-50 text-slate-600 text-xs font-semibold rounded-full border border-slate-100">
-                                            {tag}
+                                    <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                                        <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 font-['Outfit']">
+                                            <Clock size={12} className="text-[#fca96d]" /> {course.duration}
                                         </span>
-                                    ))}
-                                </div>
-
-                                <div className="flex items-center justify-between pt-6 border-t border-slate-100">
-                                    <div>
-                                        <span className="text-xs text-orange-600 font-bold bg-orange-50 px-2 py-1 rounded-full">
-                                            Admissions Open
-                                        </span>
+                                        <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:bg-[#fca96d] transition-all duration-300">
+                                            <ArrowRight size={14} />
+                                        </div>
                                     </div>
-                                    <button className="text-orange-500 font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                        View Details <ArrowRight size={16} />
-                                    </button>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
                 )}
 
-                <div className="text-center mt-16 mb-24">
+                {/* Modal Audit - Cleanup needed? Keep clean for now */}
+                <AnimatePresence>
+                    {selectedCourse && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md"
+                            onClick={() => setSelectedCourse(null)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                                className="bg-white rounded-[3rem] w-full max-w-4xl overflow-hidden relative shadow-2xl"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className="flex flex-col md:flex-row min-h-[500px]">
+                                    {/* Left Panel */}
+                                    <div className="md:w-[40%] bg-slate-50 p-12 border-r border-slate-100 flex flex-col justify-between">
+                                        <div>
+                                            <div className="w-20 h-20 rounded-3xl bg-white shadow-sm flex items-center justify-center mb-8 border border-slate-100">
+                                                {getIcon(selectedCourse.icon, `text-3xl ${selectedCourse.color}`)}
+                                            </div>
+                                            <h2 className="text-4xl font-black text-slate-900 mb-4 font-['Outfit'] tracking-tighter">{selectedCourse.title}</h2>
+                                            <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8">
+                                                {selectedCourse.description}
+                                            </p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {selectedCourse.tags?.map((tag, i) => (
+                                                    <span key={i} className="px-3 py-1 bg-white text-[10px] font-black uppercase tracking-widest text-slate-400 rounded-lg border border-slate-200">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => navigate('/student/signup')}
+                                            className="w-full mt-10 bg-slate-900 hover:bg-[#fca96d] text-white font-black text-[11px] uppercase tracking-[0.2em] py-5 rounded-2xl transition-all shadow-xl font-['Outfit']"
+                                        >
+                                            Enroll Now
+                                        </button>
+                                    </div>
+
+                                    {/* Right Panel */}
+                                    <div className="md:w-[60%] p-12 relative">
+                                        <button
+                                            onClick={() => setSelectedCourse(null)}
+                                            className="absolute top-8 right-8 w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors"
+                                        >
+                                            ✕
+                                        </button>
+
+                                        <div className="mb-10">
+                                            <h3 className="text-[10px] font-black text-[#fca96d] uppercase tracking-[0.4em] mb-8 font-['Outfit']">Curriculum Specs</h3>
+                                            <div className="space-y-6">
+                                                <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100 group hover:border-[#fca96d]/20 transition-all">
+                                                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#fca96d]">
+                                                        <Star size={20} fill="currentColor" />
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-black text-slate-900 text-sm mb-1 font-['Outfit']">In-School Immersion</h4>
+                                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                                                            {selectedCourse.deliveryDetails?.inSchool?.bootcamp || "Intensive 7-day technical bootcamp at campus."}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100 group hover:border-blue-200 transition-all">
+                                                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-blue-500">
+                                                        <Globe size={20} />
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-black text-slate-900 text-sm mb-1 font-['Outfit']">Global Support Network</h4>
+                                                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-3">
+                                                            <div className="text-[10px] font-black text-slate-400">1:1 Tutoring</div>
+                                                            <div className="text-[10px] font-black text-slate-400">24/7 Support</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-8 border-t border-slate-50">
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-['Outfit'] flex items-center gap-2">
+                                                <ShieldCheck size={14} className="text-emerald-500" /> Professional Certification Guaranteed
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* More Programs Button */}
+                <div className="text-center mt-20">
                     <button
                         onClick={() => navigate('/course')}
-                        className="px-8 py-3 rounded-full border-2 border-slate-200 text-slate-600 font-bold hover:border-orange-500 hover:text-orange-500 transition-all">
-                        View All Courses
+                        className="px-12 py-5 rounded-full bg-slate-900 text-white font-black uppercase text-[11px] tracking-[0.3em] hover:bg-[#fca96d] shadow-2xl shadow-slate-900/20 transition-all active:scale-95 font-['Outfit']"
+                    >
+                        Explore Curriculum Nodes
                     </button>
                 </div>
-
-                {/* Career Support Suite */}
-                <div className="bg-white rounded-3xl p-12 shadow-2xl border border-slate-100">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-black text-slate-900 mb-4">
-                            More than just <span className="text-orange-500">Courses</span>
-                        </h2>
-                        <p className="text-slate-500 text-sm max-w-xl mx-auto">
-                            We support your journey from learning to earning with our dedicated placement cell.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8 relative">
-                        {/* Connector Line (Desktop only) */}
-                        <div className="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-slate-100 z-0"></div>
-
-                        {[
-                            { title: "Resume Building", icon: "📄", desc: "Expert review to make your CV stand out." },
-                            { title: "Mock Interviews", icon: "🎙️", desc: "Practice with engineers from Amazon & Google." },
-                            { title: "Referral Network", icon: "🤝", desc: "Direct access to jobs in our 450+ hiring partners." }
-                        ].map((item, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: idx * 0.2, type: "spring", stiffness: 200 }}
-                                whileHover={{ y: -8, scale: 1.05 }}
-                                className="relative z-10 bg-white p-6 rounded-2xl text-center group transition-all"
-                            >
-                                <div className="w-24 h-24 mx-auto bg-slate-50 rounded-full flex items-center justify-center text-4xl mb-6 group-hover:bg-orange-50 transition-colors shadow-sm border border-slate-100 group-hover:shadow-md">
-                                    {item.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                                <p className="text-slate-500 text-sm whitespace-pre-wrap">{item.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -57,6 +57,18 @@ const courseSchema = new mongoose.Schema({
     duration: {
         type: String, // e.g., "8 weeks", "3 months"
     },
+    deliveryDetails: {
+        inSchool: {
+            bootcamp: String, // e.g., "7 Days Bootcamp"
+            postBootcamp: String // e.g., "Willing students join with paid subscription"
+        },
+        online: {
+            tutor: String, // e.g., "1:1 tutor for doubts"
+            lectures: String, // e.g., "Video lectures"
+            chatSupport: String, // e.g., "After class chat support"
+            reporting: String // e.g., "Weekly progress report PTM"
+        }
+    },
     isActive: {
         type: Boolean,
         default: true

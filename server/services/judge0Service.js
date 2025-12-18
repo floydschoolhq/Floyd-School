@@ -9,10 +9,12 @@ class Judge0Service {
 
     async submitCode(sourceCode, languageId, stdin = '', expectedOutput = '') {
         try {
+            const encode = (str) => str ? Buffer.from(str).toString('base64') : '';
+
             const options = {
                 method: 'POST',
                 url: `${this.baseURL}/submissions`,
-                params: { base64_encoded: 'false', wait: 'false' },
+                params: { base64_encoded: 'true', wait: 'false' },
                 headers: {
                     'content-type': 'application/json',
                     'X-RapidAPI-Key': this.apiKey,
@@ -20,9 +22,9 @@ class Judge0Service {
                 },
                 data: {
                     language_id: languageId,
-                    source_code: sourceCode,
-                    stdin: stdin,
-                    expected_output: expectedOutput
+                    source_code: encode(sourceCode),
+                    stdin: encode(stdin),
+                    expected_output: encode(expectedOutput)
                 }
             };
 
@@ -39,7 +41,7 @@ class Judge0Service {
             const options = {
                 method: 'GET',
                 url: `${this.baseURL}/submissions/${token}`,
-                params: { base64_encoded: 'false' },
+                params: { base64_encoded: 'true' },
                 headers: {
                     'X-RapidAPI-Key': this.apiKey,
                     'X-RapidAPI-Host': this.host
@@ -47,7 +49,17 @@ class Judge0Service {
             };
 
             const response = await axios.request(options);
-            return response.data;
+            const data = response.data;
+
+            const decode = (str) => str ? Buffer.from(str, 'base64').toString('utf-8') : null;
+
+            return {
+                ...data,
+                stdout: decode(data.stdout),
+                stderr: decode(data.stderr),
+                compile_output: decode(data.compile_output),
+                message: decode(data.message)
+            };
         } catch (error) {
             console.error('Judge0 get submission error:', error.response?.data || error.message);
             throw new Error('Failed to get submission status');

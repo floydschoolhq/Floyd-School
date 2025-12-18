@@ -4,8 +4,17 @@ const Notification = require('../models/Notification');
 // Get all courses (filtered by role)
 exports.getCourses = async (req, res) => {
     try {
-        const { role, _id } = req.user;
         let courses;
+
+        // If user is not authenticated, return all active courses (public view)
+        if (!req.user) {
+            courses = await Course.find({ isActive: true })
+                .populate('instructor', 'name email')
+                .select('-__v');
+            return res.json(courses);
+        }
+
+        const { role, _id } = req.user;
 
         if (role === 'student') {
             // Students see courses they're enrolled in or can enroll

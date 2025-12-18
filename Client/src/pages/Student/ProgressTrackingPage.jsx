@@ -26,8 +26,8 @@ const ProgressTrackingPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="text-slate-900 text-xl font-black animate-pulse">Mapping Growth Trajectory...</div>
       </div>
     );
   }
@@ -37,24 +37,24 @@ const ProgressTrackingPage = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
+    <div className="min-h-screen bg-slate-50 p-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 font-['Inter']"
       >
-        <h1 className="text-4xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-600">
-          Student Progress Tracking
+        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
+          Learning <span className="text-[#fca96d]">Journey</span>
         </h1>
-        <p className="text-slate-400">Monitor your learning journey and achievements</p>
+        <p className="text-sm font-medium text-slate-500">Comprehensive overview of your academic trajectory and milestones.</p>
       </motion.div>
 
       {/* Progress Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <GradientCard gradient="from-teal-500 via-cyan-500 to-blue-500">
-          <div className="flex flex-col items-center text-center">
-            <h3 className="text-lg font-semibold text-white mb-4">Module Completion</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        <GradientCard gradient="from-teal-500 to-cyan-600">
+          <div className="flex flex-col items-center text-center font-['Inter']">
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-teal-600 mb-6 font-['Outfit']">Curriculum Integrity</h3>
             <ProgressChart
               progress={dashboardData?.overallProgress || 0}
               subtitle={`${dashboardData?.completedModules || 0} of ${dashboardData?.totalModules || 0} modules`}
@@ -63,36 +63,41 @@ const ProgressTrackingPage = () => {
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-blue-500 via-indigo-500 to-purple-500">
-          <div className="flex flex-col items-center text-center">
-            <h3 className="text-lg font-semibold text-white mb-4">Average Score</h3>
+        <GradientCard gradient="from-blue-500 to-indigo-600">
+          <div className="flex flex-col items-center text-center py-6 font-['Inter']">
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#fca96d] mb-8 font-['Outfit']">Average Grade Point</h3>
             <div className="mb-4">
-              <span className="text-6xl font-extrabold text-white">{avgScore}%</span>
+              <span className="text-7xl font-black text-slate-900 tracking-tighter font-['Outfit']">{avgScore}%</span>
             </div>
-            <p className="text-sm text-white/70">
-              Based on {dashboardData?.submissions?.length || 0} graded assignments
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-4 px-4 py-1 bg-slate-50 rounded-full border border-slate-100">
+              Verified across {dashboardData?.submissions?.length || 0} Assessments
             </p>
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-green-500 via-emerald-500 to-teal-500">
-          <div className="flex flex-col items-center text-center">
-            <h3 className="text-lg font-semibold text-white mb-4">Enrolled Courses</h3>
+        <GradientCard gradient="from-emerald-500 to-teal-500">
+          <div className="flex flex-col items-center text-center py-6 font-['Inter']">
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-8 font-['Outfit']">Active Tracks</h3>
             <div className="mb-4">
-              <span className="text-6xl font-extrabold text-white">{dashboardData?.totalCourses || 0}</span>
+              <span className="text-7xl font-black text-slate-900 tracking-tighter font-['Outfit']">{dashboardData?.totalCourses || 0}</span>
             </div>
-            <p className="text-sm text-white/70">
-              Active learning paths
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-4 px-4 py-1 bg-slate-50 rounded-full border border-slate-100">
+              Proprietary learning paths
             </p>
           </div>
         </GradientCard>
       </div>
 
       {/* Detailed Progress Overview */}
-      <div>
-        <h2 className="text-2xl font-bold text-white mb-4">Detailed Progress Overview</h2>
-        <GradientCard gradient="from-purple-500 via-pink-500 to-rose-500">
-          <div className="space-y-6">
+      <div className="font-['Inter']">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+          <div className="p-2 bg-[#fca96d]/10 rounded-lg text-[#fca96d]">
+            <TrendingUp className="w-5 h-5" />
+          </div>
+          Granular Module Tracking
+        </h2>
+        <GradientCard gradient="from-purple-500 to-rose-500">
+          <div className="space-y-8">
             {/* Course Progress Bars */}
             {dashboardData?.courses && dashboardData.courses.length > 0 ? (
               dashboardData.courses.map((course, index) => {
@@ -104,25 +109,25 @@ const ProgressTrackingPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-white font-medium">{course.title}</span>
-                      <span className="text-sky-400 font-bold">{progress}%</span>
+                    <div className="flex items-center justify-between mb-3 font-['Outfit']">
+                      <span className="text-sm font-black text-slate-900 tracking-tight">{course.title}</span>
+                      <span className="text-sm font-black text-[#fca96d]">{progress}%</span>
                     </div>
-                    <div className="w-full bg-slate-700 rounded-full h-3">
+                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                         transition={{ duration: 1, delay: index * 0.1 }}
-                        className="bg-gradient-to-r from-sky-400 to-blue-600 h-3 rounded-full"
+                        className="bg-gradient-to-r from-[#fca96d] to-orange-500 h-full rounded-full"
                       />
                     </div>
                   </motion.div>
                 );
               })
             ) : (
-              <div className="text-center py-12 text-white/70">
-                <Target className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <p>No courses enrolled yet</p>
+              <div className="text-center py-12 text-slate-400">
+                <Target className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                <p className="font-medium italic">No curriculum data available.</p>
               </div>
             )}
           </div>

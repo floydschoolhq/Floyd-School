@@ -2,6 +2,10 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const http = require('http');
+
+// Load env variables first
+dotenv.config();
+
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
@@ -11,8 +15,6 @@ const assignmentRoutes = require('./routes/assignmentRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const codeExecutionRoutes = require('./routes/codeExecutionRoutes');
 const leadRoutes = require('./routes/leadRoutes');
-
-dotenv.config();
 
 connectDB();
 
@@ -49,6 +51,7 @@ app.use('/api/assignments', assignmentRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/code', codeExecutionRoutes);
 app.use('/api/leads', leadRoutes);
+app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/why-us', require('./routes/whyUsRoutes'));
