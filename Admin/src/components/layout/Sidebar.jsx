@@ -8,7 +8,9 @@ import {
     Settings,
     LogOut,
     Bell,
-    Cpu
+    Cpu,
+    BookOpen,
+    Target
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -18,8 +20,9 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <Activity size={20} />, label: 'Analytics', path: '/' },
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
-        { icon: <ShieldCheck size={20} />, label: 'Security Logs', path: '/logs' },
-        { icon: <Bell size={20} />, label: 'Global Notifications', path: '/notifications' },
+        { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
+        { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
+        { icon: <Bell size={20} />, label: 'Broadcast', path: '/notifications' },
     ];
 
     return (

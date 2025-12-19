@@ -6,6 +6,9 @@ import MainLayout from './components/layout/MainLayout';
 import Login from './pages/Login';
 import PlatformAnalytics from './pages/PlatformAnalytics';
 import UserGovernance from './pages/UserGovernance';
+import CourseGovernance from './pages/CourseGovernance';
+import LeadIntelligence from './pages/LeadIntelligence';
+import GlobalNotifications from './pages/GlobalNotifications';
 
 // Placeholder for pages
 const Placeholder = ({ title }) => (
@@ -30,6 +33,12 @@ const Shield = ({ size, className }) => (
   </svg>
 );
 
+import CourseGovernance from './pages/CourseGovernance';
+import LeadIntelligence from './pages/LeadIntelligence';
+import GlobalNotifications from './pages/GlobalNotifications';
+
+// ... (keep Placeholder and Shield components if you want, or remove if unused, but tool requires exact replacement or careful chunking. I'll insert imports first then replace routes)
+
 function App() {
   return (
     <Router>
@@ -44,8 +53,9 @@ function App() {
           }>
             <Route index element={<PlatformAnalytics />} />
             <Route path="users" element={<UserGovernance />} />
-            <Route path="logs" element={<Placeholder title="Security Protocol Logs" />} />
-            <Route path="notifications" element={<Placeholder title="Global Broadcast" />} />
+            <Route path="courses" element={<CourseGovernance />} />
+            <Route path="leads" element={<LeadIntelligence />} />
+            <Route path="notifications" element={<GlobalNotifications />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

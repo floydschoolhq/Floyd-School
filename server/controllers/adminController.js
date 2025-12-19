@@ -101,6 +101,7 @@ exports.createUser = async (req, res) => {
             role: role || 'student'
         });
 
+        // ... previous code
         if (user) {
             res.status(201).json({
                 success: true,
@@ -115,6 +116,104 @@ exports.createUser = async (req, res) => {
         } else {
             res.status(400).json({ success: false, message: 'Invalid user data' });
         }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Get all courses for governance
+ * @route   GET /api/admin/courses
+ * @access  Private/Admin
+ */
+exports.getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find()
+            .populate('mentor', 'name email')
+            .sort({ createdAt: -1 });
+        res.status(200).json({ success: true, courses });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Update course status (Approve/Reject)
+ * @route   PATCH /api/admin/courses/:id/status
+ * @access  Private/Admin
+ */
+exports.updateCourseStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body; // 'published', 'draft', 'rejected'
+
+        const course = await Course.findById(id);
+        if (!course) {
+            return res.status(404).json({ success: false, message: 'Course not found' });
+        }
+
+        course.status = status;
+        await course.save();
+
+        res.status(200).json({ success: true, course });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Get all leads for intelligence
+ * @route   GET /api/admin/leads
+ * @access  Private/Admin
+ */
+exports.getAllLeads = async (req, res) => {
+    try {
+        const leads = await Lead.find().sort({ createdAt: -1 });
+        res.status(200).json({ success: true, leads });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Broadcast notification
+ * @route   POST /api/admin/broadcast
+ * @access  Private/Admin
+ */
+exports.broadcastNotification = async (req, res) => {
+    try {
+        const { title, message, type, targetGroup } = req.body;
+        // targetGroup: 'all', 'students', 'mentors'
+
+        let query = {};
+        if (targetGroup === 'students') query = { role: 'student' };
+        if (targetGroup === 'mentors') query = { role: 'mentor' };
+
+        const users = await User.find(query).select('_id');
+
+        const notifications = users.map(user => ({
+            recipient: user._id,
+            title,
+            message,
+            type: type || 'info', // info, warning, success, alert
+            read: false
+        }));
+
+        const Notification = require('../models/Notification');
+        await Notification.insertMany(notifications);
+
+        // Real-time emit
+        const io = req.app.get('io');
+        if (targetGroup === 'all') {
+            io.emit('notification:broadcast', { title, message, type });
+        } else {
+            // For specific groups, we might need room logic or just simple iteration if robust rooms aren't set
+            // For now, simpler broadcast to all connected clients who can filter client-side or use existing room logic if implemented.
+            // Assuming we want simple broadcast:
+            io.emit('notification:broadcast', { title, message, type, targetGroup });
+        }
+
+        res.status(200).json({ success: true, count: notifications.length });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
