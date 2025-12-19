@@ -38,11 +38,24 @@ const PlatformAnalytics = () => {
         { key: 'openTickets', label: 'Pending Support', growth: '-5%', icon: <Zap size={24} />, color: 'indigo' },
     ];
 
-    const recentEvents = [
-        { id: 1, type: 'Security', event: 'Brute force attempt blocked from 192.168.1.1', time: '2m ago', severity: 'High' },
-        { id: 2, type: 'Growth', event: 'New Mentor application received', time: '14m ago', severity: 'Info' },
-        { id: 3, type: 'System', event: 'Automated database backup completed', time: '1h ago', severity: 'Low' },
-    ];
+    // Helper to format time (e.g. "2m ago")
+    const formatTimeAgo = (dateString) => {
+        const date = new Date(dateString);
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
+
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + "y ago";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + "mo ago";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + "d ago";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + "h ago";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + "m ago";
+        return Math.floor(seconds) + "s ago";
+    };
 
     if (loading) return (
         <div className="flex items-center justify-center h-full">
@@ -52,6 +65,7 @@ const PlatformAnalytics = () => {
 
     return (
         <div className="space-y-10">
+            {/* ... header ... */}
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
@@ -130,19 +144,21 @@ const PlatformAnalytics = () => {
                             <span className="w-2 h-2 bg-sky-500 rounded-full animate-ping"></span>
                         </h3>
                         <div className="space-y-6">
-                            {recentEvents.map((ev) => (
-                                <div key={ev.id} className="flex gap-4">
+                            {stats.recentEvents?.length > 0 ? stats.recentEvents.map((ev, i) => (
+                                <div key={i} className="flex gap-4">
                                     <div className={`mt-1 w-1.5 h-1.5 rounded-full shrink-0 ${ev.severity === 'High' ? 'bg-rose-500' : ev.severity === 'Info' ? 'bg-sky-500' : 'bg-slate-600'
                                         }`}></div>
                                     <div className="space-y-1">
                                         <p className="text-xs font-bold text-slate-300 leading-tight">{ev.event}</p>
                                         <div className="flex items-center gap-3">
                                             <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">{ev.type}</span>
-                                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">• {ev.time}</span>
+                                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">• {formatTimeAgo(ev.time)}</span>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            )) : (
+                                <p className="text-xs text-slate-500 font-bold">No recent telemetry available.</p>
+                            )}
                         </div>
                     </div>
                 </div>

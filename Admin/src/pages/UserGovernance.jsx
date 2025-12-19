@@ -274,11 +274,16 @@ const UserGovernance = () => {
                                                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
                                                 : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'
                                                 }`}
+                                            title={user.isActive !== false ? "Suspend Node" : "Activate Node"}
                                         >
                                             {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
                                         </button>
-                                        <button className="p-3 bg-slate-800 rounded-xl text-white hover:bg-sky-500 hover:text-slate-950 transition-all">
-                                            <MoreHorizontal size={18} />
+                                        <button
+                                            onClick={() => deleteUser(user._id)}
+                                            className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-transparent hover:border-rose-500/30"
+                                            title="Terminate Node Permanently"
+                                        >
+                                            <Trash2 size={18} />
                                         </button>
                                     </div>
                                 </td>

@@ -5,6 +5,7 @@ const {
     listUsers,
     updateUserStatus,
     createUser,
+    deleteUser, // Import this
     getAllCourses,
     updateCourseStatus,
     getAllLeads,
@@ -18,6 +19,7 @@ router.use(adminOnly);
 router.get('/stats', getPlatformStats);
 router.get('/users', listUsers);
 router.patch('/users/:id/status', updateUserStatus);
+router.delete('/users/:id', deleteUser); // New route
 router.post('/users', createUser);
 
 // New Routes

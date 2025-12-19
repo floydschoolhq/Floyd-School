@@ -20,6 +20,28 @@ exports.getPlatformStats = async (req, res) => {
 
         const openTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
 
+        // Fetch recent activity
+        const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt');
+        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('mentor', 'name').select('title status createdAt');
+
+        // Normalize events
+        const events = [
+            ...recentUsers.map(u => ({
+                id: u._id,
+                type: 'Growth',
+                event: `New ${u.role} joined: ${u.name}`,
+                time: u.createdAt,
+                severity: 'Info'
+            })),
+            ...recentCourses.map(c => ({
+                id: c._id,
+                type: 'System',
+                event: `Course ${c.status}: ${c.title}`,
+                time: c.createdAt,
+                severity: 'Low'
+            }))
+        ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
+
         res.status(200).json({
             success: true,
             stats: {
@@ -30,7 +52,8 @@ exports.getPlatformStats = async (req, res) => {
                 activeCourses,
                 totalLeads,
                 openTickets,
-                revenue: 124500 // Mock for now
+                revenue: 124500, // Keep mock for now
+                recentEvents: events
             }
         });
     } catch (error) {

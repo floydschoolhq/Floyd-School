@@ -129,7 +129,11 @@ const CourseGovernance = () => {
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <button className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:text-white transition-colors">
+                                <button
+                                    onClick={() => window.open('https://thinkskool-9kaq.vercel.app', '_blank')}
+                                    className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:text-white transition-colors"
+                                    title="Preview in Student Panel"
+                                >
                                     <Eye size={18} />
                                 </button>
                                 {course.status !== 'published' && (
