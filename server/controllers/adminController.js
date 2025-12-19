@@ -77,3 +77,45 @@ exports.updateUserStatus = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+/**
+ * @desc    Create a new user (admin only)
+ * @route   POST /api/admin/users
+ * @access  Private/Admin
+ */
+exports.createUser = async (req, res) => {
+    try {
+        const { name, email, password, role } = req.body;
+
+        // Check if user exists
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ success: false, message: 'User already exists' });
+        }
+
+        // Create user
+        const user = await User.create({
+            name,
+            email,
+            password,
+            role: role || 'student'
+        });
+
+        if (user) {
+            res.status(201).json({
+                success: true,
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    isActive: user.isActive
+                }
+            });
+        } else {
+            res.status(400).json({ success: false, message: 'Invalid user data' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

@@ -23,6 +23,14 @@ const UserGovernance = () => {
     const [activeTab, setActiveTab] = useState('student'); // Backend role names
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        role: 'mentor'
+    });
+
     const fetchUsers = async () => {
         try {
             const res = await api.get('/admin/users');
@@ -47,6 +55,19 @@ const UserGovernance = () => {
         }
     };
 
+    const handleCreateUser = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post('/admin/users', formData);
+            setShowModal(false);
+            setFormData({ name: '', email: '', password: '', role: 'mentor' });
+            fetchUsers();
+            alert('Node created successfully.');
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to create node');
+        }
+    };
+
     const filteredUsers = users.filter(user =>
         user.role === activeTab &&
         (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,7 +81,92 @@ const UserGovernance = () => {
     );
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-10 relative">
+            {/* Modal Overlay */}
+            <AnimatePresence>
+                {showModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-md shadow-2xl relative"
+                        >
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
+                            >
+                                <XCircle size={24} />
+                            </button>
+
+                            <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tight">
+                                Initialize New <span className="text-sky-500">Node</span>
+                            </h3>
+
+                            <form onSubmit={handleCreateUser} className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Identity Name</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.name}
+                                        onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
+                                        placeholder="Dr. Strange"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email Protocol</label>
+                                    <input
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
+                                        placeholder="strange@multiverse.io"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Secure Key</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={formData.password}
+                                        onChange={e => setFormData({ ...formData, password: e.target.value })}
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
+                                        placeholder="••••••••"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Role Assignment</label>
+                                    <select
+                                        value={formData.role}
+                                        onChange={e => setFormData({ ...formData, role: e.target.value })}
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors appearance-none"
+                                    >
+                                        <option value="mentor">Mentor</option>
+                                        <option value="growth_associate">Growth Associate</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    className="w-full py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-sky-500/20 mt-6"
+                                >
+                                    Initialize Node
+                                </button>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
@@ -76,8 +182,8 @@ const UserGovernance = () => {
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab
-                                    ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
-                                    : 'text-slate-500 hover:text-white'
+                                ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
+                                : 'text-slate-500 hover:text-white'
                                 }`}
                         >
                             {tab.replace('_', ' ')}
@@ -98,6 +204,13 @@ const UserGovernance = () => {
                         className="w-full bg-slate-950 border border-slate-800 p-4 pl-14 rounded-2xl text-sm font-bold text-white outline-none focus:border-sky-500/30 transition-all placeholder:text-slate-700"
                     />
                 </div>
+                <button
+                    onClick={() => setShowModal(true)}
+                    className="px-8 py-4 bg-white text-slate-950 font-black uppercase tracking-widest rounded-2xl hover:bg-sky-500 transition-all flex items-center gap-3 shadow-xl"
+                >
+                    <Users size={20} />
+                    Add Node
+                </button>
             </div>
 
             {/* Table */}
@@ -158,8 +271,8 @@ const UserGovernance = () => {
                                         <button
                                             onClick={() => toggleUserStatus(user._id, user.isActive !== false)}
                                             className={`p-3 rounded-xl border transition-all ${user.isActive === false
-                                                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
-                                                    : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'
+                                                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
+                                                : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'
                                                 }`}
                                         >
                                             {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
