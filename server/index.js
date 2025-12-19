@@ -75,6 +75,7 @@ app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/growth', require('./routes/growthRoutes'));
 app.use('/api/support', require('./routes/supportRoutes'));
 app.use('/api/comments', require('./routes/commentRoutes'));
 app.use('/api/why-us', require('./routes/whyUsRoutes'));

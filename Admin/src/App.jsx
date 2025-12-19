@@ -9,6 +9,7 @@ import UserGovernance from './pages/UserGovernance';
 import CourseGovernance from './pages/CourseGovernance';
 import LeadIntelligence from './pages/LeadIntelligence';
 import GlobalNotifications from './pages/GlobalNotifications';
+import SecurityLogs from './pages/SecurityLogs';
 
 // Placeholder for pages
 const Placeholder = ({ title }) => (
@@ -56,6 +57,7 @@ function App() {
             <Route path="courses" element={<CourseGovernance />} />
             <Route path="leads" element={<LeadIntelligence />} />
             <Route path="notifications" element={<GlobalNotifications />} />
+            <Route path="logs" element={<SecurityLogs />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Lead = require('../models/Lead');
+const SystemLog = require('../models/SystemLog');
 const SupportTicket = require('../models/SupportTicket');
 
 /**

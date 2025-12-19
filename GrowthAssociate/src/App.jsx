@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import SupportHub from './pages/SupportHub';
 import DiscussionModeration from './pages/DiscussionModeration';
+import StudentList from './pages/StudentList';
+import Escalations from './pages/Escalations';
 
 // Placeholder for pages
 const Placeholder = ({ title }) => (
@@ -37,8 +39,8 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="support" element={<SupportHub />} />
             <Route path="discussions" element={<DiscussionModeration />} />
-            <Route path="students" element={<Placeholder title="Student Registry" />} />
-            <Route path="escalations" element={<Placeholder title="Issue Escalation" />} />
+            <Route path="students" element={<StudentList />} />
+            <Route path="escalations" element={<Escalations />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
