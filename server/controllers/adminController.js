@@ -20,6 +20,15 @@ exports.getPlatformStats = async (req, res) => {
 
         const openTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
 
+        // Calculate Total Enrollments
+        const allCourses = await Course.find().select('enrolledStudents');
+        const totalEnrollments = allCourses.reduce((sum, course) => sum + course.enrolledStudents.length, 0);
+
+        // Calculate New Signups (Last 7 Days)
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const newSignups = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } });
+
         // Fetch recent activity
         const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt');
         const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('mentor', 'name').select('title status createdAt');
@@ -52,7 +61,8 @@ exports.getPlatformStats = async (req, res) => {
                 activeCourses,
                 totalLeads,
                 openTickets,
-                revenue: 124500, // Keep mock for now
+                totalEnrollments,
+                newSignups,
                 recentEvents: events
             }
         });

@@ -12,6 +12,8 @@ import Marque from './components/Marque';
 import PremiumNavbar from './components/PremiumNavbar';
 
 
+import GlobalNotificationListener from './components/GlobalNotificationListener';
+
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import StudentSignupPage from './pages/Student/StudentSignupPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
@@ -45,6 +47,7 @@ import StudentEcosystem from './components/StudentEcosystem.jsx';
 const HomePage = () => {
     return (
         <div>
+            <GlobalNotificationListener />
             {/* Premium Navbar */}
             <PremiumNavbar />
 

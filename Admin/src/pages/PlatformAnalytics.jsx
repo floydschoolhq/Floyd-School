@@ -33,7 +33,7 @@ const PlatformAnalytics = () => {
 
     const statConfig = [
         { key: 'totalUsers', label: 'Total Users', growth: '+12%', icon: <Users size={24} />, color: 'sky' },
-        { key: 'revenue', label: 'Platform Revenue', growth: '+8%', icon: <DollarSign size={24} />, color: 'emerald', prefix: '$' },
+        { key: 'totalEnrollments', label: 'Total Enrollments', growth: '+8%', icon: <DollarSign size={24} />, color: 'emerald', prefix: '' },
         { key: 'totalStudents', label: 'Active Students', growth: '+24%', icon: <Activity size={24} />, color: 'amber' },
         { key: 'openTickets', label: 'Pending Support', growth: '-5%', icon: <Zap size={24} />, color: 'indigo' },
     ];
@@ -80,8 +80,8 @@ const PlatformAnalytics = () => {
                     <div className="bg-slate-900 border border-slate-800 p-3 rounded-2xl flex items-center gap-3">
                         <Globe size={18} className="text-sky-500" />
                         <div className="text-right">
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Global Nodes</p>
-                            <p className="text-sm font-black text-white">12 Locations</p>
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">System Status</p>
+                            <p className="text-sm font-black text-emerald-500">ONLINE</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ const PlatformAnalytics = () => {
                     <div className="flex items-center justify-between mb-10">
                         <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-3">
                             <TrendingUp className="text-sky-400" />
-                            Growth Velocity
+                            New Signups (7d): <span className="text-white">{stats.newSignups}</span>
                         </h3>
                     </div>
 

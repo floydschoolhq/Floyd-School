@@ -13,6 +13,7 @@ import StudentLeads from './pages/StudentLeads';
 import AssignmentGrading from './pages/AssignmentGrading';
 import StudentRoster from './pages/StudentRoster';
 import SupportTickets from './pages/SupportTickets';
+import GlobalNotificationListener from './components/GlobalNotificationListener';
 
 // Placeholder for other pages
 const Placeholder = ({ title }) => (
@@ -31,6 +32,7 @@ function App() {
       <AuthProvider>
         <ToastProvider>
           <SocketProvider>
+            <GlobalNotificationListener />
             <Routes>
               <Route path="/login" element={<Login />} />
 
