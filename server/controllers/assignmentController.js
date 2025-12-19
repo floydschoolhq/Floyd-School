@@ -200,7 +200,7 @@ exports.getSubmissions = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Assignment node not found' });
         }
 
-        if (assignment.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'school-admin') {
+        if (assignment.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
             return res.status(403).json({ success: false, message: 'Not authorized for this retrieval' });
         }
 

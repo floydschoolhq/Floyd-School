@@ -9,6 +9,11 @@ exports.startLiveClass = async (req, res) => {
     try {
         const { title, topic, meetingLink } = req.body;
 
+        // Basic validation
+        if (!title || !topic || !meetingLink) {
+            return res.status(400).json({ message: 'Please provide all fields' });
+        }
+
         // Check for already active class by this mentor
         const activeClass = await LiveClass.findOne({ mentor: req.user._id, status: 'active' });
         if (activeClass) {
@@ -37,7 +42,7 @@ exports.startLiveClass = async (req, res) => {
                 recipient: student._id,
                 type: 'live_class_started',
                 title: 'Live Class Started!',
-                message: `${req.user.name} has started a live class: ${title}`,
+                message: `${req.user.name} has started a live class: ${title} `,
                 relatedId: liveClass._id,
                 relatedModel: null
             }, io);

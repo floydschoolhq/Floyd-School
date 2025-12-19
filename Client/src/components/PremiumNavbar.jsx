@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
+import NotificationDropdown from './common/NotificationDropdown';
 
 const PremiumNavbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -123,6 +124,7 @@ const PremiumNavbar = () => {
 
                         {/* Right Actions */}
                         <div className="hidden md:flex items-center gap-4">
+                            <NotificationDropdown />
                             <button
                                 onClick={handleBookSession}
                                 className="px-5 py-2 text-[10px] font-black text-white bg-slate-900 rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"

@@ -23,6 +23,11 @@ const assignmentSchema = new mongoose.Schema({
         type: Number,
         default: 100
     },
+    category: {
+        type: String,
+        enum: ['Development', 'Algorithms', 'Database', 'Debugging', 'System Design'],
+        default: 'Development'
+    },
     status: {
         type: String,
         enum: ['draft', 'published', 'closed'],

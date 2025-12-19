@@ -8,6 +8,7 @@ import api from '../../api/axios';
 const PerformanceReportPage = () => {
   const [submissions, setSubmissions] = useState([]);
   const [stats, setStats] = useState({});
+  const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,19 +20,13 @@ const PerformanceReportPage = () => {
       const response = await api.get('/dashboard/student');
       setSubmissions(response.data.submissions || []);
       setStats(response.data.stats || {});
+      setSkills(response.data.skillMatrix || []);
     } catch (error) {
       console.error('Failed to fetch performance data:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  const skills = [
-    { name: 'Algorithms', score: 95 },
-    { name: 'Debugging', score: 85 },
-    { name: 'JavaScript', score: 75 },
-    { name: 'Database', score: 65 }
-  ];
 
   if (loading) {
     return (

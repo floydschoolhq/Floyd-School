@@ -1,4 +1,4 @@
-import { BarChart, BookOpen, ClipboardCheck, Code, LayoutDashboard, Video, X } from "lucide-react";
+import { BarChart, BookOpen, ClipboardCheck, Code, LayoutDashboard, Video, X, LifeBuoy } from "lucide-react";
 import { useContext } from "react";
 import { PortalContext } from "../Context/PortalProvider";
 import { NavLink } from "./SharedComponentStudent";
@@ -15,6 +15,7 @@ const StudentSidebar = () => {
     { icon: Video, title: 'Recordings', view: 'Recordings' },
     { icon: BarChart, title: 'Progress Tracking', view: 'ProgressTracking' },
     { icon: ClipboardCheck, title: 'Performance Reports', view: 'PerformanceReport' },
+    { icon: LifeBuoy, title: 'Concierge Support', view: 'Support' },
   ];
 
   return (

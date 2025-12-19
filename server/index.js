@@ -16,15 +16,25 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const codeExecutionRoutes = require('./routes/codeExecutionRoutes');
 const leadRoutes = require('./routes/leadRoutes');
 const liveClassRoutes = require('./routes/liveClassRoutes');
+const doubtRoutes = require('./routes/doubtRoutes');
 
 connectDB();
 
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = [
+    'http://localhost:5173', // Client
+    'http://localhost:5174', // Admin
+    'http://localhost:5175', // Mentor
+    'http://localhost:5176', // GrowthAssociate
+    'http://localhost:5177',
+    'http://localhost:3000'
+];
+
 const io = new Server(server, {
     cors: {
-        origin: process.env.FRONTEND_URL || "*",
+        origin: allowedOrigins,
         methods: ["GET", "POST"],
         credentials: true,
         allowedHeaders: ["Authorization", "Content-Type", "Origin"],
@@ -34,14 +44,15 @@ const io = new Server(server, {
 // Make io accessible in routes
 app.set('io', io);
 
-app.use(cors(
-    {
-        origin: process.env.FRONTEND_URL || "*",
-        methods: ["GET", "POST"],
-        credentials: true,
-        allowedHeaders: ["Authorization", "Content-Type", "Origin"],
-    }
-));
+// CORS configuration for Express
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept"],
+    optionsSuccessStatus: 200
+}));
+
 app.use(express.json());
 
 // Routes
@@ -55,8 +66,13 @@ app.use('/api/leads', leadRoutes);
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/support', require('./routes/supportRoutes'));
+app.use('/api/comments', require('./routes/commentRoutes'));
 app.use('/api/why-us', require('./routes/whyUsRoutes'));
 app.use('/api/live-classes', liveClassRoutes);
+app.use('/api/live-chat', require('./routes/liveChatRoutes'));
+app.use('/api/doubts', doubtRoutes);
 
 app.get('/', (req, res) => {
     res.send('ThinkSkool API is running');
@@ -85,8 +101,38 @@ io.on('connection', (socket) => {
         io.emit('course:updated', data);
     });
 
+    // Handle student live class tracking
+    socket.on('liveClass:join', (classId) => {
+        socket.join(`liveClass:${classId}`);
+        io.to(`liveClass:${classId}`).emit('liveClass:countUpdate', {
+            classId,
+            count: io.sockets.adapter.rooms.get(`liveClass:${classId}`)?.size || 0
+        });
+    });
+
     socket.on('disconnect', () => {
+        // Automatically update counts for all rooms this socket was in
+        socket.rooms.forEach(room => {
+            if (room.startsWith('liveClass:')) {
+                const classId = room.split(':')[1];
+                setTimeout(() => {
+                    io.to(room).emit('liveClass:countUpdate', {
+                        classId,
+                        count: io.sockets.adapter.rooms.get(room)?.size || 0
+                    });
+                }, 100);
+            }
+        });
         console.log('Client disconnected', socket.id);
+    });
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error('SERVER ERROR:', err.stack);
+    res.status(500).json({
+        message: 'Internal Server Error',
+        error: process.env.NODE_ENV === 'development' ? err.message : {}
     });
 });
 
@@ -94,4 +140,6 @@ const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`);
 });
+

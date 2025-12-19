@@ -18,6 +18,7 @@ const courseSchema = new mongoose.Schema({
     modules: [{
         title: String,
         description: String,
+        videoUrl: String, // YouTube Link
         order: Number,
         completed: {
             type: Boolean,
@@ -30,7 +31,7 @@ const courseSchema = new mongoose.Schema({
     }],
     category: {
         type: String,
-        enum: ['AI', 'Robotics', 'Coding', 'Web Development', 'Data Science', 'Other'],
+        enum: ['AI', 'Robotics', 'AI & Robotics', 'Coding', 'Web Development', 'Data Science', 'Other'],
         default: 'Other'
     },
     // UI Fields

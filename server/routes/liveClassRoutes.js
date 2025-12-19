@@ -6,12 +6,13 @@ const {
     getActiveLiveClass
 } = require('../controllers/liveClassController');
 const { protect, authorize } = require('../middleware/authMiddleware');
+const { validate, schemas } = require('../middleware/validationMiddleware');
 
 // Student & Mentor can see active classes
 router.get('/active', protect, getActiveLiveClass);
 
 // Only Mentors can start/end classes
-router.post('/start', protect, authorize('mentor', 'admin'), startLiveClass);
+router.post('/start', protect, authorize('mentor', 'admin'), validate(schemas.liveClass), startLiveClass);
 router.put('/:id/end', protect, authorize('mentor', 'admin'), endLiveClass);
 
 module.exports = router;

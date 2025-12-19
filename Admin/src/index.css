@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --grid-template-columns-stats: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@layer base {
+  body {
+    @apply bg-[#0f172a] text-slate-200 font-sans antialiased;
+  }
+}
+
+:root {
+  --primary: #38bdf8;
+  /* sky-400 */
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 rounded-full hover:bg-sky-500 transition-colors;
+}

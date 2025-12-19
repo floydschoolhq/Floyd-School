@@ -94,7 +94,7 @@ exports.updateCourse = async (req, res) => {
         }
 
         // Check if user is instructor or admin
-        if (course.instructor.toString() !== req.user._id.toString() && req.user.role !== 'school-admin') {
+        if (course.instructor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Not authorized to update this course' });
         }
 
@@ -125,7 +125,7 @@ exports.updateCourse = async (req, res) => {
     }
 };
 
-// Delete course (admin only)
+// Delete course (mentor/admin only)
 exports.deleteCourse = async (req, res) => {
     try {
         const course = await Course.findById(req.params.id);
@@ -134,12 +134,25 @@ exports.deleteCourse = async (req, res) => {
             return res.status(404).json({ message: 'Course not found' });
         }
 
+        // Check if user is instructor or admin
+        if (course.instructor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized to delete this course' });
+        }
+
+        // Production Safety: Block deletion if students are enrolled
+        if (course.enrolledStudents && course.enrolledStudents.length > 0) {
+            return res.status(400).json({
+                message: 'Cannot decommission course node with active learners. Please migrate or offboard students first.'
+            });
+        }
+
         await course.deleteOne();
-        res.json({ message: 'Course deleted successfully' });
+        res.json({ message: 'Course node decommissioned successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
 
 // Enroll student in course
 exports.enrollStudent = async (req, res) => {
@@ -175,6 +188,111 @@ exports.enrollStudent = async (req, res) => {
         }, io);
 
         res.json({ message: 'Enrolled successfully', course });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+// Update course modules (curriculum)
+exports.updateModules = async (req, res) => {
+    try {
+        const { modules } = req.body;
+        const course = await Course.findById(req.params.id);
+
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Check if user is instructor or admin
+        const isInstructor = course.instructor && course.instructor.toString() === (req.user._id || req.user.id).toString();
+
+        if (!isInstructor && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized to update this course curriculum' });
+        }
+
+        course.modules = modules;
+        await course.save();
+
+        res.json({ message: 'Curriculum updated successfully', modules: course.modules });
+    } catch (error) {
+        console.error('Curriculum Sync Error:', error);
+        res.status(500).json({
+            message: 'Server failed to synchronize curriculum',
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+};
+
+// Get roster of all students enrolled in mentor's courses
+exports.getMentorRoster = async (req, res) => {
+    try {
+        const courses = await Course.find({ instructor: req.user._id })
+            .populate('enrolledStudents', 'name email createdAt');
+
+        // Consolidate students and map to courses
+        const studentMap = new Map();
+
+        courses.forEach(course => {
+            course.enrolledStudents.forEach(student => {
+                const studentId = student._id.toString();
+                if (!studentMap.has(studentId)) {
+                    studentMap.set(studentId, {
+                        _id: student._id,
+                        name: student.name,
+                        email: student.email,
+                        joinedAt: student.createdAt,
+                        courses: []
+                    });
+                }
+                studentMap.get(studentId).courses.push({
+                    _id: course._id,
+                    title: course.title
+                });
+            });
+        });
+
+        const roster = Array.from(studentMap.values());
+        res.json(roster);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+// Create a course-wide announcement
+exports.createAnnouncement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, message } = req.body;
+
+        const course = await Course.findById(id).populate('enrolledStudents');
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Auth check
+        if (course.instructor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        const io = req.app.get('io');
+        const notifications = [];
+
+        if (course.enrolledStudents && course.enrolledStudents.length > 0) {
+            for (const student of course.enrolledStudents) {
+                const notification = await Notification.createAndEmit({
+                    recipient: student._id,
+                    type: 'general',
+                    title: `Announcement: ${course.title}`,
+                    message: `${title}: ${message}`,
+                    relatedId: course._id,
+                    relatedModel: 'Course'
+                }, io);
+                notifications.push(notification);
+            }
+        }
+
+        res.json({ message: `Announcement sent to ${notifications.length} students` });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

@@ -4,6 +4,7 @@ import CodingLabPage from "./CodingLabPage";
 import PerformanceReportPage from "./PerformanceReportPage";
 import ProgressTrackingPage from "./ProgressTrackingPage";
 import RecordingsPage from "./RecordingPage";
+import SupportPage from "./SupportPage";
 
 const renderPage = (currentView) => {
   switch (currentView) {
@@ -19,6 +20,8 @@ const renderPage = (currentView) => {
       return <ProgressTrackingPage />;
     case 'PerformanceReport':
       return <PerformanceReportPage />;
+    case 'Support':
+      return <SupportPage />;
     default:
       return <StudentDashboard />;
   }

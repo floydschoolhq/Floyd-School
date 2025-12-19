@@ -45,10 +45,12 @@ router.post('/', async (req, res) => {
     }
 });
 
+const { protect, authorize } = require('../middleware/authMiddleware');
+
 // @route   GET /api/leads
-// @desc    Get all leads (Admin only - simplified for now)
-// @access  Private (TODO: Add Auth Middleware)
-router.get('/', async (req, res) => {
+// @desc    Get all leads
+// @access  Private (Admin, Mentor, Associate)
+router.get('/', protect, authorize('admin', 'mentor', 'growth_associate'), async (req, res) => {
     try {
         const leads = await Lead.find().sort({ createdAt: -1 });
         res.json(leads);
@@ -57,4 +59,26 @@ router.get('/', async (req, res) => {
     }
 });
 
+// @route   PATCH /api/leads/:id/status
+// @desc    Update lead status
+// @access  Private (Admin, Mentor, Associate)
+router.patch('/:id/status', protect, authorize('admin', 'mentor', 'growth_associate'), async (req, res) => {
+    try {
+        const { status } = req.body;
+        const lead = await Lead.findById(req.params.id);
+
+        if (!lead) {
+            return res.status(404).json({ message: 'Lead not found' });
+        }
+
+        lead.status = status;
+        await lead.save();
+
+        res.json({ success: true, lead });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
 module.exports = router;
+

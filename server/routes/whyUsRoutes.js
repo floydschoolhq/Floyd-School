@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 // @route   POST /api/why-us
 // @desc    Create or Update Why Us data
 // @access  Private (Admin)
-router.post('/', protect, authorize('school-admin'), async (req, res) => {
+router.post('/', protect, authorize('admin'), async (req, res) => {
     try {
         // For simplicity in this project context, we'll just create a new one and set others to inactive, 
         // or just update if we decide to maintain a singleton structure.

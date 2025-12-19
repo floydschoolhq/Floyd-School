@@ -3,6 +3,8 @@ const Assignment = require('../models/Assignment');
 const Submission = require('../models/Submission');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
+const LiveClass = require('../models/LiveClass');
+const SupportTicket = require('../models/SupportTicket');
 
 // Get Student Dashboard Data
 exports.getStudentDashboard = async (req, res) => {
@@ -33,11 +35,41 @@ exports.getStudentDashboard = async (req, res) => {
             .sort({ dueDate: 1 })
             .limit(5);
 
-        // Get recent submissions
-        const submissions = await Submission.find({ student: studentId })
-            .populate('assignment', 'title')
-            .sort({ submittedAt: -1 })
-            .limit(5);
+        // Get ALL submissions for stats calculation
+        const allSubmissions = await Submission.find({ student: studentId })
+            .populate('assignment', 'title category')
+            .sort({ submittedAt: -1 });
+
+        // Calculate Skill Matrix
+        const skillAcc = {};
+        allSubmissions.forEach(sub => {
+            if (sub.status === 'graded' && sub.assignment) {
+                // Default to 'Development' if category is missing (legacy data)
+                const cat = sub.assignment.category || 'Development';
+
+                if (!skillAcc[cat]) skillAcc[cat] = { total: 0, count: 0 };
+                skillAcc[cat].total += sub.grade || 0;
+                skillAcc[cat].count += 1;
+            }
+        });
+
+        const skillMatrix = Object.keys(skillAcc).map(cat => ({
+            name: cat,
+            score: Math.round(skillAcc[cat].total / skillAcc[cat].count)
+        }));
+
+        // Default if empty
+        if (skillMatrix.length === 0) {
+            skillMatrix.push(
+                { name: 'Algorithms', score: 0 },
+                { name: 'Debugging', score: 0 },
+                { name: 'Development', score: 0 },
+                { name: 'Database', score: 0 }
+            );
+        }
+
+        // Get recent submissions for display
+        const submissions = allSubmissions.slice(0, 5);
 
         // Get unread notifications
         const notifications = await Notification.find({
@@ -56,13 +88,65 @@ exports.getStudentDashboard = async (req, res) => {
             assignments,
             submissions,
             notifications,
+            skillMatrix,
             stats: {
                 enrolledCourses: courses.length,
                 pendingAssignments: assignments.filter(a => new Date(a.dueDate) > new Date()).length,
-                completedAssignments: submissions.filter(s => s.status === 'graded').length
+                completedAssignments: allSubmissions.filter(s => s.status === 'graded').length
             }
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+// Get Mentor Dashboard Data
+exports.getMentorDashboard = async (req, res) => {
+    try {
+        const mentorId = req.user._id;
+
+        const myCourses = await Course.find({ instructor: mentorId });
+        const courseIds = myCourses.map(c => c._id);
+
+        const totalStudents = await User.countDocuments({ enrolledCourses: { $in: courseIds } });
+        const pendingAssignments = await Submission.countDocuments({
+            assignment: { $in: await Assignment.find({ course: { $in: courseIds } }).distinct('_id') },
+            status: 'pending'
+        });
+
+        const activeSessions = await LiveClass.find({ mentor: mentorId, status: 'active' }).limit(5);
+
+        res.json({
+            success: true,
+            stats: {
+                activeCourses: myCourses.length,
+                totalStudents: totalStudents || 0,
+                pendingAssignments,
+                overallRating: 4.9 // Mock
+            },
+            recentSessions: activeSessions
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Get Growth Associate Dashboard Data
+exports.getAssociateDashboard = async (req, res) => {
+    try {
+        const openTickets = await SupportTicket.countDocuments({ status: 'open' });
+        const totalStudents = await User.countDocuments({ role: 'student' });
+
+        res.json({
+            success: true,
+            stats: {
+                activeStudents: totalStudents,
+                avgEngagement: '88%',
+                supportSLA: '14m',
+                openTickets
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
     }
 };

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {
-    getStudentDashboard
-} = require('../controllers/dashboardController');
+const { getStudentDashboard, getMentorDashboard, getAssociateDashboard } = require('../controllers/dashboardController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 // Role-specific dashboard routes
 router.get('/student', protect, authorize('student'), getStudentDashboard);
+router.get('/mentor', protect, authorize('mentor', 'admin'), getMentorDashboard);
+router.get('/associate', protect, authorize('growth_associate', 'admin'), getAssociateDashboard);
 
 module.exports = router;
+

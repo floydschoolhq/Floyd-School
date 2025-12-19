@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, Clock, PlayCircle, FileText } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2 } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
+import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 
 const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
   withCredentials: true,
   transports: ['websocket']
 });
 
+const getYouTubeId = (url) => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
 const ClassroomPage = () => {
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [myDoubt, setMyDoubt] = useState(null);
+  const [isSignaling, setIsSignaling] = useState(false);
 
   useEffect(() => {
     fetchClassroomData();
@@ -26,6 +36,24 @@ const ClassroomPage = () => {
 
     socket.on('liveClass:ended', (classId) => {
       setActiveLiveClass(prev => (prev?._id === classId ? null : prev));
+      setMyDoubt(null);
+    });
+
+    socket.on('doubt:resolved', (resolvedDoubt) => {
+      setMyDoubt(prev => (prev?._id === resolvedDoubt._id ? { ...prev, isResolved: true } : prev));
+    });
+
+    socket.on('doubt:new', (newDoubt) => {
+      // Just to be safe, if student raises doubt on another device
+      if (newDoubt.student === socket.userId) {
+        setMyDoubt(newDoubt);
+      }
+    });
+
+    socket.on('doubt:deleted', (deletedDoubtId) => {
+      if (myDoubt && myDoubt._id === deletedDoubtId) {
+        setMyDoubt(null);
+      }
     });
 
     return () => {
@@ -38,8 +66,50 @@ const ClassroomPage = () => {
     try {
       const res = await api.get('/live-classes/active');
       setActiveLiveClass(res.data);
+      if (res.data) {
+        fetchMyCurrentDoubt(res.data._id);
+        socket.emit('liveClass:join', res.data._id);
+      }
     } catch (error) {
       console.error('Failed to fetch active live class:', error);
+    }
+  };
+
+  const fetchMyCurrentDoubt = async (classId) => {
+    try {
+      const res = await api.get(`/doubts/${classId}/my`);
+      setMyDoubt(res.data);
+    } catch (error) {
+      // It's okay if no doubt exists
+    }
+  };
+
+  const handleRaiseHand = async () => {
+    if (!activeLiveClass || myDoubt) return;
+    setIsSignaling(true);
+    try {
+      const res = await api.post('/doubts', {
+        liveClassId: activeLiveClass._id,
+        question: 'Student is requesting technical assistance or has a live doubt.'
+      });
+      setMyDoubt(res.data);
+    } catch (error) {
+      console.error('Failed to signal mentor:', error);
+    } finally {
+      setIsSignaling(false);
+    }
+  };
+
+  const handleTerminateDoubt = async () => {
+    if (!myDoubt) return;
+    try {
+      // Optimistic UI update
+      const doubtId = myDoubt._id;
+      setMyDoubt(null);
+      await api.delete(`/doubts/${doubtId}`);
+    } catch (error) {
+      console.error('Failed to terminate doubt:', error);
+      // Revert if failed (optional, but good practice if we stored previous state)
     }
   };
 
@@ -87,36 +157,107 @@ const ClassroomPage = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="mb-10 bg-gradient-to-r from-[#fca96d] to-orange-500 rounded-2xl p-0.5 shadow-xl shadow-[#fca96d]/10"
         >
-          <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
-                <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
-                  <PlayCircle className="text-red-500 w-6 h-6" />
+          <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                  <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
+                    <PlayCircle className="text-red-500 w-6 h-6" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
+                  <p className="text-sm font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
                 </div>
               </div>
-              <div>
-                <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
-                <p className="text-sm font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
-                <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
+
+              <div className="flex items-center gap-3 font-['Outfit']">
+                {myDoubt ? (
+                  <div className={`px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border-2 ${myDoubt.isResolved
+                    ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                    : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
+                    }`}>
+                    {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+                    <span className="text-[10px] uppercase tracking-widest">
+                      {myDoubt.isResolved ? 'Signal Resolved' : 'Mentor Signaled'}
+                    </span>
+                    {myDoubt.isResolved && (
+                      <button
+                        onClick={handleTerminateDoubt}
+                        className="ml-2 bg-red-100/50 hover:bg-red-100 text-red-600 p-1.5 rounded-lg transition-colors border border-red-200"
+                        title="Close this doubt to ask a new one"
+                      >
+                        <Trash2 size={12} strokeWidth={3} />
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleRaiseHand}
+                    disabled={isSignaling}
+                    className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-xs tracking-widest cursor-pointer disabled:opacity-50"
+                  >
+                    {isSignaling ? 'Sending Signal...' : 'Raise Hand'}
+                  </button>
+                )}
+                <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
+                <div className="text-right hidden md:block mr-4">
+                  <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+                  <p className="text-slate-900 font-black">
+                    {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+                <a
+                  href={activeLiveClass.meetingLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest cursor-pointer"
+                >
+                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
+                </a>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 font-['Outfit']">
-              <div className="text-right hidden md:block">
-                <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
-                <p className="text-slate-900 font-black">
-                  {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
+            {/* YouTube Embed if applicable */}
+            {/* Live Class Stream + Chat */}
+            <div className="flex flex-col lg:flex-row gap-6 h-[600px] mb-12">
+              <div className="flex-1 bg-black rounded-3xl overflow-hidden shadow-2xl relative group">
+                {getYouTubeId(activeLiveClass.meetingLink) ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${getYouTubeId(activeLiveClass.meetingLink)}?autoplay=1`}
+                    title="Live Session"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-white bg-slate-900 gap-6 p-8 text-center bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/60">
+                    <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 animate-pulse">
+                      <PlayCircle size={40} className="text-[#fca96d]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black uppercase tracking-tight mb-2">External Live Session</h3>
+                      <p className="text-slate-300 font-medium max-w-md mx-auto">This session is being hosted on an external platform. Click the button below to join the secure room.</p>
+                    </div>
+                    <a
+                      href={activeLiveClass.meetingLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 bg-[#fca96d] text-slate-900 px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#fca96d]/20 flex items-center gap-3"
+                    >
+                      Join Meeting Now <CheckCircle size={16} />
+                    </a>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {new URL(activeLiveClass.meetingLink).hostname}</p>
+                  </div>
+                )}
               </div>
-              <a
-                href={activeLiveClass.meetingLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest cursor-pointer"
-              >
-                Join Now <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
-              </a>
+
+              <div className="w-full lg:w-80 h-full rounded-3xl overflow-hidden shadow-2xl">
+                <LiveChatSidebar classId={activeLiveClass._id} />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -157,8 +298,11 @@ const ClassroomPage = () => {
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
                     </div>
-                    <button className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-bold transition-colors">
-                      Continue
+                    <button
+                      onClick={() => window.location.href = '/student/recordings'}
+                      className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-bold transition-colors"
+                    >
+                      Study Node
                     </button>
                   </div>
                 </div>
