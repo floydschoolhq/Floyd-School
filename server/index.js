@@ -32,26 +32,34 @@ const allowedOrigins = [
     'http://localhost:3000'
 ];
 
-const io = new Server(server, {
-    cors: {
-        origin: allowedOrigins,
-        methods: ["GET", "POST"],
-        credentials: true,
-        allowedHeaders: ["Authorization", "Content-Type", "Origin"],
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        // Check if origin is in allowed list or is a Vercel deployment
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
+            callback(null, true);
+        } else {
+            console.log('Blocked by CORS:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept"],
+    optionsSuccessStatus: 200
+};
+
+const io = new Server(server, {
+    cors: corsOptions
 });
 
 // Make io accessible in routes
 app.set('io', io);
 
 // CORS configuration for Express
-app.use(cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept"],
-    optionsSuccessStatus: 200
-}));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
