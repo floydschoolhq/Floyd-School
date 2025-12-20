@@ -18,8 +18,8 @@ const STEMFutureSection = () => {
                     <h2 className="text-5xl md:text-7xl font-black mb-6 text-slate-900 tracking-tighter font-['Outfit']">
                         The Future of <span className="text-[#fca96d]">STEM Education</span>
                     </h2>
-                    <p className="text-xl text-slate-500 max-w-3xl mx-auto font-medium">
-                        Experience the transformation from traditional learning to immersive, interactive education
+                    <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+                        Transformation from traditional learning to immersive, interactive education.
                     </p>
                 </motion.div>
 

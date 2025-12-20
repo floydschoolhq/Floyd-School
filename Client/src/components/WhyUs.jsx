@@ -5,21 +5,21 @@ import { FaUserGraduate, FaBuilding, FaQuoteLeft, FaArrowRight, FaCheck } from '
 const WhyUs = () => {
 
     const schoolBenefits = [
-        { title: "Elevates School's Reputation", desc: "Showcases a forward-thinking, tech-integrated vision." },
-        { title: "Seamless Academic Alignment", desc: "Conducted during school hours with no schedule impact." },
-        { title: "Effortless Faculty Involvement", desc: "Entirely managed by ThinkSkool's certified mentors." },
-        { title: "Transparent Performance Insights", desc: "Real-time analytics via the Smart Portal." },
-        { title: "Enhanced Learning Outcomes", desc: "Fosters critical thinking, collaboration, and innovation." },
-        { title: "Sustainable Partnership Model", desc: "Option to extend post-immersion based on results." }
+        { title: "Reputation Boost", desc: "Showcases a tech-integrated vision." },
+        { title: "Academic Alignment", desc: "No impact on school schedule." },
+        { title: "Managed by Experts", desc: "Led by certified ThinkSkool mentors." },
+        { title: "Real-time Insights", desc: "Tracking via the Smart Portal." },
+        { title: "Innovation Focused", desc: "Fosters critical thinking and logic." },
+        { title: "Zero Obligation", desc: "Continuation based on interest." }
     ];
 
     const studentBenefits = [
-        { title: "Exposure to 4 Key Tech Fields", desc: "AI, Cybersecurity, IoT, and Web/App Development." },
-        { title: "Hands-On Project Learning", desc: "Build, solve, and create with real hands-on work." },
-        { title: "Guided by Engineers", desc: "Mentorship from skilled industry experts." },
-        { title: "Confidence & Skill Building", desc: "Boosts logic, creativity, and teamwork." },
-        { title: "Future-Ready Foundation", desc: "Builds skills for careers and competitions." },
-        { title: "Recognized Certification", desc: "Get a ThinkSkool Certificate on completion." }
+        { title: "Multi-Field Exposure", desc: "AI, IoT, and Dev immersion." },
+        { title: "Hands-On Work", desc: "Project-based industrial learning." },
+        { title: "Expert Mentorship", desc: "Guided by industry engineers." },
+        { title: "Skill Building", desc: "Logic, creativity, and teamwork." },
+        { title: "Global Certificates", desc: "Recognized industry standards." },
+        { title: "Future Ready", desc: "Foundational career readiness." }
     ];
 
     return (

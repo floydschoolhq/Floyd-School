@@ -119,20 +119,13 @@ const Hero = () => {
 
                             {/* Left Column: Premium Styled Highlights */}
                             <div className="flex flex-col gap-16">
-                                {/* One-Liner 1: The ThinkSkool Elite */}
+                                {/* One-Liner 1: Highlights */}
                                 <motion.div
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     className="relative pl-1 overflow-visible"
                                 >
-                                    <h3 className="text-4xl font-black text-slate-900 mb-4 tracking-tight font-['Outfit']">
-                                        The ThinkSkool <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fca96d] to-orange-500">Elite</span>
-                                    </h3>
-                                    <p className="text-slate-500 font-medium mb-8 leading-relaxed text-sm max-w-sm font-['Inter']">
-                                        Architecting next-generation tech leaders through industry-grade mastery and proprietary toolchains.
-                                    </p>
-
                                     <div className="flex flex-col gap-5">
                                         {[
                                             { title: "Technical Excellence", icon: <Terminal className="w-4 h-4" /> },
@@ -156,7 +149,7 @@ const Hero = () => {
                                     </div>
                                 </motion.div>
 
-                                {/* One-Liner 2: Career & Growth */}
+                                {/* One-Liner 2: Features */}
                                 <motion.div
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
@@ -164,8 +157,6 @@ const Hero = () => {
                                     transition={{ delay: 0.2 }}
                                     className="relative pl-1"
                                 >
-                                    <h4 className="text-3xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']">Career & <span className="text-[#fca96d]">Growth</span></h4>
-
                                     <div className="flex flex-col gap-5">
                                         {[
                                             { label: "Placement Integration", icon: <Briefcase className="w-4 h-4" /> },
