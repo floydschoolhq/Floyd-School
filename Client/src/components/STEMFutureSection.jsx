@@ -145,8 +145,8 @@ const TransformationFlow = ({ scrollYProgress }) => {
                         r="3"
                         fill="#F5AFAF"
                         filter="blur(1px)"
-                        initial={{ offsetDistance: "0%" }}
-                        animate={{ offsetDistance: "100%" }}
+                        initial={{ "offset-distance": "0%" }}
+                        animate={{ "offset-distance": "100%" }}
                         transition={{
                             duration: 2.5,
                             repeat: Infinity,
