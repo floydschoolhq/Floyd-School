@@ -41,7 +41,7 @@ const MainLayout = ({ children }) => {
           <div className="flex items-center space-x-6 font-['Inter']">
             <div className="flex items-center gap-3 pl-6 border-l border-slate-100">
               <div className="text-right hidden sm:block">
-                <p className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>
+                <p className="text-[13px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>
                 <p className="text-base font-black text-slate-900 leading-none font-['Outfit']">{usePortal().user?.name}</p>
               </div>
               <div className={`p-2 rounded-xl border ${system === 'student' ? 'bg-slate-50 border-slate-100 text-[#F5AFAF]' : 'bg-slate-50 border-slate-100 text-[#F5AFAF]'}`}>

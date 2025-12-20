@@ -10,7 +10,8 @@ import {
     Bell,
     Cpu,
     BookOpen,
-    Target
+    Target,
+    TrendingUp
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -22,6 +23,7 @@ const Sidebar = () => {
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
+        { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Bell size={20} />, label: 'Broadcast', path: '/broadcast' },
         { icon: <Settings size={20} />, label: 'System Settings', path: '/settings' },
     ];

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     Bell,
     Send,
@@ -10,12 +11,22 @@ import {
 import api from '../api/axios';
 
 const GlobalNotifications = () => {
+    const location = useLocation();
     const [formData, setFormData] = useState({
         title: '',
         message: '',
         targetGroup: 'all', // all, students, mentors
         type: 'info'
     });
+
+    useEffect(() => {
+        if (location.state) {
+            setFormData(prev => ({
+                ...prev,
+                ...location.state
+            }));
+        }
+    }, [location.state]);
     const [sending, setSending] = useState(false);
     const [success, setSuccess] = useState(false);
 
@@ -70,8 +81,8 @@ const GlobalNotifications = () => {
                                         key={opt.id}
                                         onClick={() => setFormData({ ...formData, targetGroup: opt.id })}
                                         className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all ${formData.targetGroup === opt.id
-                                                ? 'bg-sky-500 text-slate-950 border-sky-500'
-                                                : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                                            ? 'bg-sky-500 text-slate-950 border-sky-500'
+                                            : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
                                             }`}
                                     >
                                         {opt.icon}
@@ -90,8 +101,8 @@ const GlobalNotifications = () => {
                                         key={type}
                                         onClick={() => setFormData({ ...formData, type })}
                                         className={`p-4 rounded-2xl border text-center transition-all uppercase tracking-widest text-[9px] font-black ${formData.type === type
-                                                ? 'bg-white text-slate-950 border-white'
-                                                : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                                            ? 'bg-white text-slate-950 border-white'
+                                            : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
                                             }`}
                                     >
                                         {type}

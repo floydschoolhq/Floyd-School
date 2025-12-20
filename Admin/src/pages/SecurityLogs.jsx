@@ -24,6 +24,18 @@ const SecurityLogs = () => {
         }
     };
 
+    const handleToggleUserStatus = async (userId) => {
+        if (!window.confirm('INITIATE TACTICAL SUSPENSION: Are you sure you want to restrict access for this node?')) return;
+
+        try {
+            await api.patch(`/admin/users/${userId}/status`, { isActive: false });
+            alert('PROTOCOL EXECUTED: User access restricted.');
+            fetchLogs();
+        } catch (err) {
+            alert('TRANSMISSION FAILED: Could not suspend user.');
+        }
+    };
+
     const getLevelIcon = (level) => {
         switch (level) {
             case 'critical': return <AlertTriangle className="text-rose-500" />;
@@ -77,8 +89,8 @@ const SecurityLogs = () => {
                             key={level}
                             onClick={() => setFilterLevel(level)}
                             className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${filterLevel === level
-                                    ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
-                                    : 'text-slate-400 hover:text-white'
+                                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
+                                : 'text-slate-400 hover:text-white'
                                 }`}
                         >
                             {level}
@@ -127,9 +139,19 @@ const SecurityLogs = () => {
                                     <div className="col-span-2 text-sky-500 group-hover:text-sky-400 font-bold">
                                         {log.ip || 'System'}
                                     </div>
-                                    <div className="col-span-6 text-slate-400 group-hover:text-white transition-colors truncate">
-                                        <span className="font-bold text-slate-300 mr-2">[{log.event}]</span>
-                                        {log.message}
+                                    <div className="col-span-6 text-slate-400 group-hover:text-white transition-colors truncate flex items-center justify-between gap-4">
+                                        <div className="truncate">
+                                            <span className="font-bold text-slate-300 mr-2">[{log.event}]</span>
+                                            {log.message}
+                                        </div>
+                                        {log.user && (
+                                            <button
+                                                onClick={() => handleToggleUserStatus(log.user._id || log.user)}
+                                                className="opacity-0 group-hover:opacity-100 px-3 py-1 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all whitespace-nowrap"
+                                            >
+                                                Suspend User
+                                            </button>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))

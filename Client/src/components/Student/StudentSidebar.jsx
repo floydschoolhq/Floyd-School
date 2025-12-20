@@ -43,7 +43,7 @@ const StudentSidebar = () => {
         <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100 font-['Inter']">
           <p className="text-base font-black text-slate-400 uppercase tracking-widest mb-1 font-['Outfit']">Authenticated as</p>
           <p className="text-base font-black text-slate-900 truncate font-['Outfit']">{user?.name}</p>
-          <div className="mt-2 inline-block px-2 py-0.5 bg-[#F5AFAF]/10 text-[#F5AFAF] text-\[13px\] font-black uppercase rounded tracking-tighter font-['Outfit']">
+          <div className="mt-2 inline-block px-2 py-0.5 bg-[#F5AFAF]/10 text-[#F5AFAF] text-[13px] font-black uppercase rounded tracking-tighter font-['Outfit']">
             {system} Access
           </div>
         </div>

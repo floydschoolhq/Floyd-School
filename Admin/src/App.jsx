@@ -12,6 +12,7 @@ import CourseGovernance from './pages/CourseGovernance';
 import LeadIntelligence from './pages/LeadIntelligence';
 import GlobalNotifications from './pages/GlobalNotifications';
 import SystemSettings from './pages/SystemSettings';
+import SuccessEngine from './pages/SuccessEngine';
 import SecurityLogs from './pages/SecurityLogs';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="courses" element={<CourseGovernance />} />
             <Route path="leads" element={<LeadIntelligence />} />
             <Route path="broadcast" element={<GlobalNotifications />} />
+            <Route path="success-engine" element={<SuccessEngine />} />
             <Route path="settings" element={<SystemSettings />} />
             <Route path="logs" element={<SecurityLogs />} />
           </Route>

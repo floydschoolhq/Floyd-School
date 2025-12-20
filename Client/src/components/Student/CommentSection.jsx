@@ -73,7 +73,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
         }
     };
 
-    if (loading) return <div className="p-8 text-center text-slate-400 font-bold animate-pulse uppercase tracking-widest text-\[13px\]">Synchronizing Discussion Thread...</div>;
+    if (loading) return <div className="p-8 text-center text-slate-400 font-bold animate-pulse uppercase tracking-widest text-[13px]">Synchronizing Discussion Thread...</div>;
 
     return (
         <div className="mt-12 space-y-8 font-['Inter']">
@@ -82,7 +82,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                     <MessageSquare size={20} />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 font-['Outfit'] tracking-tight">Technical Discussion</h3>
-                <span className="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-\[13px\] font-black">{comments.length} Thoughts</span>
+                <span className="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-[13px] font-black">{comments.length} Thoughts</span>
             </div>
 
             {/* Post Comment */}
@@ -125,7 +125,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between mb-2">
                                         <h4 className="font-bold text-slate-900 text-base">{comment.studentName}</h4>
-                                        <span className="text-\[13px\] font-black text-slate-300 uppercase tracking-widest">
+                                        <span className="text-[13px] font-black text-slate-300 uppercase tracking-widest">
                                             {new Date(comment.createdAt).toLocaleDateString()}
                                         </span>
                                     </div>
@@ -135,18 +135,18 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                                         {comment.status === 'resolved' ? (
                                             <button
                                                 onClick={() => handleConfirmResolution(comment._id)}
-                                                className="flex items-center gap-2 text-\[13px\] font-black text-emerald-500 hover:text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 transition-all"
+                                                className="flex items-center gap-2 text-[13px] font-black text-emerald-500 hover:text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 transition-all"
                                             >
                                                 <CheckCircle2 size={14} /> Confirm Resolution
                                             </button>
                                         ) : (
-                                            <button className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 hover:text-[#F5AFAF] uppercase tracking-widest transition-colors">
+                                            <button className="flex items-center gap-2 text-[13px] font-black text-slate-400 hover:text-[#F5AFAF] uppercase tracking-widest transition-colors">
                                                 <Heart size={14} /> {comment.likes || 0} Likes
                                             </button>
                                         )}
                                         <button
                                             onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
-                                            className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 hover:text-sky-500 uppercase tracking-widest transition-colors"
+                                            className="flex items-center gap-2 text-[13px] font-black text-slate-400 hover:text-sky-500 uppercase tracking-widest transition-colors"
                                         >
                                             <Reply size={14} /> Reply
                                         </button>
@@ -157,18 +157,18 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                                         <div className="mt-6 ml-4 pl-6 border-l-2 border-slate-50 space-y-4">
                                             {comment.replies.map((reply, ridx) => (
                                                 <div key={ridx} className="flex gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 font-black text-\[13px\]">
+                                                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 font-black text-[13px]">
                                                         {reply.userName[0]}
                                                     </div>
                                                     <div>
                                                         <div className="flex items-center gap-2 mb-1">
                                                             <h5 className="font-bold text-slate-800 text-base">{reply.userName}</h5>
                                                             {reply.userRole && (reply.userRole === 'mentor' || reply.userRole === 'admin') && (
-                                                                <span className="bg-amber-100 text-amber-600 text-\[11px\] px-1.5 py-0.5 rounded-md font-black uppercase tracking-widest border border-amber-200">
+                                                                <span className="bg-amber-100 text-amber-600 text-[11px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-widest border border-amber-200">
                                                                     Official
                                                                 </span>
                                                             )}
-                                                            <span className="text-\[11px\] font-black text-slate-300 uppercase">
+                                                            <span className="text-[11px] font-black text-slate-300 uppercase">
                                                                 {new Date(reply.timestamp).toLocaleDateString()}
                                                             </span>
                                                         </div>
@@ -195,7 +195,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                                             />
                                             <button
                                                 onClick={() => handleReply(comment._id)}
-                                                className="bg-sky-500 text-white px-4 py-2 rounded-xl text-\[13px\] font-black uppercase tracking-widest hover:bg-sky-600 transition-all"
+                                                className="bg-sky-500 text-white px-4 py-2 rounded-xl text-[13px] font-black uppercase tracking-widest hover:bg-sky-600 transition-all"
                                             >
                                                 Reply
                                             </button>
@@ -210,8 +210,8 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                 {comments.length === 0 && (
                     <div className="text-center py-12 bg-slate-50/50 rounded-[2rem] border-2 border-dashed border-slate-100">
                         <MessageSquare className="mx-auto text-slate-200 mb-4" size={40} />
-                        <p className="text-slate-400 font-black uppercase tracking-widest text-\[13px\]">No discussions started for this node</p>
-                        <p className="text-slate-300 text-\[13px\] font-bold mt-1 uppercase italic tracking-tighter">Be the first to share an insight.</p>
+                        <p className="text-slate-400 font-black uppercase tracking-widest text-[13px]">No discussions started for this node</p>
+                        <p className="text-slate-300 text-[13px] font-bold mt-1 uppercase italic tracking-tighter">Be the first to share an insight.</p>
                     </div>
                 )}
             </div>

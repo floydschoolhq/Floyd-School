@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const http = require('http');
 const path = require('path');
+const morgan = require('morgan');
 
 // Load env variables first
 dotenv.config();
@@ -61,7 +62,7 @@ app.set('io', io);
 
 // CORS configuration for Express
 app.use(cors(corsOptions));
-
+app.use(morgan('dev'));
 app.use(express.json());
 
 // Serve static files

@@ -78,7 +78,7 @@ const StudentEcosystem = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
+                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
                         Proprietary <span className="text-[#F5AFAF]">Learning</span> Ecosystem
                     </h2>
                     <p className="text-slate-500 font-medium max-w-2xl mx-auto text-sm leading-relaxed">

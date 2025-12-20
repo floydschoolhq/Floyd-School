@@ -33,7 +33,11 @@ const SystemSettings = () => {
         try {
             const res = await api.post('/admin/system/command', { command: cmd });
             if (res.data.success) {
-                setTerminalOutput(prev => [...prev, ...res.data.output]);
+                if (res.data.output.includes('__CLEAR__')) {
+                    setTerminalOutput(['[SYSTEM] Terminal context refreshed.']);
+                } else {
+                    setTerminalOutput(prev => [...prev, ...res.data.output]);
+                }
             } else {
                 setTerminalOutput(prev => [...prev, `[ERROR] ${res.data.message}`]);
             }
@@ -72,6 +76,15 @@ const SystemSettings = () => {
     if (loading) return (
         <div className="flex items-center justify-center h-full">
             <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+        </div>
+    );
+
+    if (!settings) return (
+        <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-4">
+            <ShieldAlert size={48} className="text-rose-500 opacity-20" />
+            <h2 className="text-xl font-black text-white uppercase italic">Nexus Link Severed</h2>
+            <p className="text-slate-500 text-sm max-w-xs uppercase tracking-widest font-bold">Failed to synchronize with system core.</p>
+            <button onClick={fetchSettings} className="px-6 py-2 bg-sky-500 text-white rounded-xl font-bold uppercase text-[10px] tracking-widest">Retry Sync</button>
         </div>
     );
 

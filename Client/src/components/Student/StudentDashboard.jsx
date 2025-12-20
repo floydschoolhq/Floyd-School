@@ -54,7 +54,7 @@ const StudentDashboard = () => {
             className="flex items-center gap-2 mb-3"
           >
             <div className="w-2 h-2 rounded-full bg-[#F5AFAF]" />
-            <p className="text-\[13px\] uppercase tracking-[0.4em] font-black text-slate-400 font-['Outfit']">
+            <p className="text-[13px] uppercase tracking-[0.4em] font-black text-slate-400 font-['Outfit']">
               Standardized Access: {user?.name}
             </p>
           </motion.div>
@@ -62,7 +62,7 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl font-black text-slate-900 tracking-tighter font-['Outfit']"
+            className="text-4xl font-black text-slate-900 tracking-tighter font-['Outfit']"
           >
             Learning <span className="text-[#F5AFAF]">Odyssey</span>
           </motion.h1>
@@ -75,7 +75,7 @@ const StudentDashboard = () => {
               className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-lg"
             >
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <span className="text-\[13px\] font-black uppercase tracking-widest text-white">Neural Link Active</span>
+              <span className="text-[13px] font-black uppercase tracking-widest text-white">Neural Link Active</span>
             </motion.div>
           )}
           <NotificationPanel notifications={notifications} />
@@ -144,13 +144,13 @@ const StudentDashboard = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <h4 className="text-lg font-black text-slate-900 mb-1 tracking-tight font-['Outfit']">{assignment.title}</h4>
-                      <p className="text-\[14px\] font-bold text-slate-400 uppercase tracking-widest mb-4">{assignment.course?.title}</p>
+                      <p className="text-[14px] font-bold text-slate-400 uppercase tracking-widest mb-4">{assignment.course?.title}</p>
                       <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-white border border-slate-100 rounded-full text-\[13px\] font-black uppercase tracking-widest text-slate-500">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-white border border-slate-100 rounded-full text-[13px] font-black uppercase tracking-widest text-slate-500">
                           <Clock className="w-3 h-3 text-[#F5AFAF]" />
                           Due: {new Date(assignment.dueDate).toLocaleDateString()}
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-\[13px\] font-black uppercase tracking-widest shadow-sm ${new Date(assignment.dueDate) > new Date()
+                        <span className={`px-3 py-1 rounded-full text-[13px] font-black uppercase tracking-widest shadow-sm ${new Date(assignment.dueDate) > new Date()
                           ? 'bg-emerald-500 text-white'
                           : 'bg-rose-500 text-white'
                           }`}>
@@ -158,7 +158,7 @@ const StudentDashboard = () => {
                         </span>
                       </div>
                     </div>
-                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-\[13px\] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#F5AFAF] transition-all shadow-lg hover:shadow-[#F5AFAF]/20 active:scale-95">
+                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-[13px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#F5AFAF] transition-all shadow-lg hover:shadow-[#F5AFAF]/20 active:scale-95">
                       Initialize
                     </button>
                   </div>
@@ -177,7 +177,7 @@ const StudentDashboard = () => {
       {/* Enrolled Courses */}
       <div className="mt-12 relative z-10">
         <div className="flex items-center gap-4 mb-8">
-          <h3 className="text-3xl font-black text-slate-900 tracking-tighter font-['Outfit']">Course Portfolio</h3>
+          <h3 className="text-2xl font-black text-slate-900 tracking-tighter font-['Outfit']">Course Portfolio</h3>
           <div className="h-px flex-1 bg-slate-100" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -191,17 +191,17 @@ const StudentDashboard = () => {
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1 pr-4">
                     <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
-                    <p className="text-\[13px\] font-black text-[#F5AFAF] uppercase tracking-widest flex items-center gap-2">
+                    <p className="text-[13px] font-black text-[#F5AFAF] uppercase tracking-widest flex items-center gap-2">
                       <span className="w-1 h-1 rounded-full bg-[#F5AFAF]" /> {course.instructor?.name}
                     </p>
                   </div>
-                  <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-\[13px\] font-black uppercase tracking-widest">
+                  <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[13px] font-black uppercase tracking-widest">
                     {course.category}
                   </span>
                 </div>
                 <p className="text-base font-medium text-slate-500 mb-8 line-clamp-2 leading-relaxed">{course.description}</p>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-\[13px\] font-black uppercase tracking-widest">
+                  <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-widest">
                     <span className="text-slate-400">Mastery Progress</span>
                     <span className="text-slate-900">
                       {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
@@ -222,7 +222,7 @@ const StudentDashboard = () => {
             <div className="col-span-full text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
               <BookOpen className="w-20 h-20 mx-auto mb-6 text-slate-200" />
               <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">Curriculum nodes offline</p>
-              <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-\[14px\] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
+              <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
                 Resync Experience
               </button>
             </div>

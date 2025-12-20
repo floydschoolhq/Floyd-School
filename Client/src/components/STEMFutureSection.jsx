@@ -190,7 +190,7 @@ const STEMFutureSection = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter font-['Outfit']"
+                        className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter font-['Outfit']"
                     >
                         Future of <span className="text-[#F5AFAF]">STEM</span>
                     </motion.h2>
@@ -219,7 +219,7 @@ const STEMFutureSection = () => {
                             </div>
 
                             <div>
-                                <h3 className="text-4xl lg:text-5xl font-black text-slate-800 font-['Outfit'] mb-6 tracking-tight">Passive <span className="text-slate-200">Learning</span></h3>
+                                <h3 className="text-3xl lg:text-4xl font-black text-slate-800 font-['Outfit'] mb-6 tracking-tight">Passive <span className="text-slate-200">Learning</span></h3>
 
                                 <div className="flex gap-3 mb-8">
                                     <MetricBadge label="Engagement" value="12%" isNegative />
@@ -283,7 +283,7 @@ const STEMFutureSection = () => {
                             </div>
 
                             <div>
-                                <h3 className="text-4xl lg:text-5xl font-black text-slate-900 font-['Outfit'] mb-6 tracking-tight">Active <span className="text-[#F5AFAF]">Mastery</span></h3>
+                                <h3 className="text-3xl lg:text-4xl font-black text-slate-900 font-['Outfit'] mb-6 tracking-tight">Active <span className="text-[#F5AFAF]">Mastery</span></h3>
 
                                 <div className="flex gap-3 mb-8">
                                     <MetricBadge label="Active Retention" value="95%" />

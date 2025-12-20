@@ -26,11 +26,11 @@ const PlatformAnalytics = () => {
             if (res.data.success) {
                 setStats(res.data.stats);
             } else {
-                setError(true);
+                setError(res.data.message || 'Unknown sector error');
             }
         } catch (err) {
             console.error('Failed to fetch stats', err);
-            setError(true);
+            setError(err.response?.data?.message || err.message || 'Signal lost');
         } finally {
             setLoading(false);
         }
@@ -78,6 +78,7 @@ const PlatformAnalytics = () => {
                 <div className="bg-slate-900/50 border border-rose-500/30 p-12 rounded-[3rem] text-center max-w-md backdrop-blur-xl">
                     <Activity size={48} className="text-rose-500 mx-auto mb-6" />
                     <h2 className="text-2xl font-black text-white uppercase mb-2">Telemetry Failure</h2>
+                    <p className="text-rose-500 font-bold mb-2 uppercase text-[10px] tracking-widest">{error}</p>
                     <p className="text-slate-400 font-bold mb-8">System encountered a critical error while synchronizing platform diagnostics.</p>
                     <button
                         onClick={fetchStats}

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Settings = require('../models/Settings');
 
 const protect = async (req, res, next) => {
     let token;
@@ -52,4 +53,29 @@ const authorize = (...roles) => {
     };
 };
 
-module.exports = { protect, adminOnly, authorize };
+// Check if a specific platform module is locked
+const checkModuleLock = (moduleName) => {
+    return async (req, res, next) => {
+        try {
+            // Admins bypass all locks
+            if (req.user && req.user.role === 'admin') {
+                return next();
+            }
+
+            const settings = await Settings.getInstance();
+            if (settings.moduleLocks && settings.moduleLocks[moduleName] === true) {
+                return res.status(503).json({
+                    success: false,
+                    message: `The ${moduleName} sector is currently under maintenance. Access restricted.`,
+                    lockActive: true
+                });
+            }
+            next();
+        } catch (error) {
+            next(); // Fail open to avoid blocking site on settings error, but log it
+            console.error(`[LockCheck] Error checking lock for ${moduleName}:`, error);
+        }
+    };
+};
+
+module.exports = { protect, adminOnly, authorize, checkModuleLock };

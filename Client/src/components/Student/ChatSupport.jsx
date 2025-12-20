@@ -150,7 +150,7 @@ const ChatSupport = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-slate-950 font-black text-base uppercase tracking-tight">Growth Hotline</h3>
-                                    <p className="text-slate-950/60 text-\[13px\] font-bold flex items-center gap-1 uppercase tracking-widest">
+                                    <p className="text-slate-950/60 text-[13px] font-bold flex items-center gap-1 uppercase tracking-widest">
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                                         Live Architect
                                     </p>
@@ -183,7 +183,7 @@ const ChatSupport = () => {
                             {loading && (
                                 <div className="flex flex-col items-center justify-center h-full text-slate-500 gap-2">
                                     <Loader2 className="animate-spin" size={24} />
-                                    <span className="text-\[13px\] font-black uppercase tracking-widest">Syncing Nodes...</span>
+                                    <span className="text-[13px] font-black uppercase tracking-widest">Syncing Nodes...</span>
                                 </div>
                             )}
 

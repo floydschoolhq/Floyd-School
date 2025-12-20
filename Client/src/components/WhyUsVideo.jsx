@@ -40,7 +40,7 @@ const WhyUsVideo = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
                     <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Elite Standards</p>
-                    <h2 className="text-5xl md:text-6xl font-black text-slate-900 font-['Outfit'] tracking-tighter">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 font-['Outfit'] tracking-tighter">
                         The ThinkSkool <span className="text-[#F5AFAF]">Advantage</span>
                     </h2>
                 </div>

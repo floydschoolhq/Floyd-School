@@ -119,7 +119,7 @@ const DetailedProgram = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']"
+                        className="text-4xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']"
                     >
                         Specialized <span className="text-[#F5AFAF]">Engineering</span> Tracks
                     </motion.h2>

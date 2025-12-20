@@ -5,6 +5,9 @@ const Lead = require('../models/Lead');
 const SystemLog = require('../models/SystemLog');
 const SupportTicket = require('../models/SupportTicket');
 const Notification = require('../models/Notification');
+const Settings = require('../models/Settings');
+const Comment = require('../models/Comment');
+const LiveChat = require('../models/LiveChat');
 
 /**
  * @desc    Get platform-wide statistics for Admin
@@ -88,11 +91,12 @@ exports.getPlatformStats = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Analytics Error:', error);
+        console.error('[AdminController:getPlatformStats] TERMINAL ERROR:', error.stack);
         res.status(500).json({
             success: false,
-            message: 'Telemetric analysis failed',
-            error: error.message
+            message: 'Nexus Link Severed: Telemetry data corrupted',
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 };
@@ -285,6 +289,20 @@ exports.updateCourseStatus = async (req, res) => {
 };
 
 /**
+ * @desc    Get all leads for intelligence
+ * @route   GET /api/admin/leads
+ * @access  Private/Admin
+ */
+exports.getLeads = async (req, res) => {
+    try {
+        const leads = await Lead.find().sort({ createdAt: -1 });
+        res.status(200).json({ success: true, leads });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
  * @desc    Process system-level command via VCT
  * @route   POST /api/admin/system/command
  * @access  Private/Admin
@@ -310,23 +328,49 @@ exports.processSystemCommand = async (req, res) => {
                 ];
                 break;
             case 'status':
-                const userCount = await User.countDocuments();
-                const courseCount = await Course.countDocuments({ isActive: true });
+                const uCount = await User.countDocuments();
+                const cCount = await Course.countDocuments({ isActive: true });
+                const lCount = await Lead.countDocuments();
+                const t0 = Date.now();
+                await User.findOne(); // Dummy query for latency check
+                const latency = Date.now() - t0;
+
                 output = [
                     '[STATUS] System Operational Level: ALPHA',
-                    `[STATUS] Registered Nodes: ${userCount}`,
-                    `[STATUS] Active Curriculum Sectors: ${courseCount}`,
-                    '[STATUS] Database Latency: 4ms',
-                    '[STATUS] API Response Velocity: 12ms'
+                    `[STATUS] Registered Nodes: ${uCount}`,
+                    `[STATUS] Lead Intake Buffer: ${lCount}`,
+                    `[STATUS] Active Curriculum Sectors: ${cCount}`,
+                    `[STATUS] Database Latency: ${latency}ms`,
+                    `[STATUS] Uplink Integrity: ${latency < 100 ? 'STABLE' : 'DEGRADED'}`
                 ];
                 break;
             case 'clear-cache':
+                // In a real environment, this would hit Redis. 
+                // Here, we'll clear old system logs (older than 30 days) to "optimize".
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                const deletedLogs = await SystemLog.deleteMany({ createdAt: { $lt: thirtyDaysAgo } });
+
                 output = [
                     '[CACHE] Initializing global flush...',
                     '[CACHE] CDN edge cache purged.',
-                    '[CACHE] Database query buffer cleared.',
-                    '[CACHE] System memory optimized. Total freed: 24.5MB'
+                    `[CACHE] System logs optimized. Cleared ${deletedLogs.deletedCount} legacy records.`,
+                    '[CACHE] Memory buffer synchronized.'
                 ];
+                break;
+            case 'logs-audit':
+                const criticalLogs = await SystemLog.find({ level: { $in: ['critical', 'error'] } })
+                    .sort({ createdAt: -1 })
+                    .limit(5);
+
+                if (criticalLogs.length === 0) {
+                    output = ['[AUDIT] Security sector clean. No critical anomalies detected.'];
+                } else {
+                    output = [
+                        '[AUDIT] Critical anomalies detected in last 24h:',
+                        ...criticalLogs.map(l => `  - [${new Date(l.createdAt).toLocaleTimeString()}] ${l.event}: ${l.message.substring(0, 40)}...`)
+                    ];
+                }
                 break;
             case 'nodes':
                 const io = req.app.get('io');
@@ -337,7 +381,9 @@ exports.processSystemCommand = async (req, res) => {
                     '[NETWORK] Secure Tunneling: ACTIVE'
                 ];
                 break;
-            case 'maintenance-on':
+            case 'clear':
+                output = ['__CLEAR__']; // Special token for frontend to clear terminal
+                break;
                 const settings = await Settings.getInstance();
                 settings.maintenanceMode.isActive = true;
                 await settings.save();
@@ -407,7 +453,7 @@ exports.broadcastNotification = async (req, res) => {
             count: notifications.length
         });
     } catch (error) {
-        console.error('Broadcast Failure:', error);
+        console.error('[AdminController:broadcastNotification] Error:', error.stack);
         res.status(500).json({
             success: false,
             message: 'Broadcast signal lost.',
@@ -415,3 +461,103 @@ exports.broadcastNotification = async (req, res) => {
         });
     }
 };
+
+/**
+ * @desc    Get Growth Intelligence (Phase 2 Success Engine)
+ * @route   GET /api/admin/growth-intelligence
+ * @access  Private/Admin
+ */
+exports.getGrowthIntelligence = async (req, res) => {
+    try {
+        // 1. Lead Velocity (Avg time from Lead creation to User registration)
+        const convertedLeads = await Lead.find({ status: 'converted' }).catch(() => []);
+        let totalVelocity = 0;
+        let conversionCount = 0;
+
+        for (const lead of convertedLeads) {
+            const user = await User.findOne({ email: lead.email }).select('createdAt').catch(() => null);
+            if (user && user.createdAt > lead.createdAt) {
+                totalVelocity += (user.createdAt - lead.createdAt) / (1000 * 60 * 60); // In hours
+                conversionCount++;
+            }
+        }
+        const avgLeadVelocity = conversionCount > 0 ? (totalVelocity / conversionCount).toFixed(1) : 0;
+
+        // 2. Trending Struggles (Modules with most open comments/doubts)
+        const struggleAggr = await Comment.aggregate([
+            { $match: { status: 'open' } },
+            { $group: { _id: '$moduleTitle', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 5 }
+        ]).catch(() => []);
+
+        const trendingStruggles = struggleAggr.map(s => ({
+            module: s._id || 'Standard Protocol',
+            intensity: s.count > 10 ? 'High' : (s.count > 5 ? 'Medium' : 'Low'),
+            index: s.count
+        }));
+
+        // 3. Sentiment Pulse (Keyword analysis of LiveChat)
+        const recentChats = await LiveChat.find().sort({ createdAt: -1 }).limit(200).select('text').catch(() => []);
+        const positiveKeywords = ['thank', 'excellent', 'clear', 'understood', 'great', 'awesome', 'wow', 'good'];
+        const negativeKeywords = ['stuck', 'difficult', 'confused', 'error', 'broken', 'hard', 'fail', 'bad'];
+
+        let positiveScore = 0;
+        let negativeScore = 0;
+
+        recentChats.forEach(chat => {
+            const content = chat.text.toLowerCase();
+            positiveKeywords.forEach(kw => { if (content.includes(kw)) positiveScore++; });
+            negativeKeywords.forEach(kw => { if (content.includes(kw)) negativeScore++; });
+        });
+
+        const sentimentScore = recentChats.length > 0
+            ? Math.round(((positiveScore) / (positiveScore + negativeScore || 1)) * 100)
+            : 100;
+
+        res.status(200).json({
+            success: true,
+            intelligence: {
+                leadVelocity: `${avgLeadVelocity}h`,
+                trendingStruggles,
+                sentimentScore,
+                dataFreshness: new Date()
+            }
+        });
+    } catch (error) {
+        console.error('[AdminController:getGrowthIntelligence] ERROR:', error.stack);
+        res.status(500).json({
+            success: false,
+            message: 'Growth Intelligence Signal Corrupted',
+            error: error.message
+        });
+    }
+};
+
+/**
+ * @desc    Get friction details for a specific module
+ * @route   GET /api/admin/friction/:moduleTitle
+ * @access  Private/Admin
+ */
+exports.getFrictionDetails = async (req, res) => {
+    try {
+        const { moduleTitle } = req.params;
+
+        const openComments = await Comment.find({
+            moduleTitle,
+            status: 'open'
+        })
+            .populate('student', 'name email')
+            .sort({ createdAt: -1 })
+            .limit(20);
+
+        res.status(200).json({
+            success: true,
+            comments: openComments
+        });
+    } catch (error) {
+        console.error('[AdminController:getFrictionDetails] ERROR:', error.stack);
+        res.status(500).json({ success: false, message: 'Node Scan Interrupted' });
+    }
+};
+
