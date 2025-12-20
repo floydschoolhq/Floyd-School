@@ -40,6 +40,8 @@ const CourseManagement = () => {
         duration: ''
     });
 
+    const [useCustomCategory, setUseCustomCategory] = useState(false);
+
     // Announcement State
     const [announceData, setAnnounceData] = useState({ title: '', message: '' });
 
@@ -82,6 +84,7 @@ const CourseManagement = () => {
                 difficulty: 'Beginner',
                 duration: ''
             });
+            setUseCustomCategory(false);
         }
         setError('');
         setShowModal(true);
@@ -379,17 +382,43 @@ const CourseManagement = () => {
                                             </select>
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Category</label>
-                                            <select
-                                                value={formData.category}
-                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all"
-                                            >
-                                                <option>Web Development</option>
-                                                <option>AI & Robotics</option>
-                                                <option>Coding</option>
-                                                <option>Data Science</option>
-                                            </select>
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Category</label>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setUseCustomCategory(!useCustomCategory);
+                                                        if (!useCustomCategory) {
+                                                            setFormData({ ...formData, category: '' });
+                                                        } else {
+                                                            setFormData({ ...formData, category: 'Web Development' });
+                                                        }
+                                                    }}
+                                                    className="text-[9px] font-black text-sky-500 hover:text-sky-600 uppercase tracking-wider underline"
+                                                >
+                                                    {useCustomCategory ? 'Use Dropdown' : 'Custom Category'}
+                                                </button>
+                                            </div>
+                                            {useCustomCategory ? (
+                                                <input
+                                                    required
+                                                    placeholder="Enter custom category..."
+                                                    value={formData.category}
+                                                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all underline-none"
+                                                />
+                                            ) : (
+                                                <select
+                                                    value={formData.category}
+                                                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all"
+                                                >
+                                                    <option>Web Development</option>
+                                                    <option>AI & Robotics</option>
+                                                    <option>Coding</option>
+                                                    <option>Data Science</option>
+                                                </select>
+                                            )}
                                         </div>
                                     </div>
 

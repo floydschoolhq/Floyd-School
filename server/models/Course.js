@@ -31,7 +31,8 @@ const courseSchema = new mongoose.Schema({
     }],
     category: {
         type: String,
-        enum: ['AI', 'Robotics', 'AI & Robotics', 'Coding', 'Web Development', 'Data Science', 'Other'],
+        // Suggested values: 'AI', 'Robotics', 'AI & Robotics', 'Coding', 'Web Development', 'Data Science', 'Other'
+        // But allows any custom category
         default: 'Other'
     },
     // UI Fields

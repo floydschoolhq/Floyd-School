@@ -9,7 +9,7 @@ const supportRoles = [
         desc: "Industrial veterans who guide you through complex engineering hurdles and code architecture.",
         benefits: ["Live Debugging", "Architecture Review", "Skill Specialization"],
         icon: <Users className="w-8 h-8" />,
-        color: "from-blue-500 to-cyan-500",
+        color: "from-slate-700 to-slate-900",
         delay: 0
     },
     {
@@ -18,7 +18,7 @@ const supportRoles = [
         desc: "Your personal success partners who ensure your learning path aligns with your professional goals.",
         benefits: ["Career Mapping", "Portfolio Design", "Industry Networking"],
         icon: <Zap className="w-8 h-8" />,
-        color: "from-[#F5AFAF] to-pink-500",
+        color: "from-[#F5AFAF] to-[#F9DFDF]",
         delay: 0.1
     },
     {
@@ -27,7 +27,7 @@ const supportRoles = [
         desc: "Silent engines ensuring the cloud infrastructure and portal response remains 100% efficient.",
         benefits: ["24/7 Availability", "Resource Allocation", "System Optimization"],
         icon: <Shield className="w-8 h-8" />,
-        color: "from-purple-500 to-indigo-600",
+        color: "from-slate-600 to-slate-800",
         delay: 0.2
     }
 ];
