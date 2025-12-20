@@ -306,37 +306,50 @@ exports.getLeads = async (req, res) => {
 exports.broadcastNotification = async (req, res) => {
     try {
         const { title, message, type, targetGroup } = req.body;
-        // targetGroup: 'all', 'students', 'mentors'
+        console.log(`[Admin] Initiating broadcast: ${title} to ${targetGroup}`);
 
         let query = {};
         if (targetGroup === 'students') query = { role: 'student' };
-        if (targetGroup === 'mentors') query = { role: 'mentor' };
+        else if (targetGroup === 'mentors') query = { role: 'mentor' };
+        else if (targetGroup === 'associates') query = { role: 'growth_associate' };
 
         const users = await User.find(query).select('_id');
+
+        if (!users || users.length === 0) {
+            return res.status(200).json({
+                success: true,
+                message: 'Transmission bypassed: No active nodes in target sector.',
+                count: 0
+            });
+        }
 
         const notifications = users.map(user => ({
             recipient: user._id,
             title,
             message,
-            type: type || 'info',
+            type: ['info', 'success', 'warning', 'broadcast'].includes(type) ? type : 'broadcast',
             isRead: false
         }));
 
-        await Notification.insertMany(notifications);
+        await Notification.insertMany(notifications, { ordered: false });
 
         // Real-time emit
         const io = req.app.get('io');
-        if (targetGroup === 'all') {
-            io.emit('notification:broadcast', { title, message, type });
-        } else {
-            // For specific groups, we might need room logic or just simple iteration if robust rooms aren't set
-            // For now, simpler broadcast to all connected clients who can filter client-side or use existing room logic if implemented.
-            // Assuming we want simple broadcast:
-            io.emit('notification:broadcast', { title, message, type, targetGroup });
+        if (io) {
+            io.emit('notification:broadcast', { title, message, type: type || 'info' });
         }
 
-        res.status(200).json({ success: true, count: notifications.length });
+        res.status(200).json({
+            success: true,
+            message: 'Broadcast synchronized successfully.',
+            count: notifications.length
+        });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error('Broadcast Failure:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Broadcast signal lost.',
+            error: error.message
+        });
     }
 };

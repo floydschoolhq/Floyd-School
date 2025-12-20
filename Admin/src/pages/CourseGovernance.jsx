@@ -44,8 +44,8 @@ const CourseGovernance = () => {
 
     const filteredCourses = courses.filter(course =>
         (filter === 'all' || course.status === filter) &&
-        (course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.mentor?.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        (course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            course.instructor?.name?.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     if (loading) return (
@@ -86,7 +86,7 @@ const CourseGovernance = () => {
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-sky-400" size={18} />
                     <input
                         type="text"
-                        placeholder="Search by title or mentor..."
+                        placeholder="Search by title or instructor..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-slate-950 border border-slate-800 p-4 pl-14 rounded-2xl text-sm font-bold text-white outline-none focus:border-sky-500/30 transition-all placeholder:text-slate-700"
@@ -95,7 +95,7 @@ const CourseGovernance = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6">
-                {filteredCourses.map((course, idx) => (
+                {filteredCourses.length > 0 ? filteredCourses.map((course, idx) => (
                     <motion.div
                         key={course._id}
                         initial={{ opacity: 0, y: 20 }}
@@ -118,7 +118,7 @@ const CourseGovernance = () => {
                                     <h3 className="text-lg font-black text-white uppercase tracking-tight">{course.title}</h3>
                                     <div className="flex items-center gap-3 mt-2">
                                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1">
-                                            <FileText size={12} /> {course.mentor?.name || 'Unknown Mentor'}
+                                            <FileText size={12} /> {course.instructor?.name || 'Unknown Instructor'}
                                         </span>
                                         <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${course.status === 'published' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
                                             }`}>
@@ -155,7 +155,12 @@ const CourseGovernance = () => {
                             </div>
                         </div>
                     </motion.div>
-                ))}
+                )) : (
+                    <div className="text-center py-20 bg-slate-900/10 border border-dashed border-slate-800 rounded-[3rem]">
+                        <BookOpen size={48} className="text-slate-700 mx-auto mb-4" />
+                        <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No courses detected in this sector.</p>
+                    </div>
+                )}
             </div>
         </div>
     );
