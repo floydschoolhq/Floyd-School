@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Masterclass = require('../models/Masterclass');
+const { protect, authorize } = require('../middleware/auth');
+const masterclassController = require('../controllers/masterclassController');
 
-// @route   GET /api/masterclasses
-// @desc    Get all upcoming masterclasses
-// @access  Public
-router.get('/', async (req, res) => {
-    try {
-        const classes = await Masterclass.find().sort({ date: 1 });
-        res.json(classes);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error' });
-    }
-});
+// Public routes
+router.get('/', masterclassController.getAllMasterclasses);
+router.get('/:id', masterclassController.getMasterclass);
+
+// Student routes
+router.post('/:id/register', protect, masterclassController.registerStudent);
+router.post('/:id/unregister', protect, masterclassController.unregisterStudent);
+
+// Mentor/Admin routes
+router.post('/', protect, authorize('mentor', 'admin'), masterclassController.createMasterclass);
+router.put('/:id', protect, authorize('mentor', 'admin'), masterclassController.updateMasterclass);
+router.patch('/:id/status', protect, authorize('mentor', 'admin'), masterclassController.updateStatus);
+router.get('/:id/attendees', protect, authorize('mentor', 'admin'), masterclassController.getAttendees);
+
+// Admin only
+router.delete('/:id', protect, authorize('admin'), masterclassController.deleteMasterclass);
 
 module.exports = router;

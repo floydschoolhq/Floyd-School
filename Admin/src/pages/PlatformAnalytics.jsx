@@ -97,7 +97,12 @@ const PlatformAnalytics = () => {
                         transition={{ delay: idx * 0.1 }}
                         className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 p-8 rounded-[2.5rem] relative overflow-hidden group hover:border-sky-500/30 transition-all"
                     >
-                        <div className={`w-14 h-14 bg-${stat.color}-500/10 text-${stat.color}-400 rounded-2xl flex items-center justify-center mb-6 border border-${stat.color}-500/20`}>
+                        <div className={
+                            stat.color === 'sky' ? 'w-14 h-14 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center mb-6 border border-sky-500/20' :
+                                stat.color === 'emerald' ? 'w-14 h-14 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20' :
+                                    stat.color === 'amber' ? 'w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mb-6 border border-amber-500/20' :
+                                        'w-14 h-14 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20'
+                        }>
                             {stat.icon}
                         </div>
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{stat.label}</p>

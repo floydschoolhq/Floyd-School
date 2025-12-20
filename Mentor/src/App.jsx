@@ -13,6 +13,7 @@ import StudentLeads from './pages/StudentLeads';
 import AssignmentGrading from './pages/AssignmentGrading';
 import StudentRoster from './pages/StudentRoster';
 import SupportTickets from './pages/SupportTickets';
+import MasterclassManagement from './pages/MasterclassManagement';
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 
 // Placeholder for other pages
@@ -48,6 +49,7 @@ function App() {
                 <Route path="leads" element={<StudentLeads />} />
                 <Route path="roster" element={<StudentRoster />} />
                 <Route path="support" element={<SupportTickets />} />
+                <Route path="masterclasses" element={<MasterclassManagement />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />
