@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 const ReactLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-cyan-500">React</span></span>;
 const NodeLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-600">Node.js</span></span>;
 const PythonLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">Python</span></span>;
-const AIMLLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-purple-600">AI/ML</span></span>;
-const CloudLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-[#fca96d]">Cloud</span></span>;
-const WebDevLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-600">Web Dev</span></span>;
-const MobileLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-500">Mobile</span></span>;
+const AIMLLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-purple-600">AI/ML</span></span>;
+const CloudLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-[#F5AFAF]">Cloud</span></span>;
+const WebDevLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-blue-600">Web Dev</span></span>;
+const MobileLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-emerald-500">Mobile</span></span>;
 
 const logos = [
   { id: 1, component: ReactLogo },
@@ -22,14 +22,14 @@ const logos = [
 
 const Marque = () => {
   return (
-    <div className="w-full bg-white py-12 border-b border-slate-100">
-      <div className="text-center mb-8">
-        <p className="text-slate-500 font-semibold tracking-wide uppercase text-sm">Technologies We Master</p>
+    <div className="w-full bg-[#FCF8F8] py-16 border-b border-[#FBEFEF]">
+      <div className="text-center mb-10">
+        <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technologies We Master</p>
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#FCF8F8] to-transparent z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#FCF8F8] to-transparent z-10"></div>
 
         <motion.div
           className="flex gap-16 min-w-max items-center"

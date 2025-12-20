@@ -49,8 +49,8 @@ const StudentLoginPage = () => {
     <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden font-['Inter']">
       {/* Dynamic Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#fca96d]/5 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#F5AFAF]/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#FBEFEF]/30 rounded-full blur-[120px]"></div>
       </div>
 
       <motion.div
@@ -58,9 +58,9 @@ const StudentLoginPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1),0_30px_60px_-15px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)] border border-slate-100 relative overflow-hidden group">
+        <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_50px_100px_-20px_rgba(245,175,175,0.1),0_30px_60px_-15px_rgba(0,0,0,0.05)] border border-[#FBEFEF] relative overflow-hidden group">
           {/* Top Decorative Line */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#fca96d] to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#F5AFAF] to-transparent"></div>
 
           <header className="flex justify-between items-center mb-10">
             <div className="flex items-center gap-2 cursor-pointer group/logo" onClick={handleExit}>
@@ -68,14 +68,14 @@ const StudentLoginPage = () => {
                 <span className="text-white font-black text-xl font-['Outfit']">TS</span>
               </div>
               <h1 className="text-2xl font-black tracking-tighter text-slate-800 font-['Outfit']">
-                think<span className="text-[#fca96d]">skool</span>
+                think<span className="text-[#F5AFAF]">skool</span>
               </h1>
             </div>
           </header>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="text-left">
-              <h3 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-2">Access <span className="text-[#fca96d]">Classroom</span></h3>
+              <h3 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-2">Access <span className="text-[#F5AFAF]">Classroom</span></h3>
               <p className="text-slate-500 text-sm font-medium tracking-wide first-letter:uppercase">Secure gateway to elite engineering resources</p>
             </div>
 
@@ -88,7 +88,7 @@ const StudentLoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#fca96d] focus:ring-4 focus:ring-[#fca96d]/10 transition-all duration-300 font-medium shadow-inner"
+                  className="w-full p-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#F5AFAF] focus:ring-4 focus:ring-[#F5AFAF]/10 transition-all duration-300 font-medium shadow-inner"
                 />
               </div>
               <div className="group">
@@ -99,7 +99,7 @@ const StudentLoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#fca96d] focus:ring-4 focus:ring-[#fca96d]/10 transition-all duration-300 font-medium shadow-inner"
+                  className="w-full p-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#F5AFAF] focus:ring-4 focus:ring-[#F5AFAF]/10 transition-all duration-300 font-medium shadow-inner"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ const StudentLoginPage = () => {
 
             <div className="text-center pt-4 border-t border-slate-50">
               <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
-                Terminals offline? <Link to="/student/signup" className="text-[#fca96d] hover:text-[#e05a2b] transition-colors ml-1">Establish New Identity</Link>
+                Terminals offline? <Link to="/student/signup" className="text-[#F5AFAF] hover:text-slate-900 transition-colors ml-1">Establish New Identity</Link>
               </p>
             </div>
           </form>

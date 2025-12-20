@@ -78,7 +78,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
     return (
         <div className="mt-12 space-y-8 font-['Inter']">
             <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-50 rounded-xl text-orange-500">
+                <div className="p-2 bg-[#FCF8F8] rounded-xl text-[#F5AFAF]">
                     <MessageSquare size={20} />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 font-['Outfit'] tracking-tight">Technical Discussion</h3>
@@ -91,7 +91,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Share a technical insight or ask a doubt regarding this session..."
-                    className="w-full bg-white border-2 border-slate-100 rounded-3xl p-6 pr-20 text-sm font-medium outline-none focus:border-orange-500 transition-all shadow-xl shadow-slate-200/20 min-h-[120px] resize-none"
+                    className="w-full bg-white border-2 border-slate-100 rounded-3xl p-6 pr-20 text-sm font-medium outline-none focus:border-[#F5AFAF] transition-all shadow-xl shadow-slate-200/20 min-h-[120px] resize-none"
                     onKeyPress={(e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                             e.preventDefault();
@@ -102,7 +102,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                 <button
                     type="submit"
                     disabled={isSubmitting || !newComment.trim()}
-                    className="absolute right-4 bottom-4 bg-orange-500 text-white p-4 rounded-2xl shadow-lg shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                    className="absolute right-4 bottom-4 bg-[#F5AFAF] text-white p-4 rounded-2xl shadow-lg shadow-[#F5AFAF]/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                 >
                     <Send size={18} strokeWidth={3} />
                 </button>
@@ -140,7 +140,7 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
                                                 <CheckCircle2 size={14} /> Confirm Resolution
                                             </button>
                                         ) : (
-                                            <button className="flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-orange-500 uppercase tracking-widest transition-colors">
+                                            <button className="flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-[#F5AFAF] uppercase tracking-widest transition-colors">
                                                 <Heart size={14} /> {comment.likes || 0} Likes
                                             </button>
                                         )}

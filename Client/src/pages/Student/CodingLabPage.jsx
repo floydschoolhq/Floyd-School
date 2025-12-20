@@ -116,7 +116,7 @@ const CodingLabPage = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-black text-white mb-1 tracking-tight font-['Outfit']">
-              Elite <span className="text-[#fca96d]">Coding Laboratory</span>
+              Elite <span className="text-[#F5AFAF]">Coding Laboratory</span>
             </h1>
             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] font-['Outfit']"> High-Performance Cloud Execution Environment </p>
           </div>
@@ -176,7 +176,7 @@ const CodingLabPage = () => {
           </div>
 
           <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 font-['Outfit']">
-            Active Engine: <span className="text-[#fca96d]">{selectedLanguage.name}</span>
+            Active Engine: <span className="text-[#F5AFAF]">{selectedLanguage.name}</span>
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@ const CodingLabPage = () => {
             <span>Monaco Enterprise Engine</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#fca96d] font-['Outfit']">{user?.name}</span>
+            <span className="text-[#F5AFAF] font-['Outfit']">{user?.name}</span>
             <span className="text-slate-700">/</span>
             <span>{selectedLanguage.name}</span>
           </div>

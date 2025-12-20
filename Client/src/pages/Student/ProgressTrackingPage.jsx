@@ -45,27 +45,27 @@ const ProgressTrackingPage = () => {
         className="mb-8 font-['Inter']"
       >
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
-          Learning <span className="text-[#fca96d]">Journey</span>
+          Learning <span className="text-[#F5AFAF]">Journey</span>
         </h1>
         <p className="text-sm font-medium text-slate-500">Comprehensive overview of your academic trajectory and milestones.</p>
       </motion.div>
 
       {/* Progress Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
-        <GradientCard gradient="from-teal-500 to-cyan-600">
+        <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex flex-col items-center text-center font-['Inter']">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-teal-600 mb-6 font-['Outfit']">Curriculum Integrity</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-6 font-['Outfit']">Curriculum Integrity</h3>
             <ProgressChart
               progress={dashboardData?.overallProgress || 0}
               subtitle={`${dashboardData?.completedModules || 0} of ${dashboardData?.totalModules || 0} modules`}
-              color="#14b8a6"
+              color="#F5AFAF"
             />
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-blue-500 to-indigo-600">
+        <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="flex flex-col items-center text-center py-6 font-['Inter']">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#fca96d] mb-8 font-['Outfit']">Average Grade Point</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-8 font-['Outfit']">Average Grade Point</h3>
             <div className="mb-4">
               <span className="text-7xl font-black text-slate-900 tracking-tighter font-['Outfit']">{avgScore}%</span>
             </div>
@@ -75,9 +75,9 @@ const ProgressTrackingPage = () => {
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-emerald-500 to-teal-500">
+        <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex flex-col items-center text-center py-6 font-['Inter']">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-8 font-['Outfit']">Active Tracks</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-8 font-['Outfit']">Active Tracks</h3>
             <div className="mb-4">
               <span className="text-7xl font-black text-slate-900 tracking-tighter font-['Outfit']">{dashboardData?.totalCourses || 0}</span>
             </div>
@@ -91,12 +91,12 @@ const ProgressTrackingPage = () => {
       {/* Detailed Progress Overview */}
       <div className="font-['Inter']">
         <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
-          <div className="p-2 bg-[#fca96d]/10 rounded-lg text-[#fca96d]">
+          <div className="p-2 bg-[#F5AFAF]/10 rounded-lg text-[#F5AFAF]">
             <TrendingUp className="w-5 h-5" />
           </div>
           Granular Module Tracking
         </h2>
-        <GradientCard gradient="from-purple-500 to-rose-500">
+        <GradientCard gradient="from-[#F5AFAF] to-[#FBEFEF]">
           <div className="space-y-8">
             {/* Course Progress Bars */}
             {dashboardData?.courses && dashboardData.courses.length > 0 ? (
@@ -111,14 +111,14 @@ const ProgressTrackingPage = () => {
                   >
                     <div className="flex items-center justify-between mb-3 font-['Outfit']">
                       <span className="text-sm font-black text-slate-900 tracking-tight">{course.title}</span>
-                      <span className="text-sm font-black text-[#fca96d]">{progress}%</span>
+                      <span className="text-sm font-black text-[#F5AFAF]">{progress}%</span>
                     </div>
                     <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                         transition={{ duration: 1, delay: index * 0.1 }}
-                        className="bg-gradient-to-r from-[#fca96d] to-orange-500 h-full rounded-full"
+                        className="bg-gradient-to-r from-[#F5AFAF] to-[#F5AFAF] h-full rounded-full"
                       />
                     </div>
                   </motion.div>

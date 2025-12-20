@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBars, FaTimes, FaChevronDown, FaUserCircle } from 'react-icons/fa';
+import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
@@ -36,17 +36,19 @@ const PremiumNavbar = () => {
             name: 'For School Students',
             hasDropdown: true,
             subItems: [
-                { name: 'Foundational Mastery', link: '#programs' },
-                { name: 'Innovation Lab', link: '#ecosystem' },
-                { name: 'Student Excellence', link: '#testimonials' }
+                { name: 'Beginner STEM Modules', link: '#programs' },
+                { name: 'Robotics & AI Basics', link: '#ecosystem' },
+                { name: 'Creative Coding Labs', link: '#programs' }
             ]
         },
         {
             name: 'For College Students',
             hasDropdown: true,
             subItems: [
-                { name: 'Career Support', link: '#career' },
-                { name: 'Faculty', link: '#faculty' }
+                { name: 'Intermediate Web Dev', link: '#programs' },
+                { name: 'Advanced AI/ML Ops', link: '#ecosystem' },
+                { name: 'Full-Stack Architecture', link: '#career' },
+                { name: 'Industrial Certifications', link: '#faculty' }
             ]
         },
     ];
@@ -54,11 +56,11 @@ const PremiumNavbar = () => {
     return (
         <>
             {/* Top Banner - Tech Expert Call to Action - Now Opaque */}
-            <div className="fixed top-0 left-0 right-0 z-[60] bg-white border-b border-slate-100 h-9 flex items-center overflow-hidden shadow-sm">
+            <div className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
-                    <Sparkles size={14} className="text-[#fca96d]" />
+                    <Sparkles size={14} className="text-[#F5AFAF]" />
                     <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">Master Industry-Standard Engineering</span>
-                    <a href="#programs" className="text-[#fca96d] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
+                    <a href="#programs" className="text-[#F5AFAF] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
                         Explore Curriculum
                         <ArrowRight size={14} />
                     </a>
@@ -67,8 +69,8 @@ const PremiumNavbar = () => {
 
             <motion.nav
                 className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? 'bg-white/80 backdrop-blur-md shadow-md border-b border-slate-200'
-                    : 'bg-white border-b border-slate-100'
+                    ? 'bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(245,175,175,0.1)] border-b border-[#F9DFDF]/50'
+                    : 'bg-[#FCF8F8] border-b border-[#FBEFEF]'
                     }`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
@@ -83,13 +85,13 @@ const PremiumNavbar = () => {
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             {/* Simple Logo Icon */}
-                            <div className="w-8 h-8 rounded-lg bg-[#fca96d] flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-lg bg-[#F5AFAF] flex items-center justify-center shadow-lg shadow-[#F5AFAF]/20">
                                 <span className="text-white font-bold text-lg">TS</span>
                             </div>
 
                             {/* Logo Text */}
                             <h1 className="text-xl font-black tracking-tight text-slate-800 font-['Outfit']">
-                                think<span className="text-[#fca96d]">skool</span>
+                                think<span className="text-[#F5AFAF]">skool</span>
                             </h1>
                         </div>
 
@@ -97,7 +99,7 @@ const PremiumNavbar = () => {
                         <div className="hidden md:flex items-center gap-8">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer h-16 flex items-center">
-                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#fca96d] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
+                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#F5AFAF] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
                                         <span>{item.name}</span>
                                         {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-200" />}
                                     </div>
@@ -105,12 +107,12 @@ const PremiumNavbar = () => {
                                     {/* Dropdown Menu */}
                                     {item.hasDropdown && (
                                         <div className="absolute top-16 left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                            <div className="bg-white rounded-xl shadow-xl border border-slate-100 py-2 w-56 overflow-hidden">
+                                            <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl shadow-[#F5AFAF]/10 border border-[#FBEFEF] py-2 w-56 overflow-hidden">
                                                 {item.subItems.map((sub, idx) => (
                                                     <a
                                                         key={idx}
                                                         href={sub.link}
-                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#fca96d]/10 hover:text-[#fca96d] transition-colors border-l-2 border-transparent hover:border-[#fca96d] font-['Outfit']"
+                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#FBEFEF] hover:text-[#F5AFAF] transition-colors border-l-2 border-transparent hover:border-[#F5AFAF] font-['Outfit']"
                                                     >
                                                         {sub.name}
                                                     </a>
@@ -127,7 +129,7 @@ const PremiumNavbar = () => {
                             <NotificationDropdown />
                             <button
                                 onClick={handleBookSession}
-                                className="px-5 py-2 text-[10px] font-black text-white bg-slate-900 rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
+                                className="px-5 py-2 text-[10px] font-black text-white bg-[#2D2D2D] rounded-lg hover:shadow-xl hover:shadow-[#F5AFAF]/20 hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
                             >
                                 Book Free Session
                             </button>
@@ -139,15 +141,10 @@ const PremiumNavbar = () => {
                                         navigate('/student/login');
                                     }
                                 }}
-                                className="px-5 py-2 text-[10px] font-black text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors uppercase tracking-widest font-['Outfit']"
+                                className="px-6 py-2.5 text-[11px] font-black text-slate-700 bg-white border border-[#FBEFEF] rounded-xl hover:bg-[#FCF8F8] hover:border-[#F5AFAF]/30 transition-all uppercase tracking-widest font-['Outfit'] shadow-sm flex items-center gap-2"
                             >
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#F5AFAF] animate-pulse"></div>
                                 My Classroom
-                            </button>
-                            <button
-                                onClick={() => navigate('/profile')}
-                                className="p-2 text-slate-400 hover:text-slate-900 transition-colors"
-                            >
-                                <FaUserCircle size={28} />
                             </button>
                         </div>
 
@@ -173,13 +170,13 @@ const PremiumNavbar = () => {
                     >
                         {/* Backdrop */}
                         <div
-                            className="absolute inset-0 bg-slate-900/20 backdrop-blur-sm"
+                            className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
 
                         {/* Menu Content */}
                         <motion.div
-                            className="absolute top-20 left-0 right-0 bg-white border-b border-slate-100 shadow-xl"
+                            className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-[#FBEFEF] shadow-2xl shadow-[#F5AFAF]/10"
                             initial={{ y: -20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
@@ -188,16 +185,16 @@ const PremiumNavbar = () => {
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
-                                        className="w-full text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#fca96d]/10 hover:text-[#fca96d] transition-colors flex justify-between items-center"
+                                        className="w-full text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#F5AFAF] transition-colors flex justify-between items-center"
                                     >
                                         {item.name}
                                         {item.hasDropdown && <FaChevronDown size={12} />}
                                     </button>
                                 ))}
-                                <div className="h-px bg-slate-100 my-2" />
+                                <div className="h-px bg-[#FBEFEF] my-2" />
                                 <button
                                     onClick={() => navigate('/classroom')}
-                                    className="w-full text-center px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50"
+                                    className="w-full text-center px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
                                 >
                                     My Classroom
                                 </button>

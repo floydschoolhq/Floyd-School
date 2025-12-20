@@ -3,8 +3,8 @@ import React from 'react';
 import { FaPlayCircle, FaCode, FaBrain, FaUsers, FaChalkboardTeacher, FaTrophy, FaChevronDown } from 'react-icons/fa';
 
 const InteractiveFeatures = ({ isFeaturesExpanded }) => {
-  const MAIN_COLOR = "#FF8C00";
-  const PRIMARY_BLUE = '#007FFF';
+  const MAIN_COLOR = "#F5AFAF";
+  const PRIMARY_BLUE = '#F5AFAF';
 
   const interactiveFeaturesList = [
     {

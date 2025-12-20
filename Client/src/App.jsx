@@ -38,10 +38,13 @@ import Faculty from './components/Faculty.jsx';
 import Masterclasses from './components/Masterclasses.jsx';
 import WhyUsVideo from './components/WhyUsVideo.jsx';
 import ComparisonSection from './components/ComparisonSection.jsx';
+import AmbitiousSection from './components/AmbitiousSection.jsx';
+import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 
 import STEMFutureSection from './components/STEMFutureSection';
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
+import Feature from './components/Feature';
 
 // --- Home Page Component ---
 const HomePage = () => {
@@ -55,14 +58,19 @@ const HomePage = () => {
             <DownloadButton />
 
             {/* 3. Scrollable Content (The rest of your components) */}
-            <div className='relative pt-[100px]'>
+            <div className='relative pt-[64px]'>
                 <Hero />
+                <IndustrialNetwork />
                 <Marque />
                 <WhyUsVideo />
                 <ComparisonSection />
+                <AmbitiousSection />
+                <STEMFutureSection />
+                <WhyUs />
                 <DetailedProgram />
                 <Masterclasses />
-                <InteractiveFeatures />
+                <Feature />
+                <InteractiveFeatures isFeaturesExpanded={true} />
                 <StudentEcosystem />
                 <Faculty />
                 <HeroParallaxDemo />

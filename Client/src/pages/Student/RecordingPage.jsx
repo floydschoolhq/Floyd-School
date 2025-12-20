@@ -59,7 +59,7 @@ const RecordingsPage = () => {
                 className="mb-8 font-['Inter']"
             >
                 <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
-                    Session <span className="text-[#fca96d]">Archive</span>
+                    Session <span className="text-[#F5AFAF]">Archive</span>
                 </h1>
                 <p className="text-sm font-medium text-slate-500">Review proprietary sessions and technical deep dives at your convenience.</p>
             </motion.div>
@@ -75,7 +75,7 @@ const RecordingsPage = () => {
                             transition={{ delay: index * 0.1 }}
                         >
                             <GradientCard
-                                gradient="from-[#fca96d] to-orange-500"
+                                gradient="from-[#F5AFAF] to-[#F5AFAF]"
                                 className="hover:scale-[1.02] transition-transform cursor-pointer group"
                             >
                                 {/* Thumbnail Placeholder */}
@@ -92,9 +92,9 @@ const RecordingsPage = () => {
                                     <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
                                         <p className="text-[9px] font-black text-white/60 uppercase tracking-widest truncate">{module.courseTitle}</p>
                                     </div>
-                                    <div className="absolute inset-0 bg-[#fca96d]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div className="w-16 h-16 bg-[#fca96d]/20 backdrop-blur-md rounded-full flex items-center justify-center">
-                                            <Play className="w-6 h-6 text-[#fca96d] fill-[#fca96d] ml-1" />
+                                    <div className="absolute inset-0 bg-[#F5AFAF]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <div className="w-16 h-16 bg-[#F5AFAF]/20 backdrop-blur-md rounded-full flex items-center justify-center">
+                                            <Play className="w-6 h-6 text-[#F5AFAF] fill-[#F5AFAF] ml-1" />
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@ const RecordingsPage = () => {
                                 {/* Info */}
                                 <div className="space-y-2">
                                     <h3 className="font-bold text-slate-900 text-lg tracking-tight font-['Outfit'] line-clamp-1">{module.title}</h3>
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-[#fca96d]">{module.instructor}</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF]">{module.instructor}</p>
                                 </div>
 
                                 <div className="mt-6 flex items-center justify-between gap-4">

@@ -9,7 +9,7 @@ const FEATURES = [
         icon: <FaRobot />,
         desc: "24/7 Continuous learning assistance.",
         color: "text-slate-900",
-        bg: "bg-slate-100",
+        bg: "bg-[#FBEFEF]",
         details: [
             { label: "Contextual AI", desc: "Trained on our specific curriculum and your code repo." },
             { label: "Instant Debugging", desc: "Real-time error identification and resolution steps." },
@@ -21,8 +21,8 @@ const FEATURES = [
         miniTitle: "Cloud Deployment Terminal",
         icon: <FaCode />,
         desc: "Practice directly on the platform with no setup.",
-        color: "text-[#fca96d]",
-        bg: "bg-[#fca96d]/10",
+        color: "text-[#F5AFAF]",
+        bg: "bg-[#F5AFAF]/10",
         details: [
             { label: "Zero-Config", desc: "Start coding instantly with no local environment setup." },
             { label: "Multi-Language", desc: "Full support for JS, Python, C++, and Java." },
@@ -34,8 +34,8 @@ const FEATURES = [
         miniTitle: "Performance Vector Analytics",
         icon: <FaChartLine />,
         desc: "Real-time interactions available to school admins and parents.",
-        color: "text-black",
-        bg: "bg-slate-200",
+        color: "text-[#2D2D2D]",
+        bg: "bg-[#F9DFDF]",
         details: [
             { label: "Precision Metrics", desc: "Track every module and quiz with granular accuracy." },
             { label: "Stakeholder Dash", desc: "Dedicated portals for admins and parents." },
@@ -47,8 +47,8 @@ const FEATURES = [
         miniTitle: "Human Intelligence Tier",
         icon: <FaUserTie />,
         desc: "1:1 technical support and code reviews.",
-        color: "text-[#fca96d]",
-        bg: "bg-[#fca96d]/20",
+        color: "text-[#F5AFAF]",
+        bg: "bg-[#F5AFAF]/20",
         details: [
             { label: "Mentorship", desc: "Weekly dedicated sessions with industry leads." },
             { label: "Code Review", desc: "High-level architectural feedback on your projects." },
@@ -61,7 +61,7 @@ const FEATURES = [
         icon: <FaCloud />,
         desc: "Safe & private student learning space.",
         color: "text-slate-700",
-        bg: "bg-slate-50",
+        bg: "bg-white",
         details: [
             { label: "Private Sandbox", desc: "Dedicated, isolated environment for every student." },
             { label: "Persistent Sync", desc: "Access your workspace from any device globally." },
@@ -74,12 +74,12 @@ const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);
 
     return (
-        <section className="bg-slate-50 py-24 border-t border-slate-100 font-['Inter']">
+        <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF] font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <p className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
+                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
                     <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
-                        Proprietary <span className="text-[#fca96d]">Learning</span> Ecosystem
+                        Proprietary <span className="text-[#F5AFAF]">Learning</span> Ecosystem
                     </h2>
                     <p className="text-slate-500 font-medium max-w-2xl mx-auto text-sm leading-relaxed">
                         A cohesive suite of advanced engineering tools engineered to accelerate your path from conceptual understanding to technical excellence.
@@ -96,9 +96,9 @@ const StudentEcosystem = () => {
                             transition={{ delay: index * 0.1 }}
                             whileHover={{ y: -10 }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="bg-white rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 border border-slate-50 group cursor-pointer"
+                            className="bg-white rounded-[2.5rem] p-8 shadow-[0_20px_40px_-15px_rgba(245,175,175,0.08)] hover:shadow-[0_40px_80px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] group cursor-pointer"
                         >
-                            <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-500`}>
+                            <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm shadow-[#F5AFAF]/5`}>
                                 {feature.icon}
                             </div>
                             <h3 className="text-xl font-black text-slate-900 mb-3 font-['Outfit'] tracking-tight">{feature.title}</h3>
@@ -139,11 +139,11 @@ const StudentEcosystem = () => {
                                 </button>
 
                                 <div className="flex items-center gap-6 mb-10">
-                                    <div className={`w-16 h-16 ${selectedFeature.bg} rounded-2xl flex items-center justify-center text-4xl ${selectedFeature.color}`}>
+                                    <div className={`w-16 h-16 ${selectedFeature.bg} rounded-2xl flex items-center justify-center text-4xl ${selectedFeature.color} shadow-sm`}>
                                         {selectedFeature.icon}
                                     </div>
                                     <div>
-                                        <p className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-1 font-['Outfit']">
+                                        <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-1 font-['Outfit']">
                                             {selectedFeature.miniTitle}
                                         </p>
                                         <h3 className="text-3xl font-black text-slate-900 font-['Outfit'] tracking-tight">
@@ -156,7 +156,7 @@ const StudentEcosystem = () => {
                                     {selectedFeature.details.map((detail, idx) => (
                                         <div key={idx} className="flex items-start gap-4 group">
                                             <div className="mt-1 flex-shrink-0">
-                                                <FaCheckCircle className="text-[#fca96d]/40 group-hover:text-[#fca96d] transition-colors" size={16} />
+                                                <FaCheckCircle className="text-[#F5AFAF]/40 group-hover:text-[#F5AFAF] transition-colors" size={16} />
                                             </div>
                                             <div>
                                                 <h4 className="text-sm font-black text-slate-900 mb-1 font-['Outfit']">{detail.label}</h4>
@@ -172,7 +172,7 @@ const StudentEcosystem = () => {
                                     </p>
                                     <button
                                         onClick={() => setSelectedFeature(null)}
-                                        className="bg-slate-900 hover:bg-[#fca96d] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 font-['Outfit']"
+                                        className="bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 font-['Outfit']"
                                     >
                                         Return to Ecosystem
                                     </button>

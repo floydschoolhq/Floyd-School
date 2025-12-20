@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaLinkedinIn, FaBuilding, FaGlobe, FaGoogle, FaAmazon, FaMicrosoft } from 'react-icons/fa';
-import api from '../api/axios';
+import { Headphones, MessageSquare, PlayCircle, Star, Award, Briefcase } from 'lucide-react';
+
+const FeatureItem = ({ icon: Icon, title, desc }) => (
+    <motion.div
+        whileHover={{ x: 10 }}
+        className="flex items-center gap-6 p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800 hover:border-[#F5AFAF]/30 transition-all group"
+    >
+        <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:bg-[#F5AFAF] group-hover:text-white transition-all duration-300">
+            <Icon size={20} />
+        </div>
+        <div className="flex flex-col">
+            <span className="text-sm font-black text-slate-100 uppercase tracking-widest font-['Outfit']">{title}</span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">{desc}</span>
+        </div>
+    </motion.div>
+);
 
 const Faculty = () => {
     const [mentors, setMentors] = useState([]);
@@ -25,17 +40,70 @@ const Faculty = () => {
     }, []);
 
     return (
-        <section className="bg-slate-50 py-24 font-['Inter']">
+        <section className="bg-[#FCF8F8] py-24 font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <p className="text-[#fca96d] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Distinguished Faculty</p>
+                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Distinguished Faculty</p>
                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
-                        Industry Visionaries & <span className="text-[#fca96d]">Engineering</span> Leaders
+                        Industry Visionaries & <span className="text-[#F5AFAF]">Engineering</span> Leaders
                     </h2>
-                    <p className="text-sm font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-base font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
                         Our mentorship ecosystem is powered by veterans from the world's most innovative technology conglomerates, bringing decades of production experience to your learning journey.
                     </p>
                 </div>
+
+                {/* Feature Showcase Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-24 bg-slate-900 rounded-[3.5rem] p-8 lg:p-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] relative overflow-hidden group"
+                >
+                    {/* Background Decorative Pattern */}
+                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#F5AFAF 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+                    <div className="flex flex-col lg:flex-row gap-12 items-center relative z-10">
+                        {/* Video Side */}
+                        <div className="w-full lg:w-1/2 aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-800 relative bg-slate-800">
+                            <video
+                                src="/Untitled video - Made with Clipchamp.mp4"
+                                className="w-full h-full object-cover"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent pointer-events-none" />
+                            <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                                <span className="text-[10px] font-black text-white uppercase tracking-[0.2em] font-['Outfit']">Live Session Sample</span>
+                            </div>
+                        </div>
+
+                        {/* Features Side */}
+                        <div className="w-full lg:w-1/2 space-y-4">
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <FeatureItem icon={Headphones} title="1:1 Support" desc="Instant Mentor Access" />
+                                <FeatureItem icon={MessageSquare} title="Post-Class Chat" desc="24/7 Doubt Clearance" />
+                                <FeatureItem icon={PlayCircle} title="Live Classes" desc="Interactive Coding" />
+                                <FeatureItem icon={Star} title="Expert sessions" desc="Industry Insights" />
+                                <FeatureItem icon={Award} title="Certifications" desc="Global Recognition" />
+                                <FeatureItem icon={Briefcase} title="Hands-On Projects" desc="Production Systems" />
+                            </div>
+
+                            <div className="pt-6 border-t border-slate-800 flex justify-between items-center sm:flex-row flex-col gap-4">
+                                <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest font-['Outfit']">Complete Learning Ecosystem</p>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-6 py-2.5 rounded-full bg-[#F5AFAF] text-white text-[10px] font-black uppercase tracking-[0.2em] font-['Outfit'] shadow-lg shadow-[#F5AFAF]/20"
+                                >
+                                    Explore Program
+                                </motion.button>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {mentors.map((mentor, index) => (
@@ -80,8 +148,8 @@ const Faculty = () => {
 
                             <div className="p-6">
                                 <h3 className="text-xl font-black text-slate-900 mb-1 font-['Outfit']">{mentor.name}</h3>
-                                <p className="text-sm text-[#fca96d] font-black mb-3 font-['Outfit'] uppercase tracking-wider">{mentor.role}</p>
-                                <p className="text-slate-500 text-sm mb-6 leading-relaxed font-medium">
+                                <p className="text-sm text-[#F5AFAF] font-black mb-3 font-['Outfit'] uppercase tracking-wider">{mentor.role}</p>
+                                <p className="text-slate-600 text-sm mb-6 leading-relaxed font-medium">
                                     {mentor.bio}
                                 </p>
 

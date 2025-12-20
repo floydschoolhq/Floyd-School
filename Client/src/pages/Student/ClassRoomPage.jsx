@@ -145,7 +145,7 @@ const ClassroomPage = () => {
         className="mb-8 font-['Inter']"
       >
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
-          My Classroom <span className="text-[#fca96d]">Resources</span>
+          My Classroom <span className="text-[#F5AFAF]">Resources</span>
         </h1>
         <p className="text-sm font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
       </motion.div>
@@ -155,7 +155,7 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="mb-10 bg-gradient-to-r from-[#fca96d] to-orange-500 rounded-2xl p-0.5 shadow-xl shadow-[#fca96d]/10"
+          className="mb-10 bg-gradient-to-r from-[#F5AFAF] to-[#F5AFAF] rounded-2xl p-0.5 shadow-xl shadow-[#F5AFAF]/10"
         >
           <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -236,7 +236,7 @@ const ClassroomPage = () => {
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center text-white bg-slate-900 gap-6 p-8 text-center bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/60">
                     <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 animate-pulse">
-                      <PlayCircle size={40} className="text-[#fca96d]" />
+                      <PlayCircle size={40} className="text-[#F5AFAF]" />
                     </div>
                     <div>
                       <h3 className="text-2xl font-black uppercase tracking-tight mb-2">External Live Session</h3>
@@ -246,7 +246,7 @@ const ClassroomPage = () => {
                       href={activeLiveClass.meetingLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 bg-[#fca96d] text-slate-900 px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#fca96d]/20 flex items-center gap-3"
+                      className="mt-2 bg-[#F5AFAF] text-slate-900 px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#F5AFAF]/20 flex items-center gap-3"
                     >
                       Join Meeting Now <CheckCircle size={16} />
                     </a>
@@ -279,7 +279,7 @@ const ClassroomPage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GradientCard gradient="from-sky-500 via-blue-500 to-indigo-500">
+              <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className={`w-3 h-3 rounded-full ${course.modules?.some(m => !m.completed)
@@ -294,7 +294,7 @@ const ClassroomPage = () => {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className="text-[10px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
-                      <div className="text-lg font-black text-[#fca96d]">
+                      <div className="text-lg font-black text-[#F5AFAF]">
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
                     </div>
@@ -334,7 +334,7 @@ const ClassroomPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GradientCard gradient="from-purple-500 to-indigo-500">
+              <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
@@ -371,9 +371,9 @@ const ClassroomPage = () => {
           </div>
           Integration Sessions
         </h2>
-        <GradientCard gradient="from-emerald-500 to-cyan-500">
+        <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="text-center py-8">
-            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#fca96d] opacity-50" />
+            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#F5AFAF] opacity-50" />
             <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
             <p className="text-sm font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
             <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10">

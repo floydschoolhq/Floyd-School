@@ -10,29 +10,29 @@ const Course = () => {
             title: "AI & Machine Learning",
             icon: Cpu,
             description: "Students explore how AI identifies patterns and makes predictions. They train simple models and understand how intelligent systems respond to different inputs.",
-            color: "text-[#fca96d]",
-            bg: "bg-[#fca96d]/10",
+            color: "text-[#F5AFAF]",
+            bg: "bg-[#FBEFEF]",
         },
         {
             title: "Cybersecurity",
             icon: ShieldCheck,
-            description: "Students learn about digital safety, online risks, and protective measures. Ethical hacking simulations help them understand how cyberattacks happen and how to defend against them.",
-            color: "text-slate-800",
-            bg: "bg-slate-100",
+            description: "Students learn about digital safety, online risks, and protective measures. Ethical hacking simulations help them understand how cyberattacks happen.",
+            color: "text-[#2D2D2D]",
+            bg: "bg-[#FBEFEF]",
         },
         {
             title: "IoT & Robotics",
             icon: Zap,
-            description: "Students work with sensors, microcontrollers, and automation. They observe how devices interact and build simple automated systems rooted in IoT concepts.",
-            color: "text-black",
-            bg: "bg-gray-100",
+            description: "Students work with sensors, microcontrollers, and automation. They observe how devices interact and build simple automated systems.",
+            color: "text-[#F5AFAF]",
+            bg: "bg-[#FBEFEF]",
         },
         {
             title: "Web/App Development",
             icon: Code,
             description: "Students learn the structure of digital products by designing basic web layouts and understanding how user interfaces connect logically.",
-            color: "text-[#fca96d]",
-            bg: "bg-[#fca96d]/10",
+            color: "text-[#2D2D2D]",
+            bg: "bg-[#FBEFEF]",
         },
     ];
 
@@ -62,20 +62,20 @@ const Course = () => {
     };
 
     return (
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-16 md:py-24 bg-[#FCF8F8] font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
                 {/* Header and Introduction */}
                 <motion.h2
-                    className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4"
+                    className="text-5xl md:text-6xl font-black text-slate-900 mb-6 font-['Outfit'] tracking-tighter"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    Our Core Technology Programs
+                    Core <span className="text-[#F5AFAF]">Technology</span> Programs
                 </motion.h2>
                 <motion.p
-                    className="text-xl text-gray-600 mb-16 max-w-4xl mx-auto"
+                    className="text-lg text-slate-600 mb-20 max-w-2xl mx-auto font-medium leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -95,17 +95,17 @@ const Course = () => {
                     {courseData.map((course, index) => (
                         <motion.div
                             key={index}
-                            className={`flex flex-col text-left p-6 rounded-2xl shadow-xl transition-all duration-300 border-t-4 border-b-4 border-transparent hover:border-blue-500 hover:shadow-2xl`}
+                            className={`flex flex-col text-left p-8 rounded-[2.5rem] bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] hover:border-[#F5AFAF]/20`}
                             variants={cardVariants}
                             whileHover={{ scale: 1.05, translateY: -5 }} // Interactive lift on hover
                         >
-                            <div className={`p-4 rounded-xl mb-4 w-fit ${course.bg} ${course.color}`}>
+                            <div className={`p-4 rounded-2xl mb-6 w-fit ${course.bg} ${course.color} shadow-sm`}>
                                 <course.icon className="w-8 h-8" />
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                            <h3 className="text-2xl font-black text-slate-900 mb-4 font-['Outfit'] tracking-tight">
                                 {course.title}
                             </h3>
-                            <p className="text-gray-700 leading-relaxed grow">
+                            <p className="text-slate-600 leading-relaxed grow text-sm font-medium">
                                 {course.description}
                             </p>
                         </motion.div>

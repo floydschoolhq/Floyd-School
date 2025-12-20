@@ -42,8 +42,8 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-white p-8 relative overflow-hidden font-['Inter']">
       {/* Background Accents */}
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#fca96d]/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#F5AFAF]/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-[#FBEFEF]/40 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Header */}
       <div className="relative z-10 flex items-center justify-between mb-12">
@@ -53,7 +53,7 @@ const StudentDashboard = () => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-2 mb-3"
           >
-            <div className="w-2 h-2 rounded-full bg-[#fca96d]" />
+            <div className="w-2 h-2 rounded-full bg-[#F5AFAF]" />
             <p className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-400 font-['Outfit']">
               Standardized Access: {user?.name}
             </p>
@@ -64,7 +64,7 @@ const StudentDashboard = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl font-black text-slate-900 tracking-tighter font-['Outfit']"
           >
-            Learning <span className="text-[#fca96d]">Odyssey</span>
+            Learning <span className="text-[#F5AFAF]">Odyssey</span>
           </motion.h1>
         </div>
         <div className="flex items-center gap-4">
@@ -89,38 +89,38 @@ const StudentDashboard = () => {
           title="Active Modules"
           value={dashboardData?.stats?.enrolledCourses || 0}
           icon={BookOpen}
-          gradient="from-slate-900 to-slate-800"
+          gradient="from-[#F5AFAF] to-[#F5AFAF]"
         />
         <StatCard
           title="Pending Deliverables"
           value={dashboardData?.stats?.pendingAssignments || 0}
           icon={Clock}
-          gradient="from-[#fca96d] to-orange-600"
+          gradient="from-[#2D2D2D] to-[#1A1A1A]"
         />
         <StatCard
           title="Milestones Reached"
           value={dashboardData?.stats?.completedAssignments || 0}
           icon={Award}
-          gradient="from-emerald-500 to-teal-600"
+          gradient="from-[#F5AFAF] to-[#F5AFAF]"
         />
         <StatCard
           title="Capability Level"
           value={`${dashboardData?.overallProgress || 0}%`}
           icon={TrendingUp}
-          gradient="from-blue-600 to-indigo-700"
+          gradient="from-[#2D2D2D] to-[#1A1A1A]"
         />
       </div>
 
       {/* Main Content Grid */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Course Progress */}
-        <GradientCard className="lg:col-span-1" gradient="from-[#fca96d] to-orange-600">
+        <GradientCard className="lg:col-span-1" gradient="from-[#F5AFAF] to-[#F5AFAF]">
           <h3 className="text-xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']">Progression Metrics</h3>
           <div className="flex justify-center p-6 bg-slate-50/50 rounded-[1.5rem] border border-slate-100 shadow-inner">
             <ProgressChart
               progress={dashboardData?.overallProgress || 0}
               subtitle={`${dashboardData?.completedModules || 0} of ${dashboardData?.totalModules || 0} modules completed`}
-              color="#fca96d"
+              color="#F5AFAF"
             />
           </div>
         </GradientCard>
@@ -139,7 +139,7 @@ const StudentDashboard = () => {
                 <motion.div
                   key={assignment._id}
                   whileHover={{ x: 4 }}
-                  className="p-5 bg-slate-50 border border-slate-100 rounded-[1.5rem] hover:border-[#fca96d]/30 transition-all shadow-sm"
+                  className="p-5 bg-white border border-[#FBEFEF] rounded-[1.5rem] hover:border-[#F5AFAF]/30 transition-all shadow-sm"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
@@ -147,7 +147,7 @@ const StudentDashboard = () => {
                       <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">{assignment.course?.title}</p>
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 px-3 py-1 bg-white border border-slate-100 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500">
-                          <Clock className="w-3 h-3 text-[#fca96d]" />
+                          <Clock className="w-3 h-3 text-[#F5AFAF]" />
                           Due: {new Date(assignment.dueDate).toLocaleDateString()}
                         </div>
                         <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm ${new Date(assignment.dueDate) > new Date()
@@ -158,7 +158,7 @@ const StudentDashboard = () => {
                         </span>
                       </div>
                     </div>
-                    <button className="px-6 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#fca96d] transition-all shadow-lg hover:shadow-[#fca96d]/20 active:scale-95">
+                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#F5AFAF] transition-all shadow-lg hover:shadow-[#F5AFAF]/20 active:scale-95">
                       Initialize
                     </button>
                   </div>
@@ -185,14 +185,14 @@ const StudentDashboard = () => {
             dashboardData.courses.map((course) => (
               <GradientCard
                 key={course._id}
-                gradient="from-blue-600 to-indigo-700"
+                gradient="from-[#F5AFAF] to-[#F9DFDF]"
                 className="hover:scale-[1.02] transition-all duration-500 cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1 pr-4">
                     <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
-                    <p className="text-[10px] font-black text-[#fca96d] uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-[#fca96d]" /> {course.instructor?.name}
+                    <p className="text-[10px] font-black text-[#F5AFAF] uppercase tracking-widest flex items-center gap-2">
+                      <span className="w-1 h-1 rounded-full bg-[#F5AFAF]" /> {course.instructor?.name}
                     </p>
                   </div>
                   <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-black uppercase tracking-widest">
@@ -212,7 +212,7 @@ const StudentDashboard = () => {
                       initial={{ width: 0 }}
                       animate={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="bg-gradient-to-r from-[#fca96d] to-orange-500 h-full rounded-full"
+                      className="bg-gradient-to-r from-[#F5AFAF] to-[#F9DFDF] h-full rounded-full"
                     />
                   </div>
                 </div>

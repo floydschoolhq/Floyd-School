@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Logo = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const navigate=useNavigate();
+    const [hasScrolled, setHasScrolled] = useState(false);
+    const navigate = useNavigate();
 
     // 2. useEffect to add and clean up the scroll listener
     useEffect(() => {
@@ -29,26 +29,26 @@ const Logo = () => {
             <div className="max-w-7xl mx-auto flex items-center justify-between space-x-4">
                 {/* Logo (Left Side) */}
                 <div className="text-xl sm:text-2xl font-extrabold text-gray-800 flex items-center">
-                    <span className='text-brand-blue'>think</span>
-                    <span className='inline-block w-2'></span>
-                    <span className='text-brand-orange'>skool</span>
+                    <span className='text-slate-900 font-["Outfit"] tracking-tighter'>think</span>
+                    <span className='inline-block w-1'></span>
+                    <span className='text-[#F5AFAF] font-["Outfit"] tracking-tighter'>skool</span>
                 </div>
-                
+
                 {/* Login Button (Right Side) */}
                 {/* Conditional rendering: Only show the button when 'hasScrolled' is true */}
                 {hasScrolled && (
                     <div className=" md:block mr-20"> {/* Hide on small screens, show on medium and large screens */}
                         <button
-                          onClick={() => navigate('/role')}
-                          className="bg-brand-orange text-white px-4 py-2 rounded-full font-semibold  shadow-lg hover:shadow-xl transition duration-300 ease-in-out cursor-pointer "
+                            onClick={() => navigate('/role')}
+                            className="bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white px-6 py-2 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg hover:shadow-xl transition duration-300 ease-in-out cursor-pointer font-['Outfit']"
                         >
-                          Login
+                            Login
                         </button>
                     </div>
                 )}
             </div>
         </div>
-  )
+    )
 }
 
 export default Logo

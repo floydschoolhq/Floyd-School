@@ -44,7 +44,7 @@ const MainLayout = ({ children }) => {
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>
                 <p className="text-sm font-black text-slate-900 leading-none font-['Outfit']">{usePortal().user?.name}</p>
               </div>
-              <div className={`p-2 rounded-xl border ${system === 'student' ? 'bg-slate-50 border-slate-100 text-[#fca96d]' : 'bg-slate-50 border-slate-100 text-indigo-500'}`}>
+              <div className={`p-2 rounded-xl border ${system === 'student' ? 'bg-slate-50 border-slate-100 text-[#F5AFAF]' : 'bg-slate-50 border-slate-100 text-[#F5AFAF]'}`}>
                 <User className="w-5 h-5" />
               </div>
             </div>

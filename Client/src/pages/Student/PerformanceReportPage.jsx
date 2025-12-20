@@ -45,29 +45,29 @@ const PerformanceReportPage = () => {
         className="mb-8 font-['Inter']"
       >
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
-          Performance <span className="text-[#fca96d]">Analytics</span>
+          Performance <span className="text-[#F5AFAF]">Analytics</span>
         </h1>
         <p className="text-sm font-medium text-slate-500">In-depth analysis of scores, participation, and skill mastery metrics.</p>
       </motion.div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 font-['Inter']">
-        <GradientCard gradient="from-emerald-500 to-teal-600">
+        <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#fca96d] mb-1 font-['Outfit']">Completed Deliverables</p>
-              <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">{stats.completedAssignments || 0}</h3>
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Completed Deliverables</p>
+              <h3 className="text-3xl font-black text-white font-['Outfit']">{stats.completedAssignments || 0}</h3>
             </div>
-            <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">
-              <Award className="w-8 h-8 text-[#fca96d]" />
+            <div className="p-3 bg-[#2D2D2D] rounded-xl shadow-sm border border-[#F5AFAF]/20">
+              <Award className="w-8 h-8 text-[#F5AFAF]" />
             </div>
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-sky-500 to-blue-600">
+        <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-sky-500 mb-1 font-['Outfit']">Average Integrity Score</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Average Integrity Score</p>
               <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">
                 {submissions.length > 0
                   ? Math.round(submissions.reduce((acc, s) => acc + (s.grade || 0), 0) / submissions.length)
@@ -75,19 +75,19 @@ const PerformanceReportPage = () => {
               </h3>
             </div>
             <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">
-              <TrendingUp className="w-8 h-8 text-sky-500" />
+              <TrendingUp className="w-8 h-8 text-[#F5AFAF]" />
             </div>
           </div>
         </GradientCard>
 
-        <GradientCard gradient="from-purple-500 to-indigo-600">
+        <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-purple-500 mb-1 font-['Outfit']">Active Specializations</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Active Specializations</p>
               <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">{stats.enrolledCourses || 0}</h3>
             </div>
             <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">
-              <Target className="w-8 h-8 text-purple-500" />
+              <Target className="w-8 h-8 text-[#F5AFAF]" />
             </div>
           </div>
         </GradientCard>
@@ -97,12 +97,12 @@ const PerformanceReportPage = () => {
         {/* Skill Breakdown */}
         <div>
           <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
-            <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
+            <div className="p-2 bg-[#FBEFEF] rounded-lg text-[#F5AFAF]">
               <BarChart3 className="w-5 h-5" />
             </div>
             Skill Competency Matrix
           </h2>
-          <GradientCard gradient="from-indigo-500 to-purple-500">
+          <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
             <div className="space-y-6">
               {skills.map((skill, index) => (
                 <motion.div
@@ -113,15 +113,15 @@ const PerformanceReportPage = () => {
                   className="space-y-2"
                 >
                   <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest">
-                    <span className="text-slate-500">{skill.name}</span>
-                    <span className="text-slate-900">{skill.score}%</span>
+                    <span className="text-[#F5AFAF]">{skill.name}</span>
+                    <span className="text-white">{skill.score}%</span>
                   </div>
                   <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${skill.score}%` }}
                       transition={{ duration: 1, delay: index * 0.1 }}
-                      className="bg-gradient-to-r from-[#fca96d] to-orange-500 h-full rounded-full"
+                      className="bg-gradient-to-r from-[#F5AFAF] to-[#F9DFDF] h-full rounded-full"
                     />
                   </div>
                 </motion.div>
@@ -133,10 +133,10 @@ const PerformanceReportPage = () => {
         {/* Note/Call to action */}
         <div className="flex flex-col justify-center font-['Inter']">
           <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#fca96d]/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
-            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight font-['Outfit']">Ready for your next <span className="text-[#fca96d]">Level?</span></h3>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#F5AFAF]/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
+            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight font-['Outfit']">Ready for your next <span className="text-[#F5AFAF]">Level?</span></h3>
             <p className="text-sm font-medium text-slate-500 mb-6 leading-relaxed">Your performance metrics indicate a strong grasp of fundamental concepts. Consider unlocking advanced engineering tracks to further accelerate your growth.</p>
-            <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 font-['Outfit'] uppercase text-xs tracking-widest">
+            <button className="px-8 py-3 bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 font-['Outfit'] uppercase text-xs tracking-widest">
               Explore Advanced Tracks
             </button>
           </div>
@@ -179,7 +179,7 @@ const PerformanceReportPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={`font-black ${submission.grade >= 90 ? 'text-emerald-500' :
-                        submission.grade >= 70 ? 'text-[#fca96d]' :
+                        submission.grade >= 70 ? 'text-[#F5AFAF]' :
                           'text-rose-500'
                         }`}>
                         {submission.grade ? `${submission.grade}%` : 'Validation Pending'}
@@ -188,7 +188,7 @@ const PerformanceReportPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-tight ${submission.status === 'graded'
                         ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                        : 'bg-orange-50 text-orange-600 border border-orange-100'
+                        : 'bg-[#FBEFEF] text-[#F5AFAF] border border-[#F5AFAF]/20'
                         }`}>
                         {submission.status}
                       </span>

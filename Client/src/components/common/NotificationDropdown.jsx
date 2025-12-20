@@ -93,7 +93,7 @@ const NotificationDropdown = () => {
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllRead}
-                                    className="text-[10px] font-black uppercase tracking-widest text-[#fca96d] hover:text-orange-500 transition-colors flex items-center gap-1"
+                                    className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] hover:text-[#2D2D2D] transition-colors flex items-center gap-1"
                                 >
                                     <Check size={12} />
                                     Mark all read
@@ -107,7 +107,7 @@ const NotificationDropdown = () => {
                                     {notifications.map((notification) => (
                                         <div
                                             key={notification._id}
-                                            className={`p-4 hover:bg-slate-50 transition-colors flex gap-3 ${!notification.read ? 'bg-orange-50/30' : ''
+                                            className={`p-4 hover:bg-slate-50 transition-colors flex gap-3 ${!notification.read ? 'bg-[#FBEFEF]/30' : ''
                                                 }`}
                                             onClick={() => !notification.read && markAsRead(notification._id)}
                                         >
@@ -128,7 +128,7 @@ const NotificationDropdown = () => {
                                             </div>
                                             {!notification.read && (
                                                 <div className="flex-shrink-0 pt-1">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500"></div>
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#F5AFAF]"></div>
                                                 </div>
                                             )}
                                         </div>

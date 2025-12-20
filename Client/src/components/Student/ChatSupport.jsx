@@ -139,14 +139,14 @@ const ChatSupport = () => {
                         className="bg-slate-950 border border-slate-800 w-80 md:w-96 rounded-[2rem] shadow-2xl overflow-hidden mb-4 flex flex-col"
                     >
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 flex justify-between items-center">
+                        <div className="bg-[#F5AFAF] p-6 flex justify-between items-center">
                             <div className="flex items-center gap-4">
-                                <div className="bg-white/10 p-2.5 rounded-2xl backdrop-blur-md border border-white/20">
-                                    <MessageSquare className="text-white w-5 h-5" />
+                                <div className="bg-slate-950/10 p-2.5 rounded-2xl backdrop-blur-md border border-slate-950/10">
+                                    <MessageSquare className="text-slate-950 w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-black text-sm uppercase tracking-tight">Growth Hotline</h3>
-                                    <p className="text-blue-100 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">
+                                    <h3 className="text-slate-950 font-black text-sm uppercase tracking-tight">Growth Hotline</h3>
+                                    <p className="text-slate-950/60 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                                         Live Architect
                                     </p>
@@ -164,7 +164,7 @@ const ChatSupport = () => {
                                 )}
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+                                    className="w-8 h-8 rounded-xl bg-slate-950/10 flex items-center justify-center text-slate-950/80 hover:text-slate-950 transition-colors"
                                 >
                                     <X size={20} />
                                 </button>
@@ -186,7 +186,7 @@ const ChatSupport = () => {
                             {!loading && messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[85%] rounded-[1.25rem] p-4 text-sm font-medium leading-relaxed ${msg.type === 'user'
-                                        ? 'bg-blue-600 text-white rounded-br-none shadow-lg shadow-blue-600/20'
+                                        ? 'bg-[#F5AFAF] text-slate-950 rounded-br-none shadow-lg shadow-[#F5AFAF]/20'
                                         : 'bg-slate-900 text-slate-200 rounded-bl-none border border-slate-800'
                                         }`}>
                                         {msg.text}
@@ -203,12 +203,12 @@ const ChatSupport = () => {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                                 placeholder="Query architecture..."
-                                className="flex-1 bg-slate-950 text-white text-xs font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-600"
+                                className="flex-1 bg-slate-950 text-white text-xs font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#F5AFAF]/50 transition-all placeholder:text-slate-600"
                             />
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim()}
-                                className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50 active:scale-95"
+                                className="bg-[#F5AFAF] hover:bg-[#F5AFAF]/90 text-slate-950 p-3 rounded-xl transition-all shadow-lg shadow-[#F5AFAF]/20 disabled:opacity-50 active:scale-95"
                             >
                                 <Send size={18} strokeWidth={3} />
                             </button>
@@ -222,7 +222,7 @@ const ChatSupport = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-[1.5rem] shadow-2xl shadow-blue-600/30 flex items-center justify-center transition-all group"
+                className="bg-[#F5AFAF] hover:bg-[#F5AFAF]/90 text-slate-950 w-16 h-16 rounded-[1.5rem] shadow-2xl shadow-[#F5AFAF]/30 flex items-center justify-center transition-all group"
             >
                 {isOpen ? <X size={28} /> : <MessageSquare size={28} className="group-hover:rotate-12 transition-transform" />}
             </motion.button>

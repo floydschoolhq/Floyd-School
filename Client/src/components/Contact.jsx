@@ -44,7 +44,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center p-4"
+            className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex justify-center items-center p-4"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -52,69 +52,63 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
             onClick={onClose}
         >
             <motion.div
-                className="bg-gray-700 w-full max-w-md p-6 rounded-xl shadow-2xl relative"
+                className="bg-white w-full max-w-md p-10 rounded-[2.5rem] shadow-2xl relative border border-[#FBEFEF]"
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
             >
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-300 hover:text-white transition"
+                    className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition"
                     aria-label="Close modal"
                 >
                     <FiX className="w-6 h-6" />
                 </button>
 
-                <h3 className="text-2xl font-black text-white mb-4 font-['Outfit']">Book Your Demo Call</h3>
-                <p className="text-gray-300 mb-6 font-medium font-['Inter']">Enter your details and select a preferred date/time.</p>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tight">Book Your <span className="text-[#F5AFAF]">Demo</span></h3>
+                <p className="text-slate-500 mb-8 font-medium font-['Inter'] text-sm">Select your preferred slot for a deep-dive session.</p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Name Input */}
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Your Name</label>
+                        <label htmlFor="name" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Your Name</label>
                         <input
                             type="text"
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Enter your name"
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
+                            placeholder="Engineering Lead"
                             required
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="date" className="block text-sm font-medium text-gray-300 mb-1">Email Id</label>
+                        <label htmlFor="email" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Email Address</label>
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder='enter your email'
-                            className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-blue-500 focus:border-blue-500"
+                            placeholder='engineering@company.com'
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
                             required
                         />
                     </div>
 
-                    {/* Date/Time Input */}
                     <div>
-                        <label htmlFor="date" className="block text-sm font-medium text-gray-300 mb-1">Preferred Date & Time</label>
+                        <label htmlFor="date" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Date & Time</label>
                         <input
                             type="datetime-local"
                             id="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
                             required
                         />
                     </div>
 
-
                     <button
                         type="submit"
-                        className="w-full inline-flex justify-center items-center space-x-2 px-6 py-3 mt-4 rounded-lg text-sm font-black transition-all duration-300 transform shadow-md uppercase tracking-widest font-['Outfit']"
-                        style={{ backgroundColor: '#fca96d', color: '#1F2937' }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        className="w-full flex justify-center items-center space-x-3 px-8 py-5 rounded-2xl bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-xl shadow-slate-200 active:scale-95 font-['Outfit']"
                     >
                         Confirm Booking
                     </button>
@@ -181,90 +175,87 @@ const Contact = () => {
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <motion.div
-                        className="bg-gray-800 p-8 md:p-16 rounded-2xl shadow-2xl text-center relative"
+                        className="bg-white p-12 md:p-24 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(245,175,175,0.15)] text-center relative border border-[#FBEFEF] overflow-hidden"
                         variants={sectionVariants}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.4 }}
                     >
+                        {/* Decorative Background */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#F5AFAF]/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+
                         {/* Back Button */}
                         <a
                             href="/"
-                            className="absolute top-4 left-4 md:top-8 md:left-8 text-white hover:text-blue-400 transition duration-300 p-3 rounded-full bg-gray-700/50 hover:bg-gray-700 z-10"
+                            className="absolute top-8 left-8 text-slate-400 hover:text-[#F5AFAF] transition duration-300 p-4 rounded-2xl bg-[#FCF8F8] border border-[#FBEFEF] group z-10"
                             aria-label="Go back to home"
                         >
-                            <FiArrowLeft className="text-2xl" />
+                            <FiArrowLeft className="text-xl group-hover:-translate-x-1 transition-transform" />
                         </a>
 
                         <motion.h2
-                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#fca96d] mb-4 font-['Outfit']"
+                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#F5AFAF] mb-4 font-['Outfit']"
                             variants={itemVariants}
                         >
-                            Global Partners
+                            Connect with us
                         </motion.h2>
                         <motion.h1
-                            className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white font-['Outfit']"
+                            className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-slate-900 font-['Outfit']"
                             variants={itemVariants}
                         >
-                            Strategic <span className="text-[#fca96d]">Inquiries</span>
+                            Ready to <span className="text-[#F5AFAF]">Succeed?</span>
                         </motion.h1>
                         <motion.p
-                            className="text-sm md:text-base text-gray-400 mb-12 max-w-2xl mx-auto font-medium leading-relaxed font-['Inter']"
+                            className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed font-['Inter']"
                             variants={itemVariants}
                         >
-                            Partner with ThinkSkool to redefine the boundaries of technical education and empower the next generation of global engineering talent.
+                            Join the elite ecosystem of ThinkSkool. Let's discuss how we can accelerate your engineering journey to industry mastery.
                         </motion.p>
 
                         {/* Contact Details Grid */}
-                        <motion.div
-                            className="flex justify-center flex-wrap gap-8 mb-12"
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ staggerChildren: 0.2 }}
-                        >
+                        <div className="flex justify-center flex-wrap gap-12 mb-16">
                             {/* Email */}
                             <motion.div
-                                className="flex items-center space-x-3"
+                                className="flex flex-col items-center gap-4 group"
                                 variants={itemVariants}
                             >
-                                <FiMail className="text-2xl text-blue-400" />
+                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:scale-110 transition-transform">
+                                    <FiMail className="text-2xl" />
+                                </div>
                                 <a
-                                    href="mailto:info@thinkskool.in"
-                                    className="text-lg font-medium text-white hover:text-blue-300 transition"
+                                    href="mailto:thinkskool.office@gmail.com"
+                                    className="text-lg font-black text-slate-900 hover:text-[#F5AFAF] transition font-['Outfit'] tracking-tight"
                                 >
-                                    thinkskool.office@gmil.com
+                                    thinkskool.office@gmail.com
                                 </a>
                             </motion.div>
 
                             {/* Phone */}
                             <motion.div
-                                className="flex items-center space-x-3"
+                                className="flex flex-col items-center gap-4 group"
                                 variants={itemVariants}
                             >
-                                <FiPhone className="text-2xl text-blue-400" />
+                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:scale-110 transition-transform">
+                                    <FiPhone className="text-2xl" />
+                                </div>
                                 <a
                                     href="tel:+918527740849"
-                                    className="text-lg font-medium text-white hover:text-blue-300 transition"
+                                    className="text-lg font-black text-slate-900 hover:text-[#F5AFAF] transition font-['Outfit'] tracking-tight"
                                 >
-                                    +91-8527740849
+                                    +91 85277 40849
                                 </a>
                             </motion.div>
-                        </motion.div>
+                        </div>
 
                         <motion.button
                             onClick={() => setIsModalOpen(true)}
-                            className="inline-flex items-center space-x-3 px-10 py-4 rounded-full text-[10px] uppercase tracking-widest font-black transition-all duration-300 transform shadow-lg font-['Outfit']"
-                            style={{ backgroundColor: '#fca96d', color: '#1F2937' }}
-                            whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(252, 169, 109, 0.4)" }}
-                            whileTap={{ scale: 0.95 }}
+                            className="inline-flex items-center space-x-4 px-12 py-6 rounded-[2rem] bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-2xl shadow-slate-200 hover:-translate-y-1 active:scale-95 font-['Outfit']"
                             variants={itemVariants}
-                            disabled={isSubmitting} // Disable while submitting
+                            disabled={isSubmitting}
                         >
-                            <FiCalendar className="text-2xl" />
-                            <span>{isSubmitting ? 'Booking...' : 'Book a Demo Call'}</span>
+                            <FiCalendar className="text-xl" />
+                            <span>{isSubmitting ? 'Architecting...' : 'Book a Demo Call'}</span>
                         </motion.button>
-
                     </motion.div>
                 </div>
 
