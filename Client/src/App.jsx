@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
 
 // Layout Components (Always visible or shared)
@@ -103,6 +103,15 @@ const App = () => {
     // 3. Check if the current path is in the hidden list
     // This returns true if the current path matches any path in the hideLayoutOnPaths array
     const shouldHideLayout = hideLayoutOnPaths.includes(location.pathname);
+
+    // 4. Scroll to top on route change or page refresh
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant' // Use 'instant' for immediate scroll on refresh, 'smooth' for navigation
+        });
+    }, [location.pathname]);
 
 
     return (
