@@ -84,7 +84,7 @@ const HowItWorksSection = () => {
     });
 
     return (
-        <section ref={containerRef} className="relative bg-[#FCF8F8] py-32 overflow-hidden border-t border-[#FBEFEF]">
+        <section id="how-it-works" ref={containerRef} className="relative bg-[#FCF8F8] py-32 overflow-hidden border-t border-[#FBEFEF]">
             {/* Header */}
             <div className="max-w-7xl mx-auto px-4 mb-24 relative z-10 text-center">
                 <motion.p

@@ -166,7 +166,13 @@ const WhyUs = () => {
                 {/* Final CTA */}
                 <div className="text-center mt-32">
                     <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-6">Ready to start this journey?</p>
-                    <button className="bg-[#2D2D2D] text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)] hover:-translate-y-1 flex items-center gap-2 mx-auto font-['Outfit'] group">
+                    <button
+                        onClick={() => {
+                            const el = document.getElementById('registration-form');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="bg-[#2D2D2D] text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)] hover:-translate-y-1 flex items-center gap-2 mx-auto font-['Outfit'] group"
+                    >
                         Enable The Ecosystem <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>

@@ -184,7 +184,7 @@ const Hero = () => {
                             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#F5AFAF] via-white/20 to-[#F5AFAF] rounded-[3rem] p-[1px] opacity-20 group-hover:opacity-100 transition-opacity duration-1000 blur-sm" />
                             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#F5AFAF] via-white/20 to-[#F5AFAF] rounded-[3rem] p-[1px] opacity-10 group-hover:opacity-40 transition-opacity duration-1000" />
 
-                            <div className="relative bg-[#0F172A]/95 backdrop-blur-3xl rounded-[3.5rem] p-8 md:p-12 overflow-hidden shadow-[0_100px_100px_-50px_rgba(0,0,0,0.8)] border border-white/5">
+                            <div id="registration-form" className="relative bg-[#0F172A]/95 backdrop-blur-3xl rounded-[3.5rem] p-8 md:p-12 overflow-hidden shadow-[0_100px_100px_-50px_rgba(0,0,0,0.8)] border border-white/5">
 
                                 {/* Background Subtle Mesh */}
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,175,175,0.08),transparent_70%)]" />
