@@ -45,8 +45,14 @@ exports.getPlatformStats = async (req, res) => {
         const newSignups = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } }).catch(() => 0);
 
         // Fetch recent activity with safety
-        const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt').catch(() => []);
-        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('instructor', 'name').select('title isActive createdAt').catch(() => []);
+        const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3)
+            .select('name role createdAt')
+            .catch(() => []);
+
+        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3)
+            .populate('instructor', 'name')
+            .select('title isActive createdAt instructor') // Must select instructor for populate
+            .catch(() => []);
 
         // Normalize events safely
         const events = [
@@ -245,10 +251,11 @@ exports.createUser = async (req, res) => {
 exports.getCourses = async (req, res) => {
     try {
         const courses = await Course.find()
-            .populate('mentor', 'name email')
+            .populate('instructor', 'name email') // Correct field is instructor, not mentor
             .sort({ createdAt: -1 });
         res.status(200).json({ success: true, courses });
     } catch (error) {
+        console.error('Course Governance Error:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
