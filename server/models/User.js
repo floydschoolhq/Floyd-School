@@ -20,7 +20,10 @@ const userSchema = new mongoose.Schema({
         enum: ['student', 'mentor', 'admin', 'growth_associate'],
         default: 'student',
     },
-    // Additional fields can be added here based on role if needed
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true,
 });

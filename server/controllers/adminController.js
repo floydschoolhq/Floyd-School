@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Lead = require('../models/Lead');
@@ -124,20 +125,27 @@ exports.deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+        // Validate ObjectId format
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ success: false, message: 'Invalid Node identity format.' });
         }
 
-        // Check if user is trying to delete themselves
-        if (req.user && user._id.toString() === req.user.id) {
-            return res.status(400).json({ success: false, message: 'Cannot delete own account via governance' });
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Node not found in ecosystem.' });
+        }
+
+        // Check if user is trying to delete themselves (Primary Controller protection)
+        const requesterId = req.user?._id?.toString() || req.user?.id;
+        if (requesterId === user._id.toString()) {
+            return res.status(400).json({ success: false, message: 'Primary Controller cannot terminate own identity.' });
         }
 
         await User.findByIdAndDelete(id);
 
-        res.status(200).json({ success: true, message: 'User deleted successfully' });
+        res.status(200).json({ success: true, message: 'Node terminated successfully.' });
     } catch (error) {
+        console.error('Termination failure:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
