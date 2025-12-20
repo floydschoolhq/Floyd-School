@@ -15,7 +15,11 @@ const notificationSchema = new mongoose.Schema({
             'course_updated',
             'submission_received',
             'live_class_started',
-            'general'
+            'general',
+            'info',
+            'success',
+            'warning',
+            'broadcast'
         ],
         required: true
     },
@@ -33,7 +37,7 @@ const notificationSchema = new mongoose.Schema({
     },
     relatedModel: {
         type: String,
-        enum: ['Assignment', 'Course', 'Submission', null]
+        enum: ['Assignment', 'Course', 'Submission', 'User', null]
     },
     isRead: {
         type: Boolean,

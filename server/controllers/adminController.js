@@ -4,6 +4,7 @@ const Course = require('../models/Course');
 const Lead = require('../models/Lead');
 const SystemLog = require('../models/SystemLog');
 const SupportTicket = require('../models/SupportTicket');
+const Notification = require('../models/Notification');
 
 /**
  * @desc    Get platform-wide statistics for Admin
@@ -17,7 +18,7 @@ exports.getPlatformStats = async (req, res) => {
         const totalMentors = await User.countDocuments({ role: 'mentor' });
         const totalAssociates = await User.countDocuments({ role: 'growth_associate' });
 
-        const activeCourses = await Course.countDocuments({ status: 'published' });
+        const activeCourses = await Course.countDocuments({ isActive: true });
         const totalLeads = await Lead.countDocuments();
 
         const openTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
@@ -33,7 +34,7 @@ exports.getPlatformStats = async (req, res) => {
 
         // Fetch recent activity
         const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt');
-        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('mentor', 'name').select('title status createdAt');
+        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('instructor', 'name').select('title isActive createdAt');
 
         // Normalize events
         const events = [
@@ -47,7 +48,7 @@ exports.getPlatformStats = async (req, res) => {
             ...recentCourses.map(c => ({
                 id: c._id,
                 type: 'System',
-                event: `Course ${c.status}: ${c.title}`,
+                event: `Course ${c.isActive ? 'Active' : 'Inactive'}: ${c.title}`,
                 time: c.createdAt,
                 severity: 'Low'
             }))
@@ -293,11 +294,10 @@ exports.broadcastNotification = async (req, res) => {
             recipient: user._id,
             title,
             message,
-            type: type || 'info', // info, warning, success, alert
-            read: false
+            type: type || 'info',
+            isRead: false
         }));
 
-        const Notification = require('../models/Notification');
         await Notification.insertMany(notifications);
 
         // Real-time emit

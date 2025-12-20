@@ -214,3 +214,70 @@ exports.getSubmissions = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to retrieve transmissions' });
     }
 };
+// @desc    Update assignment
+// @route   PUT /api/assignments/:id
+// @access  Private (Mentor/Admin)
+exports.updateAssignment = async (req, res) => {
+    try {
+        let assignment = await Assignment.findById(req.params.id);
+
+        if (!assignment) {
+            return res.status(404).json({ success: false, message: 'Assignment not found' });
+        }
+
+        // Check ownership
+        if (assignment.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ success: false, message: 'Not authorized to update this assignment' });
+        }
+
+        assignment = await Assignment.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+
+        res.status(200).json({ success: true, data: assignment });
+    } catch (error) {
+        console.error(`[AssignmentController:updateAssignment] Error: ${error.message}`);
+        res.status(500).json({ success: false, message: 'Failed to update assignment' });
+    }
+};
+
+// @desc    Delete assignment
+// @route   DELETE /api/assignments/:id
+// @access  Private (Mentor/Admin)
+exports.deleteAssignment = async (req, res) => {
+    try {
+        const assignment = await Assignment.findById(req.params.id);
+
+        if (!assignment) {
+            return res.status(404).json({ success: false, message: 'Assignment not found' });
+        }
+
+        // Check ownership
+        if (assignment.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ success: false, message: 'Not authorized to delete this assignment' });
+        }
+
+        await assignment.deleteOne();
+
+        res.status(200).json({ success: true, message: 'Assignment deleted successfully' });
+    } catch (error) {
+        console.error(`[AssignmentController:deleteAssignment] Error: ${error.message}`);
+        res.status(500).json({ success: false, message: 'Failed to delete assignment' });
+    }
+};
+
+// @desc    Get assignments for a specific course
+// @route   GET /api/assignments/course/:courseId
+// @access  Private
+exports.getAssignmentsByCourse = async (req, res) => {
+    try {
+        const assignments = await Assignment.find({ course: req.params.courseId })
+            .populate('createdBy', 'name')
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({ success: true, count: assignments.length, data: assignments });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch course assignments' });
+    }
+};
