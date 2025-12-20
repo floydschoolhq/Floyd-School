@@ -7,15 +7,15 @@ import { PortalProvider } from './components/Context/PortalProvider.jsx'
 
 
 createRoot(document.getElementById('root')).render(
-  
-    <BrowserRouter>
+
+  <BrowserRouter future={{ v7_startTransition: true }}>
     <PortalProvider>
-         
+
       <App />
-    
+
     </PortalProvider>
-    
-    </BrowserRouter>
-   
-,
+
+  </BrowserRouter>
+
+  ,
 )
