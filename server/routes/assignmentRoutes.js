@@ -11,8 +11,12 @@ const {
     getAssignmentsByCourse
 } = require('../controllers/assignmentController');
 const upload = require('../middleware/uploadMiddleware');
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { protect, adminOnly, authorize } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
+const checkMaintenance = require('../middleware/maintenanceMiddleware');
+
+router.use(protect);
+router.use(checkMaintenance('assignments'));
 
 // Get assignments (all roles)
 router.get('/', protect, getAssignments);
@@ -34,7 +38,7 @@ router.post('/upload', protect, authorize('mentor', 'admin'), upload.single('fil
     if (!req.file) {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
-    const fileUrl = `/uploads/assignments/${req.file.filename}`;
+    const fileUrl = `/ uploads / assignments / ${req.file.filename} `;
     res.status(200).json({
         success: true,
         file: {

@@ -8,10 +8,11 @@ const {
     getAllUsers,
     deleteUser,
     updateUserStatus,
-    createUser,
     getSystemLogs,
+    processSystemCommand,
     updateCourseStatus
 } = require('../controllers/adminController');
+const { getSettings, updateSettings } = require('../controllers/settingsController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 router.use(protect);
@@ -31,6 +32,11 @@ router.get('/logs', getSystemLogs);
 // Course Management Routes
 router.get('/courses', getCourses); // Assuming getCourses from controller maps to this
 router.patch('/courses/:id/status', updateCourseStatus); // Assuming updateCourseStatus exists in controller
+
+// Settings
+router.get('/settings', getSettings);
+router.patch('/settings', updateSettings);
+router.post('/system/command', processSystemCommand);
 
 // Other Admin Routes
 router.get('/leads', getLeads);

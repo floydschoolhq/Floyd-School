@@ -6,6 +6,7 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
 import NotificationDropdown from './common/NotificationDropdown';
+import MaintenanceBanner from './MaintenanceBanner';
 
 const PremiumNavbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -55,6 +56,7 @@ const PremiumNavbar = () => {
 
     return (
         <>
+            <MaintenanceBanner />
             {/* Top Banner - Tech Expert Call to Action - Now Opaque */}
             <div className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">

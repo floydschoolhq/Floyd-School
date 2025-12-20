@@ -22,7 +22,8 @@ const Sidebar = () => {
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
-        { icon: <Bell size={20} />, label: 'Broadcast', path: '/notifications' },
+        { icon: <Bell size={20} />, label: 'Broadcast', path: '/broadcast' },
+        { icon: <Settings size={20} />, label: 'System Settings', path: '/settings' },
     ];
 
     return (

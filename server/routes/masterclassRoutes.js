@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { protect, authorize } = require('../middleware/auth');
+const { protect, adminOnly, authorize } = require('../middleware/authMiddleware');
+const checkMaintenance = require('../middleware/maintenanceMiddleware');
 const masterclassController = require('../controllers/masterclassController');
+
+router.use(checkMaintenance('masterclasses'));
 
 // Public routes
 router.get('/', masterclassController.getAllMasterclasses);

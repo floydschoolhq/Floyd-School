@@ -5,11 +5,16 @@ const {
     endLiveClass,
     getActiveLiveClass
 } = require('../controllers/liveClassController');
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { protect, adminOnly, authorize } = require('../middleware/authMiddleware');
+const checkMaintenance = require('../middleware/maintenanceMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 
+// Apply global middleware for this router
+router.use(protect);
+router.use(checkMaintenance('liveClasses'));
+
 // Student & Mentor can see active classes
-router.get('/active', protect, getActiveLiveClass);
+router.get('/active', getActiveLiveClass); // 'protect' is now applied via router.use
 
 // Only Mentors can start/end classes
 router.post('/start', protect, authorize('mentor', 'admin'), validate(schemas.liveClass), startLiveClass);

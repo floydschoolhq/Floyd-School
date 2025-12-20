@@ -6,6 +6,9 @@ const {
     getSubmissionStatus
 } = require('../controllers/codeExecutionController');
 const { protect } = require('../middleware/authMiddleware');
+const checkMaintenance = require('../middleware/maintenanceMiddleware');
+
+router.use(checkMaintenance('codingLab'));
 
 // Execute code (protected route)
 router.post('/execute', protect, executeCode);

@@ -11,6 +11,7 @@ import UserGovernance from './pages/UserGovernance';
 import CourseGovernance from './pages/CourseGovernance';
 import LeadIntelligence from './pages/LeadIntelligence';
 import GlobalNotifications from './pages/GlobalNotifications';
+import SystemSettings from './pages/SystemSettings';
 import SecurityLogs from './pages/SecurityLogs';
 
 function App() {
@@ -25,11 +26,13 @@ function App() {
               <MainLayout />
             </ProtectedRoute>
           }>
-            <Route index element={<PlatformAnalytics />} />
+            <Route index element={<PlatformAnalytics />} /> {/* Keep index for default, or change to analytics */}
+            <Route path="analytics" element={<PlatformAnalytics />} />
             <Route path="users" element={<UserGovernance />} />
             <Route path="courses" element={<CourseGovernance />} />
             <Route path="leads" element={<LeadIntelligence />} />
-            <Route path="notifications" element={<GlobalNotifications />} />
+            <Route path="broadcast" element={<GlobalNotifications />} />
+            <Route path="settings" element={<SystemSettings />} />
             <Route path="logs" element={<SecurityLogs />} />
           </Route>
 
