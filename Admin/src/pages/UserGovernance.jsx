@@ -12,7 +12,8 @@ import {
     CheckCircle2,
     XCircle,
     Menu,
-    ShieldAlert
+    ShieldAlert,
+    Trash2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
