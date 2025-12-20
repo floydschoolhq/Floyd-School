@@ -147,7 +147,7 @@ const ClassroomPage = () => {
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
           My Classroom <span className="text-[#F5AFAF]">Resources</span>
         </h1>
-        <p className="text-sm font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
+        <p className="text-base font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
       </motion.div>
 
       {/* Live Class Banner */}
@@ -168,8 +168,8 @@ const ClassroomPage = () => {
                 </div>
                 <div>
                   <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
-                  <p className="text-sm font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
+                  <p className="text-base font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                  <p className="text-\[13px\] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ const ClassroomPage = () => {
                     : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
                     }`}>
                     {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
-                    <span className="text-[10px] uppercase tracking-widest">
+                    <span className="text-\[13px\] uppercase tracking-widest">
                       {myDoubt.isResolved ? 'Signal Resolved' : 'Mentor Signaled'}
                     </span>
                     {myDoubt.isResolved && (
@@ -197,14 +197,14 @@ const ClassroomPage = () => {
                   <button
                     onClick={handleRaiseHand}
                     disabled={isSignaling}
-                    className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-xs tracking-widest cursor-pointer disabled:opacity-50"
+                    className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest cursor-pointer disabled:opacity-50"
                   >
                     {isSignaling ? 'Sending Signal...' : 'Raise Hand'}
                   </button>
                 )}
                 <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
                 <div className="text-right hidden md:block mr-4">
-                  <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+                  <p className="text-\[13px\] text-slate-400 uppercase font-black tracking-widest">Started at</p>
                   <p className="text-slate-900 font-black">
                     {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
@@ -213,9 +213,9 @@ const ClassroomPage = () => {
                   href={activeLiveClass.meetingLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-xs tracking-widest cursor-pointer"
+                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-base tracking-widest cursor-pointer"
                 >
-                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] ml-2 font-black">LIVE</span>
+                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-\[13px\] ml-2 font-black">LIVE</span>
                 </a>
               </div>
             </div>
@@ -246,11 +246,11 @@ const ClassroomPage = () => {
                       href={activeLiveClass.meetingLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 bg-[#F5AFAF] text-slate-900 px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#F5AFAF]/20 flex items-center gap-3"
+                      className="mt-2 bg-[#F5AFAF] text-slate-900 px-8 py-4 rounded-2xl text-base font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#F5AFAF]/20 flex items-center gap-3"
                     >
                       Join Meeting Now <CheckCircle size={16} />
                     </a>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {new URL(activeLiveClass.meetingLink).hostname}</p>
+                    <p className="text-\[13px\] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {new URL(activeLiveClass.meetingLink).hostname}</p>
                   </div>
                 )}
               </div>
@@ -288,19 +288,19 @@ const ClassroomPage = () => {
                       }`} />
                     <div>
                       <h3 className="font-bold text-slate-800 text-lg tracking-tight">{course.title}</h3>
-                      <p className="text-xs font-medium text-slate-500">{course.instructor?.name}</p>
+                      <p className="text-base font-medium text-slate-500">{course.instructor?.name}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <div className="text-[10px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
+                      <div className="text-\[13px\] font-black tracking-widest text-slate-400 uppercase">Progress</div>
                       <div className="text-lg font-black text-[#F5AFAF]">
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
                     </div>
                     <button
                       onClick={() => window.location.href = '/student/recordings'}
-                      className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-bold transition-colors"
+                      className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-base font-bold transition-colors"
                     >
                       Study Node
                     </button>
@@ -312,7 +312,7 @@ const ClassroomPage = () => {
           {courses.length === 0 && (
             <div className="text-center py-12 text-slate-400">
               <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-30" />
-              <p className="font-medium italic text-sm">No curriculum units assigned yet.</p>
+              <p className="font-medium italic text-base">No curriculum units assigned yet.</p>
             </div>
           )}
         </div>
@@ -338,13 +338,13 @@ const ClassroomPage = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
-                    <p className="text-xs font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
-                    <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <p className="text-base font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
+                    <div className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                       <Clock className="w-3 h-3" />
                       Due: {new Date(assignment.dueDate).toLocaleDateString()}
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-tighter ${assignment.status === 'published'
+                  <span className={`px-2 py-1 rounded text-\[13px\] font-black uppercase tracking-tighter ${assignment.status === 'published'
                     ? 'bg-orange-50 text-orange-600 border border-orange-100'
                     : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                     }`}>
@@ -357,7 +357,7 @@ const ClassroomPage = () => {
           {assignments.length === 0 && (
             <div className="col-span-full text-center py-12 text-slate-400">
               <FileText className="w-16 h-16 mx-auto mb-4 opacity-30" />
-              <p className="font-medium italic text-sm">No active assignments found.</p>
+              <p className="font-medium italic text-base">No active assignments found.</p>
             </div>
           )}
         </div>
@@ -375,7 +375,7 @@ const ClassroomPage = () => {
           <div className="text-center py-8">
             <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#F5AFAF] opacity-50" />
             <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
-            <p className="text-sm font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
+            <p className="text-base font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
             <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10">
               Browse Archive
             </button>

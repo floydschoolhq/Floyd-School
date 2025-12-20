@@ -76,12 +76,12 @@ const StudentLoginPage = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="text-left">
               <h3 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-2">Access <span className="text-[#F5AFAF]">Classroom</span></h3>
-              <p className="text-slate-500 text-sm font-medium tracking-wide first-letter:uppercase">Secure gateway to elite engineering resources</p>
+              <p className="text-slate-500 text-base font-medium tracking-wide first-letter:uppercase">Secure gateway to elite engineering resources</p>
             </div>
 
             <div className="space-y-4">
               <div className="group">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Deployment Identity</label>
+                <label className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Deployment Identity</label>
                 <input
                   type="email"
                   placeholder="name@university.edu"
@@ -92,7 +92,7 @@ const StudentLoginPage = () => {
                 />
               </div>
               <div className="group">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Credential Key</label>
+                <label className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Credential Key</label>
                 <input
                   type="password"
                   placeholder="••••••••••••"
@@ -109,7 +109,7 @@ const StudentLoginPage = () => {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
               disabled={!email || !password || isSubmitting}
-              className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-[11px] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
+              className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-\[14px\] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
                 ${(!email || !password || isSubmitting)
                   ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
                   : 'bg-slate-900 text-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]'
@@ -129,7 +129,7 @@ const StudentLoginPage = () => {
             </motion.button>
 
             <div className="text-center pt-4 border-t border-slate-50">
-              <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+              <p className="text-\[14px\] font-black text-slate-400 uppercase tracking-widest">
                 Terminals offline? <Link to="/student/signup" className="text-[#F5AFAF] hover:text-slate-900 transition-colors ml-1">Establish New Identity</Link>
               </p>
             </div>
@@ -139,7 +139,7 @@ const StudentLoginPage = () => {
         {/* Floating Back Link */}
         <button
           onClick={handleExit}
-          className="mt-8 mx-auto flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors bg-white rounded-full shadow-sm hover:shadow-md border border-slate-100"
+          className="mt-8 mx-auto flex items-center gap-2 px-6 py-3 text-\[13px\] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors bg-white rounded-full shadow-sm hover:shadow-md border border-slate-100"
         >
           <LogOutIcon size={12} className="rotate-180" /> Return to Base
         </button>

@@ -78,12 +78,12 @@ const StudentSignupPage = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="text-left">
                             <h3 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-2">Build Your <span className="text-[#F5AFAF]">Profile</span></h3>
-                            <p className="text-slate-500 text-sm font-medium tracking-wide">Initialize your journey into master-level engineering</p>
+                            <p className="text-slate-500 text-base font-medium tracking-wide">Initialize your journey into master-level engineering</p>
                         </div>
 
                         <div className="space-y-4">
                             <div className="group">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Full Legal Name</label>
+                                <label className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Full Legal Name</label>
                                 <input
                                     type="text"
                                     placeholder="Engineer Name"
@@ -94,7 +94,7 @@ const StudentSignupPage = () => {
                                 />
                             </div>
                             <div className="group">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Communication Node (Email)</label>
+                                <label className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Communication Node (Email)</label>
                                 <input
                                     type="email"
                                     placeholder="name@university.edu"
@@ -105,7 +105,7 @@ const StudentSignupPage = () => {
                                 />
                             </div>
                             <div className="group">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Access Cipher (Password)</label>
+                                <label className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block font-['Outfit']">Access Cipher (Password)</label>
                                 <input
                                     type="password"
                                     placeholder="••••••••••••"
@@ -122,7 +122,7 @@ const StudentSignupPage = () => {
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.98 }}
                             disabled={!name || !email || !password || isSubmitting}
-                            className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-[11px] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
+                            className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-\[14px\] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
                                 ${(!name || !email || !password || isSubmitting)
                                     ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
                                     : 'bg-slate-900 text-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]'
@@ -142,7 +142,7 @@ const StudentSignupPage = () => {
                         </motion.button>
 
                         <div className="text-center pt-4 border-t border-slate-50">
-                            <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                            <p className="text-\[14px\] font-black text-slate-400 uppercase tracking-widest">
                                 Identity confirmed? <Link to="/student/login" className="text-[#F5AFAF] hover:text-slate-900 transition-colors ml-1">Access Terminal</Link>
                             </p>
                         </div>
@@ -152,7 +152,7 @@ const StudentSignupPage = () => {
                 {/* Floating Back Link */}
                 <button
                     onClick={handleExit}
-                    className="mt-8 mx-auto flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors bg-white rounded-full shadow-sm hover:shadow-md border border-slate-100"
+                    className="mt-8 mx-auto flex items-center gap-2 px-6 py-3 text-\[13px\] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors bg-white rounded-full shadow-sm hover:shadow-md border border-slate-100"
                 >
                     <LogOutIcon size={12} className="rotate-180" /> Abort Initialization
                 </button>

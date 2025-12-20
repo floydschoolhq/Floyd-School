@@ -149,8 +149,8 @@ const ChatSupport = () => {
                                     <MessageSquare className="text-slate-950 w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h3 className="text-slate-950 font-black text-sm uppercase tracking-tight">Growth Hotline</h3>
-                                    <p className="text-slate-950/60 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">
+                                    <h3 className="text-slate-950 font-black text-base uppercase tracking-tight">Growth Hotline</h3>
+                                    <p className="text-slate-950/60 text-\[13px\] font-bold flex items-center gap-1 uppercase tracking-widest">
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                                         Live Architect
                                     </p>
@@ -183,13 +183,13 @@ const ChatSupport = () => {
                             {loading && (
                                 <div className="flex flex-col items-center justify-center h-full text-slate-500 gap-2">
                                     <Loader2 className="animate-spin" size={24} />
-                                    <span className="text-[10px] font-black uppercase tracking-widest">Syncing Nodes...</span>
+                                    <span className="text-\[13px\] font-black uppercase tracking-widest">Syncing Nodes...</span>
                                 </div>
                             )}
 
                             {!loading && messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[85%] rounded-[1.25rem] p-4 text-sm font-medium leading-relaxed ${msg.type === 'user'
+                                    <div className={`max-w-[85%] rounded-[1.25rem] p-4 text-base font-medium leading-relaxed ${msg.type === 'user'
                                         ? 'bg-[#F5AFAF] text-slate-950 rounded-br-none shadow-lg shadow-[#F5AFAF]/20'
                                         : 'bg-slate-900 text-slate-200 rounded-bl-none border border-slate-800'
                                         }`}>
@@ -212,7 +212,7 @@ const ChatSupport = () => {
                                     }
                                 }}
                                 placeholder="Query architecture..."
-                                className="flex-1 bg-slate-950 text-white text-xs font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#F5AFAF]/50 transition-all placeholder:text-slate-600"
+                                className="flex-1 bg-slate-950 text-white text-base font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#F5AFAF]/50 transition-all placeholder:text-slate-600"
                             />
                             <button
                                 onClick={handleSend}

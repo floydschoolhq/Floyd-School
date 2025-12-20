@@ -60,7 +60,7 @@ export
     `}
     >
       <Icon className={`w-5 h-5 mr-3 transition-colors ${currentView === view ? 'text-white' : 'text-slate-400 group-hover:text-[#F5AFAF]'}`} />
-      <span className="text-sm font-black tracking-tight">{title}</span>
+      <span className="text-base font-black tracking-tight">{title}</span>
     </button>
   );
 

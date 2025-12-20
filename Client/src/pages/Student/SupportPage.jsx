@@ -134,12 +134,12 @@ const SupportPage = () => {
                     <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit'] italic">
                         Technical <span className="text-sky-500">Concierge</span>
                     </h1>
-                    <p className="text-sm font-medium text-slate-500">Direct integration with growth architects for proprietary support.</p>
+                    <p className="text-base font-medium text-slate-500">Direct integration with growth architects for proprietary support.</p>
                 </motion.div>
 
                 <button
                     onClick={() => setShowNewTicketModal(true)}
-                    className="bg-slate-900 text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
+                    className="bg-slate-900 text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-\[13px\] flex items-center gap-2 hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
                 >
                     <Plus size={16} /> Raise Ticket
                 </button>
@@ -159,18 +159,18 @@ const SupportPage = () => {
                                     }`}
                             >
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${ticket.status === 'open' ? 'bg-emerald-50 text-emerald-600' :
+                                    <div className={`px-3 py-1 rounded-full text-\[11px\] font-black uppercase tracking-widest ${ticket.status === 'open' ? 'bg-emerald-50 text-emerald-600' :
                                             ticket.status === 'in-progress' ? 'bg-sky-50 text-sky-600' :
                                                 'bg-slate-100 text-slate-500'
                                         }`}>
                                         {ticket.status}
                                     </div>
-                                    <div className="text-[8px] font-black text-slate-400 uppercase">
+                                    <div className="text-\[11px\] font-black text-slate-400 uppercase">
                                         {new Date(ticket.createdAt).toLocaleDateString()}
                                     </div>
                                 </div>
                                 <h3 className="font-bold text-slate-900 mb-2 truncate font-['Outfit']">{ticket.subject}</h3>
-                                <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                <div className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                                     <MessageSquare size={12} />
                                     {ticket.messages.length} Correspondence
                                 </div>
@@ -179,7 +179,7 @@ const SupportPage = () => {
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center p-12 bg-white rounded-[3rem] border-4 border-dashed border-slate-100 text-center">
                             <LifeBuoy size={48} className="text-slate-200 mb-4" />
-                            <p className="text-slate-400 text-xs font-black uppercase tracking-widest">No Active Tickets</p>
+                            <p className="text-slate-400 text-base font-black uppercase tracking-widest">No Active Tickets</p>
                         </div>
                     )}
                 </div>
@@ -196,14 +196,14 @@ const SupportPage = () => {
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-black text-slate-900 font-['Outfit']">{selectedTicket.subject}</h2>
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                        <div className="flex items-center gap-2 text-\[13px\] font-bold text-slate-400 uppercase tracking-widest">
                                             <div className={`w-2 h-2 rounded-full ${selectedTicket.assignedTo ? 'bg-emerald-500' : 'bg-yellow-500 animate-pulse'}`} />
                                             {selectedTicket.assignedTo ? 'Connected with Architect' : 'Awaiting Assignment'}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <div className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border ${selectedTicket.priority === 'urgent' ? 'bg-rose-50 border-rose-100 text-rose-500' :
+                                    <div className={`px-4 py-2 rounded-xl text-\[13px\] font-black uppercase tracking-widest border ${selectedTicket.priority === 'urgent' ? 'bg-rose-50 border-rose-100 text-rose-500' :
                                             'bg-slate-50 border-slate-100 text-slate-500'
                                         }`}>
                                         {selectedTicket.priority} Priority
@@ -214,8 +214,8 @@ const SupportPage = () => {
                             {/* Messages */}
                             <div className="flex-1 overflow-y-auto p-8 space-y-6 custom-scrollbar">
                                 <div className="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Original Inquiry</p>
-                                    <p className="text-sm font-medium text-slate-700 leading-relaxed">{selectedTicket.issue}</p>
+                                    <p className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest mb-2">Original Inquiry</p>
+                                    <p className="text-base font-medium text-slate-700 leading-relaxed">{selectedTicket.issue}</p>
                                 </div>
 
                                 {selectedTicket.messages.map((msg, idx) => (
@@ -229,8 +229,8 @@ const SupportPage = () => {
                                                 ? 'bg-slate-900 text-white rounded-br-none'
                                                 : 'bg-slate-100 text-slate-700 rounded-bl-none'
                                             }`}>
-                                            <p className="text-sm font-medium leading-relaxed">{msg.text}</p>
-                                            <p className={`text-[8px] mt-2 font-black uppercase tracking-widest ${msg.sender === currentUser?._id ? 'text-white/40' : 'text-slate-400'
+                                            <p className="text-base font-medium leading-relaxed">{msg.text}</p>
+                                            <p className={`text-\[11px\] mt-2 font-black uppercase tracking-widest ${msg.sender === currentUser?._id ? 'text-white/40' : 'text-slate-400'
                                                 }`}>
                                                 {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                             </p>
@@ -248,7 +248,7 @@ const SupportPage = () => {
                                         placeholder="Type your message..."
                                         value={newMessage}
                                         onChange={(e) => setNewMessage(e.target.value)}
-                                        className="w-full bg-white border-2 border-slate-100 rounded-2xl p-4 pr-16 text-sm font-bold outline-none focus:border-sky-500 transition-all placeholder:text-slate-300 shadow-lg shadow-slate-200/20"
+                                        className="w-full bg-white border-2 border-slate-100 rounded-2xl p-4 pr-16 text-base font-bold outline-none focus:border-sky-500 transition-all placeholder:text-slate-300 shadow-lg shadow-slate-200/20"
                                     />
                                     <button
                                         type="submit"
@@ -266,7 +266,7 @@ const SupportPage = () => {
                                 <MessageCircle size={40} />
                             </div>
                             <h2 className="text-2xl font-black text-slate-900 font-['Outfit'] mb-2">Select a channel</h2>
-                            <p className="text-sm text-slate-400 font-medium max-w-xs">Initialize a correspondence to resolve technical roadblocks.</p>
+                            <p className="text-base text-slate-400 font-medium max-w-xs">Initialize a correspondence to resolve technical roadblocks.</p>
                         </div>
                     )}
                 </div>
@@ -293,7 +293,7 @@ const SupportPage = () => {
 
                             <form onSubmit={handleCreateTicket} className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Subject Matter</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Subject Matter</label>
                                     <input
                                         required
                                         placeholder="e.g. Authentication Node Error"
@@ -304,7 +304,7 @@ const SupportPage = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Technical Details</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Technical Details</label>
                                     <textarea
                                         required
                                         rows={4}
@@ -316,14 +316,14 @@ const SupportPage = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Priority Protocol</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Priority Protocol</label>
                                     <div className="grid grid-cols-2 gap-3">
                                         {['medium', 'urgent'].map((p) => (
                                             <button
                                                 key={p}
                                                 type="button"
                                                 onClick={() => setNewTicketData({ ...newTicketData, priority: p })}
-                                                className={`py-3 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition-all ${newTicketData.priority === p
+                                                className={`py-3 rounded-xl text-\[13px\] font-black uppercase tracking-widest border-2 transition-all ${newTicketData.priority === p
                                                         ? 'bg-sky-50 border-sky-500 text-sky-600'
                                                         : 'bg-white border-slate-100 text-slate-400'
                                                     }`}
@@ -336,7 +336,7 @@ const SupportPage = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all mt-4"
+                                    className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-\[13px\] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all mt-4"
                                 >
                                     Initialize Inquiry
                                 </button>

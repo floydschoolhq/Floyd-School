@@ -77,15 +77,15 @@ const LiveChatSidebar = ({ classId, user }) => {
             {/* Header */}
             <div className="p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-white font-black text-sm uppercase tracking-tight flex items-center gap-2">
+                    <h3 className="text-white font-black text-base uppercase tracking-tight flex items-center gap-2">
                         Class <span className="text-blue-500 font-black">Transmission</span>
                     </h3>
                     <div className="flex items-center gap-1.5 px-2 py-1 bg-blue-500/10 rounded-lg">
                         <Users size={12} className="text-blue-500" />
-                        <span className="text-[10px] font-black text-blue-500">{studentCount}</span>
+                        <span className="text-\[13px\] font-black text-blue-500">{studentCount}</span>
                     </div>
                 </div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Global Interaction Active</p>
+                <p className="text-\[13px\] font-bold text-slate-500 uppercase tracking-widest">Global Interaction Active</p>
             </div>
 
             {/* Chat Messages */}
@@ -96,18 +96,18 @@ const LiveChatSidebar = ({ classId, user }) => {
                 {messages.map((msg, idx) => (
                     <div key={idx} className="group">
                         <div className="flex items-center gap-2 mb-1.5">
-                            <span className={`text-[10px] font-black uppercase tracking-tight ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-amber-500' : 'text-slate-400'
+                            <span className={`text-\[13px\] font-black uppercase tracking-tight ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-amber-500' : 'text-slate-400'
                                 }`}>
                                 {msg.senderName}
                             </span>
                             {(msg.role === 'mentor' || msg.role === 'admin') && (
                                 <ShieldCheck size={10} className="text-amber-500" />
                             )}
-                            <span className="text-[8px] font-bold text-slate-600 ml-auto">
+                            <span className="text-\[11px\] font-bold text-slate-600 ml-auto">
                                 {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                         </div>
-                        <p className={`text-xs leading-relaxed font-medium transition-colors ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-white' : 'text-slate-300'
+                        <p className={`text-base leading-relaxed font-medium transition-colors ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-white' : 'text-slate-300'
                             }`}>
                             {msg.text}
                         </p>
@@ -117,7 +117,7 @@ const LiveChatSidebar = ({ classId, user }) => {
                 {messages.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center opacity-30 text-center space-y-4">
                         <MessageCircle size={48} className="text-slate-500" />
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Awaiting Signal...</p>
+                        <p className="text-\[13px\] font-black uppercase tracking-widest text-slate-500">Awaiting Signal...</p>
                     </div>
                 )}
             </div>
@@ -136,7 +136,7 @@ const LiveChatSidebar = ({ classId, user }) => {
                             }
                         }}
                         placeholder="Broadcast message..."
-                        className="w-full bg-slate-950 text-white text-[11px] font-bold rounded-xl pl-4 pr-12 py-3 border-2 border-slate-800 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-700"
+                        className="w-full bg-slate-950 text-white text-\[14px\] font-bold rounded-xl pl-4 pr-12 py-3 border-2 border-slate-800 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-700"
                     />
                     <button
                         type="submit"

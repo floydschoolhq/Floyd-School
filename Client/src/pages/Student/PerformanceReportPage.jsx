@@ -47,7 +47,7 @@ const PerformanceReportPage = () => {
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
           Performance <span className="text-[#F5AFAF]">Analytics</span>
         </h1>
-        <p className="text-sm font-medium text-slate-500">In-depth analysis of scores, participation, and skill mastery metrics.</p>
+        <p className="text-base font-medium text-slate-500">In-depth analysis of scores, participation, and skill mastery metrics.</p>
       </motion.div>
 
       {/* Stats Grid */}
@@ -55,7 +55,7 @@ const PerformanceReportPage = () => {
         <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Completed Deliverables</p>
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Completed Deliverables</p>
               <h3 className="text-3xl font-black text-white font-['Outfit']">{stats.completedAssignments || 0}</h3>
             </div>
             <div className="p-3 bg-[#2D2D2D] rounded-xl shadow-sm border border-[#F5AFAF]/20">
@@ -67,7 +67,7 @@ const PerformanceReportPage = () => {
         <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Average Integrity Score</p>
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Average Integrity Score</p>
               <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">
                 {submissions.length > 0
                   ? Math.round(submissions.reduce((acc, s) => acc + (s.grade || 0), 0) / submissions.length)
@@ -83,7 +83,7 @@ const PerformanceReportPage = () => {
         <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Active Specializations</p>
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#F5AFAF] mb-1 font-['Outfit']">Active Specializations</p>
               <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">{stats.enrolledCourses || 0}</h3>
             </div>
             <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">
@@ -112,7 +112,7 @@ const PerformanceReportPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="space-y-2"
                 >
-                  <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest">
+                  <div className="flex items-center justify-between text-base font-black uppercase tracking-widest">
                     <span className="text-[#F5AFAF]">{skill.name}</span>
                     <span className="text-white">{skill.score}%</span>
                   </div>
@@ -135,8 +135,8 @@ const PerformanceReportPage = () => {
           <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#F5AFAF]/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
             <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight font-['Outfit']">Ready for your next <span className="text-[#F5AFAF]">Level?</span></h3>
-            <p className="text-sm font-medium text-slate-500 mb-6 leading-relaxed">Your performance metrics indicate a strong grasp of fundamental concepts. Consider unlocking advanced engineering tracks to further accelerate your growth.</p>
-            <button className="px-8 py-3 bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 font-['Outfit'] uppercase text-xs tracking-widest">
+            <p className="text-base font-medium text-slate-500 mb-6 leading-relaxed">Your performance metrics indicate a strong grasp of fundamental concepts. Consider unlocking advanced engineering tracks to further accelerate your growth.</p>
+            <button className="px-8 py-3 bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 font-['Outfit'] uppercase text-base tracking-widest">
               Explore Advanced Tracks
             </button>
           </div>
@@ -151,16 +151,16 @@ const PerformanceReportPage = () => {
             <table className="min-w-full">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100 font-['Outfit']">
-                  <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-4 text-left text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                     Assessment
                   </th>
-                  <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-4 text-left text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                     Integrity Score
                   </th>
-                  <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-4 text-left text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                     Status
                   </th>
-                  <th className="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-4 text-left text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                     Timestamp
                   </th>
                 </tr>
@@ -174,10 +174,10 @@ const PerformanceReportPage = () => {
                     transition={{ delay: index * 0.05 }}
                     className="hover:bg-slate-50/50 transition-colors"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-base font-black text-slate-900">
                       {submission.assignment?.title || 'N/A'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-6 py-4 whitespace-nowrap text-base">
                       <span className={`font-black ${submission.grade >= 90 ? 'text-emerald-500' :
                         submission.grade >= 70 ? 'text-[#F5AFAF]' :
                           'text-rose-500'
@@ -185,15 +185,15 @@ const PerformanceReportPage = () => {
                         {submission.grade ? `${submission.grade}%` : 'Validation Pending'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-tight ${submission.status === 'graded'
+                    <td className="px-6 py-4 whitespace-nowrap text-base">
+                      <span className={`px-2 py-1 rounded text-\[13px\] font-black uppercase tracking-tight ${submission.status === 'graded'
                         ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                         : 'bg-[#FBEFEF] text-[#F5AFAF] border border-[#F5AFAF]/20'
                         }`}>
                         {submission.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-xs font-medium text-slate-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-base font-medium text-slate-500">
                       {new Date(submission.submittedAt).toLocaleDateString()}
                     </td>
                   </motion.tr>
