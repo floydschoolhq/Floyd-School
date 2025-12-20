@@ -17,6 +17,7 @@ const ChatSupport = () => {
     const [input, setInput] = useState("");
     const [ticket, setTicket] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isSending, setIsSending] = useState(false);
     const scrollRef = useRef(null);
 
     useEffect(() => {
@@ -85,10 +86,11 @@ const ChatSupport = () => {
     };
 
     const handleSend = async () => {
-        if (!input.trim() || !user) return;
+        if (!input.trim() || !user || isSending) return;
 
         const userMsg = input;
         setInput("");
+        setIsSending(true);
 
         try {
             let currentTicket = ticket;
@@ -108,6 +110,8 @@ const ChatSupport = () => {
             }
         } catch (error) {
             console.error('Chat failed:', error);
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -201,16 +205,21 @@ const ChatSupport = () => {
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey) {
+                                        e.preventDefault();
+                                        handleSend();
+                                    }
+                                }}
                                 placeholder="Query architecture..."
                                 className="flex-1 bg-slate-950 text-white text-xs font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#F5AFAF]/50 transition-all placeholder:text-slate-600"
                             />
                             <button
                                 onClick={handleSend}
-                                disabled={!input.trim()}
+                                disabled={!input.trim() || isSending}
                                 className="bg-[#F5AFAF] hover:bg-[#F5AFAF]/90 text-slate-950 p-3 rounded-xl transition-all shadow-lg shadow-[#F5AFAF]/20 disabled:opacity-50 active:scale-95"
                             >
-                                <Send size={18} strokeWidth={3} />
+                                {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} strokeWidth={3} />}
                             </button>
                         </div>
                     </motion.div>
