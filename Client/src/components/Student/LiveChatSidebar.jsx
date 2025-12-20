@@ -13,6 +13,7 @@ const LiveChatSidebar = ({ classId, user }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [studentCount, setStudentCount] = useState(0);
+    const [isSending, setIsSending] = useState(false);
     const scrollRef = useRef(null);
 
     useEffect(() => {
@@ -52,16 +53,22 @@ const LiveChatSidebar = ({ classId, user }) => {
 
     const handleSend = async (e) => {
         e.preventDefault();
-        if (!input.trim()) return;
+        if (!input.trim() || isSending) return;
+
+        setIsSending(true);
+        const messageText = input;
+        setInput('');
 
         try {
             await api.post('/live-chat', {
                 classId,
-                text: input
+                text: messageText
             });
-            setInput('');
         } catch (error) {
             console.error('Failed to send message:', error);
+            setInput(messageText); // Restore input on error
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -122,15 +129,21 @@ const LiveChatSidebar = ({ classId, user }) => {
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSend(e);
+                            }
+                        }}
                         placeholder="Broadcast message..."
                         className="w-full bg-slate-950 text-white text-[11px] font-bold rounded-xl pl-4 pr-12 py-3 border-2 border-slate-800 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-700"
                     />
                     <button
                         type="submit"
-                        disabled={!input.trim()}
+                        disabled={!input.trim() || isSending}
                         className="absolute right-1.5 top-1.5 p-2 bg-blue-600 text-white rounded-lg shadow-lg shadow-blue-600/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                     >
-                        <Send size={14} strokeWidth={3} />
+                        {isSending ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}><Send size={14} strokeWidth={3} /></motion.div> : <Send size={14} strokeWidth={3} />}
                     </button>
                 </div>
             </form>
