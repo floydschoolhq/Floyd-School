@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const http = require('http');
+const path = require('path');
 
 // Load env variables first
 dotenv.config();
@@ -62,6 +63,9 @@ app.set('io', io);
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api/auth', authRoutes);

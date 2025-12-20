@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Guide: Coding Cloud Lab Infrastructure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+        }
+
+        header {
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.025em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0ea5e9;
+            margin-top: 40px;
+            border-left: 4px solid #0ea5e9;
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #334155;
+            margin-top: 25px;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #e11d48;
+        }
+
+        .file-path {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-title {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #ef4444;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        @media print {
+            body { margin: 0; padding: 2cm; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Coding Cloud Lab</h1>
+        <p style="color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Technical Infrastructure Guide for Engineering Team</p>
+    </header>
+
+    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 40px;">
+        <p><strong>Objective:</strong> Resolve critical issues in code execution, standard input (STDIN) handling, and compiler error diagnostics to improve the overall student learning experience.</p>
+    </div>
+
+    <h2>1. Project Architecture</h2>
+    
+    <h3>Frontend Layer</h3>
+    <ul>
+        <li><strong>Primary Hub:</strong> <code>CodingLabPage.jsx</code>
+            <span class="file-path">Location: Client/src/pages/Student/CodingLabPage.jsx</span>
+        </li>
+        <li><strong>Component Library:</strong> <code>Client/src/components/ide/</code>
+            <span class="file-path">Includes: MonacoEditor, Terminal, LanguageSelector</span>
+        </li>
+    </ul>
+
+    <h3>Backend Layer</h3>
+    <ul>
+        <li><strong>Orchestration:</strong> <code>codeExecutionController.js</code>
+            <span class="file-path">Location: Server/controllers/codeExecutionController.js</span>
+        </li>
+        <li><strong>Service Integration:</strong> <code>judge0Service.js</code>
+            <span class="file-path">Location: Server/services/judge0Service.js</span>
+        </li>
+    </ul>
+
+    <h2>2. Priority Issue Domains</h2>
+
+    <h3>A. Execution Reliability</h3>
+    <p>Ensure that the Judge0 API polling logic robustly handles processing delays and network latency to avoid premature timeout errors.</p>
+
+    <h3>B. Standard Input (STDIN)</h3>
+    <p>Current input handling may fail for interactive sessions. Verify that <code>stdin</code> is correctly Base64 encoded in <code>judge0Service.js</code> before transmission.</p>
+
+    <h3>C. Diagnostic Feedback</h3>
+    <p>Students often receive generic errors. Improve the mapping between Judge0 Status IDs and user-facing messages in the frontend.</p>
+
+    <div class="alert">
+        <span class="alert-title">Critical Requirement</span>
+        <p>Ensure all code transmissions are tested against non-ASCII characters. Base64 encoding must be strictly verified for cross-language compatibility (Python, C++, Java).</p>
+    </div>
+
+    <div class="footer">
+        Generated by Antigravity AI | Project: ThinkSkool Education Platform | 2025
+    </div>
+
+    <script>
+        // Optional: Auto-trigger print dialog if opened directly
+        // window.print();
+    </script>
+</body>
+</html>

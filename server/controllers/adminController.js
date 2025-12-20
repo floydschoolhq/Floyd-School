@@ -13,43 +13,55 @@ const Notification = require('../models/Notification');
  */
 exports.getPlatformStats = async (req, res) => {
     try {
-        const totalUsers = await User.countDocuments();
-        const totalStudents = await User.countDocuments({ role: 'student' });
-        const totalMentors = await User.countDocuments({ role: 'mentor' });
-        const totalAssociates = await User.countDocuments({ role: 'growth_associate' });
+        // Use Promise.allSettled or safe defaults for maximum resilience
+        const [
+            totalUsers,
+            totalStudents,
+            totalMentors,
+            totalAssociates,
+            activeCourses,
+            totalLeads,
+            openTickets
+        ] = await Promise.all([
+            User.countDocuments().catch(() => 0),
+            User.countDocuments({ role: 'student' }).catch(() => 0),
+            User.countDocuments({ role: 'mentor' }).catch(() => 0),
+            User.countDocuments({ role: 'growth_associate' }).catch(() => 0),
+            Course.countDocuments({ isActive: true }).catch(() => 0),
+            Lead.countDocuments().catch(() => 0),
+            SupportTicket.countDocuments({ status: { $ne: 'resolved' } }).catch(() => 0)
+        ]);
 
-        const activeCourses = await Course.countDocuments({ isActive: true });
-        const totalLeads = await Lead.countDocuments();
+        // Calculate Total Enrollments safely
+        const allCourses = await Course.find().select('enrolledStudents').catch(() => []);
+        const totalEnrollments = allCourses.reduce((sum, course) => {
+            const count = Array.isArray(course.enrolledStudents) ? course.enrolledStudents.length : 0;
+            return sum + count;
+        }, 0);
 
-        const openTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
-
-        // Calculate Total Enrollments
-        const allCourses = await Course.find().select('enrolledStudents');
-        const totalEnrollments = allCourses.reduce((sum, course) => sum + course.enrolledStudents.length, 0);
-
-        // Calculate New Signups (Last 7 Days)
+        // Calculate New Signups Safely
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-        const newSignups = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } });
+        const newSignups = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } }).catch(() => 0);
 
-        // Fetch recent activity
-        const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt');
-        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('instructor', 'name').select('title isActive createdAt');
+        // Fetch recent activity with safety
+        const recentUsers = await User.find().sort({ createdAt: -1 }).limit(3).select('name role createdAt').catch(() => []);
+        const recentCourses = await Course.find().sort({ createdAt: -1 }).limit(3).populate('instructor', 'name').select('title isActive createdAt').catch(() => []);
 
-        // Normalize events
+        // Normalize events safely
         const events = [
-            ...recentUsers.map(u => ({
+            ...(recentUsers || []).map(u => ({
                 id: u._id,
                 type: 'Growth',
-                event: `New ${u.role} joined: ${u.name}`,
-                time: u.createdAt,
+                event: `New ${u.role || 'user'} joined: ${u.name || 'Anonymous'}`,
+                time: u.createdAt || new Date(),
                 severity: 'Info'
             })),
-            ...recentCourses.map(c => ({
+            ...(recentCourses || []).map(c => ({
                 id: c._id,
                 type: 'System',
-                event: `Course ${c.isActive ? 'Active' : 'Inactive'}: ${c.title}`,
-                time: c.createdAt,
+                event: `Course ${c.isActive ? 'Active' : 'Inactive'}: ${c.title || 'Untitled'}`,
+                time: c.createdAt || new Date(),
                 severity: 'Low'
             }))
         ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
@@ -70,7 +82,12 @@ exports.getPlatformStats = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error('Analytics Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Telemetric analysis failed',
+            error: error.message
+        });
     }
 };
 

@@ -130,9 +130,7 @@ const AssignmentGrading = () => {
         uploadData.append('file', file);
 
         try {
-            const res = await api.post('/assignments/upload', uploadData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            const res = await api.post('/assignments/upload', uploadData);
             setFormData(prev => ({
                 ...prev,
                 attachments: [...prev.attachments, res.data.file]
@@ -479,8 +477,8 @@ const AssignmentGrading = () => {
                                                         key={stat}
                                                         onClick={() => setFormData({ ...formData, status: stat })}
                                                         className={`flex-1 py-3 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all ${formData.status === stat
-                                                                ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
-                                                                : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300'
+                                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
+                                                            : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300'
                                                             }`}
                                                     >
                                                         {stat}
