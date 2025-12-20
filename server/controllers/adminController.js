@@ -77,10 +77,66 @@ exports.getPlatformStats = async (req, res) => {
  * @route   GET /api/admin/users
  * @access  Private/Admin
  */
-exports.listUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select('-password').sort({ createdAt: -1 });
         res.status(200).json({ success: true, users });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Get system logs for security audit
+ * @route   GET /api/admin/logs
+ * @access  Private/Admin
+ */
+exports.getSystemLogs = async (req, res) => {
+    try {
+        const { level, limit = 50 } = req.query;
+
+        let query = {};
+        if (level && level !== 'all') {
+            query.level = level;
+        }
+
+        const logs = await SystemLog.find(query)
+            .sort({ createdAt: -1 })
+            .limit(parseInt(limit))
+            .populate('user', 'name email role');
+
+        res.status(200).json({
+            success: true,
+            count: logs.length,
+            logs
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Delete user permanently
+ * @route   DELETE /api/admin/users/:id
+ * @access  Private/Admin
+ */
+exports.deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Check if user is trying to delete themselves
+        if (req.user && user._id.toString() === req.user.id) {
+            return res.status(400).json({ success: false, message: 'Cannot delete own account via governance' });
+        }
+
+        await User.findByIdAndDelete(id);
+
+        res.status(200).json({ success: true, message: 'User deleted successfully' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -160,7 +216,7 @@ exports.createUser = async (req, res) => {
  * @route   GET /api/admin/courses
  * @access  Private/Admin
  */
-exports.getAllCourses = async (req, res) => {
+exports.getCourses = async (req, res) => {
     try {
         const courses = await Course.find()
             .populate('mentor', 'name email')
@@ -200,7 +256,7 @@ exports.updateCourseStatus = async (req, res) => {
  * @route   GET /api/admin/leads
  * @access  Private/Admin
  */
-exports.getAllLeads = async (req, res) => {
+exports.getLeads = async (req, res) => {
     try {
         const leads = await Lead.find().sort({ createdAt: -1 });
         res.status(200).json({ success: true, leads });

@@ -56,6 +56,17 @@ const UserGovernance = () => {
         }
     };
 
+    const handleDeleteUser = async (id) => {
+        if (!window.confirm('PROTOCOL WARNING: This will permanently terminate the ecosystem node. Proceed?')) return;
+        try {
+            await api.delete(`/admin/users/${id}`);
+            fetchUsers();
+        } catch (err) {
+            console.error('Termination sequence failed', err);
+            alert('Failed to delete node.');
+        }
+    };
+
     const handleCreateUser = async (e) => {
         e.preventDefault();
         try {
@@ -280,7 +291,7 @@ const UserGovernance = () => {
                                             {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
                                         </button>
                                         <button
-                                            onClick={() => deleteUser(user._id)}
+                                            onClick={() => handleDeleteUser(user._id)}
                                             className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-transparent hover:border-rose-500/30"
                                             title="Terminate Node Permanently"
                                         >
