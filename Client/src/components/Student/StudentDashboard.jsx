@@ -46,7 +46,7 @@ const StudentDashboard = () => {
       <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-[#FBEFEF]/40 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="relative z-10 flex items-center justify-between mb-12">
+      <div className="relative z-20 flex items-center justify-between mb-12">
         <div>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
