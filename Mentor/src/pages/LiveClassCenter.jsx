@@ -42,6 +42,7 @@ const LiveClassCenter = () => {
     // Form state
     const [title, setTitle] = useState('');
     const [topic, setTopic] = useState('');
+    const [platform, setPlatform] = useState('youtube');
     const [meetingLink, setMeetingLink] = useState('');
     const [error, setError] = useState('');
 
@@ -121,9 +122,10 @@ const LiveClassCenter = () => {
             const res = await api.post('/live-classes/start', {
                 title,
                 topic,
+                platform,
                 meetingLink
             });
-            setActiveClass(res.data.liveClass);
+            setActiveClass(res.data);
             toast.success('Live broadcast node established');
             setTitle('');
             setTopic('');
@@ -236,6 +238,31 @@ const LiveClassCenter = () => {
                                             required
                                             className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all shadow-inner"
                                         />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Streaming Platform</label>
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                            {[
+                                                { id: 'youtube', label: 'YouTube' },
+                                                { id: 'jitsi', label: 'Jitsi Meet' },
+                                                { id: 'google-meet', label: 'Google Meet' },
+                                                { id: 'zoom', label: 'Zoom' },
+                                                { id: 'other', label: 'Other' }
+                                            ].map(p => (
+                                                <button
+                                                    key={p.id}
+                                                    type="button"
+                                                    onClick={() => setPlatform(p.id)}
+                                                    className={`px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${platform === p.id
+                                                        ? 'bg-sky-500 border-sky-500 text-white shadow-lg shadow-sky-500/20'
+                                                        : 'bg-slate-50 border-slate-200 text-slate-500 hover:border-sky-200'
+                                                        }`}
+                                                >
+                                                    {p.label}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">

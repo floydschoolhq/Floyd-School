@@ -24,6 +24,11 @@ const liveClassSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    platform: {
+        type: String,
+        enum: ['youtube', 'jitsi', 'google-meet', 'zoom', 'other'],
+        default: 'other'
+    },
     meetingLink: {
         type: String,
         required: true

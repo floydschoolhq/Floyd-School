@@ -131,7 +131,7 @@ const App = () => {
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={<MainLayout>
-                    {renderPage(usePortal().currentView, usePortal().system)}
+                    {renderPage(usePortal().currentView, usePortal())}
                 </MainLayout>} />
                 <Route path='/downloads' element={<DownloadPage />} />
 

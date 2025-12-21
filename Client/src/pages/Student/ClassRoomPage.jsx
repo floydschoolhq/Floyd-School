@@ -5,11 +5,8 @@ import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
-
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-  withCredentials: true,
-  transports: ['websocket']
-});
+import { PortalContext } from '../../components/Context/PortalProvider';
+import { useContext } from 'react';
 
 const getYouTubeId = (url) => {
   if (!url) return null;
@@ -19,6 +16,12 @@ const getYouTubeId = (url) => {
 };
 
 const ClassroomPage = () => {
+  const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
+    withCredentials: true,
+    transports: ['websocket']
+  });
+
+  const { setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
@@ -169,7 +172,7 @@ const ClassroomPage = () => {
                 <div>
                   <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
                   <p className="text-base font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
-                  <p className="text-\[13px\] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
+                  <p className="text-[13px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
                 </div>
               </div>
 
@@ -180,7 +183,7 @@ const ClassroomPage = () => {
                     : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
                     }`}>
                     {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
-                    <span className="text-\[13px\] uppercase tracking-widest">
+                    <span className="text-[13px] uppercase tracking-widest">
                       {myDoubt.isResolved ? 'Signal Resolved' : 'Mentor Signaled'}
                     </span>
                     {myDoubt.isResolved && (
@@ -204,23 +207,23 @@ const ClassroomPage = () => {
                 )}
                 <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
                 <div className="text-right hidden md:block mr-4">
-                  <p className="text-\[13px\] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+                  <p className="text-[13px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
                   <p className="text-slate-900 font-black">
                     {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
-                <a
-                  href={activeLiveClass.meetingLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    setGlobalActiveLiveClass(activeLiveClass);
+                    setView('LiveSession');
+                  }}
                   className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-base tracking-widest cursor-pointer"
                 >
-                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-\[13px\] ml-2 font-black">LIVE</span>
-                </a>
+                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[13px] ml-2 font-black">LIVE</span>
+                </button>
               </div>
             </div>
 
-            {/* YouTube Embed if applicable */}
             {/* Live Class Stream + Chat */}
             <div className="flex flex-col lg:flex-row gap-6 h-[600px] mb-12">
               <div className="flex-1 bg-black rounded-3xl overflow-hidden shadow-2xl relative group">
@@ -239,18 +242,19 @@ const ClassroomPage = () => {
                       <PlayCircle size={40} className="text-[#F5AFAF]" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-black uppercase tracking-tight mb-2">External Live Session</h3>
-                      <p className="text-slate-300 font-medium max-w-md mx-auto">This session is being hosted on an external platform. Click the button below to join the secure room.</p>
+                      <h3 className="text-2xl font-black uppercase tracking-tight mb-2">Embedded Live Session</h3>
+                      <p className="text-slate-300 font-medium max-w-md mx-auto">This session can be viewed directly within our secure terminal environment.</p>
                     </div>
-                    <a
-                      href={activeLiveClass.meetingLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => {
+                        setGlobalActiveLiveClass(activeLiveClass);
+                        setView('LiveSession');
+                      }}
                       className="mt-2 bg-[#F5AFAF] text-slate-900 px-8 py-4 rounded-2xl text-base font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#F5AFAF]/20 flex items-center gap-3"
                     >
                       Join Meeting Now <CheckCircle size={16} />
-                    </a>
-                    <p className="text-\[13px\] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {new URL(activeLiveClass.meetingLink).hostname}</p>
+                    </button>
+                    <p className="text-[13px] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {activeLiveClass.platform?.toUpperCase() || new URL(activeLiveClass.meetingLink).hostname}</p>
                   </div>
                 )}
               </div>
@@ -293,7 +297,7 @@ const ClassroomPage = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <div className="text-\[13px\] font-black tracking-widest text-slate-400 uppercase">Progress</div>
+                      <div className="text-[13px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
                       <div className="text-lg font-black text-[#F5AFAF]">
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
@@ -339,12 +343,12 @@ const ClassroomPage = () => {
                   <div className="flex-1">
                     <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
                     <p className="text-base font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
-                    <div className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-[13px] font-black text-slate-400 uppercase tracking-widest">
                       <Clock className="w-3 h-3" />
                       Due: {new Date(assignment.dueDate).toLocaleDateString()}
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded text-\[13px\] font-black uppercase tracking-tighter ${assignment.status === 'published'
+                  <span className={`px-2 py-1 rounded text-[13px] font-black uppercase tracking-tighter ${assignment.status === 'published'
                     ? 'bg-orange-50 text-orange-600 border border-orange-100'
                     : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                     }`}>

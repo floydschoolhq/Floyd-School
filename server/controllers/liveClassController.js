@@ -7,7 +7,7 @@ const User = require('../models/User');
 // @access  Private/Mentor
 exports.startLiveClass = async (req, res) => {
     try {
-        const { title, topic, meetingLink } = req.body;
+        const { title, topic, platform, meetingLink } = req.body;
 
         // Basic validation
         if (!title || !topic || !meetingLink) {
@@ -23,6 +23,7 @@ exports.startLiveClass = async (req, res) => {
         const liveClass = await LiveClass.create({
             title,
             topic,
+            platform: platform || 'other',
             meetingLink,
             mentor: req.user._id,
             mentorName: req.user.name,
