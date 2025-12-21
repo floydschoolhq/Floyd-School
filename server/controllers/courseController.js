@@ -8,7 +8,7 @@ exports.getCourses = async (req, res) => {
 
         // If user is not authenticated, return all active courses (public view)
         if (!req.user) {
-            courses = await Course.find({ isActive: true })
+            courses = await Course.find({ isActive: true, status: 'published' })
                 .populate('instructor', 'name email')
                 .select('-__v');
             return res.json(courses);
@@ -18,7 +18,7 @@ exports.getCourses = async (req, res) => {
 
         if (role === 'student') {
             // Students see courses they're enrolled in or can enroll
-            courses = await Course.find({ isActive: true })
+            courses = await Course.find({ isActive: true, status: 'published' })
                 .populate('instructor', 'name email')
                 .select('-__v');
         } else if (role === 'mentor') {

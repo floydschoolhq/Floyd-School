@@ -75,14 +75,14 @@ const Masterclasses = () => {
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                     <div className="space-y-4">
                         <div className="inline-block px-4 py-1 rounded-full bg-white border border-[#FBEFEF] shadow-sm">
-                            <span className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technical Deep Dives</span>
+                            <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technical Deep Dives</span>
                         </div>
                         <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter font-['Outfit'] leading-none">
-                            Expert Integration <span className="text-[#F5AFAF]">Sessions</span>
+                            Expert Integration <span className="text-[#2563EB]">Sessions</span>
                         </h2>
                     </div>
                     <div>
-                        <button className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:text-[#F5AFAF] hover:border-[#F5AFAF]/30 transition-all font-['Outfit'] shadow-sm hover:shadow-md">
+                        <button className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all font-['Outfit'] shadow-sm hover:shadow-md">
                             View all events <FaArrowRight className="text-[12px]" />
                         </button>
                     </div>
@@ -113,16 +113,16 @@ const Masterclasses = () => {
                                 <div className="mb-8">
                                     <div className="flex items-center gap-4 text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] font-['Outfit'] mb-4">
                                         <div className="flex items-center gap-1.5">
-                                            <FaCalendarAlt className="text-[#F5AFAF]/60" />
+                                            <FaCalendarAlt className="text-[#2563EB]/60" />
                                             {new Date(event.scheduledDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                         </div>
                                         <div className="w-1 h-1 rounded-full bg-slate-200" />
                                         <div className="flex items-center gap-1.5">
-                                            <FaClock className="text-[#F5AFAF]/60" />
+                                            <FaClock className="text-[#2563EB]/60" />
                                             {event.startTime}
                                         </div>
                                     </div>
-                                    <h3 className="text-2xl font-black text-slate-900 leading-[1.2] group-hover:text-[#F5AFAF] transition-colors font-['Outfit'] tracking-tight">
+                                    <h3 className="text-2xl font-black text-slate-900 leading-[1.2] group-hover:text-[#2563EB] transition-colors font-['Outfit'] tracking-tight">
                                         {event.title}
                                     </h3>
                                 </div>
@@ -130,7 +130,7 @@ const Masterclasses = () => {
                                 {/* Instructor Section */}
                                 <div className="flex items-center gap-4 py-6 border-y border-slate-50 mb-8">
                                     <div className="relative">
-                                        <img src={event.instructorImage} alt={event.instructorName} className="w-12 h-12 rounded-2xl object-cover ring-4 ring-slate-50 group-hover:ring-[#F5AFAF]/10 transition-all" />
+                                        <img src={event.instructorImage} alt={event.instructorName} className="w-12 h-12 rounded-2xl object-cover ring-4 ring-slate-50 group-hover:ring-[#2563EB]/10 transition-all" />
                                         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full" />
                                     </div>
                                     <div>
@@ -143,7 +143,7 @@ const Masterclasses = () => {
                                 <div className="flex items-center justify-between gap-4">
                                     <div className="flex flex-wrap gap-2 flex-1">
                                         {event.tags?.slice(0, 2).map((tag, i) => (
-                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#F5AFAF] bg-[#F5AFAF]/5 px-3 py-1.5 rounded-xl border border-[#F5AFAF]/10 font-['Outfit']">
+                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/5 px-3 py-1.5 rounded-xl border border-[#2563EB]/10 font-['Outfit']">
                                                 {tag}
                                             </span>
                                         ))}
@@ -160,7 +160,7 @@ const Masterclasses = () => {
                                         onClick={() => isRegistered ? handleUnregister(event._id) : handleRegister(event._id)}
                                         disabled={registering[event._id]}
                                         className={`w-12 h-12 flex items-center justify-center ${isRegistered ? 'bg-emerald-500' : 'bg-slate-900'
-                                            } text-white rounded-2xl hover:bg-[#F5AFAF] transition-all shadow-xl shadow-slate-900/10 active:shadow-inner disabled:opacity-50`}
+                                            } text-white rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl shadow-slate-900/10 active:shadow-inner disabled:opacity-50`}
                                     >
                                         {registering[event._id] ? (
                                             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

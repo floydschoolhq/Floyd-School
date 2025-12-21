@@ -42,7 +42,7 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-white p-8 relative overflow-hidden font-['Inter']">
       {/* Background Accents */}
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#F5AFAF]/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#2563EB]/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-[#FBEFEF]/40 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Header */}
@@ -53,9 +53,9 @@ const StudentDashboard = () => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-2 mb-3"
           >
-            <div className="w-2 h-2 rounded-full bg-[#F5AFAF]" />
+            <div className="w-2 h-2 rounded-full bg-[#2563EB]" />
             <p className="text-[13px] uppercase tracking-[0.4em] font-black text-slate-400 font-['Outfit']">
-              Standardized Access: {user?.name}
+              Welcome Back: {user?.name}
             </p>
           </motion.div>
           <motion.h1
@@ -64,7 +64,7 @@ const StudentDashboard = () => {
             transition={{ delay: 0.1 }}
             className="text-4xl font-black text-slate-900 tracking-tighter font-['Outfit']"
           >
-            Learning <span className="text-[#F5AFAF]">Odyssey</span>
+            Student <span className="text-[#2563EB]">Portal</span>
           </motion.h1>
         </div>
         <div className="flex items-center gap-4">
@@ -75,7 +75,7 @@ const StudentDashboard = () => {
               className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-lg"
             >
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <span className="text-[13px] font-black uppercase tracking-widest text-white">Neural Link Active</span>
+              <span className="text-[13px] font-black uppercase tracking-widest text-white">Live Support Active</span>
             </motion.div>
           )}
           <NotificationPanel notifications={notifications} />
@@ -89,7 +89,7 @@ const StudentDashboard = () => {
           title="Active Modules"
           value={dashboardData?.stats?.enrolledCourses || 0}
           icon={BookOpen}
-          gradient="from-[#F5AFAF] to-[#F5AFAF]"
+          gradient="from-[#2563EB] to-[#2563EB]"
         />
         <StatCard
           title="Pending Deliverables"
@@ -101,7 +101,7 @@ const StudentDashboard = () => {
           title="Milestones Reached"
           value={dashboardData?.stats?.completedAssignments || 0}
           icon={Award}
-          gradient="from-[#F5AFAF] to-[#F5AFAF]"
+          gradient="from-[#2563EB] to-[#2563EB]"
         />
         <StatCard
           title="Capability Level"
@@ -114,13 +114,13 @@ const StudentDashboard = () => {
       {/* Main Content Grid */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Course Progress */}
-        <GradientCard className="lg:col-span-1" gradient="from-[#F5AFAF] to-[#F5AFAF]">
+        <GradientCard className="lg:col-span-1" gradient="from-[#2563EB] to-[#2563EB]">
           <h3 className="text-xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']">Progression Metrics</h3>
           <div className="flex justify-center p-6 bg-slate-50/50 rounded-[1.5rem] border border-slate-100 shadow-inner">
             <ProgressChart
               progress={dashboardData?.overallProgress || 0}
               subtitle={`${dashboardData?.completedModules || 0} of ${dashboardData?.totalModules || 0} modules completed`}
-              color="#F5AFAF"
+              color="#2563EB"
             />
           </div>
         </GradientCard>
@@ -128,7 +128,7 @@ const StudentDashboard = () => {
         {/* Latest Assignments */}
         <GradientCard className="lg:col-span-2" gradient="from-slate-900 to-slate-800">
           <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">Upcoming Deployments</h3>
+            <h3 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">Upcoming Assignments</h3>
             <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl">
               <Calendar className="w-5 h-5 text-slate-900" />
             </div>
@@ -139,7 +139,7 @@ const StudentDashboard = () => {
                 <motion.div
                   key={assignment._id}
                   whileHover={{ x: 4 }}
-                  className="p-5 bg-white border border-[#FBEFEF] rounded-[1.5rem] hover:border-[#F5AFAF]/30 transition-all shadow-sm"
+                  className="p-5 bg-white border border-[#FBEFEF] rounded-[1.5rem] hover:border-[#2563EB]/30 transition-all shadow-sm"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
@@ -147,19 +147,19 @@ const StudentDashboard = () => {
                       <p className="text-[14px] font-bold text-slate-400 uppercase tracking-widest mb-4">{assignment.course?.title}</p>
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 px-3 py-1 bg-white border border-slate-100 rounded-full text-[13px] font-black uppercase tracking-widest text-slate-500">
-                          <Clock className="w-3 h-3 text-[#F5AFAF]" />
+                          <Clock className="w-3 h-3 text-[#2563EB]" />
                           Due: {new Date(assignment.dueDate).toLocaleDateString()}
                         </div>
                         <span className={`px-3 py-1 rounded-full text-[13px] font-black uppercase tracking-widest shadow-sm ${new Date(assignment.dueDate) > new Date()
                           ? 'bg-emerald-500 text-white'
-                          : 'bg-rose-500 text-white'
+                          : 'bg-blue-500 text-white'
                           }`}>
-                          {new Date(assignment.dueDate) > new Date() ? 'Operational' : 'Critical'}
+                          {new Date(assignment.dueDate) > new Date() ? 'On Track' : 'Urgent'}
                         </span>
                       </div>
                     </div>
-                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-[13px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#F5AFAF] transition-all shadow-lg hover:shadow-[#F5AFAF]/20 active:scale-95">
-                      Initialize
+                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-[13px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#2563EB] transition-all shadow-lg hover:shadow-[#2563EB]/20 active:scale-95">
+                      Start
                     </button>
                   </div>
                 </motion.div>
@@ -185,14 +185,14 @@ const StudentDashboard = () => {
             dashboardData.courses.map((course) => (
               <GradientCard
                 key={course._id}
-                gradient="from-[#F5AFAF] to-[#F9DFDF]"
+                gradient="from-[#2563EB] to-[#F9DFDF]"
                 className="hover:scale-[1.02] transition-all duration-500 cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1 pr-4">
                     <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
-                    <p className="text-[13px] font-black text-[#F5AFAF] uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-[#F5AFAF]" /> {course.instructor?.name}
+                    <p className="text-[13px] font-black text-[#2563EB] uppercase tracking-widest flex items-center gap-2">
+                      <span className="w-1 h-1 rounded-full bg-[#2563EB]" /> {course.instructor?.name}
                     </p>
                   </div>
                   <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[13px] font-black uppercase tracking-widest">
@@ -212,7 +212,7 @@ const StudentDashboard = () => {
                       initial={{ width: 0 }}
                       animate={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="bg-gradient-to-r from-[#F5AFAF] to-[#F9DFDF] h-full rounded-full"
+                      className="bg-gradient-to-r from-[#2563EB] to-[#F9DFDF] h-full rounded-full"
                     />
                   </div>
                 </div>
@@ -221,9 +221,9 @@ const StudentDashboard = () => {
           ) : (
             <div className="col-span-full text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
               <BookOpen className="w-20 h-20 mx-auto mb-6 text-slate-200" />
-              <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">Curriculum nodes offline</p>
+              <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">No courses found</p>
               <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
-                Resync Experience
+                Refresh
               </button>
             </div>
           )}

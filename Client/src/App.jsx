@@ -23,6 +23,7 @@ import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
+import SchoolPartnership from './pages/SchoolPartnership.jsx';
 
 
 
@@ -31,7 +32,6 @@ import { HeroParallaxDemo } from './components/HeroParallaxDemo';
 import { TextRevealCardPreview } from './components/TextRevealCardPreview';
 
 import Logo from './components/Logo.jsx';
-import DownloadButton from './components/DownloadButton.jsx';
 import StickyBottomBar from './components/StickyBottomBar.jsx';
 import WhyUs from './components/WhyUs.jsx';
 import Faculty from './components/Faculty.jsx';
@@ -53,9 +53,6 @@ const HomePage = () => {
             <GlobalNotificationListener />
             {/* Premium Navbar */}
             <PremiumNavbar />
-
-            {/* 2. Fixed Download Button at Bottom Right (z-50) */}
-            <DownloadButton />
 
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative pt-[64px]'>
@@ -141,6 +138,9 @@ const App = () => {
 
                 {/*Signup*/}
                 <Route path='/student/signup' element={<StudentSignupPage />} />
+
+                {/* School Partnership */}
+                <Route path='/school-partnerships' element={<SchoolPartnership />} />
             </Routes>
 
             {/* Conditional Footer Rendering */}

@@ -64,7 +64,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                     <FiX className="w-6 h-6" />
                 </button>
 
-                <h3 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tight">Book Your <span className="text-[#F5AFAF]">Demo</span></h3>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tight">Book Your <span className="text-[#2563EB]">Demo</span></h3>
                 <p className="text-slate-500 mb-8 font-medium font-['Inter'] text-sm">Select your preferred slot for a deep-dive session.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -75,7 +75,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#2563EB]/20 outline-none transition-all"
                             placeholder="Engineering Lead"
                             required
                         />
@@ -89,7 +89,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='engineering@company.com'
-                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#2563EB]/20 outline-none transition-all"
                             required
                         />
                     </div>
@@ -101,7 +101,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                             id="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 focus:ring-2 focus:ring-[#F5AFAF]/20 outline-none transition-all"
+                            className="w-full px-5 py-4 bg-[#FCF8F8] border border-[#FBEFEF] rounded-2xl text-slate-900 focus:ring-2 focus:ring-[#2563EB]/20 outline-none transition-all"
                             required
                         />
                     </div>
@@ -182,19 +182,19 @@ const Contact = () => {
                         viewport={{ once: true, amount: 0.4 }}
                     >
                         {/* Decorative Background */}
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#F5AFAF]/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#2563EB]/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
 
                         {/* Back Button */}
                         <a
                             href="/"
-                            className="absolute top-8 left-8 text-slate-400 hover:text-[#F5AFAF] transition duration-300 p-4 rounded-2xl bg-[#FCF8F8] border border-[#FBEFEF] group z-10"
+                            className="absolute top-8 left-8 text-slate-400 hover:text-[#2563EB] transition duration-300 p-4 rounded-2xl bg-[#FCF8F8] border border-[#FBEFEF] group z-10"
                             aria-label="Go back to home"
                         >
                             <FiArrowLeft className="text-xl group-hover:-translate-x-1 transition-transform" />
                         </a>
 
                         <motion.h2
-                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#F5AFAF] mb-4 font-['Outfit']"
+                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#2563EB] mb-4 font-['Outfit']"
                             variants={itemVariants}
                         >
                             Connect with us
@@ -203,7 +203,7 @@ const Contact = () => {
                             className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-slate-900 font-['Outfit']"
                             variants={itemVariants}
                         >
-                            Ready to <span className="text-[#F5AFAF]">Succeed?</span>
+                            Ready to <span className="text-[#2563EB]">Succeed?</span>
                         </motion.h1>
                         <motion.p
                             className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed font-['Inter']"
@@ -219,12 +219,12 @@ const Contact = () => {
                                 className="flex flex-col items-center gap-4 group"
                                 variants={itemVariants}
                             >
-                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:scale-110 transition-transform">
+                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#2563EB] shadow-lg group-hover:scale-110 transition-transform">
                                     <FiMail className="text-2xl" />
                                 </div>
                                 <a
                                     href="mailto:thinkskool.office@gmail.com"
-                                    className="text-lg font-black text-slate-900 hover:text-[#F5AFAF] transition font-['Outfit'] tracking-tight"
+                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition font-['Outfit'] tracking-tight"
                                 >
                                     thinkskool.office@gmail.com
                                 </a>
@@ -235,12 +235,12 @@ const Contact = () => {
                                 className="flex flex-col items-center gap-4 group"
                                 variants={itemVariants}
                             >
-                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:scale-110 transition-transform">
+                                <div className="w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#2563EB] shadow-lg group-hover:scale-110 transition-transform">
                                     <FiPhone className="text-2xl" />
                                 </div>
                                 <a
                                     href="tel:+918527740849"
-                                    className="text-lg font-black text-slate-900 hover:text-[#F5AFAF] transition font-['Outfit'] tracking-tight"
+                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition font-['Outfit'] tracking-tight"
                                 >
                                     +91 85277 40849
                                 </a>

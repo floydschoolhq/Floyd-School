@@ -31,7 +31,7 @@ export function TextRevealCardPreview() {
             {/* Floating Icons representing Vision & Motive */}
             <FloatingIcon icon={FaRobot} color="text-cyan-400" top="15%" left="15%" delay={0} />
             <FloatingIcon icon={FaBrain} color="text-purple-400" top="15%" right="15%" delay={1} />
-            <FloatingIcon icon={FaRocket} color="text-[#F5AFAF]" bottom="15%" left="20%" delay={2} />
+            <FloatingIcon icon={FaRocket} color="text-[#2563EB]" bottom="15%" left="20%" delay={2} />
             <FloatingIcon icon={FaLaptopCode} color="text-green-400" bottom="15%" right="20%" delay={3} />
 
             {/* Cloud Shaped Course Cards - Floating One-Liners */}
@@ -48,7 +48,7 @@ export function TextRevealCardPreview() {
                     <TextRevealCardDescription className="text-slate-400">
                         Hover over the card to reveal the core technologies you will master with{' '}
                         <span className="text-white font-bold">Think</span>
-                        <span className="text-[#F5AFAF] font-bold">Skool</span>.
+                        <span className="text-[#2563EB] font-bold">Skool</span>.
                     </TextRevealCardDescription>
                 </TextRevealCard>
             </div>

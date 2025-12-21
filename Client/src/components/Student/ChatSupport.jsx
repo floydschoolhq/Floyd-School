@@ -143,7 +143,7 @@ const ChatSupport = () => {
                         className="bg-slate-950 border border-slate-800 w-80 md:w-96 rounded-[2rem] shadow-2xl overflow-hidden mb-4 flex flex-col"
                     >
                         {/* Header */}
-                        <div className="bg-[#F5AFAF] p-6 flex justify-between items-center">
+                        <div className="bg-[#2563EB] p-6 flex justify-between items-center">
                             <div className="flex items-center gap-4">
                                 <div className="bg-slate-950/10 p-2.5 rounded-2xl backdrop-blur-md border border-slate-950/10">
                                     <MessageSquare className="text-slate-950 w-5 h-5" />
@@ -190,7 +190,7 @@ const ChatSupport = () => {
                             {!loading && messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[85%] rounded-[1.25rem] p-4 text-base font-medium leading-relaxed ${msg.type === 'user'
-                                        ? 'bg-[#F5AFAF] text-slate-950 rounded-br-none shadow-lg shadow-[#F5AFAF]/20'
+                                        ? 'bg-[#2563EB] text-slate-950 rounded-br-none shadow-lg shadow-[#2563EB]/20'
                                         : 'bg-slate-900 text-slate-200 rounded-bl-none border border-slate-800'
                                         }`}>
                                         {msg.text}
@@ -212,12 +212,12 @@ const ChatSupport = () => {
                                     }
                                 }}
                                 placeholder="Query architecture..."
-                                className="flex-1 bg-slate-950 text-white text-base font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#F5AFAF]/50 transition-all placeholder:text-slate-600"
+                                className="flex-1 bg-slate-950 text-white text-base font-bold rounded-xl px-4 py-3 border border-slate-800 focus:outline-none focus:border-[#2563EB]/50 transition-all placeholder:text-slate-600"
                             />
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim() || isSending}
-                                className="bg-[#F5AFAF] hover:bg-[#F5AFAF]/90 text-slate-950 p-3 rounded-xl transition-all shadow-lg shadow-[#F5AFAF]/20 disabled:opacity-50 active:scale-95"
+                                className="bg-[#2563EB] hover:bg-[#2563EB]/90 text-slate-950 p-3 rounded-xl transition-all shadow-lg shadow-[#2563EB]/20 disabled:opacity-50 active:scale-95"
                             >
                                 {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} strokeWidth={3} />}
                             </button>
@@ -231,7 +231,7 @@ const ChatSupport = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="bg-[#F5AFAF] hover:bg-[#F5AFAF]/90 text-slate-950 w-16 h-16 rounded-[1.5rem] shadow-2xl shadow-[#F5AFAF]/30 flex items-center justify-center transition-all group"
+                className="bg-[#2563EB] hover:bg-[#2563EB]/90 text-slate-950 w-16 h-16 rounded-[1.5rem] shadow-2xl shadow-[#2563EB]/30 flex items-center justify-center transition-all group"
             >
                 {isOpen ? <X size={28} /> : <MessageSquare size={28} className="group-hover:rotate-12 transition-transform" />}
             </motion.button>

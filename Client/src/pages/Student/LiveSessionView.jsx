@@ -107,7 +107,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                     </button>
                     <div>
                         <h1 className="text-xl font-black text-slate-900 leading-tight font-['Outfit'] italic">
-                            LIVE <span className="text-[#F5AFAF] not-italic">SESSION</span>
+                            LIVE <span className="text-[#2563EB] not-italic">SESSION</span>
                         </h1>
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">
                             {liveClass.title} • {liveClass.topic}
@@ -133,7 +133,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                             {myDoubt.isResolved && (
                                 <button
                                     onClick={handleTerminateDoubt}
-                                    className="ml-2 bg-red-100/50 hover:bg-red-100 text-red-600 p-1 rounded-lg transition-colors"
+                                    className="ml-2 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-1 rounded-lg transition-colors"
                                 >
                                     <Trash2 size={10} strokeWidth={3} />
                                 </button>
@@ -166,9 +166,9 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/80">
                                 <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-[2rem] border border-white/20 flex items-center justify-center mb-8 animate-pulse">
-                                    <Monitor className="text-[#F5AFAF] w-10 h-10" />
+                                    <Monitor className="text-[#2563EB] w-10 h-10" />
                                 </div>
-                                <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-4">External Protocol Detected</h2>
+                                <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-4">External Link Detected</h2>
                                 <p className="text-slate-400 max-w-md mx-auto font-medium mb-10 leading-relaxed">
                                     This session is using a secure external platform ({liveClass.platform?.toUpperCase() || 'EXTERNAL'}). Please bridge the connection using the satellite link below.
                                 </p>
@@ -176,14 +176,14 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                                     href={liveClass.meetingLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-[#F5AFAF] hover:bg-white text-slate-950 px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-2xl shadow-[#F5AFAF]/20 flex items-center gap-3"
+                                    className="bg-[#2563EB] hover:bg-white text-slate-950 px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-2xl shadow-[#2563EB]/20 flex items-center gap-3"
                                 >
-                                    Establish Uplink <ExternalLink size={20} strokeWidth={3} />
+                                    Join Meeting <ExternalLink size={20} strokeWidth={3} />
                                 </a>
 
                                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-40">
                                     <Shield size={14} className="text-white" />
-                                    <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Secure Direct Connection</span>
+                                    <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Secure Connection</span>
                                 </div>
                             </div>
                         )}
@@ -192,8 +192,8 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                     {/* Status Overlay for Stream */}
                     <div className="absolute top-6 left-6 pointer-events-none">
                         <div className="flex items-center gap-3 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
-                            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
-                            <span className="text-[9px] font-black text-white uppercase tracking-widest italic">{liveClass.platform === 'youtube' ? 'Transcoding' : 'Real-time'} Satellite Stream</span>
+                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest italic">{liveClass.platform === 'youtube' ? 'Live' : 'Real-time'} Stream</span>
                         </div>
                     </div>
                 </div>
@@ -205,8 +205,8 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                             <PlayCircle size={16} />
                         </div>
                         <div>
-                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest leading-none">Live Terminal</h3>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Operational Command</p>
+                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest leading-none">Live Chat</h3>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Chat Room</p>
                         </div>
                     </div>
                     <div className="flex-1 overflow-hidden">

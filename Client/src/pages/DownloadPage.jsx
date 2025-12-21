@@ -13,7 +13,7 @@ const initialDocuments = [
     fileName: "Brochure.pdf", 
     url: Brochure,
     Icon: FileText,
-    color: 'bg-indigo-500'
+    color: 'bg-blue-500'
   }
 ];
 

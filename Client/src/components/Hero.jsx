@@ -78,8 +78,13 @@ const Hero = () => {
     // 3D Tilt Logic for Elite Form
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-    const rotateX = useTransform(y, [-100, 100], [10, -10]);
-    const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+
+    // Smooth out the mouse movement
+    const smoothX = useSpring(x, { stiffness: 150, damping: 20 });
+    const smoothY = useSpring(y, { stiffness: 150, damping: 20 });
+
+    const rotateX = useTransform(smoothY, [-100, 100], [10, -10]);
+    const rotateY = useTransform(smoothX, [-100, 100], [-10, 10]);
 
     const handleMouseMove = (event) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -97,15 +102,15 @@ const Hero = () => {
     return (
         <div ref={containerRef} className="relative bg-[#FCF8F8] pt-12 pb-64 overflow-hidden">
             {/* Background Decorative Particles */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5AFAF]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F9DFDF]/5 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
 
 
 
                 {/* Elite Form Section */}
-                <div className="grid md:grid-cols-[1fr_450px] gap-16 max-w-6xl items-center">
+                <div className="grid md:grid-cols-[1fr_500px] gap-24 max-w-7xl items-center">
 
                     {/* Left Column: Premium Styled Highlights */}
                     <div className="flex flex-col gap-16">
@@ -124,15 +129,22 @@ const Hero = () => {
                                 ].map((item, i) => (
                                     <motion.div
                                         key={i}
-                                        whileHover={{ x: 12, scale: 1.02 }}
-                                        className="group flex items-center gap-6 p-6 rounded-[2.8rem] bg-white border border-[#FBEFEF] hover:shadow-2xl hover:shadow-[#F5AFAF]/10 hover:border-[#F5AFAF]/20 transition-all duration-500"
+                                        whileHover={{ x: 10, scale: 1.02 }}
+                                        className="group relative flex items-center gap-5 p-5 rounded-[2.5rem] bg-white border border-[#FBEFEF] shadow-xl hover:shadow-2xl hover:shadow-[#2563EB]/10 hover:border-[#2563EB]/30 transition-all duration-500 overflow-hidden"
                                     >
-                                        <div className="w-14 h-14 rounded-2xl bg-[#2D2D2D] flex items-center justify-center text-[#F5AFAF] shadow-lg group-hover:scale-110 transition-all duration-300">
-                                            {item.icon}
+                                        {/* Hover Gradient Glow */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                        {/* Left Accent Bar */}
+                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                        <div className="relative z-10 w-14 h-14 rounded-2xl bg-[#2D2D2D] flex items-center justify-center text-[#2563EB] shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                            {React.cloneElement(item.icon, { className: "w-6 h-6" })}
                                         </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-600 group-hover:text-slate-900 transition-colors">{item.title}</span>
-                                            <span className="text-[10px] font-bold text-[#F5AFAF] uppercase tracking-widest mt-1">Industrial Grade</span>
+
+                                        <div className="relative z-10 flex flex-col">
+                                            <span className="text-sm font-black uppercase tracking-wider text-slate-800 group-hover:text-slate-900 transition-colors">{item.title}</span>
+                                            <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest transition-colors mt-0.5">Industrial Grade</span>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -151,7 +163,7 @@ const Hero = () => {
                                 onClick={() => handleAuthAction(() => navigate('/student/dashboard'))}
                                 className="w-full sm:w-auto px-12 py-6 bg-[#2D2D2D] text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] hover:-translate-y-1 active:scale-95 font-['Outfit']"
                             >
-                                Jump into Lab
+                                Go to Dashboard
                             </button>
                             <button
                                 onClick={() => {
@@ -160,7 +172,7 @@ const Hero = () => {
                                 }}
                                 className="w-full sm:w-auto px-12 py-6 bg-white text-slate-900 border-2 border-[#FBEFEF] rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-[#FBEFEF]/50 transition-all hover:-translate-y-1 active:scale-95 font-['Outfit']"
                             >
-                                Explore Path
+                                View Programs
                             </button>
                         </motion.div>
                     </div>
@@ -181,8 +193,8 @@ const Hero = () => {
                             className="relative w-full group"
                         >
                             {/* Moving Gradient Border Container */}
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#F5AFAF] via-white/20 to-[#F5AFAF] rounded-[3rem] p-[1px] opacity-20 group-hover:opacity-100 transition-opacity duration-1000 blur-sm" />
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#F5AFAF] via-white/20 to-[#F5AFAF] rounded-[3rem] p-[1px] opacity-10 group-hover:opacity-40 transition-opacity duration-1000" />
+                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-white/20 to-[#2563EB] rounded-[3rem] p-[1px] opacity-20 group-hover:opacity-100 transition-opacity duration-1000 blur-sm" />
+                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-white/20 to-[#2563EB] rounded-[3rem] p-[1px] opacity-10 group-hover:opacity-40 transition-opacity duration-1000" />
 
                             <div id="registration-form" className="relative bg-[#0F172A]/95 backdrop-blur-3xl rounded-[3.5rem] p-8 md:p-12 shadow-[0_100px_100px_-50px_rgba(0,0,0,0.8)] border border-white/5">
 
@@ -200,11 +212,11 @@ const Hero = () => {
                                         </div>
                                         <h3 className="text-3xl font-black text-white mb-4 font-['Outfit'] uppercase tracking-tight">Access Granted</h3>
                                         <p className="text-white/40 text-[13px] font-medium leading-relaxed font-['Inter'] max-w-[280px] mx-auto">
-                                            Your coordinates have been received. An advisor will reach out shortly.
+                                            Your details have been submitted. An advisor will reach out shortly.
                                         </p>
                                         <button
                                             onClick={() => setStatus('idle')}
-                                            className="mt-12 text-[10px] font-black text-[#F5AFAF] hover:text-white transition-colors uppercase tracking-[0.3em] font-['Outfit']"
+                                            className="mt-12 text-[10px] font-black text-[#2563EB] hover:text-white transition-colors uppercase tracking-[0.3em] font-['Outfit']"
                                         >
                                             ← Submit New Request
                                         </button>
@@ -213,10 +225,10 @@ const Hero = () => {
                                     <>
                                         <div className="mb-10 relative z-10">
                                             <div className="flex items-center gap-4 mb-6">
-                                                <div className="w-2 h-8 bg-[#F5AFAF] rounded-full shadow-[0_0_20px_rgba(245,175,175,0.6)]" />
-                                                <h3 className="text-3xl font-black text-white leading-tight tracking-tight font-['Outfit'] uppercase">Curate Your <span className="text-[#F5AFAF]">Path</span></h3>
+                                                <div className="w-2 h-8 bg-[#2563EB] rounded-full shadow-[0_0_20px_rgba(245,175,175,0.6)]" />
+                                                <h3 className="text-3xl font-black text-white leading-tight tracking-tight font-['Outfit'] uppercase">Start Your <span className="text-[#2563EB]">Journey</span></h3>
                                             </div>
-                                            <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">Initialize your industrial journey</p>
+                                            <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">Begin your learning experience</p>
                                         </div>
 
                                         <form className="space-y-5 relative z-10" onSubmit={handleFormSubmit}>
@@ -252,15 +264,15 @@ const Hero = () => {
                                                     value={formData.topic}
                                                     onChange={handleInputChange}
                                                     required
-                                                    className="w-full text-[11px] p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/20 appearance-none focus:outline-none focus:border-[#F5AFAF]/50 focus:ring-4 focus:ring-[#F5AFAF]/5 transition-all font-black uppercase tracking-widest cursor-pointer hover:bg-white/10 shadow-xl"
+                                                    className="w-full text-[11px] p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/20 appearance-none focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-black uppercase tracking-widest cursor-pointer hover:bg-white/10 shadow-xl"
                                                 >
-                                                    <option value="" className="bg-slate-950">Target Domain</option>
+                                                    <option value="" className="bg-slate-950">Select Course</option>
                                                     <option value="Full Stack Development" className="bg-slate-950">Full Stack Engineering</option>
                                                     <option value="Data Science & AI" className="bg-slate-950">Data Excellence & AI</option>
                                                     <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
                                                     <option value="IoT & Robotics" className="bg-slate-950">Systems & Robotics</option>
                                                 </select>
-                                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-[#F5AFAF] transition-colors">
+                                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-[#2563EB] transition-colors">
                                                     <ArrowRight size={16} className="rotate-90" />
                                                 </div>
                                             </div>
@@ -274,8 +286,8 @@ const Hero = () => {
                                                         value={formData.name}
                                                         onChange={handleInputChange}
                                                         required
-                                                        placeholder="Tactical Identifier (Full Name)"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#F5AFAF]/50 focus:ring-4 focus:ring-[#F5AFAF]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
+                                                        placeholder="Full Name"
+                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
                                                     />
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">
@@ -285,8 +297,8 @@ const Hero = () => {
                                                         value={formData.phone}
                                                         onChange={handleInputChange}
                                                         required
-                                                        placeholder="Encrypted Line"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#F5AFAF]/50 focus:ring-4 focus:ring-[#F5AFAF]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
+                                                        placeholder="Phone Number"
+                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
                                                     />
                                                     <input
                                                         type="email"
@@ -294,8 +306,8 @@ const Hero = () => {
                                                         value={formData.email}
                                                         onChange={handleInputChange}
                                                         required
-                                                        placeholder="Digital Inbox"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#F5AFAF]/50 focus:ring-4 focus:ring-[#F5AFAF]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
+                                                        placeholder="Email Address"
+                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
                                                     />
                                                 </div>
                                             </div>
@@ -308,19 +320,19 @@ const Hero = () => {
                                                 disabled={status === 'loading'}
                                                 className="w-full relative group overflow-hidden rounded-[1.8rem] transition-all shadow-[0_25px_50px_-20px_rgba(245,175,175,0.4)]"
                                             >
-                                                <div className="absolute inset-0 bg-[#F5AFAF] transition-transform duration-700 group-hover:scale-110" />
-                                                <div className="relative py-5 text-slate-950 font-black text-[13px] uppercase tracking-[0.4em] flex items-center justify-center gap-3">
+                                                <div className="absolute inset-0 bg-[#2563EB] transition-transform duration-700 group-hover:scale-110" />
+                                                <div className="relative py-4 text-white font-black text-lg uppercase tracking-[0.25em] flex items-center justify-center gap-3">
                                                     {status === 'loading' ? (
-                                                        <div className="w-5 h-5 border-3 border-slate-950/20 border-t-slate-950 rounded-full animate-spin" />
+                                                        <div className="w-5 h-5 border-3 border-white/20 border-t-white rounded-full animate-spin" />
                                                     ) : (
-                                                        <>Request Access <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" /></>
+                                                        <>Get Started <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" /></>
                                                     )}
                                                 </div>
                                             </motion.button>
 
                                             <div className="flex items-center gap-4 py-2">
                                                 <div className="h-[1px] flex-1 bg-white/10" />
-                                                <p className="text-[10px] text-white/40 font-black uppercase tracking-widest text-center">Elite Protocol</p>
+                                                <p className="text-[10px] text-white/40 font-black uppercase tracking-widest text-center">Secure Registration</p>
                                                 <div className="h-[1px] flex-1 bg-white/10" />
                                             </div>
                                         </form>

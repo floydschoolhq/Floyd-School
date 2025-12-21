@@ -20,9 +20,9 @@ const userSchema = new mongoose.Schema({
         enum: ['student', 'mentor', 'admin', 'growth_associate'],
         default: 'student',
     },
-    isActive: {
-        type: Boolean,
-        default: true
+    lastLogin: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true,

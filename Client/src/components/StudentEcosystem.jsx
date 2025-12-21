@@ -21,8 +21,8 @@ const FEATURES = [
         miniTitle: "Cloud Deployment Terminal",
         icon: <FaCode />,
         desc: "Practice directly on the platform with no setup.",
-        color: "text-[#F5AFAF]",
-        bg: "bg-[#F5AFAF]/10",
+        color: "text-[#2563EB]",
+        bg: "bg-[#2563EB]/10",
         details: [
             { label: "Zero-Config", desc: "Start coding instantly with no local environment setup." },
             { label: "Multi-Language", desc: "Full support for JS, Python, C++, and Java." },
@@ -47,8 +47,8 @@ const FEATURES = [
         miniTitle: "Human Intelligence Tier",
         icon: <FaUserTie />,
         desc: "1:1 technical support and code reviews.",
-        color: "text-[#F5AFAF]",
-        bg: "bg-[#F5AFAF]/20",
+        color: "text-[#2563EB]",
+        bg: "bg-[#2563EB]/20",
         details: [
             { label: "Mentorship", desc: "Weekly dedicated sessions with industry leads." },
             { label: "Code Review", desc: "High-level architectural feedback on your projects." },
@@ -77,9 +77,9 @@ const StudentEcosystem = () => {
         <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF] font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Holistic Infrastructure</p>
                     <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']">
-                        Proprietary <span className="text-[#F5AFAF]">Learning</span> Ecosystem
+                        Proprietary <span className="text-[#2563EB]">Learning</span> Ecosystem
                     </h2>
                     <p className="text-slate-500 font-medium max-w-2xl mx-auto text-sm leading-relaxed">
                         A cohesive suite of advanced engineering tools engineered to accelerate your path from conceptual understanding to technical excellence.
@@ -98,7 +98,7 @@ const StudentEcosystem = () => {
                             onClick={() => setSelectedFeature(feature)}
                             className="bg-white rounded-[2.5rem] p-8 shadow-[0_20px_40px_-15px_rgba(245,175,175,0.08)] hover:shadow-[0_40px_80px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] group cursor-pointer"
                         >
-                            <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm shadow-[#F5AFAF]/5`}>
+                            <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center text-3xl ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm shadow-[#2563EB]/5`}>
                                 {feature.icon}
                             </div>
                             <h3 className="text-xl font-black text-slate-900 mb-3 font-['Outfit'] tracking-tight">{feature.title}</h3>
@@ -143,7 +143,7 @@ const StudentEcosystem = () => {
                                         {selectedFeature.icon}
                                     </div>
                                     <div>
-                                        <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-1 font-['Outfit']">
+                                        <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-1 font-['Outfit']">
                                             {selectedFeature.miniTitle}
                                         </p>
                                         <h3 className="text-3xl font-black text-slate-900 font-['Outfit'] tracking-tight">
@@ -156,7 +156,7 @@ const StudentEcosystem = () => {
                                     {selectedFeature.details.map((detail, idx) => (
                                         <div key={idx} className="flex items-start gap-4 group">
                                             <div className="mt-1 flex-shrink-0">
-                                                <FaCheckCircle className="text-[#F5AFAF]/40 group-hover:text-[#F5AFAF] transition-colors" size={16} />
+                                                <FaCheckCircle className="text-[#2563EB]/40 group-hover:text-[#2563EB] transition-colors" size={16} />
                                             </div>
                                             <div>
                                                 <h4 className="text-sm font-black text-slate-900 mb-1 font-['Outfit']">{detail.label}</h4>
@@ -172,7 +172,7 @@ const StudentEcosystem = () => {
                                     </p>
                                     <button
                                         onClick={() => setSelectedFeature(null)}
-                                        className="bg-[#2D2D2D] hover:bg-[#F5AFAF] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 font-['Outfit']"
+                                        className="bg-[#2D2D2D] hover:bg-[#2563EB] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 font-['Outfit']"
                                     >
                                         Return to Ecosystem
                                     </button>

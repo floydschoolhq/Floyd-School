@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export const ProgressChart = ({ progress, title, subtitle, color = "#F5AFAF" }) => {
+export const ProgressChart = ({ progress, title, subtitle, color = "#2563EB" }) => {
     return (
         <motion.div
             className="flex flex-col items-center"

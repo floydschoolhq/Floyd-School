@@ -25,15 +25,15 @@ const WhyUs = () => {
     return (
         <section className="bg-[#FCF8F8] py-24 relative overflow-hidden border-t border-[#FBEFEF] font-['Inter']">
             {/* Background Gradients */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#F5AFAF_0.5px,transparent_0.5px)] [background-size:24px_24px] opacity-20 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#2563EB_0.5px,transparent_0.5px)] [background-size:24px_24px] opacity-20 pointer-events-none"></div>
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header */}
                 <div className="text-center mb-24">
-                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">The Transformation Path</p>
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">The Transformation Path</p>
                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 font-['Outfit']">
-                        From <span className="text-[#F5AFAF]">Classroom</span> to <span className="text-[#2D2D2D]">Career</span>
+                        From <span className="text-[#2563EB]">Classroom</span> to <span className="text-[#2D2D2D]">Career</span>
                     </h2>
                     <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">
                         A step-by-step journey transforming the educational ecosystem.
@@ -47,7 +47,7 @@ const WhyUs = () => {
                         whileInView={{ height: '100%' }}
                         viewport={{ once: true }}
                         transition={{ duration: 3, ease: "linear" }}
-                        className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#F5AFAF] via-[#F9DFDF] to-[#2D2D2D] md:-translate-x-1/2 origin-top opacity-50"
+                        className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2563EB] via-[#F9DFDF] to-[#2D2D2D] md:-translate-x-1/2 origin-top opacity-50"
                     ></motion.div>
 
 
@@ -58,9 +58,9 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-white/50 backdrop-blur-sm border border-[#F5AFAF]/20 p-4 rounded-3xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-[0_10px_30px_-10px_rgba(245,175,175,0.2)] md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-white/50 backdrop-blur-sm border border-[#2563EB]/20 p-4 rounded-3xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-[0_10px_30px_-10px_rgba(245,175,175,0.2)] md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
-                            <span className="w-10 h-10 rounded-full bg-[#F5AFAF] flex items-center justify-center text-white text-xl">🏫</span>
+                            <span className="w-10 h-10 rounded-full bg-[#2563EB] flex items-center justify-center text-white text-xl">🏫</span>
                             <h3 className="text-2xl font-black text-slate-900 font-['Outfit'] pr-4">Partnering with the School</h3>
                         </motion.div>
 
@@ -91,7 +91,7 @@ const WhyUs = () => {
                                         whileInView={{ scale: 1 }}
                                         viewport={{ once: true, margin: "-50px" }}
                                         transition={{ type: "spring", stiffness: 300, delay: 0 }}
-                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-4 border-[#F5AFAF] rounded-full z-10 shadow-sm"
+                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-4 border-[#2563EB] rounded-full z-10 shadow-sm"
                                     ></motion.div>
 
                                 </div>
@@ -106,7 +106,7 @@ const WhyUs = () => {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
-                            className="bg-white/80 backdrop-blur-sm px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#F5AFAF] border border-[#FBEFEF] rounded-full z-10 font-['Outfit'] shadow-sm"
+                            className="bg-white/80 backdrop-blur-sm px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] border border-[#FBEFEF] rounded-full z-10 font-['Outfit'] shadow-sm"
                         >
                             Seamless Integration
                         </motion.div>

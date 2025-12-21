@@ -18,12 +18,12 @@ const supportRoles = [
         desc: "Your personal success partners who ensure your learning path aligns with your professional goals.",
         benefits: ["Career Mapping", "Portfolio Design", "Industry Networking"],
         icon: <Zap className="w-8 h-8" />,
-        color: "from-[#F5AFAF] to-[#F9DFDF]",
+        color: "from-[#2563EB] to-blue-100",
         delay: 0.1
     },
     {
-        title: "Elite Admins",
-        role: "Ecosystem Guardians",
+        title: "System Admins",
+        role: "Platform Managers",
         desc: "Silent engines ensuring the cloud infrastructure and portal response remains 100% efficient.",
         benefits: ["24/7 Availability", "Resource Allocation", "System Optimization"],
         icon: <Shield className="w-8 h-8" />,
@@ -44,7 +44,7 @@ const RoleCard = ({ role, index }) => {
         >
             <div className={`absolute inset-0 bg-gradient-to-br ${role.color} opacity-0 group-hover:opacity-10 rounded-[3rem] blur-2xl transition-opacity duration-500`} />
 
-            <div className="relative bg-white border border-[#FBEFEF] rounded-[3rem] p-10 h-full shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(245,175,175,0.1)] transition-all duration-500 overflow-hidden">
+            <div className="relative bg-white border border-slate-200 rounded-[3rem] p-10 h-full shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(37,99,235,0.1)] transition-all duration-500 overflow-hidden">
                 {/* Decorative Pattern */}
                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
                     {role.icon}
@@ -81,9 +81,9 @@ const RoleCard = ({ role, index }) => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex items-center gap-1 text-[#F5AFAF]">
+                    <div className="flex items-center gap-1 text-[#2563EB]">
                         <Star size={12} fill="currentColor" />
-                        <span className="text-[10px] font-black font-['Outfit']">ELITE SUPPORT</span>
+                        <span className="text-[10px] font-black font-['Outfit']">PREMIUM SUPPORT</span>
                     </div>
                 </div>
             </div>
@@ -102,15 +102,15 @@ const SupportEcosystem = () => {
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
     return (
-        <section ref={containerRef} className="relative bg-[#FCF8F8] pt-32 pb-6 overflow-hidden border-t border-[#FBEFEF]">
+        <section ref={containerRef} className="relative bg-[#F8FAFC] pt-32 pb-6 overflow-hidden border-t border-slate-200">
             {/* Background 3D Elements */}
             <motion.div style={{ y, opacity }} className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute top-1/4 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-[#F5AFAF]/5 rounded-full blur-[100px]" />
+                <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[100px]" />
 
                 {/* Orbital Rings */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-[#FBEFEF]/50 rounded-full animate-[spin_60s_linear_infinite]" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#FBEFEF] rounded-full animate-[spin_40s_linear_infinite_reverse]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-slate-200/50 rounded-full animate-[spin_60s_linear_infinite]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-slate-200 rounded-full animate-[spin_40s_linear_infinite_reverse]" />
             </motion.div>
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -119,10 +119,10 @@ const SupportEcosystem = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-[#FBEFEF] shadow-sm mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6"
                     >
-                        <Heart size={14} className="text-[#F5AFAF] fill-[#F5AFAF]" />
-                        <span className="text-[10px] font-black text-slate-800 uppercase tracking-widest font-['Outfit']">The Human Engine</span>
+                        <Heart size={14} className="text-[#2563EB] fill-[#2563EB]" />
+                        <span className="text-[10px] font-black text-slate-800 uppercase tracking-widest font-['Outfit']">Our Team</span>
                     </motion.div>
 
                     <motion.h2
@@ -130,7 +130,7 @@ const SupportEcosystem = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-5xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter font-['Outfit']"
                     >
-                        Support That <span className="text-[#F5AFAF]">Never Sleeps</span>
+                        Support That <span className="text-[#2563EB]">Never Sleeps</span>
                     </motion.h2>
 
                 </div>
@@ -148,12 +148,12 @@ const SupportEcosystem = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="mt-24 p-12 bg-[#2D2D2D] rounded-[3rem] relative overflow-hidden group shadow-2xl"
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#F5AFAF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                     <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                         <div className="text-center md:text-left">
                             <h3 className="text-3xl font-black text-white mb-2 font-['Outfit'] uppercase tracking-tight">
-                                Integrated <span className="text-[#F5AFAF]">Help Desk</span>
+                                Integrated <span className="text-[#2563EB]">Help Desk</span>
                             </h3>
                         </div>
 
@@ -164,7 +164,7 @@ const SupportEcosystem = () => {
                             </div>
                             <div className="w-px h-10 bg-slate-800" />
                             <div className="flex flex-col items-center">
-                                <span className="text-2xl font-black text-[#F5AFAF] font-['Outfit']">24/7</span>
+                                <span className="text-2xl font-black text-[#2563EB] font-['Outfit']">24/7</span>
                                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active</span>
                             </div>
                         </div>

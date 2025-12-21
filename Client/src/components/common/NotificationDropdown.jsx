@@ -60,7 +60,7 @@ const NotificationDropdown = () => {
             case 'support_ticket':
             case 'support_message':
                 return <Ticket size={16} className="text-sky-500" />;
-            default: return <Info size={16} className="text-indigo-500" />;
+            default: return <Info size={16} className="text-blue-500" />;
         }
     };
 
@@ -72,7 +72,7 @@ const NotificationDropdown = () => {
             >
                 <Bell size={20} />
                 {unreadCount > 0 && (
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border border-white animate-pulse"></span>
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border border-white animate-pulse"></span>
                 )}
             </button>
 
@@ -93,7 +93,7 @@ const NotificationDropdown = () => {
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllRead}
-                                    className="text-[10px] font-black uppercase tracking-widest text-[#F5AFAF] hover:text-[#2D2D2D] transition-colors flex items-center gap-1"
+                                    className="text-[10px] font-black uppercase tracking-widest text-[#2563EB] hover:text-[#2D2D2D] transition-colors flex items-center gap-1"
                                 >
                                     <Check size={12} />
                                     Mark all read
@@ -128,7 +128,7 @@ const NotificationDropdown = () => {
                                             </div>
                                             {!notification.read && (
                                                 <div className="flex-shrink-0 pt-1">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#F5AFAF]"></div>
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB]"></div>
                                                 </div>
                                             )}
                                         </div>

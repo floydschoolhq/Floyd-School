@@ -10,7 +10,7 @@ const Course = () => {
             title: "AI & Machine Learning",
             icon: Cpu,
             description: "Students explore how AI identifies patterns and makes predictions. They train simple models and understand how intelligent systems respond to different inputs.",
-            color: "text-[#F5AFAF]",
+            color: "text-[#2563EB]",
             bg: "bg-[#FBEFEF]",
         },
         {
@@ -24,7 +24,7 @@ const Course = () => {
             title: "IoT & Robotics",
             icon: Zap,
             description: "Students work with sensors, microcontrollers, and automation. They observe how devices interact and build simple automated systems.",
-            color: "text-[#F5AFAF]",
+            color: "text-[#2563EB]",
             bg: "bg-[#FBEFEF]",
         },
         {
@@ -72,7 +72,7 @@ const Course = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    Core <span className="text-[#F5AFAF]">Technology</span> Programs
+                    Core <span className="text-[#2563EB]">Technology</span> Programs
                 </motion.h2>
                 <motion.p
                     className="text-lg text-slate-600 mb-20 max-w-2xl mx-auto font-medium leading-relaxed"
@@ -95,7 +95,7 @@ const Course = () => {
                     {courseData.map((course, index) => (
                         <motion.div
                             key={index}
-                            className={`flex flex-col text-left p-8 rounded-[2.5rem] bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] hover:border-[#F5AFAF]/20`}
+                            className={`flex flex-col text-left p-8 rounded-[2.5rem] bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] hover:border-[#2563EB]/20`}
                             variants={cardVariants}
                             whileHover={{ scale: 1.05, translateY: -5 }} // Interactive lift on hover
                         >

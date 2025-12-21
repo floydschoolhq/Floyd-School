@@ -116,7 +116,7 @@ const CodingLabPage = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-black text-white mb-1 tracking-tight font-['Outfit']">
-              Elite <span className="text-[#F5AFAF]">Coding Laboratory</span>
+              Elite <span className="text-[#2563EB]">Coding Laboratory</span>
             </h1>
             <p className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] font-['Outfit']"> High-Performance Cloud Execution Environment </p>
           </div>
@@ -168,7 +168,7 @@ const CodingLabPage = () => {
 
             <button
               onClick={handleResetCode}
-              className="flex items-center gap-2 px-5 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-xl font-bold text-base uppercase tracking-widest transition-all border border-rose-500/20"
+              className="flex items-center gap-2 px-5 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 rounded-xl font-bold text-base uppercase tracking-widest transition-all border border-blue-500/20"
             >
               <RotateCcw className="w-4 h-4" />
               Revert
@@ -176,7 +176,7 @@ const CodingLabPage = () => {
           </div>
 
           <div className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 font-['Outfit']">
-            Active Engine: <span className="text-[#F5AFAF]">{selectedLanguage.name}</span>
+            Active Engine: <span className="text-[#2563EB]">{selectedLanguage.name}</span>
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@ const CodingLabPage = () => {
             <span>Monaco Enterprise Engine</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#F5AFAF] font-['Outfit']">{user?.name}</span>
+            <span className="text-[#2563EB] font-['Outfit']">{user?.name}</span>
             <span className="text-slate-700">/</span>
             <span>{selectedLanguage.name}</span>
           </div>

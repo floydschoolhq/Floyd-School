@@ -203,7 +203,7 @@ const SupportPage = () => {
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <div className={`px-4 py-2 rounded-xl text-\[13px\] font-black uppercase tracking-widest border ${selectedTicket.priority === 'urgent' ? 'bg-rose-50 border-rose-100 text-rose-500' :
+                                    <div className={`px-4 py-2 rounded-xl text-\[13px\] font-black uppercase tracking-widest border ${selectedTicket.priority === 'urgent' ? 'bg-blue-50 border-blue-100 text-blue-500' :
                                             'bg-slate-50 border-slate-100 text-slate-500'
                                         }`}>
                                         {selectedTicket.priority} Priority

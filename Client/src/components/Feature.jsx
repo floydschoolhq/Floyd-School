@@ -34,13 +34,13 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
   const currentMedia = media[currentIndex];
 
   return (
-    <div className={`flex flex-col bg-white rounded-[3.5rem] p-8 lg:p-12 border ${isTraditional ? 'border-slate-100 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100' : 'border-[#F5AFAF]/20 shadow-[0_40px_80px_-20px_rgba(245,175,175,0.15)]'} transition-all duration-700 h-full`}>
+    <div className={`flex flex-col bg-white rounded-[3.5rem] p-8 lg:p-12 border ${isTraditional ? 'border-slate-100 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100' : 'border-[#2563EB]/20 shadow-[0_40px_80px_-20px_rgba(245,175,175,0.15)]'} transition-all duration-700 h-full`}>
       <div className="mb-10 text-left">
-        <span className={`inline-block px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-4 font-['Outfit'] ${isTraditional ? 'bg-slate-50 text-slate-400 border border-slate-100' : 'bg-[#F5AFAF]/10 text-[#F5AFAF] border border-[#F5AFAF]/10'}`}>
+        <span className={`inline-block px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-4 font-['Outfit'] ${isTraditional ? 'bg-slate-50 text-slate-400 border border-slate-100' : 'bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/10'}`}>
           {subtitle}
         </span>
         <h3 className="text-3xl lg:text-4xl font-black text-slate-900 font-['Outfit'] tracking-tight leading-none">
-          {title.split(' ')[0]} <span className={isTraditional ? 'text-slate-300' : 'text-[#F5AFAF]'}>{title.split(' ').slice(1).join(' ')}</span>
+          {title.split(' ')[0]} <span className={isTraditional ? 'text-slate-300' : 'text-[#2563EB]'}>{title.split(' ').slice(1).join(' ')}</span>
         </h3>
       </div>
 
@@ -82,7 +82,7 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
               transition={{ duration: 4.5, ease: "linear" }}
-              className={`h-full ${isTraditional ? 'bg-slate-400' : 'bg-[#F5AFAF]'}`}
+              className={`h-full ${isTraditional ? 'bg-slate-400' : 'bg-[#2563EB]'}`}
             />
           </div>
         </div>
@@ -90,7 +90,7 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
 
       <div className="mt-8 flex gap-2 flex-wrap min-h-[32px]">
         {currentMedia.tags?.map((tag, i) => (
-          <span key={i} className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-xl border font-['Outfit'] ${isTraditional ? 'bg-slate-50 text-slate-400 border-slate-100' : 'bg-[#FBEFEF] text-[#F5AFAF] border-[#F9DFDF]'}`}>
+          <span key={i} className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-xl border font-['Outfit'] ${isTraditional ? 'bg-slate-50 text-slate-400 border-slate-100' : 'bg-[#FBEFEF] text-[#2563EB] border-[#F9DFDF]'}`}>
             {tag}
           </span>
         ))}
@@ -103,7 +103,7 @@ const Feature = () => {
   return (
     <section className="py-32 bg-[#FCF8F8] relative overflow-hidden" id="feature-section">
       {/* Background patterns */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#F5AFAF_0.5px,transparent_0.5px)] [background-size:32px_32px] opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#2563EB_0.5px,transparent_0.5px)] [background-size:32px_32px] opacity-[0.03] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-24">
@@ -112,10 +112,10 @@ const Feature = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="inline-block px-4 py-1 rounded-full bg-white border border-[#FBEFEF] shadow-sm mb-6"
           >
-            <span className="text-[10px] font-black text-[#F5AFAF] uppercase tracking-[0.4em] font-['Outfit']">Simultaneous Comparison</span>
+            <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-[0.4em] font-['Outfit']">Simultaneous Comparison</span>
           </motion.div>
           <h2 className="text-6xl md:text-8xl font-black text-slate-900 mb-6 font-['Outfit'] tracking-tighter leading-none">
-            Experience the <span className="text-[#F5AFAF]">Difference</span>
+            Experience the <span className="text-[#2563EB]">Difference</span>
           </h2>
           <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">Witness the transition from passive absorbing to active creation in real-time.</p>
         </div>

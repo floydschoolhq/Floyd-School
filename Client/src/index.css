@@ -3,14 +3,14 @@
 @theme {
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --color-brand-pink-light: #FCF8F8;
-  --color-brand-pink-soft: #FBEFEF;
-  --color-brand-pink-med: #F9DFDF;
-  --color-brand-pink-primary: #F5AFAF;
-  --color-brand-dark: #2D2D2D;
-  --color-brand-text-main: #1A1A1A;
-  --color-brand-text-muted: #52525B;
-  --color-brand-text-light: #71717A;
+  --color-brand-pink-light: #FFFFFF;
+  --color-brand-pink-soft: #F8FAFC;
+  --color-brand-pink-med: #E2E8F0;
+  --color-brand-pink-primary: #2563EB;
+  --color-brand-dark: #020617;
+  --color-brand-text-main: #0F172A;
+  --color-brand-text-muted: #475569;
+  --color-brand-text-light: #64748B;
 
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
@@ -40,8 +40,8 @@ h6 {
 }
 
 body {
-  background-color: #FCF8F8;
-  color: #1A1A1A;
+  background-color: #FFFFFF;
+  color: #0F172A;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

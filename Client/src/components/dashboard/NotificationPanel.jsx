@@ -63,7 +63,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
             >
                 <Bell className="w-6 h-6 text-slate-600" />
                 {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#F5AFAF] text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                    <span className="absolute -top-1 -right-1 bg-[#2563EB] text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
@@ -85,7 +85,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                                 {unreadCount > 0 && (
                                     <button
                                         onClick={markAllAsRead}
-                                        className="text-xs font-bold text-[#F5AFAF] hover:underline"
+                                        className="text-xs font-bold text-[#2563EB] hover:underline"
                                     >
                                         Mark all read
                                     </button>
@@ -120,7 +120,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                                         <div className="flex items-start gap-4">
                                             <div className={cn(
                                                 "w-2 h-2 rounded-full mt-2 transition-colors",
-                                                !notification.isRead ? "bg-[#F5AFAF]" : "bg-slate-200"
+                                                !notification.isRead ? "bg-[#2563EB]" : "bg-slate-200"
                                             )} />
                                             <div className="flex-1">
                                                 <h4 className="text-sm font-bold text-slate-800 mb-1">
@@ -134,8 +134,8 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                                                 </p>
                                             </div>
                                             {!notification.isRead && (
-                                                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#F5AFAF]/10">
-                                                    <Check className="w-3 h-3 text-[#F5AFAF]" />
+                                                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#2563EB]/10">
+                                                    <Check className="w-3 h-3 text-[#2563EB]" />
                                                 </div>
                                             )}
                                         </div>

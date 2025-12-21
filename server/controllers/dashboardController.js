@@ -137,6 +137,44 @@ exports.getAssociateDashboard = async (req, res) => {
         const openTickets = await SupportTicket.countDocuments({ status: 'open' });
         const totalStudents = await User.countDocuments({ role: 'student' });
 
+        // Calculate At-Risk Students
+        const allStudents = await User.find({ role: 'student' }).select('name lastLogin email createdAt');
+        const now = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000;
+
+        const riskData = allStudents.map(student => {
+            const lastLogin = student.lastLogin ? new Date(student.lastLogin) : new Date(student.createdAt);
+            const diffDays = Math.floor((now - lastLogin) / oneDay);
+
+            let risk = 'Low';
+            let reason = 'Active recently';
+
+            if (diffDays > 14) {
+                risk = 'High';
+                reason = 'Protocol breached: Long-term inactivity';
+            } else if (diffDays > 7) {
+                risk = 'High';
+                reason = `Inactive for ${diffDays} days`;
+            } else if (diffDays > 3) {
+                risk = 'Medium';
+                reason = `Absent for ${diffDays} days`;
+            }
+
+            return {
+                name: student.name,
+                risk,
+                lastActive: diffDays === 0 ? 'Today' : `${diffDays} days ago`,
+                reason,
+                diffDays
+            };
+        });
+
+        // Filter only Medium/High risk and sort by inactivity
+        const atRiskStudents = riskData
+            .filter(s => s.risk !== 'Low')
+            .sort((a, b) => b.diffDays - a.diffDays)
+            .slice(0, 5); // Show top 5
+
         res.json({
             success: true,
             stats: {
@@ -144,7 +182,8 @@ exports.getAssociateDashboard = async (req, res) => {
                 avgEngagement: '88%',
                 supportSLA: '14m',
                 openTickets
-            }
+            },
+            atRiskStudents
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

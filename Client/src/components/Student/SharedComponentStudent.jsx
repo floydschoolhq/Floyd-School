@@ -54,12 +54,12 @@ export
       className={`
       flex items-center w-full p-4 rounded-xl transition duration-200 group font-['Outfit']
       ${currentView === view
-          ? 'bg-[#F5AFAF] text-white shadow-lg shadow-[#F5AFAF]/20'
-          : 'text-slate-500 hover:bg-slate-50 hover:text-[#F5AFAF]'
+          ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20'
+          : 'text-slate-500 hover:bg-slate-50 hover:text-[#2563EB]'
         }
     `}
     >
-      <Icon className={`w-5 h-5 mr-3 transition-colors ${currentView === view ? 'text-white' : 'text-slate-400 group-hover:text-[#F5AFAF]'}`} />
+      <Icon className={`w-5 h-5 mr-3 transition-colors ${currentView === view ? 'text-white' : 'text-slate-400 group-hover:text-[#2563EB]'}`} />
       <span className="text-base font-black tracking-tight">{title}</span>
     </button>
   );

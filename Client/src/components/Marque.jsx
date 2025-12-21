@@ -6,7 +6,7 @@ const ReactLogo = () => <span className="text-2xl font-bold text-slate-500 flex 
 const NodeLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-600">Node.js</span></span>;
 const PythonLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">Python</span></span>;
 const AIMLLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-purple-600">AI/ML</span></span>;
-const CloudLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-[#F5AFAF]">Cloud</span></span>;
+const CloudLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-[#2563EB]">Cloud</span></span>;
 const WebDevLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-blue-600">Web Dev</span></span>;
 const MobileLogo = () => <span className="text-2xl font-black text-slate-500 flex items-center gap-1 font-['Outfit']"><span className="text-emerald-500">Mobile</span></span>;
 
@@ -24,7 +24,7 @@ const Marque = () => {
   return (
     <div className="w-full bg-[#FCF8F8] py-16 border-b border-[#FBEFEF]">
       <div className="text-center mb-10">
-        <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technologies We Master</p>
+        <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technologies We Master</p>
       </div>
 
       <div className="relative w-full overflow-hidden">

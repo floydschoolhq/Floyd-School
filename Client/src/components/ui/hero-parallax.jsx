@@ -141,7 +141,7 @@ export const Header = () => {
                         ease: "linear"
                     }}
                 >
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-[#F5AFAF] inline-block">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-[#2563EB] inline-block">
                         The Future of
                     </span>
                 </motion.span>
@@ -167,7 +167,7 @@ export const Header = () => {
                         }
                     }}
                 >
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 inline-block">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-blue-400 inline-block">
                         STEM Education
                     </span>
                 </motion.span>

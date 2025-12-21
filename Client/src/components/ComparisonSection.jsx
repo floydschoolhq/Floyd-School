@@ -15,7 +15,7 @@ const ComparisonSection = () => {
             thinkskool: {
                 title: "Immersive IDE",
                 desc: "Live code from Day 1.",
-                icon: <Terminal className="text-[#F5AFAF]" />,
+                icon: <Terminal className="text-[#2563EB]" />,
                 metric: "85% Practicality"
             }
         },
@@ -30,7 +30,7 @@ const ComparisonSection = () => {
             thinkskool: {
                 title: "Production Apps",
                 desc: "Build 5+ industry tools.",
-                icon: <Code2 className="text-[#F5AFAF]" />,
+                icon: <Code2 className="text-[#2563EB]" />,
                 metric: "90% Readiness"
             }
         },
@@ -45,7 +45,7 @@ const ComparisonSection = () => {
             thinkskool: {
                 title: "Engineering Mastery",
                 desc: "FAANG-level expertise.",
-                icon: <Globe className="text-[#F5AFAF]" />,
+                icon: <Globe className="text-[#2563EB]" />,
                 metric: "Industry Professional"
             }
         }
@@ -57,9 +57,9 @@ const ComparisonSection = () => {
 
                 {/* Header */}
                 <div className="text-center mb-20">
-                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Performance Metrics</p>
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Performance Metrics</p>
                     <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter font-['Outfit']">
-                        Conventional vs <span className="text-[#F5AFAF]">Future Ready</span>
+                        Conventional vs <span className="text-[#2563EB]">Future Ready</span>
                     </h2>
                 </div>
 
@@ -102,17 +102,17 @@ const ComparisonSection = () => {
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-white rounded-[3rem] p-10 border-2 border-[#F5AFAF]/20 shadow-[0_40px_80px_-20px_rgba(245,175,175,0.15)] relative overflow-hidden"
+                        className="bg-white rounded-[3rem] p-10 border-2 border-[#2563EB]/20 shadow-[0_40px_80px_-20px_rgba(245,175,175,0.15)] relative overflow-hidden"
                     >
                         {/* Decorative background accent */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#F5AFAF]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
 
                         <div className="flex items-center justify-between mb-12 relative z-10">
-                            <span className="px-5 py-2 bg-[#F5AFAF] text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-[#F5AFAF]/30 flex items-center gap-2">
+                            <span className="px-5 py-2 bg-[#2563EB] text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-[#2563EB]/30 flex items-center gap-2">
                                 <Sparkles size={14} />
                                 ThinkSkool Method
                             </span>
-                            <TrendingUp className="text-[#F5AFAF]" size={24} />
+                            <TrendingUp className="text-[#2563EB]" size={24} />
                         </div>
 
                         <div className="space-y-12 relative z-10">
@@ -126,21 +126,21 @@ const ComparisonSection = () => {
                                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                                 >
                                     <motion.div
-                                        className="absolute left-[18px] top-1 w-3 h-3 rounded-full bg-[#F5AFAF] border-2 border-white z-10 shadow-sm"
+                                        className="absolute left-[18px] top-1 w-3 h-3 rounded-full bg-[#2563EB] border-2 border-white z-10 shadow-sm"
                                         animate={{ scale: [1, 1.2, 1] }}
                                         transition={{ repeat: Infinity, duration: 2, delay: idx * 0.3 }}
                                     ></motion.div>
-                                    <p className="text-[10px] font-black text-[#F5AFAF] uppercase tracking-widest mb-2">{step.stage}</p>
+                                    <p className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest mb-2">{step.stage}</p>
                                     <div className="flex items-center gap-4 mb-1">
                                         <h3 className="text-xl font-black text-slate-900 font-['Outfit']">{step.thinkskool.title}</h3>
-                                        <div className="w-8 h-8 rounded-lg bg-[#FBEFEF] flex items-center justify-center group-hover:bg-[#F5AFAF] group-hover:text-white transition-colors duration-300">
+                                        <div className="w-8 h-8 rounded-lg bg-[#FBEFEF] flex items-center justify-center group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
                                             {React.cloneElement(step.thinkskool.icon, { size: 16 })}
                                         </div>
                                     </div>
                                     <p className="text-sm text-slate-500 font-medium mb-4">{step.thinkskool.desc}</p>
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FBEFEF] rounded-full border border-[#F9DFDF]">
-                                        <TrendingUp size={12} className="text-[#F5AFAF]" />
-                                        <span className="text-[10px] font-black text-[#F5AFAF] uppercase tracking-widest">{step.thinkskool.metric}</span>
+                                        <TrendingUp size={12} className="text-[#2563EB]" />
+                                        <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest">{step.thinkskool.metric}</span>
                                     </div>
                                 </motion.div>
                             ))}
@@ -156,9 +156,9 @@ const ComparisonSection = () => {
                     viewport={{ once: true }}
                     className="mt-16 bg-[#2D2D2D] rounded-[2.5rem] p-12 text-center relative overflow-hidden group shadow-2xl"
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#F5AFAF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     <h3 className="text-3xl font-black text-white mb-4 relative z-10 font-['Outfit'] uppercase tracking-tight">
-                        Transforming the <span className="text-[#F5AFAF]">Learning Identity</span>
+                        Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
                     <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">
                         ThinkSkool doesn't just teach code; it architecturally remodels the student's problem-solving core, moving them from passive consumers to elite engineering creators.

@@ -4,7 +4,7 @@ import { DownloadCloudIcon } from 'lucide-react';
 import Brochure from '../assets/pdf/Brochure.pdf';
 
 const DownloadButton = () => {
-    const customOrange = '#F5AFAF';
+    const customOrange = '#2563EB';
     const [isVisible, setIsVisible] = React.useState(true);
 
     React.useEffect(() => {

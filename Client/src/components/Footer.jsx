@@ -45,10 +45,10 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex items-center font-black text-2xl mb-4 text-slate-900 font-['Outfit']">
-              <span className='text-slate-900'>think</span><span className='text-[#F5AFAF]'>skool</span>
+              <span className='text-slate-900'>think</span><span className='text-[#2563EB]'>skool</span>
             </div>
             <p className="text-slate-500 text-sm mb-6 leading-relaxed max-w-sm font-medium">
-              Making students <span className="text-[#F5AFAF] font-black">future ready</span>, not just job ready. The highest rated coding learning platform.
+              Making students <span className="text-[#2563EB] font-black">future ready</span>, not just job ready. The highest rated coding learning platform.
             </p>
 
             <div className="flex space-x-3">
@@ -56,7 +56,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href="#"
-                  className="w-8 h-8 bg-white border border-[#FBEFEF] rounded-full flex items-center justify-center text-slate-400 hover:border-[#F5AFAF] hover:text-[#F5AFAF] transition-all duration-300 shadow-sm"
+                  className="w-8 h-8 bg-white border border-[#FBEFEF] rounded-full flex items-center justify-center text-slate-400 hover:border-[#2563EB] hover:text-[#2563EB] transition-all duration-300 shadow-sm"
                 >
                   <Icon size={14} />
                 </a>
@@ -73,7 +73,7 @@ const Footer = () => {
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-sm font-medium text-slate-400 hover:text-[#F5AFAF] transition-colors"
+                      className="text-sm font-medium text-slate-400 hover:text-[#2563EB] transition-colors"
                     >
                       {link.name}
                     </a>
@@ -86,7 +86,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-8 border-t border-[#FBEFEF] flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#F5AFAF] font-['Outfit']">
+        <div className="pt-8 border-t border-[#FBEFEF] flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#2563EB] font-['Outfit']">
           <p className="text-slate-400">&copy; 2025 ThinkSkool. All rights reserved.</p>
           <div className="flex gap-2 items-center">
             <img src="https://files.codingninjas.in/images/google-play-icon.svg" alt="Play Store" className="h-8 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500" />

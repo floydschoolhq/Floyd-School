@@ -41,7 +41,7 @@ export const Terminal = ({ output = [], onClear, isRunning }) => {
                             animate={{ opacity: 1, x: 0 }}
                             className={cn(
                                 "mb-1",
-                                line.type === 'error' && "text-red-400",
+                                line.type === 'error' && "text-blue-400",
                                 line.type === 'success' && "text-green-400",
                                 line.type === 'info' && "text-sky-400",
                                 line.type === 'output' && "text-slate-300"

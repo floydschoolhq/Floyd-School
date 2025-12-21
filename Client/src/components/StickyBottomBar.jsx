@@ -56,14 +56,14 @@ const StickyBottomBar = () => {
                         className="pointer-events-auto relative group"
                     >
                         {/* Premium Glow Effect */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-[#F5AFAF]/15 via-white/5 to-[#F5AFAF]/15 rounded-[1.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        <div className="absolute -inset-1 bg-gradient-to-r from-[#2563EB]/15 via-white/5 to-[#2563EB]/15 rounded-[1.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                         <div className="relative flex items-center bg-[#1C1C1E]/95 backdrop-blur-2xl border border-white/10 rounded-[1.5rem] px-6 py-2.5 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)] gap-6">
 
                             {/* Future Tech - Segment 1 */}
                             <div className="flex items-center gap-3">
                                 <div className="relative">
-                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#F5AFAF] to-[#FBEFEF] flex items-center justify-center shadow-lg shadow-[#F5AFAF]/20">
+                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#FBEFEF] flex items-center justify-center shadow-lg shadow-[#2563EB]/20">
                                         <Zap size={16} className="text-[#1C1C1E] fill-[#1C1C1E]" />
                                     </div>
                                     <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#1C1C1E] animate-pulse" />
@@ -71,13 +71,13 @@ const StickyBottomBar = () => {
                                 <div className="min-w-[120px]">
                                     <div className="flex items-center gap-2">
                                         <h4 className="text-white font-black text-[12px] uppercase tracking-wide font-['Outfit'] leading-none">Future Tech</h4>
-                                        <span className="text-[8px] font-black text-[#F5AFAF] uppercase tracking-widest px-1.5 py-0.5 bg-[#F5AFAF]/10 rounded-md">LIVE</span>
+                                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-widest px-1.5 py-0.5 bg-[#2563EB]/10 rounded-md">LIVE</span>
                                     </div>
                                     <p className="text-white/30 text-[9px] font-medium font-['Inter'] mt-0.5">Industrial Mentorship</p>
                                 </div>
                                 <button
                                     onClick={() => navigate('/student/login')}
-                                    className="w-7 h-7 rounded-full bg-white/5 hover:bg-[#F5AFAF] text-white hover:text-[#1C1C1E] transition-all duration-300 flex items-center justify-center group/btn"
+                                    className="w-7 h-7 rounded-full bg-white/5 hover:bg-[#2563EB] text-white hover:text-[#1C1C1E] transition-all duration-300 flex items-center justify-center group/btn"
                                 >
                                     <ArrowUpRight size={14} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                                 </button>
@@ -89,7 +89,7 @@ const StickyBottomBar = () => {
                             {/* Certifications - Segment 2 */}
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
-                                    <Shield size={16} className="text-[#F5AFAF]" />
+                                    <Shield size={16} className="text-[#2563EB]" />
                                 </div>
                                 <div className="min-w-[120px]">
                                     <h4 className="text-white font-black text-[12px] uppercase tracking-wide font-['Outfit'] leading-none">Certifications</h4>
@@ -97,7 +97,7 @@ const StickyBottomBar = () => {
                                 </div>
                                 <button
                                     onClick={() => navigate('/student/signup')}
-                                    className="px-4 py-1.5 rounded-lg bg-[#F5AFAF] hover:bg-white text-[#1C1C1E] font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#F5AFAF]/5 active:scale-95 font-['Outfit']"
+                                    className="px-4 py-1.5 rounded-lg bg-[#2563EB] hover:bg-white text-[#1C1C1E] font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#2563EB]/5 active:scale-95 font-['Outfit']"
                                 >
                                     Access
                                 </button>

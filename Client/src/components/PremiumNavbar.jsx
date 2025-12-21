@@ -60,12 +60,12 @@ const PremiumNavbar = () => {
             {/* Top Banner - Tech Expert Call to Action - Now Opaque */}
             <div className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
-                    <Sparkles size={14} className="text-[#F5AFAF]" />
+                    <Sparkles size={14} className="text-[#2563EB]" />
                     <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">Master Industry-Standard Engineering</span>
-                    <a href="#programs" className="text-[#F5AFAF] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
-                        Explore Curriculum
+                    <Link to="/school-partnerships" className="text-[#2563EB] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
+                        School Partnership
                         <ArrowRight size={14} />
-                    </a>
+                    </Link>
                 </div>
             </div>
 
@@ -87,13 +87,13 @@ const PremiumNavbar = () => {
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             {/* Simple Logo Icon */}
-                            <div className="w-8 h-8 rounded-lg bg-[#F5AFAF] flex items-center justify-center shadow-lg shadow-[#F5AFAF]/20">
+                            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center shadow-lg shadow-[#2563EB]/20">
                                 <span className="text-white font-bold text-lg">TS</span>
                             </div>
 
                             {/* Logo Text */}
                             <h1 className="text-xl font-black tracking-tight text-slate-800 font-['Outfit']">
-                                think<span className="text-[#F5AFAF]">skool</span>
+                                think<span className="text-[#2563EB]">skool</span>
                             </h1>
                         </div>
 
@@ -101,7 +101,7 @@ const PremiumNavbar = () => {
                         <div className="hidden md:flex items-center gap-8">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer h-16 flex items-center">
-                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#F5AFAF] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
+                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#2563EB] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
                                         <span>{item.name}</span>
                                         {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-200" />}
                                     </div>
@@ -109,12 +109,12 @@ const PremiumNavbar = () => {
                                     {/* Dropdown Menu */}
                                     {item.hasDropdown && (
                                         <div className="absolute top-16 left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                            <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl shadow-[#F5AFAF]/10 border border-[#FBEFEF] py-2 w-56 overflow-hidden">
+                                            <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl shadow-[#2563EB]/10 border border-[#FBEFEF] py-2 w-56 overflow-hidden">
                                                 {item.subItems.map((sub, idx) => (
                                                     <a
                                                         key={idx}
                                                         href={sub.link}
-                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#FBEFEF] hover:text-[#F5AFAF] transition-colors border-l-2 border-transparent hover:border-[#F5AFAF] font-['Outfit']"
+                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors border-l-2 border-transparent hover:border-[#2563EB] font-['Outfit']"
                                                     >
                                                         {sub.name}
                                                     </a>
@@ -131,7 +131,7 @@ const PremiumNavbar = () => {
                             <NotificationDropdown />
                             <button
                                 onClick={handleBookSession}
-                                className="px-5 py-2 text-[10px] font-black text-white bg-[#2D2D2D] rounded-lg hover:shadow-xl hover:shadow-[#F5AFAF]/20 hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
+                                className="px-5 py-2 text-[10px] font-black text-white bg-[#2D2D2D] rounded-lg hover:shadow-xl hover:shadow-[#2563EB]/20 hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
                             >
                                 Book Free Session
                             </button>
@@ -143,9 +143,9 @@ const PremiumNavbar = () => {
                                         navigate('/student/login');
                                     }
                                 }}
-                                className="px-6 py-2.5 text-[11px] font-black text-slate-700 bg-white border border-[#FBEFEF] rounded-xl hover:bg-[#FCF8F8] hover:border-[#F5AFAF]/30 transition-all uppercase tracking-widest font-['Outfit'] shadow-sm flex items-center gap-2"
+                                className="px-6 py-2.5 text-[11px] font-black text-slate-700 bg-white border border-[#FBEFEF] rounded-xl hover:bg-[#FCF8F8] hover:border-[#2563EB]/30 transition-all uppercase tracking-widest font-['Outfit'] shadow-sm flex items-center gap-2"
                             >
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#F5AFAF] animate-pulse"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse"></div>
                                 My Classroom
                             </button>
                         </div>
@@ -178,7 +178,7 @@ const PremiumNavbar = () => {
 
                         {/* Menu Content */}
                         <motion.div
-                            className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-[#FBEFEF] shadow-2xl shadow-[#F5AFAF]/10"
+                            className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-[#FBEFEF] shadow-2xl shadow-[#2563EB]/10"
                             initial={{ y: -20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
@@ -187,7 +187,7 @@ const PremiumNavbar = () => {
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
-                                        className="w-full text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#F5AFAF] transition-colors flex justify-between items-center"
+                                        className="w-full text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors flex justify-between items-center"
                                     >
                                         {item.name}
                                         {item.hasDropdown && <FaChevronDown size={12} />}

@@ -35,7 +35,7 @@ const MaintenanceBanner = () => {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                className="bg-rose-500 text-white fixed top-0 left-0 right-0 z-[200] shadow-lg shadow-rose-500/20"
+                className="bg-blue-500 text-white fixed top-0 left-0 right-0 z-[200] shadow-lg shadow-blue-500/20"
             >
                 <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">

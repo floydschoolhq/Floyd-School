@@ -53,8 +53,17 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                         {/* Header */}
                         <div className="bg-white p-8 border-b border-[#FBEFEF] text-slate-900 flex justify-between items-start font-['Outfit']">
                             <div>
-                                <h3 className="text-2xl font-black mb-1 uppercase tracking-tight">Book a <span className="text-[#F5AFAF]">Free Session</span></h3>
-                                <p className="text-slate-500 text-sm font-medium">Get expert guidance for your future.</p>
+                                {source === 'school_partnership' ? (
+                                    <>
+                                        <h3 className="text-2xl font-black mb-1 uppercase tracking-tight">Start <span className="text-[#2563EB]">Partnership</span></h3>
+                                        <p className="text-slate-500 text-sm font-medium">Schedule a briefing for your institution.</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h3 className="text-2xl font-black mb-1 uppercase tracking-tight">Book a <span className="text-[#2563EB]">Free Session</span></h3>
+                                        <p className="text-slate-500 text-sm font-medium">Get expert guidance for your future.</p>
+                                    </>
+                                )}
                             </div>
                             <button onClick={onClose} className="text-slate-400 hover:text-slate-900 transition-colors p-2 rounded-full hover:bg-[#FCF8F8]">
                                 <FaTimes />
@@ -69,43 +78,53 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                         <FaCheckCircle />
                                     </div>
                                     <h4 className="text-xl font-bold text-slate-900 mb-2">Request Received!</h4>
-                                    <p className="text-slate-500">Our expert counselor will call you shortly.</p>
+                                    <p className="text-slate-500">
+                                        {source === 'school_partnership'
+                                            ? 'Our partnership team will contact your school shortly.'
+                                            : 'Our expert counselor will call you shortly.'}
+                                    </p>
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {errorMsg && (
-                                        <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg">
+                                        <div className="p-3 bg-blue-50 text-blue-600 text-sm rounded-lg">
                                             {errorMsg}
                                         </div>
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Name</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                            {source === 'school_partnership' ? 'Administrator Name' : 'Name'}
+                                        </label>
                                         <input
                                             type="text"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#F5AFAF] transition-colors font-['Inter'] font-medium"
-                                            placeholder="Enter your name"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
+                                            placeholder={source === 'school_partnership' ? "Enter contact person's name" : "Enter your name"}
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Email</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                            {source === 'school_partnership' ? 'Official Email' : 'Email'}
+                                        </label>
                                         <input
                                             type="email"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#F5AFAF] transition-colors font-['Inter'] font-medium"
-                                            placeholder="Enter your email"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
+                                            placeholder={source === 'school_partnership' ? "principal@school.edu" : "Enter your email"}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">Phone Number</label>
+                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                            {source === 'school_partnership' ? 'School Contact Number' : 'Phone Number'}
+                                        </label>
                                         <input
                                             type="tel"
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#F5AFAF] transition-colors font-['Inter'] font-medium"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
                                             placeholder="+91 98765 43210"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -117,7 +136,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                         disabled={status === 'loading'}
                                         className="w-full bg-[#2D2D2D] text-white font-black py-5 rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-2xl shadow-slate-100 uppercase tracking-widest text-xs font-['Outfit'] active:scale-95"
                                     >
-                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : 'Confirm Registration'}
+                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : (source === 'school_partnership' ? 'Request Briefing' : 'Confirm Registration')}
                                     </button>
                                 </form>
                             )}

@@ -51,6 +51,7 @@ const LeadIntelligence = () => {
                             <th className="p-6 text-[11px] font-black text-slate-500 uppercase tracking-widest">Prospect</th>
                             <th className="p-6 text-[11px] font-black text-slate-500 uppercase tracking-widest">Contact Info</th>
                             <th className="p-6 text-[11px] font-black text-slate-500 uppercase tracking-widest">Interest</th>
+                            <th className="p-6 text-[11px] font-black text-slate-500 uppercase tracking-widest">Source</th>
                             <th className="p-6 text-[11px] font-black text-slate-500 uppercase tracking-widest">Status</th>
                         </tr>
                     </thead>
@@ -83,13 +84,19 @@ const LeadIntelligence = () => {
                                 </td>
                                 <td className="p-6">
                                     <span className="text-xs font-bold text-white bg-slate-800 px-2 py-1 rounded">
-                                        {lead.courseInterest || 'General Inquiry'}
+                                        {lead.source === 'school_partnership' ? 'Partnership Request' : (lead.topic || lead.courseInterest || 'General Inquiry')}
+                                    </span>
+                                </td>
+                                <td className="p-6">
+                                    <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded ${lead.source === 'school_partnership' ? 'bg-purple-500/20 text-purple-400' : 'bg-slate-800 text-slate-400'
+                                        }`}>
+                                        {lead.source?.replace('_', ' ') || 'Unknown'}
                                     </span>
                                 </td>
                                 <td className="p-6">
                                     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${lead.status === 'Converted' ? 'bg-emerald-500/20 text-emerald-500' :
-                                            lead.status === 'Contacted' ? 'bg-sky-500/20 text-sky-500' :
-                                                'bg-slate-700 text-slate-300'
+                                        lead.status === 'Contacted' ? 'bg-sky-500/20 text-sky-500' :
+                                            'bg-slate-700 text-slate-300'
                                         }`}>
                                         {lead.status}
                                     </span>

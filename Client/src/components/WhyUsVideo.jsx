@@ -32,16 +32,16 @@ const WhyUsVideo = () => {
             {/* Background Text */}
             <div className="absolute top-10 left-0 right-0 flex justify-center pointer-events-none select-none overflow-hidden">
                 <h1 className="text-[12rem] md:text-[18rem] font-black text-transparent stroke-text opacity-5 whitespace-nowrap"
-                    style={{ WebkitTextStroke: '2px #F5AFAF' }}>
+                    style={{ WebkitTextStroke: '2px #2563EB' }}>
                     THE EDGE
                 </h1>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <p className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Elite Standards</p>
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Elite Standards</p>
                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 font-['Outfit'] tracking-tighter">
-                        The ThinkSkool <span className="text-[#F5AFAF]">Advantage</span>
+                        The ThinkSkool <span className="text-[#2563EB]">Advantage</span>
                     </h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -86,7 +86,7 @@ const WhyUsVideo = () => {
 
                                 {/* Speaker Info */}
                                 <div className="absolute bottom-6 left-6 font-['Outfit']">
-                                    <h3 className="text-[#F5AFAF] font-black text-xl tracking-tight">{data.video?.speakerName}</h3>
+                                    <h3 className="text-[#2563EB] font-black text-xl tracking-tight">{data.video?.speakerName}</h3>
                                     <p className="text-slate-300 text-sm font-medium">{data.video?.speakerRole}</p>
                                 </div>
                             </div>
@@ -104,13 +104,13 @@ const WhyUsVideo = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.2, duration: 0.5 }}
-                                    className="bg-white rounded-[2rem] p-8 flex items-center gap-8 border border-[#FBEFEF] hover:border-[#F5AFAF]/20 shadow-lg hover:shadow-2xl transition-all group"
+                                    className="bg-white rounded-[2rem] p-8 flex items-center gap-8 border border-[#FBEFEF] hover:border-[#2563EB]/20 shadow-lg hover:shadow-2xl transition-all group"
                                 >
-                                    <div className={`w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#F5AFAF] group-hover:scale-110 transition-transform shadow-sm shrink-0`}>
+                                    <div className={`w-16 h-16 rounded-3xl bg-[#FBEFEF] flex items-center justify-center text-[#2563EB] group-hover:scale-110 transition-transform shadow-sm shrink-0`}>
                                         <Icon size={28} />
                                     </div>
                                     <div>
-                                        <h3 className="text-slate-900 text-2xl font-black group-hover:text-[#F5AFAF] transition-colors font-['Outfit'] tracking-tight mb-1">
+                                        <h3 className="text-slate-900 text-2xl font-black group-hover:text-[#2563EB] transition-colors font-['Outfit'] tracking-tight mb-1">
                                             {feature.title}
                                         </h3>
                                         <p className="text-slate-500 text-sm font-medium leading-relaxed">

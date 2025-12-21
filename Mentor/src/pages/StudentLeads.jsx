@@ -70,7 +70,7 @@ const StudentLeads = () => {
             <header className="flex justify-between items-end">
                 <div>
                     <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase italic underline decoration-sky-500 decoration-4 underline-offset-8">
-                        Transmission <span className="text-sky-500 not-italic">Leads</span>
+                        Student <span className="text-sky-500 not-italic">Leads</span>
                     </h2>
                     <p className="text-slate-500 font-bold mt-4 uppercase tracking-widest text-xs">Incoming signals from potential student nodes.</p>
                 </div>
@@ -88,7 +88,7 @@ const StudentLeads = () => {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors" size={18} />
                     <input
                         type="text"
-                        placeholder="Search by name, interest or neural hash..."
+                        placeholder="Search by name, interest or ID..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-white border-2 border-slate-100 p-4 pl-12 rounded-[1.5rem] font-bold text-sm text-slate-900 outline-none focus:border-sky-500 transition-all shadow-sm"
@@ -100,9 +100,9 @@ const StudentLeads = () => {
                 <table className="w-full text-left">
                     <thead>
                         <tr className="bg-slate-50 border-b-2 border-slate-100">
-                            <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Origin</th>
+                            <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Information</th>
                             <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Interested Sector</th>
-                            <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Signal Status</th>
+                            <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                             <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
                         </tr>
                     </thead>
@@ -136,7 +136,7 @@ const StudentLeads = () => {
                                         onChange={(e) => handleStatusChange(lead._id, e.target.value)}
                                         className="bg-slate-50 border border-slate-200 p-2 rounded-xl text-[10px] font-black uppercase tracking-widest outline-none focus:border-sky-500"
                                     >
-                                        <option value="new">New Node</option>
+                                        <option value="new">New Lead</option>
                                         <option value="contacted">In Contact</option>
                                         <option value="converted">Encoded (Converted)</option>
                                         <option value="closed">Terminated (Closed)</option>

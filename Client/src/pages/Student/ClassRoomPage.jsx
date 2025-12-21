@@ -148,7 +148,7 @@ const ClassroomPage = () => {
         className="mb-8 font-['Inter']"
       >
         <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
-          My Classroom <span className="text-[#F5AFAF]">Resources</span>
+          My Classroom <span className="text-[#2563EB]">Resources</span>
         </h1>
         <p className="text-base font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
       </motion.div>
@@ -158,15 +158,15 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="mb-10 bg-gradient-to-r from-[#F5AFAF] to-[#F5AFAF] rounded-2xl p-0.5 shadow-xl shadow-[#F5AFAF]/10"
+          className="mb-10 bg-gradient-to-r from-[#2563EB] to-[#2563EB] rounded-2xl p-0.5 shadow-xl shadow-[#2563EB]/10"
         >
           <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
-                  <div className="w-12 h-12 bg-red-50/50 rounded-full flex items-center justify-center border border-red-100">
-                    <PlayCircle className="text-red-500 w-6 h-6" />
+                  <div className="w-3 h-3 bg-blue-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                  <div className="w-12 h-12 bg-blue-50/50 rounded-full flex items-center justify-center border border-blue-100">
+                    <PlayCircle className="text-blue-500 w-6 h-6" />
                   </div>
                 </div>
                 <div>
@@ -189,7 +189,7 @@ const ClassroomPage = () => {
                     {myDoubt.isResolved && (
                       <button
                         onClick={handleTerminateDoubt}
-                        className="ml-2 bg-red-100/50 hover:bg-red-100 text-red-600 p-1.5 rounded-lg transition-colors border border-red-200"
+                        className="ml-2 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-1.5 rounded-lg transition-colors border border-blue-200"
                         title="Close this doubt to ask a new one"
                       >
                         <Trash2 size={12} strokeWidth={3} />
@@ -217,7 +217,7 @@ const ClassroomPage = () => {
                     setGlobalActiveLiveClass(activeLiveClass);
                     setView('LiveSession');
                   }}
-                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-red-500/20 uppercase text-base tracking-widest cursor-pointer"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase text-base tracking-widest cursor-pointer"
                 >
                   Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[13px] ml-2 font-black">LIVE</span>
                 </button>
@@ -239,7 +239,7 @@ const ClassroomPage = () => {
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center text-white bg-slate-900 gap-6 p-8 text-center bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/60">
                     <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 animate-pulse">
-                      <PlayCircle size={40} className="text-[#F5AFAF]" />
+                      <PlayCircle size={40} className="text-[#2563EB]" />
                     </div>
                     <div>
                       <h3 className="text-2xl font-black uppercase tracking-tight mb-2">Embedded Live Session</h3>
@@ -250,7 +250,7 @@ const ClassroomPage = () => {
                         setGlobalActiveLiveClass(activeLiveClass);
                         setView('LiveSession');
                       }}
-                      className="mt-2 bg-[#F5AFAF] text-slate-900 px-8 py-4 rounded-2xl text-base font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#F5AFAF]/20 flex items-center gap-3"
+                      className="mt-2 bg-[#2563EB] text-slate-900 px-8 py-4 rounded-2xl text-base font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#2563EB]/20 flex items-center gap-3"
                     >
                       Join Meeting Now <CheckCircle size={16} />
                     </button>
@@ -298,7 +298,7 @@ const ClassroomPage = () => {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className="text-[13px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
-                      <div className="text-lg font-black text-[#F5AFAF]">
+                      <div className="text-lg font-black text-[#2563EB]">
                         {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                       </div>
                     </div>
@@ -377,7 +377,7 @@ const ClassroomPage = () => {
         </h2>
         <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="text-center py-8">
-            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#F5AFAF] opacity-50" />
+            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#2563EB] opacity-50" />
             <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
             <p className="text-base font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
             <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10">

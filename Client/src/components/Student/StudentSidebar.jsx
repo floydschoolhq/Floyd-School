@@ -29,7 +29,7 @@ const StudentSidebar = () => {
       <div className="flex flex-col">
         <div className="flex items-center justify-between mb-8">
           <div className="text-2xl font-black flex items-center tracking-tighter font-['Outfit']">
-            <span className='text-slate-900'>think</span><span className='text-[#F5AFAF]'>skool</span>
+            <span className='text-slate-900'>think</span><span className='text-[#2563EB]'>skool</span>
           </div>
           <button
             className="md:hidden p-2 text-slate-500 hover:text-slate-700 rounded-full"
@@ -43,7 +43,7 @@ const StudentSidebar = () => {
         <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100 font-['Inter']">
           <p className="text-base font-black text-slate-400 uppercase tracking-widest mb-1 font-['Outfit']">Authenticated as</p>
           <p className="text-base font-black text-slate-900 truncate font-['Outfit']">{user?.name}</p>
-          <div className="mt-2 inline-block px-2 py-0.5 bg-[#F5AFAF]/10 text-[#F5AFAF] text-[13px] font-black uppercase rounded tracking-tighter font-['Outfit']">
+          <div className="mt-2 inline-block px-2 py-0.5 bg-[#2563EB]/10 text-[#2563EB] text-[13px] font-black uppercase rounded tracking-tighter font-['Outfit']">
             {system} Access
           </div>
         </div>

@@ -61,6 +61,10 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
+            // Update lastLogin
+            user.lastLogin = Date.now();
+            await user.save();
+
             // Emit socket event
             const io = req.app.get('io');
             if (io) {

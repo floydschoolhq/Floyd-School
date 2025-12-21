@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 export const GradientCard = ({
     children,
     className,
-    gradient = "from-blue-500 via-purple-500 to-pink-500",
+    gradient = "from-blue-500 via-purple-500 to-blue-500",
 }) => {
     return (
         <motion.div
@@ -42,7 +42,7 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
                 {change && (
                     <p className={cn(
                         "text-[10px] mt-2 font-black uppercase tracking-widest flex items-center gap-1",
-                        change > 0 ? "text-emerald-500" : "text-rose-500"
+                        change > 0 ? "text-emerald-500" : "text-blue-500"
                     )}>
                         {change > 0 ? "↑" : "↓"} {Math.abs(change)}% Growth
                     </p>

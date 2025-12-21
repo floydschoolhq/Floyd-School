@@ -14,6 +14,7 @@ import api from '../api/axios';
 
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
+    const [atRiskStudents, setAtRiskStudents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const Dashboard = () => {
             try {
                 const res = await api.get('/dashboard/associate');
                 setStats(res.data.stats);
+                setAtRiskStudents(res.data.atRiskStudents || []);
             } catch (err) {
                 console.error('Failed to fetch associate stats', err);
             } finally {
@@ -35,12 +37,6 @@ const Dashboard = () => {
         { label: 'Avg Engagement', value: stats?.avgEngagement || '0%', icon: <Activity size={20} />, color: 'bg-emerald-500' },
         { label: 'Support SLA', value: stats?.supportSLA || '0m', icon: <Clock size={20} />, color: 'bg-sky-500' },
         { label: 'Open Tickets', value: stats?.openTickets || '0', icon: <UserX size={20} />, color: 'bg-rose-500' },
-    ];
-
-    const atRiskStudents = [
-        { name: 'David Miller', risk: 'High', lastActive: '5 days ago', reason: 'Stopped submittng assignments' },
-        { name: 'Sofie Lopez', risk: 'Medium', lastActive: '2 days ago', reason: 'Missed 3 live classes' },
-        { name: 'Kira Vance', risk: 'High', lastActive: '8 days ago', reason: 'Low IDE activity' },
     ];
 
     if (loading) return (
@@ -92,33 +88,43 @@ const Dashboard = () => {
                         </div>
 
                         <div className="space-y-4">
-                            {atRiskStudents.map((student, idx) => (
-                                <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-3xl bg-slate-50 border border-slate-100 group hover:border-orange-200 hover:bg-orange-50/30 transition-all">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-rose-500 border border-slate-200 text-lg font-black shadow-sm group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-600 transition-all">
-                                            {student.name[0]}
-                                        </div>
-                                        <div>
-                                            <p className="font-black text-slate-900 uppercase tracking-tight">{student.name}</p>
-                                            <div className="flex items-center gap-2 mt-0.5">
-                                                <span className={`text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter ${student.risk === 'High' ? 'bg-rose-100 text-rose-600' : 'bg-orange-100 text-orange-600'
-                                                    }`}>Risk: {student.risk}</span>
-                                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">• Last Seen: {student.lastActive}</span>
+                            {atRiskStudents.length > 0 ? (
+                                atRiskStudents.map((student, idx) => (
+                                    <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-3xl bg-slate-50 border border-slate-100 group hover:border-orange-200 hover:bg-orange-50/30 transition-all">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-rose-500 border border-slate-200 text-lg font-black shadow-sm group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-600 transition-all">
+                                                {student.name[0]}
+                                            </div>
+                                            <div>
+                                                <p className="font-black text-slate-900 uppercase tracking-tight">{student.name}</p>
+                                                <div className="flex items-center gap-2 mt-0.5">
+                                                    <span className={`text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter ${student.risk === 'High' ? 'bg-rose-100 text-rose-600' : 'bg-orange-100 text-orange-600'
+                                                        }`}>Risk: {student.risk}</span>
+                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">• Last Seen: {student.lastActive}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="mt-4 md:mt-0 flex items-center gap-8">
-                                        <div className="hidden lg:block">
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-right">Primary Cause</p>
-                                            <p className="text-xs font-bold text-slate-600 text-right italic">"{student.reason}"</p>
+                                        <div className="mt-4 md:mt-0 flex items-center gap-8">
+                                            <div className="hidden lg:block">
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 text-right">Primary Cause</p>
+                                                <p className="text-xs font-bold text-slate-600 text-right italic">"{student.reason}"</p>
+                                            </div>
+                                            <button className="bg-slate-900 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-orange-500 transition-all flex items-center gap-2">
+                                                <Zap size={14} fill="currentColor" />
+                                                Initiate Outreach
+                                            </button>
                                         </div>
-                                        <button className="bg-slate-900 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-orange-500 transition-all flex items-center gap-2">
-                                            <Zap size={14} fill="currentColor" />
-                                            Initiate Outreach
-                                        </button>
                                     </div>
+                                ))
+                            ) : (
+                                <div className="p-12 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
+                                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-emerald-500 border border-slate-100 shadow-sm">
+                                        <Zap size={24} />
+                                    </div>
+                                    <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">System Optimized</h3>
+                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2">No critical retention risks detected.</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
                 </div>

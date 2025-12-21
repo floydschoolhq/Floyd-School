@@ -6,22 +6,22 @@ const SchoolSteps = [
     {
         title: "Strategic Consultation",
         icon: <School className="w-6 h-6" />,
-        color: "from-blue-500 to-indigo-600"
+        color: "from-blue-500 to-blue-600"
     },
     {
         title: "7-Day Free Bootcamp",
         icon: <Calendar className="w-6 h-6" />,
-        color: "from-indigo-500 to-purple-600"
+        color: "from-blue-500 to-purple-600"
     },
     {
         title: "Advanced Lab setup",
         icon: <Cpu className="w-6 h-6" />,
-        color: "from-purple-500 to-pink-600"
+        color: "from-purple-500 to-blue-600"
     },
     {
         title: "Elite Certification",
         icon: <Trophy className="w-6 h-6" />,
-        color: "from-pink-500 to-[#F5AFAF]"
+        color: "from-blue-500 to-[#2563EB]"
     }
 ];
 
@@ -34,17 +34,17 @@ const StudentSteps = [
     {
         title: "Premium Live Classes",
         icon: <Video className="w-6 h-6" />,
-        color: "from-blue-500 to-indigo-600"
+        color: "from-blue-500 to-blue-600"
     },
     {
         title: "Support Ops & Assignments",
         icon: <MessageSquare className="w-6 h-6" />,
-        color: "from-indigo-500 to-purple-600"
+        color: "from-blue-500 to-purple-600"
     },
     {
         title: "Impact & Career Launch",
         icon: <Rocket className="w-6 h-6" />,
-        color: "from-purple-500 to-[#F5AFAF]"
+        color: "from-purple-500 to-[#2563EB]"
     }
 ];
 
@@ -84,13 +84,13 @@ const HowItWorksSection = () => {
     });
 
     return (
-        <section id="how-it-works" ref={containerRef} className="relative bg-[#FCF8F8] py-32 overflow-hidden border-t border-[#FBEFEF]">
+        <section id="how-it-works" ref={containerRef} className="relative bg-[#F8FAFC] py-32 overflow-hidden border-t border-slate-200">
             {/* Header */}
             <div className="max-w-7xl mx-auto px-4 mb-24 relative z-10 text-center">
                 <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="text-[#F5AFAF] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']"
+                    className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']"
                 >
                     Operational Flow
                 </motion.p>
@@ -99,7 +99,7 @@ const HowItWorksSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="text-5xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']"
                 >
-                    Dual Journey <span className="text-[#F5AFAF]">Framework</span>
+                    Dual Journey <span className="text-[#2563EB]">Framework</span>
                 </motion.h2>
             </div>
 
@@ -122,9 +122,9 @@ const HowItWorksSection = () => {
                         />
                         <defs>
                             <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stopColor="#F5AFAF" />
+                                <stop offset="0%" stopColor="#2563EB" />
                                 <stop offset="50%" stopColor="#2D2D2D" />
-                                <stop offset="100%" stopColor="#F5AFAF" />
+                                <stop offset="100%" stopColor="#2563EB" />
                             </linearGradient>
                         </defs>
                     </svg>
@@ -152,8 +152,8 @@ const HowItWorksSection = () => {
 
                     {/* For Students */}
                     <div className="flex-1 lg:mt-32">
-                        <div className="flex items-center gap-4 mb-16 bg-white p-6 rounded-[2.5rem] border border-[#FBEFEF] shadow-sm w-fit mx-auto lg:mx-0 lg:ml-auto">
-                            <div className="w-12 h-12 bg-[#F5AFAF] rounded-2xl flex items-center justify-center text-white">
+                        <div className="flex items-center gap-4 mb-16 bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm w-fit mx-auto lg:mx-0 lg:ml-auto">
+                            <div className="w-12 h-12 bg-[#2563EB] rounded-2xl flex items-center justify-center text-white">
                                 <GraduationCap className="w-6 h-6" />
                             </div>
                             <div>
@@ -172,7 +172,7 @@ const HowItWorksSection = () => {
 
             {/* Glowing orbs */}
             <div className="absolute top-1/4 -left-24 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-1/4 -right-24 w-96 h-96 bg-[#F5AFAF]/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-1/4 -right-24 w-96 h-96 bg-[#2563EB]/5 rounded-full blur-[120px] pointer-events-none" />
         </section>
     );
 };
