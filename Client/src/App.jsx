@@ -95,6 +95,7 @@ const App = () => {
     const hideLayoutOnPaths = [
         '/student/login',
         '/student/signup',
+        '/student',
         '/downloads',
         '/contact'
 
