@@ -4,7 +4,8 @@ const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 const api = axios.create({
     baseURL: `${baseURL}/api`,
-    withCredentials: true
+    withCredentials: true,
+    timeout: 15000 // 15 second timeout to prevent indefinite loading
 });
 
 // Add a request interceptor to include the token in headers

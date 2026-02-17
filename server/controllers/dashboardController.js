@@ -11,15 +11,28 @@ exports.getStudentDashboard = async (req, res) => {
     try {
         const studentId = req.user._id;
 
-        // Get enrolled courses that are published
-        const courses = await Course.find({
-            enrolledStudents: studentId,
-            status: 'published'
-        })
-            .populate('instructor', 'name email')
-            .select('title description modules category');
+        // Step 1: Fetch core data concurrently
+        const [courses, allSubmissions, notifications] = await Promise.all([
+            Course.find({
+                enrolledStudents: studentId,
+                status: 'published'
+            })
+                .populate('instructor', 'name email')
+                .select('title description modules category'),
 
-        // Calculate overall progress
+            Submission.find({ student: studentId })
+                .populate('assignment', 'title category')
+                .sort({ submittedAt: -1 }),
+
+            Notification.find({
+                recipient: studentId,
+                isRead: false
+            })
+                .sort({ createdAt: -1 })
+                .limit(10)
+        ]);
+
+        // Step 2: Calculate overall progress from courses
         let totalModules = 0;
         let completedModules = 0;
         courses.forEach(course => {
@@ -28,7 +41,7 @@ exports.getStudentDashboard = async (req, res) => {
         });
         const overallProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
 
-        // Get assignments for enrolled courses
+        // Step 3: Get assignments based on fetched courses
         const courseIds = courses.map(c => c._id);
         const assignments = await Assignment.find({
             course: { $in: courseIds },
@@ -38,18 +51,11 @@ exports.getStudentDashboard = async (req, res) => {
             .sort({ dueDate: 1 })
             .limit(5);
 
-        // Get ALL submissions for stats calculation
-        const allSubmissions = await Submission.find({ student: studentId })
-            .populate('assignment', 'title category')
-            .sort({ submittedAt: -1 });
-
-        // Calculate Skill Matrix
+        // Step 4: Calculate Skill Matrix from submissions
         const skillAcc = {};
         allSubmissions.forEach(sub => {
             if (sub.status === 'graded' && sub.assignment) {
-                // Default to 'Development' if category is missing (legacy data)
                 const cat = sub.assignment.category || 'Development';
-
                 if (!skillAcc[cat]) skillAcc[cat] = { total: 0, count: 0 };
                 skillAcc[cat].total += sub.grade || 0;
                 skillAcc[cat].count += 1;
@@ -61,7 +67,6 @@ exports.getStudentDashboard = async (req, res) => {
             score: Math.round(skillAcc[cat].total / skillAcc[cat].count)
         }));
 
-        // Default if empty
         if (skillMatrix.length === 0) {
             skillMatrix.push(
                 { name: 'Algorithms', score: 0 },
@@ -71,17 +76,6 @@ exports.getStudentDashboard = async (req, res) => {
             );
         }
 
-        // Get recent submissions for display
-        const submissions = allSubmissions.slice(0, 5);
-
-        // Get unread notifications
-        const notifications = await Notification.find({
-            recipient: studentId,
-            isRead: false
-        })
-            .sort({ createdAt: -1 })
-            .limit(10);
-
         res.json({
             courses,
             overallProgress,
@@ -89,7 +83,7 @@ exports.getStudentDashboard = async (req, res) => {
             completedModules,
             totalModules,
             assignments,
-            submissions,
+            submissions: allSubmissions.slice(0, 5),
             notifications,
             skillMatrix,
             stats: {
@@ -99,6 +93,7 @@ exports.getStudentDashboard = async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('Student Dashboard Error:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };

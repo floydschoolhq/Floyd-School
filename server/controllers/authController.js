@@ -57,11 +57,13 @@ const registerUser = async (req, res) => {
 // @access  Public
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    console.log(`[Auth] Login attempt for email: ${email}`);
 
     try {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
+            console.log(`[Auth] Login successful for: ${email} (${user.role})`);
             // Update lastLogin
             user.lastLogin = Date.now();
             await user.save();
@@ -81,9 +83,11 @@ const loginUser = async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
+            console.warn(`[Auth] Invalid credentials for: ${email}`);
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
+        console.error(`[Auth] Login Error for ${email}:`, error.stack);
         res.status(500).json({ message: error.message });
     }
 };

@@ -501,13 +501,22 @@ exports.getGrowthIntelligence = async (req, res) => {
     try {
         // 1. Lead Velocity (Avg time from Lead creation to User registration)
         const convertedLeads = await Lead.find({ status: 'converted' }).catch(() => []);
+
+        // Fetch all relevant users in one go to avoid N+1 query problem
+        const emails = convertedLeads.map(l => l.email);
+        const users = await User.find({ email: { $in: emails } }).select('email createdAt').catch(() => []);
+        const userMap = users.reduce((acc, u) => {
+            acc[u.email] = u.createdAt;
+            return acc;
+        }, {});
+
         let totalVelocity = 0;
         let conversionCount = 0;
 
         for (const lead of convertedLeads) {
-            const user = await User.findOne({ email: lead.email }).select('createdAt').catch(() => null);
-            if (user && user.createdAt > lead.createdAt) {
-                totalVelocity += (user.createdAt - lead.createdAt) / (1000 * 60 * 60); // In hours
+            const userCreatedAt = userMap[lead.email];
+            if (userCreatedAt && userCreatedAt > lead.createdAt) {
+                totalVelocity += (userCreatedAt - lead.createdAt) / (1000 * 60 * 60); // In hours
                 conversionCount++;
             }
         }
