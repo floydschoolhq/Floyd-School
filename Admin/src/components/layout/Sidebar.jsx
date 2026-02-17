@@ -11,7 +11,8 @@ import {
     Cpu,
     BookOpen,
     Target,
-    TrendingUp
+    TrendingUp,
+    Monitor
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 

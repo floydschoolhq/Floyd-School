@@ -1,5 +1,6 @@
 import { BarChart, BookOpen, ClipboardCheck, Code, LayoutDashboard, Video, X, LifeBuoy, PlayCircle } from "lucide-react";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { PortalContext } from "../Context/PortalProvider";
 import { NavLink } from "./SharedComponentStudent";
 
@@ -29,9 +30,9 @@ const StudentSidebar = () => {
       {/* Header */}
       <div className="flex flex-col">
         <div className="flex items-center justify-between mb-8">
-          <div className="text-2xl font-black flex items-center tracking-tighter font-['Outfit']">
+          <Link to="/" className="text-2xl font-black flex items-center tracking-tighter font-['Outfit'] hover:opacity-80 transition-opacity">
             <span className='text-slate-900'>think</span><span className='text-[#2563EB]'>skool</span>
-          </div>
+          </Link>
           <button
             className="md:hidden p-2 text-slate-500 hover:text-slate-700 rounded-full"
             onClick={() => setIsSidebarOpen(false)}
