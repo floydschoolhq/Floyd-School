@@ -20,6 +20,13 @@ const generateToken = (id) => {
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
+    // Restriction: Only allow @thinkskool.com domain
+    if (!email.toLowerCase().endsWith('@thinkskool.com')) {
+        return res.status(400).json({
+            message: 'Registration restricted: Please use your @thinkskool.com email address.'
+        });
+    }
+
     try {
         const userExists = await User.findOne({ email });
 

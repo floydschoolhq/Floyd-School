@@ -21,6 +21,12 @@ const StudentSignupPage = () => {
         e.preventDefault();
         if (!name || !email || !password) return;
 
+        // Domain restriction check
+        if (!email.toLowerCase().endsWith('@thinkskool.com')) {
+            alert('Invalid Domain: Please use your @thinkskool.com email address.');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {

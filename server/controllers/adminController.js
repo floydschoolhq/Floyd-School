@@ -333,6 +333,45 @@ exports.getLeads = async (req, res) => {
 };
 
 /**
+ * @desc    Update lead status
+ * @route   PATCH /api/admin/leads/:id/status
+ * @access  Private/Admin
+ */
+exports.updateLeadStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const lead = await Lead.findById(id);
+        if (!lead) {
+            return res.status(404).json({ success: false, message: 'Lead not found' });
+        }
+
+        lead.status = status;
+        await lead.save();
+
+        res.status(200).json({ success: true, lead });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
+ * @desc    Delete lead permanently (Terminate)
+ * @route   DELETE /api/admin/leads/:id
+ * @access  Private/Admin
+ */
+exports.deleteLead = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Lead.findByIdAndDelete(id);
+        res.status(200).json({ success: true, message: 'Lead terminated successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
  * @desc    Process system-level command via VCT
  * @route   POST /api/admin/system/command
  * @access  Private/Admin

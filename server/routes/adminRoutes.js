@@ -15,7 +15,9 @@ const {
     updateCourseStatus,
     getGrowthIntelligence,
     getFrictionDetails,
-    toggleUserStatus
+    toggleUserStatus,
+    updateLeadStatus,
+    deleteLead
 } = require('../controllers/adminController');
 const { getAccessRequests, reviewAccessRequest } = require('../controllers/studentController');
 const { getSettings, updateSettings } = require('../controllers/settingsController');
@@ -60,6 +62,8 @@ router.post('/system/command', processSystemCommand);
 
 // Intelligence
 router.get('/leads', getLeads);
+router.patch('/leads/:id/status', updateLeadStatus);
+router.delete('/leads/:id', deleteLead);
 router.get('/growth-intelligence', getGrowthIntelligence);
 router.get('/friction/:moduleTitle', getFrictionDetails);
 router.post('/broadcast', broadcastNotification);
