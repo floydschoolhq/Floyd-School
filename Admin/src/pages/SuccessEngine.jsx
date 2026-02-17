@@ -16,7 +16,11 @@ import FrictionDetailsModal from '../components/modals/FrictionDetailsModal';
 
 const SuccessEngine = () => {
     const [intel, setIntel] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedModule, setSelectedModule] = useState(null);
 
     const fetchIntelligence = async () => {
         setRefreshing(true);
