@@ -146,8 +146,8 @@ exports.getAssociateDashboard = async (req, res) => {
         const now = Date.now();
         const oneDay = 24 * 60 * 60 * 1000;
 
-        const riskData = allStudents.map(student => {
-            const lastLogin = student.lastLogin ? new Date(student.lastLogin) : new Date(student.createdAt);
+        const riskData = allStudents.filter(s => s).map(student => {
+            const lastLogin = student.lastLogin ? new Date(student.lastLogin) : (student.createdAt ? new Date(student.createdAt) : new Date());
             const diffDays = Math.floor((now - lastLogin) / oneDay);
 
             let risk = 'Low';
