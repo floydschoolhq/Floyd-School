@@ -9,6 +9,7 @@ const StudentLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState(null);
   const navigate = useNavigate();
   const { updateUser } = useContext(PortalContext);
 
@@ -21,6 +22,7 @@ const StudentLoginPage = () => {
     if (!email || !password) return;
 
     setIsSubmitting(true);
+    setLoginError(null);
 
     try {
       const response = await api.post('/auth/login', {
@@ -39,7 +41,10 @@ const StudentLoginPage = () => {
       navigate('/student');
     } catch (error) {
       console.error('Login failed:', error.response?.data?.message || error.message);
-      alert(error.response?.data?.message || 'Login failed');
+      const detailedError = error.response?.data?.clinicalError || error.response?.data?.message || error.message;
+      const stack = error.response?.data?.stack ? `\n\nDetails: ${error.response.data.stack.substring(0, 100)}...` : '';
+      setLoginError(detailedError + (error.response?.data?.stack ? ' (See console for details)' : ''));
+      alert(detailedError + stack);
     } finally {
       setIsSubmitting(false);
     }
@@ -78,6 +83,13 @@ const StudentLoginPage = () => {
               <h3 className="text-3xl font-bold text-slate-900 tracking-tight font-['Outfit'] mb-2">Student <span className="text-[#2563EB]">Login</span></h3>
               <p className="text-slate-500 text-sm font-medium">Welcome back to your engineering dashboard</p>
             </div>
+
+            {loginError && (
+              <div className="p-4 bg-red-50 border border-red-100 rounded-2xl mb-6">
+                <p className="text-red-600 text-[13px] font-bold uppercase tracking-tight mb-1">Clinic Diagnostic Error</p>
+                <p className="text-red-500 text-[12px] font-medium leading-relaxed">{loginError}</p>
+              </div>
+            )}
 
             <div className="space-y-4">
               <div className="group">

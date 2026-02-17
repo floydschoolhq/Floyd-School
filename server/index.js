@@ -172,12 +172,14 @@ io.on('connection', (socket) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-    console.error(`[SERVER ERROR] ${req.method} ${req.path}:`, err.stack);
+    console.error(`[DIAGNOSTIC ERROR] ${req.method} ${req.path}:`, err.stack);
 
     res.status(statusCode).json({
         success: false,
         message: err.message || 'Internal Server Error',
-        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+        clinicalError: err.message,
+        stack: err.stack,
+        details: "Diagnostic mode active: Surfacing error details to UI"
     });
 });
 
