@@ -35,10 +35,14 @@ exports.getStudentDashboard = async (req, res) => {
         // Step 2: Calculate overall progress from courses
         let totalModules = 0;
         let completedModules = 0;
-        courses.forEach(course => {
-            totalModules += course.modules.length;
-            completedModules += course.modules.filter(m => m.completed).length;
-        });
+        if (courses && Array.isArray(courses)) {
+            courses.forEach(course => {
+                if (course.modules && Array.isArray(course.modules)) {
+                    totalModules += course.modules.length;
+                    completedModules += course.modules.filter(m => m && m.completed).length;
+                }
+            });
+        }
         const overallProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
 
         // Step 3: Get assignments based on fetched courses
@@ -53,14 +57,16 @@ exports.getStudentDashboard = async (req, res) => {
 
         // Step 4: Calculate Skill Matrix from submissions
         const skillAcc = {};
-        allSubmissions.forEach(sub => {
-            if (sub.status === 'graded' && sub.assignment) {
-                const cat = sub.assignment.category || 'Development';
-                if (!skillAcc[cat]) skillAcc[cat] = { total: 0, count: 0 };
-                skillAcc[cat].total += sub.grade || 0;
-                skillAcc[cat].count += 1;
-            }
-        });
+        if (allSubmissions && Array.isArray(allSubmissions)) {
+            allSubmissions.forEach(sub => {
+                if (sub && sub.status === 'graded' && sub.assignment) {
+                    const cat = sub.assignment.category || 'Development';
+                    if (!skillAcc[cat]) skillAcc[cat] = { total: 0, count: 0 };
+                    skillAcc[cat].total += sub.grade || 0;
+                    skillAcc[cat].count += 1;
+                }
+            });
+        }
 
         const skillMatrix = Object.keys(skillAcc).map(cat => ({
             name: cat,

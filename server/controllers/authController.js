@@ -4,10 +4,12 @@ const bcrypt = require('bcryptjs');
 
 // Generate JWT
 const generateToken = (id) => {
+    // Fallback to avoid hard crash if config is missing, but log a warning
+    const secret = process.env.JWT_SECRET || 'fallback_secret_for_emergency_recovery_only';
     if (!process.env.JWT_SECRET) {
-        throw new Error('JWT_SECRET is not defined in environment variables');
+        console.warn('CRITICAL WARNING: JWT_SECRET is missing. Using insecure fallback secret.');
     }
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id }, secret, {
         expiresIn: '30d',
     });
 };
