@@ -94,20 +94,32 @@ app.use((req, res, next) => {
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Basic health check (Ping)
+app.get('/ping', (req, res) => {
+    res.status(200).json({ status: 'Online', timestamp: new Date().toISOString() });
+});
+
+// Diagnostic check (Consolidated)
+app.get('/api/diagnostic-check', async (req, res) => {
+    try {
+        const User = require('./models/User');
+        const count = await User.countDocuments();
+        const connection = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+        res.json({
+            status: 'Diagnostic Active',
+            environment: process.env.NODE_ENV || 'not set',
+            database: connection,
+            userCount: count,
+            mongodb_uri_present: !!process.env.MONGO_URI,
+            jwt_secret_present: !!process.env.JWT_SECRET
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message, stack: err.stack });
+    }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/assignments', assignmentRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/code', codeExecutionRoutes);
-app.use('/api/leads', leadRoutes);
-app.use('/api/notifications', require('./routes/notificationRoutes'));
-
-// Root diagnostic route
-app.get('/', (req, res) => {
-    res.send('Thinkskool API Ecosystem: Online & Ready');
-});
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
@@ -118,12 +130,7 @@ app.use('/api/why-us', require('./routes/whyUsRoutes'));
 app.use('/api/live-classes', liveClassRoutes);
 app.use('/api/live-chat', require('./routes/liveChatRoutes'));
 app.use('/api/doubts', doubtRoutes);
-app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/public', require('./routes/publicRoutes'));
-
-app.get('/', (req, res) => {
-    res.send('ThinkSkool API is running');
-})
 
 // Socket.io connection with authentication
 io.on('connection', (socket) => {
