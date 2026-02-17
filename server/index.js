@@ -37,14 +37,18 @@ const allowedOrigins = [
 
 const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
+        // Allow requests with no origin
         if (!origin) return callback(null, true);
 
-        // Check if origin is in allowed list or is a Vercel deployment
-        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
+        // Strip trailing slash for comparison
+        const cleanOrigin = origin.replace(/\/$/, "");
+        const cleanAllowed = allowedOrigins.map(o => o.replace(/\/$/, ""));
+
+        // Check if origin is in allowed list or is a Vercel/Render deployment
+        if (cleanAllowed.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app') || cleanOrigin.endsWith('.onrender.com')) {
             callback(null, true);
         } else {
-            console.log('Blocked by CORS:', origin);
+            console.error('[CORS ERROR] Blocked Origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -166,10 +170,13 @@ io.on('connection', (socket) => {
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    console.error('SERVER ERROR:', err.stack);
-    res.status(500).json({
-        message: 'Internal Server Error',
-        error: process.env.NODE_ENV === 'development' ? err.message : {}
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+    console.error(`[SERVER ERROR] ${req.method} ${req.path}:`, err.stack);
+
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || 'Internal Server Error',
+        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
     });
 });
 

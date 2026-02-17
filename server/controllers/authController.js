@@ -62,12 +62,23 @@ const registerUser = async (req, res) => {
 // @access  Public
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Please provide email and password' });
+    }
+
     console.log(`[Auth] Login attempt for email: ${email}`);
 
     try {
         const user = await User.findOne({ email });
 
-        if (user && (await user.matchPassword(password))) {
+        if (!user) {
+            console.warn(`[Auth] User not found: ${email}`);
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const isMatch = await user.matchPassword(password);
+        if (isMatch) {
             console.log(`[Auth] Login successful for: ${email} (${user.role})`);
             // Update lastLogin
             user.lastLogin = Date.now();
@@ -88,12 +99,16 @@ const loginUser = async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
-            console.warn(`[Auth] Invalid credentials for: ${email}`);
-            res.status(401).json({ message: 'Invalid email or password' });
+            console.warn(`[Auth] Password mismatch for: ${email}`);
+            res.status(401).json({ message: 'Invalid credentials' });
         }
     } catch (error) {
-        console.error(`[Auth] Login Error for ${email}:`, error.stack);
-        res.status(500).json({ message: error.message });
+        console.error(`[Auth] CRITICAL LOGIN ERROR for ${email}:`, error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error during authentication',
+            error: error.message
+        });
     }
 };
 
