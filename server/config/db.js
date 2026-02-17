@@ -9,11 +9,11 @@ const connectDB = async () => {
         });
         console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
-        console.error(`MongoDB Connection Error: ${error.message}`);
+        console.error(`CRITICAL: MongoDB Connection Error: ${error.message}`);
         if (error.message.includes('ENOTFOUND')) {
             console.error('CRITICAL: MongoDB SRV record could not be resolved. Please check your MONGO_URI and network connection.');
         }
-        process.exit(1);
+        console.error('Server will continue to run but database dependent routes will fail.');
     }
 };
 

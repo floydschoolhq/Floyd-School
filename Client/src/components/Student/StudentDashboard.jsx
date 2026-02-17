@@ -18,8 +18,17 @@ const StudentDashboard = () => {
   const [requestingAccess, setRequestingAccess] = useState(false);
   const { isConnected, notifications } = useSocket(user?._id);
 
+  const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
+
   useEffect(() => {
     fetchDashboardData();
+
+    // Show warning if still loading after 7s
+    const timer = setTimeout(() => {
+      if (loading) setShowTimeoutWarning(true);
+    }, 7000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const fetchDashboardData = async () => {
@@ -51,8 +60,24 @@ const StudentDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white gap-6">
         <div className="text-slate-900 text-xl font-black animate-pulse">Initializing Portal...</div>
+        {showTimeoutWarning && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center gap-2 max-w-xs text-center p-4 bg-blue-50 rounded-2xl border border-blue-100"
+          >
+            <p className="text-sm font-bold text-blue-800">Connection is taking longer than expected.</p>
+            <p className="text-xs text-blue-600">The ecosystem may be under high load. Please hold on or check your connection.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-2 text-xs font-black uppercase tracking-widest text-[#2563EB] hover:underline"
+            >
+              Force Refresh
+            </button>
+          </motion.div>
+        )}
       </div>
     );
   }

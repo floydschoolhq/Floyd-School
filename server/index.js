@@ -65,6 +65,26 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 
+// Database connection health check middleware
+app.use((req, res, next) => {
+    const isConnected = mongoose.connection.readyState === 1;
+    req.dbConnected = isConnected;
+
+    // List of prefixes that REQUIRE database
+    const apiPrefixes = ['/api/auth', '/api/dashboard', '/api/courses', '/api/assignments', '/api/students'];
+    const isApiRequest = apiPrefixes.some(prefix => req.path.startsWith(prefix));
+
+    if (isApiRequest && !isConnected) {
+        return res.status(503).json({
+            success: false,
+            message: 'Ecosystem Under Maintenance: Database link severed. Please try again in a few moments.',
+            dbConnected: false
+        });
+    }
+
+    next();
+});
+
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -15,6 +15,7 @@ import api from '../api/axios';
 const Dashboard = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
 
     useEffect(() => {
         const fetchDashboard = async () => {
@@ -28,6 +29,11 @@ const Dashboard = () => {
             }
         };
         fetchDashboard();
+
+        const timer = setTimeout(() => {
+            if (loading) setShowTimeoutWarning(true);
+        }, 7000);
+        return () => clearTimeout(timer);
     }, []);
 
     const stats = [
@@ -38,8 +44,26 @@ const Dashboard = () => {
     ];
 
     if (loading) return (
-        <div className="flex items-center justify-center h-full">
-            <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+        <div className="flex flex-col items-center justify-center h-full gap-6">
+            <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+            </div>
+            {showTimeoutWarning && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col items-center gap-2 max-w-xs text-center p-4 bg-sky-50 rounded-2xl border border-sky-100"
+                >
+                    <p className="text-xs font-bold text-sky-800">Connection is slow.</p>
+                    <p className="text-[10px] text-sky-600 uppercase tracking-widest">The ecosystem link is taking longer than expected.</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="mt-2 text-[10px] font-black uppercase tracking-widest text-sky-600 hover:underline"
+                    >
+                        Sync Interface
+                    </button>
+                </motion.div>
+            )}
         </div>
     );
 

@@ -16,10 +16,7 @@ import FrictionDetailsModal from '../components/modals/FrictionDetailsModal';
 
 const SuccessEngine = () => {
     const [intel, setIntel] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedModule, setSelectedModule] = useState(null);
+    const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
 
     const fetchIntelligence = async () => {
         setRefreshing(true);
@@ -36,12 +33,34 @@ const SuccessEngine = () => {
 
     useEffect(() => {
         fetchIntelligence();
+        const timer = setTimeout(() => {
+            if (loading) setShowTimeoutWarning(true);
+        }, 7000);
+        return () => clearTimeout(timer);
     }, []);
 
     if (loading) return (
-        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-            <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin" />
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Synchronizing analytics...</p>
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-6">
+            <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin" />
+                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Synchronizing analytics...</p>
+            </div>
+            {showTimeoutWarning && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col items-center gap-2 max-w-xs text-center p-4 bg-slate-50 rounded-2xl border border-slate-100"
+                >
+                    <p className="text-xs font-bold text-slate-600">This is taking longer than usual.</p>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-tight">Check ecosystem link or refresh.</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="mt-2 text-[10px] font-black uppercase tracking-widest text-[#2563EB] hover:underline"
+                    >
+                        Force Reload
+                    </button>
+                </motion.div>
+            )}
         </div>
     );
 
