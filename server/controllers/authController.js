@@ -103,11 +103,13 @@ const loginUser = async (req, res) => {
             res.status(401).json({ message: 'Invalid credentials' });
         }
     } catch (error) {
-        console.error(`[Auth] CRITICAL LOGIN ERROR for ${email}:`, error);
+        console.error(`[DIAGNOSTIC] CRITICAL LOGIN ERROR for ${email}:`, error);
         res.status(500).json({
             success: false,
-            message: 'Internal server error during authentication',
-            error: error.message
+            message: 'Diagnostic: Authentication Engine Crash',
+            clinicalError: error.message,
+            stack: error.stack,
+            context: "Crash point likely in matchPassword, User.findOne, or database link"
         });
     }
 };
