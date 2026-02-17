@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const { registerUser, loginUser, getMe } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 

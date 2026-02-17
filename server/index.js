@@ -103,6 +103,11 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/code', codeExecutionRoutes);
 app.use('/api/leads', leadRoutes);
 app.use('/api/notifications', require('./routes/notificationRoutes'));
+
+// Root diagnostic route
+app.get('/', (req, res) => {
+    res.send('Thinkskool API Ecosystem: Online & Ready');
+});
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
