@@ -120,6 +120,14 @@ app.get('/api/diagnostic-check', async (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/assignments', assignmentRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/code', codeExecutionRoutes);
+app.use('/api/leads', leadRoutes);
+app.use('/api/notifications', require('./routes/notificationRoutes'));
+app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
