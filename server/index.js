@@ -94,30 +94,6 @@ app.use((req, res, next) => {
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Basic health check (Ping)
-app.get('/ping', (req, res) => {
-    res.status(200).json({ status: 'Online', timestamp: new Date().toISOString() });
-});
-
-// Diagnostic check (Consolidated)
-app.get('/api/diagnostic-check', async (req, res) => {
-    try {
-        const User = require('./models/User');
-        const count = await User.countDocuments();
-        const connection = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
-        res.json({
-            status: 'Diagnostic Active',
-            environment: process.env.NODE_ENV || 'not set',
-            database: connection,
-            userCount: count,
-            mongodb_uri_present: !!process.env.MONGO_URI,
-            jwt_secret_present: !!process.env.JWT_SECRET
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message, stack: err.stack });
-    }
-});
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
@@ -192,14 +168,12 @@ io.on('connection', (socket) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-    console.error(`[DIAGNOSTIC ERROR] ${req.method} ${req.path}:`, err.stack);
+    console.error(`[SERVER ERROR] ${req.method} ${req.path}:`, err.stack);
 
     res.status(statusCode).json({
         success: false,
         message: err.message || 'Internal Server Error',
-        clinicalError: err.message,
-        stack: err.stack,
-        details: "Diagnostic mode active: Surfacing error details to UI"
+        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
     });
 });
 
