@@ -20,6 +20,7 @@ const Sidebar = () => {
         { icon: <MessageCircle size={20} />, label: 'Support Hub', path: '/support' },
         { icon: <MessageSquare size={20} />, label: 'Discussions', path: '/discussions' },
         { icon: <Users size={20} />, label: 'Student List', path: '/students' },
+        { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
         { icon: <AlertTriangle size={20} />, label: 'Escalations', path: '/escalations' },
     ];
 

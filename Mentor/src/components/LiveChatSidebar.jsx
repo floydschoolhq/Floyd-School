@@ -5,7 +5,7 @@ import api from '../api/axios';
 import { useSocket } from '../context/SocketContext';
 
 const LiveChatSidebar = ({ classId }) => {
-    const { socket } = useSocket();
+    const socket = useSocket();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [studentCount, setStudentCount] = useState(0);
@@ -102,6 +102,12 @@ const LiveChatSidebar = ({ classId }) => {
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSend(e);
+                            }
+                        }}
                         placeholder="Broadcast response..."
                         className="w-full bg-slate-950 text-white text-[11px] font-bold rounded-xl pl-4 pr-12 py-3 border-2 border-slate-800 focus:outline-none focus:border-sky-500 transition-all placeholder:text-slate-700"
                     />

@@ -4,15 +4,16 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { PortalProvider } from './components/Context/PortalProvider.jsx'
+import { SocketProvider } from './components/Context/SocketContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
 
   <BrowserRouter future={{ v7_startTransition: true }}>
     <PortalProvider>
-
-      <App />
-
+      <SocketProvider>
+        <App />
+      </SocketProvider>
     </PortalProvider>
 
   </BrowserRouter>

@@ -1,21 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink } from 'lucide-react';
+import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink, BookOpen, Maximize, Minimize } from 'lucide-react';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
+import StudentLiveRoom from '../../components/Student/StudentLiveRoom';
 import api from '../../api/axios';
-import { io } from 'socket.io-client';
+import { useSocket } from '../../components/Context/SocketContext';
 
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-    withCredentials: true,
-    transports: ['websocket']
-});
+const getYouTubeId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+};
 
 const LiveSessionView = ({ liveClass, onBack }) => {
+    const socket = useSocket();
     const [myDoubt, setMyDoubt] = useState(null);
     const [isSignaling, setIsSignaling] = useState(false);
     const [participantCount, setParticipantCount] = useState(0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const stageRef = useRef(null);
+
+    const toggleFullscreen = () => {
+        if (!stageRef.current) return;
+        if (!document.fullscreenElement) {
+            stageRef.current.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+            setIsFullscreen(true);
+        } else {
+            document.exitFullscreen();
+            setIsFullscreen(false);
+        }
+    };
 
     useEffect(() => {
+        const handleFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', handleFsChange);
+        return () => document.removeEventListener('fullscreenchange', handleFsChange);
+    }, []);
+
+    useEffect(() => {
+        if (!liveClass || !socket) return;
         fetchMyCurrentDoubt(liveClass._id);
         socket.emit('liveClass:join', liveClass._id);
 
@@ -38,12 +64,52 @@ const LiveSessionView = ({ liveClass, onBack }) => {
             socket.off('doubt:resolved');
             socket.off('doubt:deleted');
         };
-    }, [liveClass._id]);
+    }, [liveClass?._id]);
+
+    useEffect(() => {
+        const preventContext = (e) => e.preventDefault();
+        window.addEventListener('contextmenu', preventContext);
+        return () => window.removeEventListener('contextmenu', preventContext);
+    }, []);
+
+    if (!liveClass) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+                <div className="w-32 h-32 bg-white rounded-[3rem] shadow-2xl flex items-center justify-center mb-10 border border-slate-100 animate-bounce transition-all duration-1000">
+                    <PlayCircle className="text-[#2563EB] w-16 h-16" />
+                </div>
+                <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tighter font-['Outfit'] italic uppercase">
+                    No active <span className="text-[#2563EB] not-italic">Broadcasts</span>
+                </h2>
+                <p className="text-slate-500 max-w-sm font-medium mb-12 text-lg leading-relaxed">
+                    The instructional uplink is currently idle. Mentors will notify you when a technical deep dive begins.
+                </p>
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={onBack}
+                        className="px-10 py-5 bg-slate-900 text-white text-sm font-bold uppercase tracking-[0.2em] rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl shadow-slate-200"
+                    >
+                        Return to Classroom
+                    </button>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="p-5 bg-white text-slate-400 border border-slate-200 rounded-2xl hover:text-slate-900 transition-all shadow-sm"
+                    >
+                        <Clock size={20} />
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     const fetchMyCurrentDoubt = async (classId) => {
         try {
             const res = await api.get(`/doubts/${classId}/my`);
-            setMyDoubt(res.data);
+            if (res.data) {
+                setMyDoubt(res.data);
+            } else {
+                setMyDoubt(null);
+            }
         } catch (error) {
             // No doubt exists
         }
@@ -77,25 +143,37 @@ const LiveSessionView = ({ liveClass, onBack }) => {
     };
 
     const getEmbedUrl = () => {
-        const { platform, meetingLink } = liveClass;
+        const { platform, meetingLink, startedAt } = liveClass;
+
+        // Calculate offset in seconds for YouTube-based platforms
+        const startSeconds = Math.max(0, Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000));
+
         if (platform === 'youtube') {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = meetingLink.match(regExp);
             const videoId = (match && match[2].length === 11) ? match[2] : null;
-            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&showinfo=0&autohide=1&start=${startSeconds}` : null;
         }
         if (platform === 'jitsi') {
-            // Jitsi links usually look like https://meet.jit.si/RoomName
-            // Embed URL is same but we can use the Jitsi IFrame API or just the URL
             return meetingLink;
+        }
+        if (platform === 'premiere') {
+            const videoId = getYouTubeId(meetingLink);
+            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&showinfo=0&autohide=1&start=${startSeconds}` : meetingLink;
         }
         return null;
     };
 
     const embedUrl = getEmbedUrl();
 
+    // Lockdown handlers
+    const preventContext = (e) => e.preventDefault();
+
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div
+            className="min-h-screen bg-slate-50 flex flex-col select-none"
+            onContextMenu={preventContext}
+        >
             {/* Top Bar */}
             <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
                 <div className="flex items-center gap-4">
@@ -154,15 +232,38 @@ const LiveSessionView = ({ liveClass, onBack }) => {
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                 {/* Stage Area */}
-                <div className="flex-1 bg-slate-900 relative flex flex-col">
+                <div className="flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
                     <div className="flex-1 relative overflow-hidden">
-                        {embedUrl ? (
-                            <iframe
-                                className="w-full h-full border-0"
-                                src={embedUrl}
-                                allow="camera; microphone; fullscreen; display-capture; autoplay"
-                                title="Live Stream"
-                            ></iframe>
+                        {liveClass.platform === 'agora' ? (
+                            <StudentLiveRoom
+                                appId={import.meta.env.VITE_AGORA_APP_ID || "PLACEHOLDER_APP_ID"}
+                                channelName={liveClass.channelName}
+                                token={liveClass.token}
+                                uid={0}
+                            />
+                        ) : (embedUrl || liveClass.platform === 'jitsi') ? (
+                            <div className="absolute inset-0 overflow-hidden bg-black pointer-events-none">
+                                <iframe
+                                    className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-0 pointer-events-none select-none"
+                                    src={embedUrl}
+                                    allow="camera; microphone; fullscreen; display-capture; autoplay"
+                                    title="Live Stream"
+                                ></iframe>
+
+                                {/* Secure Intercept Overlay - Absolute Black-Hole but Clean */}
+                                <div className="absolute inset-0 z-50 bg-transparent cursor-default pointer-events-auto" onContextMenu={(e) => e.preventDefault()}>
+                                    {/* Fullscreen Trigger */}
+                                    <button
+                                        onClick={toggleFullscreen}
+                                        className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl group/fs-btn"
+                                    >
+                                        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+                                    </button>
+
+                                    {/* Interaction Block & Subtler Branding */}
+                                    <div className="absolute inset-0 border-[20px] border-slate-900/10 pointer-events-none"></div>
+                                </div>
+                            </div>
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/80">
                                 <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-[2rem] border border-white/20 flex items-center justify-center mb-8 animate-pulse">
@@ -189,13 +290,6 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                         )}
                     </div>
 
-                    {/* Status Overlay for Stream */}
-                    <div className="absolute top-6 left-6 pointer-events-none">
-                        <div className="flex items-center gap-3 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
-                            <span className="text-[9px] font-black text-white uppercase tracking-widest italic">{liveClass.platform === 'youtube' ? 'Live' : 'Real-time'} Stream</span>
-                        </div>
-                    </div>
                 </div>
 
                 {/* Terminal/Chat Area */}

@@ -2,15 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Users, MessageCircle, ShieldCheck } from 'lucide-react';
 import api from '../../api/axios';
-import { io } from 'socket.io-client';
-
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-    withCredentials: true,
-    transports: ['websocket']
-});
+import { PortalContext } from '../Context/PortalProvider';
+import { useSocket } from '../Context/SocketContext';
 
 const LiveChatSidebar = ({ classId }) => {
-    const { user } = React.useContext(require('../Context/PortalProvider').PortalContext);
+    const socket = useSocket();
+    const { user } = React.useContext(PortalContext);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [studentCount, setStudentCount] = useState(0);
@@ -33,7 +30,7 @@ const LiveChatSidebar = ({ classId }) => {
         }
     };
     useEffect(() => {
-        if (classId) {
+        if (classId && socket) {
             fetchMessages();
             socket.emit('liveClass:join', classId);
 
@@ -50,7 +47,7 @@ const LiveChatSidebar = ({ classId }) => {
                 socket.off('liveClass:countUpdate');
             };
         }
-    }, [classId]);
+    }, [classId, socket]);
 
     useEffect(() => {
         if (scrollRef.current) {

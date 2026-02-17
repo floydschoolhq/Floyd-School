@@ -93,8 +93,8 @@ const checkPermission = (permissionName) => {
             });
         }
 
-        // Admins bypass all permission checks
-        if (req.user.role === 'admin') {
+        // Admins and Mentors bypass all permission checks
+        if (req.user.role === 'admin' || req.user.role === 'mentor') {
             return next();
         }
 

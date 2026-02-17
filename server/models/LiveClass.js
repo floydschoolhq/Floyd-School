@@ -26,12 +26,20 @@ const liveClassSchema = new mongoose.Schema({
     },
     platform: {
         type: String,
-        enum: ['youtube', 'jitsi', 'google-meet', 'zoom', 'other'],
+        enum: ['youtube', 'jitsi', 'google-meet', 'zoom', 'agora', 'premiere', 'other'],
         default: 'other'
+    },
+    channelName: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
+    token: {
+        type: String
     },
     meetingLink: {
         type: String,
-        required: true
+        required: false // Not required for Agora
     },
     startedAt: {
         type: Date,
@@ -39,7 +47,15 @@ const liveClassSchema = new mongoose.Schema({
     },
     endedAt: {
         type: Date
-    }
+    },
+    duration: {
+        type: Number, // In seconds
+        default: 3600 // 1 hour default
+    },
+    attendants: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 }, {
     timestamps: true
 });

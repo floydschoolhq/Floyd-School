@@ -17,15 +17,21 @@ const RecordingsPage = () => {
     const [loading, setLoading] = useState(true);
     const [selectedVideo, setSelectedVideo] = useState(null);
 
+    const [liveRecordings, setLiveRecordings] = useState([]);
+
     useEffect(() => {
         fetchRecordings();
     }, []);
 
     const fetchRecordings = async () => {
         try {
-            const res = await api.get('/courses');
-            const data = Array.isArray(res.data) ? res.data : res.data.data;
-            setCourses(data);
+            const [coursesRes, liveRes] = await Promise.all([
+                api.get('/courses'),
+                api.get('/live-classes/archive')
+            ]);
+            const coursesData = Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data;
+            setCourses(coursesData);
+            setLiveRecordings(liveRes.data || []);
         } catch (error) {
             console.error('Failed to fetch recordings:', error);
         } finally {
@@ -42,13 +48,26 @@ const RecordingsPage = () => {
     }
 
     // Flatten modules from all courses
-    const allModules = courses.flatMap(course =>
+    const courseModules = courses.flatMap(course =>
         (course.modules || []).map(module => ({
             ...module,
             courseTitle: course.title,
-            instructor: course.instructor?.name || 'ThinkSkool Master'
+            instructor: course.instructor?.name || 'ThinkSkool Master',
+            isLiveArchive: false
         }))
-    ).filter(m => m.videoUrl);
+    );
+
+    const liveArchiveModules = liveRecordings.map(lc => ({
+        _id: lc._id,
+        title: lc.title,
+        videoUrl: lc.meetingLink, // In 'premiere' and 'youtube' modes, this is the video URL
+        courseTitle: 'Live Session Archive',
+        instructor: lc.mentorName || 'ThinkSkool Mentor',
+        isLiveArchive: true,
+        createdAt: lc.startedAt
+    }));
+
+    const allModules = [...liveArchiveModules, ...courseModules].filter(m => m.videoUrl);
 
     return (
         <div className="min-h-screen bg-slate-50 p-6">

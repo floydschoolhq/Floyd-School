@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldAlert, X } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MaintenanceBanner = () => {
@@ -10,15 +10,15 @@ const MaintenanceBanner = () => {
     useEffect(() => {
         const checkStatus = async () => {
             try {
-                const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-                const res = await axios.get(`${baseURL}/public/settings`);
-                if (res.data.success && res.data.maintenanceMode?.isActive) {
+                // Use standardized api instance to avoid URL mismatches
+                const res = await api.get('/public/settings');
+                if (res.data.maintenanceMode?.isActive) {
                     setMaintenance(res.data.maintenanceMode);
                 } else {
                     setMaintenance(null);
                 }
             } catch (err) {
-                console.error('Failed to fetch platform status');
+                // Silent failure is fine for background checks
             }
         };
 

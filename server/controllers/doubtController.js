@@ -67,7 +67,7 @@ exports.getMyDoubt = async (req, res) => {
         }).sort({ createdAt: -1 });
 
         if (!doubt) {
-            return res.status(404).json({ message: 'No doubt found' });
+            return res.status(200).json(null);
         }
         res.json(doubt);
     } catch (error) {

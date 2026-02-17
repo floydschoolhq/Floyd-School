@@ -5,7 +5,9 @@ import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
+import StudentLiveRoom from '../../components/Student/StudentLiveRoom';
 import { PortalContext } from '../../components/Context/PortalProvider';
+import { useSocket } from '../../components/Context/SocketContext';
 import { useContext } from 'react';
 
 const getYouTubeId = (url) => {
@@ -16,10 +18,7 @@ const getYouTubeId = (url) => {
 };
 
 const ClassroomPage = () => {
-  const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-    withCredentials: true,
-    transports: ['websocket']
-  });
+  const socket = useSocket();
 
   const { user, setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
   const [courses, setCourses] = useState([]);
@@ -51,10 +50,12 @@ const ClassroomPage = () => {
 
     socket.on('liveClass:started', (liveClass) => {
       setActiveLiveClass(liveClass);
+      setGlobalActiveLiveClass(liveClass);
     });
 
     socket.on('liveClass:ended', (classId) => {
       setActiveLiveClass(prev => (prev?._id === classId ? null : prev));
+      setGlobalActiveLiveClass(null);
       setMyDoubt(null);
     });
 
@@ -81,10 +82,17 @@ const ClassroomPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const preventContext = (e) => e.preventDefault();
+    window.addEventListener('contextmenu', preventContext);
+    return () => window.removeEventListener('contextmenu', preventContext);
+  }, []);
+
   const fetchActiveLiveClass = async () => {
     try {
       const res = await api.get('/live-classes/active');
       setActiveLiveClass(res.data);
+      setGlobalActiveLiveClass(res.data); // Sync with context for Sidebar/LiveSessionView
       if (res.data) {
         fetchMyCurrentDoubt(res.data._id);
         socket.emit('liveClass:join', res.data._id);
@@ -262,45 +270,7 @@ const ClassroomPage = () => {
               </div>
             </div>
 
-            {/* Live Class Stream + Chat */}
-            <div className="flex flex-col lg:flex-row gap-6 h-[600px] mb-12">
-              <div className="flex-1 bg-black rounded-3xl overflow-hidden shadow-2xl relative group">
-                {getYouTubeId(activeLiveClass.meetingLink) ? (
-                  <iframe
-                    className="w-full h-full"
-                    src={`https://www.youtube.com/embed/${getYouTubeId(activeLiveClass.meetingLink)}?autoplay=1`}
-                    title="Live Session"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-white bg-slate-900 gap-6 p-8 text-center bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/60">
-                    <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 animate-pulse">
-                      <PlayCircle size={40} className="text-[#2563EB]" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black uppercase tracking-tight mb-2">Embedded Live Session</h3>
-                      <p className="text-slate-300 font-medium max-w-md mx-auto">This session can be viewed directly within our secure terminal environment.</p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setGlobalActiveLiveClass(activeLiveClass);
-                        setView('LiveSession');
-                      }}
-                      className="mt-2 bg-[#2563EB] text-slate-900 px-8 py-4 rounded-2xl text-base font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-xl shadow-[#2563EB]/20 flex items-center gap-3"
-                    >
-                      Join Meeting Now <CheckCircle size={16} />
-                    </button>
-                    <p className="text-[13px] text-slate-400 font-bold uppercase tracking-widest mt-4">Platform: {activeLiveClass.platform?.toUpperCase() || new URL(activeLiveClass.meetingLink).hostname}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="w-full lg:w-80 h-full rounded-3xl overflow-hidden shadow-2xl">
-                <LiveChatSidebar classId={activeLiveClass._id} />
-              </div>
-            </div>
+            {/* Live Class Stream + Chat Removed from Dashboard to prevent auto-viewing */}
           </div>
         </motion.div>
       )}
