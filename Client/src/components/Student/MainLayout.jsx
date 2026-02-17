@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { PortalContext } from "../Context/PortalProvider";
 import StudentSidebar from "./StudentSidebar";
 import ChatSupport from "./ChatSupport";
-import { Menu, User } from "lucide-react";
+import { Menu, User, Home } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
   const usePortal = () => useContext(PortalContext);
@@ -38,7 +39,14 @@ const MainLayout = ({ children }) => {
             </h1>
           </div>
 
-          <div className="flex items-center space-x-6 font-['Inter']">
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-xs uppercase tracking-widest transition-all"
+            >
+              <Home className="w-4 h-4" />
+              Return to Site
+            </Link>
             <div className="flex items-center gap-3 pl-6 border-l border-slate-100">
               <div className="text-right hidden sm:block">
                 <p className="text-[13px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>

@@ -8,7 +8,8 @@ import {
     Settings,
     LogOut,
     Heart,
-    MessageSquare
+    MessageSquare,
+    Monitor
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 

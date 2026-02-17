@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield } from 'lucide-react';
+import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PortalContext } from '../Context/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
@@ -137,6 +137,13 @@ const StudentDashboard = () => {
             </motion.div>
           )}
           <NotificationPanel notifications={notifications} />
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-slate-900/10"
+          >
+            <Home className="w-4 h-4" />
+            Go to Site
+          </Link>
           <LogoutButton />
         </div>
       </div>
