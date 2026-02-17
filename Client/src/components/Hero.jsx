@@ -5,8 +5,6 @@ import { Briefcase, Award, Headphones, Terminal, Cpu, Code2, CheckCircle, ArrowR
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
-import HowItWorksSection from './HowItWorksSection';
-import SupportEcosystem from './SupportEcosystem';
 import api from '../api/axios';
 
 const Hero = () => {
@@ -347,9 +345,7 @@ const Hero = () => {
 
 
 
-                {/* HOW IT WORKS Section */}
-                <HowItWorksSection />
-                <SupportEcosystem />
+                {/* Modal for Lead Gen */}
                 <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source="hero_10x_card" />
             </div>
         </div >

@@ -15,7 +15,7 @@ const StudentSidebar = () => {
     { icon: Video, title: 'Recordings', view: 'Recordings' },
     { icon: BarChart, title: 'Progress Tracking', view: 'ProgressTracking' },
     { icon: ClipboardCheck, title: 'Performance Reports', view: 'PerformanceReport' },
-    { icon: LifeBuoy, title: 'Concierge Support', view: 'Support' },
+    { icon: LifeBuoy, title: 'Concierge Support', view: 'Support' }
   ];
 
   return (

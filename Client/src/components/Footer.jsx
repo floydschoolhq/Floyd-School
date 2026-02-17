@@ -12,7 +12,7 @@ const Footer = () => {
     {
       title: 'ThinkSkool',
       links: [
-        { name: 'About Us', href: '/about' },
+        { name: 'About Us', href: '#how-it-works' },
         { name: 'Careers', href: '/careers' },
         { name: 'Privacy Policy', href: '/privacy' },
         { name: 'Terms & Conditions', href: '/terms' },
@@ -21,17 +21,16 @@ const Footer = () => {
     {
       title: 'Products',
       links: [
-        { name: 'Future Tech Bootcamp', href: '/bootcamp' },
-        { name: 'ThinkSkool Certifications', href: '/certifications' },
-        { name: 'Code 360', href: '/code360' },
+        { name: 'Future Tech Bootcamp', href: '#programs' },
+        { name: 'ThinkSkool Certifications', href: '#programs' },
+        { name: 'Code 360', href: '/student/coding-lab' },
       ],
     },
     {
       title: 'Community',
       links: [
-        { name: 'Events', href: '#' },
-        { name: 'Blog', href: '#' },
-        { name: 'Campus Ninja', href: '#' },
+        { name: 'Events', href: '/events' },
+        { name: 'Blog', href: '/blog' },
       ],
     },
   ];

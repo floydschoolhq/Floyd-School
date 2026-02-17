@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
   --color-brand-pink-light: #FFFFFF;
   --color-brand-pink-soft: #F8FAFC;
   --color-brand-pink-med: #E2E8F0;
@@ -26,7 +26,7 @@ html {
 }
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 h1,
@@ -35,8 +35,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.03em;
+  /* Slightly tighter for premium feel */
 }
 
 body {
@@ -51,20 +52,25 @@ body {
   @apply text-xs font-bold uppercase tracking-widest leading-relaxed;
 }
 
-/* Custom Scrollbar */
+/* Custom Premium Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #020617;
+  /* Dark Brand Background */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 5px;
+  background: #2563EB;
+  /* Brand Blue */
+  border-radius: 6px;
+  border: 3px solid #020617;
+  /* Creates padding/floating effect */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #1d4ed8;
+  /* Darker Blue on Hover */
 }

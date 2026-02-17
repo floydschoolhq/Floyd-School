@@ -14,6 +14,7 @@ import GlobalNotifications from './pages/GlobalNotifications';
 import SystemSettings from './pages/SystemSettings';
 import SuccessEngine from './pages/SuccessEngine';
 import SecurityLogs from './pages/SecurityLogs';
+import AccessRequests from './pages/AccessRequests';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route index element={<PlatformAnalytics />} /> {/* Keep index for default, or change to analytics */}
             <Route path="analytics" element={<PlatformAnalytics />} />
             <Route path="users" element={<UserGovernance />} />
+            <Route path="requests" element={<AccessRequests />} />
             <Route path="courses" element={<CourseGovernance />} />
             <Route path="leads" element={<LeadIntelligence />} />
             <Route path="broadcast" element={<GlobalNotifications />} />

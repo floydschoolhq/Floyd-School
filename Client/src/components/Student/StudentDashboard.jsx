@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText } from 'lucide-react';
+import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { PortalContext } from '../Context/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
 import { NotificationPanel } from '../dashboard/NotificationPanel';
@@ -11,9 +12,10 @@ import api from '../../api/axios';
 
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
-  const { user } = usePortal();
+  const { user, updateUser, setView } = usePortal();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [requestingAccess, setRequestingAccess] = useState(false);
   const { isConnected, notifications } = useSocket(user?._id);
 
   useEffect(() => {
@@ -31,10 +33,41 @@ const StudentDashboard = () => {
     }
   };
 
+  const handleRequestAccess = async () => {
+    setRequestingAccess(true);
+    try {
+      await api.post('/students/request-access', {
+        permission: 'canAccessCourses',
+        message: 'Requesting access to course library'
+      });
+      alert('Access request submitted! An administrator will review your request shortly.');
+    } catch (error) {
+      console.error('Failed to request access:', error);
+      alert(error.response?.data?.message || 'Failed to submit access request');
+    } finally {
+      setRequestingAccess(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white">
         <div className="text-slate-900 text-xl font-black animate-pulse">Initializing Portal...</div>
+      </div>
+    );
+  }
+
+  // Safety check: If user is not loaded, redirect or show error
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-black text-slate-900 mb-4">Authentication Required</h2>
+          <p className="text-slate-500 mb-6">Please log in to access your dashboard.</p>
+          <a href="/student/login" className="px-6 py-3 bg-[#2563EB] text-white rounded-xl font-bold">
+            Go to Login
+          </a>
+        </div>
       </div>
     );
   }
@@ -178,55 +211,83 @@ const StudentDashboard = () => {
       <div className="mt-12 relative z-10">
         <div className="flex items-center gap-4 mb-8">
           <h3 className="text-2xl font-black text-slate-900 tracking-tighter font-['Outfit']">Course Portfolio</h3>
+          {!user.permissions?.canAccessCourses && (
+            <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+              <Lock size={10} /> Locked
+            </span>
+          )}
           <div className="h-px flex-1 bg-slate-100" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dashboardData?.courses && dashboardData.courses.length > 0 ? (
-            dashboardData.courses.map((course) => (
-              <GradientCard
-                key={course._id}
-                gradient="from-[#2563EB] to-[#F9DFDF]"
-                className="hover:scale-[1.02] transition-all duration-500 cursor-pointer"
+
+        <div className="relative">
+          {/* Lock Overlay */}
+          {!user.permissions?.canAccessCourses && (
+            <div className="absolute inset-0 z-50 bg-white/60 backdrop-blur-md rounded-[3rem] flex flex-col items-center justify-center text-center p-8 border border-white/20">
+              <div className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
+                <Lock className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-2xl font-black text-slate-900 mb-2 font-['Outfit']">Access Restricted</h4>
+              <p className="text-slate-500 max-w-md font-medium mb-8">
+                Your course portfolio is currently locked. Contact your administrator to unlock full access to the curriculum.
+              </p>
+              <button
+                onClick={handleRequestAccess}
+                disabled={requestingAccess}
+                className="px-8 py-4 bg-[#2563EB] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex-1 pr-4">
-                    <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
-                    <p className="text-[13px] font-black text-[#2563EB] uppercase tracking-widest flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-[#2563EB]" /> {course.instructor?.name}
-                    </p>
-                  </div>
-                  <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[13px] font-black uppercase tracking-widest">
-                    {course.category}
-                  </span>
-                </div>
-                <p className="text-base font-medium text-slate-500 mb-8 line-clamp-2 leading-relaxed">{course.description}</p>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-widest">
-                    <span className="text-slate-400">Mastery Progress</span>
-                    <span className="text-slate-900">
-                      {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
-                    </span>
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden shadow-inner">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="bg-gradient-to-r from-[#2563EB] to-[#F9DFDF] h-full rounded-full"
-                    />
-                  </div>
-                </div>
-              </GradientCard>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
-              <BookOpen className="w-20 h-20 mx-auto mb-6 text-slate-200" />
-              <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">No courses found</p>
-              <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
-                Refresh
+                {requestingAccess ? 'Submitting...' : 'Request Access'}
               </button>
             </div>
           )}
+
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!user.permissions?.canAccessCourses ? 'blur-sm pointer-events-none select-none opacity-50' : ''}`}>
+            {dashboardData?.courses && dashboardData.courses.length > 0 ? (
+              dashboardData.courses.map((course) => (
+                <GradientCard
+                  key={course._id}
+                  gradient="from-[#2563EB] to-[#F9DFDF]"
+                  className="hover:scale-[1.02] transition-all duration-500 cursor-pointer"
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex-1 pr-4">
+                      <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
+                      <p className="text-[13px] font-black text-[#2563EB] uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-1 h-1 rounded-full bg-[#2563EB]" /> {course.instructor?.name}
+                      </p>
+                    </div>
+                    <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[13px] font-black uppercase tracking-widest">
+                      {course.category}
+                    </span>
+                  </div>
+                  <p className="text-base font-medium text-slate-500 mb-8 line-clamp-2 leading-relaxed">{course.description}</p>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-widest">
+                      <span className="text-slate-400">Mastery Progress</span>
+                      <span className="text-slate-900">
+                        {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden shadow-inner">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        className="bg-gradient-to-r from-[#2563EB] to-[#F9DFDF] h-full rounded-full"
+                      />
+                    </div>
+                  </div>
+                </GradientCard>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
+                <BookOpen className="w-20 h-20 mx-auto mb-6 text-slate-200" />
+                <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">No courses found</p>
+                <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
+                  Refresh
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -17,25 +17,13 @@ const StickyBottomBar = () => {
         // Initial show after 2.5 seconds
         const showTimer = setTimeout(() => setIsVisible(true), 2500);
 
-        // Auto-hide logic that respects hover
-        const startAutoHide = () => {
-            if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-            hideTimeoutRef.current = setTimeout(() => {
-                if (!isHovered) {
-                    setIsVisible(false);
-                }
-            }, 12000); // 12 seconds of visibility
-        };
 
-        if (isVisible && !isHovered) {
-            startAutoHide();
-        }
 
         return () => {
             clearTimeout(showTimer);
             if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
         };
-    }, [isVisible, isHovered]);
+    }, []);
 
     const handleDismiss = () => {
         setIsVisible(false);
@@ -58,7 +46,7 @@ const StickyBottomBar = () => {
                         {/* Premium Glow Effect */}
                         <div className="absolute -inset-1 bg-gradient-to-r from-[#2563EB]/15 via-white/5 to-[#2563EB]/15 rounded-[1.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                        <div className="relative flex items-center bg-[#1C1C1E]/95 backdrop-blur-2xl border border-white/10 rounded-[1.5rem] px-6 py-2.5 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)] gap-6">
+                        <div className="relative flex items-center bg-[#1C1C1E]/40 backdrop-blur-2xl border border-white/10 rounded-[1.5rem] px-32 py-2 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)] gap-6">
 
                             {/* Future Tech - Segment 1 */}
                             <div className="flex items-center gap-3">

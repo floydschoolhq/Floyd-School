@@ -23,9 +23,8 @@ const protect = async (req, res, next) => {
         }
     }
 
-    if (!token) {
-        return res.status(401).json({ message: 'Not authorized, no token' });
-    }
+    // If no token was provided
+    return res.status(401).json({ message: 'Not authorized, no token' });
 };
 
 const adminOnly = (req, res, next) => {
@@ -78,4 +77,38 @@ const checkModuleLock = (moduleName) => {
     };
 };
 
-module.exports = { protect, adminOnly, authorize, checkModuleLock };
+const checkPermission = (permissionName) => {
+    return (req, res, next) => {
+        // Safety check: Ensure next is a function
+        if (typeof next !== 'function') {
+            console.error('[checkPermission] next is not a function!');
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
+
+        // Safety check: Ensure user is authenticated (protect middleware should run first)
+        if (!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Authentication required before checking permissions'
+            });
+        }
+
+        // Admins bypass all permission checks
+        if (req.user.role === 'admin') {
+            return next();
+        }
+
+        // Check if user has the specific permission
+        if (req.user.permissions && req.user.permissions[permissionName] === true) {
+            return next();
+        }
+
+        return res.status(403).json({
+            success: false,
+            message: `Access denied. You do not have the ${permissionName} permission.`,
+            permissionDenied: true
+        });
+    };
+};
+
+module.exports = { protect, adminOnly, authorize, checkModuleLock, checkPermission };

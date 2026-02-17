@@ -74,6 +74,11 @@ const courseSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    status: {
+        type: String,
+        enum: ['draft', 'published', 'rejected'],
+        default: 'draft'
     }
 }, {
     timestamps: true

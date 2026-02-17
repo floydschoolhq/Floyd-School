@@ -11,8 +11,11 @@ exports.getStudentDashboard = async (req, res) => {
     try {
         const studentId = req.user._id;
 
-        // Get enrolled courses
-        const courses = await Course.find({ enrolledStudents: studentId })
+        // Get enrolled courses that are published
+        const courses = await Course.find({
+            enrolledStudents: studentId,
+            status: 'published'
+        })
             .populate('instructor', 'name email')
             .select('title description modules category');
 

@@ -44,7 +44,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
 
 
   return (
-    <section className="py-16 md:py-24 bg-white text-gray-800">
+    <section className="py-16 md:py-24 bg-slate-900 text-slate-200 border-y border-slate-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Collapsible Content Area */}
@@ -107,7 +107,7 @@ const FeatureItem = ({ feature, color }) => (
     </div>
     <div>
       <h3 className="text-xl md:text-2xl font-bold mb-1">{feature.title}</h3>
-      <p className="text-gray-600 text-lg">{feature.description}</p>
+      <p className="text-slate-400 text-lg">{feature.description}</p>
     </div>
   </div>
 );

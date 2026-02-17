@@ -5,9 +5,9 @@ import { FaCode, FaArrowRight, FaRobot, FaChartLine, FaUserTie, FaCloud, FaCheck
 const FEATURES = [
     {
         title: "Chatbot Support",
-        miniTitle: "Neural Core Integration",
+        miniTitle: "AI-Powered Assistance",
         icon: <FaRobot />,
-        desc: "24/7 Continuous learning assistance.",
+        desc: "24/7 learning assistance for all your study needs.",
         color: "text-slate-900",
         bg: "bg-[#FBEFEF]",
         details: [
@@ -18,35 +18,35 @@ const FEATURES = [
     },
     {
         title: "Built-in Coding IDE",
-        miniTitle: "Cloud Deployment Terminal",
+        miniTitle: "Cloud-Based Workspace",
         icon: <FaCode />,
-        desc: "Practice directly on the platform with no setup.",
+        desc: "Practice directly on the platform with zero local setup.",
         color: "text-[#2563EB]",
         bg: "bg-[#2563EB]/10",
         details: [
-            { label: "Zero-Config", desc: "Start coding instantly with no local environment setup." },
-            { label: "Multi-Language", desc: "Full support for JS, Python, C++, and Java." },
-            { label: "Cloud Compilers", desc: "Low-latency execution on high-performance nodes." }
+            { label: "Zero-Config", desc: "Start coding instantly without installing any software." },
+            { label: "Multi-Language", desc: "Full support for modern programming languages." },
+            { label: "High Speed", desc: "Fast execution on high-performance cloud infrastructure." }
         ]
     },
     {
         title: "Progress Monitoring",
-        miniTitle: "Performance Vector Analytics",
+        miniTitle: "Advanced Analytics",
         icon: <FaChartLine />,
-        desc: "Real-time interactions available to school admins and parents.",
+        desc: "Real-time insights available to school admins and parents.",
         color: "text-[#2D2D2D]",
         bg: "bg-[#F9DFDF]",
         details: [
-            { label: "Precision Metrics", desc: "Track every module and quiz with granular accuracy." },
+            { label: "Progress Metrics", desc: "Track every module and quiz score with accuracy." },
             { label: "Stakeholder Dash", desc: "Dedicated portals for admins and parents." },
-            { label: "Predictive Engines", desc: "Identifies learning bottlenecks before they occur." }
+            { label: "Insights Engine", desc: "Identifies learning bottlenecks before they occur." }
         ]
     },
     {
         title: "Expert Guidance",
-        miniTitle: "Human Intelligence Tier",
+        miniTitle: "Expert Mentor Support",
         icon: <FaUserTie />,
-        desc: "1:1 technical support and code reviews.",
+        desc: "1:1 technical support and direct line to industry experts.",
         color: "text-[#2563EB]",
         bg: "bg-[#2563EB]/20",
         details: [
@@ -57,15 +57,15 @@ const FEATURES = [
     },
     {
         title: "Secure Cloud",
-        miniTitle: "Fortified Infrastructure",
+        miniTitle: "Encrypted Infrastructure",
         icon: <FaCloud />,
-        desc: "Safe & private student learning space.",
+        desc: "A safe, private, and encrypted learning space.",
         color: "text-slate-700",
         bg: "bg-white",
         details: [
-            { label: "Private Sandbox", desc: "Dedicated, isolated environment for every student." },
-            { label: "Persistent Sync", desc: "Access your workspace from any device globally." },
-            { label: "Enterprise Security", desc: "Protected by industry-leading encryption protocols." }
+            { label: "Private Sandbox", desc: "Dedicated, safe environment for every student." },
+            { label: "Persistent Sync", desc: "Access your workspace from any device seamlessly." },
+            { label: "Data Security", desc: "Protected by industry-standard encryption protocols." }
         ]
     }
 ];

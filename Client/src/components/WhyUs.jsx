@@ -23,19 +23,27 @@ const WhyUs = () => {
     ];
 
     return (
-        <section className="bg-[#FCF8F8] py-24 relative overflow-hidden border-t border-[#FBEFEF] font-['Inter']">
+        <section className="bg-slate-900 py-24 relative overflow-hidden border-t border-slate-800 font-['Inter']">
             {/* Background Gradients */}
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#2563EB_0.5px,transparent_0.5px)] [background-size:24px_24px] opacity-20 pointer-events-none"></div>
 
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+                {/* Corner Decorations */}
+                <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 hidden lg:block opacity-[0.03] text-white pointer-events-none">
+                    <FaBuilding className="text-[400px]" />
+                </div>
+                <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 hidden lg:block opacity-[0.03] text-white pointer-events-none">
+                    <FaUserGraduate className="text-[400px]" />
+                </div>
 
                 {/* Header */}
                 <div className="text-center mb-24">
                     <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">The Transformation Path</p>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 font-['Outfit']">
-                        From <span className="text-[#2563EB]">Classroom</span> to <span className="text-[#2D2D2D]">Career</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-200 mb-6 font-['Outfit']">
+                        From <span className="text-[#2563EB]">Classroom</span> to <span className="text-slate-200">Career</span>
                     </h2>
-                    <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
                         A step-by-step journey transforming the educational ecosystem.
                     </p>
                 </div>
@@ -47,7 +55,7 @@ const WhyUs = () => {
                         whileInView={{ height: '100%' }}
                         viewport={{ once: true }}
                         transition={{ duration: 3, ease: "linear" }}
-                        className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2563EB] via-[#F9DFDF] to-[#2D2D2D] md:-translate-x-1/2 origin-top opacity-50"
+                        className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2563EB] via-slate-700 to-slate-900 md:-translate-x-1/2 origin-top opacity-50"
                     ></motion.div>
 
 
@@ -58,16 +66,16 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-white/50 backdrop-blur-sm border border-[#2563EB]/20 p-4 rounded-3xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-[0_10px_30px_-10px_rgba(245,175,175,0.2)] md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-slate-800/80 backdrop-blur-sm border border-[#2563EB]/20 p-4 rounded-3xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-[0_10px_30px_-10px_rgba(37,99,235,0.2)] md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <span className="w-10 h-10 rounded-full bg-[#2563EB] flex items-center justify-center text-white text-xl">🏫</span>
-                            <h3 className="text-2xl font-black text-slate-900 font-['Outfit'] pr-4">Partnering with the School</h3>
+                            <h3 className="text-2xl font-black text-slate-200 font-['Outfit'] pr-4">Partnering with the School</h3>
                         </motion.div>
 
                         {/* Distributed School Points */}
                         <div className="space-y-12">
                             {schoolBenefits.map((item, idx) => (
-                                <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-16 items-center">
+                                <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-32 items-center">
 
                                     {/* Alternating Content Layout */}
                                     <div className={`
@@ -80,8 +88,8 @@ const WhyUs = () => {
                                             viewport={{ once: true, margin: "-50px" }}
                                             transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
                                         >
-                                            <h4 className="font-black text-slate-900 text-lg font-['Outfit']">{item.title}</h4>
-                                            <p className="text-slate-500 text-sm font-medium">{item.desc}</p>
+                                            <h4 className="font-black text-slate-200 text-lg font-['Outfit']">{item.title}</h4>
+                                            <p className="text-slate-400 text-sm font-medium">{item.desc}</p>
                                         </motion.div>
                                     </div>
 
@@ -91,7 +99,7 @@ const WhyUs = () => {
                                         whileInView={{ scale: 1 }}
                                         viewport={{ once: true, margin: "-50px" }}
                                         transition={{ type: "spring", stiffness: 300, delay: 0 }}
-                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-4 border-[#2563EB] rounded-full z-10 shadow-sm"
+                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-slate-900 border-4 border-[#2563EB] rounded-full z-10 shadow-sm"
                                     ></motion.div>
 
                                 </div>
@@ -106,7 +114,7 @@ const WhyUs = () => {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
-                            className="bg-white/80 backdrop-blur-sm px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] border border-[#FBEFEF] rounded-full z-10 font-['Outfit'] shadow-sm"
+                            className="bg-slate-800/80 backdrop-blur-sm px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] border border-slate-700 rounded-full z-10 font-['Outfit'] shadow-sm"
                         >
                             Seamless Integration
                         </motion.div>
@@ -120,16 +128,16 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-blue-50 border border-blue-100 p-4 rounded-2xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-md md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 p-4 rounded-2xl inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-12 shadow-md md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <span className="text-3xl">🎓</span>
-                            <h3 className="text-2xl font-black text-slate-900 font-['Outfit']">Empowering the Student</h3>
+                            <h3 className="text-2xl font-black text-slate-200 font-['Outfit']">Empowering the Student</h3>
                         </motion.div>
 
                         {/* Distributed Student Points */}
                         <div className="space-y-12">
                             {studentBenefits.map((item, idx) => (
-                                <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-16 items-center">
+                                <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-32 items-center">
 
                                     {/* Alternating Content Layout */}
                                     <div className={`
@@ -142,8 +150,8 @@ const WhyUs = () => {
                                             viewport={{ once: true, margin: "-50px" }}
                                             transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
                                         >
-                                            <h4 className="font-black text-slate-900 text-lg font-['Outfit']">{item.title}</h4>
-                                            <p className="text-slate-500 text-sm font-medium">{item.desc}</p>
+                                            <h4 className="font-black text-slate-200 text-lg font-['Outfit']">{item.title}</h4>
+                                            <p className="text-slate-400 text-sm font-medium">{item.desc}</p>
                                         </motion.div>
                                     </div>
 
@@ -153,7 +161,7 @@ const WhyUs = () => {
                                         whileInView={{ scale: 1 }}
                                         viewport={{ once: true, margin: "-50px" }}
                                         transition={{ type: "spring", stiffness: 300, delay: 0 }}
-                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-4 border-[#2D2D2D] rounded-full z-10 shadow-sm"
+                                        className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 -translate-y-0 md:-translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-slate-900 border-4 border-slate-600 rounded-full z-10 shadow-sm"
                                     ></motion.div>
 
                                 </div>
@@ -165,13 +173,13 @@ const WhyUs = () => {
 
                 {/* Final CTA */}
                 <div className="text-center mt-32">
-                    <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-6">Ready to start this journey?</p>
+                    <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mb-6">Ready to start this journey?</p>
                     <button
                         onClick={() => {
                             const el = document.getElementById('registration-form');
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="bg-[#2D2D2D] text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)] hover:-translate-y-1 flex items-center gap-2 mx-auto font-['Outfit'] group"
+                        className="bg-[#2563EB] text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-white hover:text-[#2563EB] transition-all shadow-[0_20px_40px_-10px_rgba(37,99,235,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.4)] hover:-translate-y-1 flex items-center gap-2 mx-auto font-['Outfit'] group"
                     >
                         Enable The Ecosystem <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>

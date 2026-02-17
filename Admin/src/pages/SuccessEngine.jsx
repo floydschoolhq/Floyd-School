@@ -27,7 +27,7 @@ const SuccessEngine = () => {
             const res = await api.get('/admin/growth-intelligence');
             setIntel(res.data.intelligence);
         } catch (err) {
-            console.error('Growth Signal Lost:', err);
+            console.error('Failed to fetch analytics:', err);
         } finally {
             setLoading(false);
             setRefreshing(false);
@@ -40,144 +40,145 @@ const SuccessEngine = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-            <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin" />
-            <p className="text-slate-500 font-black uppercase tracking-[0.3em] text-[10px]">Syncing Intelligence Pulse...</p>
+            <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin" />
+            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Synchronizing analytics...</p>
         </div>
     );
 
     return (
-        <div className="space-y-10 pb-20">
-            {/* Header Area */}
-            <header className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto space-y-8 pb-20 font-['Inter']">
+            {/* Professional Header */}
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase flex items-center gap-3">
-                        Success <span className="text-sky-500 italic">Engine</span>
-                        <div className="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[10px] rounded-full border border-emerald-500/20 flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                            Live Intelligence
-                        </div>
+                    <h2 className="text-3xl font-black text-slate-900 tracking-tight font-['Outfit']">
+                        Insight <span className="text-blue-600">Dashboard</span>
                     </h2>
-                    <p className="text-slate-500 font-bold mt-1 uppercase tracking-widest text-xs">
-                        Growth Intelligence & Student Sentiment Analytics
+                    <p className="text-slate-500 font-medium mt-1">
+                        Real-time student engagement and growth analytics.
                     </p>
                 </div>
                 <button
                     onClick={fetchIntelligence}
                     disabled={refreshing}
-                    className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all active:scale-95 disabled:opacity-50 shadow-sm"
+                    className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-95 disabled:opacity-50 shadow-sm"
                 >
-                    <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
-                    Refresh Signal
+                    <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
+                    Update Data
                 </button>
             </header>
 
-            {/* Core Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Top Metric Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#0f172a] p-8 rounded-[2.5rem] shadow-2xl text-white relative overflow-hidden group"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden group"
                 >
-                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                        <TrendingUp size={80} />
+                    <div className="absolute top-0 right-0 p-6 text-blue-100 transform translate-x-4 -translate-y-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
+                        <TrendingUp size={120} />
                     </div>
-                    <div className="relative z-10">
-                        <p className="text-sky-400 font-black text-[10px] uppercase tracking-[0.3em] mb-4">Lead Velocity</p>
-                        <h3 className="text-5xl font-black font-['Outfit'] tracking-tighter mb-2">{intel?.leadVelocity || '0h'}</h3>
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">Avg Conversion Time</p>
-                        <div className="mt-8 flex items-center gap-2 text-emerald-400 text-[10px] font-black uppercase">
-                            <TrendingUp size={12} />
-                            Signal Strength: 100%
-                        </div>
+                    <p className="text-blue-600 font-black text-[11px] uppercase tracking-widest mb-4">Lead Velocity</p>
+                    <h3 className="text-5xl font-black text-slate-900 font-['Outfit'] tracking-tighter mb-1">{intel?.leadVelocity || '0h'}</h3>
+                    <p className="text-slate-500 text-sm font-medium">Average conversion time</p>
+                    <div className="mt-8 flex items-center gap-2 text-emerald-600 bg-emerald-50 w-fit px-3 py-1 rounded-lg text-[10px] font-black uppercase">
+                        <Activity size={12} />
+                        Active Growth
                     </div>
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm relative group overflow-hidden"
+                    className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden group"
                 >
-                    <div className="absolute top-0 right-0 p-8 text-sky-500/5 group-hover:scale-110 transition-transform duration-700">
-                        <Activity size={80} />
+                    <div className="absolute top-0 right-0 p-6 text-indigo-100 transform translate-x-4 -translate-y-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700">
+                        <BarChart3 size={120} />
                     </div>
-                    <p className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] mb-4">Sentiment Pulse</p>
-                    <div className="flex items-end gap-3 mb-2">
-                        <h3 className="text-5xl font-black text-slate-900 font-['Outfit'] tracking-tighter">{intel?.sentimentScore || 0}%</h3>
-                    </div>
-                    <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Global Satisfaction Score</p>
-                    <div className="mt-8 w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <p className="text-indigo-600 font-black text-[11px] uppercase tracking-widest mb-4">Student Sentiment</p>
+                    <h3 className="text-5xl font-black text-slate-900 font-['Outfit'] tracking-tighter mb-1">{intel?.sentimentScore || 0}%</h3>
+                    <p className="text-slate-500 text-sm font-medium">Global satisfaction index</p>
+                    <div className="mt-8 w-full h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${intel?.sentimentScore || 0}%` }}
                             transition={{ duration: 1, ease: 'easeOut' }}
-                            className={`h-full ${intel?.sentimentScore > 70 ? 'bg-emerald-500' : (intel?.sentimentScore > 40 ? 'bg-amber-500' : 'bg-rose-500')}`}
+                            className={`h-full rounded-full transition-colors ${intel?.sentimentScore > 70 ? 'bg-emerald-500' : (intel?.sentimentScore > 40 ? 'bg-blue-500' : 'bg-rose-500')}`}
                         />
                     </div>
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-sky-500 p-8 rounded-[2.5rem] shadow-xl text-white relative group overflow-hidden"
+                    className="bg-slate-900 p-8 rounded-[2rem] shadow-xl text-white relative overflow-hidden group"
                 >
-                    <div className="absolute -bottom-4 -right-4 text-white/10 group-hover:rotate-12 transition-transform duration-700">
-                        <Shield size={120} />
+                    <div className="absolute -bottom-8 -right-8 text-white/5 transform group-hover:-translate-x-4 group-hover:-translate-y-4 transition-all duration-700">
+                        <Shield size={160} />
                     </div>
-                    <p className="text-white/60 font-black text-[10px] uppercase tracking-[0.3em] mb-4">Node Health</p>
-                    <h3 className="text-4xl font-black font-['Outfit'] tracking-tight mb-2 italic uppercase">Operational</h3>
-                    <p className="text-white/80 text-xs font-bold uppercase tracking-widest">System Integrity Verified</p>
-                    <div className="mt-8 flex items-center gap-2 text-white/90 text-[10px] font-black uppercase">
+                    <p className="text-blue-400 font-black text-[11px] uppercase tracking-widest mb-4">Platform Health</p>
+                    <h3 className="text-4xl font-black font-['Outfit'] tracking-tight mb-1 uppercase">Healthy</h3>
+                    <p className="text-slate-400 text-sm font-medium">All systems operational</p>
+                    <div className="mt-8 flex items-center gap-2 text-blue-400 text-[10px] font-black uppercase">
                         <Zap size={12} fill="currentColor" />
-                        Infrastructure Level: Alpha
+                        Intelligence Mode: Static
                     </div>
                 </motion.div>
             </div>
 
-            {/* Trending Struggles Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div className="lg:col-span-8 space-y-8">
-                    <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm relative overflow-hidden">
+            {/* Content Sections */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Friction Heatmap */}
+                <div className="lg:col-span-8 flex flex-col">
+                    <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-100 shadow-sm flex-1">
                         <div className="flex items-center justify-between mb-10">
                             <div>
-                                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-3">
-                                    Curriculum <span className="text-rose-500">Struggle Heatmap</span>
+                                <h3 className="text-xl font-black text-slate-900 font-['Outfit'] uppercase tracking-tight">
+                                    Learning <span className="text-blue-600">Friction Tracker</span>
                                 </h3>
-                                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Identification of High-Friction Modules</p>
+                                <p className="text-slate-500 text-sm font-medium mt-1">Identifying modules where students require assistance.</p>
                             </div>
-                            <BarChart3 className="text-slate-200" size={24} />
+                            <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
+                                <AlertCircle size={24} />
+                            </div>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                             {(!intel?.trendingStruggles || intel.trendingStruggles.length === 0) ? (
-                                <div className="py-20 text-center space-y-4">
-                                    <Shield className="mx-auto text-slate-100" size={48} />
-                                    <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No Critical Struggles Detected</p>
+                                <div className="py-20 text-center space-y-4 bg-slate-50/50 rounded-[2rem] border border-dashed border-slate-200">
+                                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-slate-100">
+                                        <Shield className="text-blue-200" size={32} />
+                                    </div>
+                                    <div>
+                                        <p className="text-slate-900 font-black uppercase text-xs tracking-widest mb-1">Smooth Integration</p>
+                                        <p className="text-slate-500 text-sm font-medium">No learning roadblocks detected in current curriculum.</p>
+                                    </div>
                                 </div>
                             ) : (
                                 intel.trendingStruggles.map((struggle, idx) => (
                                     <motion.div
                                         key={idx}
-                                        initial={{ opacity: 0, x: -20 }}
+                                        initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className="flex items-center justify-between p-6 rounded-3xl bg-slate-50 border border-slate-100 group hover:border-sky-200 hover:bg-sky-50/20 transition-all"
+                                        className="flex items-center justify-between p-5 rounded-2xl bg-white border border-slate-100 hover:border-blue-100 hover:shadow-md transition-all group"
                                     >
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-400 border border-slate-200 text-lg font-black shadow-sm group-hover:text-sky-500 transition-colors">
-                                                0{idx + 1}
+                                        <div className="flex items-center gap-5">
+                                            <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 font-black text-xs border border-slate-100 group-hover:text-blue-500 group-hover:bg-blue-50 transition-all">
+                                                {idx + 1}
                                             </div>
                                             <div>
-                                                <p className="font-black text-slate-900 uppercase dark:text-slate-900 font-['Outfit'] tracking-tight text-lg leading-none mb-2">
+                                                <h4 className="font-black text-slate-900 font-['Outfit'] tracking-tight text-lg mb-1 leading-none">
                                                     {struggle.module}
-                                                </p>
+                                                </h4>
                                                 <div className="flex items-center gap-3">
-                                                    <span className={`text-[8px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter ${struggle.intensity === 'High' ? 'bg-rose-100 text-rose-600' : 'bg-amber-100 text-amber-600'
+                                                    <span className={`text-[9px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest ${struggle.intensity === 'High' ? 'bg-rose-50 text-rose-600' : 'bg-blue-50 text-blue-600'
                                                         }`}>
-                                                        {struggle.intensity} Friction
+                                                        {struggle.intensity} Difficulty
                                                     </span>
-                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">• {struggle.index} Open Feedback Nodes</span>
+                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                        • {struggle.index} Student Inquiries
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +187,7 @@ const SuccessEngine = () => {
                                                 setSelectedModule(struggle.module);
                                                 setIsModalOpen(true);
                                             }}
-                                            className="p-3 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-sky-500 hover:border-sky-500 transition-all"
+                                            className="p-3 bg-slate-50 text-slate-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all shadow-sm"
                                         >
                                             <ChevronRight size={18} />
                                         </button>
@@ -197,49 +198,55 @@ const SuccessEngine = () => {
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-[#1e293b] p-10 rounded-[3rem] shadow-2xl text-white relative overflow-hidden h-full">
-                        <div className="absolute top-0 right-0 p-10 opacity-5">
-                            <MessageSquare size={120} />
+                {/* Intelligence Feed */}
+                <div className="lg:col-span-4">
+                    <div className="bg-slate-900 p-8 md:p-10 rounded-[2.5rem] shadow-2xl text-white h-full flex flex-col">
+                        <div className="flex items-center gap-3 mb-10">
+                            <div className="p-2.5 bg-blue-500/20 rounded-xl text-blue-400">
+                                <Zap size={20} fill="currentColor" />
+                            </div>
+                            <h3 className="text-xl font-black uppercase tracking-tight font-['Outfit']">Dashboard Summary</h3>
                         </div>
-                        <h3 className="text-xl font-black uppercase tracking-tight mb-8">Intelligence Log</h3>
-                        <div className="space-y-8">
-                            <div className="flex gap-4">
-                                <div className="w-px h-full bg-slate-700 absolute" />
-                                <div className="relative space-y-8">
-                                    <div className="flex gap-4 items-start">
-                                        <div className="w-2 h-2 bg-sky-500 rounded-full mt-1.5 shadow-[0_0_8px_rgba(14,165,233,0.5)]" />
-                                        <div>
-                                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Conversion Logic</p>
-                                            <p className="text-sm font-bold tracking-tight text-slate-300">Lead velocity stable at {intel?.leadVelocity}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4 items-start">
-                                        <div className="w-2 h-2 bg-emerald-500 rounded-full mt-1.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Sentiment Scan</p>
-                                            <p className="text-sm font-bold tracking-tight text-slate-300">Global satisfaction index identified at {intel?.sentimentScore}%</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4 items-start">
-                                        <div className="w-2 h-2 bg-amber-500 rounded-full mt-1.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Friction Audit</p>
-                                            <p className="text-sm font-bold tracking-tight text-slate-300">{intel?.trendingStruggles?.length || 0} Critical friction nodes located in curriculum.</p>
-                                        </div>
-                                    </div>
+
+                        <div className="flex-1 space-y-8 relative">
+                            {/* Vertical Line */}
+                            <div className="absolute left-[7px] top-2 bottom-2 w-px bg-slate-800" />
+
+                            <div className="flex gap-5 items-start relative z-10">
+                                <div className="w-3.5 h-3.5 bg-blue-500 rounded-full mt-1 border-4 border-slate-900" />
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 leading-none">Registration Flow</p>
+                                    <p className="text-sm font-bold text-slate-200 tracking-tight leading-snug">Average lead conversion is currently at {intel?.leadVelocity || 'stable'} speed.</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-5 items-start relative z-10">
+                                <div className="w-3.5 h-3.5 bg-emerald-500 rounded-full mt-1 border-4 border-slate-900" />
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 leading-none">Platform Sentiment</p>
+                                    <p className="text-sm font-bold text-slate-200 tracking-tight leading-snug">Average student satisfaction sits at {intel?.sentimentScore || 0}% globally.</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-5 items-start relative z-10">
+                                <div className="w-3.5 h-3.5 bg-amber-500 rounded-full mt-1 border-4 border-slate-900" />
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 leading-none">Curriculum Friction</p>
+                                    <p className="text-sm font-bold text-slate-200 tracking-tight leading-snug">Currently tracking {intel?.trendingStruggles?.length || 0} modules with elevated friction.</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-12 bg-white/5 border border-white/5 p-6 rounded-3xl">
-                            <div className="flex items-center gap-3 mb-4 text-emerald-400">
-                                <Shield size={18} />
-                                <span className="text-[10px] font-black uppercase tracking-widest">Protocol Intelligence</span>
+                        <div className="mt-12 bg-white/5 border border-white/5 p-6 rounded-2xl relative overflow-hidden">
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-2 mb-3 text-emerald-400">
+                                    <Shield size={16} />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Recommended Actions</span>
+                                </div>
+                                <p className="text-xs text-slate-400 font-bold leading-relaxed italic">
+                                    "Platform metrics are balanced. We recommend focusing outreach on students with higher lead velocity nodes."
+                                </p>
                             </div>
-                            <p className="text-xs text-slate-400 font-bold leading-relaxed italic">
-                                "Growth metrics are within nominal parameters. Focus outreach on 'Converted' leads with velocity {'>'} 24h."
-                            </p>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import Split from 'react-split';
-import { Play, Save, RotateCcw, Download, Upload, Settings } from 'lucide-react';
+import { Play, Save, RotateCcw, Download, Upload, Settings, Lock } from 'lucide-react';
 import { MonacoEditor } from '../../components/ide/MonacoEditor';
 import { Terminal } from '../../components/ide/Terminal';
 import { LanguageSelector, LANGUAGES } from '../../components/ide/LanguageSelector';
@@ -19,6 +19,22 @@ const CodingLabPage = () => {
   const [output, setOutput] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [stdin, setStdin] = useState('');
+  const [requestingAccess, setRequestingAccess] = useState(false);
+
+  const handleRequestAccess = async () => {
+    setRequestingAccess(true);
+    try {
+      await api.post('/students/request-access', {
+        permission: 'canAccessLabs',
+        message: 'Requesting access to coding laboratory'
+      });
+      alert('Access request submitted! An administrator will review your request shortly.');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to submit access request');
+    } finally {
+      setRequestingAccess(false);
+    }
+  };
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
@@ -110,7 +126,29 @@ const CodingLabPage = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-950 flex flex-col font-['Inter']">
+    <div className="h-screen bg-slate-950 flex flex-col font-['Inter'] relative">
+      {/* Access Lock Overlay */}
+      {!user?.permissions?.canAccessLabs && (
+        <div className="absolute inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8">
+          <div className="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
+            <Lock className="w-10 h-10 text-white" />
+          </div>
+          <h2 className="text-4xl font-black text-white mb-3 font-['Outfit'] tracking-tighter">
+            Laboratory <span className="text-blue-500">Locked</span>
+          </h2>
+          <p className="text-slate-400 max-w-sm font-medium mb-10 text-sm leading-relaxed">
+            The coding environment is currently restricted. <br />
+            Please request official access to the laboratory to begin your development sessions.
+          </p>
+          <button
+            onClick={handleRequestAccess}
+            disabled={requestingAccess}
+            className="px-12 py-6 bg-blue-600 text-white text-sm font-bold uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all shadow-2xl shadow-blue-600/20 disabled:opacity-50"
+          >
+            {requestingAccess ? 'Submitting...' : 'Request Lab Access'}
+          </button>
+        </div>
+      )}
       {/* Header */}
       <div className="bg-slate-900 border-b border-slate-800 px-6 py-4">
         <div className="flex items-center justify-between">

@@ -4,7 +4,8 @@ const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 const api = axios.create({
     baseURL: `${baseURL}/api`,
-    withCredentials: true
+    withCredentials: true,
+    timeout: 10000 // 10 second timeout for all requests
 });
 
 api.interceptors.request.use(

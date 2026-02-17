@@ -98,9 +98,20 @@ exports.updateCourse = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized to update this course' });
         }
 
+        // Create update object from body
+        const updateData = { ...req.body };
+
+        // Protect critical fields: mentors cannot approve their own courses
+        // or change the instructor assignment
+        if (req.user.role !== 'admin') {
+            delete updateData.status;
+            delete updateData.instructor;
+            delete updateData.isActive;
+        }
+
         const updatedCourse = await Course.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updateData,
             { new: true, runValidators: true }
         );
 

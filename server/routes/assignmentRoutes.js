@@ -11,7 +11,7 @@ const {
     getAssignmentsByCourse
 } = require('../controllers/assignmentController');
 const upload = require('../middleware/uploadMiddleware');
-const { protect, adminOnly, authorize } = require('../middleware/authMiddleware');
+const { protect, adminOnly, authorize, checkPermission } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 
@@ -19,7 +19,7 @@ router.use(protect);
 router.use(checkMaintenance('assignments'));
 
 // Get assignments (all roles)
-router.get('/', protect, getAssignments);
+router.get('/', protect, checkPermission('canAccessCourses'), getAssignments);
 
 // Create assignment (mentor only)
 router.post('/', protect, authorize('mentor', 'admin'), createAssignment);
@@ -30,8 +30,13 @@ router.put('/:id', protect, authorize('mentor', 'admin'), updateAssignment);
 // Delete assignment (mentor/admin only)
 router.delete('/:id', protect, authorize('mentor', 'admin'), deleteAssignment);
 
+// Student Submissions
+router.post('/:id/submit', protect, authorize('student'), checkPermission('canAccessCourses'), submitAssignment);
+router.get('/:id/submissions', protect, authorize('mentor', 'admin'), getSubmissions);
+router.post('/submissions/:id/grade', protect, authorize('mentor', 'admin'), gradeAssignment);
+
 // Get assignments for a specific course
-router.get('/course/:courseId', protect, getAssignmentsByCourse);
+router.get('/course/:courseId', protect, checkPermission('canAccessCourses'), getAssignmentsByCourse);
 
 // File upload for assignment attachments
 router.post('/upload', protect, authorize('mentor', 'admin'), upload.single('file'), (req, res) => {

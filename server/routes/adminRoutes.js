@@ -9,6 +9,7 @@ const {
     createUser,
     deleteUser,
     updateUserStatus,
+    updateUserPermissions,
     getSystemLogs,
     processSystemCommand,
     updateCourseStatus,
@@ -16,6 +17,7 @@ const {
     getFrictionDetails,
     toggleUserStatus
 } = require('../controllers/adminController');
+const { getAccessRequests, reviewAccessRequest } = require('../controllers/studentController');
 const { getSettings, updateSettings } = require('../controllers/settingsController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
@@ -41,6 +43,7 @@ router.get('/stats', getPlatformStats);
 router.get('/users', getAllUsers);
 router.post('/users', createUser);
 router.patch('/users/:id/status', updateUserStatus);
+router.patch('/users/:id/permissions', updateUserPermissions);
 router.delete('/users/:id', deleteUser);
 
 // Infrastructure Logs
@@ -60,5 +63,9 @@ router.get('/leads', getLeads);
 router.get('/growth-intelligence', getGrowthIntelligence);
 router.get('/friction/:moduleTitle', getFrictionDetails);
 router.post('/broadcast', broadcastNotification);
+
+// Access Requests
+router.get('/access-requests', getAccessRequests);
+router.patch('/access-requests/:id', reviewAccessRequest);
 
 module.exports = router;

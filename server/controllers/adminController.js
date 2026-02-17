@@ -205,6 +205,36 @@ exports.updateUserStatus = async (req, res) => {
 };
 
 /**
+ * @desc    Update user permissions (Granular Access Control)
+ * @route   PATCH /api/admin/users/:id/permissions
+ * @access  Private/Admin
+ */
+exports.updateUserPermissions = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { permissions } = req.body;
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Merge permissions
+        user.permissions = {
+            ...user.permissions,
+            ...permissions
+        };
+
+        await user.save();
+
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        console.error('Permission Update Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to update access matrix.' });
+    }
+};
+
+/**
  * @desc    Create a new user (admin only)
  * @route   POST /api/admin/users
  * @access  Private/Admin

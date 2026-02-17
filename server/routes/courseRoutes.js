@@ -11,12 +11,12 @@ const {
     getMentorRoster,
     createAnnouncement
 } = require('../controllers/courseController');
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { protect, authorize, checkPermission } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 
 // Public/Protected routes
 router.get('/', getCourses);
-router.get('/:id', protect, getCourseById);
+router.get('/:id', protect, checkPermission('canAccessCourses'), getCourseById);
 
 // Mentor/Admin only routes
 router.post('/', protect, authorize('mentor', 'admin'), validate(schemas.course), createCourse);
@@ -32,6 +32,6 @@ router.post('/:id/announce', protect, authorize('mentor', 'admin'), validate(sch
 
 
 // Student enrollment
-router.post('/:id/enroll', protect, authorize('student'), enrollStudent);
+router.post('/:id/enroll', protect, authorize('student'), checkPermission('canAccessCourses'), enrollStudent);
 
 module.exports = router;

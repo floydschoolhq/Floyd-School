@@ -13,7 +13,11 @@ import {
     XCircle,
     Menu,
     ShieldAlert,
-    Trash2
+    Trash2,
+    Lock,
+    Unlock,
+    Shield,
+    RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
@@ -23,6 +27,7 @@ const UserGovernance = () => {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('student'); // Backend role names
     const [searchTerm, setSearchTerm] = useState('');
+    const [updatingPermission, setUpdatingPermission] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -77,6 +82,32 @@ const UserGovernance = () => {
             alert('Node created successfully.');
         } catch (error) {
             alert(error.response?.data?.message || 'Failed to create node');
+        }
+    };
+
+    const togglePermission = async (userId, permissionKey, currentValue) => {
+        setUpdatingPermission(`${userId}-${permissionKey}`);
+        try {
+            await api.patch(`/admin/users/${userId}/permissions`, {
+                permissions: { [permissionKey]: !currentValue }
+            });
+
+            // Optimistic Update
+            setUsers(prev => prev.map(u =>
+                u._id === userId ? {
+                    ...u,
+                    permissions: {
+                        ...(u.permissions || {}),
+                        [permissionKey]: !currentValue
+                    }
+                } : u
+            ));
+        } catch (err) {
+            console.error('Permission override failed', err);
+            alert('Failed to update permission protocol.');
+            fetchUsers(); // Revert
+        } finally {
+            setUpdatingPermission(null);
         }
     };
 
@@ -231,8 +262,18 @@ const UserGovernance = () => {
                     <thead>
                         <tr className="bg-slate-900/50 border-b border-slate-800">
                             <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Neural Identity</th>
-                            <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Protocol Status</th>
-                            <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Initialization</th>
+                            {activeTab === 'student' ? (
+                                <>
+                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Course Sync</th>
+                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Lab Access</th>
+                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Net Comms</th>
+                                </>
+                            ) : (
+                                <>
+                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Protocol Status</th>
+                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Initialization</th>
+                                </>
+                            )}
                             <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] text-right">Overrides</th>
                         </tr>
                     </thead>
@@ -260,24 +301,52 @@ const UserGovernance = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td className="p-8">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`w-2 h-2 rounded-full ${user.isActive !== false ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
-                                            }`}></div>
-                                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${user.isActive !== false ? 'text-emerald-500' : 'text-rose-500'
-                                            }`}>
-                                            {user.isActive !== false ? 'ACTIVE_LINK' : 'TERMINATED'}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td className="p-8">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar size={14} className="text-slate-600" />
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                            {new Date(user.createdAt).toLocaleDateString()}
-                                        </span>
-                                    </div>
-                                </td>
+                                {activeTab === 'student' ? (
+                                    <>
+                                        {['canAccessCourses', 'canAccessLabs', 'canAccessCommunity'].map(key => (
+                                            <td key={key} className="p-8">
+                                                <button
+                                                    onClick={() => togglePermission(user._id, key, user.permissions?.[key])}
+                                                    disabled={updatingPermission === `${user._id}-${key}`}
+                                                    className={`relative w-12 h-6 rounded-full transition-all duration-300 ${user.permissions?.[key] ? 'bg-sky-500' : 'bg-slate-800'
+                                                        } ${updatingPermission === `${user._id}-${key}` ? 'opacity-50 cursor-wait' : 'cursor-pointer'} border border-slate-700`}
+                                                >
+                                                    <div className={`absolute top-0.5 bottom-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-all duration-300 ${user.permissions?.[key] ? 'left-[calc(100%-1.4rem)]' : 'left-0.5'
+                                                        } flex items-center justify-center`}>
+                                                        {updatingPermission === `${user._id}-${key}` ? (
+                                                            <RefreshCw size={10} className="text-sky-500 animate-spin" />
+                                                        ) : user.permissions?.[key] ? (
+                                                            <Unlock size={10} className="text-sky-500" />
+                                                        ) : (
+                                                            <Lock size={10} className="text-slate-400" />
+                                                        )}
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                        <td className="p-8">
+                                            <div className="flex items-center gap-3">
+                                                <div className={`w-2 h-2 rounded-full ${user.isActive !== false ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
+                                                    }`}></div>
+                                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${user.isActive !== false ? 'text-emerald-500' : 'text-rose-500'
+                                                    }`}>
+                                                    {user.isActive !== false ? 'ACTIVE_LINK' : 'TERMINATED'}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="p-8">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar size={14} className="text-slate-600" />
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                    {new Date(user.createdAt).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </>
+                                )}
                                 <td className="p-8 text-right">
                                     <div className="flex items-center justify-end gap-3">
                                         <button

@@ -87,6 +87,7 @@ app.use('/api/why-us', require('./routes/whyUsRoutes'));
 app.use('/api/live-classes', liveClassRoutes);
 app.use('/api/live-chat', require('./routes/liveChatRoutes'));
 app.use('/api/doubts', doubtRoutes);
+app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/public', require('./routes/publicRoutes'));
 
 app.get('/', (req, res) => {

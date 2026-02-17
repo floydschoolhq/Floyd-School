@@ -9,13 +9,29 @@ const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
     transports: ['websocket']
 });
 
-const LiveChatSidebar = ({ classId, user }) => {
+const LiveChatSidebar = ({ classId }) => {
+    const { user } = React.useContext(require('../Context/PortalProvider').PortalContext);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [studentCount, setStudentCount] = useState(0);
     const [isSending, setIsSending] = useState(false);
+    const [requestingAccess, setRequestingAccess] = useState(false);
     const scrollRef = useRef(null);
 
+    const handleRequestAccess = async () => {
+        setRequestingAccess(true);
+        try {
+            await api.post('/students/request-access', {
+                permission: 'canAccessCommunity',
+                message: 'Requesting access to live community chat'
+            });
+            alert('Access request submitted! An administrator will review your request shortly.');
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to submit access request');
+        } finally {
+            setRequestingAccess(false);
+        }
+    };
     useEffect(() => {
         if (classId) {
             fetchMessages();
@@ -147,6 +163,26 @@ const LiveChatSidebar = ({ classId, user }) => {
                     </button>
                 </div>
             </form>
+            {/* Community Access Lock */}
+            {!user?.permissions?.canAccessCommunity && (
+                <div className="absolute inset-0 z-50 bg-slate-900/98 backdrop-blur-md flex flex-col items-center justify-center text-center p-6">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
+                        <MessageCircle className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-xl font-black text-white mb-2 tracking-tight">Community <span className="text-blue-500">Locked</span></h4>
+                    <p className="text-xs font-semibold text-slate-400 leading-relaxed mb-6">
+                        Interact with your peers and mentors. <br />
+                        Request access to enable the live community discussion module.
+                    </p>
+                    <button
+                        onClick={handleRequestAccess}
+                        disabled={requestingAccess}
+                        className="w-full py-4 bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/10 disabled:opacity-50"
+                    >
+                        {requestingAccess ? 'Processing...' : 'Request Community Access'}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

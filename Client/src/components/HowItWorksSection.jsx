@@ -58,11 +58,11 @@ const StepCard = ({ step, index, side }) => {
             className={`relative flex items-center ${side === 'left' ? 'flex-row' : 'flex-row-reverse'} gap-8 mb-24 last:mb-0 w-full lg:w-[45%]`}
         >
             <div className={`flex-1 ${side === 'left' ? 'text-right' : 'text-left'}`}>
-                <h3 className="text-xl font-black text-slate-900 font-['Outfit']">{step.title}</h3>
+                <h3 className="text-xl font-black text-slate-200 font-['Outfit']">{step.title}</h3>
             </div>
 
             <div className={`relative flex-shrink-0 w-16 h-16 rounded-[1.25rem] bg-gradient-to-br ${step.color} p-[2px] shadow-lg group hover:scale-110 transition-transform duration-500`}>
-                <div className="w-full h-full bg-white rounded-[1.15rem] flex items-center justify-center text-slate-900 group-hover:bg-transparent group-hover:text-white transition-colors duration-500">
+                <div className="w-full h-full bg-slate-900 rounded-[1.15rem] flex items-center justify-center text-white group-hover:bg-transparent group-hover:text-white transition-colors duration-500">
                     {step.icon}
                 </div>
             </div>
@@ -84,7 +84,7 @@ const HowItWorksSection = () => {
     });
 
     return (
-        <section id="how-it-works" ref={containerRef} className="relative bg-[#F8FAFC] py-32 overflow-hidden border-t border-slate-200">
+        <section id="how-it-works" ref={containerRef} className="relative bg-slate-900 py-32 overflow-hidden border-t border-slate-800">
             {/* Header */}
             <div className="max-w-7xl mx-auto px-4 mb-24 relative z-10 text-center">
                 <motion.p
@@ -97,7 +97,7 @@ const HowItWorksSection = () => {
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="text-5xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']"
+                    className="text-5xl font-black text-slate-200 mb-8 tracking-tight font-['Outfit']"
                 >
                     Dual Journey <span className="text-[#2563EB]">Framework</span>
                 </motion.h2>
@@ -105,7 +105,7 @@ const HowItWorksSection = () => {
 
             <div className="max-w-7xl mx-auto px-4 relative">
                 {/* SVG Snake Path */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-full -translate-x-1/2 hidden lg:block pointer-events-none opacity-20">
+                <div className="absolute left-1/2 top-0 bottom-0 w-full -translate-x-1/2 hidden lg:block pointer-events-none opacity-60">
                     <svg className="w-full h-full" viewBox="0 0 1000 1200" fill="none">
                         <motion.path
                             d="M 500 0 
@@ -115,16 +115,18 @@ const HowItWorksSection = () => {
                                S 500 900, 500 1000 
                                S 800 1100, 800 1250"
                             stroke="url(#snakeGradient)"
-                            strokeWidth="4"
+                            strokeWidth="3"
                             strokeLinecap="round"
                             style={{ pathLength }}
-                            className="drop-shadow-[0_0_15px_rgba(245,175,175,0.5)]"
+                            className="drop-shadow-[0_0_15px_rgba(37,99,235,0.8)]"
                         />
                         <defs>
                             <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stopColor="#2563EB" />
-                                <stop offset="50%" stopColor="#2D2D2D" />
-                                <stop offset="100%" stopColor="#2563EB" />
+                                <stop offset="0%" stopColor="#2563EB" stopOpacity="0" />
+                                <stop offset="15%" stopColor="#2563EB" />
+                                <stop offset="50%" stopColor="#60A5FA" />
+                                <stop offset="85%" stopColor="#2563EB" />
+                                <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
                             </linearGradient>
                         </defs>
                     </svg>
@@ -134,12 +136,12 @@ const HowItWorksSection = () => {
                 <div className="flex flex-col lg:flex-row justify-between gap-16 relative z-10">
                     {/* For Schools */}
                     <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-16 bg-white p-6 rounded-[2.5rem] border border-[#FBEFEF] shadow-sm w-fit mx-auto lg:mx-0">
-                            <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white">
+                        <div className="flex items-center gap-4 mb-16 bg-slate-800/80 backdrop-blur-sm p-6 rounded-[2.5rem] border border-slate-700 shadow-sm w-fit mx-auto lg:mx-0">
+                            <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white border border-slate-700">
                                 <School className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-slate-900 font-['Outfit'] tracking-tight">For Schools</h3>
+                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">For Schools</h3>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Institutional Integration</p>
                             </div>
                         </div>
@@ -152,12 +154,12 @@ const HowItWorksSection = () => {
 
                     {/* For Students */}
                     <div className="flex-1 lg:mt-32">
-                        <div className="flex items-center gap-4 mb-16 bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm w-fit mx-auto lg:mx-0 lg:ml-auto">
+                        <div className="flex items-center gap-4 mb-16 bg-slate-800/80 backdrop-blur-sm p-6 rounded-[2.5rem] border border-slate-700 shadow-sm w-fit mx-auto lg:mx-0 lg:ml-auto">
                             <div className="w-12 h-12 bg-[#2563EB] rounded-2xl flex items-center justify-center text-white">
                                 <GraduationCap className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-slate-900 font-['Outfit'] tracking-tight">For Students</h3>
+                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">For Students</h3>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Growth Expedition</p>
                             </div>
                         </div>

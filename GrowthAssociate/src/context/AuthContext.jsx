@@ -18,10 +18,14 @@ export const AuthProvider = ({ children }) => {
                     localStorage.removeItem('associate_token');
                 }
             } catch (err) {
+                console.error('Auth verification failed:', err.message);
                 localStorage.removeItem('associate_token');
+            } finally {
+                setLoading(false);
             }
+        } else {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     useEffect(() => {

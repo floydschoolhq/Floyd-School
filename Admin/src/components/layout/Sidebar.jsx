@@ -21,6 +21,7 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <Activity size={20} />, label: 'Analytics', path: '/' },
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
+        { icon: <ShieldCheck size={20} />, label: 'Access Requests', path: '/requests' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },

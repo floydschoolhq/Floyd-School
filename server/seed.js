@@ -143,31 +143,40 @@ const seedMentors = [
 const seedMasterclasses = [
     {
         title: "System Design for Scale",
-        instructor: "Ankit Singh",
-        role: "Principal Engineer, Uber",
-        date: new Date("2024-03-20"),
-        time: "7:00 PM",
-        image: "https://randomuser.me/api/portraits/men/45.jpg",
+        description: "Learn how to build systems that handle millions of requests per second.",
+        instructorName: "Ankit Singh",
+        instructorRole: "Principal Engineer, Uber",
+        scheduledDate: new Date("2024-03-20"),
+        startTime: "7:00 PM",
+        endTime: "9:00 PM",
+        meetingLink: "https://zoom.us/j/system-design",
+        instructorImage: "https://randomuser.me/api/portraits/men/45.jpg",
         tags: ["Architecture", "Backend"],
         students: 1200
     },
     {
         title: "Intro to GenAI",
-        instructor: "Maya Reddy",
-        role: "AI Researcher, DeepMind",
-        date: new Date("2024-03-25"),
-        time: "5:00 PM",
-        image: "https://randomuser.me/api/portraits/women/35.jpg",
+        description: "Deep dive into Generative AI and its real-world applications.",
+        instructorName: "Maya Reddy",
+        instructorRole: "AI Researcher, DeepMind",
+        scheduledDate: new Date("2024-03-25"),
+        startTime: "5:00 PM",
+        endTime: "7:00 PM",
+        meetingLink: "https://zoom.us/j/gen-ai",
+        instructorImage: "https://randomuser.me/api/portraits/women/35.jpg",
         tags: ["AI", "Future Tech"],
         students: 850
     },
     {
         title: "Product Management 101",
-        instructor: "David Chen",
-        role: "PM, Cred",
-        date: new Date("2024-03-28"),
-        time: "6:00 PM",
-        image: "https://randomuser.me/api/portraits/men/22.jpg",
+        description: "Master the basics of product strategy and life cycle management.",
+        instructorName: "David Chen",
+        instructorRole: "PM, Cred",
+        scheduledDate: new Date("2024-03-28"),
+        startTime: "6:00 PM",
+        endTime: "8:00 PM",
+        meetingLink: "https://zoom.us/j/pm-101",
+        instructorImage: "https://randomuser.me/api/portraits/men/22.jpg",
         tags: ["Product", "Strategy"],
         students: 600
     }
@@ -229,7 +238,11 @@ const seedDB = async () => {
 
         // Seed Masterclasses
         await Masterclass.deleteMany({});
-        await Masterclass.insertMany(seedMasterclasses);
+        const masterclassesWithInstructor = seedMasterclasses.map(mc => ({
+            ...mc,
+            instructor: instructor._id
+        }));
+        await Masterclass.insertMany(masterclassesWithInstructor);
         console.log('Masterclasses seeded successfully!');
 
         // Seed Why Us

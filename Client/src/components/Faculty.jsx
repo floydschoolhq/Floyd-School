@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn, FaBuilding, FaGlobe, FaGoogle, FaAmazon, FaMicrosoft } from 'react-icons/fa';
 import { Headphones, MessageSquare, PlayCircle, Star, Award, Briefcase } from 'lucide-react';
+import api from '../api/axios';
+
+// Import Slideshow Images
+import slide1 from '../assets/images/slide1.png';
+import slide2 from '../assets/images/slide2.png';
+import slide3 from '../assets/images/slide3.png';
+
+const slides = [
+    { src: slide1, type: "Live Session" },
+    { src: slide2, type: "Collaborative Lab" },
+    { src: slide3, type: "Project Demo" }
+];
 
 const FeatureItem = ({ icon: Icon, title, desc }) => (
     <motion.div
@@ -20,6 +32,15 @@ const FeatureItem = ({ icon: Icon, title, desc }) => (
 
 const Faculty = () => {
     const [mentors, setMentors] = useState([]);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Auto-advance slides
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 4000);
+        return () => clearInterval(timer);
+    }, []);
 
     useEffect(() => {
         const fetchMentors = async () => {
@@ -40,7 +61,7 @@ const Faculty = () => {
     }, []);
 
     return (
-        <section className="bg-[#FCF8F8] py-24 font-['Inter']">
+        <section className="bg-slate-50 py-24 font-['Inter']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Distinguished Faculty</p>
@@ -63,20 +84,35 @@ const Faculty = () => {
                     <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
                     <div className="flex flex-col lg:flex-row gap-12 items-center relative z-10">
-                        {/* Video Side */}
+                        {/* Slideshow Side */}
                         <div className="w-full lg:w-1/2 aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-800 relative bg-slate-800">
-                            <video
-                                src="/Untitled video - Made with Clipchamp.mp4"
-                                className="w-full h-full object-cover"
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                            />
+                            <AnimatePresence mode="wait">
+                                <motion.img
+                                    key={currentSlide}
+                                    src={slides[currentSlide].src}
+                                    alt="Gallery"
+                                    initial={{ opacity: 0, scale: 1.1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.8 }}
+                                    className="w-full h-full object-cover absolute inset-0"
+                                />
+                            </AnimatePresence>
+
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent pointer-events-none" />
                             <div className="absolute bottom-6 left-6 flex items-center gap-3">
                                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                                <span className="text-[10px] font-black text-white uppercase tracking-[0.2em] font-['Outfit']">Live Session Sample</span>
+                                <AnimatePresence mode="wait">
+                                    <motion.span
+                                        key={currentSlide}
+                                        initial={{ opacity: 0, y: 5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -5 }}
+                                        className="text-[10px] font-black text-white uppercase tracking-[0.2em] font-['Outfit']"
+                                    >
+                                        {slides[currentSlide].type}
+                                    </motion.span>
+                                </AnimatePresence>
                             </div>
                         </div>
 

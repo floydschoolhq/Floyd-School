@@ -45,6 +45,8 @@ import STEMFutureSection from './components/STEMFutureSection';
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
+import HowItWorksSection from './components/HowItWorksSection';
+import SupportEcosystem from './components/SupportEcosystem';
 
 // --- Home Page Component ---
 const HomePage = () => {
@@ -57,6 +59,8 @@ const HomePage = () => {
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative pt-[64px]'>
                 <Hero />
+                <HowItWorksSection />
+                <SupportEcosystem />
                 <IndustrialNetwork />
                 <Marque />
                 <WhyUsVideo />
@@ -95,7 +99,6 @@ const App = () => {
         '/student',
         '/downloads',
         '/contact'
-
     ];
 
     // 3. Check if the current path is in the hidden list

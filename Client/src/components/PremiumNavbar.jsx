@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
@@ -7,22 +7,60 @@ import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
 import NotificationDropdown from './common/NotificationDropdown';
 import MaintenanceBanner from './MaintenanceBanner';
+import api from '../api/axios';
+
+const FALLBACK_COURSES = [
+    { title: "IoT & Robotics", level: "Beginner", link: "/course" },
+    { title: "Web & App Architecture", level: "Intermediate", link: "/course" },
+    { title: "AI & Machine Learning", level: "Advanced", link: "/course" },
+    { title: "Cybersecurity Ops", level: "Advanced", link: "/course" }
+];
 
 const PremiumNavbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const { user } = useContext(PortalContext);
+    const [courses, setCourses] = useState([]);
 
-    // Detect scroll for navbar background change
+    const { scrollY } = useScroll();
+
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious();
+        if (latest > previous && latest > 150) {
+            setIsVisible(false);
+        } else {
+            setIsVisible(true);
+        }
+        setIsScrolled(latest > 20);
+    });
+
+    // Fetch and Filter Courses
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+        const fetchCourses = async () => {
+            try {
+                // Try fetching from API
+                const res = await api.get('/courses');
+                let data = Array.isArray(res.data) ? res.data : res.data.data || [];
+
+                // If API returns empty, use fallback to ensure UI works for demo
+                if (data.length === 0) data = FALLBACK_COURSES;
+
+                setCourses(data);
+            } catch (error) {
+                console.warn("Course fetch failed, using fallback navigation data.");
+                setCourses(FALLBACK_COURSES);
+            }
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        fetchCourses();
     }, []);
+
+    // Filter Logic
+    const schoolCourses = courses.filter(c => c.level === 'Beginner' || c.level === 'Intermediate').map(c => ({ name: c.title, link: '/course' }));
+    const collegeCourses = courses.filter(c => c.level === 'Intermediate' || c.level === 'Advanced').map(c => ({ name: c.title, link: '/course' }));
 
     const handleBookSession = () => {
         if (!user) {
@@ -32,33 +70,31 @@ const PremiumNavbar = () => {
         }
     };
 
+    // Permission Check: If user exists and is a student, check permissions. Guests see everything (Marketing).
+    const canViewCourses = !user || user.role !== 'student' || user.permissions?.canAccessCourses;
+
     const navItems = [
-        {
+        ...(canViewCourses ? [{
             name: 'For School Students',
             hasDropdown: true,
-            subItems: [
-                { name: 'Beginner STEM Modules', link: '#programs' },
-                { name: 'Robotics & AI Basics', link: '#ecosystem' },
-                { name: 'Creative Coding Labs', link: '#programs' }
-            ]
+            subItems: schoolCourses.length > 0 ? schoolCourses : [{ name: 'Explore Courses', link: '/course' }]
         },
         {
             name: 'For College Students',
             hasDropdown: true,
-            subItems: [
-                { name: 'Intermediate Web Dev', link: '#programs' },
-                { name: 'Advanced AI/ML Ops', link: '#ecosystem' },
-                { name: 'Full-Stack Architecture', link: '#career' },
-                { name: 'Industrial Certifications', link: '#faculty' }
-            ]
-        },
+            subItems: collegeCourses.length > 0 ? collegeCourses : [{ name: 'Explore Programs', link: '/course' }]
+        }] : []),
     ];
 
     return (
         <>
             <MaintenanceBanner />
             {/* Top Banner - Tech Expert Call to Action - Now Opaque */}
-            <div className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm">
+            <motion.div
+                animate={{ y: isVisible ? 0 : -100 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm"
+            >
                 <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
                     <Sparkles size={14} className="text-[#2563EB]" />
                     <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">Master Industry-Standard Engineering</span>
@@ -67,16 +103,16 @@ const PremiumNavbar = () => {
                         <ArrowRight size={14} />
                     </Link>
                 </div>
-            </div>
+            </motion.div>
 
             <motion.nav
-                className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                className={`fixed top-9 left-0 right-0 z-50 transition-colors duration-300 ${isScrolled
                     ? 'bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(245,175,175,0.1)] border-b border-[#F9DFDF]/50'
                     : 'bg-[#FCF8F8] border-b border-[#FBEFEF]'
                     }`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
+                initial={{ y: 0 }}
+                animate={{ y: isVisible ? 0 : -100 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
@@ -111,13 +147,13 @@ const PremiumNavbar = () => {
                                         <div className="absolute top-16 left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                             <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl shadow-[#2563EB]/10 border border-[#FBEFEF] py-2 w-56 overflow-hidden">
                                                 {item.subItems.map((sub, idx) => (
-                                                    <a
+                                                    <Link
                                                         key={idx}
-                                                        href={sub.link}
+                                                        to={sub.link}
                                                         className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors border-l-2 border-transparent hover:border-[#2563EB] font-['Outfit']"
                                                     >
                                                         {sub.name}
-                                                    </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </div>

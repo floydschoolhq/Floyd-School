@@ -21,13 +21,29 @@ const ClassroomPage = () => {
     transports: ['websocket']
   });
 
-  const { setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
+  const { user, setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
   const [loading, setLoading] = useState(true);
   const [myDoubt, setMyDoubt] = useState(null);
   const [isSignaling, setIsSignaling] = useState(false);
+  const [requestingAccess, setRequestingAccess] = useState(false);
+
+  const handleRequestAccess = async () => {
+    setRequestingAccess(true);
+    try {
+      await api.post('/students/request-access', {
+        permission: 'canAccessCourses',
+        message: 'Requesting access to course classroom'
+      });
+      alert('Access request submitted! An administrator will review your request shortly.');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to submit access request');
+    } finally {
+      setRequestingAccess(false);
+    }
+  };
 
   useEffect(() => {
     fetchClassroomData();
@@ -141,6 +157,28 @@ const ClassroomPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 p-6 relative">
+      {/* Access Lock Overlay */}
+      {!user?.permissions?.canAccessCourses && (
+        <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
+          <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
+            <BookOpen className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tighter">
+            Access <span className="text-blue-600">Pending</span>
+          </h2>
+          <p className="text-slate-500 max-w-md font-medium mb-8 text-sm leading-relaxed">
+            Your classroom access is currently being set up. <br />
+            Please request access from your administrator to view the full curriculum.
+          </p>
+          <button
+            onClick={handleRequestAccess}
+            disabled={requestingAccess}
+            className="px-10 py-5 bg-slate-900 text-white text-sm font-bold uppercase tracking-widest rounded-2xl hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 disabled:opacity-50"
+          >
+            {requestingAccess ? 'Processing...' : 'Request Course Access'}
+          </button>
+        </div>
+      )}
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

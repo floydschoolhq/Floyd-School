@@ -5,13 +5,13 @@ const {
     getLanguages,
     getSubmissionStatus
 } = require('../controllers/codeExecutionController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect, checkPermission } = require('../middleware/authMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 
 router.use(checkMaintenance('codingLab'));
 
 // Execute code (protected route)
-router.post('/execute', protect, executeCode);
+router.post('/execute', protect, checkPermission('canAccessLabs'), executeCode);
 
 // Get supported languages (public)
 router.get('/languages', getLanguages);
