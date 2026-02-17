@@ -31,7 +31,8 @@ const allowedOrigins = [
     'http://localhost:5175', // Mentor
     'http://localhost:5176', // GrowthAssociate
     'http://localhost:5177',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://thinkskool-mxyc.vercel.app' // Direct Vercel Origin
 ];
 
 const corsOptions = {
@@ -177,5 +178,10 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`);
+
+    // Safety check for critical environment variables
+    if (!process.env.JWT_SECRET) {
+        console.warn('WARNING: JWT_SECRET is not defined in environment variables. Authentication will fail.');
+    }
 });
 
