@@ -282,7 +282,7 @@ const Hero = () => {
                                                 <>
                                                     {/* Experience Selection - Tech Grid */}
                                                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-                                                        {["Class 6-7", "Class 8", "Class 9-10", "Class 11-12", "College", "Management", "Others"].map((option, idx) => (
+                                                        {["Class 6-8", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
                                                             <button
                                                                 key={idx}
                                                                 type="button"
