@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { Briefcase, Award, Headphones, Terminal, Cpu, Code2, CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -224,9 +224,13 @@ const Hero = () => {
                                         <div className="w-24 h-24 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(16,185,129,0.2)] border border-emerald-500/20">
                                             <CheckCircle className="w-12 h-12" />
                                         </div>
-                                        <h3 className="text-3xl font-black text-white mb-4 font-['Outfit'] uppercase tracking-tight">Access Granted</h3>
+                                        <h3 className="text-3xl font-black text-white mb-4 font-['Outfit'] uppercase tracking-tight">
+                                            {regType === 'student' ? 'Application Successful' : 'Request Received'}
+                                        </h3>
                                         <p className="text-white/40 text-[13px] font-medium leading-relaxed font-['Inter'] max-w-[280px] mx-auto">
-                                            Your details have been submitted. An advisor will reach out shortly.
+                                            {regType === 'student'
+                                                ? 'Your details have been submitted. An advisor will reach out shortly to guide your journey.'
+                                                : 'Our partnership team has received your request. We will contact your institution shortly.'}
                                         </p>
                                         <button
                                             onClick={() => setStatus('idle')}

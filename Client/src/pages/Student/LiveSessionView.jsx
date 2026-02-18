@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink, BookOpen, Maximize, Minimize } from 'lucide-react';
+import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink, Maximize, Minimize } from 'lucide-react';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
-import StudentLiveRoom from '../../components/Student/StudentLiveRoom';
 import api from '../../api/axios';
 import { useSocket } from '../../components/Context/SocketContext';
 
@@ -234,14 +233,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                 {/* Stage Area */}
                 <div className="flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
                     <div className="flex-1 relative overflow-hidden">
-                        {liveClass.platform === 'agora' ? (
-                            <StudentLiveRoom
-                                appId={import.meta.env.VITE_AGORA_APP_ID || "PLACEHOLDER_APP_ID"}
-                                channelName={liveClass.channelName}
-                                token={liveClass.token}
-                                uid={0}
-                            />
-                        ) : (embedUrl || liveClass.platform === 'jitsi') ? (
+                        {(embedUrl || liveClass.platform === 'jitsi') ? (
                             <div className="absolute inset-0 overflow-hidden bg-black pointer-events-none">
                                 <iframe
                                     className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-0 pointer-events-none select-none"

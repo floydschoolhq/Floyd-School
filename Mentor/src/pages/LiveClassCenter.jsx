@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     Video,
-    Layout,
     Users,
     MessageSquare,
     Check,
@@ -11,18 +10,12 @@ import {
     Link as LinkIcon,
     ExternalLink,
     Square,
-    Lock,
-    Unlock,
-    MessageCircle,
-    BookOpen
+    MessageCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 import { useSocket } from '../context/SocketContext';
 import { useToast } from '../context/ToastContext';
-import LiveChatSidebar from '../components/LiveChatSidebar';
-import LiveRoom from '../components/LiveRoom';
-
 const LiveClassCenter = () => {
     const socket = useSocket();
     const toast = useToast();
@@ -32,19 +25,11 @@ const LiveClassCenter = () => {
     const [studentCount, setStudentCount] = useState(0);
     const [activeTab, setActiveTab] = useState('doubts'); // 'doubts' or 'chat'
     const [doubtsLoading, setDoubtsLoading] = useState(false);
-
-    // YouTube Helper
-    const getYouTubeId = (url) => {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-        const match = url?.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    };
     const [starting, setStarting] = useState(false);
 
-    // Form state
     const [title, setTitle] = useState('');
     const [topic, setTopic] = useState('');
-    const [platform, setPlatform] = useState('agora');
+    const [platform, setPlatform] = useState('youtube');
     const [meetingLink, setMeetingLink] = useState('');
     const [durationMin, setDurationMin] = useState(60);
     const [durationSec, setDurationSec] = useState(0);
@@ -55,7 +40,12 @@ const LiveClassCenter = () => {
     const [courses, setCourses] = useState([]);
     const [searchingRecordings, setSearchingRecordings] = useState(false);
 
-    const AGORA_APP_ID = import.meta.env.VITE_AGORA_APP_ID || "PLACEHOLDER_APP_ID"; // User will need to provide this
+    // YouTube Helper
+    const getYouTubeId = (url) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url?.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
 
     useEffect(() => {
         fetchActiveClass();
@@ -289,7 +279,6 @@ const LiveClassCenter = () => {
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Streaming Platform</label>
                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                             {[
-                                                { id: 'agora', label: 'Inbuilt (Agora)' },
                                                 { id: 'premiere', label: 'Simulated Live' },
                                                 { id: 'youtube', label: 'YouTube' },
                                                 { id: 'jitsi', label: 'Jitsi Meet' },
@@ -313,15 +302,11 @@ const LiveClassCenter = () => {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
-                                            {platform === 'agora' ? 'Broadcast Mode' : 'Satellite Link (Meeting URL)'}
+                                            Satellite Link (Meeting URL)
                                         </label>
                                         <div className="relative">
-                                            <LinkIcon className={`absolute left-4 top-1/2 -translate-y-1/2 ${platform === 'agora' ? 'text-sky-500' : 'text-slate-400'}`} size={18} />
-                                            {platform === 'agora' ? (
-                                                <div className="w-full bg-sky-50 border-2 border-sky-100 p-4 pl-12 rounded-2xl font-bold text-sky-700">
-                                                    Inbuilt Studio Mode Selected
-                                                </div>
-                                            ) : platform === 'premiere' ? (
+                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                            {platform === 'premiere' ? (
                                                 <div className="flex gap-3">
                                                     <input
                                                         type="url"
@@ -416,108 +401,99 @@ const LiveClassCenter = () => {
                                 </form>
                             </motion.div>
                         ) : (
-                            activeClass.platform === 'agora' ? (
-                                <LiveRoom
-                                    appId={AGORA_APP_ID}
-                                    channelName={activeClass.channelName}
-                                    token={activeClass.token}
-                                    uid={0}
-                                    onEndClass={handleEnd}
-                                />
-                            ) : (
-                                <motion.div
-                                    key="active-session"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-slate-900 p-10 rounded-[2.5rem] border border-slate-800 shadow-2xl text-white overflow-hidden relative h-full flex flex-col justify-center"
-                                >
-                                    {/* Visualizer effect */}
-                                    <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                            <motion.div
+                                key="active-session"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-slate-900 p-10 rounded-[2.5rem] border border-slate-800 shadow-2xl text-white overflow-hidden relative h-full flex flex-col justify-center"
+                            >
+                                {/* Visualizer effect */}
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
 
-                                    <div className="relative z-10 space-y-8">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-16 h-16 bg-rose-500 rounded-3xl flex items-center justify-center shadow-lg shadow-rose-500/20 animate-pulse">
-                                                <Video size={32} />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-2xl font-black uppercase tracking-tight leading-none">{activeClass.title}</h3>
-                                                <p className="text-sky-400 font-bold uppercase tracking-widest text-xs mt-2">{activeClass.topic}</p>
-                                            </div>
+                                <div className="relative z-10 space-y-8">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 bg-rose-500 rounded-3xl flex items-center justify-center shadow-lg shadow-rose-500/20 animate-pulse">
+                                            <Video size={32} />
                                         </div>
-
-                                        <div className="grid grid-cols-1 gap-6">
-                                            {/* Broadcast Node */}
-                                            {getYouTubeId(activeClass.meetingLink) ? (
-                                                <div className="aspect-video bg-black rounded-[2rem] overflow-hidden border border-slate-700 shadow-2xl relative group/preview">
-                                                    <iframe
-                                                        width="100%"
-                                                        height="100%"
-                                                        src={`https://www.youtube.com/embed/${getYouTubeId(activeClass.meetingLink)}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0`}
-                                                        title="YouTube Live Session"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        className="relative z-10 pointer-events-none"
-                                                    ></iframe>
-
-                                                    {/* Secure Intercept Overlay for Mentor */}
-                                                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-transparent pointer-events-auto">
-                                                        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/80 to-transparent pointer-events-none flex items-start justify-between px-6 pt-3">
-                                                            <div className="flex items-center gap-2">
-                                                                <div className="w-1.5 h-1.5 bg-sky-500 rounded-full animate-pulse"></div>
-                                                                <span className="text-[8px] font-black text-sky-400 uppercase tracking-[0.3em] font-mono">PREVIEW_SECURE // MONITOR_ONLY</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="absolute inset-0 border-[10px] border-slate-900/50 pointer-events-none"></div>
-                                                    </div>
-
-                                                    <div className="absolute top-4 right-4 z-30 bg-rose-500 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest animate-pulse">
-                                                        Live Broadcast
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div className="aspect-video bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center p-8 text-center">
-                                                    <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center mb-4">
-                                                        <Video className="text-white/20" size={32} />
-                                                    </div>
-                                                    <p className="text-white/40 font-black uppercase tracking-[0.2em] text-[10px]">Standard Signal Active</p>
-                                                    <p className="text-white/10 text-[10px] mt-2 max-w-[200px]">Uplink established via Zoom/Meet. Preview unavailable for standard protocols.</p>
-                                                </div>
-                                            )}
-
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="bg-white/5 border border-white/10 p-5 rounded-3xl">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Queue Depth</p>
-                                                    <p className="text-2xl font-black text-white">{unresolvedDoubts.length} <span className="text-sky-400 text-xs leading-none uppercase">Queries</span></p>
-                                                </div>
-                                                <div className="bg-white/5 border border-white/10 p-5 rounded-3xl">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status</p>
-                                                    <p className="text-lg font-black text-emerald-400 uppercase tracking-widest mt-1">Operational</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex flex-col gap-4">
-                                            <a
-                                                href={activeClass.meetingLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="w-full bg-white text-slate-900 py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-sky-400 hover:text-white transition-all shadow-xl active:scale-[0.98]"
-                                            >
-                                                Join Main Space
-                                                <ExternalLink size={18} />
-                                            </a>
-                                            <button
-                                                onClick={handleEnd}
-                                                className="w-full bg-rose-500/10 border border-rose-500/30 text-rose-500 py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]"
-                                            >
-                                                <Square size={18} className="fill-current" />
-                                                Terminate Session
-                                            </button>
+                                        <div>
+                                            <h3 className="text-2xl font-black uppercase tracking-tight leading-none">{activeClass.title}</h3>
+                                            <p className="text-sky-400 font-bold uppercase tracking-widest text-xs mt-2">{activeClass.topic}</p>
                                         </div>
                                     </div>
-                                </motion.div>
-                            )
-                        )}
+
+                                    <div className="grid grid-cols-1 gap-6">
+                                        {/* Broadcast Node */}
+                                        {getYouTubeId(activeClass.meetingLink) ? (
+                                            <div className="aspect-video bg-black rounded-[2rem] overflow-hidden border border-slate-700 shadow-2xl relative group/preview">
+                                                <iframe
+                                                    width="100%"
+                                                    height="100%"
+                                                    src={`https://www.youtube.com/embed/${getYouTubeId(activeClass.meetingLink)}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0`}
+                                                    title="YouTube Live Session"
+                                                    frameBorder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    className="relative z-10 pointer-events-none"
+                                                ></iframe>
+
+                                                {/* Secure Intercept Overlay for Mentor */}
+                                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-transparent pointer-events-auto">
+                                                    <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/80 to-transparent pointer-events-none flex items-start justify-between px-6 pt-3">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 bg-sky-500 rounded-full animate-pulse"></div>
+                                                            <span className="text-[8px] font-black text-sky-400 uppercase tracking-[0.3em] font-mono">PREVIEW_SECURE // MONITOR_ONLY</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute inset-0 border-[10px] border-slate-900/50 pointer-events-none"></div>
+                                                </div>
+
+                                                <div className="absolute top-4 right-4 z-30 bg-rose-500 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest animate-pulse">
+                                                    Live Broadcast
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="aspect-video bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center p-8 text-center">
+                                                <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center mb-4">
+                                                    <Video className="text-white/20" size={32} />
+                                                </div>
+                                                <p className="text-white/40 font-black uppercase tracking-[0.2em] text-[10px]">Standard Signal Active</p>
+                                                <p className="text-white/10 text-[10px] mt-2 max-w-[200px]">Uplink established via Zoom/Meet. Preview unavailable for standard protocols.</p>
+                                            </div>
+                                        )}
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="bg-white/5 border border-white/10 p-5 rounded-3xl">
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Queue Depth</p>
+                                                <p className="text-2xl font-black text-white">{unresolvedDoubts.length} <span className="text-sky-400 text-xs leading-none uppercase">Queries</span></p>
+                                            </div>
+                                            <div className="bg-white/5 border border-white/10 p-5 rounded-3xl">
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Status</p>
+                                                <p className="text-lg font-black text-emerald-400 uppercase tracking-widest mt-1">Operational</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-4">
+                                        <a
+                                            href={activeClass.meetingLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="w-full bg-white text-slate-900 py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-sky-400 hover:text-white transition-all shadow-xl active:scale-[0.98]"
+                                        >
+                                            Join Main Space
+                                            <ExternalLink size={18} />
+                                        </a>
+                                        <button
+                                            onClick={handleEnd}
+                                            className="w-full bg-rose-500/10 border border-rose-500/30 text-rose-500 py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-rose-500 hover:text-white transition-all active:scale-[0.98]"
+                                        >
+                                            <Square size={18} className="fill-current" />
+                                            Terminate Session
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )
+                        }
                     </AnimatePresence>
                 </div>
 

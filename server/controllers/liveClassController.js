@@ -1,4 +1,3 @@
-const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
 const LiveClass = require('../models/LiveClass');
 const Notification = require('../models/Notification');
 const User = require('../models/User');
@@ -31,32 +30,10 @@ exports.startLiveClass = async (req, res) => {
             duration: duration || 3600 // Default to 1 hour if not provided
         };
 
-        if (platform === 'agora') {
-            // Generate Agora Token
-            const appId = process.env.AGORA_APP_ID;
-            const appCertificate = process.env.AGORA_APP_CERTIFICATE;
-            const channelName = `class_${req.user._id}_${Date.now()}`;
-            const uid = 0; // 0 allows any user to join with this token (for simplicity, or use specific UIDs)
-            const role = RtcRole.PUBLISHER;
-            const expirationTimeInSeconds = 3600 * 4; // 4 hours
-            const currentTimestamp = Math.floor(Date.now() / 1000);
-            const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
-
-            if (!appId || !appCertificate) {
-                return res.status(500).json({ message: 'Agora credentials missing on server' });
-            }
-
-            const token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs);
-
-            liveClassData.channelName = channelName;
-            liveClassData.token = token;
-            liveClassData.meetingLink = 'inbuilt'; // Placeholder for schema validation in older clients
-        } else {
-            if (!meetingLink) {
-                return res.status(400).json({ message: 'Meeting link is required for external platforms' });
-            }
-            liveClassData.meetingLink = meetingLink;
+        if (platform !== 'premiere' && !meetingLink) {
+            return res.status(400).json({ message: 'Meeting link is required for external platforms' });
         }
+        liveClassData.meetingLink = meetingLink;
 
         const liveClass = await LiveClass.create(liveClassData);
 
