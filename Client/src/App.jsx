@@ -41,7 +41,7 @@ import ComparisonSection from './components/ComparisonSection.jsx';
 import AmbitiousSection from './components/AmbitiousSection.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 
-import STEMFutureSection from './components/STEMFutureSection';
+
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
@@ -66,7 +66,6 @@ const HomePage = () => {
                 <WhyUsVideo />
                 <ComparisonSection />
                 <AmbitiousSection />
-                <STEMFutureSection />
                 <WhyUs />
                 <DetailedProgram />
                 <Masterclasses />
