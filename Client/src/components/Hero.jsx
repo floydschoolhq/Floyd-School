@@ -25,12 +25,15 @@ const Hero = () => {
         restDelta: 0.001
     });
 
+    const [regType, setRegType] = useState('student'); // student or school
     const [selectedExperience, setSelectedExperience] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
-        topic: ''
+        topic: '',
+        institutionName: '',
+        designation: ''
     });
     const [status, setStatus] = useState('idle'); // idle, loading, success
 
@@ -40,22 +43,35 @@ const Hero = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if (!selectedExperience || !formData.topic || !formData.name || !formData.phone || !formData.email) {
-            alert("Please fill in all details to proceed.");
-            return;
+        if (regType === 'student') {
+            if (!selectedExperience || !formData.topic || !formData.name || !formData.phone || !formData.email) {
+                alert("Please fill in all details to proceed.");
+                return;
+            }
+        } else {
+            if (!formData.institutionName || !formData.name || !formData.phone || !formData.email) {
+                alert("Please fill in institution and contact details.");
+                return;
+            }
         }
 
         setStatus('loading');
         try {
-            await api.post('/leads', {
+            const payload = regType === 'student' ? {
                 ...formData,
                 experience: selectedExperience,
-                source: 'hero_form',
+                source: 'hero_form_student',
                 type: 'course_enquiry'
-            });
+            } : {
+                ...formData,
+                source: 'hero_form_school',
+                type: 'school_partnership'
+            };
+
+            await api.post('/leads', payload);
             setStatus('success');
             // Reset form after success
-            setFormData({ name: '', email: '', phone: '', topic: '' });
+            setFormData({ name: '', email: '', phone: '', topic: '', institutionName: '', designation: '' });
             setSelectedExperience('');
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
@@ -222,58 +238,115 @@ const Hero = () => {
                                 ) : (
                                     <>
                                         <div className="mb-10 relative z-10">
+                                            {/* Reg Type Tab Switcher */}
+                                            <div className="flex gap-2 mb-8 p-1.5 bg-white/5 rounded-2xl border border-white/10 shadow-inner">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setRegType('student')}
+                                                    className={`
+                                                        flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 font-['Outfit']
+                                                        ${regType === 'student'
+                                                            ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20 border border-white/10'
+                                                            : 'text-white/40 hover:text-white/60 hover:bg-white/5'}
+                                                    `}
+                                                >
+                                                    Student Solo
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setRegType('school')}
+                                                    className={`
+                                                        flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 font-['Outfit']
+                                                        ${regType === 'school'
+                                                            ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20 border border-white/10'
+                                                            : 'text-white/40 hover:text-white/60 hover:bg-white/5'}
+                                                    `}
+                                                >
+                                                    School Partner
+                                                </button>
+                                            </div>
+
                                             <div className="flex items-center gap-4 mb-6">
                                                 <div className="w-2 h-8 bg-[#2563EB] rounded-full shadow-[0_0_20px_rgba(245,175,175,0.6)]" />
-                                                <h3 className="text-3xl font-black text-white leading-tight tracking-tight font-['Outfit'] uppercase">Start Your <span className="text-[#2563EB]">Journey</span></h3>
+                                                <h3 className="text-3xl font-black text-white leading-tight tracking-tight font-['Outfit'] uppercase">
+                                                    {regType === 'student' ? <>Start Your <span className="text-[#2563EB]">Journey</span></> : <>Partner <span className="text-[#2563EB]">With Us</span></>}
+                                                </h3>
                                             </div>
-                                            <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">Begin your learning experience</p>
+                                            <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">
+                                                {regType === 'student' ? "Begin your learning experience" : "Empower your institution's future"}
+                                            </p>
                                         </div>
 
                                         <form className="space-y-5 relative z-10" onSubmit={handleFormSubmit}>
-                                            {/* Experience Selection - Tech Grid */}
-                                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-                                                {["Class 6-7", "Class 8", "Class 9-10", "Class 11-12", "College", "Management", "Others"].map((option, idx) => (
-                                                    <button
-                                                        key={idx}
-                                                        type="button"
-                                                        onClick={() => setSelectedExperience(option)}
-                                                        className={`
+                                            {regType === 'student' ? (
+                                                <>
+                                                    {/* Experience Selection - Tech Grid */}
+                                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+                                                        {["Class 6-7", "Class 8", "Class 9-10", "Class 11-12", "College", "Management", "Others"].map((option, idx) => (
+                                                            <button
+                                                                key={idx}
+                                                                type="button"
+                                                                onClick={() => setSelectedExperience(option)}
+                                                                className={`
                                                                     py-3.5 px-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-500 relative overflow-hidden active:scale-95
                                                                     ${selectedExperience === option
-                                                                ? 'bg-white text-slate-950 shadow-[0_0_25px_rgba(255,255,255,0.3)]'
-                                                                : 'bg-white/5 text-white/40 hover:text-white/70 border border-white/10 hover:border-white/20'}
+                                                                        ? 'bg-white text-slate-950 shadow-[0_0_25px_rgba(255,255,255,0.3)]'
+                                                                        : 'bg-white/5 text-white/40 hover:text-white/70 border border-white/10 hover:border-white/20'}
                                                                 `}
-                                                    >
-                                                        {option}
-                                                        {selectedExperience === option && (
-                                                            <motion.div
-                                                                layoutId="activeGlow"
-                                                                className="absolute inset-x-4 bottom-1 h-0.5 bg-slate-950 rounded-full"
-                                                            />
-                                                        )}
-                                                    </button>
-                                                ))}
-                                            </div>
+                                                            >
+                                                                {option}
+                                                                {selectedExperience === option && (
+                                                                    <motion.div
+                                                                        layoutId="activeGlow"
+                                                                        className="absolute inset-x-4 bottom-1 h-0.5 bg-slate-950 rounded-full"
+                                                                    />
+                                                                )}
+                                                            </button>
+                                                        ))}
+                                                    </div>
 
-                                            {/* Custom Advanced Select */}
-                                            <div className="relative group">
-                                                <select
-                                                    name="topic"
-                                                    value={formData.topic}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="w-full text-[11px] p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/20 appearance-none focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-black uppercase tracking-widest cursor-pointer hover:bg-white/10 shadow-xl"
-                                                >
-                                                    <option value="" className="bg-slate-950">Select Course</option>
-                                                    <option value="Full Stack Development" className="bg-slate-950">Full Stack Engineering</option>
-                                                    <option value="Data Science & AI" className="bg-slate-950">Data Excellence & AI</option>
-                                                    <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
-                                                    <option value="IoT & Robotics" className="bg-slate-950">Systems & Robotics</option>
-                                                </select>
-                                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-[#2563EB] transition-colors">
-                                                    <ArrowRight size={16} className="rotate-90" />
+                                                    {/* Custom Advanced Select */}
+                                                    <div className="relative group">
+                                                        <select
+                                                            name="topic"
+                                                            value={formData.topic}
+                                                            onChange={handleInputChange}
+                                                            required
+                                                            className="w-full text-[11px] p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/20 appearance-none focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-black uppercase tracking-widest cursor-pointer hover:bg-white/10 shadow-xl"
+                                                        >
+                                                            <option value="" className="bg-slate-950">Select Course</option>
+                                                            <option value="Full Stack Development" className="bg-slate-950">Full Stack Engineering</option>
+                                                            <option value="Data Science & AI" className="bg-slate-950">Data Excellence & AI</option>
+                                                            <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
+                                                            <option value="IoT & Robotics" className="bg-slate-950">Systems & Robotics</option>
+                                                        </select>
+                                                        <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-[#2563EB] transition-colors">
+                                                            <ArrowRight size={16} className="rotate-90" />
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="space-y-4">
+                                                    <input
+                                                        type="text"
+                                                        name="institutionName"
+                                                        value={formData.institutionName}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                        placeholder="Institution / School Name"
+                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        name="designation"
+                                                        value={formData.designation}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                        placeholder="Your Designation (e.g. Principal, Director)"
+                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
+                                                    />
                                                 </div>
-                                            </div>
+                                            )}
 
                                             {/* Ultra Sleek Inputs */}
                                             <div className="space-y-4">
@@ -284,7 +357,7 @@ const Hero = () => {
                                                         value={formData.name}
                                                         onChange={handleInputChange}
                                                         required
-                                                        placeholder="Full Name"
+                                                        placeholder={regType === 'student' ? "Full Name" : "Contact Person Name"}
                                                         className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
                                                     />
                                                 </div>

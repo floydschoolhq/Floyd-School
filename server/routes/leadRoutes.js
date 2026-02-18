@@ -7,7 +7,7 @@ const Lead = require('../models/Lead');
 // @access  Public
 router.post('/', async (req, res) => {
     try {
-        const { email, name, phone, type, source, experience, topic } = req.body;
+        const { email, name, phone, type, source, experience, topic, institutionName, designation } = req.body;
 
         // Simple validation
         if (!email) {
@@ -25,7 +25,9 @@ router.post('/', async (req, res) => {
             type,
             source,
             experience,
-            topic
+            topic,
+            institutionName,
+            designation
         });
 
         const savedLead = await newLead.save();

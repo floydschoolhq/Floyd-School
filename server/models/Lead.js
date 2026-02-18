@@ -32,6 +32,14 @@ const leadSchema = new mongoose.Schema({
         type: String, // 'Class 6-7', etc.
         trim: true
     },
+    institutionName: {
+        type: String,
+        trim: true
+    },
+    designation: {
+        type: String,
+        trim: true
+    },
     status: {
         type: String,
         enum: ['new', 'contacted', 'converted', 'closed'],
