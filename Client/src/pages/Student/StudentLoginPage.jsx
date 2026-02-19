@@ -21,10 +21,12 @@ const StudentLoginPage = () => {
     if (!email || !password) return;
 
     // Domain restriction check
+    /* 
     if (!email.toLowerCase().endsWith('@thinkskool.com')) {
-      alert('Invalid Domain: Student access requires a @thinkskool.com email address.');
+      toast.error('Invalid Domain', 'Student access requires a @thinkskool.com email address.');
       return;
     }
+    */
 
     setIsSubmitting(true);
 

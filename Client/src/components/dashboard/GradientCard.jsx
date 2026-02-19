@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, animate } from 'framer-motion';
 import { cn } from '../../lib/utils';
 
 export const GradientCard = ({
@@ -42,7 +42,7 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
     const suffix = typeof value === 'string' ? value.replace(/[\d.-]/g, '') : '';
 
     React.useEffect(() => {
-        const controls = motion.animate(0, numericValue, {
+        const controls = animate(0, numericValue, {
             duration: 1.5,
             ease: "easeOut",
             onUpdate: (latest) => setDisplayValue(Math.floor(latest))
