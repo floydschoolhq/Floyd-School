@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-base transition-colors duration-500">
 
       <StudentSidebar />
 
@@ -26,15 +26,15 @@ const MainLayout = ({ children }) => {
       {/* Main Content Area */}
       <div className="md:ml-64 transition-all duration-300">
         {/* Header/Navbar */}
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 p-4 md:px-8 md:py-4 flex items-center justify-between">
+        <header className="sticky top-0 z-30 bg-surface-base/80 backdrop-blur-xl border-b border-surface-el p-4 md:px-8 md:py-4 flex items-center justify-between transition-colors duration-500">
           <div className="flex items-center space-x-6">
             <button
-              className="md:hidden p-2 text-slate-600 rounded-full hover:bg-slate-50"
+              className="md:hidden p-2 text-text-muted rounded-full hover:bg-surface-soft transition-all"
               onClick={() => setIsSidebarOpen(true)}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">
+            <h1 className="text-xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">
               {usePortal().currentView.replace(/([A-Z])/g, ' $1').trim()}
             </h1>
           </div>
@@ -42,17 +42,17 @@ const MainLayout = ({ children }) => {
           <div className="flex items-center gap-4">
             <Link
               to="/"
-              className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-xs uppercase tracking-widest transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-surface-soft hover:bg-surface-el text-text-muted rounded-xl font-bold text-xs uppercase tracking-widest transition-all"
             >
               <Home className="w-4 h-4" />
               Return to Site
             </Link>
-            <div className="flex items-center gap-3 pl-6 border-l border-slate-100">
+            <div className="flex items-center gap-3 pl-6 border-l border-surface-el">
               <div className="text-right hidden sm:block">
-                <p className="text-[13px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 font-['Outfit']">Standard Account</p>
-                <p className="text-base font-black text-slate-900 leading-none font-['Outfit']">{usePortal().user?.name}</p>
+                <p className="text-[11px] font-black text-text-muted uppercase tracking-widest leading-none mb-1 font-['Outfit']">Student</p>
+                <p className="text-base font-black text-text-main leading-none font-['Outfit'] transition-colors duration-500">{usePortal().user?.name}</p>
               </div>
-              <div className={`p-2 rounded-xl border ${system === 'student' ? 'bg-slate-50 border-slate-100 text-[#2563EB]' : 'bg-slate-50 border-slate-100 text-[#2563EB]'}`}>
+              <div className="p-2.5 rounded-xl bg-surface-soft border border-surface-el text-accent-primary transition-all duration-500">
                 <User className="w-5 h-5" />
               </div>
             </div>

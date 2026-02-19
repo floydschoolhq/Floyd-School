@@ -1,26 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUserGraduate, FaBuilding, FaQuoteLeft, FaArrowRight, FaCheck } from 'react-icons/fa';
+import { FaUserGraduate, FaBuilding, FaArrowRight } from 'react-icons/fa';
+import SectionHeader from './common/SectionHeader';
+import { schoolBenefits, studentBenefits } from '../constants/siteData';
 
 const WhyUs = () => {
-
-    const schoolBenefits = [
-        { title: "Reputation Boost", desc: "Showcases a tech-integrated vision." },
-        { title: "Academic Alignment", desc: "No impact on school schedule." },
-        { title: "Managed by Experts", desc: "Led by certified ThinkSkool mentors." },
-        { title: "Real-time Insights", desc: "Tracking via the Smart Portal." },
-        { title: "Innovation Focused", desc: "Fosters critical thinking and logic." },
-        { title: "Zero Obligation", desc: "Continuation based on interest." }
-    ];
-
-    const studentBenefits = [
-        { title: "Multi-Field Exposure", desc: "AI, IoT, and Dev immersion." },
-        { title: "Hands-On Work", desc: "Project-based industrial learning." },
-        { title: "Expert Mentorship", desc: "Guided by industry engineers." },
-        { title: "Skill Building", desc: "Logic, creativity, and teamwork." },
-        { title: "Global Certificates", desc: "Recognized industry standards." },
-        { title: "Future Ready", desc: "Foundational career readiness." }
-    ];
 
     return (
         <section className="bg-slate-900 py-24 relative overflow-hidden border-t border-slate-800 font-['Inter']">
@@ -38,15 +22,12 @@ const WhyUs = () => {
                 </div>
 
                 {/* Header */}
-                <div className="text-center mb-24">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">The Transformation Path</p>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-200 mb-6 font-['Outfit']">
-                        From <span className="text-[#2563EB]">Classroom</span> to <span className="text-slate-200">Career</span>
-                    </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-                        A step-by-step journey transforming the educational ecosystem.
-                    </p>
-                </div>
+                <SectionHeader
+                    subtitle="The Transformation Path"
+                    title={<span>From <span className="text-[#2563EB]">Classroom</span> to <span className="text-slate-200">Career</span></span>}
+                    description="A step-by-step journey transforming the educational ecosystem."
+                    light={false}
+                />
 
                 <div className="relative">
                     {/* Continuous Vertical Line - Animated Draw Down */}

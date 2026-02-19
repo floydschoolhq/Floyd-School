@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Brain, ShieldCheck, Cpu, Globe, Star, Clock, ArrowRight, Code, Terminal, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import SectionHeader from './common/SectionHeader';
+import { FALLBACK_COURSES } from '../constants/siteData';
 
 const IconMap = {
     'Brain': Brain,
@@ -12,53 +14,6 @@ const IconMap = {
     'Code': Code,
     'Terminal': Terminal
 };
-
-const FALLBACK_COURSES = [
-    {
-        _id: '1',
-        title: "AI & Machine Learning",
-        icon: 'Cpu',
-        description: "Explore the frontiers of neural networks, predictive modeling, and deep learning architectures with hands-on industrial projects.",
-        color: "text-[#2563EB]",
-        rating: 4.9,
-        duration: "6 Months",
-        tags: ["Neural Networks", "Python", "Deep Learning"],
-        deliveryDetails: { inSchool: { bootcamp: "7-Day Technical Deep Dive" } }
-    },
-    {
-        _id: '2',
-        title: "Web & App Architecture",
-        icon: 'Code',
-        description: "Master full-stack engineering, from responsive UI frameworks to scalable cloud-native backend infrastructure.",
-        color: "text-[#2563EB]",
-        rating: 4.8,
-        duration: "6 Months",
-        tags: ["React", "Node.js", "Cloud"],
-        deliveryDetails: { inSchool: { bootcamp: "UI/UX Masterclass" } }
-    },
-    {
-        _id: '3',
-        title: "IoT & Robotics",
-        icon: 'Terminal',
-        description: "Engineer autonomous systems, hardware-software integration, and real-time distributed sensor networks.",
-        color: "text-[#2563EB]",
-        rating: 4.7,
-        duration: "4 Months",
-        tags: ["Embedded Systems", "C++", "Sensors"],
-        deliveryDetails: { inSchool: { bootcamp: "Hardware Hackathon" } }
-    },
-    {
-        _id: '4',
-        title: "Cybersecurity Ops",
-        icon: 'Shield',
-        description: "Analyze digital threats, implement zero-trust protocols, and master ethical hacking in a controlled lab environment.",
-        color: "text-[#2563EB]",
-        rating: 4.9,
-        duration: "5 Months",
-        tags: ["Ethical Hacking", "Networks", "Security"],
-        deliveryDetails: { inSchool: { bootcamp: "Red Team Simulation" } }
-    }
-];
 
 const DetailedProgram = () => {
     const navigate = useNavigate();
@@ -105,34 +60,12 @@ const DetailedProgram = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']"
-                    >
-                        Advanced Learning Framework
-                    </motion.p>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl font-black text-slate-900 mb-6 tracking-tight font-['Outfit']"
-                    >
-                        Specialized <span className="text-[#2563EB]">Engineering</span> Programs
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-slate-600 max-w-2xl mx-auto text-base font-medium leading-relaxed"
-                    >
-                        Architecting professional competence through immersive technical mastery and expert-led innovation labs.
-                    </motion.p>
-                </div>
+                <SectionHeader
+                    subtitle="Advanced Learning Framework"
+                    title={<span>Specialized <span className="text-[#2563EB]">Engineering</span> Programs</span>}
+                    description="Architecting professional competence through immersive technical mastery and expert-led innovation labs."
+                    light={true}
+                />
 
                 {/* Cards Grid */}
                 {loading ? (

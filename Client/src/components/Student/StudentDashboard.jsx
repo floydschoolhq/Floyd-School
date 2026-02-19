@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield, Home } from 'lucide-react';
+import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield, Home, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PortalContext } from '../Context/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
@@ -10,9 +10,14 @@ import { LogoutButton } from '../dashboard/LogoutButton';
 import { useSocket } from '../../hooks/useSocket';
 import api from '../../api/axios';
 
+import DynamicGreeting from '../dashboard/DynamicGreeting';
+import { useTheme } from '../Context/ThemeProvider';
+const Achievement3D = lazy(() => import('../dashboard/Achievement3D'));
+
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
   const { user, updateUser, setView } = usePortal();
+  const { theme, setTheme } = useTheme();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
@@ -98,229 +103,296 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white p-8 relative overflow-hidden font-['Inter']">
+    <div className="min-h-screen bg-surface-base p-8 relative overflow-hidden font-['Inter'] transition-colors duration-500">
       {/* Background Accents */}
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#2563EB]/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-[#FBEFEF]/40 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="relative z-20 flex items-center justify-between mb-12">
-        <div>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 mb-3"
-          >
-            <div className="w-2 h-2 rounded-full bg-[#2563EB]" />
-            <p className="text-[13px] uppercase tracking-[0.4em] font-black text-slate-400 font-['Outfit']">
-              Welcome Back: {user?.name}
-            </p>
-          </motion.div>
+      <div className="relative z-20 flex items-end justify-between mb-12">
+        <div className="flex flex-col">
+          <DynamicGreeting name={user?.name} />
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl font-black text-slate-900 tracking-tighter font-['Outfit']"
+            className="text-5xl font-black text-text-main tracking-tighter font-['Outfit'] -mt-1"
           >
-            Student <span className="text-[#2563EB]">Portal</span>
+            Learning <span className="text-accent-primary">Control Center</span>
           </motion.h1>
         </div>
         <div className="flex items-center gap-4">
+          {/* Theme Switcher Widget */}
+          <div className="flex items-center gap-2 bg-surface-soft p-1 rounded-2xl border border-surface-el shadow-sm">
+            {['modern', 'studio', 'cyber'].map((t) => (
+              <button
+                key={t}
+                onClick={() => setTheme(t)}
+                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${theme === t
+                  ? 'bg-accent-primary text-white shadow-lg shadow-accent-primary/20 scale-105'
+                  : 'text-text-muted hover:bg-surface-el hover:text-text-main'
+                  }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
           {isConnected && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-text-main border border-surface-el rounded-2xl shadow-lg"
             >
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <span className="text-[13px] font-black uppercase tracking-widest text-white">Live Support Active</span>
+              <span className="text-[13px] font-black uppercase tracking-widest text-surface-base">Live</span>
             </motion.div>
           )}
           <NotificationPanel notifications={notifications} />
           <Link
             to="/"
-            className="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-slate-900/10"
+            className="flex items-center gap-2 px-4 py-2 bg-text-main hover:bg-text-muted text-surface-base rounded-lg font-bold text-xs uppercase tracking-widest transition-all shadow-lg"
           >
             <Home className="w-4 h-4" />
-            Go to Site
+            Site
           </Link>
           <LogoutButton />
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <StatCard
           title="Active Modules"
           value={dashboardData?.stats?.enrolledCourses || 0}
           icon={BookOpen}
-          gradient="from-[#2563EB] to-[#2563EB]"
+          gradient="from-accent-primary to-accent-primary"
         />
         <StatCard
           title="Pending Deliverables"
           value={dashboardData?.stats?.pendingAssignments || 0}
           icon={Clock}
-          gradient="from-[#2D2D2D] to-[#1A1A1A]"
+          gradient="from-text-main to-text-muted"
         />
         <StatCard
           title="Milestones Reached"
           value={dashboardData?.stats?.completedAssignments || 0}
           icon={Award}
-          gradient="from-[#2563EB] to-[#2563EB]"
+          gradient="from-accent-primary to-accent-primary"
         />
         <StatCard
           title="Capability Level"
           value={`${dashboardData?.overallProgress || 0}%`}
           icon={TrendingUp}
-          gradient="from-[#2D2D2D] to-[#1A1A1A]"
+          gradient="from-text-main to-text-muted"
         />
       </div>
 
-      {/* Main Content Grid */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Course Progress */}
-        <GradientCard className="lg:col-span-1" gradient="from-[#2563EB] to-[#2563EB]">
-          <h3 className="text-xl font-black text-slate-900 mb-8 tracking-tight font-['Outfit']">Progression Metrics</h3>
-          <div className="flex justify-center p-6 bg-slate-50/50 rounded-[1.5rem] border border-slate-100 shadow-inner">
-            <ProgressChart
-              progress={dashboardData?.overallProgress || 0}
-              subtitle={`${dashboardData?.completedModules || 0} of ${dashboardData?.totalModules || 0} modules completed`}
-              color="#2563EB"
-            />
-          </div>
-        </GradientCard>
+      {/* Main Content Bento Grid */}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-max">
 
-        {/* Latest Assignments */}
-        <GradientCard className="lg:col-span-2" gradient="from-slate-900 to-slate-800">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">Upcoming Assignments</h3>
-            <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl">
-              <Calendar className="w-5 h-5 text-slate-900" />
-            </div>
-          </div>
-          <div className="space-y-4">
-            {dashboardData?.assignments && dashboardData.assignments.length > 0 ? (
-              dashboardData.assignments.slice(0, 3).map((assignment) => (
-                <motion.div
-                  key={assignment._id}
-                  whileHover={{ x: 4 }}
-                  className="p-5 bg-white border border-[#FBEFEF] rounded-[1.5rem] hover:border-[#2563EB]/30 transition-all shadow-sm"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h4 className="text-lg font-black text-slate-900 mb-1 tracking-tight font-['Outfit']">{assignment.title}</h4>
-                      <p className="text-[14px] font-bold text-slate-400 uppercase tracking-widest mb-4">{assignment.course?.title}</p>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-white border border-slate-100 rounded-full text-[13px] font-black uppercase tracking-widest text-slate-500">
-                          <Clock className="w-3 h-3 text-[#2563EB]" />
-                          Due: {new Date(assignment.dueDate).toLocaleDateString()}
-                        </div>
-                        <span className={`px-3 py-1 rounded-full text-[13px] font-black uppercase tracking-widest shadow-sm ${new Date(assignment.dueDate) > new Date()
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-blue-500 text-white'
-                          }`}>
-                          {new Date(assignment.dueDate) > new Date() ? 'On Track' : 'Urgent'}
-                        </span>
-                      </div>
-                    </div>
-                    <button className="px-6 py-3 bg-[#2D2D2D] text-white text-[13px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#2563EB] transition-all shadow-lg hover:shadow-[#2563EB]/20 active:scale-95">
-                      Start
-                    </button>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <div className="text-center py-12 bg-slate-50 rounded-[1.5rem] border border-dashed border-slate-200">
-                <FileText className="w-12 h-12 mx-auto mb-4 text-slate-200" />
-                <p className="text-base font-black uppercase tracking-[0.2em] text-slate-400">All deliverables verified</p>
+        {/* Mastery Analysis + 3D Badge Column */}
+        <div className="lg:col-span-4 flex flex-col gap-6">
+          {/* Course Progress - Bento Item 1 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="flex-1"
+          >
+            <GradientCard className="h-full" gradient="from-accent-primary to-accent-secondary">
+              <h3 className="text-xl font-black text-text-main mb-6 tracking-tight font-['Outfit'] transition-colors duration-500">Mastery Analysis</h3>
+              <div className="flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm transition-colors duration-500">
+                <ProgressChart
+                  progress={dashboardData?.overallProgress || 0}
+                  subtitle={`${dashboardData?.completedModules || 0} / ${dashboardData?.totalModules || 0} Units`}
+                  color="var(--accent-primary)"
+                />
               </div>
-            )}
-          </div>
-        </GradientCard>
-      </div>
+            </GradientCard>
+          </motion.div>
 
-      {/* Enrolled Courses */}
-      <div className="mt-12 relative z-10">
-        <div className="flex items-center gap-4 mb-8">
-          <h3 className="text-2xl font-black text-slate-900 tracking-tighter font-['Outfit']">Course Portfolio</h3>
-          {!user.permissions?.canAccessCourses && (
-            <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
-              <Lock size={10} /> Locked
-            </span>
-          )}
-          <div className="h-px flex-1 bg-slate-100" />
+          {/* 3D Achievement Badge - Bento Item 1b */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="flex-1"
+          >
+            <GradientCard className="h-full overflow-hidden" gradient="from-accent-secondary to-accent-primary">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 bg-surface-soft border border-surface-el rounded-xl">
+                  <Sparkles className="w-5 h-5 text-accent-primary" />
+                </div>
+                <h3 className="text-xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">Achievement</h3>
+              </div>
+              <Suspense fallback={
+                <div className="h-56 flex items-center justify-center">
+                  <div className="w-10 h-10 border-4 border-surface-el border-t-accent-primary rounded-full animate-spin" />
+                </div>
+              }>
+                <Achievement3D
+                  title={dashboardData?.stats?.completedAssignments > 5 ? "Master" : "Rising Star"}
+                  color="var(--accent-primary)"
+                />
+              </Suspense>
+            </GradientCard>
+          </motion.div>
         </div>
 
-        <div className="relative">
-          {/* Lock Overlay */}
-          {!user.permissions?.canAccessCourses && (
-            <div className="absolute inset-0 z-50 bg-white/60 backdrop-blur-md rounded-[3rem] flex flex-col items-center justify-center text-center p-8 border border-white/20">
-              <div className="w-20 h-20 bg-slate-900 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
-                <Lock className="w-8 h-8 text-white" />
+        {/* Latest Assignments - Bento Item 2 */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="lg:col-span-8"
+        >
+          <GradientCard className="h-full" gradient="from-text-main to-text-muted">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-2xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">Mission Objectives</h3>
+              <div className="p-4 bg-surface-soft border border-surface-el rounded-2xl transition-colors duration-500">
+                <Calendar className="w-6 h-6 text-text-main" />
               </div>
-              <h4 className="text-2xl font-black text-slate-900 mb-2 font-['Outfit']">Access Restricted</h4>
-              <p className="text-slate-500 max-w-md font-medium mb-8">
-                Your course portfolio is currently locked. Contact your administrator to unlock full access to the curriculum.
-              </p>
-              <button
-                onClick={handleRequestAccess}
-                disabled={requestingAccess}
-                className="px-8 py-4 bg-[#2563EB] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {requestingAccess ? 'Submitting...' : 'Request Access'}
-              </button>
             </div>
-          )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {dashboardData?.assignments && dashboardData.assignments.length > 0 ? (
+                dashboardData.assignments.slice(0, 4).map((assignment, idx) => (
+                  <motion.div
+                    key={assignment._id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + (idx * 0.1) }}
+                    className="p-6 bg-surface-base border border-surface-el rounded-[2rem] hover:border-accent-primary/50 transition-all duration-300 shadow-sm flex flex-col justify-between"
+                  >
+                    <div>
+                      <h4 className="text-lg font-black text-text-main mb-1 tracking-tight font-['Outfit'] line-clamp-1">{assignment.title}</h4>
+                      <p className="text-[11px] font-black text-text-muted uppercase tracking-widest mb-4">{assignment.course?.title}</p>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center gap-2 text-[12px] font-black text-text-muted uppercase tracking-widest">
+                        <Clock className="w-3.5 h-3.5 text-accent-primary" />
+                        {new Date(assignment.dueDate).toLocaleDateString()}
+                      </div>
+                      <button className="px-5 py-2.5 bg-text-main text-surface-base text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-accent-primary transition-all shadow-lg active:scale-95">
+                        Initiate
+                      </button>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-16 bg-surface-soft rounded-[2.5rem] border border-dashed border-surface-el">
+                  <FileText className="w-16 h-16 mx-auto mb-4 text-surface-el" />
+                  <p className="text-sm font-black uppercase tracking-[0.3em] text-text-muted">Directives Fulfilled</p>
+                </div>
+              )}
+            </div>
+          </GradientCard>
+        </motion.div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!user.permissions?.canAccessCourses ? 'blur-sm pointer-events-none select-none opacity-50' : ''}`}>
-            {dashboardData?.courses && dashboardData.courses.length > 0 ? (
-              dashboardData.courses.map((course) => (
-                <GradientCard
-                  key={course._id}
-                  gradient="from-[#2563EB] to-[#F9DFDF]"
-                  className="hover:scale-[1.02] transition-all duration-500 cursor-pointer"
+        {/* Enrolled Courses - Bento Item 3 (Full Width Below) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="lg:col-span-12 mt-6"
+        >
+          <div className="flex items-center gap-4 mb-8">
+            <h3 className="text-3xl font-black text-text-main tracking-tighter font-['Outfit'] transition-colors duration-500">Learning Expeditions</h3>
+            {!user.permissions?.canAccessCourses && (
+              <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500">
+                <Lock size={12} className="text-accent-primary" /> Locked Segment
+              </span>
+            )}
+            <div className="h-px flex-1 bg-surface-el transition-colors duration-500" />
+          </div>
+
+          <div className="relative">
+            {/* Lock Overlay */}
+            {!user.permissions?.canAccessCourses && (
+              <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[3.5rem] flex flex-col items-center justify-center text-center p-12 border border-surface-el transition-all duration-500">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 3 }}
+                  className="w-24 h-24 bg-text-main rounded-[2rem] flex items-center justify-center mb-8 shadow-2xl"
                 >
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex-1 pr-4">
-                      <h4 className="text-xl font-black text-slate-900 mb-2 tracking-tight leading-tight font-['Outfit']">{course.title}</h4>
-                      <p className="text-[13px] font-black text-[#2563EB] uppercase tracking-widest flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-[#2563EB]" /> {course.instructor?.name}
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 bg-slate-900 text-white rounded-lg text-[13px] font-black uppercase tracking-widest">
-                      {course.category}
+                  <Lock className="w-10 h-10 text-surface-base" />
+                </motion.div>
+                <h4 className="text-3xl font-black text-text-main mb-3 font-['Outfit']">Access Protocol Required</h4>
+                <p className="text-text-muted max-w-md font-medium mb-10 text-lg">
+                  This tactical segment is restricted. Initialize a request for administrative clearance to unlock the curriculum.
+                </p>
+                <button
+                  onClick={handleRequestAccess}
+                  disabled={requestingAccess}
+                  className="px-10 py-5 bg-accent-primary text-white text-[13px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-accent-secondary transition-all shadow-2xl shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed group"
+                >
+                  {requestingAccess ? 'Transmitting...' : (
+                    <span className="flex items-center gap-3">
+                      Request Clearance <Shield className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                     </span>
-                  </div>
-                  <p className="text-base font-medium text-slate-500 mb-8 line-clamp-2 leading-relaxed">{course.description}</p>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-widest">
-                      <span className="text-slate-400">Mastery Progress</span>
-                      <span className="text-slate-900">
-                        {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden shadow-inner">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                        className="bg-gradient-to-r from-[#2563EB] to-[#F9DFDF] h-full rounded-full"
-                      />
-                    </div>
-                  </div>
-                </GradientCard>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
-                <BookOpen className="w-20 h-20 mx-auto mb-6 text-slate-200" />
-                <p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 mb-8">No courses found</p>
-                <button className="px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white text-[14px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-2xl shadow-slate-900/30">
-                  Refresh
+                  )}
                 </button>
               </div>
             )}
+
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!user.permissions?.canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
+              {dashboardData?.courses && dashboardData.courses.length > 0 ? (
+                dashboardData.courses.map((course, idx) => (
+                  <GradientCard
+                    key={course._id}
+                    gradient="from-accent-primary to-accent-secondary"
+                    className="hover:scale-[1.03] transition-all duration-500 cursor-pointer"
+                  >
+                    <div className="flex items-start justify-between mb-8">
+                      <div className="flex-1 pr-6">
+                        <h4 className="text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] font-['Outfit'] transition-colors duration-500">{course.title}</h4>
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-surface-soft border border-surface-el flex items-center justify-center overflow-hidden">
+                            <Users className="w-4 h-4 text-accent-primary" />
+                          </div>
+                          <p className="text-[12px] font-black text-accent-primary uppercase tracking-widest">
+                            {course.instructor?.name}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="px-4 py-2 bg-text-main text-surface-base rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg">
+                        {course.category}
+                      </span>
+                    </div>
+                    <p className="text-base font-medium text-text-muted mb-10 line-clamp-2 leading-relaxed transition-colors duration-500">{course.description}</p>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em]">
+                        <span className="text-text-muted">Mastery Index</span>
+                        <span className="text-text-main">
+                          {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-surface-el rounded-full h-2.5 overflow-hidden shadow-inner transition-colors duration-500">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
+                          transition={{ duration: 2, ease: "circOut" }}
+                          className="bg-gradient-to-r from-accent-primary to-accent-secondary h-full rounded-full"
+                        />
+                      </div>
+                    </div>
+                  </GradientCard>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-24 bg-surface-soft rounded-[3.5rem] border border-dashed border-surface-el transition-colors duration-500">
+                  <BookOpen className="w-24 h-24 mx-auto mb-8 text-surface-el" />
+                  <p className="text-lg font-black uppercase tracking-[0.4em] text-text-muted mb-10">Historical Context Missing: No Courses</p>
+                  <button className="px-12 py-6 bg-text-main hover:bg-accent-primary text-surface-base text-[14px] font-black uppercase tracking-[0.4em] rounded-2xl transition-all shadow-2xl scale-100 hover:scale-105">
+                    Refresh Feed
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

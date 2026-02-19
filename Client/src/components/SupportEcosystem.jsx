@@ -1,38 +1,15 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { Users, Headphones, Shield, MessageSquare, Zap, Target, Star, Heart } from 'lucide-react';
+import { Users, Headphones, ShieldCheck, MessageSquare, Zap, Target, Star, Heart } from 'lucide-react';
+import SectionHeader from './common/SectionHeader';
+import { supportRoles } from '../constants/siteData';
 
-const supportRoles = [
-    {
-        title: "Expert Mentors",
-        role: "Technical Architects",
-        desc: "Industrial veterans who guide you through complex engineering hurdles and code architecture.",
-        benefits: ["Live Debugging", "Architecture Review", "Skill Specialization"],
-        icon: <Users className="w-8 h-8" />,
-        color: "from-slate-700 to-slate-900",
-        delay: 0
-    },
-    {
-        title: "Growth Associates",
-        role: "Career Catalysts",
-        desc: "Your personal success partners who ensure your learning path aligns with your professional goals.",
-        benefits: ["Career Mapping", "Portfolio Design", "Industry Networking"],
-        icon: <Zap className="w-8 h-8" />,
-        color: "from-[#2563EB] to-blue-100",
-        delay: 0.1
-    },
-    {
-        title: "System Admins",
-        role: "Platform Managers",
-        desc: "Silent engines ensuring the cloud infrastructure and portal response remains 100% efficient.",
-        benefits: ["24/7 Availability", "Resource Allocation", "System Optimization"],
-        icon: <Shield className="w-8 h-8" />,
-        color: "from-slate-600 to-slate-800",
-        delay: 0.2
-    }
-];
+const IconMap = {
+    Users, Headphones, ShieldCheck, MessageSquare, Zap, Target, Star, Heart
+};
 
 const RoleCard = ({ role, index }) => {
+    const IconComponent = IconMap[role.icon] || Users;
     return (
         <motion.div
             initial={{ opacity: 0, y: 50, rotateX: 10 }}
@@ -47,11 +24,11 @@ const RoleCard = ({ role, index }) => {
             <div className="relative bg-white border border-slate-200 rounded-[3rem] p-10 h-full shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(37,99,235,0.1)] transition-all duration-500 overflow-hidden">
                 {/* Decorative Pattern */}
                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
-                    {role.icon}
+                    <IconComponent className="w-8 h-8" />
                 </div>
 
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center text-white mb-8 shadow-lg shadow-inherit/20`}>
-                    {role.icon}
+                    <IconComponent className="w-8 h-8" />
                 </div>
 
                 <div className="mb-6">
@@ -116,23 +93,11 @@ const SupportEcosystem = () => {
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-24">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6"
-                    >
-                        <Heart size={14} className="text-[#2563EB] fill-[#2563EB]" />
-                        <span className="text-[10px] font-black text-slate-800 uppercase tracking-widest font-['Outfit']">Our Team</span>
-                    </motion.div>
-
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter font-['Outfit']"
-                    >
-                        Support That <span className="text-[#2563EB]">Never Sleeps</span>
-                    </motion.h2>
-
+                    <SectionHeader
+                        subtitle="Our Team"
+                        title={<span>Support That <span className="text-[#2563EB]">Never Sleeps</span></span>}
+                        light={true}
+                    />
                 </div>
 
                 {/* Roles Grid */}

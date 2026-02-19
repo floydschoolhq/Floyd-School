@@ -1,18 +1,55 @@
 @import 'tailwindcss';
 
-@theme {
+/* 
+  Tailwind v4 Theme Registration.
+  We register the color token NAMES with @theme inline.
+  The actual values come from CSS custom properties defined in :root / [data-theme].
+*/
+@theme inline {
+  --color-surface-base: var(--surface-base);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-el: var(--surface-el);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
   --font-heading: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
-  --color-brand-pink-light: #FFFFFF;
-  --color-brand-pink-soft: #F8FAFC;
-  --color-brand-pink-med: #E2E8F0;
-  --color-brand-pink-primary: #2563EB;
-  --color-brand-dark: #020617;
-  --color-brand-text-main: #0F172A;
-  --color-brand-text-muted: #475569;
-  --color-brand-text-light: #64748B;
-
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+/* ─── Default: Modern (Light) ──────────────────────────────── */
+:root,
+[data-theme='modern'] {
+  --surface-base: #FFFFFF;
+  --surface-soft: #F8FAFC;
+  --surface-el: #E2E8F0;
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --accent-primary: #2563EB;
+  --accent-secondary: #7C3AED;
+}
+
+/* ─── Studio (Dark) ─────────────────────────────────────────── */
+[data-theme='studio'] {
+  --surface-base: #020617;
+  --surface-soft: #0F172A;
+  --surface-el: #1E293B;
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --accent-primary: #3B82F6;
+  --accent-secondary: #8B5CF6;
+}
+
+/* ─── Cyber (Hacker) ────────────────────────────────────────── */
+[data-theme='cyber'] {
+  --surface-base: #000000;
+  --surface-soft: #050505;
+  --surface-el: #111111;
+  --text-main: #FFFFFF;
+  --text-muted: #666666;
+  --accent-primary: #00FF41;
+  --accent-secondary: #FF00FF;
 }
 
 @keyframes scroll {

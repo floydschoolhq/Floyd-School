@@ -4,6 +4,12 @@ import { School, CheckCircle, Clock, BookOpen, ArrowRight, Sparkles, Target, Zap
 import { useNavigate } from 'react-router-dom';
 import LeadFormModal from '../components/LeadFormModal';
 import Brochure from '../assets/pdf/Brochure.pdf';
+import SectionHeader from '../components/common/SectionHeader';
+import { timelineSteps, valueProps } from '../constants/siteData';
+
+const IconMap = {
+    Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, School
+};
 
 const SchoolPartnership = () => {
     const navigate = useNavigate();
@@ -24,58 +30,10 @@ const SchoolPartnership = () => {
         document.body.removeChild(link);
     };
 
-    const timelineSteps = [
-        {
-            phase: "Week 01",
-            title: "The Zero-Risk Spark",
-            subtitle: "7-Day Free Bootcamp",
-            icon: <Zap className="w-5 h-5 text-white" />,
-            description: "We deploy our expert mentors to your campus for a one-week intensive bootcamp. Every student builds a real project. No cost to the school, no commitment required.",
-            color: "bg-blue-500"
-        },
-        {
-            phase: "Week 02",
-            title: "Voluntary Selection",
-            subtitle: "Student-Led Enrollment",
-            icon: <Users className="w-5 h-5 text-white" />,
-            description: "Students who resonate with the engineering mindset choose to continue. We handle all parental consents and formalities. You get a cohort of genuinely motivated learners.",
-            color: "bg-purple-500"
-        },
-        {
-            phase: "Ongoing",
-            title: "Seamless Integration",
-            subtitle: "Zero Schedule Disruption",
-            icon: <Clock className="w-5 h-5 text-white" />,
-            description: "Our proprietary scheduling model maps classes to existing activity periods or free slots. We require ZERO extra hours from your standard academic timetable.",
-            color: "bg-blue-500"
-        },
-        {
-            phase: "Year Round",
-            title: "Curriculum Sync",
-            subtitle: "Academic Reinforcement",
-            icon: <BookOpen className="w-5 h-5 text-white" />,
-            description: "We align our engineering modules with your Physics and Math syllabus (CBSE/ICSE/IB), helping students visualize abstract concepts through practical application.",
-            color: "bg-emerald-500"
-        }
-    ];
-
-    const valueProps = [
-        {
-            icon: <ShieldCheck className="w-8 h-8 text-blue-500" />,
-            title: "Zero Infrastructure Cost",
-            description: "We bring the technology, the platform, and the experts. Your labs become innovation hubs without a single rupee of capital expenditure."
-        },
-        {
-            icon: <Target className="w-8 h-8 text-purple-500" />,
-            title: "Competitive Edge",
-            description: "Differentiate your school by offering elite, industry-standard engineering training that goes far beyond standard computer science."
-        },
-        {
-            icon: <GraduationCap className="w-8 h-8 text-blue-500" />,
-            title: "University Portfolio",
-            description: "Our students graduate with a GitHub portfolio of deployed applications—a massive advantage for admissions in India and abroad."
-        }
-    ];
+    const renderIcon = (iconName, className) => {
+        const IconComponent = IconMap[iconName] || School;
+        return <IconComponent className={className} />;
+    };
 
     return (
         <div className="min-h-screen bg-[#FCF8F8] font-['Inter'] relative overflow-x-hidden pt-24">
@@ -92,24 +50,11 @@ const SchoolPartnership = () => {
                         <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-600 font-['Outfit']">Official Institutional Partner</span>
                     </motion.div>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-8xl font-black text-slate-900 tracking-tighter mb-8 font-['Outfit'] leading-[0.9]"
-                    >
-                        The Engineering <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600">Center of Excellence</span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-xl md:text-2xl text-slate-600 font-medium leading-relaxed max-w-3xl mx-auto mb-12"
-                    >
-                        Establish a world-class engineering department inside your campus with <span className="text-slate-900 font-bold decoration-blue-200 underline decoration-4 underline-offset-4">zero disruption</span> to your academic calendar.
-                    </motion.p>
+                    <SectionHeader
+                        title={<span>The Engineering <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600">Center of Excellence</span></span>}
+                        description={<span>Establish a world-class engineering department inside your campus with <span className="text-slate-900 font-bold decoration-blue-200 underline decoration-4 underline-offset-4">zero disruption</span> to your academic calendar.</span>}
+                        light={true}
+                    />
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -158,8 +103,8 @@ const SchoolPartnership = () => {
                                     transition={{ delay: index * 0.15 }}
                                     className="relative z-10 group"
                                 >
-                                    <div className={`w-12 h-12 ${step.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300 ring-4 ring-white`}>
-                                        {step.icon}
+                                    <div className={`w-12 h-12 ${step.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300 ring-4 ring-white text-white`}>
+                                        {renderIcon(step.icon, "w-5 h-5")}
                                     </div>
                                     <div className="bg-[#FCF8F8] p-8 rounded-3xl border border-slate-100 h-full hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
                                         <div className="inline-block px-3 py-1 bg-white rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border border-slate-100 font-['Outfit']">
@@ -197,7 +142,7 @@ const SchoolPartnership = () => {
                                     className="flex gap-6"
                                 >
                                     <div className="shrink-0 pt-1">
-                                        {prop.icon}
+                                        {renderIcon(prop.icon, "w-8 h-8 text-blue-500")}
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-black text-slate-800 mb-3 font-['Outfit']">{prop.title}</h3>

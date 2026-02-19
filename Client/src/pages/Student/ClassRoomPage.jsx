@@ -5,7 +5,7 @@ import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
-import StudentLiveRoom from '../../components/Student/StudentLiveRoom';
+
 import { PortalContext } from '../../components/Context/PortalProvider';
 import { useSocket } from '../../components/Context/SocketContext';
 import { useContext } from 'react';

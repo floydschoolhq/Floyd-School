@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight, Terminal, Cpu, Code2 } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';

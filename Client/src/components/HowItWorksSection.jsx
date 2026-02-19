@@ -1,54 +1,10 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { School, GraduationCap, Coffee, Target, Trophy, Rocket, Cpu, Globe, Video, MessageSquare, Calendar } from 'lucide-react';
+import { School, GraduationCap, Calendar, Cpu, Trophy, Globe, Video, MessageSquare, Rocket } from 'lucide-react';
+import SectionHeader from './common/SectionHeader';
+import { SchoolSteps, StudentSteps } from '../constants/siteData';
 
-const SchoolSteps = [
-    {
-        title: "Strategic Consultation",
-        icon: <School className="w-6 h-6" />,
-        color: "from-blue-500 to-blue-600"
-    },
-    {
-        title: "7-Day Free Bootcamp",
-        icon: <Calendar className="w-6 h-6" />,
-        color: "from-blue-500 to-purple-600"
-    },
-    {
-        title: "Advanced Lab setup",
-        icon: <Cpu className="w-6 h-6" />,
-        color: "from-purple-500 to-blue-600"
-    },
-    {
-        title: "Elite Certification",
-        icon: <Trophy className="w-6 h-6" />,
-        color: "from-blue-500 to-[#2563EB]"
-    }
-];
-
-const StudentSteps = [
-    {
-        title: "Portal & Path Setup",
-        icon: <Globe className="w-6 h-6" />,
-        color: "from-cyan-500 to-blue-600"
-    },
-    {
-        title: "Premium Live Classes",
-        icon: <Video className="w-6 h-6" />,
-        color: "from-blue-500 to-blue-600"
-    },
-    {
-        title: "Support Ops & Assignments",
-        icon: <MessageSquare className="w-6 h-6" />,
-        color: "from-blue-500 to-purple-600"
-    },
-    {
-        title: "Impact & Career Launch",
-        icon: <Rocket className="w-6 h-6" />,
-        color: "from-purple-500 to-[#2563EB]"
-    }
-];
-
-const StepCard = ({ step, index, side }) => {
+const StepCard = ({ step, index, side, renderIcon }) => {
     return (
         <motion.div
             initial={{ opacity: 0, x: side === 'left' ? -50 : 50 }}
@@ -63,7 +19,7 @@ const StepCard = ({ step, index, side }) => {
 
             <div className={`relative flex-shrink-0 w-16 h-16 rounded-[1.25rem] bg-gradient-to-br ${step.color} p-[2px] shadow-lg group hover:scale-110 transition-transform duration-500`}>
                 <div className="w-full h-full bg-slate-900 rounded-[1.15rem] flex items-center justify-center text-white group-hover:bg-transparent group-hover:text-white transition-colors duration-500">
-                    {step.icon}
+                    {renderIcon(step.icon)}
                 </div>
             </div>
         </motion.div>
@@ -83,24 +39,24 @@ const HowItWorksSection = () => {
         restDelta: 0.001
     });
 
+    const IconMap = {
+        School, GraduationCap, Calendar, Cpu, Trophy, Globe, Video, MessageSquare, Rocket
+    };
+
+    const renderIcon = (iconName) => {
+        const IconComponent = IconMap[iconName] || Globe;
+        return <IconComponent className="w-6 h-6" />;
+    };
+
     return (
         <section id="how-it-works" ref={containerRef} className="relative bg-slate-900 py-32 overflow-hidden border-t border-slate-800">
             {/* Header */}
             <div className="max-w-7xl mx-auto px-4 mb-24 relative z-10 text-center">
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']"
-                >
-                    Operational Flow
-                </motion.p>
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="text-5xl font-black text-slate-200 mb-8 tracking-tight font-['Outfit']"
-                >
-                    Dual Journey <span className="text-[#2563EB]">Framework</span>
-                </motion.h2>
+                <SectionHeader
+                    subtitle="Operational Flow"
+                    title={<span>Dual Journey <span className="text-[#2563EB]">Framework</span></span>}
+                    light={false}
+                />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 relative">
@@ -147,7 +103,7 @@ const HowItWorksSection = () => {
                         </div>
                         <div className="flex flex-col items-end">
                             {SchoolSteps.map((step, idx) => (
-                                <StepCard key={idx} step={step} index={idx} side="left" />
+                                <StepCard key={idx} step={step} index={idx} side="left" renderIcon={renderIcon} />
                             ))}
                         </div>
                     </div>
@@ -165,7 +121,7 @@ const HowItWorksSection = () => {
                         </div>
                         <div className="flex flex-col items-start">
                             {StudentSteps.map((step, idx) => (
-                                <StepCard key={idx} step={step} index={idx} side="right" />
+                                <StepCard key={idx} step={step} index={idx} side="right" renderIcon={renderIcon} />
                             ))}
                         </div>
                     </div>
