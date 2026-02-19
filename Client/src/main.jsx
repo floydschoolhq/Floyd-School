@@ -6,17 +6,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { PortalProvider } from './components/Context/PortalProvider.jsx'
 import { SocketProvider } from './components/Context/SocketContext.jsx'
 import { ThemeProvider } from './components/Context/ThemeProvider.jsx'
-
+import { ToastProvider } from './components/Context/ToastProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
 
   <BrowserRouter future={{ v7_startTransition: true }}>
     <ThemeProvider>
-      <PortalProvider>
-        <SocketProvider>
-          <App />
-        </SocketProvider>
-      </PortalProvider>
+      <ToastProvider>
+        <PortalProvider>
+          <SocketProvider>
+            <App />
+          </SocketProvider>
+        </PortalProvider>
+      </ToastProvider>
     </ThemeProvider>
   </BrowserRouter>
 

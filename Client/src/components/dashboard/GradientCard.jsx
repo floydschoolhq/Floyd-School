@@ -37,11 +37,26 @@ export const GradientCard = ({
 };
 
 export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
+    const [displayValue, setDisplayValue] = React.useState(0);
+    const numericValue = typeof value === 'string' ? parseFloat(value.replace(/[^\d.-]/g, '')) : value;
+    const suffix = typeof value === 'string' ? value.replace(/[\d.-]/g, '') : '';
+
+    React.useEffect(() => {
+        const controls = motion.animate(0, numericValue, {
+            duration: 1.5,
+            ease: "easeOut",
+            onUpdate: (latest) => setDisplayValue(Math.floor(latest))
+        });
+        return () => controls.stop();
+    }, [numericValue]);
+
     return (
         <GradientCard gradient={gradient} className="flex items-center justify-between p-7">
             <div className="flex-1">
                 <p className="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted mb-2 font-['Outfit']">{title}</p>
-                <h3 className="text-4xl font-black text-text-main tracking-tighter font-['Outfit'] transition-colors duration-500">{value}</h3>
+                <h3 className="text-4xl font-black text-text-main tracking-tighter font-['Outfit'] transition-colors duration-500">
+                    {displayValue}{suffix}
+                </h3>
                 {change && (
                     <p className={cn(
                         "text-[10px] mt-2 font-black uppercase tracking-widest flex items-center gap-1",

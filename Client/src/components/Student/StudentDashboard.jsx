@@ -12,12 +12,22 @@ import api from '../../api/axios';
 
 import DynamicGreeting from '../dashboard/DynamicGreeting';
 import { useTheme } from '../Context/ThemeProvider';
+import { useToast } from '../Context/ToastProvider';
+import { useStreak } from '../../hooks/useStreak';
+import { useConfetti } from '../../hooks/useConfetti';
+import { DashboardSkeleton } from '../dashboard/SkeletonCard';
+import StreakWidget from '../dashboard/StreakWidget';
+
 const Achievement3D = lazy(() => import('../dashboard/Achievement3D'));
 
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
   const { user, updateUser, setView } = usePortal();
   const { theme, setTheme } = useTheme();
+  const toast = useToast();
+  const { streak } = useStreak();
+  const { celebrateSide } = useConfetti();
+
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
@@ -40,8 +50,14 @@ const StudentDashboard = () => {
     try {
       const response = await api.get('/dashboard/student');
       setDashboardData(response.data);
+
+      // Feature: Celebrate achievement on load if they have completed more than 5 assignments
+      if (response.data?.stats?.completedAssignments > 5) {
+        setTimeout(() => celebrateSide(), 1000);
+      }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
+      toast.error('Connection Error', 'Failed to synchronize dashboard metrics.');
     } finally {
       setLoading(false);
     }
@@ -54,37 +70,17 @@ const StudentDashboard = () => {
         permission: 'canAccessCourses',
         message: 'Requesting access to course library'
       });
-      alert('Access request submitted! An administrator will review your request shortly.');
+      toast.success('Request Transmitted', 'An administrator will review your clearance shortly.');
     } catch (error) {
       console.error('Failed to request access:', error);
-      alert(error.response?.data?.message || 'Failed to submit access request');
+      toast.error('Submission Failed', error.response?.data?.message || 'Failed to transmit request.');
     } finally {
       setRequestingAccess(false);
     }
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white gap-6">
-        <div className="text-slate-900 text-xl font-black animate-pulse">Initializing Portal...</div>
-        {showTimeoutWarning && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center gap-2 max-w-xs text-center p-4 bg-blue-50 rounded-2xl border border-blue-100"
-          >
-            <p className="text-sm font-bold text-blue-800">Connection is taking longer than expected.</p>
-            <p className="text-xs text-blue-600">The ecosystem may be under high load. Please hold on or check your connection.</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-2 text-xs font-black uppercase tracking-widest text-[#2563EB] hover:underline"
-            >
-              Force Refresh
-            </button>
-          </motion.div>
-        )}
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   // Safety check: If user is not loaded, redirect or show error
@@ -122,6 +118,8 @@ const StudentDashboard = () => {
           </motion.h1>
         </div>
         <div className="flex items-center gap-4">
+          <StreakWidget />
+
           {/* Theme Switcher Widget */}
           <div className="flex items-center gap-2 bg-surface-soft p-1 rounded-2xl border border-surface-el shadow-sm">
             {['modern', 'studio', 'cyber'].map((t) => (
