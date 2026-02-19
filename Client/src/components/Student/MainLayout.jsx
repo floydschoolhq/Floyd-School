@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { PortalContext } from "../Context/PortalProvider";
-import { ThemeContext } from "../Context/ThemeProvider";
+import { useTheme } from "../Context/ThemeProvider";
 import { useToast } from "../Context/ToastProvider";
 import StudentSidebar from "./StudentSidebar";
 import ChatSupport from "./ChatSupport";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
   const { isSidebarOpen, setIsSidebarOpen, setView, currentView, user } = useContext(PortalContext);
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
   const toast = useToast();
   const [isCommandOpen, setIsCommandOpen] = useState(false);
 
