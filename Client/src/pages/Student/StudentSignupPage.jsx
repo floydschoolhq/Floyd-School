@@ -56,7 +56,7 @@ const StudentSignupPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden font-['Inter']">
+        <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden">
             {/* Dynamic Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#2563EB]/10 rounded-full blur-[120px]"></div>
@@ -75,9 +75,9 @@ const StudentSignupPage = () => {
                     <header className="flex justify-between items-center mb-10">
                         <div className="flex items-center gap-2 cursor-pointer group/logo" onClick={handleExit}>
                             <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-lg group-hover/logo:scale-110 transition-transform duration-300">
-                                <span className="text-white font-black text-xl font-['Outfit']">TS</span>
+                                <span className="text-white font-black text-xl">TS</span>
                             </div>
-                            <h1 className="text-2xl font-black tracking-tighter text-slate-800 font-['Outfit']">
+                            <h1 className="text-2xl font-black tracking-tighter text-slate-800">
                                 think<span className="text-[#2563EB]">skool</span>
                             </h1>
                         </div>
@@ -85,13 +85,13 @@ const StudentSignupPage = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="text-left">
-                            <h3 className="text-3xl font-bold text-slate-900 tracking-tight font-['Outfit'] mb-2">Create <span className="text-[#2563EB]">Account</span></h3>
+                            <h3 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Create <span className="text-[#2563EB]">Account</span></h3>
                             <p className="text-slate-500 text-sm font-medium">Sign up to get started with your engineering journey</p>
                         </div>
 
                         <div className="space-y-4">
                             <div className="group">
-                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block font-['Outfit']">Full Name</label>
+                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block">Full Name</label>
                                 <input
                                     type="text"
                                     placeholder="Engineer Name"
@@ -102,7 +102,7 @@ const StudentSignupPage = () => {
                                 />
                             </div>
                             <div className="group">
-                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block font-['Outfit']">Email Address</label>
+                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block">Email Address</label>
                                 <input
                                     type="email"
                                     placeholder="name@university.edu"
@@ -113,7 +113,7 @@ const StudentSignupPage = () => {
                                 />
                             </div>
                             <div className="group">
-                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block font-['Outfit']">Password</label>
+                                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wide ml-1 mb-2 block">Password</label>
                                 <input
                                     type="password"
                                     placeholder="••••••••••••"
@@ -130,7 +130,7 @@ const StudentSignupPage = () => {
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.98 }}
                             disabled={!name || !email || !password || isSubmitting}
-                            className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-\[14px\] uppercase tracking-[0.3em] font-['Outfit'] transition-all duration-500
+                            className={`w-full group relative overflow-hidden rounded-2xl p-5 font-black text-\[14px\] uppercase tracking-[0.3em] transition-all duration-500
                                 ${(!name || !email || !password || isSubmitting)
                                     ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
                                     : 'bg-slate-900 text-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]'

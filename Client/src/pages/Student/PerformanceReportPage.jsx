@@ -42,21 +42,21 @@ const PerformanceReportPage = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8 font-['Inter']"
+        className="mb-8"
       >
-        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
+        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">
           Performance <span className="text-[#2563EB]">Analytics</span>
         </h1>
         <p className="text-base font-medium text-slate-500">In-depth analysis of scores, participation, and skill mastery metrics.</p>
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 font-['Inter']">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1 font-['Outfit']">Completed Deliverables</p>
-              <h3 className="text-3xl font-black text-white font-['Outfit']">{stats.completedAssignments || 0}</h3>
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1">Completed Deliverables</p>
+              <h3 className="text-3xl font-black text-white">{stats.completedAssignments || 0}</h3>
             </div>
             <div className="p-3 bg-[#2D2D2D] rounded-xl shadow-sm border border-[#2563EB]/20">
               <Award className="w-8 h-8 text-[#2563EB]" />
@@ -67,8 +67,8 @@ const PerformanceReportPage = () => {
         <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1 font-['Outfit']">Average Integrity Score</p>
-              <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1">Average Integrity Score</p>
+              <h3 className="text-3xl font-black text-slate-900">
                 {submissions.length > 0
                   ? Math.round(submissions.reduce((acc, s) => acc + (s.grade || 0), 0) / submissions.length)
                   : 0}%
@@ -83,8 +83,8 @@ const PerformanceReportPage = () => {
         <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1 font-['Outfit']">Active Specializations</p>
-              <h3 className="text-3xl font-black text-slate-900 font-['Outfit']">{stats.enrolledCourses || 0}</h3>
+              <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB] mb-1">Active Specializations</p>
+              <h3 className="text-3xl font-black text-slate-900">{stats.enrolledCourses || 0}</h3>
             </div>
             <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">
               <Target className="w-8 h-8 text-[#2563EB]" />
@@ -96,7 +96,7 @@ const PerformanceReportPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         {/* Skill Breakdown */}
         <div>
-          <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+          <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
             <div className="p-2 bg-[#FBEFEF] rounded-lg text-[#2563EB]">
               <BarChart3 className="w-5 h-5" />
             </div>
@@ -131,12 +131,12 @@ const PerformanceReportPage = () => {
         </div>
 
         {/* Note/Call to action */}
-        <div className="flex flex-col justify-center font-['Inter']">
+        <div className="flex flex-col justify-center">
           <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#2563EB]/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
-            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight font-['Outfit']">Ready for your next <span className="text-[#2563EB]">Level?</span></h3>
+            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">Ready for your next <span className="text-[#2563EB]">Level?</span></h3>
             <p className="text-base font-medium text-slate-500 mb-6 leading-relaxed">Your performance metrics indicate a strong grasp of fundamental concepts. Consider unlocking advanced engineering tracks to further accelerate your growth.</p>
-            <button className="px-8 py-3 bg-[#2D2D2D] hover:bg-[#2563EB] text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 font-['Outfit'] uppercase text-base tracking-widest">
+            <button className="px-8 py-3 bg-[#2D2D2D] hover:bg-[#2563EB] text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest">
               Explore Advanced Tracks
             </button>
           </div>
@@ -145,12 +145,12 @@ const PerformanceReportPage = () => {
 
       {/* Historical Score Trends */}
       <div className="font-['Inter']">
-        <h2 className="text-xl font-black text-slate-900 mb-6 font-['Outfit']">Integration History</h2>
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden font-['Inter']">
+        <h2 className="text-xl font-black text-slate-900 mb-6">Integration History</h2>
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-100 font-['Outfit']">
+                <tr className="bg-slate-50 border-b border-slate-100">
                   <th className="px-6 py-4 text-left text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                     Assessment
                   </th>

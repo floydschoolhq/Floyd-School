@@ -33,10 +33,10 @@ const DynamicGreeting = ({ name }) => {
                 {icon}
             </div>
             <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 font-['Outfit'] leading-none mb-1">
+                <p className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 leading-none mb-1">
                     {greeting}
                 </p>
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight font-['Outfit'] leading-none">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
                     {name}
                 </h2>
             </div>

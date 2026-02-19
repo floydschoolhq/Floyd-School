@@ -28,7 +28,7 @@ export const ProgressChart = ({ progress, title, subtitle, color = "var(--accent
                 />
             </div>
             {title && (
-                <h3 className="text-xl font-black text-text-main mb-1 font-['Outfit'] tracking-tight transition-colors duration-500">{title}</h3>
+                <h3 className="text-xl font-black text-text-main mb-1 tracking-tight transition-colors duration-500">{title}</h3>
             )}
             {subtitle && (
                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-text-muted transition-colors duration-500">{subtitle}</p>

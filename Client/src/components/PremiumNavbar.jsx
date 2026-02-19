@@ -75,12 +75,12 @@ const PremiumNavbar = () => {
 
     const navItems = [
         ...(canViewCourses ? [{
-            name: 'For School Students',
+            name: 'In-School Path',
             hasDropdown: true,
             subItems: schoolCourses.length > 0 ? schoolCourses : [{ name: 'Explore Courses', link: '/course' }]
         },
         {
-            name: 'For College Students',
+            name: 'Independent Path',
             hasDropdown: true,
             subItems: collegeCourses.length > 0 ? collegeCourses : [{ name: 'Explore Programs', link: '/course' }]
         }] : []),
@@ -97,9 +97,9 @@ const PremiumNavbar = () => {
             >
                 <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
                     <Sparkles size={14} className="text-[#2563EB]" />
-                    <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">Master Industry-Standard Engineering</span>
+                    <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">School Bootcamps | Independent Online Mastery</span>
                     <Link to="/school-partnerships" className="text-[#2563EB] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
-                        School Partnership
+                        Institutional Partnership
                         <ArrowRight size={14} />
                     </Link>
                 </div>

@@ -77,7 +77,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                 <div className="w-32 h-32 bg-white rounded-[3rem] shadow-2xl flex items-center justify-center mb-10 border border-slate-100 animate-bounce transition-all duration-1000">
                     <PlayCircle className="text-[#2563EB] w-16 h-16" />
                 </div>
-                <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tighter font-['Outfit'] italic uppercase">
+                <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tighter italic uppercase">
                     No active <span className="text-[#2563EB] not-italic">Broadcasts</span>
                 </h2>
                 <p className="text-slate-500 max-w-sm font-medium mb-12 text-lg leading-relaxed">
@@ -183,7 +183,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                         <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                        <h1 className="text-xl font-black text-slate-900 leading-tight font-['Outfit'] italic">
+                        <h1 className="text-xl font-black text-slate-900 leading-tight italic">
                             LIVE <span className="text-[#2563EB] not-italic">SESSION</span>
                         </h1>
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">

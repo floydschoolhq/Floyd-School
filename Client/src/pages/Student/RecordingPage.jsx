@@ -75,9 +75,9 @@ const RecordingsPage = () => {
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-8 font-['Inter']"
+                className="mb-8"
             >
-                <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
+                <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">
                     Session <span className="text-[#2563EB]">Archive</span>
                 </h1>
                 <p className="text-base font-medium text-slate-500">Review proprietary sessions and technical deep dives at your convenience.</p>
@@ -120,14 +120,14 @@ const RecordingsPage = () => {
 
                                 {/* Info */}
                                 <div className="space-y-2">
-                                    <h3 className="font-bold text-slate-900 text-lg tracking-tight font-['Outfit'] line-clamp-1">{module.title}</h3>
+                                    <h3 className="font-bold text-slate-900 text-lg tracking-tight line-clamp-1">{module.title}</h3>
                                     <p className="text-\[13px\] font-black uppercase tracking-widest text-[#2563EB]">{module.instructor}</p>
                                 </div>
 
                                 <div className="mt-6 flex items-center justify-between gap-4">
                                     <button
                                         onClick={() => setSelectedVideo(module)}
-                                        className="flex-1 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2 font-['Outfit']"
+                                        className="flex-1 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2"
                                     >
                                         <Play className="w-4 h-4 fill-white" />
                                         Watch
@@ -183,7 +183,7 @@ const RecordingsPage = () => {
                                             {selectedVideo.instructor}
                                         </span>
                                     </div>
-                                    <h2 className="text-2xl font-black text-slate-900 tracking-tight font-['Outfit'] italic">
+                                    <h2 className="text-2xl font-black text-slate-900 tracking-tight italic">
                                         {selectedVideo.title}
                                     </h2>
                                 </div>
@@ -209,7 +209,7 @@ const RecordingsPage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-center text-\[13px\] font-black text-slate-400 uppercase tracking-widest mt-12 font-['Outfit']"
+                className="text-center text-\[13px\] font-black text-slate-400 uppercase tracking-widest mt-12"
             >
                 Archive availability: Synchronized with Mentor Curriculum Nodes.
             </motion.p>

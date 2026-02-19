@@ -128,7 +128,42 @@ const Hero = () => {
 
                     {/* Left Column: Premium Styled Highlights */}
                     <div className="flex flex-col gap-16">
-                        {/* One-Liner 1: Highlights */}
+                        {/* Delivery Model Badges */}
+                        <div className="flex flex-wrap gap-3">
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="px-5 py-2.5 bg-[#2563EB]/10 border border-[#2563EB]/30 rounded-full flex items-center gap-2.5 backdrop-blur-md"
+                            >
+                                <div className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
+                                <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-[0.2em]">In-School Bootcamps</span>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="px-5 py-2.5 bg-slate-900/50 border border-slate-700 rounded-full flex items-center gap-2.5 backdrop-blur-md"
+                            >
+                                <div className="w-2 h-2 rounded-full bg-slate-400" />
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Independent Online</span>
+                            </motion.div>
+                        </div>
+
+                        {/* Updated Hero Headline */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.85] mb-8 font-['Outfit'] uppercase">
+                                Dual Mode <br />
+                                <span className="text-[#2563EB]">Tech Mastery</span>
+                            </h1>
+                            <p className="text-xl md:text-2xl font-medium text-slate-500 max-w-xl leading-relaxed mb-6">
+                                We deliver elite engineering education directly to your <span className="text-[#2563EB] font-bold">School</span> via intensive bootcamps or <span className="text-slate-900 font-bold">Online</span> through our production-grade platform.
+                            </p>
+                        </motion.div>
+
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}

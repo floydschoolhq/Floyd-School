@@ -36,7 +36,7 @@ const SchoolPartnership = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FCF8F8] font-['Inter'] relative overflow-x-hidden pt-24">
+        <div className="min-h-screen bg-[#FCF8F8] relative overflow-x-hidden pt-24">
 
             {/* Hero Section */}
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
@@ -47,7 +47,7 @@ const SchoolPartnership = () => {
                         className="inline-flex items-center gap-2 px-6 py-2 bg-white border border-slate-200 rounded-full mb-10 shadow-sm"
                     >
                         <School className="w-4 h-4 text-blue-600" />
-                        <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-600 font-['Outfit']">Official Institutional Partner</span>
+                        <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-600">Official Institutional Partner</span>
                     </motion.div>
 
                     <SectionHeader
@@ -64,13 +64,13 @@ const SchoolPartnership = () => {
                     >
                         <button
                             onClick={openLeadModal}
-                            className="w-full md:w-auto px-10 py-4 bg-[#2D2D2D] text-white rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl font-['Outfit']"
+                            className="w-full md:w-auto px-10 py-4 bg-[#2D2D2D] text-white rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl"
                         >
                             Schedule Principal's Briefing
                         </button>
                         <button
                             onClick={handleBrochureDownload}
-                            className="w-full md:w-auto px-10 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-50 transition-all font-['Outfit'] flex items-center justify-center gap-2"
+                            className="w-full md:w-auto px-10 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
                         >
                             Download Brochure
                             <ArrowRight size={14} />
@@ -83,7 +83,7 @@ const SchoolPartnership = () => {
             <div className="bg-white py-32 border-y border-slate-100 relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-24">
-                        <h2 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-6">The Zero-Friction Integration Model</h2>
+                        <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-6">The Zero-Friction Integration Model</h2>
                         <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
                             We understand schools. That's why we designed a process that respects your existing schedule and administrative load.
                         </p>
@@ -107,11 +107,11 @@ const SchoolPartnership = () => {
                                         {renderIcon(step.icon, "w-5 h-5")}
                                     </div>
                                     <div className="bg-[#FCF8F8] p-8 rounded-3xl border border-slate-100 h-full hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
-                                        <div className="inline-block px-3 py-1 bg-white rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border border-slate-100 font-['Outfit']">
+                                        <div className="inline-block px-3 py-1 bg-white rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border border-slate-100">
                                             {step.phase}
                                         </div>
-                                        <h3 className="text-xl font-black text-slate-900 mb-1 font-['Outfit']">{step.title}</h3>
-                                        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 font-['Outfit']">{step.subtitle}</h4>
+                                        <h3 className="text-xl font-black text-slate-900 mb-1">{step.title}</h3>
+                                        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">{step.subtitle}</h4>
                                         <p className="text-sm text-slate-500 font-medium leading-relaxed">
                                             {step.description}
                                         </p>
@@ -127,7 +127,7 @@ const SchoolPartnership = () => {
             <div className="py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div>
-                        <h2 className="text-4xl font-black text-slate-900 tracking-tight font-['Outfit'] mb-8 leading-tight">
+                        <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-8 leading-tight">
                             Why Top Schools Are <br />
                             <span className="text-[#2563EB]">Partnering With Us</span>
                         </h2>
@@ -145,7 +145,7 @@ const SchoolPartnership = () => {
                                         {renderIcon(prop.icon, "w-8 h-8 text-blue-500")}
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-black text-slate-800 mb-3 font-['Outfit']">{prop.title}</h3>
+                                        <h3 className="text-xl font-black text-slate-800 mb-3">{prop.title}</h3>
                                         <p className="text-slate-500 leading-relaxed font-medium">
                                             {prop.description}
                                         </p>
@@ -170,7 +170,7 @@ const SchoolPartnership = () => {
                                     {"}"}
                                 </code>
                             </div>
-                            <h4 className="text-2xl font-black text-slate-900 mb-2 font-['Outfit']">Board Alignment</h4>
+                            <h4 className="text-2xl font-black text-slate-900 mb-2">Board Alignment</h4>
                             <p className="text-slate-500 font-medium mb-6">
                                 We aren't just coding. We teach the <span className="text-blue-600 font-bold">Physics</span> of game engines, the <span className="text-purple-600 font-bold">Mathematics</span> of AI, and the <span className="text-blue-600 font-bold">Logic</span> of algorithms.
                             </p>
@@ -187,7 +187,7 @@ const SchoolPartnership = () => {
             {/* Final CTA */}
             <div className="py-24 bg-[#2D2D2D] relative overflow-hidden">
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 font-['Outfit'] tracking-normal">
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-normal">
                         Innovation Starts with a Conversation
                     </h2>
                     <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
@@ -195,7 +195,7 @@ const SchoolPartnership = () => {
                     </p>
                     <button
                         onClick={openLeadModal}
-                        className="px-12 py-5 bg-[#2563EB] text-slate-900 rounded-xl font-black uppercase text-sm tracking-[0.2em] hover:bg-white transition-all shadow-xl font-['Outfit']"
+                        className="px-12 py-5 bg-[#2563EB] text-slate-900 rounded-xl font-black uppercase text-sm tracking-[0.2em] hover:bg-white transition-all shadow-xl"
                     >
                         Get in Touch
                     </button>

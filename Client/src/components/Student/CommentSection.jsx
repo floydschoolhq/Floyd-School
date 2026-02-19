@@ -76,12 +76,12 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
     if (loading) return <div className="p-8 text-center text-slate-400 font-bold animate-pulse uppercase tracking-widest text-[13px]">Synchronizing Discussion Thread...</div>;
 
     return (
-        <div className="mt-12 space-y-8 font-['Inter']">
+        <div className="mt-12 space-y-8">
             <div className="flex items-center gap-3">
                 <div className="p-2 bg-[#FCF8F8] rounded-xl text-[#2563EB]">
                     <MessageSquare size={20} />
                 </div>
-                <h3 className="text-xl font-black text-slate-900 font-['Outfit'] tracking-tight">Technical Discussion</h3>
+                <h3 className="text-xl font-black text-slate-900 tracking-tight">Technical Discussion</h3>
                 <span className="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-[13px] font-black">{comments.length} Thoughts</span>
             </div>
 

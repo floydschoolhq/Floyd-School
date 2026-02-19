@@ -36,14 +36,14 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#FCF8F8] text-slate-600 pt-16 pb-8 border-t border-[#FBEFEF] font-['Inter']">
+    <footer className="bg-[#FCF8F8] text-slate-600 pt-16 pb-8 border-t border-[#FBEFEF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
 
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <div className="flex items-center font-black text-2xl mb-4 text-slate-900 font-['Outfit']">
+            <div className="flex items-center font-black text-2xl mb-4 text-slate-900">
               <span className='text-slate-900'>think</span><span className='text-[#2563EB]'>skool</span>
             </div>
             <p className="text-slate-500 text-sm mb-6 leading-relaxed max-w-sm font-medium">
@@ -66,7 +66,7 @@ const Footer = () => {
           {/* Links Columns */}
           {footerLinks.map((section, index) => (
             <div key={index}>
-              <h3 className="text-slate-900 font-black mb-4 font-['Outfit'] uppercase text-[10px] tracking-widest">{section.title}</h3>
+              <h3 className="text-slate-900 font-black mb-4 uppercase text-[10px] tracking-widest">{section.title}</h3>
               <ul className="space-y-2.5">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
@@ -85,7 +85,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-8 border-t border-[#FBEFEF] flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#2563EB] font-['Outfit']">
+        <div className="pt-8 border-t border-[#FBEFEF] flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#2563EB]">
           <p className="text-slate-400">&copy; 2025 ThinkSkool. All rights reserved.</p>
           <div className="flex gap-2 items-center">
             <img src="https://files.codingninjas.in/images/google-play-icon.svg" alt="Play Store" className="h-8 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500" />

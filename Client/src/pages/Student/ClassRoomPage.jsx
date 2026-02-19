@@ -171,7 +171,7 @@ const ClassroomPage = () => {
           <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
             <BookOpen className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tighter">
+          <h2 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">
             Access <span className="text-blue-600">Pending</span>
           </h2>
           <p className="text-slate-500 max-w-md font-medium mb-8 text-sm leading-relaxed">
@@ -191,9 +191,9 @@ const ClassroomPage = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8 font-['Inter']"
+        className="mb-8"
       >
-        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit']">
+        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">
           My Classroom <span className="text-[#2563EB]">Resources</span>
         </h1>
         <p className="text-base font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
@@ -216,13 +216,13 @@ const ClassroomPage = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-slate-900 text-xl font-black tracking-tight font-['Outfit']">Live Class in Session</h3>
-                  <p className="text-base font-medium text-slate-500 font-['Inter']">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                  <h3 className="text-slate-900 text-xl font-black tracking-tight">Live Class in Session</h3>
+                  <p className="text-base font-medium text-slate-500">{activeLiveClass.title}: {activeLiveClass.topic}</p>
                   <p className="text-[13px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 font-['Outfit']">
+              <div className="flex items-center gap-3">
                 {myDoubt ? (
                   <div className={`px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border-2 ${myDoubt.isResolved
                     ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
@@ -276,8 +276,8 @@ const ClassroomPage = () => {
       )}
 
       {/* Current Lessons */}
-      <div className="mb-8 font-['Inter']">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+      <div className="mb-8">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
           <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
             <BookOpen className="w-5 h-5" />
           </div>
@@ -331,8 +331,8 @@ const ClassroomPage = () => {
       </div>
 
       {/* Assignments */}
-      <div className="mb-8 font-['Inter']">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+      <div className="mb-8">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
           <div className="p-2 bg-purple-50 rounded-lg text-purple-500">
             <FileText className="w-5 h-5" />
           </div>
@@ -376,8 +376,8 @@ const ClassroomPage = () => {
       </div>
 
       {/* Class Recordings */}
-      <div className="mb-10 font-['Inter']">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3 font-['Outfit']">
+      <div className="mb-10">
+        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
           <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
             <PlayCircle className="w-5 h-5" />
           </div>

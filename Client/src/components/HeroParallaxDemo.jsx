@@ -23,14 +23,14 @@ export function HeroParallaxDemo() {
         <div className="w-full bg-[#FCF8F8] py-24 border-y border-[#FBEFEF]" id="certification">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
                 <div className="md:w-1/2">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Global Recognition</p>
-                    <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tighter font-['Outfit']">
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4">Global Recognition</p>
+                    <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tighter">
                         Get Recognized with <span className="text-[#2563EB]">Industry Standard</span> Certificates
                     </h2>
-                    <p className="text-lg text-slate-500 mb-8 leading-relaxed font-medium font-['Inter']">
+                    <p className="text-lg text-slate-500 mb-8 leading-relaxed font-medium">
                         Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from ThinkSkool and our partners.
                     </p>
-                    <button className="px-10 py-4 bg-[#2D2D2D] text-white font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl font-['Outfit']">
+                    <button className="px-10 py-4 bg-[#2D2D2D] text-white font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl">
                         View Sample Certificate
                     </button>
                 </div>
@@ -41,9 +41,9 @@ export function HeroParallaxDemo() {
                             <div className="w-16 h-16 bg-[#FBEFEF] rounded-full mx-auto mb-4 flex items-center justify-center">
                                 <span className="text-3xl">🏆</span>
                             </div>
-                            <h3 className="text-2xl font-black text-slate-800 mb-2 font-['Outfit']">Certificate of Completion</h3>
+                            <h3 className="text-2xl font-black text-slate-800 mb-2">Certificate of Completion</h3>
                             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Validates that</p>
-                            <p className="text-2xl font-black text-slate-900 my-4 font-['Outfit']">Elite Student</p>
+                            <p className="text-2xl font-black text-slate-900 my-4">Elite Student</p>
                             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">has successfully completed the technical curriculum.</p>
                         </div>
                     </div>

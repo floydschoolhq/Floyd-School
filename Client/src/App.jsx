@@ -47,6 +47,7 @@ import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
 import HowItWorksSection from './components/HowItWorksSection';
 import SupportEcosystem from './components/SupportEcosystem';
+import DualModelSection from './components/DualModelSection';
 
 // --- Home Page Component ---
 const HomePage = () => {
@@ -59,6 +60,7 @@ const HomePage = () => {
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative pt-[64px]'>
                 <Hero />
+                <DualModelSection />
                 <HowItWorksSection />
                 <SupportEcosystem />
                 <IndustrialNetwork />

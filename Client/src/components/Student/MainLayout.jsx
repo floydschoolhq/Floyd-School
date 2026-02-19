@@ -56,7 +56,7 @@ const MainLayout = ({ children }) => {
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">
+            <h1 className="text-xl font-black text-text-main tracking-tight transition-colors duration-500">
               {currentView.replace(/([A-Z])/g, ' $1').trim()}
             </h1>
           </div>
@@ -80,8 +80,8 @@ const MainLayout = ({ children }) => {
             </Link>
             <div className="flex items-center gap-3 pl-6 border-l border-surface-el">
               <div className="text-right hidden sm:block">
-                <p className="text-[11px] font-black text-text-muted uppercase tracking-widest leading-none mb-1 font-['Outfit']">Student</p>
-                <p className="text-base font-black text-text-main leading-none font-['Outfit'] transition-colors duration-500">{user?.name}</p>
+                <p className="text-[11px] font-black text-text-muted uppercase tracking-widest leading-none mb-1">Student</p>
+                <p className="text-base font-black text-text-main leading-none transition-colors duration-500">{user?.name}</p>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-soft border border-surface-el text-accent-primary transition-all duration-500">
                 <User className="w-5 h-5" />

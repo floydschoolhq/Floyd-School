@@ -58,10 +58,10 @@ const StickyBottomBar = () => {
                                 </div>
                                 <div className="min-w-[120px]">
                                     <div className="flex items-center gap-2">
-                                        <h4 className="text-white font-black text-[12px] uppercase tracking-wide font-['Outfit'] leading-none">Future Tech</h4>
+                                        <h4 className="text-white font-black text-[12px] uppercase tracking-wide leading-none">Future Tech</h4>
                                         <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-widest px-1.5 py-0.5 bg-[#2563EB]/10 rounded-md">LIVE</span>
                                     </div>
-                                    <p className="text-white/30 text-[9px] font-medium font-['Inter'] mt-0.5">Industrial Mentorship</p>
+                                    <p className="text-white/30 text-[9px] font-medium mt-0.5">Industrial Mentorship</p>
                                 </div>
                                 <button
                                     onClick={() => navigate('/student/login')}
@@ -80,12 +80,12 @@ const StickyBottomBar = () => {
                                     <Shield size={16} className="text-[#2563EB]" />
                                 </div>
                                 <div className="min-w-[120px]">
-                                    <h4 className="text-white font-black text-[12px] uppercase tracking-wide font-['Outfit'] leading-none">Certifications</h4>
-                                    <p className="text-white/30 text-[9px] font-medium font-['Inter'] mt-0.5">Global Recognition</p>
+                                    <h4 className="text-white font-black text-[12px] uppercase tracking-wide leading-none">Certifications</h4>
+                                    <p className="text-white/30 text-[9px] font-medium mt-0.5">Global Recognition</p>
                                 </div>
                                 <button
                                     onClick={() => navigate('/student/signup')}
-                                    className="px-4 py-1.5 rounded-lg bg-[#2563EB] hover:bg-white text-[#1C1C1E] font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#2563EB]/5 active:scale-95 font-['Outfit']"
+                                    className="px-4 py-1.5 rounded-lg bg-[#2563EB] hover:bg-white text-[#1C1C1E] font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#2563EB]/5 active:scale-95"
                                 >
                                     Access
                                 </button>

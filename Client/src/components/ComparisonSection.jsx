@@ -52,13 +52,13 @@ const ComparisonSection = () => {
     ];
 
     return (
-        <section className="relative bg-[#FCF8F8] py-24 overflow-hidden font-['Inter']">
+        <section className="relative bg-[#FCF8F8] py-24 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header */}
                 <div className="text-center mb-20">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']">Performance Metrics</p>
-                    <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter font-['Outfit']">
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4">Performance Metrics</p>
+                    <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter">
                         Conventional vs <span className="text-[#2563EB]">Future Ready</span>
                     </h2>
                 </div>
@@ -86,7 +86,7 @@ const ComparisonSection = () => {
                                 <div key={idx} className="relative pl-16">
                                     <div className="absolute left-[18px] top-1 w-3 h-3 rounded-full bg-slate-200 border-2 border-white z-10"></div>
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{step.stage}</p>
-                                    <h3 className="text-xl font-black text-slate-700 mb-1 font-['Outfit']">{step.traditional.title}</h3>
+                                    <h3 className="text-xl font-black text-slate-700 mb-1">{step.traditional.title}</h3>
                                     <p className="text-sm text-slate-400 font-medium mb-4">{step.traditional.desc}</p>
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 rounded-full border border-slate-100">
                                         <TrendingDown size={12} className="text-slate-300" />
@@ -132,7 +132,7 @@ const ComparisonSection = () => {
                                     ></motion.div>
                                     <p className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest mb-2">{step.stage}</p>
                                     <div className="flex items-center gap-4 mb-1">
-                                        <h3 className="text-xl font-black text-slate-900 font-['Outfit']">{step.thinkskool.title}</h3>
+                                        <h3 className="text-xl font-black text-slate-900">{step.thinkskool.title}</h3>
                                         <div className="w-8 h-8 rounded-lg bg-[#FBEFEF] flex items-center justify-center group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
                                             {React.cloneElement(step.thinkskool.icon, { size: 16 })}
                                         </div>
@@ -157,7 +157,7 @@ const ComparisonSection = () => {
                     className="mt-16 bg-[#2D2D2D] rounded-[2.5rem] p-12 text-center relative overflow-hidden group shadow-2xl"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <h3 className="text-3xl font-black text-white mb-4 relative z-10 font-['Outfit'] uppercase tracking-tight">
+                    <h3 className="text-3xl font-black text-white mb-4 relative z-10 uppercase tracking-tight">
                         Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
                     <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">

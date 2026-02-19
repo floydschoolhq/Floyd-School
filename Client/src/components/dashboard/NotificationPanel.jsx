@@ -81,7 +81,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                     >
                         {/* Header */}
                         <div className="p-6 border-b border-surface-el flex items-center justify-between">
-                            <h3 className="text-xl font-black text-text-main tracking-tight font-['Outfit']">Alert Center</h3>
+                            <h3 className="text-xl font-black text-text-main tracking-tight">Alert Center</h3>
                             <div className="flex items-center gap-3">
                                 {unreadCount > 0 && (
                                     <button
@@ -124,7 +124,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                                                 !notification.isRead ? "bg-accent-primary scale-125 shadow-[0_0_8px_var(--accent-primary)]" : "bg-surface-el"
                                             )} />
                                             <div className="flex-1">
-                                                <h4 className="text-sm font-black text-text-main mb-1 font-['Outfit'] tracking-tight">
+                                                <h4 className="text-sm font-black text-text-main mb-1 tracking-tight">
                                                     {notification.title}
                                                 </h4>
                                                 <p className="text-xs text-text-muted leading-relaxed font-medium">

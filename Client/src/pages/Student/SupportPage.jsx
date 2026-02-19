@@ -131,7 +131,7 @@ const SupportPage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     className="font-['Inter']"
                 >
-                    <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight font-['Outfit'] italic">
+                    <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight italic">
                         Technical <span className="text-sky-500">Concierge</span>
                     </h1>
                     <p className="text-base font-medium text-slate-500">Direct integration with growth architects for proprietary support.</p>
@@ -169,7 +169,7 @@ const SupportPage = () => {
                                         {new Date(ticket.createdAt).toLocaleDateString()}
                                     </div>
                                 </div>
-                                <h3 className="font-bold text-slate-900 mb-2 truncate font-['Outfit']">{ticket.subject}</h3>
+                                <h3 className="font-bold text-slate-900 mb-2 truncate">{ticket.subject}</h3>
                                 <div className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                                     <MessageSquare size={12} />
                                     {ticket.messages.length} Correspondence
@@ -195,7 +195,7 @@ const SupportPage = () => {
                                         <Shield size={24} />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-black text-slate-900 font-['Outfit']">{selectedTicket.subject}</h2>
+                                        <h2 className="text-xl font-black text-slate-900">{selectedTicket.subject}</h2>
                                         <div className="flex items-center gap-2 text-\[13px\] font-bold text-slate-400 uppercase tracking-widest">
                                             <div className={`w-2 h-2 rounded-full ${selectedTicket.assignedTo ? 'bg-emerald-500' : 'bg-yellow-500 animate-pulse'}`} />
                                             {selectedTicket.assignedTo ? 'Connected with Architect' : 'Awaiting Assignment'}
@@ -265,7 +265,7 @@ const SupportPage = () => {
                             <div className="w-24 h-24 bg-slate-50 rounded-[2rem] flex items-center justify-center text-slate-300 mb-6">
                                 <MessageCircle size={40} />
                             </div>
-                            <h2 className="text-2xl font-black text-slate-900 font-['Outfit'] mb-2">Select a channel</h2>
+                            <h2 className="text-2xl font-black text-slate-900 mb-2">Select a channel</h2>
                             <p className="text-base text-slate-400 font-medium max-w-xs">Initialize a correspondence to resolve technical roadblocks.</p>
                         </div>
                     )}
@@ -289,7 +289,7 @@ const SupportPage = () => {
                             exit={{ scale: 0.9, opacity: 0 }}
                             className="relative w-full max-w-lg bg-white rounded-[3rem] p-10 shadow-2xl"
                         >
-                            <h2 className="text-3xl font-black text-slate-900 mb-8 font-['Outfit'] italic">New <span className="text-sky-500">Inquiry</span></h2>
+                            <h2 className="text-3xl font-black text-slate-900 mb-8 italic">New <span className="text-sky-500">Inquiry</span></h2>
 
                             <form onSubmit={handleCreateTicket} className="space-y-6">
                                 <div className="space-y-2">

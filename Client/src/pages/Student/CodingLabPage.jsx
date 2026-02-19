@@ -126,14 +126,14 @@ const CodingLabPage = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-950 flex flex-col font-['Inter'] relative">
+    <div className="h-screen bg-slate-950 flex flex-col relative">
       {/* Access Lock Overlay */}
       {!user?.permissions?.canAccessLabs && (
         <div className="absolute inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8">
           <div className="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
             <Lock className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-4xl font-black text-white mb-3 font-['Outfit'] tracking-tighter">
+          <h2 className="text-4xl font-black text-white mb-3 tracking-tighter">
             Laboratory <span className="text-blue-500">Locked</span>
           </h2>
           <p className="text-slate-400 max-w-sm font-medium mb-10 text-sm leading-relaxed">
@@ -153,14 +153,14 @@ const CodingLabPage = () => {
       <div className="bg-slate-900 border-b border-slate-800 px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-black text-white mb-1 tracking-tight font-['Outfit']">
+            <h1 className="text-xl font-black text-white mb-1 tracking-tight">
               Elite <span className="text-[#2563EB]">Coding Laboratory</span>
             </h1>
-            <p className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] font-['Outfit']"> High-Performance Cloud Execution Environment </p>
+            <p className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em]"> High-Performance Cloud Execution Environment </p>
           </div>
           <div className="flex items-center gap-4">
             {isConnected && (
-              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg font-['Outfit']">
+              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
                 <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
                 <span className="text-\[13px\] font-black text-emerald-500 uppercase tracking-widest">Compiler Edge</span>
               </div>
@@ -182,7 +182,7 @@ const CodingLabPage = () => {
               whileTap={{ scale: 0.98 }}
               onClick={handleRunCode}
               disabled={isRunning}
-              className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 font-['Outfit']"
+              className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20"
             >
               <Play className="w-4 h-4 fill-white" />
               {isRunning ? 'Executing...' : 'Run Integration'}
@@ -213,7 +213,7 @@ const CodingLabPage = () => {
             </button>
           </div>
 
-          <div className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2 font-['Outfit']">
+          <div className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2">
             Active Engine: <span className="text-[#2563EB]">{selectedLanguage.name}</span>
           </div>
         </div>
@@ -251,7 +251,7 @@ const CodingLabPage = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-slate-900 border-t border-slate-800 px-6 py-2 font-['Outfit']">
+      <div className="bg-slate-900 border-t border-slate-800 px-6 py-2">
         <div className="flex items-center justify-between text-\[13px\] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-4">
             <span>Powered by Judge0 Core</span>
@@ -259,7 +259,7 @@ const CodingLabPage = () => {
             <span>Monaco Enterprise Engine</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#2563EB] font-['Outfit']">{user?.name}</span>
+            <span className="text-[#2563EB]">{user?.name}</span>
             <span className="text-slate-700">/</span>
             <span>{selectedLanguage.name}</span>
           </div>

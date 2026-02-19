@@ -40,7 +40,7 @@ const Logo = () => {
                     <div className=" md:block mr-20"> {/* Hide on small screens, show on medium and large screens */}
                         <button
                             onClick={() => navigate('/role')}
-                            className="bg-[#2D2D2D] hover:bg-[#2563EB] text-white px-6 py-2 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg hover:shadow-xl transition duration-300 ease-in-out cursor-pointer font-['Outfit']"
+                            className="bg-[#2D2D2D] hover:bg-[#2563EB] text-white px-6 py-2 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg hover:shadow-xl transition duration-300 ease-in-out cursor-pointer"
                         >
                             Login
                         </button>

@@ -51,7 +51,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                         className="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="bg-white p-8 border-b border-[#FBEFEF] text-slate-900 flex justify-between items-start font-['Outfit']">
+                        <div className="bg-white p-8 border-b border-[#FBEFEF] text-slate-900 flex justify-between items-start">
                             <div>
                                 {source === 'school_partnership' ? (
                                     <>
@@ -93,38 +93,38 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
                                             {source === 'school_partnership' ? 'Administrator Name' : 'Name'}
                                         </label>
                                         <input
                                             type="text"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
                                             placeholder={source === 'school_partnership' ? "Enter contact person's name" : "Enter your name"}
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
                                             {source === 'school_partnership' ? 'Official Email' : 'Email'}
                                         </label>
                                         <input
                                             type="email"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
                                             placeholder={source === 'school_partnership' ? "principal@school.edu" : "Enter your email"}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 font-['Outfit'] uppercase tracking-widest text-[10px]">
+                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
                                             {source === 'school_partnership' ? 'School Contact Number' : 'Phone Number'}
                                         </label>
                                         <input
                                             type="tel"
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-['Inter'] font-medium"
+                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
                                             placeholder="+91 98765 43210"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -134,7 +134,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
-                                        className="w-full bg-[#2D2D2D] text-white font-black py-5 rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-2xl shadow-slate-100 uppercase tracking-widest text-xs font-['Outfit'] active:scale-95"
+                                        className="w-full bg-[#2D2D2D] text-white font-black py-5 rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-2xl shadow-slate-100 uppercase tracking-widest text-xs active:scale-95"
                                     >
                                         {status === 'loading' ? <FaSpinner className="animate-spin" /> : (source === 'school_partnership' ? 'Request Briefing' : 'Confirm Registration')}
                                     </button>

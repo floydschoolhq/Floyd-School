@@ -9,7 +9,7 @@ const SectionHeader = ({ subtitle, title, description, light = false, centered =
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className={`${light ? 'text-[#2563EB]' : 'text-[#2563EB]'} font-black uppercase tracking-[0.4em] text-[10px] mb-4 font-['Outfit']`}
+                    className={`${light ? 'text-[#2563EB]' : 'text-[#2563EB]'} font-black uppercase tracking-[0.4em] text-[10px] mb-4`}
                 >
                     {subtitle}
                 </motion.p>
@@ -20,7 +20,7 @@ const SectionHeader = ({ subtitle, title, description, light = false, centered =
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
-                    className={`text-4xl md:text-5xl font-black ${light ? 'text-slate-900' : 'text-slate-200'} mb-6 tracking-tight font-['Outfit']`}
+                    className={`text-4xl md:text-5xl font-black ${light ? 'text-slate-900' : 'text-slate-200'} mb-6 tracking-tight`}
                 >
                     {title}
                 </motion.h2>

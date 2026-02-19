@@ -6,7 +6,7 @@ import { GlowingCard } from './ui/GlowingCard';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-[#FCF8F8] py-32 relative overflow-hidden font-['Inter']" id="about">
+    <div className="min-h-screen bg-[#FCF8F8] py-32 relative overflow-hidden" id="about">
       {/* Background Decorative Mesh */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#2563EB]/5 rounded-full blur-[120px] animate-pulse"></div>
@@ -19,8 +19,8 @@ const About = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           className="text-center mb-24"
         >
-          <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-6 font-['Outfit'] block">ThinkSkool Philosophy</span>
-          <h2 className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-slate-900 to-slate-400 tracking-tighter font-['Outfit'] leading-none">
+          <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-6 block">ThinkSkool Philosophy</span>
+          <h2 className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-slate-900 to-slate-400 tracking-tighter leading-none">
             Engineering <br className="hidden md:block" /> Excellence.
           </h2>
         </motion.div>
@@ -43,17 +43,17 @@ const About = () => {
                   <FaSchool className="text-6xl text-slate-100 opacity-80 group-hover:opacity-100 group-hover:text-[#2563EB] transition-all" />
                 </div>
 
-                <h3 className="text-4xl lg:text-5xl font-black text-white mb-8 font-['Outfit'] tracking-tight">For <span className="text-[#2563EB]">Schools</span></h3>
+                <h3 className="text-4xl lg:text-5xl font-black text-white mb-8 tracking-tight">In-School <span className="text-[#2563EB]">Bootcamps</span></h3>
 
                 <p className="text-xl text-slate-400 mb-10 leading-relaxed font-medium">
-                  Seamlessly integrated into your daily curriculum to eliminate all scheduling friction.
-                  <span className="block mt-6 text-[#2563EB] font-black uppercase tracking-[0.2em] text-[11px] font-['Outfit']">THINKSKOOL HANDLES THE TECH.</span>
+                  We bring elite engineering talent to your campus for intensive, hands-on learning sprints that align with your institutional goals.
+                  <span className="block mt-6 text-[#2563EB] font-black uppercase tracking-[0.2em] text-[11px]">OFFLINE TECHNICAL DEEP DIVES.</span>
                 </p>
 
                 <div className="mt-auto pt-10 border-t border-white/5 w-full flex justify-center items-center gap-6">
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] font-['Outfit']">Industrial Grade</span>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Industrial Grade</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] font-['Outfit']">Frictionless</span>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Frictionless</span>
                 </div>
               </div>
             </GlowingCard>
@@ -76,17 +76,17 @@ const About = () => {
                   <FaUserGraduate className="text-6xl text-[#2563EB] drop-shadow-[0_0_15px_rgba(245,175,175,0.4)]" />
                 </div>
 
-                <h3 className="text-4xl lg:text-5xl font-black text-slate-100 mb-8 font-['Outfit'] tracking-tight">For <span className="text-[#2563EB]">Students</span></h3>
+                <h3 className="text-4xl lg:text-5xl font-black text-slate-100 mb-8 tracking-tight">Independent <span className="text-[#2563EB]">Quest</span></h3>
 
                 <p className="text-xl text-slate-400 mb-10 leading-relaxed font-medium">
-                  Forge professional skills in AI, Robotics, and Architecture.
-                  <span className="block mt-6 text-[#2563EB] font-black uppercase tracking-[0.2em] text-[11px] font-['Outfit']">BUILD CREATORS, NOT CONSUMERS.</span>
+                  Forge professional skills in AI, Robotics, and Architecture via ThinkSkool Pulse—our world-class online learning ecosystem.
+                  <span className="block mt-6 text-[#2563EB] font-black uppercase tracking-[0.2em] text-[11px]">ONLINE PRODUCTION MASTERY.</span>
                 </p>
 
                 <div className="mt-auto pt-10 border-t border-white/5 w-full flex justify-center items-center gap-6">
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] font-['Outfit']">Future Ready</span>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Future Ready</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] font-['Outfit']">Mastery First</span>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Mastery First</span>
                 </div>
               </div>
             </GlowingCard>

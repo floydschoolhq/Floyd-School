@@ -97,8 +97,8 @@ const HowItWorksSection = () => {
                                 <School className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">For Schools</h3>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Institutional Integration</p>
+                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">Institutional Path</h3>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">In-School Bootcamps</p>
                             </div>
                         </div>
                         <div className="flex flex-col items-end">
@@ -115,8 +115,8 @@ const HowItWorksSection = () => {
                                 <GraduationCap className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">For Students</h3>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Growth Expedition</p>
+                                <h3 className="text-xl font-black text-slate-200 font-['Outfit'] tracking-tight">Independent Path</h3>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ThinkSkool Pulse (Online)</p>
                             </div>
                         </div>
                         <div className="flex flex-col items-start">

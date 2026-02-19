@@ -64,12 +64,12 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                     <FiX className="w-6 h-6" />
                 </button>
 
-                <h3 className="text-3xl font-black text-slate-900 mb-2 font-['Outfit'] tracking-tight">Book Your <span className="text-[#2563EB]">Demo</span></h3>
-                <p className="text-slate-500 mb-8 font-medium font-['Inter'] text-sm">Select your preferred slot for a deep-dive session.</p>
+                <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tight">Book Your <span className="text-[#2563EB]">Demo</span></h3>
+                <p className="text-slate-500 mb-8 font-medium text-sm">Select your preferred slot for a deep-dive session.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="name" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Your Name</label>
+                        <label htmlFor="name" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Your Name</label>
                         <input
                             type="text"
                             id="name"
@@ -82,7 +82,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                     </div>
 
                     <div>
-                        <label htmlFor="email" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Email Address</label>
+                        <label htmlFor="email" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</label>
                         <input
                             type="email"
                             id="email"
@@ -95,7 +95,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
                     </div>
 
                     <div>
-                        <label htmlFor="date" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 font-['Outfit']">Date & Time</label>
+                        <label htmlFor="date" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Date & Time</label>
                         <input
                             type="datetime-local"
                             id="date"
@@ -108,7 +108,7 @@ const BookingModal = ({ isOpen, onClose, onBook }) => {
 
                     <button
                         type="submit"
-                        className="w-full flex justify-center items-center space-x-3 px-8 py-5 rounded-2xl bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-xl shadow-slate-200 active:scale-95 font-['Outfit']"
+                        className="w-full flex justify-center items-center space-x-3 px-8 py-5 rounded-2xl bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-xl shadow-slate-200 active:scale-95"
                     >
                         Confirm Booking
                     </button>
@@ -194,19 +194,19 @@ const Contact = () => {
                         </a>
 
                         <motion.h2
-                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#2563EB] mb-4 font-['Outfit']"
+                            className="text-[10px] uppercase tracking-[0.4em] font-black text-[#2563EB] mb-4"
                             variants={itemVariants}
                         >
                             Connect with us
                         </motion.h2>
                         <motion.h1
-                            className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-slate-900 font-['Outfit']"
+                            className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-slate-900"
                             variants={itemVariants}
                         >
                             Ready to <span className="text-[#2563EB]">Succeed?</span>
                         </motion.h1>
                         <motion.p
-                            className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed font-['Inter']"
+                            className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed"
                             variants={itemVariants}
                         >
                             Join the elite ecosystem of ThinkSkool. Let's discuss how we can accelerate your engineering journey to industry mastery.
@@ -224,7 +224,7 @@ const Contact = () => {
                                 </div>
                                 <a
                                     href="mailto:thinkskool.office@gmail.com"
-                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition font-['Outfit'] tracking-tight"
+                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition tracking-tight"
                                 >
                                     thinkskool.office@gmail.com
                                 </a>
@@ -240,7 +240,7 @@ const Contact = () => {
                                 </div>
                                 <a
                                     href="tel:+918527740849"
-                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition font-['Outfit'] tracking-tight"
+                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition tracking-tight"
                                 >
                                     +91 85277 40849
                                 </a>
@@ -249,7 +249,7 @@ const Contact = () => {
 
                         <motion.button
                             onClick={() => setIsModalOpen(true)}
-                            className="inline-flex items-center space-x-4 px-12 py-6 rounded-[2rem] bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-2xl shadow-slate-200 hover:-translate-y-1 active:scale-95 font-['Outfit']"
+                            className="inline-flex items-center space-x-4 px-12 py-6 rounded-[2rem] bg-[#2D2D2D] text-white text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-800 shadow-2xl shadow-slate-200 hover:-translate-y-1 active:scale-95"
                             variants={itemVariants}
                             disabled={isSubmitting}
                         >

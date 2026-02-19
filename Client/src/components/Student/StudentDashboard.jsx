@@ -99,7 +99,7 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface-base p-8 relative overflow-hidden font-['Inter'] transition-colors duration-500">
+    <div className="min-h-screen bg-surface-base p-8 relative overflow-hidden transition-colors duration-500">
       {/* Background Accents */}
       <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -112,7 +112,7 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl font-black text-text-main tracking-tighter font-['Outfit'] -mt-1"
+            className="text-5xl font-black text-text-main tracking-tighter -mt-1"
           >
             Learning <span className="text-accent-primary">Control Center</span>
           </motion.h1>
@@ -199,7 +199,7 @@ const StudentDashboard = () => {
             className="flex-1"
           >
             <GradientCard className="h-full" gradient="from-accent-primary to-accent-secondary">
-              <h3 className="text-xl font-black text-text-main mb-6 tracking-tight font-['Outfit'] transition-colors duration-500">Mastery Analysis</h3>
+              <h3 className="text-xl font-black text-text-main mb-6 tracking-tight transition-colors duration-500">Mastery Analysis</h3>
               <div className="flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm transition-colors duration-500">
                 <ProgressChart
                   progress={dashboardData?.overallProgress || 0}
@@ -223,7 +223,7 @@ const StudentDashboard = () => {
                 <div className="p-2.5 bg-surface-soft border border-surface-el rounded-xl">
                   <Sparkles className="w-5 h-5 text-accent-primary" />
                 </div>
-                <h3 className="text-xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">Achievement</h3>
+                <h3 className="text-xl font-black text-text-main tracking-tight transition-colors duration-500">Achievement</h3>
               </div>
               <Suspense fallback={
                 <div className="h-56 flex items-center justify-center">
@@ -249,7 +249,7 @@ const StudentDashboard = () => {
         >
           <GradientCard className="h-full" gradient="from-text-main to-text-muted">
             <div className="flex items-center justify-between mb-10">
-              <h3 className="text-2xl font-black text-text-main tracking-tight font-['Outfit'] transition-colors duration-500">Mission Objectives</h3>
+              <h3 className="text-2xl font-black text-text-main tracking-tight transition-colors duration-500">Mission Objectives</h3>
               <div className="p-4 bg-surface-soft border border-surface-el rounded-2xl transition-colors duration-500">
                 <Calendar className="w-6 h-6 text-text-main" />
               </div>
@@ -265,7 +265,7 @@ const StudentDashboard = () => {
                     className="p-6 bg-surface-base border border-surface-el rounded-[2rem] hover:border-accent-primary/50 transition-all duration-300 shadow-sm flex flex-col justify-between"
                   >
                     <div>
-                      <h4 className="text-lg font-black text-text-main mb-1 tracking-tight font-['Outfit'] line-clamp-1">{assignment.title}</h4>
+                      <h4 className="text-lg font-black text-text-main mb-1 tracking-tight line-clamp-1">{assignment.title}</h4>
                       <p className="text-[11px] font-black text-text-muted uppercase tracking-widest mb-4">{assignment.course?.title}</p>
                     </div>
                     <div className="flex items-center justify-between mt-4">
@@ -298,7 +298,7 @@ const StudentDashboard = () => {
           className="lg:col-span-12 mt-6"
         >
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-3xl font-black text-text-main tracking-tighter font-['Outfit'] transition-colors duration-500">Learning Expeditions</h3>
+            <h3 className="text-3xl font-black text-text-main tracking-tighter transition-colors duration-500">Learning Expeditions</h3>
             {!user.permissions?.canAccessCourses && (
               <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500">
                 <Lock size={12} className="text-accent-primary" /> Locked Segment
@@ -318,7 +318,7 @@ const StudentDashboard = () => {
                 >
                   <Lock className="w-10 h-10 text-surface-base" />
                 </motion.div>
-                <h4 className="text-3xl font-black text-text-main mb-3 font-['Outfit']">Access Protocol Required</h4>
+                <h4 className="text-3xl font-black text-text-main mb-3">Access Protocol Required</h4>
                 <p className="text-text-muted max-w-md font-medium mb-10 text-lg">
                   This tactical segment is restricted. Initialize a request for administrative clearance to unlock the curriculum.
                 </p>
@@ -346,7 +346,7 @@ const StudentDashboard = () => {
                   >
                     <div className="flex items-start justify-between mb-8">
                       <div className="flex-1 pr-6">
-                        <h4 className="text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] font-['Outfit'] transition-colors duration-500">{course.title}</h4>
+                        <h4 className="text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] transition-colors duration-500">{course.title}</h4>
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 rounded-full bg-surface-soft border border-surface-el flex items-center justify-center overflow-hidden">
                             <Users className="w-4 h-4 text-accent-primary" />

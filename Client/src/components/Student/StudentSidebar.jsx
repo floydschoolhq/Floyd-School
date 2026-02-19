@@ -39,7 +39,7 @@ const StudentSidebar = () => {
           {/* Header */}
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-8">
-              <Link to="/" className="text-2xl font-black flex items-center tracking-tighter font-['Outfit'] hover:opacity-80 transition-opacity">
+              <Link to="/" className="text-2xl font-black flex items-center tracking-tighter hover:opacity-80 transition-opacity">
                 <span className='text-text-main transition-colors duration-500'>think</span>
                 <span style={{ color: 'var(--accent-primary)' }}>skool</span>
               </Link>
@@ -56,11 +56,11 @@ const StudentSidebar = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="mb-8 p-4 bg-surface-soft rounded-2xl border border-surface-el font-['Inter'] transition-colors duration-500"
+              className="mb-8 p-4 bg-surface-soft rounded-2xl border border-surface-el transition-colors duration-500"
             >
-              <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-1 font-['Outfit']">Authenticated As</p>
-              <p className="text-base font-black text-text-main truncate font-['Outfit'] transition-colors duration-500">{user?.name}</p>
-              <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent-primary/10 text-accent-primary text-[11px] font-black uppercase rounded-lg tracking-tighter font-['Outfit']">
+              <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-1">Authenticated As</p>
+              <p className="text-base font-black text-text-main truncate transition-colors duration-500">{user?.name}</p>
+              <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent-primary/10 text-accent-primary text-[11px] font-black uppercase rounded-lg tracking-tighter">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse" />
                 {system} Access
               </div>

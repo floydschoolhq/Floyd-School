@@ -48,21 +48,21 @@ export const FALLBACK_COURSES = [
 ];
 
 export const schoolBenefits = [
-    { title: "Reputation Boost", desc: "Showcases a tech-integrated vision." },
-    { title: "Academic Alignment", desc: "No impact on school schedule." },
-    { title: "Managed by Experts", desc: "Led by certified ThinkSkool mentors." },
-    { title: "Real-time Insights", desc: "Tracking via the Smart Portal." },
-    { title: "Innovation Focused", desc: "Fosters critical thinking and logic." },
-    { title: "Zero Obligation", desc: "Continuation based on interest." }
+    { title: "Campus Elevation", desc: "Transforms your labs into elite engineering hubs." },
+    { title: "Zero Setup Cost", desc: "We bring the tech, mentors, and the curriculum." },
+    { title: "Flexible Scheduling", desc: "Bootcamps designed to fit your academic calendar." },
+    { title: "Expert Led", desc: "Industrial veterans delivering hands-on training." },
+    { title: "Real-time Tracking", desc: "Institutional dashboard for performance insights." },
+    { title: "Offline Impact", desc: "Intensive in-person learning that sticks." }
 ];
 
 export const studentBenefits = [
-    { title: "Multi-Field Exposure", desc: "AI, IoT, and Dev immersion." },
-    { title: "Hands-On Work", desc: "Project-based industrial learning." },
-    { title: "Expert Mentorship", desc: "Guided by industry engineers." },
-    { title: "Skill Building", desc: "Logic, creativity, and teamwork." },
-    { title: "Global Certificates", desc: "Recognized industry standards." },
-    { title: "Future Ready", desc: "Foundational career readiness." }
+    { title: "Self-Paced Mastery", desc: "Learn at your own speed with 24/7 access." },
+    { title: "Global Community", desc: "Connect with elite students and engineers worldwide." },
+    { title: "Production Grade Portal", desc: "Build in real-world IDE environments." },
+    { title: "Direct Mentorship", desc: "1-on-1 support from industrial technical architects." },
+    { title: "Independent Portfolio", desc: "Graduate with a GitHub full of deployed apps." },
+    { title: "ThinkSkool Pulse", desc: "High-octane, independent online curriculum." }
 ];
 
 export const supportRoles = [

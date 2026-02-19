@@ -4,7 +4,7 @@ import { Briefcase, Award, Headphones } from 'lucide-react';
 
 const IndustrialNetwork = () => {
     return (
-        <section className="bg-[#FCF8F8] pt-6 pb-24 overflow-hidden font-['Inter']">
+        <section className="bg-[#FCF8F8] pt-6 pb-24 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-3 gap-8">
                     {[
@@ -25,7 +25,7 @@ const IndustrialNetwork = () => {
                                 {item.icon}
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 group-hover:text-slate-950 transition-colors font-['Outfit']">{item.label}</span>
+                                <span className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 group-hover:text-slate-950 transition-colors">{item.label}</span>
                                 <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest mt-2">Tier-1 Partner Network</span>
                             </div>
                             <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-[200px]">

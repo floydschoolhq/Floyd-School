@@ -29,7 +29,7 @@ export const GradientCard = ({
             )} />
 
             {/* Content */}
-            <div className="relative z-10 font-['Inter']">
+            <div className="relative z-10">
                 {children}
             </div>
         </motion.div>
@@ -53,8 +53,8 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
     return (
         <GradientCard gradient={gradient} className="flex items-center justify-between p-7">
             <div className="flex-1">
-                <p className="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted mb-2 font-['Outfit']">{title}</p>
-                <h3 className="text-4xl font-black text-text-main tracking-tighter font-['Outfit'] transition-colors duration-500">
+                <p className="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted mb-2">{title}</p>
+                <h3 className="text-4xl font-black text-text-main tracking-tighter transition-colors duration-500">
                     {displayValue}{suffix}
                 </h3>
                 {change && (

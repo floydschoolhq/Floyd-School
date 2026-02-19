@@ -62,12 +62,12 @@ const Course = () => {
     };
 
     return (
-        <section className="py-16 md:py-24 bg-[#FCF8F8] font-['Inter']">
+        <section className="py-16 md:py-24 bg-[#FCF8F8]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
                 {/* Header and Introduction */}
                 <motion.h2
-                    className="text-5xl md:text-6xl font-black text-slate-900 mb-6 font-['Outfit'] tracking-tighter"
+                    className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -102,7 +102,7 @@ const Course = () => {
                             <div className={`p-4 rounded-2xl mb-6 w-fit ${course.bg} ${course.color} shadow-sm`}>
                                 <course.icon className="w-8 h-8" />
                             </div>
-                            <h3 className="text-2xl font-black text-slate-900 mb-4 font-['Outfit'] tracking-tight">
+                            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">
                                 {course.title}
                             </h3>
                             <p className="text-slate-600 leading-relaxed grow text-sm font-medium">

@@ -53,7 +53,7 @@ const Masterclasses = () => {
 
     if (loading) {
         return (
-            <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF] font-['Inter']">
+            <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-3 gap-10">
                         {[1, 2, 3].map(i => (
@@ -70,19 +70,19 @@ const Masterclasses = () => {
     }
 
     return (
-        <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF] font-['Inter']">
+        <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                     <div className="space-y-4">
                         <div className="inline-block px-4 py-1 rounded-full bg-white border border-[#FBEFEF] shadow-sm">
-                            <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] font-['Outfit']">Technical Deep Dives</span>
+                            <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px]">Technical Deep Dives</span>
                         </div>
-                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter font-['Outfit'] leading-none">
+                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none">
                             Expert Integration <span className="text-[#2563EB]">Sessions</span>
                         </h2>
                     </div>
                     <div>
-                        <button className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all font-['Outfit'] shadow-sm hover:shadow-md">
+                        <button className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all shadow-sm hover:shadow-md">
                             View all events <FaArrowRight className="text-[12px]" />
                         </button>
                     </div>
@@ -105,13 +105,13 @@ const Masterclasses = () => {
                                 className="bg-white rounded-[2.8rem] border border-slate-100 p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_-20px_rgba(245,175,175,0.12)] transition-all duration-500 relative group cursor-pointer"
                             >
                                 {/* Status Badge */}
-                                <div className={`absolute top-8 right-8 px-4 py-1.5 ${event.isFree ? 'bg-slate-900' : 'bg-emerald-500'} text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-full font-['Outfit'] z-10 shadow-lg`}>
+                                <div className={`absolute top-8 right-8 px-4 py-1.5 ${event.isFree ? 'bg-slate-900' : 'bg-emerald-500'} text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-full z-10 shadow-lg`}>
                                     {event.isFree ? 'FREE' : 'PREMIUM'}
                                 </div>
 
                                 {/* Header Info */}
                                 <div className="mb-8">
-                                    <div className="flex items-center gap-4 text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] font-['Outfit'] mb-4">
+                                    <div className="flex items-center gap-4 text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-4">
                                         <div className="flex items-center gap-1.5">
                                             <FaCalendarAlt className="text-[#2563EB]/60" />
                                             {new Date(event.scheduledDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
@@ -122,7 +122,7 @@ const Masterclasses = () => {
                                             {event.startTime}
                                         </div>
                                     </div>
-                                    <h3 className="text-2xl font-black text-slate-900 leading-[1.2] group-hover:text-[#2563EB] transition-colors font-['Outfit'] tracking-tight">
+                                    <h3 className="text-2xl font-black text-slate-900 leading-[1.2] group-hover:text-[#2563EB] transition-colors tracking-tight">
                                         {event.title}
                                     </h3>
                                 </div>
@@ -134,8 +134,8 @@ const Masterclasses = () => {
                                         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-black text-slate-900 font-['Outfit'] tracking-tight">{event.instructorName}</p>
-                                        <p className="text-[11px] text-slate-500 font-black uppercase tracking-wider font-['Outfit'] mt-0.5 opacity-70">{event.instructorRole}</p>
+                                        <p className="text-sm font-black text-slate-900 tracking-tight">{event.instructorName}</p>
+                                        <p className="text-[11px] text-slate-500 font-black uppercase tracking-wider mt-0.5 opacity-70">{event.instructorRole}</p>
                                     </div>
                                 </div>
 
@@ -143,12 +143,12 @@ const Masterclasses = () => {
                                 <div className="flex items-center justify-between gap-4">
                                     <div className="flex flex-wrap gap-2 flex-1">
                                         {event.tags?.slice(0, 2).map((tag, i) => (
-                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/5 px-3 py-1.5 rounded-xl border border-[#2563EB]/10 font-['Outfit']">
+                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/5 px-3 py-1.5 rounded-xl border border-[#2563EB]/10">
                                                 {tag}
                                             </span>
                                         ))}
                                         {event.attendeeCount !== undefined && (
-                                            <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-black uppercase tracking-widest font-['Outfit'] ml-auto">
+                                            <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-black uppercase tracking-widest ml-auto">
                                                 <FaUsers className="text-slate-300" />
                                                 <span>{event.attendeeCount}+</span>
                                             </div>

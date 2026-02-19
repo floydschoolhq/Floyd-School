@@ -13,7 +13,7 @@ const AmbitiousSection = () => {
     ];
 
     return (
-        <section className="bg-slate-50 py-24 relative overflow-hidden font-['Inter']">
+        <section className="bg-slate-50 py-24 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
 
                 <div>
@@ -23,7 +23,7 @@ const AmbitiousSection = () => {
                         viewport={{ once: true }}
                         className="mb-16"
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter font-['Outfit'] text-center mb-16">
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter text-center mb-16">
                             Why <span className="text-[#2563EB]">Ambitious Students</span> Choose Us
                         </h2>
 
@@ -42,7 +42,7 @@ const AmbitiousSection = () => {
                                         {stat.icon}
                                     </div>
                                     <div>
-                                        <h4 className="text-[12px] font-black text-slate-900 uppercase tracking-tight mb-2 font-['Outfit']">{stat.title}</h4>
+                                        <h4 className="text-[12px] font-black text-slate-900 uppercase tracking-tight mb-2">{stat.title}</h4>
                                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-tight">{stat.desc}</p>
                                     </div>
                                 </motion.div>
