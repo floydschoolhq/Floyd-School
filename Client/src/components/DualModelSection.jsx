@@ -1,40 +1,122 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, Users, Globe } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import dualModelBg from '../assets/images/dual-model-bg.png';
 
+// Typewriter hook
+const useTypewriter = (text, isActive, speed = 22) => {
+    const [displayed, setDisplayed] = useState('');
+    const intervalRef = useRef(null);
+
+    useEffect(() => {
+        if (isActive) {
+            setDisplayed('');
+            let i = 0;
+            intervalRef.current = setInterval(() => {
+                setDisplayed(text.slice(0, i + 1));
+                i++;
+                if (i >= text.length) clearInterval(intervalRef.current);
+            }, speed);
+        } else {
+            clearInterval(intervalRef.current);
+            setDisplayed('');
+        }
+        return () => clearInterval(intervalRef.current);
+    }, [isActive, text]);
+
+    return displayed;
+};
+
+// Individual expandable feature row
+const FeatureRow = ({ feature, accentColor, borderColor }) => {
+    const [hovered, setHovered] = useState(false);
+    const typed = useTypewriter(feature.detail, hovered);
+
+    return (
+        <motion.div
+            onHoverStart={() => setHovered(true)}
+            onHoverEnd={() => setHovered(false)}
+            animate={{ height: hovered ? 'auto' : 'auto' }}
+            className={`group cursor-default rounded-2xl border ${hovered ? borderColor : 'border-white/5'} bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-300 px-5 overflow-hidden`}
+        >
+            {/* Collapsed row */}
+            <div className="flex items-center gap-4 py-4">
+                <motion.div
+                    animate={{ scale: hovered ? 1.3 : 1, rotate: hovered ? 90 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    className={`w-1.5 h-1.5 rounded-full ${accentColor === 'text-blue-400' ? 'bg-blue-400' : 'bg-indigo-400'} shrink-0`}
+                />
+                <span className="text-[11px] font-black text-slate-200 uppercase tracking-widest flex-1">
+                    {feature.name}
+                </span>
+                <motion.div
+                    animate={{ opacity: hovered ? 1 : 0.3, x: hovered ? 2 : 0 }}
+                    className={`text-[9px] font-bold uppercase tracking-widest ${accentColor}`}
+                >
+                    hover
+                </motion.div>
+            </div>
+
+            {/* Expanded typewriter content */}
+            <AnimatePresence>
+                {hovered && (
+                    <motion.div
+                        key="expanded"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeOut' }}
+                        className="overflow-hidden"
+                    >
+                        <div className={`border-t ${borderColor.replace('border-', 'border-').replace('/40', '/20')} mx-0 mb-4 pb-4 pt-3`}>
+                            <p className={`text-[10px] font-bold ${accentColor} uppercase tracking-[0.3em] mb-2`}>
+                                {feature.tag}
+                            </p>
+                            <p className="text-slate-400 text-[11px] leading-relaxed font-medium min-h-[36px]">
+                                {typed}
+                                <span className="inline-block w-0.5 h-3 bg-current ml-0.5 animate-pulse align-middle" />
+                            </p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+};
+
+// Full model card
 const ModelCard = ({ model, idx, onClick }) => (
     <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: idx * 0.15 }}
-        whileHover={{ y: -12, scale: 1.01 }}
         className="group relative bg-slate-950/80 backdrop-blur-xl rounded-[2.5rem] p-8 overflow-hidden border border-white/5 shadow-3xl flex flex-col h-full"
     >
-        {/* Dynamic Glow Layer */}
+        {/* Glow layers */}
         <div className={`absolute -top-32 -right-32 w-80 h-80 ${model.glow} rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-1000 ease-out`} />
-        <div className={`absolute -bottom-32 -left-32 w-64 h-64 ${model.glow} opacity-10 rounded-full blur-[80px] group-hover:translate-x-10 transition-transform duration-1000`} />
+        <div className={`absolute -bottom-32 -left-32 w-64 h-64 ${model.glow} opacity-10 rounded-full blur-[80px]`} />
 
-        {/* Glass Badge */}
-        <div className={`inline-flex items-center self-start px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] mb-12 bg-white/5 backdrop-blur-md border border-white/10 ${model.accent}`}>
-            <span className={`w-2 h-2 rounded-full ${model.id === 'school' ? 'bg-blue-500' : 'bg-indigo-500'} mr-3 animate-pulse shadow-[0_0_10px_currentColor]`} />
+        {/* Badge */}
+        <div className={`inline-flex items-center self-start px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] mb-8 bg-white/5 backdrop-blur-md border border-white/10 ${model.accent}`}>
+            <span className={`w-2 h-2 rounded-full ${model.id === 'school' ? 'bg-blue-500' : 'bg-indigo-500'} mr-3 animate-pulse`} />
             {model.badge}
         </div>
 
         <div className="relative z-10 mb-auto">
-            <h3 className="text-3xl font-extrabold text-white uppercase leading-tight tracking-tight mb-3">{model.title}</h3>
-            <p className={`${model.accent} font-bold text-[10px] tracking-[0.4em] uppercase mb-8`}>{model.subtitle}</p>
+            <h3 className="text-3xl font-extrabold text-white uppercase leading-tight tracking-tight mb-1">{model.title}</h3>
+            <p className={`${model.accent} font-bold text-[10px] tracking-[0.4em] uppercase mb-6`}>{model.subtitle}</p>
 
-            <div className="grid grid-cols-1 gap-6">
+            {/* Expandable feature rows */}
+            <div className="flex flex-col gap-2">
                 {model.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-5 group/item">
-                        <div className={`w-3 h-3 rounded-md border border-white/10 flex items-center justify-center group-hover/item:border-${model.color}-500/50 transition-colors`}>
-                            <div className={`w-1 h-1 rounded-sm bg-${model.color}-400 group-hover/item:scale-150 transition-transform`} />
-                        </div>
-                        <span className="text-xs font-bold text-slate-300 uppercase tracking-widest group-hover/item:text-white transition-colors">{feature}</span>
-                    </div>
+                    <FeatureRow
+                        key={fIdx}
+                        feature={feature}
+                        accentColor={model.accent}
+                        borderColor={model.id === 'school' ? 'border-blue-500/40' : 'border-indigo-500/40'}
+                    />
                 ))}
             </div>
         </div>
@@ -52,6 +134,7 @@ const ModelCard = ({ model, idx, onClick }) => (
 
 const DualModelSection = () => {
     const navigate = useNavigate();
+
     const models = [
         {
             id: 'school',
@@ -61,9 +144,31 @@ const DualModelSection = () => {
             accent: "text-blue-400",
             color: "blue",
             features: [
-                "Expert Mentors On-Site",
-                "Zero Setup Overhead",
-                "Industrial Certification"
+                {
+                    name: "Expert Mentors On-Site",
+                    tag: "Mentorship Layer",
+                    detail: "Work directly with senior engineers from Google, Microsoft & Amazon who run real-time debugging sessions, guided code reviews, and architecture deep-dives — all inside your school premises."
+                },
+                {
+                    name: "Zero Setup Overhead",
+                    tag: "Infrastructure",
+                    detail: "We arrive with our full lab stack — laptops, servers, development environments, and project boards pre-configured. Students code from day one without spending a minute on tooling."
+                },
+                {
+                    name: "Industrial Certification",
+                    tag: "Credential",
+                    detail: "Upon completion, students receive a globally recognized ThinkSkool certification co-signed by industry partners — a resume-grade credential verified on our public platform."
+                },
+                {
+                    name: "Collaborative Lab Sessions",
+                    tag: "Learning Mode",
+                    detail: "Structured pair-programming and group sprints mirror real engineering teams. Students work in rotating squad formations, improving communication under project pressure."
+                },
+                {
+                    name: "Live Project Deployment",
+                    tag: "Outcome",
+                    detail: "Every cohort ships a production-grade project by the final week — hosted, documented, and publicly accessible. A portfolio asset that proves real-world capability."
+                }
             ],
             cta: "In-School Batch",
             badge: "Offline"
@@ -76,9 +181,31 @@ const DualModelSection = () => {
             accent: "text-indigo-400",
             color: "indigo",
             features: [
-                "Flexible Learning",
-                "Global Community",
-                "Dedicated Support"
+                {
+                    name: "Flexible Learning Schedule",
+                    tag: "Accessibility",
+                    detail: "All live sessions are recorded in 4K and instantly available on your dashboard. Learn at 9 PM after school or at 7 AM before — your schedule, your rules, zero compromise on quality."
+                },
+                {
+                    name: "Global Community Access",
+                    tag: "Network",
+                    detail: "Join a network of 2,000+ active students from 18+ countries. Weekly peer challenges, global hackathons, and a private Discord hub keep you connected to top engineering minds worldwide."
+                },
+                {
+                    name: "Dedicated 1:1 Support",
+                    tag: "Mentorship",
+                    detail: "Every student gets a personal technical mentor assigned for the full course duration. Book private sessions, ask asynchronous questions, and get code reviews within 24 hours."
+                },
+                {
+                    name: "ThinkSkool Portal Access",
+                    tag: "Platform",
+                    detail: "The full platform — AI diagnostics, project tracker, learning analytics, peer leaderboard, and mentor dashboard — is available 24/7. Track your precision score in real time."
+                },
+                {
+                    name: "Industry Simulations",
+                    tag: "Practicum",
+                    detail: "Scenario-based sprints simulate real startup engineering environments. You'll tackle product backlogs, write engineering specs, and present technical solutions to virtual stakeholders."
+                }
             ],
             cta: "Enroll Now",
             badge: "Online"
@@ -86,26 +213,27 @@ const DualModelSection = () => {
     ];
 
     return (
-        <section id="models" className="relative py-14 overflow-hidden bg-slate-950">
-            {/* Background Image with Overlay */}
+        <section id="models" className="relative py-16 overflow-hidden bg-slate-950">
+            {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <img
                     src={dualModelBg}
                     alt="Background"
-                    className="w-full h-full object-cover opacity-30 grayscale contrast-125"
+                    className="w-full h-full object-cover opacity-55 grayscale contrast-125"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-slate-950" />
-                <div className="absolute inset-0 bg-slate-950/20" />
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950" />
+                <div className="absolute inset-0 bg-slate-950/10" />
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Full-width horizontal layout */}
+            <div className="w-full px-6 xl:px-12 2xl:px-20 relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-10">
+                <div className="text-center mb-12">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-blue-400 font-bold uppercase tracking-[0.4em] text-[9px] mb-2 shadow-sm"
+                        className="text-blue-400 font-bold uppercase tracking-[0.4em] text-[9px] mb-2"
                     >
                         Two Paths. One Destination.
                     </motion.p>
@@ -113,13 +241,22 @@ const DualModelSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-4xl font-extrabold text-white tracking-tight uppercase"
+                        className="text-4xl md:text-5xl font-extrabold text-white tracking-tight uppercase"
                     >
                         Delivery <span className="text-blue-500 drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]">Models.</span>
                     </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-3"
+                    >
+                        Hover over any feature below to read the full detail
+                    </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8">
+                {/* Equal 2-column full-width cards */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1600px] mx-auto">
                     {models.map((model, idx) => (
                         <ModelCard
                             key={model.id}
@@ -130,14 +267,13 @@ const DualModelSection = () => {
                     ))}
                 </div>
 
-                {/* Bottom Note - Bento Style */}
+                {/* Bottom Banner */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-12 p-8 bg-slate-950/80 backdrop-blur-xl rounded-[2.5rem] relative overflow-hidden group border border-white/5 shadow-3xl"
+                    className="mt-12 p-8 bg-slate-950/80 backdrop-blur-xl rounded-[2.5rem] relative overflow-hidden group border border-white/5 shadow-3xl max-w-[1600px] mx-auto"
                 >
-                    {/* Depth Layers */}
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(#2563EB_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03]" />
                     <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] group-hover:bg-blue-600/20 transition-all duration-700" />
 
@@ -148,7 +284,9 @@ const DualModelSection = () => {
                             </div>
                             <div className="text-center md:text-left">
                                 <h4 className="text-2xl font-extrabold text-white uppercase tracking-tight leading-tight mb-2">Industrial Convergence</h4>
-                                <p className="text-[10px] font-bold text-blue-300 uppercase tracking-[0.4em] leading-relaxed">Architecting the interface between <br className="hidden md:block" /> academic theory & global industrial ops</p>
+                                <p className="text-[10px] font-bold text-blue-300 uppercase tracking-[0.4em] leading-relaxed">
+                                    Architecting the interface between <br className="hidden md:block" /> academic theory & global industrial ops
+                                </p>
                             </div>
                         </div>
 
@@ -169,4 +307,3 @@ const DualModelSection = () => {
 };
 
 export default DualModelSection;
-
