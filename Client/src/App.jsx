@@ -60,7 +60,7 @@ const HomePage = () => {
             <PremiumNavbar />
 
             {/* 3. Scrollable Content (The rest of your components) */}
-            <div className='relative pt-[64px]'>
+            <div className='relative'>
                 <Hero />
                 <Marque />
                 <DualModelSection />

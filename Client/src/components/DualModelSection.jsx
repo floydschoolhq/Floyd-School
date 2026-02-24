@@ -76,7 +76,7 @@ const DualModelSection = () => {
     ];
 
     return (
-        <section className="relative bg-[#FCF8F8] py-16 overflow-hidden border-t border-[#FBEFEF]">
+        <section className="relative bg-[#FCF8F8] py-20 overflow-hidden border-t border-[#FBEFEF]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
                 <div className="text-center mb-12">

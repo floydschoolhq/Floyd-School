@@ -22,7 +22,7 @@ const logos = [
 
 const Marque = () => {
   return (
-    <div className="w-full bg-[#FCF8F8] py-10 border-b border-[#FBEFEF] relative z-10">
+    <div className="w-full bg-[#FCF8F8] py-14 border-b border-[#FBEFEF] relative z-10">
       <div className="text-center mb-6">
         <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[9px] opacity-60">Technologies We Master</p>
       </div>
