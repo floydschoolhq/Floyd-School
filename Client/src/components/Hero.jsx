@@ -148,10 +148,9 @@ const Hero = () => {
                             animate={{ opacity: 1, x: 0 }}
                             className="flex flex-col gap-3"
                         >
-                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit'] leading-[0.95]">
-                                DUAL MODE<br />
-                                <span className="text-[#2563EB]">TECH</span><br />
-                                MASTERY
+                            <h1 className="text-4xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit'] leading-[0.9]">
+                                LOGIC ALIGNED,<br />
+                                <span className="text-[#2563EB]">FUTURE</span> DEFINED
                             </h1>
                         </motion.div>
 
@@ -219,7 +218,9 @@ const Hero = () => {
                         >
                             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-blue-300 to-[#2563EB] rounded-[2.5rem] p-[1px] opacity-10 group-hover:opacity-60 transition-opacity duration-700 blur-sm" />
 
-                            <div id="registration-form" className="relative bg-[#2D2D2D] backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-white/5">
+                            <div id="registration-form" className="relative bg-slate-950/40 backdrop-blur-2xl rounded-[3rem] p-6 md:p-10 shadow-3xl border border-white/10 overflow-hidden relative z-10">
+                                {/* Interior Glass Highlight */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
 
                                 {status === 'success' ? (
                                     <motion.div
@@ -238,9 +239,10 @@ const Hero = () => {
                                     <>
                                         <div className="mb-6 relative z-10">
                                             {/* Tabs */}
-                                            <div className="flex gap-2 mb-5 p-1 bg-white/5 rounded-xl border border-white/10">
-                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
-                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
+                                            {/* Tabs */}
+                                            <div className="flex gap-2 mb-6 p-1 bg-white/5 rounded-2xl border border-white/10">
+                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
+                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
                                             </div>
                                             <div className="flex items-center gap-3 mb-4">
                                                 <div className="w-1.5 h-7 bg-[#2563EB] rounded-full" />

@@ -93,9 +93,9 @@ const PremiumNavbar = () => {
             <motion.div
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#FBEFEF] h-10 flex items-center overflow-hidden"
+                className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#FBEFEF] h-8 flex items-center overflow-hidden"
             >
-                <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between gap-4 text-[10px] font-['Outfit']">
+                <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between gap-4 text-[9px] font-['Outfit']">
                     <div className="flex items-center gap-3">
                         <Sparkles size={14} className="text-[#2563EB] animate-pulse" />
                         <span className="text-slate-500 font-black uppercase tracking-[0.4em]">School Bootcamps | Independent Online Mastery</span>
@@ -108,16 +108,16 @@ const PremiumNavbar = () => {
             </motion.div>
 
             <motion.nav
-                className={`fixed top-10 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-                    ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-[#FBEFEF] py-2'
-                    : 'bg-[#FCF8F8]/90 backdrop-blur-md border-b border-[#FBEFEF] py-4'
+                className={`fixed top-8 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-[#FBEFEF] py-1.5'
+                    : 'bg-[#FCF8F8]/90 backdrop-blur-md border-b border-[#FBEFEF] py-3'
                     }`}
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center justify-between h-14">
 
                         {/* Logo Section */}
                         <div
@@ -138,7 +138,7 @@ const PremiumNavbar = () => {
                         {/* Desktop Navigation - Clean & Simple */}
                         <div className="hidden md:flex items-center gap-10">
                             {navItems.map((item) => (
-                                <div key={item.name} className="relative group cursor-pointer h-16 flex items-center">
+                                <div key={item.name} className="relative group cursor-pointer h-14 flex items-center">
                                     <div className="flex items-center gap-2 text-slate-600 group-hover:text-[#2563EB] font-black uppercase text-[10px] tracking-[0.3em] transition-all font-['Outfit']">
                                         <span>{item.name}</span>
                                         {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-300" />}
