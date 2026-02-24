@@ -46,7 +46,7 @@ const About = () => {
                 <h3 className="text-4xl lg:text-6xl font-black text-white mb-10 tracking-tighter uppercase font-['Outfit']">Institutional <span className="text-[#2563EB]">Legacy</span></h3>
 
                 <p className="text-base text-slate-500 mb-12 leading-loose font-black uppercase tracking-widest font-['Outfit']">
-                  We architect elite engineering infrastructure within your campus through immersive industrial labs that redefine academic benchmarks.
+                  We build professional engineering infrastructure within your campus through immersive industrial labs that redefine academic benchmarks.
                   <span className="block mt-8 text-[#2563EB] font-black uppercase tracking-[0.3em] text-[11px]">OFFLINE INDUSTRIAL INTEGRATION.</span>
                 </p>
 

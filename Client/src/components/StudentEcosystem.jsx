@@ -43,7 +43,7 @@ const FEATURES = [
         ]
     },
     {
-        title: "Elite Network Access",
+        title: "Industry Network Access",
         miniTitle: "The Connection",
         icon: <FaUserTie />,
         desc: "Direct link to hiring managers and CTOs from Tier-1 tech companies.",
@@ -101,7 +101,7 @@ const StudentEcosystem = () => {
                         transition={{ delay: 0.1 }}
                         className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] max-w-2xl mx-auto font-['Outfit']"
                     >
-                        Custom-engineered industrial infrastructure designed to architect elite technical competence and global engineering dominance.
+                        Custom-engineered industrial infrastructure designed to build professional competence and global engineering skills.
                     </motion.p>
                 </div>
 

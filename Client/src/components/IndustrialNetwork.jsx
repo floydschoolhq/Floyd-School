@@ -9,7 +9,7 @@ const IndustrialNetwork = () => {
                 <div className="grid md:grid-cols-3 gap-5">
                     {[
                         { label: "Professional Networks", icon: <Briefcase className="w-5 h-5" /> },
-                        { label: "Elite Certifications", icon: <Award className="w-5 h-5" /> },
+                        { label: "Industry Certifications", icon: <Award className="w-5 h-5" /> },
                         { label: "24/7 Expert Support", icon: <Headphones className="w-5 h-5" /> }
                     ].map((item, i) => (
                         <motion.div

@@ -9,7 +9,7 @@ const AmbitiousSection = () => {
         { title: "Certifications", desc: "Industry recognized", icon: <Award size={20} /> },
         { title: "Career Mastery", desc: "Professional Network", icon: <Briefcase size={20} /> },
         { title: "Lifetime Access", desc: "Learn at your pace", icon: <Clock size={20} /> },
-        { title: "Global Skills", desc: "Elite Career Roadmap", icon: <TrendingUp size={20} /> }
+        { title: "Global Skills", desc: "Career Roadmap", icon: <TrendingUp size={20} /> }
     ];
 
     return (

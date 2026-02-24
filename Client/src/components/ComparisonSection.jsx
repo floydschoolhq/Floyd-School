@@ -161,7 +161,7 @@ const ComparisonSection = () => {
                         Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
                     <p className="text-slate-500 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium font-['Outfit']">
-                        ThinkSkool doesn't just teach code; it architecturally remodels the student's problem-solving core, moving them from passive consumers to elite engineering creators.
+                        ThinkSkool doesn't just teach code; it remodeled the student's problem-solving core, moving them from passive consumers to professional engineering creators.
                     </p>
                 </motion.div>
 

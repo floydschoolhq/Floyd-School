@@ -43,7 +43,7 @@ export function HeroParallaxDemo() {
                             </div>
                             <h3 className="text-2xl font-black text-slate-800 mb-2">Certificate of Completion</h3>
                             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Validates that</p>
-                            <p className="text-2xl font-black text-slate-900 my-4">Elite Student</p>
+                            <p className="text-2xl font-black text-slate-900 my-4">Certified Student</p>
                             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">has successfully completed the technical curriculum.</p>
                         </div>
                     </div>

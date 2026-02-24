@@ -47,7 +47,7 @@ const Footer = () => {
               <span className='text-slate-900'>think</span><span className='text-[#2563EB]'>skool</span>
             </div>
             <p className="text-slate-500 text-sm mb-6 leading-relaxed max-w-sm font-medium">
-              Architecting <span className="text-[#2563EB]">Future Ready</span> Engineers through industrial grade immersion and technical mastery.
+              Building the next generation of engineers through industrial training.
             </p>
 
             <div className="flex space-x-4">

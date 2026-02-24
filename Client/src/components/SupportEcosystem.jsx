@@ -80,7 +80,7 @@ const RoleCard = ({ role, index }) => {
                     </div>
                     <div className="flex items-center gap-1.5 text-[#2563EB]">
                         <Star size={12} fill="currentColor" />
-                        <span className="text-[9px] font-black font-['Outfit'] uppercase tracking-[0.2em]">Elite Support</span>
+                        <span className="text-[9px] font-black font-['Outfit'] uppercase tracking-[0.2em]">Dedicated Support</span>
                     </div>
                 </div>
             </div>

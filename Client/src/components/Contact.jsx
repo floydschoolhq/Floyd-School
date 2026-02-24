@@ -209,7 +209,7 @@ const Contact = () => {
                             className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed"
                             variants={itemVariants}
                         >
-                            Join the elite ecosystem of ThinkSkool. Let's discuss how we can accelerate your engineering journey to industry mastery.
+                            Join the ThinkSkool ecosystem. Let's discuss how we can accelerate your engineering journey to industry mastery.
                         </motion.p>
 
                         {/* Contact Details Grid */}

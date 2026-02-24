@@ -63,7 +63,7 @@ const DualModelSection = () => {
         {
             id: 'independent',
             title: "Online Live",
-            subtitle: "Global Mastery",
+            subtitle: "Live Online Learning",
             color: "from-[#2563EB] via-indigo-500 to-[#2563EB]",
             features: [
                 "Flexible Learning",
