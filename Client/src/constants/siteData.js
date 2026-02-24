@@ -5,64 +5,64 @@ export const FALLBACK_COURSES = [
         _id: '1',
         title: "AI & Machine Learning",
         icon: 'Cpu',
-        description: "Explore the frontiers of neural networks, predictive modeling, and deep learning architectures with hands-on industrial projects.",
+        description: "Neural networks, predictive modeling, and deep learning.",
         color: "text-[#2563EB]",
         rating: 4.9,
         duration: "6 Months",
-        tags: ["Neural Networks", "Python", "Deep Learning"],
-        deliveryDetails: { inSchool: { bootcamp: "7-Day Technical Deep Dive" } }
+        tags: ["AI", "Python", "ML"],
+        deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } }
     },
     {
         _id: '2',
-        title: "Web & App Architecture",
+        title: "Web Architecture",
         icon: 'Code',
-        description: "Master full-stack engineering, from responsive UI frameworks to scalable cloud-native backend infrastructure.",
+        description: "Full-stack engineering with scalable cloud infrastructure.",
         color: "text-[#2563EB]",
         rating: 4.8,
         duration: "6 Months",
-        tags: ["React", "Node.js", "Cloud"],
-        deliveryDetails: { inSchool: { bootcamp: "UI/UX Masterclass" } }
+        tags: ["React", "Node", "Cloud"],
+        deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } }
     },
     {
         _id: '3',
         title: "IoT & Robotics",
         icon: 'Terminal',
-        description: "Engineer autonomous systems, hardware-software integration, and real-time distributed sensor networks.",
+        description: "Hardware-software integration and autonomous systems.",
         color: "text-[#2563EB]",
         rating: 4.7,
         duration: "4 Months",
-        tags: ["Embedded Systems", "C++", "Sensors"],
-        deliveryDetails: { inSchool: { bootcamp: "Hardware Hackathon" } }
+        tags: ["Embedded", "C++", "Sensors"],
+        deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } }
     },
     {
         _id: '4',
         title: "Cybersecurity Ops",
         icon: 'Shield',
-        description: "Analyze digital threats, implement zero-trust protocols, and master ethical hacking in a controlled lab environment.",
+        description: "Threat analysis and zero-trust protocol mastery.",
         color: "text-[#2563EB]",
         rating: 4.9,
         duration: "5 Months",
-        tags: ["Ethical Hacking", "Networks", "Security"],
-        deliveryDetails: { inSchool: { bootcamp: "Red Team Simulation" } }
+        tags: ["SecOps", "Networking", "Hacking"],
+        deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } }
     }
 ];
 
 export const schoolBenefits = [
-    { title: "Campus Elevation", desc: "Transforms your labs into elite engineering hubs." },
-    { title: "Zero Setup Cost", desc: "We bring the tech, mentors, and the curriculum." },
-    { title: "Flexible Scheduling", desc: "Bootcamps designed to fit your academic calendar." },
-    { title: "Expert Led", desc: "Industrial veterans delivering hands-on training." },
-    { title: "Real-time Tracking", desc: "Institutional dashboard for performance insights." },
-    { title: "Offline Impact", desc: "Intensive in-person learning that sticks." }
+    { title: "Campus Elevation", desc: "Elite engineering hubs in your labs." },
+    { title: "Zero Setup Cost", desc: "No infrastructure investment required." },
+    { title: "Flexible Scheduling", desc: "Fits your school's academic calendar." },
+    { title: "Expert Led", desc: "Industrial veterans delivering training." },
+    { title: "Real-time Tracking", desc: "Performance insights for institutions." },
+    { title: "Offline Impact", desc: "Hands-on in-school mastery." }
 ];
 
 export const studentBenefits = [
-    { title: "Self-Paced Mastery", desc: "Learn at your own speed with 24/7 access." },
-    { title: "Global Community", desc: "Connect with elite students and engineers worldwide." },
-    { title: "Production Grade Portal", desc: "Build in real-world IDE environments." },
-    { title: "Direct Mentorship", desc: "1-on-1 support from industrial technical architects." },
-    { title: "Independent Portfolio", desc: "Graduate with a GitHub full of deployed apps." },
-    { title: "ThinkSkool Pulse", desc: "High-octane, independent online curriculum." }
+    { title: "Self-Paced Mastery", desc: "Learn with 24/7 portal access." },
+    { title: "Global Community", desc: "Connect with world-class engineers." },
+    { title: "Production Portal", desc: "Build in real-world IDEs." },
+    { title: "Direct Mentorship", desc: "1-on-1 support from architects." },
+    { title: "Independent Portfolio", desc: "Graduate with active GitHub apps." },
+    { title: "ThinkSkool Online Batches", desc: "High-octane online curriculum." }
 ];
 
 export const supportRoles = [
@@ -97,22 +97,22 @@ export const supportRoles = [
 
 export const SchoolSteps = [
     {
-        title: "Strategic Consultation",
+        title: "Strategy Scan",
         icon: 'School',
         color: "from-blue-500 to-blue-600"
     },
     {
-        title: "7-Day Free Bootcamp",
+        title: "Free Bootcamp",
         icon: 'Calendar',
         color: "from-blue-500 to-purple-600"
     },
     {
-        title: "Advanced Lab setup",
+        title: "Lab Integration",
         icon: 'Cpu',
         color: "from-purple-500 to-blue-600"
     },
     {
-        title: "Elite Certification",
+        title: "Certification",
         icon: 'Trophy',
         color: "from-blue-500 to-[#2563EB]"
     }
@@ -120,22 +120,22 @@ export const SchoolSteps = [
 
 export const StudentSteps = [
     {
-        title: "Portal & Path Setup",
+        title: "Portal Access",
         icon: 'Globe',
         color: "from-cyan-500 to-blue-600"
     },
     {
-        title: "Premium Live Classes",
+        title: "Live Mentoring",
         icon: 'Video',
         color: "from-blue-500 to-blue-600"
     },
     {
-        title: "Support Ops & Assignments",
+        title: "Code Support",
         icon: 'MessageSquare',
         color: "from-blue-500 to-purple-600"
     },
     {
-        title: "Impact & Career Launch",
+        title: "Career Launch",
         icon: 'Rocket',
         color: "from-purple-500 to-[#2563EB]"
     }
@@ -144,34 +144,34 @@ export const StudentSteps = [
 export const timelineSteps = [
     {
         phase: "Week 01",
-        title: "The Zero-Risk Spark",
-        subtitle: "7-Day Free Bootcamp",
+        title: "Zero-Risk Spark",
+        subtitle: "Free Bootcamp",
         icon: 'Zap',
-        description: "We deploy our expert mentors to your campus for a one-week intensive bootcamp. Every student builds a real project. No cost to the school, no commitment required.",
+        description: "Deploy expert mentors for a seven-day intensive bootcamp.",
         color: "bg-blue-500"
     },
     {
         phase: "Week 02",
-        title: "Voluntary Selection",
-        subtitle: "Student-Led Enrollment",
+        title: "Active Selection",
+        subtitle: "Direct Enrollment",
         icon: 'Users',
-        description: "Students who resonate with the engineering mindset choose to continue. We handle all parental consents and formalities. You get a cohort of genuinely motivated learners.",
+        description: "Motivated students choose to continue their engineering journey.",
         color: "bg-purple-500"
     },
     {
         phase: "Ongoing",
-        title: "Seamless Integration",
-        subtitle: "Zero Schedule Disruption",
+        title: "Sync Integration",
+        subtitle: "Zero Disruption",
         icon: 'Clock',
-        description: "Our proprietary scheduling model maps classes to existing activity periods or free slots. We require ZERO extra hours from your standard academic timetable.",
+        description: "Classes mapped to existing periods with zero schedule overhead.",
         color: "bg-blue-500"
     },
     {
         phase: "Year Round",
         title: "Curriculum Sync",
-        subtitle: "Academic Reinforcement",
+        subtitle: "Academic Link",
         icon: 'BookOpen',
-        description: "We align our engineering modules with your Physics and Math syllabus (CBSE/ICSE/IB), helping students visualize abstract concepts through practical application.",
+        description: "Modules aligned with school physics and math syllabus.",
         color: "bg-emerald-500"
     }
 ];
@@ -179,17 +179,17 @@ export const timelineSteps = [
 export const valueProps = [
     {
         icon: 'ShieldCheck',
-        title: "Zero Infrastructure Cost",
-        description: "We bring the technology, the platform, and the experts. Your labs become innovation hubs without a single rupee of capital expenditure."
+        title: "Zero Setup Cost",
+        description: "Elite innovation hubs in your labs at zero capital expenditure."
     },
     {
         icon: 'Target',
-        title: "Competitive Edge",
-        description: "Differentiate your school by offering elite, industry-standard engineering training that goes far beyond standard computer science."
+        title: "Industrial Edge",
+        description: "Industry-standard engineering training that elevates school status."
     },
     {
         icon: 'GraduationCap',
-        title: "University Portfolio",
-        description: "Our students graduate with a GitHub portfolio of deployed applications—a massive advantage for admissions in India and abroad."
+        title: "Elite Portfolio",
+        description: "Students graduate with active GitHub apps and industrial experience."
     }
 ];

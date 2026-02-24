@@ -22,9 +22,9 @@ const logos = [
 
 const Marque = () => {
   return (
-    <div className="w-full bg-[#FCF8F8] py-16 border-b border-[#FBEFEF]">
-      <div className="text-center mb-10">
-        <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px]">Technologies We Master</p>
+    <div className="w-full bg-[#FCF8F8] py-10 border-b border-[#FBEFEF] relative z-10">
+      <div className="text-center mb-6">
+        <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[9px] opacity-60">Technologies We Master</p>
       </div>
 
       <div className="relative w-full overflow-hidden">
@@ -32,7 +32,7 @@ const Marque = () => {
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#FCF8F8] to-transparent z-10"></div>
 
         <motion.div
-          className="flex gap-16 min-w-max items-center"
+          className="flex gap-20 min-w-max items-center"
           animate={{
             x: ['0%', '-50%'],
           }}
@@ -40,13 +40,13 @@ const Marque = () => {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 30,
+              duration: 40,
               ease: "linear",
             },
           }}
         >
           {[...logos, ...logos, ...logos, ...logos].map((LogoItem, index) => (
-            <div key={index} className="opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 cursor-pointer">
+            <div key={index} className="opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer">
               <LogoItem.component />
             </div>
           ))}

@@ -17,15 +17,15 @@ const slides = [
 
 const FeatureItem = ({ icon: Icon, title, desc }) => (
     <motion.div
-        whileHover={{ x: 10 }}
-        className="flex items-center gap-6 p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800 hover:border-[#2563EB]/30 transition-all group"
+        whileHover={{ x: 6 }}
+        className="flex items-center gap-4 p-3 rounded-xl bg-white border border-[#FBEFEF] hover:border-[#2563EB]/20 hover:shadow-sm transition-all group"
     >
-        <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-[#2563EB] shadow-lg group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
-            <Icon size={20} />
+        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#2563EB] border border-blue-100 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
+            <Icon size={18} />
         </div>
         <div className="flex flex-col">
-            <span className="text-sm font-black text-slate-100 uppercase tracking-widest">{title}</span>
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">{desc}</span>
+            <span className="text-xs font-black text-slate-800 uppercase tracking-widest">{title}</span>
+            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">{desc}</span>
         </div>
     </motion.div>
 );
@@ -61,15 +61,17 @@ const Faculty = () => {
     }, []);
 
     return (
-        <section className="bg-slate-50 py-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4">Distinguished Faculty</p>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
-                        Industry Visionaries & <span className="text-[#2563EB]">Engineering</span> Leaders
+        <section className="bg-[#FCF8F8] py-16 border-t border-[#FBEFEF] relative overflow-hidden">
+            <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-50 rounded-full blur-[120px] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="text-center mb-10">
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[9px] mb-3 font-['Outfit']">Distinguished Faculty</p>
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter font-['Outfit'] uppercase leading-none">
+                        Industry Visionaries &amp; <span className="text-[#2563EB]">Engineering</span> Leaders
                     </h2>
-                    <p className="text-base font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        Our mentorship ecosystem is powered by veterans from the world's most innovative technology conglomerates, bringing decades of production experience to your learning journey.
+                    <p className="text-xs font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed font-['Outfit']">
+                        Our mentorship ecosystem is powered by veterans from the world's most innovative technology conglomerates.
                     </p>
                 </div>
 
@@ -78,14 +80,11 @@ const Faculty = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-24 bg-slate-900 rounded-[3.5rem] p-8 lg:p-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] relative overflow-hidden group"
+                    className="mb-10 bg-white rounded-[2.5rem] p-6 lg:p-8 shadow-sm border border-[#FBEFEF] relative overflow-hidden"
                 >
-                    {/* Background Decorative Pattern */}
-                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-
-                    <div className="flex flex-col lg:flex-row gap-12 items-center relative z-10">
+                    <div className="flex flex-col lg:flex-row gap-16 items-center relative z-10">
                         {/* Slideshow Side */}
-                        <div className="w-full lg:w-1/2 aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-800 relative bg-slate-800">
+                        <div className="w-full lg:w-1/2 aspect-video rounded-[1.5rem] overflow-hidden shadow-md border border-[#FBEFEF] relative bg-slate-100">
                             <AnimatePresence mode="wait">
                                 <motion.img
                                     key={currentSlide}
@@ -95,12 +94,11 @@ const Faculty = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.8 }}
-                                    className="w-full h-full object-cover absolute inset-0"
+                                    className="w-full h-full object-cover absolute inset-0 opacity-60"
                                 />
                             </AnimatePresence>
-
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent pointer-events-none" />
-                            <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-100 to-transparent" />
+                            <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#FBEFEF]">
                                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
                                 <AnimatePresence mode="wait">
                                     <motion.span
@@ -108,7 +106,7 @@ const Faculty = () => {
                                         initial={{ opacity: 0, y: 5 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -5 }}
-                                        className="text-[10px] font-black text-white uppercase tracking-[0.2em]"
+                                        className="text-[9px] font-black text-slate-700 uppercase tracking-[0.2em]"
                                     >
                                         {slides[currentSlide].type}
                                     </motion.span>
@@ -117,7 +115,7 @@ const Faculty = () => {
                         </div>
 
                         {/* Features Side */}
-                        <div className="w-full lg:w-1/2 space-y-4">
+                        <div className="w-full lg:w-1/2 space-y-6">
                             <div className="grid sm:grid-cols-2 gap-4">
                                 <FeatureItem icon={Headphones} title="1:1 Support" desc="Instant Mentor Access" />
                                 <FeatureItem icon={MessageSquare} title="Post-Class Chat" desc="24/7 Doubt Clearance" />
@@ -125,17 +123,6 @@ const Faculty = () => {
                                 <FeatureItem icon={Star} title="Expert sessions" desc="Industry Insights" />
                                 <FeatureItem icon={Award} title="Certifications" desc="Global Recognition" />
                                 <FeatureItem icon={Briefcase} title="Hands-On Projects" desc="Production Systems" />
-                            </div>
-
-                            <div className="pt-6 border-t border-slate-800 flex justify-between items-center sm:flex-row flex-col gap-4">
-                                <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Complete Learning Ecosystem</p>
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-6 py-2.5 rounded-full bg-[#2563EB] text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-[#2563EB]/20"
-                                >
-                                    Explore Program
-                                </motion.button>
                             </div>
                         </div>
                     </div>
@@ -148,53 +135,38 @@ const Faculty = () => {
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{
-                                delay: index * 0.1,
-                                type: "spring",
-                                stiffness: 100
-                            }}
-                            whileHover={{
-                                y: -15,
-                                scale: 1.03,
-                                transition: { type: "spring", stiffness: 300 }
-                            }}
-                            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group cursor-pointer"
+                            transition={{ delay: index * 0.1 }}
+                            whileHover={{ y: -6, scale: 1.01 }}
+                            className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/20 hover:shadow-md transition-all duration-300"
                         >
-                            <div className="relative h-64 overflow-hidden bg-slate-200">
-                                {/* Use a placeholder if the specific image loads fail, but these are reliable static URLs for this context or use generic */}
+                            <div className="relative h-72 overflow-hidden bg-slate-950">
                                 <img
                                     src={mentor.image}
                                     alt={mentor.name}
                                     onError={(e) => { e.target.src = `https://i.pravatar.cc/300?u=${index}` }}
-                                    className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                                    className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 opacity-60 group-hover:opacity-100"
                                 />
-                                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                                    <div className="flex items-center gap-2 text-white">
-                                        {/* Simple mapping logic */}
-                                        {mentor.companyIcon === 'Google' && <FaGoogle />}
-                                        {mentor.companyIcon === 'Amazon' && <FaAmazon />}
-                                        {mentor.companyIcon === 'Microsoft' && <FaMicrosoft />}
-                                        {mentor.companyIcon === 'Globe' && <FaGlobe />}
-                                        {!['Google', 'Amazon', 'Microsoft', 'Globe'].includes(mentor.companyIcon) && <FaBuilding />}
-
-                                        <span className="text-xs font-black uppercase tracking-widest">{mentor.company}</span>
+                                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent">
+                                    <div className="flex items-center gap-3 text-[#2563EB]">
+                                        <FaBuilding size={14} />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">{mentor.company}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-6">
-                                <h3 className="text-xl font-black text-slate-900 mb-1">{mentor.name}</h3>
-                                <p className="text-sm text-[#2563EB] font-black mb-3 uppercase tracking-wider">{mentor.role}</p>
-                                <p className="text-slate-600 text-sm mb-6 leading-relaxed font-medium">
+                            <div className="p-8">
+                                <h3 className="text-2xl font-black text-white mb-2 font-['Outfit'] uppercase tracking-tight">{mentor.name}</h3>
+                                <p className="text-[#2563EB] font-black text-[10px] mb-6 uppercase tracking-[0.3em] font-['Outfit']">{mentor.role}</p>
+                                <p className="text-slate-500 text-xs mb-8 leading-relaxed font-medium">
                                     {mentor.bio}
                                 </p>
 
-                                <div className="flex justify-between items-center border-t border-slate-100 pt-4">
-                                    <button className="text-slate-400 hover:text-blue-600 transition-colors">
+                                <div className="flex justify-between items-center border-t border-white/5 pt-6">
+                                    <button className="text-slate-600 hover:text-[#2563EB] transition-colors">
                                         <FaLinkedinIn size={20} />
                                     </button>
-                                    <button className="text-sm font-black text-slate-900 border border-slate-200 px-4 py-2 rounded-lg hover:bg-slate-900 hover:text-white transition-all uppercase tracking-widest">
-                                        View Profile
+                                    <button className="text-[10px] font-black text-white bg-white/5 px-6 py-3 rounded-xl hover:bg-[#2563EB] transition-all uppercase tracking-widest border border-white/10 font-['Outfit']">
+                                        Profile
                                     </button>
                                 </div>
                             </div>

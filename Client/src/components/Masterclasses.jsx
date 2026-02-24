@@ -53,11 +53,11 @@ const Masterclasses = () => {
 
     if (loading) {
         return (
-            <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF]">
+            <section className="bg-[#0A0F1E] py-32 border-t border-white/5">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-3 gap-10">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white h-96 rounded-[2.8rem] border border-slate-100 animate-pulse"></div>
+                            <div key={i} className="bg-white/5 h-96 rounded-[3rem] border border-white/5 animate-pulse"></div>
                         ))}
                     </div>
                 </div>
@@ -70,20 +70,20 @@ const Masterclasses = () => {
     }
 
     return (
-        <section className="bg-[#FCF8F8] py-24 border-t border-[#FBEFEF]">
+        <section className="bg-[#0A0F1E] py-32 border-t border-white/5 font-['Outfit']">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div className="space-y-4">
-                        <div className="inline-block px-4 py-1 rounded-full bg-white border border-[#FBEFEF] shadow-sm">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                    <div className="space-y-6">
+                        <div className="inline-block px-5 py-2 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/30 shadow-2xl">
                             <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px]">Technical Deep Dives</span>
                         </div>
-                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none">
+                        <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none uppercase">
                             Expert Integration <span className="text-[#2563EB]">Sessions</span>
                         </h2>
                     </div>
                     <div>
-                        <button className="flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all shadow-sm hover:shadow-md">
-                            View all events <FaArrowRight className="text-[12px]" />
+                        <button className="flex items-center gap-4 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 font-black uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/10 transition-all shadow-2xl backdrop-blur-xl">
+                            View All Events <FaArrowRight className="text-[14px]" />
                         </button>
                     </div>
                 </div>
@@ -101,73 +101,72 @@ const Masterclasses = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                                whileHover={{ y: -12 }}
-                                className="bg-white rounded-[2.8rem] border border-slate-100 p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_-20px_rgba(245,175,175,0.12)] transition-all duration-500 relative group cursor-pointer"
+                                whileHover={{ y: -15, scale: 1.02 }}
+                                className="bg-white/5 backdrop-blur-3xl rounded-[3.5rem] p-10 border border-white/5 shadow-2xl transition-all duration-500 relative group cursor-pointer overflow-hidden"
                             >
+                                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                                 {/* Status Badge */}
-                                <div className={`absolute top-8 right-8 px-4 py-1.5 ${event.isFree ? 'bg-slate-900' : 'bg-emerald-500'} text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-full z-10 shadow-lg`}>
+                                <div className={`absolute top-10 right-10 px-5 py-2 ${event.isFree ? 'bg-slate-950' : 'bg-[#2563EB]'} text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full z-10 shadow-2xl border border-white/10`}>
                                     {event.isFree ? 'FREE' : 'PREMIUM'}
                                 </div>
 
                                 {/* Header Info */}
-                                <div className="mb-8">
-                                    <div className="flex items-center gap-4 text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-4">
-                                        <div className="flex items-center gap-1.5">
-                                            <FaCalendarAlt className="text-[#2563EB]/60" />
+                                <div className="mb-10 relative z-10">
+                                    <div className="flex items-center gap-5 text-slate-500 font-black text-[10px] uppercase tracking-[0.25em] mb-6">
+                                        <div className="flex items-center gap-2">
+                                            <FaCalendarAlt className="text-[#2563EB]" />
                                             {new Date(event.scheduledDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                         </div>
-                                        <div className="w-1 h-1 rounded-full bg-slate-200" />
-                                        <div className="flex items-center gap-1.5">
-                                            <FaClock className="text-[#2563EB]/60" />
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
+                                        <div className="flex items-center gap-2">
+                                            <FaClock className="text-blue-400" />
                                             {event.startTime}
                                         </div>
                                     </div>
-                                    <h3 className="text-2xl font-black text-slate-900 leading-[1.2] group-hover:text-[#2563EB] transition-colors tracking-tight">
+                                    <h3 className="text-3xl font-black text-white leading-[1.1] group-hover:text-blue-400 transition-colors tracking-tight uppercase font-['Outfit']">
                                         {event.title}
                                     </h3>
                                 </div>
 
                                 {/* Instructor Section */}
-                                <div className="flex items-center gap-4 py-6 border-y border-slate-50 mb-8">
+                                <div className="flex items-center gap-5 py-8 border-y border-white/5 mb-10 relative z-10">
                                     <div className="relative">
-                                        <img src={event.instructorImage} alt={event.instructorName} className="w-12 h-12 rounded-2xl object-cover ring-4 ring-slate-50 group-hover:ring-[#2563EB]/10 transition-all" />
-                                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full" />
+                                        <img src={event.instructorImage} alt={event.instructorName} className="w-14 h-14 rounded-2xl object-cover ring-4 ring-white/5 group-hover:ring-[#2563EB]/20 transition-all shadow-2xl" />
+                                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-slate-950 rounded-full" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-black text-slate-900 tracking-tight">{event.instructorName}</p>
-                                        <p className="text-[11px] text-slate-500 font-black uppercase tracking-wider mt-0.5 opacity-70">{event.instructorRole}</p>
+                                        <p className="text-base font-black text-white tracking-tight uppercase font-['Outfit']">{event.instructorName}</p>
+                                        <p className="text-[11px] text-slate-500 font-black uppercase tracking-wider mt-1 opacity-80">{event.instructorRole}</p>
                                     </div>
                                 </div>
 
                                 {/* Footer Controls */}
-                                <div className="flex items-center justify-between gap-4">
+                                <div className="flex items-center justify-between gap-6 relative z-10">
                                     <div className="flex flex-wrap gap-2 flex-1">
                                         {event.tags?.slice(0, 2).map((tag, i) => (
-                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/5 px-3 py-1.5 rounded-xl border border-[#2563EB]/10">
+                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/10 px-4 py-2 rounded-xl border border-[#2563EB]/20">
                                                 {tag}
                                             </span>
                                         ))}
-                                        {event.attendeeCount !== undefined && (
-                                            <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-black uppercase tracking-widest ml-auto">
-                                                <FaUsers className="text-slate-300" />
-                                                <span>{event.attendeeCount}+</span>
-                                            </div>
-                                        )}
                                     </div>
                                     <motion.button
-                                        whileHover={{ scale: 1.1, rotate: 5 }}
+                                        whileHover={{ scale: 1.15, rotate: 5 }}
                                         whileTap={{ scale: 0.9 }}
-                                        onClick={() => isRegistered ? handleUnregister(event._id) : handleRegister(event._id)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            isRegistered ? handleUnregister(event._id) : handleRegister(event._id);
+                                        }}
                                         disabled={registering[event._id]}
-                                        className={`w-12 h-12 flex items-center justify-center ${isRegistered ? 'bg-emerald-500' : 'bg-slate-900'
-                                            } text-white rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl shadow-slate-900/10 active:shadow-inner disabled:opacity-50`}
+                                        className={`w-14 h-14 flex items-center justify-center ${isRegistered ? 'bg-emerald-500' : 'bg-[#2563EB]'
+                                            } text-white rounded-2xl hover:bg-blue-600 transition-all shadow-2xl shadow-blue-500/20 active:shadow-inner disabled:opacity-50`}
                                     >
                                         {registering[event._id] ? (
-                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                         ) : isRegistered ? (
-                                            <FaCheck size={14} />
+                                            <FaCheck size={16} />
                                         ) : (
-                                            <FaBell size={14} />
+                                            <FaBell size={16} />
                                         )}
                                     </motion.button>
                                 </div>

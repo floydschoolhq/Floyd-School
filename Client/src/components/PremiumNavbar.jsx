@@ -59,8 +59,8 @@ const PremiumNavbar = () => {
     }, []);
 
     // Filter Logic
-    const schoolCourses = courses.filter(c => c.level === 'Beginner' || c.level === 'Intermediate').map(c => ({ name: c.title, link: '/course' }));
-    const collegeCourses = courses.filter(c => c.level === 'Intermediate' || c.level === 'Advanced').map(c => ({ name: c.title, link: '/course' }));
+    const schoolCourses = courses.filter(c => c.level === 'Beginner' || c.level === 'Intermediate').map(c => ({ name: c.title, link: '/school-partnerships' }));
+    const collegeCourses = courses.filter(c => c.level === 'Intermediate' || c.level === 'Advanced').map(c => ({ name: c.title, link: '/online-program' }));
 
     const handleBookSession = () => {
         if (!user) {
@@ -75,14 +75,14 @@ const PremiumNavbar = () => {
 
     const navItems = [
         ...(canViewCourses ? [{
-            name: 'In-School Path',
+            name: 'Offline Batches',
             hasDropdown: true,
-            subItems: schoolCourses.length > 0 ? schoolCourses : [{ name: 'Explore Courses', link: '/course' }]
+            subItems: schoolCourses.length > 0 ? schoolCourses : [{ name: 'Explore Batches', link: '/school-partnerships' }]
         },
         {
-            name: 'Independent Path',
+            name: 'Online Programs',
             hasDropdown: true,
-            subItems: collegeCourses.length > 0 ? collegeCourses : [{ name: 'Explore Programs', link: '/course' }]
+            subItems: collegeCourses.length > 0 ? collegeCourses : [{ name: 'Explore Online', link: '/online-program' }]
         }] : []),
     ];
 
@@ -93,12 +93,14 @@ const PremiumNavbar = () => {
             <motion.div
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#F9DFDF] h-9 flex items-center overflow-hidden shadow-sm"
+                className="fixed top-0 left-0 right-0 z-[60] bg-[#FCF8F8] border-b border-[#FBEFEF] h-10 flex items-center overflow-hidden"
             >
-                <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-center gap-2 text-[10px] md:text-xs font-['Inter']">
-                    <Sparkles size={14} className="text-[#2563EB]" />
-                    <span className="text-slate-600 font-black uppercase tracking-widest font-['Outfit']">School Bootcamps | Independent Online Mastery</span>
-                    <Link to="/school-partnerships" className="text-[#2563EB] font-black hover:underline flex items-center gap-1 ml-4 uppercase tracking-tighter font-['Outfit']">
+                <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between gap-4 text-[10px] font-['Outfit']">
+                    <div className="flex items-center gap-3">
+                        <Sparkles size={14} className="text-[#2563EB] animate-pulse" />
+                        <span className="text-slate-500 font-black uppercase tracking-[0.4em]">School Bootcamps | Independent Online Mastery</span>
+                    </div>
+                    <Link to="/online-program" className="text-[#2563EB] font-black hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors">
                         Institutional Partnership
                         <ArrowRight size={14} />
                     </Link>
@@ -106,9 +108,9 @@ const PremiumNavbar = () => {
             </motion.div>
 
             <motion.nav
-                className={`fixed top-9 left-0 right-0 z-50 transition-colors duration-300 ${isScrolled
-                    ? 'bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(245,175,175,0.1)] border-b border-[#F9DFDF]/50'
-                    : 'bg-[#FCF8F8] border-b border-[#FBEFEF]'
+                className={`fixed top-10 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-[#FBEFEF] py-2'
+                    : 'bg-[#FCF8F8]/90 backdrop-blur-md border-b border-[#FBEFEF] py-4'
                     }`}
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
@@ -119,38 +121,38 @@ const PremiumNavbar = () => {
 
                         {/* Logo Section */}
                         <div
-                            className="flex items-center gap-2 cursor-pointer"
+                            className="flex items-center gap-3 cursor-pointer group"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             {/* Simple Logo Icon */}
-                            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center shadow-lg shadow-[#2563EB]/20">
-                                <span className="text-white font-bold text-lg">TS</span>
+                            <div className="w-10 h-10 rounded-xl bg-[#2563EB] flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)] group-hover:scale-110 transition-transform">
+                                <span className="text-white font-black text-xl font-['Outfit']">TS</span>
                             </div>
 
                             {/* Logo Text */}
-                            <h1 className="text-xl font-black tracking-tight text-slate-800 font-['Outfit']">
+                            <h1 className="text-2xl font-black tracking-tighter text-slate-900 font-['Outfit'] uppercase">
                                 think<span className="text-[#2563EB]">skool</span>
                             </h1>
                         </div>
 
                         {/* Desktop Navigation - Clean & Simple */}
-                        <div className="hidden md:flex items-center gap-8">
+                        <div className="hidden md:flex items-center gap-10">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer h-16 flex items-center">
-                                    <div className="flex items-center gap-1 text-slate-500 group-hover:text-[#2563EB] font-black uppercase text-[11px] tracking-widest transition-colors font-['Outfit']">
+                                    <div className="flex items-center gap-2 text-slate-600 group-hover:text-[#2563EB] font-black uppercase text-[10px] tracking-[0.3em] transition-all font-['Outfit']">
                                         <span>{item.name}</span>
-                                        {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-200" />}
+                                        {item.hasDropdown && <FaChevronDown size={10} className="mt-0.5 group-hover:rotate-180 transition-transform duration-300" />}
                                     </div>
 
                                     {/* Dropdown Menu */}
                                     {item.hasDropdown && (
-                                        <div className="absolute top-16 left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                            <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl shadow-[#2563EB]/10 border border-[#FBEFEF] py-2 w-56 overflow-hidden">
+                                        <div className="absolute top-16 left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                                            <div className="bg-white/98 backdrop-blur-md rounded-[1.5rem] shadow-lg border border-[#FBEFEF] py-4 w-56 overflow-hidden">
                                                 {item.subItems.map((sub, idx) => (
                                                     <Link
                                                         key={idx}
                                                         to={sub.link}
-                                                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors border-l-2 border-transparent hover:border-[#2563EB] font-['Outfit']"
+                                                        className="block px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:bg-[#FCF8F8] hover:text-[#2563EB] transition-all border-l-4 border-transparent hover:border-[#2563EB] font-['Outfit']"
                                                     >
                                                         {sub.name}
                                                     </Link>
@@ -163,13 +165,13 @@ const PremiumNavbar = () => {
                         </div>
 
                         {/* Right Actions */}
-                        <div className="hidden md:flex items-center gap-4">
+                        <div className="hidden md:flex items-center gap-6">
                             <NotificationDropdown />
                             <button
                                 onClick={handleBookSession}
-                                className="px-5 py-2 text-[10px] font-black text-white bg-[#2D2D2D] rounded-lg hover:shadow-xl hover:shadow-[#2563EB]/20 hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
+                                className="px-5 py-2.5 text-[10px] font-black text-slate-700 bg-white border border-[#FBEFEF] rounded-xl hover:bg-[#FCF8F8] hover:border-[#2563EB]/30 hover:text-[#2563EB] hover:-translate-y-0.5 transition-all uppercase tracking-widest font-['Outfit']"
                             >
-                                Book Free Session
+                                Get Started
                             </button>
                             <button
                                 onClick={() => {
@@ -179,10 +181,10 @@ const PremiumNavbar = () => {
                                         navigate('/student/login');
                                     }
                                 }}
-                                className="px-6 py-2.5 text-[11px] font-black text-slate-700 bg-white border border-[#FBEFEF] rounded-xl hover:bg-[#FCF8F8] hover:border-[#2563EB]/30 transition-all uppercase tracking-widest font-['Outfit'] shadow-sm flex items-center gap-2"
+                                className="px-6 py-2.5 text-[10px] font-black text-white bg-[#2563EB] rounded-xl hover:bg-blue-700 transition-all uppercase tracking-widest font-['Outfit'] flex items-center gap-2 shadow-md shadow-blue-500/20"
                             >
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse"></div>
-                                My Classroom
+                                <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                                Control Panel
                             </button>
                         </div>
 

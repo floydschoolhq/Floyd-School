@@ -24,6 +24,7 @@ import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
+import OnlineProgram from './pages/OnlineProgram.jsx';
 
 
 
@@ -49,6 +50,7 @@ import HowItWorksSection from './components/HowItWorksSection';
 import SupportEcosystem from './components/SupportEcosystem';
 import DualModelSection from './components/DualModelSection';
 
+
 // --- Home Page Component ---
 const HomePage = () => {
     return (
@@ -60,11 +62,11 @@ const HomePage = () => {
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative pt-[64px]'>
                 <Hero />
+                <Marque />
                 <DualModelSection />
                 <HowItWorksSection />
                 <SupportEcosystem />
                 <IndustrialNetwork />
-                <Marque />
                 <WhyUsVideo />
                 <ComparisonSection />
                 <AmbitiousSection />
@@ -99,7 +101,8 @@ const App = () => {
         '/student/signup',
         '/student',
         '/downloads',
-        '/contact'
+        '/contact',
+        '/online-program'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -145,6 +148,9 @@ const App = () => {
 
                 {/* School Partnership */}
                 <Route path='/school-partnerships' element={<SchoolPartnership />} />
+
+                {/* Online Program */}
+                <Route path='/online-program' element={<OnlineProgram />} />
             </Routes>
 
             {/* Conditional Footer Rendering */}

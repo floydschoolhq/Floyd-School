@@ -1,154 +1,128 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { School, Globe, Zap, Target, Users, Rocket, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Zap, Users, Globe } from 'lucide-react';
+
+const ModelCard = ({ model, idx, onClick }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: idx * 0.15 }}
+        whileHover={{ y: -6, scale: 1.01 }}
+        className="group relative bg-white rounded-[2rem] p-8 border border-[#FBEFEF] shadow-sm hover:shadow-lg hover:border-[#2563EB]/20 transition-all duration-400 overflow-hidden"
+    >
+        <div className="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-[#2563EB]/5 rounded-full blur-2xl group-hover:opacity-100 opacity-0 transition-opacity" />
+
+        {/* Badge */}
+        <div className="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-5 bg-blue-50 text-[#2563EB] border border-blue-100">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB] mr-2 animate-pulse" />
+            {model.badge}
+        </div>
+
+        <div className="mb-6">
+            <h3 className="text-3xl font-black text-slate-900 font-['Outfit'] uppercase leading-none tracking-tight">{model.title}</h3>
+            <p className="text-[#2563EB] font-bold text-xs tracking-widest mt-2 uppercase font-['Outfit']">{model.subtitle}</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 mb-8">
+            {model.features.map((feature, fIdx) => (
+                <div key={fIdx} className="flex items-center gap-3">
+                    <div className="w-[3px] h-5 bg-[#2563EB] rounded-full" />
+                    <span className="text-xs font-black text-slate-600 uppercase tracking-widest font-['Outfit']">{feature}</span>
+                </div>
+            ))}
+        </div>
+
+        <button
+            onClick={onClick}
+            className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 font-black uppercase text-xs tracking-[0.2em] transition-all duration-300 bg-[#2563EB]/5 text-[#2563EB] border border-[#2563EB]/20 hover:bg-[#2563EB] hover:text-white hover:border-[#2563EB] group/btn"
+        >
+            <span>{model.cta}</span>
+            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+        </button>
+    </motion.div>
+);
 
 const DualModelSection = () => {
+    const navigate = useNavigate();
     const models = [
         {
             id: 'school',
-            title: "School Bootcamps",
-            subtitle: "On-Campus Excellence",
-            description: "We bring elite engineering talent directly to your school's labs. Intensive, week-long technical deep dives where students build production-grade projects in their familiar environment.",
-            icon: <School className="w-8 h-8" />,
-            color: "from-blue-600 to-blue-400",
+            title: "On-Campus",
+            subtitle: "Industrial Bootcamps",
+            color: "from-[#2563EB] via-blue-500 to-[#2563EB]",
             features: [
                 "Expert Mentors On-Site",
                 "Zero Setup Overhead",
-                "School Schedule Alignment",
-                "Institutional Certification"
+                "Industrial Certification"
             ],
-            cta: "Partner Your School",
-            badge: "Offline / On-Campus"
+            cta: "In-School Batch",
+            badge: "Offline"
         },
         {
             id: 'independent',
-            title: "ThinkSkool Pulse",
-            subtitle: "Independent Mastery",
-            description: "A high-octane online journey for students who want to master technology at their own pace. Access our world-class curriculum, industry mentors, and production IDE from anywhere in the world.",
-            icon: <Globe className="w-8 h-8" />,
-            color: "from-slate-800 to-slate-600",
+            title: "Online Live",
+            subtitle: "Global Mastery",
+            color: "from-[#2563EB] via-indigo-500 to-[#2563EB]",
             features: [
-                "Flexible Learning Hours",
-                "Global Student Community",
-                "1-on-1 Dedicated Support",
-                "Industry-Standard Projects"
+                "Flexible Learning",
+                "Global Community",
+                "Dedicated Support"
             ],
-            cta: "Enroll Independently",
-            badge: "Online / 100% Remote"
+            cta: "Enroll Now",
+            badge: "Online"
         }
     ];
 
     return (
-        <section className="relative bg-[#FCF8F8] py-32 overflow-hidden">
-            {/* Background Decorative Elements */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-[#2563EB]/10 to-transparent hidden lg:block" />
-
+        <section className="relative bg-[#FCF8F8] py-16 overflow-hidden border-t border-[#FBEFEF]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-24">
+                <div className="text-center mb-12">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4"
+                        className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-3 font-['Outfit']"
                     >
-                        Our Delivery Framework
+                        Two Paths. One Destination.
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit']"
+                        className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit']"
                     >
-                        Two Paths. <br className="md:hidden" /> One <span className="text-[#2563EB]">Destination.</span>
+                        Delivery <span className="text-[#2563EB]">Models.</span>
                     </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="mt-6 text-slate-500 text-lg max-w-2xl mx-auto font-medium"
-                    >
-                        Whether through your institution or direct online access, we ensure the same elite standard of technical education.
-                    </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 relative">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {models.map((model, idx) => (
-                        <motion.div
+                        <ModelCard
                             key={model.id}
-                            initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="group"
-                        >
-                            <div className="relative p-10 md:p-14 bg-white rounded-[3.5rem] border border-[#FBEFEF] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.05)] hover:shadow-[0_50px_100px_-20px_rgba(37,99,235,0.1)] transition-all duration-700">
-                                {/* Accent Gradient Background */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${model.color} opacity-0 group-hover:opacity-[0.02] transition-opacity duration-700 rounded-[3.5rem]`} />
-
-                                {/* Badge */}
-                                <div className={`inline-flex items-center px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest mb-10 ${idx === 0 ? 'bg-[#2563EB]/10 text-[#2563EB]' : 'bg-slate-100 text-slate-600'}`}>
-                                    {model.badge}
-                                </div>
-
-                                <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
-                                    <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${model.color} flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-500`}>
-                                        {model.icon}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-3xl font-black text-slate-900 font-['Outfit'] uppercase">{model.title}</h3>
-                                        <p className="text-[#2563EB] font-bold text-sm tracking-wide">{model.subtitle}</p>
-                                    </div>
-                                </div>
-
-                                <p className="text-slate-500 leading-relaxed mb-10 font-medium text-lg">
-                                    {model.description}
-                                </p>
-
-                                <div className="space-y-4 mb-12">
-                                    {model.features.map((feature, fIdx) => (
-                                        <div key={fIdx} className="flex items-center gap-3">
-                                            <div className={`w-5 h-5 rounded-full ${idx === 0 ? 'bg-blue-50 text-[#2563EB]' : 'bg-slate-50 text-slate-600'} flex items-center justify-center`}>
-                                                <Target size={12} strokeWidth={3} />
-                                            </div>
-                                            <span className="text-sm font-bold text-slate-700">{feature}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <button
-                                    onClick={() => {
-                                        const el = document.getElementById('registration-form');
-                                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                    }}
-                                    className={`w-full py-5 rounded-2xl flex items-center justify-center gap-3 font-black uppercase text-xs tracking-[0.2em] transition-all duration-300 ${idx === 0
-                                            ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/30 hover:bg-blue-700 hover:-translate-y-1'
-                                            : 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-1'
-                                        }`}
-                                >
-                                    {model.cta}
-                                    <ArrowRight size={16} />
-                                </button>
-                            </div>
-                        </motion.div>
+                            model={model}
+                            idx={idx}
+                            onClick={() => idx === 0 ? navigate('/school-partnerships') : navigate('/online-program')}
+                        />
                     ))}
                 </div>
 
-                {/* Integration Note */}
+                {/* Bottom Note */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-24 p-8 bg-white border border-[#FBEFEF] rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm"
+                    className="mt-10 p-6 bg-white border border-[#FBEFEF] rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm"
                 >
-                    <div className="flex items-center gap-6 text-center md:text-left">
-                        <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center shrink-0">
-                            <Zap className="w-6 h-6" />
+                    <div className="flex items-center gap-5">
+                        <div className="w-12 h-12 bg-[#2563EB]/10 border border-[#2563EB]/20 rounded-2xl flex items-center justify-center shrink-0">
+                            <Zap className="w-6 h-6 text-[#2563EB]" />
                         </div>
                         <div>
-                            <h4 className="text-xl font-black text-slate-900 uppercase font-['Outfit']">United Ecosystem</h4>
-                            <p className="text-slate-500 text-sm font-medium">Both paths gain full access to the ThinkSkool Portal, Industrial Mentors, and our Production Lab environments.</p>
+                            <h4 className="text-lg font-black text-slate-900 uppercase font-['Outfit'] tracking-tight">United Industrial Ecosystem</h4>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Connecting Local Institutes to Global Opportunities</p>
                         </div>
                     </div>
                 </motion.div>

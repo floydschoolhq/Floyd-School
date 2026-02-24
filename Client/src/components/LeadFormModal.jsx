@@ -48,84 +48,84 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
+                        className="relative bg-slate-950 border border-white/10 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden font-['Outfit']"
                     >
                         {/* Header */}
-                        <div className="bg-white p-8 border-b border-[#FBEFEF] text-slate-900 flex justify-between items-start">
+                        <div className="bg-slate-900/50 p-10 border-b border-white/5 text-white flex justify-between items-start">
                             <div>
                                 {source === 'school_partnership' ? (
                                     <>
-                                        <h3 className="text-2xl font-black mb-1 uppercase tracking-tight">Start <span className="text-[#2563EB]">Partnership</span></h3>
-                                        <p className="text-slate-500 text-sm font-medium">Schedule a briefing for your institution.</p>
+                                        <h3 className="text-3xl font-black mb-2 uppercase tracking-tighter">Start <span className="text-[#2563EB]">Partnership</span></h3>
+                                        <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Architect industrial labs.</p>
                                     </>
                                 ) : (
                                     <>
-                                        <h3 className="text-2xl font-black mb-1 uppercase tracking-tight">Book a <span className="text-[#2563EB]">Free Session</span></h3>
-                                        <p className="text-slate-500 text-sm font-medium">Get expert guidance for your future.</p>
+                                        <h3 className="text-3xl font-black mb-2 uppercase tracking-tighter">Book <span className="text-[#2563EB]">Briefing</span></h3>
+                                        <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Strategize your career path.</p>
                                     </>
                                 )}
                             </div>
-                            <button onClick={onClose} className="text-slate-400 hover:text-slate-900 transition-colors p-2 rounded-full hover:bg-[#FCF8F8]">
+                            <button onClick={onClose} className="text-slate-600 hover:text-white transition-colors p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-[#2563EB]">
                                 <FaTimes />
                             </button>
                         </div>
 
                         {/* Body */}
-                        <div className="p-6">
+                        <div className="p-10">
                             {status === 'success' ? (
-                                <div className="text-center py-8">
-                                    <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                                <div className="text-center py-12">
+                                    <div className="w-20 h-20 bg-blue-500/10 text-[#2563EB] rounded-2xl flex items-center justify-center mx-auto mb-8 text-4xl border border-[#2563EB]/20 shadow-2xl">
                                         <FaCheckCircle />
                                     </div>
-                                    <h4 className="text-xl font-bold text-slate-900 mb-2">Request Received!</h4>
-                                    <p className="text-slate-500">
+                                    <h4 className="text-2xl font-black text-white mb-3 uppercase tracking-tight">Signal Received</h4>
+                                    <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest leading-loose">
                                         {source === 'school_partnership'
-                                            ? 'Our partnership team will contact your school shortly.'
-                                            : 'Our expert counselor will call you shortly.'}
+                                            ? 'Our industrial team will establish contact within 24 hours.'
+                                            : 'An expert counselor will ping you shortly.'}
                                     </p>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-4">
+                                <form onSubmit={handleSubmit} className="space-y-6">
                                     {errorMsg && (
-                                        <div className="p-3 bg-blue-50 text-blue-600 text-sm rounded-lg">
+                                        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest rounded-xl">
                                             {errorMsg}
                                         </div>
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
-                                            {source === 'school_partnership' ? 'Administrator Name' : 'Name'}
+                                        <label className="block text-[10px] font-black text-slate-500 mb-2 uppercase tracking-[0.3em]">
+                                            {source === 'school_partnership' ? 'Administrator Name' : 'Identity'}
                                         </label>
                                         <input
                                             type="text"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
-                                            placeholder={source === 'school_partnership' ? "Enter contact person's name" : "Enter your name"}
+                                            className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-[#2563EB] focus:bg-[#2563EB]/5 text-white transition-all font-medium placeholder:text-slate-700"
+                                            placeholder={source === 'school_partnership' ? "Enter contact person's name" : "Your full name"}
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
-                                            {source === 'school_partnership' ? 'Official Email' : 'Email'}
+                                        <label className="block text-[10px] font-black text-slate-500 mb-2 uppercase tracking-[0.3em]">
+                                            {source === 'school_partnership' ? 'Institutional Email' : 'Channel'}
                                         </label>
                                         <input
                                             type="email"
                                             required
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
-                                            placeholder={source === 'school_partnership' ? "principal@school.edu" : "Enter your email"}
+                                            className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-[#2563EB] focus:bg-[#2563EB]/5 text-white transition-all font-medium placeholder:text-slate-700"
+                                            placeholder={source === 'school_partnership' ? "principal@school.edu" : "email@example.com"}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-black text-slate-700 mb-1 uppercase tracking-widest text-[10px]">
-                                            {source === 'school_partnership' ? 'School Contact Number' : 'Phone Number'}
+                                        <label className="block text-[10px] font-black text-slate-500 mb-2 uppercase tracking-[0.3em]">
+                                            {source === 'school_partnership' ? 'Industrial Line' : 'Communication'}
                                         </label>
                                         <input
                                             type="tel"
-                                            className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#2563EB] transition-colors font-medium"
-                                            placeholder="+91 98765 43210"
+                                            className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-[#2563EB] focus:bg-[#2563EB]/5 text-white transition-all font-medium placeholder:text-slate-700"
+                                            placeholder="+91 XXXXX XXXXX"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                         />
@@ -134,9 +134,14 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
-                                        className="w-full bg-[#2D2D2D] text-white font-black py-5 rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-2xl shadow-slate-100 uppercase tracking-widest text-xs active:scale-95"
+                                        className="w-full bg-[#2563EB] text-white font-black py-5 rounded-2xl hover:bg-blue-600 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-[10px] shadow-2xl active:scale-95 group/btn"
                                     >
-                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : (source === 'school_partnership' ? 'Request Briefing' : 'Confirm Registration')}
+                                        {status === 'loading' ? <FaSpinner className="animate-spin" /> : (
+                                            <>
+                                                {source === 'school_partnership' ? 'Establish Partnership' : 'Initiate Briefing'}
+                                                <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
+                                            </>
+                                        )}
                                     </button>
                                 </form>
                             )}

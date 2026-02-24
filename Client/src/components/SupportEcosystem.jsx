@@ -1,15 +1,35 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { Users, Headphones, ShieldCheck, MessageSquare, Zap, Target, Star, Heart } from 'lucide-react';
-import SectionHeader from './common/SectionHeader';
-import { supportRoles } from '../constants/siteData';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Heart, Shield, Star, Headphones, Users, Zap } from 'lucide-react';
 
-const IconMap = {
-    Users, Headphones, ShieldCheck, MessageSquare, Zap, Target, Star, Heart
-};
+const supportRoles = [
+    {
+        role: "Industrial Lead",
+        title: "Technical Mentors",
+        benefits: ["Live Problem Solving", "Code Reviews", "Industrial Best Practices"],
+        icon: <Users className="w-8 h-8" />,
+        color: "from-blue-500 to-indigo-600",
+        delay: 0
+    },
+    {
+        role: "Ops Engine",
+        title: "Support Engineers",
+        benefits: ["24/7 Availability", "Resource Allocation", "System Optimization"],
+        icon: <Shield className="w-8 h-8" />,
+        color: "from-purple-500 to-indigo-600",
+        delay: 0.2
+    },
+    {
+        role: "Experience",
+        title: "Success Managers",
+        benefits: ["Career Coaching", "Network Access", "Personalized Roadmap"],
+        icon: <Star className="w-8 h-8" />,
+        color: "from-blue-500 to-blue-600",
+        delay: 0.4
+    }
+];
 
 const RoleCard = ({ role, index }) => {
-    const IconComponent = IconMap[role.icon] || Users;
     return (
         <motion.div
             initial={{ opacity: 0, y: 50, rotateX: 10 }}
@@ -21,46 +41,46 @@ const RoleCard = ({ role, index }) => {
         >
             <div className={`absolute inset-0 bg-gradient-to-br ${role.color} opacity-0 group-hover:opacity-10 rounded-[3rem] blur-2xl transition-opacity duration-500`} />
 
-            <div className="relative bg-white border border-slate-200 rounded-[3rem] p-10 h-full shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(37,99,235,0.1)] transition-all duration-500 overflow-hidden">
+            <div className="relative bg-white border border-[#FBEFEF] rounded-[2rem] p-7 h-full shadow-sm hover:shadow-md hover:border-[#2563EB]/20 transition-all duration-400 overflow-hidden">
                 {/* Decorative Pattern */}
-                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
-                    <IconComponent className="w-8 h-8" />
+                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.1] transition-opacity">
+                    {role.icon}
                 </div>
 
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center text-white mb-8 shadow-lg shadow-inherit/20`}>
-                    <IconComponent className="w-8 h-8" />
+                <div className={`w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#2563EB] mb-5 border border-blue-100 group-hover:bg-[#2563EB] group-hover:text-white transition-all shadow-sm`}>
+                    {React.cloneElement(role.icon, { className: "w-6 h-6" })}
                 </div>
 
-                <div className="mb-6">
-                    <p className={`text-[10px] font-black uppercase tracking-[0.3em] bg-gradient-to-r ${role.color} bg-clip-text text-transparent mb-2 font-['Outfit']`}>
+                <div className="mb-5">
+                    <p className={`text-[9px] font-black uppercase tracking-[0.4em] text-[#2563EB] mb-2 font-['Outfit']`}>
                         {role.role}
                     </p>
-                    <h3 className="text-2xl font-black text-slate-900 font-['Outfit'] tracking-tight">
+                    <h3 className="text-2xl font-black text-slate-900 font-['Outfit'] tracking-tighter uppercase leading-none">
                         {role.title}
                     </h3>
                 </div>
 
-                <ul className="space-y-4">
+                <ul className="space-y-3">
                     {role.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-center gap-3 text-[11px] font-black text-slate-700 uppercase tracking-widest font-['Outfit']">
-                            <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${role.color}`} />
+                        <li key={i} className="flex items-center gap-3 text-[9px] font-black text-slate-500 uppercase tracking-widest font-['Outfit']">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
                             {benefit}
                         </li>
                     ))}
                 </ul>
 
                 {/* Bottom Graphic */}
-                <div className="mt-12 flex items-center justify-between">
+                <div className="mt-6 flex items-center justify-between pt-5 border-t border-slate-100">
                     <div className="flex -space-x-2">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">
+                            <div key={i} className="w-8 h-8 rounded-lg border-2 border-white bg-slate-100 flex items-center justify-center text-[9px] font-black text-slate-400">
                                 {String.fromCharCode(64 + i)}
                             </div>
                         ))}
                     </div>
-                    <div className="flex items-center gap-1 text-[#2563EB]">
+                    <div className="flex items-center gap-1.5 text-[#2563EB]">
                         <Star size={12} fill="currentColor" />
-                        <span className="text-[10px] font-black font-['Outfit']">PREMIUM SUPPORT</span>
+                        <span className="text-[9px] font-black font-['Outfit'] uppercase tracking-[0.2em]">Elite Support</span>
                     </div>
                 </div>
             </div>
@@ -79,29 +99,32 @@ const SupportEcosystem = () => {
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
     return (
-        <section ref={containerRef} className="relative bg-[#F8FAFC] pt-32 pb-6 overflow-hidden border-t border-slate-200">
-            {/* Background 3D Elements */}
-            <motion.div style={{ y, opacity }} className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <div className="absolute top-1/4 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[100px]" />
-
-                {/* Orbital Rings */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-slate-200/50 rounded-full animate-[spin_60s_linear_infinite]" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-slate-200 rounded-full animate-[spin_40s_linear_infinite_reverse]" />
-            </motion.div>
+        <section ref={containerRef} className="relative bg-white pt-16 pb-16 overflow-hidden border-t border-[#FBEFEF]">
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-24">
-                    <SectionHeader
-                        subtitle="Our Team"
-                        title={<span>Support That <span className="text-[#2563EB]">Never Sleeps</span></span>}
-                        light={true}
-                    />
+                <div className="text-center mb-10">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100 mb-4"
+                    >
+                        <Heart size={12} className="text-[#2563EB] fill-[#2563EB]" />
+                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-widest font-['Outfit']">The Human Engine</span>
+                    </motion.div>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter font-['Outfit'] uppercase"
+                    >
+                        Support That <span className="text-[#2563EB]">Never Sleeps</span>
+                    </motion.h2>
+
                 </div>
 
                 {/* Roles Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {supportRoles.map((role, idx) => (
                         <RoleCard key={idx} role={role} index={idx} />
                     ))}
@@ -109,29 +132,26 @@ const SupportEcosystem = () => {
 
                 {/* Bottom CTA Graphic */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="mt-24 p-12 bg-[#2D2D2D] rounded-[3rem] relative overflow-hidden group shadow-2xl"
+                    className="mt-8 p-6 bg-[#FCF8F8] rounded-[2rem] border border-[#FBEFEF] relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4"
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="text-center md:text-left">
+                        <h3 className="text-xl font-black text-slate-900 font-['Outfit'] uppercase tracking-tight">
+                            Integrated <span className="text-[#2563EB]">Help Desk</span>
+                        </h3>
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest font-['Outfit']">Global Response Infrastructure</p>
+                    </div>
 
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                        <div className="text-center md:text-left">
-                            <h3 className="text-3xl font-black text-white mb-2 font-['Outfit'] uppercase tracking-tight">
-                                Integrated <span className="text-[#2563EB]">Help Desk</span>
-                            </h3>
+                    <div className="flex items-center gap-6">
+                        <div className="flex flex-col items-center">
+                            <span className="text-2xl font-black text-slate-900 font-['Outfit']">1:1</span>
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Ratio</span>
                         </div>
-
-                        <div className="flex items-center gap-6">
-                            <div className="flex flex-col items-center">
-                                <span className="text-2xl font-black text-white font-['Outfit']">1:1</span>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Ratio</span>
-                            </div>
-                            <div className="w-px h-10 bg-slate-800" />
-                            <div className="flex flex-col items-center">
-                                <span className="text-2xl font-black text-[#2563EB] font-['Outfit']">24/7</span>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active</span>
-                            </div>
+                        <div className="w-px h-10 bg-slate-200" />
+                        <div className="flex flex-col items-center">
+                            <span className="text-2xl font-black text-[#2563EB] font-['Outfit']">24/7</span>
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Active</span>
                         </div>
                     </div>
                 </motion.div>
@@ -141,3 +161,4 @@ const SupportEcosystem = () => {
 };
 
 export default SupportEcosystem;
+

@@ -13,7 +13,6 @@ const Hero = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const containerRef = useRef(null);
 
-    // Global Hero Scroll
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
@@ -25,7 +24,7 @@ const Hero = () => {
         restDelta: 0.001
     });
 
-    const [regType, setRegType] = useState('student'); // student or school
+    const [regType, setRegType] = useState('student');
     const [selectedExperience, setSelectedExperience] = useState('');
     const [formData, setFormData] = useState({
         name: '',
@@ -35,7 +34,7 @@ const Hero = () => {
         institutionName: '',
         designation: ''
     });
-    const [status, setStatus] = useState('idle'); // idle, loading, success
+    const [status, setStatus] = useState('idle');
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -70,7 +69,6 @@ const Hero = () => {
 
             await api.post('/leads', payload);
             setStatus('success');
-            // Reset form after success
             setFormData({ name: '', email: '', phone: '', topic: '', institutionName: '', designation: '' });
             setSelectedExperience('');
             setTimeout(() => setStatus('idle'), 5000);
@@ -89,16 +87,14 @@ const Hero = () => {
         action();
     };
 
-    // 3D Tilt Logic for Elite Form
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    // Smooth out the mouse movement
     const smoothX = useSpring(x, { stiffness: 150, damping: 20 });
     const smoothY = useSpring(y, { stiffness: 150, damping: 20 });
 
-    const rotateX = useTransform(smoothY, [-100, 100], [10, -10]);
-    const rotateY = useTransform(smoothX, [-100, 100], [-10, 10]);
+    const rotateX = useTransform(smoothY, [-100, 100], [8, -8]);
+    const rotateY = useTransform(smoothX, [-100, 100], [-8, 8]);
 
     const handleMouseMove = (event) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -114,122 +110,102 @@ const Hero = () => {
     };
 
     return (
-        <div ref={containerRef} className="relative bg-[#FCF8F8] pt-12 pb-64 overflow-hidden">
-            {/* Background Decorative Particles */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F9DFDF]/5 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
+        <div ref={containerRef} className="relative bg-[#FCF8F8] pt-6 pb-12 overflow-hidden">
+            {/* Subtle Background Decoration */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#2563EB]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/50 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
+                {/* Split Grid Layout */}
+                <div className="grid md:grid-cols-[1fr_460px] gap-8 items-center">
 
-
-
-                {/* Elite Form Section */}
-                <div className="grid md:grid-cols-[1fr_500px] gap-24 max-w-7xl items-center">
-
-                    {/* Left Column: Premium Styled Highlights */}
-                    <div className="flex flex-col gap-16">
-                        {/* Delivery Model Badges */}
-                        <div className="flex flex-wrap gap-3">
+                    {/* Left Column */}
+                    <div className="flex flex-col gap-5">
+                        {/* Delivery Mode Badges */}
+                        <div className="flex flex-wrap gap-2 mt-2">
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="px-5 py-2.5 bg-[#2563EB]/10 border border-[#2563EB]/30 rounded-full flex items-center gap-2.5 backdrop-blur-md"
+                                className="px-4 py-1.5 min-w-fit bg-[#2563EB]/10 border border-[#2563EB]/30 rounded-full flex items-center gap-2 backdrop-blur-md"
                             >
-                                <div className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
-                                <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-[0.2em]">In-School Bootcamps</span>
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse" />
+                                <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.2em]">In-School Bootcamps</span>
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="px-5 py-2.5 bg-slate-900/50 border border-slate-700 rounded-full flex items-center gap-2.5 backdrop-blur-md"
+                                className="px-4 py-1.5 min-w-fit bg-slate-100 border border-slate-200 rounded-full flex items-center gap-2"
                             >
-                                <div className="w-2 h-2 rounded-full bg-slate-400" />
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Independent Online</span>
+                                <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                                <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Independent Online Mastery</span>
                             </motion.div>
                         </div>
 
-                        {/* Updated Hero Headline */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.85] mb-8 font-['Outfit'] uppercase">
-                                Dual Mode <br />
-                                <span className="text-[#2563EB]">Tech Mastery</span>
-                            </h1>
-                            <p className="text-xl md:text-2xl font-medium text-slate-500 max-w-xl leading-relaxed mb-6">
-                                We deliver elite engineering education directly to your <span className="text-[#2563EB] font-bold">School</span> via intensive bootcamps or <span className="text-slate-900 font-bold">Online</span> through our production-grade platform.
-                            </p>
-                        </motion.div>
-
+                        {/* Headlines — reduced size */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative pl-1 overflow-visible"
+                            animate={{ opacity: 1, x: 0 }}
+                            className="flex flex-col gap-1"
                         >
-                            <div className="flex flex-col gap-6">
-                                {[
-                                    { title: "Technical Excellence", icon: <Terminal className="w-4 h-4" /> },
-                                    { title: "Production Mastery", icon: <Cpu className="w-4 h-4" /> },
-                                    { title: "Innovation Core", icon: <Code2 className="w-4 h-4" /> }
-                                ].map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        whileHover={{ x: 10, scale: 1.02 }}
-                                        className="group relative flex items-center gap-5 p-5 rounded-[2.5rem] bg-white border border-[#FBEFEF] shadow-xl hover:shadow-2xl hover:shadow-[#2563EB]/10 hover:border-[#2563EB]/30 transition-all duration-500 overflow-hidden"
-                                    >
-                                        {/* Hover Gradient Glow */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                        {/* Left Accent Bar */}
-                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                                        <div className="relative z-10 w-14 h-14 rounded-2xl bg-[#2D2D2D] flex items-center justify-center text-[#2563EB] shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                            {React.cloneElement(item.icon, { className: "w-6 h-6" })}
-                                        </div>
-
-                                        <div className="relative z-10 flex flex-col">
-                                            <span className="text-sm font-black uppercase tracking-wider text-slate-800 group-hover:text-slate-900 transition-colors">{item.title}</span>
-                                            <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest transition-colors mt-0.5">Industrial Grade</span>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
+                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit'] leading-[0.95]">
+                                DUAL MODE<br />
+                                <span className="text-[#2563EB]">TECH</span><br />
+                                MASTERY
+                            </h1>
                         </motion.div>
 
-                        {/* CTA Buttons - Premium Styled */}
+                        {/* Feature Cards — reduced padding */}
+                        <div className="flex flex-col gap-3">
+                            {[
+                                { title: "Technical Excellence", sub: "Industrial Grade", icon: <Terminal className="w-4 h-4" /> },
+                                { title: "Production Mastery", sub: "Industrial Grade", icon: <Cpu className="w-4 h-4" /> },
+                                { title: "Innovation Core", sub: "Industrial Grade", icon: <Code2 className="w-4 h-4" /> }
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ x: 6, scale: 1.01 }}
+                                    className="group relative flex items-center gap-4 p-3.5 rounded-2xl bg-white border border-[#FBEFEF] shadow-sm hover:border-[#2563EB]/30 hover:shadow-md transition-all duration-300 overflow-hidden"
+                                >
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-l-2xl" />
+                                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-[#2563EB] group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300 shrink-0">
+                                        {React.cloneElement(item.icon, { className: "w-5 h-5" })}
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-sm font-black uppercase tracking-wide text-slate-800 font-['Outfit']">{item.title}</span>
+                                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-widest font-['Outfit']">{item.sub}</span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* CTA Buttons */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.4 }}
-                            className="flex flex-col sm:flex-row items-center gap-4"
+                            transition={{ delay: 0.3 }}
+                            className="flex flex-col sm:flex-row items-center gap-3 mt-2"
                         >
                             <button
                                 onClick={() => handleAuthAction(() => navigate('/student/dashboard'))}
-                                className="w-full sm:w-auto px-12 py-6 bg-[#2D2D2D] text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-slate-800 transition-all shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] hover:-translate-y-1 active:scale-95 font-['Outfit']"
+                                className="w-full sm:w-auto px-8 py-3.5 bg-[#2563EB] text-white rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 font-['Outfit']"
                             >
-                                Go to Dashboard
+                                Get Started
                             </button>
                             <button
-                                onClick={() => {
-                                    const el = document.getElementById('how-it-works');
-                                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                }}
-                                className="w-full sm:w-auto px-12 py-6 bg-white text-slate-900 border-2 border-[#FBEFEF] rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-[#FBEFEF]/50 transition-all hover:-translate-y-1 active:scale-95 font-['Outfit']"
+                                onClick={() => navigate('/online-program')}
+                                className="w-full sm:w-auto px-8 py-3.5 bg-white text-slate-700 border border-[#FBEFEF] rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-[#FCF8F8] hover:border-[#2563EB]/30 transition-all hover:-translate-y-0.5 font-['Outfit']"
                             >
-                                View Programs
+                                Explore Programs
                             </button>
                         </motion.div>
                     </div>
 
-                    {/* Elite Card Column: 3D Interactive Form */}
-                    <div className="perspective-[2000px] flex justify-center items-center">
+                    {/* Right Column: 3D Interactive Form */}
+                    <div className="perspective-[2000px] flex justify-center items-center origin-top md:origin-right">
                         <motion.div
-                            initial={{ opacity: 0, x: 50, rotateY: 15 }}
+                            initial={{ opacity: 0, x: 40, rotateY: 10 }}
                             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                             viewport={{ once: true }}
                             onMouseMove={handleMouseMove}
@@ -241,210 +217,75 @@ const Hero = () => {
                             }}
                             className="relative w-full group"
                         >
-                            {/* Moving Gradient Border Container */}
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-white/20 to-[#2563EB] rounded-[3rem] p-[1px] opacity-20 group-hover:opacity-100 transition-opacity duration-1000 blur-sm" />
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-white/20 to-[#2563EB] rounded-[3rem] p-[1px] opacity-10 group-hover:opacity-40 transition-opacity duration-1000" />
+                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-blue-300 to-[#2563EB] rounded-[2.5rem] p-[1px] opacity-10 group-hover:opacity-60 transition-opacity duration-700 blur-sm" />
 
-                            <div id="registration-form" className="relative bg-[#0F172A]/95 backdrop-blur-3xl rounded-[3.5rem] p-8 md:p-12 shadow-[0_100px_100px_-50px_rgba(0,0,0,0.8)] border border-white/5">
-
-                                {/* Background Subtle Mesh */}
-                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,175,175,0.08),transparent_70%)]" />
+                            <div id="registration-form" className="relative bg-[#2D2D2D] backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-white/5">
 
                                 {status === 'success' ? (
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="text-center py-20 relative z-10"
+                                        className="text-center py-16 relative z-10"
                                     >
-                                        <div className="w-24 h-24 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(16,185,129,0.2)] border border-emerald-500/20">
-                                            <CheckCircle className="w-12 h-12" />
+                                        <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
+                                            <CheckCircle className="w-10 h-10" />
                                         </div>
-                                        <h3 className="text-3xl font-black text-white mb-4 font-['Outfit'] uppercase tracking-tight">
-                                            {regType === 'student' ? 'Application Successful' : 'Request Received'}
-                                        </h3>
-                                        <p className="text-white/40 text-[13px] font-medium leading-relaxed font-['Inter'] max-w-[280px] mx-auto">
-                                            {regType === 'student'
-                                                ? 'Your details have been submitted. An advisor will reach out shortly to guide your journey.'
-                                                : 'Our partnership team has received your request. We will contact your institution shortly.'}
-                                        </p>
-                                        <button
-                                            onClick={() => setStatus('idle')}
-                                            className="mt-12 text-[10px] font-black text-[#2563EB] hover:text-white transition-colors uppercase tracking-[0.3em] font-['Outfit']"
-                                        >
-                                            ← Submit New Request
-                                        </button>
+                                        <h3 className="text-2xl font-black text-white mb-3 font-['Outfit'] uppercase">Success</h3>
+                                        <p className="text-white/40 text-xs font-medium max-w-[240px] mx-auto">Details submitted successfully.</p>
+                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-white uppercase tracking-[0.3em] font-['Outfit']">← New Request</button>
                                     </motion.div>
                                 ) : (
                                     <>
-                                        <div className="mb-10 relative z-10">
-                                            {/* Reg Type Tab Switcher */}
-                                            <div className="flex gap-2 mb-8 p-1.5 bg-white/5 rounded-2xl border border-white/10 shadow-inner">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setRegType('student')}
-                                                    className={`
-                                                        flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 font-['Outfit']
-                                                        ${regType === 'student'
-                                                            ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20 border border-white/10'
-                                                            : 'text-white/40 hover:text-white/60 hover:bg-white/5'}
-                                                    `}
-                                                >
-                                                    Student Solo
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setRegType('school')}
-                                                    className={`
-                                                        flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 font-['Outfit']
-                                                        ${regType === 'school'
-                                                            ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20 border border-white/10'
-                                                            : 'text-white/40 hover:text-white/60 hover:bg-white/5'}
-                                                    `}
-                                                >
-                                                    School Partner
-                                                </button>
+                                        <div className="mb-6 relative z-10">
+                                            {/* Tabs */}
+                                            <div className="flex gap-2 mb-5 p-1 bg-white/5 rounded-xl border border-white/10">
+                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
+                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
                                             </div>
-
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="w-2 h-8 bg-[#2563EB] rounded-full shadow-[0_0_20px_rgba(245,175,175,0.6)]" />
-                                                <h3 className="text-3xl font-black text-white leading-tight tracking-tight font-['Outfit'] uppercase">
-                                                    {regType === 'student' ? <>Start Your <span className="text-[#2563EB]">Journey</span></> : <>Partner <span className="text-[#2563EB]">With Us</span></>}
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="w-1.5 h-7 bg-[#2563EB] rounded-full" />
+                                                <h3 className="text-xl font-black text-white leading-tight font-['Outfit'] uppercase">
+                                                    {regType === 'student' ? 'Start Your Journey' : 'Partner with Us'}
                                                 </h3>
                                             </div>
-                                            <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">
-                                                {regType === 'student' ? "Begin your learning experience" : "Empower your institution's future"}
-                                            </p>
+                                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-5">Begin your learning experience</p>
                                         </div>
 
-                                        <form className="space-y-5 relative z-10" onSubmit={handleFormSubmit}>
+                                        <form className="space-y-3.5 relative z-10" onSubmit={handleFormSubmit}>
                                             {regType === 'student' ? (
                                                 <>
-                                                    {/* Experience Selection - Tech Grid */}
-                                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-                                                        {["Class 6-8", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
-                                                            <button
-                                                                key={idx}
-                                                                type="button"
-                                                                onClick={() => setSelectedExperience(option)}
-                                                                className={`
-                                                                    py-3.5 px-3 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all duration-500 relative overflow-hidden active:scale-95
-                                                                    ${selectedExperience === option
-                                                                        ? 'bg-white text-slate-950 shadow-[0_0_25px_rgba(255,255,255,0.3)]'
-                                                                        : 'bg-white/5 text-white/40 hover:text-white/70 border border-white/10 hover:border-white/20'}
-                                                                `}
-                                                            >
-                                                                {option}
-                                                                {selectedExperience === option && (
-                                                                    <motion.div
-                                                                        layoutId="activeGlow"
-                                                                        className="absolute inset-x-4 bottom-1 h-0.5 bg-slate-950 rounded-full"
-                                                                    />
-                                                                )}
-                                                            </button>
+                                                    <div className="grid grid-cols-3 gap-2">
+                                                        {["Class 8-9", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
+                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2.5 px-1 rounded-xl text-[9px] font-black uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/5 text-white/40 border border-white/10 hover:border-white/20'}`}>{option}</button>
                                                         ))}
                                                     </div>
-
-                                                    {/* Custom Advanced Select */}
-                                                    <div className="relative group">
-                                                        <select
-                                                            name="topic"
-                                                            value={formData.topic}
-                                                            onChange={handleInputChange}
-                                                            required
-                                                            className="w-full text-[11px] p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white placeholder:text-white/20 appearance-none focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-black uppercase tracking-widest cursor-pointer hover:bg-white/10 shadow-xl"
-                                                        >
-                                                            <option value="" className="bg-slate-950">Select Course</option>
-                                                            <option value="Full Stack Development" className="bg-slate-950">Full Stack Engineering</option>
-                                                            <option value="Data Science & AI" className="bg-slate-950">Data Excellence & AI</option>
-                                                            <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
-                                                            <option value="IoT & Robotics" className="bg-slate-950">Systems & Robotics</option>
-                                                        </select>
-                                                        <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-[#2563EB] transition-colors">
-                                                            <ArrowRight size={16} className="rotate-90" />
-                                                        </div>
-                                                    </div>
+                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white appearance-none focus:outline-none focus:border-[#2563EB]/50 font-black uppercase tracking-widest cursor-pointer">
+                                                        <option value="" className="bg-slate-950">Select Course</option>
+                                                        <option value="Full Stack" className="bg-slate-950">Full Stack</option>
+                                                        <option value="AI & ML" className="bg-slate-950">AI & ML</option>
+                                                        <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
+                                                        <option value="Robotics" className="bg-slate-950">Robotics</option>
+                                                    </select>
                                                 </>
                                             ) : (
-                                                <div className="space-y-4">
-                                                    <input
-                                                        type="text"
-                                                        name="institutionName"
-                                                        value={formData.institutionName}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        placeholder="Institution / School Name"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        name="designation"
-                                                        value={formData.designation}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        placeholder="Your Designation (e.g. Principal, Director)"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
-                                                    />
+                                                <div className="space-y-3">
+                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
                                                 </div>
                                             )}
-
-                                            {/* Ultra Sleek Inputs */}
-                                            <div className="space-y-4">
-                                                <div className="relative group">
-                                                    <input
-                                                        type="text"
-                                                        name="name"
-                                                        value={formData.name}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        placeholder={regType === 'student' ? "Full Name" : "Contact Person Name"}
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <input
-                                                        type="tel"
-                                                        name="phone"
-                                                        value={formData.phone}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        placeholder="Phone Number"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
-                                                    />
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        value={formData.email}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        placeholder="Email Address"
-                                                        className="w-full text-xs p-4 rounded-[1.2rem] bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#2563EB]/50 focus:ring-4 focus:ring-[#2563EB]/5 transition-all font-medium placeholder:text-white/20 hover:bg-white/10"
-                                                    />
+                                            <div className="space-y-3">
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
                                                 </div>
                                             </div>
-
-                                            {/* Elite Access Button */}
-                                            <motion.button
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                type="submit"
-                                                disabled={status === 'loading'}
-                                                className="w-full relative group overflow-hidden rounded-[1.8rem] transition-all shadow-[0_25px_50px_-20px_rgba(245,175,175,0.4)]"
-                                            >
-                                                <div className="absolute inset-0 bg-[#2563EB] transition-transform duration-700 group-hover:scale-110" />
-                                                <div className="relative py-4 text-white font-black text-lg uppercase tracking-[0.25em] flex items-center justify-center gap-3">
-                                                    {status === 'loading' ? (
-                                                        <div className="w-5 h-5 border-3 border-white/20 border-t-white rounded-full animate-spin" />
-                                                    ) : (
-                                                        <>Get Started <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" /></>
-                                                    )}
+                                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[1.5rem] transition-all bg-[#2563EB] hover:bg-blue-600">
+                                                <div className="py-3.5 text-white font-black text-base uppercase tracking-[0.25em] flex items-center justify-center gap-2">
+                                                    {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={16} /></>}
                                                 </div>
                                             </motion.button>
-
-                                            <div className="flex items-center gap-4 py-2">
-                                                <div className="h-[1px] flex-1 bg-white/10" />
-                                                <p className="text-[10px] text-white/40 font-black uppercase tracking-widest text-center">Secure Registration</p>
-                                                <div className="h-[1px] flex-1 bg-white/10" />
-                                            </div>
+                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest font-['Outfit']">Secure Registration</p>
                                         </form>
                                     </>
                                 )}
@@ -453,14 +294,9 @@ const Hero = () => {
                     </div>
                 </div>
 
-
-
-
-
-                {/* Modal for Lead Gen */}
                 <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source="hero_10x_card" />
             </div>
-        </div >
+        </div>
     );
 };
 
