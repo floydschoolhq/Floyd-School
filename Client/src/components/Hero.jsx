@@ -151,49 +151,70 @@ const Hero = () => {
                     <div className="grid grid-cols-2 gap-4 h-fit">
                         {/* Major Tile - Technical Excellence */}
                         <motion.div
-                            whileHover={{ y: -8, scale: 1.02 }}
-                            className="col-span-2 relative p-10 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            whileHover={{ y: -6 }}
+                            transition={{ duration: 0.5 }}
+                            className="col-span-2 relative p-8 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[80px] -mr-32 -mt-32 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#2563EB]/[0.02] to-transparent pointer-events-none" />
-                            <div className="relative z-10">
-                                <div className="w-14 h-14 rounded-2xl bg-[#2563EB] flex items-center justify-center text-white mb-6 shadow-xl shadow-blue-500/30">
-                                    <Terminal className="w-7 h-7" />
+                            {/* Gradient top edge */}
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
+                            {/* Ambient glow */}
+                            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-600/15 rounded-full blur-[80px] group-hover:bg-blue-600/25 transition-all duration-700" />
+                            <div className="relative z-10 flex items-center justify-between gap-6">
+                                <div className="flex items-center gap-5">
+                                    <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-[0_0_30px_rgba(37,99,235,0.5)] shrink-0">
+                                        <Terminal className="w-7 h-7" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-tight mb-1">Technical Excellence</h3>
+                                        <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.25em]">Industrial Grade Systems</span>
+                                    </div>
                                 </div>
-                                <h3 className="text-3xl font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-2">Technical Excellence</h3>
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2563EB]/10 text-[#2563EB] text-[9px] font-bold uppercase tracking-[0.2em]">
-                                    Industrial Grade Systems
+                                <div className="text-right shrink-0 hidden sm:block">
+                                    <p className="text-4xl font-black text-white/10 group-hover:text-blue-500/20 transition-colors duration-500 select-none">01</p>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Secondary Tile - Projects */}
+                        {/* Secondary Tile - Live Ops */}
                         <motion.div
-                            whileHover={{ y: -8, scale: 1.02 }}
-                            className="relative p-7 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            whileHover={{ y: -6 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="relative p-6 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-slate-900/[0.02] rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-slate-900/[0.05] transition-colors" />
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-500/40 to-transparent" />
+                            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-slate-700/20 rounded-full blur-[50px] group-hover:bg-blue-700/15 transition-all duration-500" />
                             <div className="relative z-10">
-                                <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white mb-4 shadow-lg shadow-slate-900/10">
+                                <div className="w-11 h-11 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Cpu className="w-5 h-5" />
                                 </div>
-                                <h4 className="text-lg font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-1">Live Ops</h4>
-                                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Deployment</span>
+                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Live Ops</h4>
+                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-[0.2em]">Deployment</span>
                             </div>
                         </motion.div>
 
-                        {/* Secondary Tile - Architecture */}
+                        {/* Secondary Tile - Engineering */}
                         <motion.div
-                            whileHover={{ y: -8, scale: 1.02 }}
-                            className="relative p-7 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            whileHover={{ y: -6 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="relative p-6 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#2563EB]/[0.02] rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-[#2563EB]/[0.05] transition-colors" />
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+                            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-700/10 rounded-full blur-[50px] group-hover:bg-blue-600/20 transition-all duration-500" />
                             <div className="relative z-10">
-                                <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] mb-4">
+                                <div className="w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Code2 className="w-5 h-5" />
                                 </div>
-                                <h4 className="text-lg font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-1">Engineering</h4>
-                                <span className="text-[8px] font-bold text-[#2563EB] uppercase tracking-[0.2em]">Finality</span>
+                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Engineering</h4>
+                                <span className="text-xs font-semibold text-blue-500/70 uppercase tracking-[0.2em]">Finality</span>
                             </div>
                         </motion.div>
 
