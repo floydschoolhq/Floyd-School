@@ -213,3 +213,4 @@ const SchoolPartnership = () => {
 };
 
 export default SchoolPartnership;
+

@@ -6,6 +6,7 @@ import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
 import api from '../api/axios';
+import heroBg from '../assets/images/2.png';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -110,94 +111,98 @@ const Hero = () => {
     };
 
     return (
-        <div ref={containerRef} className="relative bg-[#FCF8F8] pt-32 pb-20 overflow-hidden">
-            {/* Subtle Background Decoration */}
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#2563EB]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/50 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
+        <section id="home" ref={containerRef} className="relative pt-28 pb-20 overflow-hidden">
+            {/* Immersive Tech Backdrop with User Provided Image */}
+            <div className="absolute inset-0 z-0">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{
+                        backgroundImage: `url(${heroBg})`,
+                        imageRendering: 'auto',
+                        WebkitBackfaceVisibility: 'hidden', // Prevents shimmering/blur during scroll
+                        transform: 'translateZ(0)' // Forced GPU acceleration for sharper rendering
+                    }}
+                />
+
+                {/* Refined Contrast Overlays - Removed Blur to preserve image quality */}
+                <div className="absolute inset-0 bg-white/30" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/40 to-white/10 opacity-90" />
+                <div className="absolute inset-0 bg-[radial-gradient(#2563EB_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.05]" />
+
+                {/* Animated Floating Gradients for Depth */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.5, 0.3],
+                        x: [0, 50, 0],
+                        y: [0, -50, 0]
+                    }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px]"
+                />
+            </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 {/* Split Grid Layout */}
                 <div className="grid md:grid-cols-[1fr_460px] gap-16 items-center">
 
-                    {/* Left Column */}
-                    <div className="flex flex-col gap-5">
-                        {/* Delivery Mode Badges */}
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="px-4 py-1.5 min-w-fit bg-[#2563EB]/10 border border-[#2563EB]/30 rounded-full flex items-center gap-2 backdrop-blur-md"
-                            >
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse" />
-                                <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.2em]">In-School Bootcamps</span>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="px-4 py-1.5 min-w-fit bg-slate-100 border border-slate-200 rounded-full flex items-center gap-2"
-                            >
-                                <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                                <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Online Learning Pathways</span>
-                            </motion.div>
-                        </div>
-
-                        {/* Headlines — reduced size */}
+                    {/* Left Column: Bento Hub */}
+                    <div className="grid grid-cols-2 gap-4 h-fit">
+                        {/* Major Tile - Technical Excellence */}
                         <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="flex flex-col gap-3"
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="col-span-2 relative p-10 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
                         >
-                            <h1 className="text-4xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit'] leading-[0.9]">
-                                LOGIC ALIGNED,<br />
-                                <span className="text-[#2563EB]">FUTURE</span> DEFINED
-                            </h1>
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[80px] -mr-32 -mt-32 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#2563EB]/[0.02] to-transparent pointer-events-none" />
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 rounded-2xl bg-[#2563EB] flex items-center justify-center text-white mb-6 shadow-xl shadow-blue-500/30">
+                                    <Terminal className="w-7 h-7" />
+                                </div>
+                                <h3 className="text-3xl font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-2">Technical Excellence</h3>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2563EB]/10 text-[#2563EB] text-[9px] font-bold uppercase tracking-[0.2em]">
+                                    Industrial Grade Systems
+                                </div>
+                            </div>
                         </motion.div>
 
-                        {/* Feature Cards — reduced padding */}
-                        <div className="flex flex-col gap-3">
-                            {[
-                                { title: "Technical Excellence", sub: "Industrial Grade", icon: <Terminal className="w-4 h-4" /> },
-                                { title: "Real-world Projects", sub: "Industrial Grade", icon: <Cpu className="w-4 h-4" /> },
-                                { title: "Software Engineering", sub: "Industrial Grade", icon: <Code2 className="w-4 h-4" /> }
-                            ].map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    whileHover={{ x: 6, scale: 1.01 }}
-                                    className="group relative flex items-center gap-4 p-3.5 rounded-2xl bg-white border border-[#FBEFEF] shadow-sm hover:border-[#2563EB]/30 hover:shadow-md transition-all duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-l-2xl" />
-                                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-[#2563EB] group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300 shrink-0">
-                                        {React.cloneElement(item.icon, { className: "w-5 h-5" })}
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-black uppercase tracking-wide text-slate-800 font-['Outfit']">{item.title}</span>
-                                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-widest font-['Outfit']">{item.sub}</span>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* CTA Buttons */}
+                        {/* Secondary Tile - Projects */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className="flex flex-col sm:flex-row items-center gap-3 mt-8"
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="relative p-7 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
                         >
-                            <button
-                                onClick={() => handleAuthAction(() => navigate('/student/dashboard'))}
-                                className="w-full sm:w-auto px-8 py-3.5 bg-[#2563EB] text-white rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 font-['Outfit']"
-                            >
-                                Get Started
-                            </button>
-                            <button
-                                onClick={() => navigate('/online-program')}
-                                className="w-full sm:w-auto px-8 py-3.5 bg-white text-slate-700 border border-[#FBEFEF] rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-[#FCF8F8] hover:border-[#2563EB]/30 transition-all hover:-translate-y-0.5 font-['Outfit']"
-                            >
-                                Explore Programs
-                            </button>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-slate-900/[0.02] rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-slate-900/[0.05] transition-colors" />
+                            <div className="relative z-10">
+                                <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white mb-4 shadow-lg shadow-slate-900/10">
+                                    <Cpu className="w-5 h-5" />
+                                </div>
+                                <h4 className="text-lg font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-1">Live Ops</h4>
+                                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Deployment</span>
+                            </div>
+                        </motion.div>
+
+                        {/* Secondary Tile - Architecture */}
+                        <motion.div
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="relative p-7 rounded-[3rem] bg-white border border-white shadow-[0_20px_50px_rgba(37,99,235,0.05)] overflow-hidden group transition-all duration-500"
+                        >
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#2563EB]/[0.02] rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-[#2563EB]/[0.05] transition-colors" />
+                            <div className="relative z-10">
+                                <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] mb-4">
+                                    <Code2 className="w-5 h-5" />
+                                </div>
+                                <h4 className="text-lg font-extrabold text-slate-900 uppercase tracking-tight leading-tight mb-1">Engineering</h4>
+                                <span className="text-[8px] font-bold text-[#2563EB] uppercase tracking-[0.2em]">Finality</span>
+                            </div>
+                        </motion.div>
+
+                        {/* CTA Bento Tile */}
+                        <motion.div
+                            className="col-span-2 mt-4 p-2 rounded-[3rem] bg-slate-900 shadow-2xl flex items-center gap-2"
+                        >
+                            <button className="flex-1 py-5 rounded-[2.5rem] bg-[#2563EB] text-white font-extrabold uppercase text-xs tracking-[0.2em] hover:bg-blue-600 transition-all">Enroll Now</button>
+                            <button className="flex-1 py-5 rounded-[2.5rem] bg-slate-800 text-white font-extrabold uppercase text-xs tracking-[0.2em] hover:bg-slate-700 transition-all">Explore</button>
                         </motion.div>
                     </div>
 
@@ -216,9 +221,11 @@ const Hero = () => {
                             }}
                             className="relative w-full group"
                         >
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-blue-300 to-[#2563EB] rounded-[2.5rem] p-[1px] opacity-10 group-hover:opacity-60 transition-opacity duration-700 blur-sm" />
+                            <div className="absolute -inset-[2px] bg-gradient-to-r from-[#2563EB] via-blue-400 to-[#2563EB] rounded-[4rem] p-[2.5px] opacity-100 shadow-[0_0_60px_rgba(37,99,235,0.4)] blur-[1px] transition-opacity duration-700" />
 
-                            <div id="registration-form" className="relative bg-slate-950/40 backdrop-blur-2xl rounded-[3rem] p-6 md:p-10 shadow-3xl border border-white/10 overflow-hidden relative z-10">
+                            <div id="registration-form" className="relative bg-slate-950/90 group-hover:bg-black/95 backdrop-blur-3xl rounded-[3.5rem] p-6 md:p-10 shadow-3xl overflow-hidden relative z-10 transition-all duration-700">
+                                {/* Intense Permanent Backdrop Glow */}
+                                <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-900/10 transition-colors duration-700 pointer-events-none" />
                                 {/* Interior Glass Highlight */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
 
@@ -231,22 +238,22 @@ const Hero = () => {
                                         <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
                                             <CheckCircle className="w-10 h-10" />
                                         </div>
-                                        <h3 className="text-2xl font-black text-white mb-3 font-['Outfit'] uppercase">Success</h3>
+                                        <h3 className="text-2xl font-extrabold text-white mb-3 uppercase">Success</h3>
                                         <p className="text-white/40 text-xs font-medium max-w-[240px] mx-auto">Details submitted successfully.</p>
-                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-white uppercase tracking-[0.3em] font-['Outfit']">← New Request</button>
+                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-white uppercase tracking-[0.3em]">← New Request</button>
                                     </motion.div>
                                 ) : (
                                     <>
                                         <div className="mb-6 relative z-10">
                                             {/* Tabs */}
                                             {/* Tabs */}
-                                            <div className="flex gap-2 mb-6 p-1 bg-white/5 rounded-2xl border border-white/10">
-                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
-                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
+                                            <div className="flex gap-2 mb-6 p-1 bg-white/5 rounded-[2rem]">
+                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2.5 rounded-[1.5rem] text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
+                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2.5 rounded-[1.5rem] text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
                                             </div>
                                             <div className="flex items-center gap-3 mb-4">
                                                 <div className="w-1.5 h-7 bg-[#2563EB] rounded-full" />
-                                                <h3 className="text-xl font-black text-white leading-tight font-['Outfit'] uppercase">
+                                                <h3 className="text-xl font-extrabold text-white leading-tight uppercase">
                                                     {regType === 'student' ? 'Start Your Journey' : 'Partner with Us'}
                                                 </h3>
                                             </div>
@@ -258,10 +265,10 @@ const Hero = () => {
                                                 <>
                                                     <div className="grid grid-cols-2 gap-2">
                                                         {["Class 8-9", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
-                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-1.5 px-1 rounded-lg text-[9px] font-black uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/5 text-white/40 border border-white/10 hover:border-white/20'}`}>{option}</button>
+                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/10 text-white/40 border border-transparent hover:border-white/10'}`}>{option}</button>
                                                         ))}
                                                     </div>
-                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white appearance-none focus:outline-none focus:border-[#2563EB]/50 font-black uppercase tracking-widest cursor-pointer">
+                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white appearance-none focus:outline-none focus:bg-white/15 font-bold uppercase tracking-widest cursor-pointer shadow-lg">
                                                         <option value="" className="bg-slate-900">Select Course</option>
                                                         <option value="Full Stack" className="bg-slate-900">Full Stack</option>
                                                         <option value="AI & ML" className="bg-slate-900">AI & ML</option>
@@ -271,23 +278,23 @@ const Hero = () => {
                                                 </>
                                             ) : (
                                                 <div className="space-y-3">
-                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
-                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
                                                 </div>
                                             )}
                                             <div className="space-y-3">
-                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
                                                 <div className="grid grid-cols-2 gap-3">
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
-                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[11px] p-2.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
                                                 </div>
                                             </div>
-                                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[1.5rem] transition-all bg-[#2563EB] hover:bg-blue-600">
-                                                <div className="py-3.5 text-white font-black text-base uppercase tracking-[0.25em] flex items-center justify-center gap-2">
+                                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] transition-all bg-[#2563EB] hover:bg-blue-600 shadow-2xl shadow-blue-500/30">
+                                                <div className="py-3.5 text-white font-extrabold text-base uppercase tracking-widest flex items-center justify-center gap-2">
                                                     {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={16} /></>}
                                                 </div>
                                             </motion.button>
-                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest font-['Outfit']">Secure Registration</p>
+                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest">Secure Registration</p>
                                         </form>
                                     </>
                                 )}
@@ -298,8 +305,9 @@ const Hero = () => {
 
                 <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source="hero_10x_card" />
             </div>
-        </div>
+        </section>
     );
 };
 
 export default Hero;
+

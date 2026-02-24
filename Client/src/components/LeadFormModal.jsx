@@ -48,7 +48,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative bg-slate-950 border border-white/10 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden font-['Outfit']"
+                        className="relative bg-slate-950 border border-white/10 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden"
                     >
                         {/* Header */}
                         <div className="bg-slate-900/50 p-10 border-b border-white/5 text-white flex justify-between items-start">
@@ -154,3 +154,4 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
 };
 
 export default LeadFormModal;
+

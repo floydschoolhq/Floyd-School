@@ -110,3 +110,4 @@ export const OldEducation3DScene = () => {
         </Canvas>
     );
 };
+

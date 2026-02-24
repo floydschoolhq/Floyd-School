@@ -25,8 +25,8 @@ const IndustrialNetwork = () => {
                                 {item.icon}
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="text-sm font-black uppercase tracking-[0.2em] text-slate-800 group-hover:text-[#2563EB] transition-colors font-['Outfit']">{item.label}</span>
-                                <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.4em] mt-2 font-['Outfit']">Tier-1 Partner Network</span>
+                                <span className="text-sm font-extrabold uppercase tracking-[0.2em] text-slate-800 group-hover:text-[#2563EB] transition-colors">{item.label}</span>
+                                <span className="text-[9px] font-bold text-[#2563EB] uppercase tracking-[0.4em] mt-2">Tier-1 Partner Network</span>
                             </div>
                             <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-[220px]">
                                 Seamlessly integrated into our industrial learning ecosystem.
@@ -40,3 +40,4 @@ const IndustrialNetwork = () => {
 };
 
 export default IndustrialNetwork;
+

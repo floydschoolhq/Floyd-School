@@ -45,3 +45,4 @@ const DynamicGreeting = ({ name }) => {
 };
 
 export default DynamicGreeting;
+

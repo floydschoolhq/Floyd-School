@@ -150,3 +150,4 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
         </div>
     );
 };
+

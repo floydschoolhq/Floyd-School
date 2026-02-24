@@ -305,3 +305,4 @@ const LiveSessionView = ({ liveClass, onBack }) => {
 };
 
 export default LiveSessionView;
+

@@ -30,3 +30,4 @@ const renderPage = (currentView, system) => {
   }
 };
 export default renderPage;
+

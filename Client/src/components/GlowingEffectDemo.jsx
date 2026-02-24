@@ -70,3 +70,4 @@ const GridItem = ({ area, icon, title, description }) => {
         </li>
     );
 };
+

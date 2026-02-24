@@ -105,3 +105,4 @@ const CloudCard = ({ text, subtext, top, left, right, bottom, delay }) => {
         </motion.div>
     );
 };
+

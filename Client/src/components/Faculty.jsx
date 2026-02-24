@@ -24,7 +24,7 @@ const FeatureItem = ({ icon: Icon, title, desc }) => (
             <Icon size={18} />
         </div>
         <div className="flex flex-col">
-            <span className="text-xs font-black text-slate-800 uppercase tracking-widest">{title}</span>
+            <span className="text-xs font-bold text-slate-800 uppercase tracking-widest">{title}</span>
             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">{desc}</span>
         </div>
     </motion.div>
@@ -66,11 +66,11 @@ const Faculty = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-10">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[9px] mb-3 font-['Outfit']">Distinguished Faculty</p>
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter font-['Outfit'] uppercase leading-none">
+                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] mb-3">Distinguished Faculty</p>
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tighter uppercase leading-none">
                         Industry Visionaries &amp; <span className="text-[#2563EB]">Engineering</span> Leaders
                     </h2>
-                    <p className="text-xs font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed font-['Outfit']">
+                    <p className="text-xs font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed">
                         Our mentorship ecosystem is powered by veterans from the world's most innovative technology conglomerates.
                     </p>
                 </div>
@@ -106,7 +106,7 @@ const Faculty = () => {
                                         initial={{ opacity: 0, y: 5 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -5 }}
-                                        className="text-[9px] font-black text-slate-700 uppercase tracking-[0.2em]"
+                                        className="text-[9px] font-bold text-slate-700 uppercase tracking-[0.2em]"
                                     >
                                         {slides[currentSlide].type}
                                     </motion.span>
@@ -128,44 +128,44 @@ const Faculty = () => {
                     </div>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 px-4 max-w-[85%] mx-auto">
                     {mentors.map((mentor, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            initial={{ opacity: 0, scale: 0.9, y: 15 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            whileHover={{ y: -6, scale: 1.01 }}
-                            className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/20 hover:shadow-md transition-all duration-300"
+                            transition={{ delay: index * 0.05 }}
+                            whileHover={{ y: -4, scale: 1.02 }}
+                            className="bg-white rounded-[1.2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/20 hover:shadow-md transition-all duration-300 w-full"
                         >
-                            <div className="relative h-72 overflow-hidden bg-slate-950">
+                            <div className="relative h-44 overflow-hidden bg-slate-950">
                                 <img
                                     src={mentor.image}
                                     alt={mentor.name}
-                                    onError={(e) => { e.target.src = `https://i.pravatar.cc/300?u=${index}` }}
+                                    onError={(e) => { e.target.src = `https://i.pravatar.cc/150?u=${index}` }}
                                     className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 opacity-60 group-hover:opacity-100"
                                 />
-                                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent">
-                                    <div className="flex items-center gap-3 text-[#2563EB]">
-                                        <FaBuilding size={14} />
-                                        <span className="text-[10px] font-black uppercase tracking-widest">{mentor.company}</span>
+                                <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent">
+                                    <div className="flex items-center gap-1.5 text-[#2563EB]">
+                                        <FaBuilding size={10} />
+                                        <span className="text-[7px] font-bold uppercase tracking-widest">{mentor.company}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8">
-                                <h3 className="text-2xl font-black text-white mb-2 font-['Outfit'] uppercase tracking-tight">{mentor.name}</h3>
-                                <p className="text-[#2563EB] font-black text-[10px] mb-6 uppercase tracking-[0.3em] font-['Outfit']">{mentor.role}</p>
-                                <p className="text-slate-500 text-xs mb-8 leading-relaxed font-medium">
+                            <div className="p-4">
+                                <h3 className="text-sm font-extrabold text-slate-900 mb-0.5 uppercase tracking-tight truncate">{mentor.name}</h3>
+                                <p className="text-[#2563EB] font-bold text-[7px] mb-3 uppercase tracking-[0.2em] truncate">{mentor.role}</p>
+                                <p className="text-slate-500 text-[8px] mb-4 leading-relaxed font-medium line-clamp-2">
                                     {mentor.bio}
                                 </p>
 
-                                <div className="flex justify-between items-center border-t border-white/5 pt-6">
-                                    <button className="text-slate-600 hover:text-[#2563EB] transition-colors">
-                                        <FaLinkedinIn size={20} />
+                                <div className="flex justify-between items-center border-t border-slate-50 pt-3">
+                                    <button className="text-slate-400 hover:text-[#2563EB] transition-colors">
+                                        <FaLinkedinIn size={14} />
                                     </button>
-                                    <button className="text-[10px] font-black text-white bg-white/5 px-6 py-3 rounded-xl hover:bg-[#2563EB] transition-all uppercase tracking-widest border border-white/10 font-['Outfit']">
+                                    <button className="text-[7px] font-bold text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg hover:bg-[#2563EB] hover:text-white transition-all uppercase tracking-widest border border-slate-100">
                                         Profile
                                     </button>
                                 </div>
@@ -179,3 +179,4 @@ const Faculty = () => {
 };
 
 export default Faculty;
+

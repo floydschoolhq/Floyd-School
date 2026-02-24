@@ -36,7 +36,7 @@ const CourseCard = ({ course }) => {
                 <span className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">{course.rating} Rating</span>
             </div>
 
-            <h3 className="text-2xl font-black text-white uppercase font-['Outfit'] mb-3 tracking-tight">{course.title}</h3>
+            <h3 className="text-2xl font-black text-white uppercase mb-3 tracking-tight">{course.title}</h3>
             <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6">
                 {course.description}
             </p>
@@ -200,7 +200,7 @@ const OnlineProgram = () => {
                     <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
                         <div>
                             <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Industrial Curriculum</p>
-                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase font-['Outfit'] tracking-tighter">Explore <span className="text-[#2563EB]">Programs.</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Explore <span className="text-[#2563EB]">Programs.</span></h2>
                         </div>
                         <div className="flex gap-4">
                             <span className="px-5 py-2 rounded-full border border-white/5 text-[10px] font-black text-white bg-white/5 uppercase tracking-widest">Live Interactive</span>
@@ -233,7 +233,7 @@ const OnlineProgram = () => {
                 <div className="bg-white/2 py-32 border-y border-white/5">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-24">
-                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase font-['Outfit'] tracking-tighter mb-6">Industrial <span className="text-[#2563EB]">Mentors.</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-6">Industrial <span className="text-[#2563EB]">Mentors.</span></h2>
                             <p className="text-slate-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-wide">Learn from technical architects who build high-scale production systems daily.</p>
                         </div>
 
@@ -265,7 +265,7 @@ const OnlineProgram = () => {
                                     <div className="w-16 h-16 rounded-2xl bg-[#0A0F1E] border border-white/5 flex items-center justify-center text-[#2563EB] mb-8 shadow-xl">
                                         <Users size={32} />
                                     </div>
-                                    <h3 className="text-2xl font-black text-white uppercase font-['Outfit'] mb-2 tracking-tight">{role.title}</h3>
+                                    <h3 className="text-2xl font-black text-white uppercase mb-2 tracking-tight">{role.title}</h3>
                                     <p className="text-[#2563EB] text-xs font-black uppercase tracking-widest mb-6">{role.role}</p>
                                     <p className="text-slate-400 text-sm font-medium leading-relaxed mb-8">{role.desc}</p>
                                     <div className="space-y-3">
@@ -286,7 +286,7 @@ const OnlineProgram = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
                     <div className="text-center mb-24">
                         <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Transparent Pricing</p>
-                        <h2 className="text-4xl md:text-5xl font-black text-white uppercase font-['Outfit'] tracking-tighter">Choose Your <span className="text-[#2563EB]">Path.</span></h2>
+                        <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Choose Your <span className="text-[#2563EB]">Path.</span></h2>
                     </div>
 
                     <motion.div
@@ -318,7 +318,7 @@ const OnlineProgram = () => {
                         </div>
                         <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                             <div>
-                                <h3 className="text-3xl md:text-5xl font-black text-white uppercase font-['Outfit'] mb-8 tracking-tighter">Flexible <br /><span className="text-[#2563EB]">Learning Cycles.</span></h3>
+                                <h3 className="text-3xl md:text-5xl font-black text-white uppercase mb-8 tracking-tighter">Flexible <br /><span className="text-[#2563EB]">Learning Cycles.</span></h3>
                                 <div className="space-y-6">
                                     <div className="flex gap-6">
                                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#2563EB] shrink-0 border border-white/10">
@@ -369,7 +369,7 @@ const OnlineProgram = () => {
                         </svg>
                     </div>
                     <div className="max-w-4xl mx-auto px-4 relative z-10">
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-10 tracking-tighter uppercase font-['Outfit']">
+                        <h2 className="text-4xl md:text-6xl font-black text-white mb-10 tracking-tighter uppercase">
                             Start Your Industrial <br /> Engineering Journey.
                         </h2>
                         <button
@@ -392,3 +392,4 @@ const OnlineProgram = () => {
 };
 
 export default OnlineProgram;
+

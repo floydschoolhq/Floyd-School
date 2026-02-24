@@ -70,19 +70,19 @@ const Masterclasses = () => {
     }
 
     return (
-        <section className="bg-[#0A0F1E] py-32 border-t border-white/5 font-['Outfit']">
+        <section className="bg-[#0A0F1E] py-32 border-t border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
                     <div className="space-y-6">
                         <div className="inline-block px-5 py-2 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/30 shadow-2xl">
-                            <span className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px]">Technical Deep Dives</span>
+                            <span className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[10px]">Technical Deep Dives</span>
                         </div>
-                        <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none uppercase">
+                        <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-none uppercase">
                             Expert Integration <span className="text-[#2563EB]">Sessions</span>
                         </h2>
                     </div>
                     <div>
-                        <button className="flex items-center gap-4 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 font-black uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/10 transition-all shadow-2xl backdrop-blur-xl">
+                        <button className="flex items-center gap-4 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 font-bold uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/10 transition-all shadow-2xl backdrop-blur-xl">
                             View All Events <FaArrowRight className="text-[14px]" />
                         </button>
                     </div>
@@ -107,13 +107,13 @@ const Masterclasses = () => {
                                 <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                 {/* Status Badge */}
-                                <div className={`absolute top-10 right-10 px-5 py-2 ${event.isFree ? 'bg-slate-950' : 'bg-[#2563EB]'} text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full z-10 shadow-2xl border border-white/10`}>
+                                <div className={`absolute top-10 right-10 px-5 py-2 ${event.isFree ? 'bg-slate-950' : 'bg-[#2563EB]'} text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full z-10 shadow-2xl border border-white/10`}>
                                     {event.isFree ? 'FREE' : 'PREMIUM'}
                                 </div>
 
                                 {/* Header Info */}
                                 <div className="mb-10 relative z-10">
-                                    <div className="flex items-center gap-5 text-slate-500 font-black text-[10px] uppercase tracking-[0.25em] mb-6">
+                                    <div className="flex items-center gap-5 text-slate-500 font-bold text-[10px] uppercase tracking-[0.25em] mb-6">
                                         <div className="flex items-center gap-2">
                                             <FaCalendarAlt className="text-[#2563EB]" />
                                             {new Date(event.scheduledDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
@@ -124,7 +124,7 @@ const Masterclasses = () => {
                                             {event.startTime}
                                         </div>
                                     </div>
-                                    <h3 className="text-3xl font-black text-white leading-[1.1] group-hover:text-blue-400 transition-colors tracking-tight uppercase font-['Outfit']">
+                                    <h3 className="text-3xl font-extrabold text-white leading-[1.1] group-hover:text-blue-400 transition-colors tracking-tight uppercase">
                                         {event.title}
                                     </h3>
                                 </div>
@@ -136,8 +136,8 @@ const Masterclasses = () => {
                                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-slate-950 rounded-full" />
                                     </div>
                                     <div>
-                                        <p className="text-base font-black text-white tracking-tight uppercase font-['Outfit']">{event.instructorName}</p>
-                                        <p className="text-[11px] text-slate-500 font-black uppercase tracking-wider mt-1 opacity-80">{event.instructorRole}</p>
+                                        <p className="text-base font-extrabold text-white tracking-tight uppercase">{event.instructorName}</p>
+                                        <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wider mt-1 opacity-80">{event.instructorRole}</p>
                                     </div>
                                 </div>
 
@@ -145,7 +145,7 @@ const Masterclasses = () => {
                                 <div className="flex items-center justify-between gap-6 relative z-10">
                                     <div className="flex flex-wrap gap-2 flex-1">
                                         {event.tags?.slice(0, 2).map((tag, i) => (
-                                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/10 px-4 py-2 rounded-xl border border-[#2563EB]/20">
+                                            <span key={i} className="text-[9px] font-bold uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/10 px-4 py-2 rounded-xl border border-[#2563EB]/20">
                                                 {tag}
                                             </span>
                                         ))}
@@ -180,3 +180,4 @@ const Masterclasses = () => {
 };
 
 export default Masterclasses;
+

@@ -159,3 +159,4 @@ const Stars = () => {
 };
 
 export const MemoizedStars = memo(Stars);
+

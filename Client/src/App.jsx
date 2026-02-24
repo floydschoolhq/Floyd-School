@@ -34,11 +34,8 @@ import { TextRevealCardPreview } from './components/TextRevealCardPreview';
 
 import Logo from './components/Logo.jsx';
 import StickyBottomBar from './components/StickyBottomBar.jsx';
-import WhyUs from './components/WhyUs.jsx';
 import Faculty from './components/Faculty.jsx';
 import Masterclasses from './components/Masterclasses.jsx';
-import WhyUsVideo from './components/WhyUsVideo.jsx';
-import ComparisonSection from './components/ComparisonSection.jsx';
 import AmbitiousSection from './components/AmbitiousSection.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 
@@ -67,10 +64,7 @@ const HomePage = () => {
                 <HowItWorksSection />
                 <SupportEcosystem />
                 <IndustrialNetwork />
-                <WhyUsVideo />
-                <ComparisonSection />
                 <AmbitiousSection />
-                <WhyUs />
                 <DetailedProgram />
                 <Masterclasses />
                 <Feature />

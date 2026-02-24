@@ -53,67 +53,86 @@ const DetailedProgram = () => {
     };
 
     return (
-        <section id="programs" className="relative bg-[#0A0F1E] py-32 overflow-hidden border-t border-white/5">
-            {/* Background Decorative Elements */}
-            <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#2563EB]/5 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <section id="programs" className="relative bg-[#020617] py-24 overflow-hidden border-t border-white/5 cyber-mesh">
+            {/* Energy Field Backgrounds */}
+            <div className="absolute top-0 right-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 rounded-full blur-[120px] pointer-events-none animate-float-orb"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none animate-float-orb" style={{ animationDelay: '-5s' }}></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <SectionHeader
-                    subtitle="Advanced Learning Framework"
-                    title={<span>Specialized <span className="text-[#2563EB]">Engineering</span> Programs</span>}
-                    description="Architecting professional competence through immersive technical mastery and expert-led innovation labs."
-                />
+                <div className="text-center mb-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
+                    >
+                        <Brain size={10} className="text-[#2563EB] animate-pulse" />
+                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.4em]">Advanced Learning Framework</span>
+                    </motion.div>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none mb-6"
+                    >
+                        Specialized <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] via-blue-400 to-indigo-500">Engineering</span> Programs
+                    </motion.h2>
+                    <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[8.5px] max-w-xl mx-auto leading-relaxed">
+                        Architecting professional competence through immersive technical mastery and expert-led innovation labs.
+                    </p>
+                </div>
 
                 {/* Cards Grid */}
                 {loading ? (
                     <div className="text-center py-20">
-                        <div className="inline-block w-8 h-8 border-[3px] border-white/5 border-t-[#2563EB] rounded-full animate-spin"></div>
-                        <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-[#2563EB]">Loading Ecosystem...</p>
+                        <div className="inline-block w-6 h-6 border-[2.5px] border-white/5 border-t-[#2563EB] rounded-full animate-spin"></div>
+                        <p className="mt-4 text-[9px] font-bold uppercase tracking-widest text-[#2563EB]">Loading Ecosystem...</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {courses.map((course, index) => (
                             <motion.div
                                 key={course._id || index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                whileHover={{ y: -12, scale: 1.02 }}
+                                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+                                whileHover={{ y: -8 }}
                                 onClick={() => setSelectedCourse(course)}
-                                className="group relative bg-white/5 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/5 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden"
+                                className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2.5rem] p-8 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
                             >
-                                {/* Hover Gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/10 to-transparent transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+                                {/* Intensity Glow Filter */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl" />
 
-                                <div className="relative z-10">
-                                    <div className={`w-16 h-16 rounded-2xl bg-slate-950 flex items-center justify-center mb-8 border border-white/5 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300`}>
-                                        {getIcon(course.icon, "w-8 h-8")}
+                                {/* Glass Shine Sweep */}
+                                <div className="glass-shine-effect" />
+
+                                <div className="relative z-10 flex flex-col h-full">
+                                    <div className={`w-12 h-12 rounded-xl bg-slate-950 flex items-center justify-center mb-8 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
+                                        {getIcon(course.icon, "w-6 h-6 text-[#2563EB] group-hover:text-white transition-colors")}
                                     </div>
 
                                     <div className="flex items-center gap-1 mb-4">
                                         {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={10} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-700"} />
+                                            <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-800"} />
                                         ))}
-                                        <span className="text-[10px] font-black text-slate-500 ml-1 font-['Outfit']">{course.rating}</span>
+                                        <span className="text-[9px] font-black text-slate-500 ml-1 tracking-widest">{course.rating}</span>
                                     </div>
 
-                                    <h3 className="text-2xl font-black text-white mb-4 tracking-tight font-['Outfit'] uppercase group-hover:text-blue-400 transition-colors">
+                                    <h3 className="text-[18px] font-black text-white mb-4 tracking-tight uppercase leading-none group-hover:text-blue-400 transition-colors">
                                         {course.title}
                                     </h3>
 
-                                    <p className="text-slate-500 text-xs mb-8 line-clamp-2 leading-relaxed font-medium font-['Outfit']">
+                                    <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-8 line-clamp-3 leading-relaxed">
                                         {course.description}
                                     </p>
 
-                                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                                        <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 font-['Outfit']">
-                                            <Clock size={12} className="text-[#2563EB]" /> {course.duration}
+                                    <div className="mt-auto flex items-center justify-between pt-6 border-t border-white/5">
+                                        <span className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-white transition-colors">
+                                            <Clock size={10} className="text-[#2563EB]" /> {course.duration}
                                         </span>
-                                        <div className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 transition-all duration-300">
-                                            <ArrowRight size={16} />
+                                        <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                                            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                                         </div>
                                     </div>
                                 </div>
@@ -146,13 +165,13 @@ const DetailedProgram = () => {
                                             <div className="w-24 h-24 rounded-3xl bg-slate-950 shadow-2xl flex items-center justify-center mb-10 border border-white/10">
                                                 {getIcon(selectedCourse.icon, `text-4xl text-[#2563EB]`)}
                                             </div>
-                                            <h2 className="text-4xl font-black text-white mb-6 tracking-tighter font-['Outfit'] uppercase leading-none">{selectedCourse.title}</h2>
-                                            <p className="text-slate-400 text-sm font-medium leading-relaxed mb-10 font-['Outfit']">
+                                            <h2 className="text-4xl font-extrabold text-white mb-6 tracking-tighter uppercase leading-none">{selectedCourse.title}</h2>
+                                            <p className="text-slate-400 text-sm font-medium leading-relaxed mb-10">
                                                 {selectedCourse.description}
                                             </p>
                                             <div className="flex flex-wrap gap-2">
                                                 {selectedCourse.tags?.map((tag, i) => (
-                                                    <span key={i} className="px-4 py-1.5 bg-white/5 text-[10px] font-black uppercase tracking-widest text-[#2563EB] rounded-xl border border-white/5">
+                                                    <span key={i} className="px-4 py-1.5 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-[#2563EB] rounded-xl border border-white/5">
                                                         {tag}
                                                     </span>
                                                 ))}
@@ -160,7 +179,7 @@ const DetailedProgram = () => {
                                         </div>
                                         <button
                                             onClick={() => navigate('/student/signup')}
-                                            className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-black text-[12px] uppercase tracking-[0.25em] py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20 font-['Outfit']"
+                                            className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-bold text-[12px] uppercase tracking-[0.25em] py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20"
                                         >
                                             Enroll Now
                                         </button>
@@ -176,15 +195,15 @@ const DetailedProgram = () => {
                                         </button>
 
                                         <div className="mb-12">
-                                            <h3 className="text-[10px] font-black text-[#2563EB] uppercase tracking-[0.4em] mb-10 font-['Outfit']">Program Details</h3>
+                                            <h3 className="text-[10px] font-bold text-[#2563EB] uppercase tracking-[0.4em] mb-10">Program Details</h3>
                                             <div className="space-y-6">
                                                 <div className="flex items-start gap-5 p-6 bg-white/2 rounded-3xl border border-white/5 group hover:border-[#2563EB]/20 transition-all">
                                                     <div className="w-12 h-12 rounded-2xl bg-slate-950 shadow-2xl flex items-center justify-center text-[#2563EB] border border-white/10">
                                                         <Star size={24} fill="currentColor" />
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-black text-white text-base mb-1 font-['Outfit'] uppercase">Campus Bootcamp</h4>
-                                                        <p className="text-xs text-slate-500 font-medium leading-relaxed font-['Outfit']">
+                                                        <h4 className="font-bold text-white text-base mb-1 uppercase">Campus Bootcamp</h4>
+                                                        <p className="text-xs text-slate-500 font-medium leading-relaxed">
                                                             {selectedCourse.deliveryDetails?.inSchool?.bootcamp || "Intensive 7-day technical bootcamp at campus."}
                                                         </p>
                                                     </div>
@@ -195,10 +214,10 @@ const DetailedProgram = () => {
                                                         <Globe size={24} />
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-black text-white text-base mb-1 font-['Outfit'] uppercase">Global Support Network</h4>
+                                                        <h4 className="font-bold text-white text-base mb-1 uppercase">Global Support Network</h4>
                                                         <div className="grid grid-cols-2 gap-x-6 gap-y-3 mt-4">
-                                                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-['Outfit']">1:1 Tutoring</div>
-                                                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-['Outfit']">24/7 Support</div>
+                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">1:1 Tutoring</div>
+                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">24/7 Support</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +225,7 @@ const DetailedProgram = () => {
                                         </div>
 
                                         <div className="pt-10 border-t border-white/5">
-                                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-3 font-['Outfit']">
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-3">
                                                 <ShieldCheck size={16} className="text-blue-400" /> Professional Certification Achievement
                                             </p>
                                         </div>
@@ -221,7 +240,7 @@ const DetailedProgram = () => {
                 <div className="text-center mt-24">
                     <button
                         onClick={() => navigate('/course')}
-                        className="px-16 py-6 rounded-2xl bg-[#2563EB] text-white font-black uppercase text-[12px] tracking-[0.3em] hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 font-['Outfit'] hover:-translate-y-1"
+                        className="px-16 py-6 rounded-2xl bg-[#2563EB] text-white font-extrabold uppercase text-[12px] tracking-[0.3em] hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 hover:-translate-y-1"
                     >
                         Explore Programs
                     </button>
@@ -232,3 +251,4 @@ const DetailedProgram = () => {
 };
 
 export default DetailedProgram;
+

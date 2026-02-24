@@ -36,3 +36,4 @@ export const ProgressChart = ({ progress, title, subtitle, color = "var(--accent
         </motion.div>
     );
 };
+

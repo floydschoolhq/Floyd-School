@@ -82,3 +82,4 @@ export const DashboardSkeleton = () => (
         </div>
     </motion.div>
 );
+

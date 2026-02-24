@@ -57,8 +57,8 @@ const ComparisonSection = () => {
 
                 {/* Header */}
                 <div className="text-center mb-10">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[9px] mb-3 font-['Outfit']">Performance Metrics</p>
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter font-['Outfit'] uppercase leading-none">
+                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] mb-3">Performance Metrics</p>
+                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tighter uppercase leading-none">
                         Conventional vs <span className="text-[#2563EB]">Future Ready</span>
                     </h2>
                 </div>
@@ -73,7 +73,7 @@ const ComparisonSection = () => {
                         className="bg-white/40 rounded-[2rem] p-8 border border-slate-200 shadow-sm grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
                     >
                         <div className="flex items-center justify-between mb-16">
-                            <span className="px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[9px] font-black uppercase tracking-widest border border-slate-200">
+                            <span className="px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[9px] font-bold uppercase tracking-widest border border-slate-200">
                                 Traditional Education
                             </span>
                             <TrendingDown className="text-slate-700" size={24} />
@@ -85,12 +85,12 @@ const ComparisonSection = () => {
                             {COMPARSIONS.map((step, idx) => (
                                 <div key={idx} className="relative pl-12">
                                     <div className="absolute left-[17px] top-1 w-2.5 h-2.5 rounded-full bg-slate-300 border-2 border-[#FCF8F8] z-10"></div>
-                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 font-['Outfit']">{step.stage}</p>
-                                    <h3 className="text-base font-black text-slate-500 mb-0.5 font-['Outfit'] uppercase">{step.traditional.title}</h3>
+                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">{step.stage}</p>
+                                    <h3 className="text-base font-bold text-slate-500 mb-0.5 uppercase">{step.traditional.title}</h3>
                                     <p className="text-xs text-slate-400 font-medium mb-3">{step.traditional.desc}</p>
                                     <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-slate-100 rounded-full border border-slate-200">
                                         <TrendingDown size={10} className="text-slate-400" />
-                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{step.traditional.metric}</span>
+                                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{step.traditional.metric}</span>
                                     </div>
                                 </div>
                             ))}
@@ -108,7 +108,7 @@ const ComparisonSection = () => {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-[#2563EB]/x rounded-full blur-3xl -mr-32 -mt-32 opacity-10"></div>
 
                         <div className="flex items-center justify-between mb-16 relative z-10">
-                            <span className="px-6 py-2.5 bg-[#2563EB] text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-2xl shadow-blue-500/40 flex items-center gap-2">
+                            <span className="px-6 py-2.5 bg-[#2563EB] text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-2xl shadow-blue-500/40 flex items-center gap-2">
                                 <Sparkles size={14} />
                                 ThinkSkool Method
                             </span>
@@ -130,9 +130,9 @@ const ComparisonSection = () => {
                                         animate={{ scale: [1, 1.2, 1] }}
                                         transition={{ repeat: Infinity, duration: 2, delay: idx * 0.3 }}
                                     ></motion.div>
-                                    <p className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest mb-2 font-['Outfit']">{step.stage}</p>
+                                    <p className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest mb-2">{step.stage}</p>
                                     <div className="flex items-center gap-4 mb-2">
-                                        <h3 className="text-base font-black text-slate-900 font-['Outfit'] uppercase tracking-tight">{step.thinkskool.title}</h3>
+                                        <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-tight">{step.thinkskool.title}</h3>
                                         <div className="w-9 h-9 rounded-xl bg-slate-950 flex items-center justify-center group-hover:bg-[#2563EB] group-hover:text-white border border-white/5 transition-colors duration-300">
                                             {React.cloneElement(step.thinkskool.icon, { size: 18 })}
                                         </div>
@@ -140,7 +140,7 @@ const ComparisonSection = () => {
                                     <p className="text-xs text-slate-500 font-medium mb-4 leading-relaxed">{step.thinkskool.desc}</p>
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#2563EB]/10 rounded-full border border-[#2563EB]/20">
                                         <TrendingUp size={12} className="text-[#2563EB]" />
-                                        <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest font-['Outfit']">{step.thinkskool.metric}</span>
+                                        <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest">{step.thinkskool.metric}</span>
                                     </div>
                                 </motion.div>
                             ))}
@@ -157,10 +157,10 @@ const ComparisonSection = () => {
                     className="mt-8 bg-white rounded-[2rem] p-8 text-center relative overflow-hidden shadow-sm border border-[#FBEFEF]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <h3 className="text-2xl font-black text-slate-900 mb-4 relative z-10 uppercase tracking-tight font-['Outfit']">
+                    <h3 className="text-2xl font-extrabold text-slate-900 mb-4 relative z-10 uppercase tracking-tight">
                         Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
-                    <p className="text-slate-500 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium font-['Outfit']">
+                    <p className="text-slate-500 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">
                         ThinkSkool doesn't just teach code; it remodeled the student's problem-solving core, moving them from passive consumers to professional engineering creators.
                     </p>
                 </motion.div>
@@ -171,3 +171,4 @@ const ComparisonSection = () => {
 };
 
 export default ComparisonSection;
+

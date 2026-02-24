@@ -120,3 +120,4 @@ export const products = [
         thumbnail: image8,
     },
 ];
+

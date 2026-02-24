@@ -220,3 +220,4 @@ const CommentSection = ({ moduleId, moduleTitle }) => {
 };
 
 export default CommentSection;
+

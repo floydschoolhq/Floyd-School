@@ -58,3 +58,4 @@ export const Terminal = ({ output = [], onClear, isRunning }) => {
         </div>
     );
 };
+

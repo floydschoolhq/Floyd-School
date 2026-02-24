@@ -238,3 +238,4 @@ export const ProductCard = ({ product }) => {
         </motion.div>
     );
 };
+

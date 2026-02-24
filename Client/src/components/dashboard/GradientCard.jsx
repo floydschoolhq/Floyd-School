@@ -76,3 +76,4 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
         </GradientCard>
     );
 };
+

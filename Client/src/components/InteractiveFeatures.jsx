@@ -113,3 +113,4 @@ const FeatureItem = ({ feature, color }) => (
 );
 
 export default InteractiveFeatures;
+

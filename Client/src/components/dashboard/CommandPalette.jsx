@@ -174,3 +174,4 @@ const CommandPalette = ({ isOpen, onClose, onNavigate, onTheme }) => {
 };
 
 export default CommandPalette;
+
