@@ -110,14 +110,14 @@ const Hero = () => {
     };
 
     return (
-        <div ref={containerRef} className="relative bg-[#FCF8F8] pt-6 pb-12 overflow-hidden">
+        <div ref={containerRef} className="relative bg-[#FCF8F8] pt-32 pb-20 overflow-hidden">
             {/* Subtle Background Decoration */}
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#2563EB]/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/50 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 {/* Split Grid Layout */}
-                <div className="grid md:grid-cols-[1fr_460px] gap-8 items-center">
+                <div className="grid md:grid-cols-[1fr_460px] gap-16 items-center">
 
                     {/* Left Column */}
                     <div className="flex flex-col gap-5">
@@ -146,7 +146,7 @@ const Hero = () => {
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="flex flex-col gap-1"
+                            className="flex flex-col gap-3"
                         >
                             <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit'] leading-[0.95]">
                                 DUAL MODE<br />
@@ -185,7 +185,7 @@ const Hero = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="flex flex-col sm:flex-row items-center gap-3 mt-2"
+                            className="flex flex-col sm:flex-row items-center gap-3 mt-8"
                         >
                             <button
                                 onClick={() => handleAuthAction(() => navigate('/student/dashboard'))}
@@ -219,7 +219,7 @@ const Hero = () => {
                         >
                             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#2563EB] via-blue-300 to-[#2563EB] rounded-[2.5rem] p-[1px] opacity-10 group-hover:opacity-60 transition-opacity duration-700 blur-sm" />
 
-                            <div id="registration-form" className="relative bg-[#2D2D2D] backdrop-blur-xl rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-white/5">
+                            <div id="registration-form" className="relative bg-white rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-[#FBEFEF]">
 
                                 {status === 'success' ? (
                                     <motion.div
@@ -230,54 +230,54 @@ const Hero = () => {
                                         <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
                                             <CheckCircle className="w-10 h-10" />
                                         </div>
-                                        <h3 className="text-2xl font-black text-white mb-3 font-['Outfit'] uppercase">Success</h3>
-                                        <p className="text-white/40 text-xs font-medium max-w-[240px] mx-auto">Details submitted successfully.</p>
-                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-white uppercase tracking-[0.3em] font-['Outfit']">← New Request</button>
+                                        <h3 className="text-2xl font-black text-slate-900 mb-3 font-['Outfit'] uppercase">Success</h3>
+                                        <p className="text-slate-500 text-xs font-medium max-w-[240px] mx-auto">Details submitted successfully.</p>
+                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-slate-900 uppercase tracking-[0.3em] font-['Outfit']">← New Request</button>
                                     </motion.div>
                                 ) : (
                                     <>
                                         <div className="mb-6 relative z-10">
                                             {/* Tabs */}
-                                            <div className="flex gap-2 mb-5 p-1 bg-white/5 rounded-xl border border-white/10">
-                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
-                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-md' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
+                                            <div className="flex gap-2 mb-5 p-1 bg-slate-50 rounded-xl border border-slate-200">
+                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}>Student Solo</button>
+                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2.5 rounded-lg text-xs font-black uppercase tracking-[0.2em] transition-all font-['Outfit'] ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}>School Partner</button>
                                             </div>
                                             <div className="flex items-center gap-3 mb-4">
                                                 <div className="w-1.5 h-7 bg-[#2563EB] rounded-full" />
-                                                <h3 className="text-xl font-black text-white leading-tight font-['Outfit'] uppercase">
+                                                <h3 className="text-xl font-black text-slate-900 leading-tight font-['Outfit'] uppercase">
                                                     {regType === 'student' ? 'Start Your Journey' : 'Partner with Us'}
                                                 </h3>
                                             </div>
-                                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-5">Begin your learning experience</p>
+                                            <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest pl-5">Begin your learning experience</p>
                                         </div>
 
                                         <form className="space-y-3.5 relative z-10" onSubmit={handleFormSubmit}>
                                             {regType === 'student' ? (
                                                 <>
-                                                    <div className="grid grid-cols-3 gap-2">
+                                                    <div className="grid grid-cols-2 gap-2">
                                                         {["Class 8-9", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
-                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2.5 px-1 rounded-xl text-[9px] font-black uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/5 text-white/40 border border-white/10 hover:border-white/20'}`}>{option}</button>
+                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2 px-1 rounded-xl text-[9px] font-black uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-[#2563EB] text-white' : 'bg-[#FCF8F8] text-slate-500 border border-[#FBEFEF] hover:border-slate-300'}`}>{option}</button>
                                                         ))}
                                                     </div>
-                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white appearance-none focus:outline-none focus:border-[#2563EB]/50 font-black uppercase tracking-widest cursor-pointer">
-                                                        <option value="" className="bg-slate-950">Select Course</option>
-                                                        <option value="Full Stack" className="bg-slate-950">Full Stack</option>
-                                                        <option value="AI & ML" className="bg-slate-950">AI & ML</option>
-                                                        <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
-                                                        <option value="Robotics" className="bg-slate-950">Robotics</option>
+                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 appearance-none focus:outline-none focus:border-[#2563EB]/50 font-black uppercase tracking-widest cursor-pointer">
+                                                        <option value="" className="bg-white">Select Course</option>
+                                                        <option value="Full Stack" className="bg-white">Full Stack</option>
+                                                        <option value="AI & ML" className="bg-white">AI & ML</option>
+                                                        <option value="Cyber Security" className="bg-white">Cyber Intelligence</option>
+                                                        <option value="Robotics" className="bg-white">Robotics</option>
                                                     </select>
                                                 </>
                                             ) : (
                                                 <div className="space-y-3">
-                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
-                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 focus:outline-none placeholder:text-slate-400" />
+                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 focus:outline-none placeholder:text-slate-400" />
                                                 </div>
                                             )}
                                             <div className="space-y-3">
-                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 focus:outline-none placeholder:text-slate-400" />
                                                 <div className="grid grid-cols-2 gap-3">
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
-                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-xs p-3.5 rounded-[1rem] bg-white/5 border border-white/10 text-white focus:outline-none placeholder:text-white/20" />
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 focus:outline-none placeholder:text-slate-400" />
+                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[10px] p-3 rounded-xl bg-[#FCF8F8] border border-[#FBEFEF] text-slate-900 focus:outline-none placeholder:text-slate-400" />
                                                 </div>
                                             </div>
                                             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[1.5rem] transition-all bg-[#2563EB] hover:bg-blue-600">
@@ -285,7 +285,7 @@ const Hero = () => {
                                                     {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={16} /></>}
                                                 </div>
                                             </motion.button>
-                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest font-['Outfit']">Secure Registration</p>
+                                            <p className="text-center text-[8px] text-slate-400 uppercase tracking-widest font-['Outfit']">Secure Registration</p>
                                         </form>
                                     </>
                                 )}
