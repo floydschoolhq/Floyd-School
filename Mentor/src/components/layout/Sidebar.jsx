@@ -12,7 +12,7 @@ import {
     LogOut,
     Presentation
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import BrandLogo from '../common/BrandLogo';
 
 const Sidebar = () => {
     const { logout } = useAuth();
@@ -31,9 +31,7 @@ const Sidebar = () => {
     return (
         <div className="w-64 h-screen bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800">
             <div className="p-6">
-                <h1 className="text-2xl font-black text-white tracking-tight font-['Outfit']">
-                    ThinkSkool <span className="text-sky-500">Mentor</span>
-                </h1>
+                <BrandLogo size="md" suffix="Mentor" />
             </div>
 
             <nav className="flex-1 px-4 py-4 space-y-1" aria-label="Main Navigation">

@@ -14,7 +14,7 @@ import {
     TrendingUp,
     Monitor
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import BrandLogo from '../common/BrandLogo';
 
 const Sidebar = () => {
     const { logout } = useAuth();
@@ -34,12 +34,7 @@ const Sidebar = () => {
     return (
         <div className="w-64 h-screen bg-[#0f172a] text-slate-400 flex flex-col border-r border-slate-800">
             <div className="p-8">
-                <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-3">
-                    <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
-                        <Cpu size={22} />
-                    </div>
-                    <span className="font-['Outfit'] italic">THINK<span className="text-sky-400 not-italic">OS</span></span>
-                </h1>
+                <BrandLogo size="md" suffix="Admin" />
                 <p className="text-[10px] font-black text-sky-500/60 uppercase tracking-[0.3em] mt-3 ml-1">Root Authority</p>
             </div>
 
