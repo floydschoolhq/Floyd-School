@@ -85,19 +85,22 @@ const SupportEcosystem = () => {
     const containerRef = useRef(null);
 
     const allFeatures = [
-        ...supportRoles.map(r => ({ ...r, desc: r.benefits.join(" • ") })),
-        { title: "Professional Networks", desc: "Tier-1 Partner Network Integration", icon: <Users size={16} /> },
-        { title: "Industry Certifications", desc: "Global Verification Standards", icon: <Shield size={16} /> },
-        { title: "24/7 Expert Support", desc: "Always-on Technical Intelligence", icon: <Headphones size={16} /> }
+        ...supportRoles.map(r => ({ ...r, desc: r.benefits.join(" • ") }))
     ];
 
     return (
-        <section id="team" ref={containerRef} className="relative bg-[#020617] py-20 overflow-hidden border-t border-white/5">
+        <section id="support" ref={containerRef} className="relative bg-[#020617] py-20 overflow-hidden border-t border-white/5">
             {/* Ambient Background Energy */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto px-4 relative z-10">
+            <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-7xl mx-auto px-4 relative z-10"
+            >
                 {/* Header */}
                 <div className="text-center mb-16">
                     <motion.div
@@ -149,7 +152,7 @@ const SupportEcosystem = () => {
                         </div>
                     </div>
                 </motion.div>
-            </div>
+            </motion.div>
         </section>
     );
 };

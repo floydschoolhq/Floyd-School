@@ -25,6 +25,7 @@ import DownloadPage from './pages/DownloadPage.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
+import BootcampGallery from './pages/BootcampGallery.jsx';
 
 
 
@@ -53,9 +54,6 @@ const HomePage = () => {
     return (
         <div>
             <GlobalNotificationListener />
-            {/* Premium Navbar */}
-            <PremiumNavbar />
-
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative'>
                 <Hero />
@@ -119,6 +117,7 @@ const App = () => {
     return (
         <div>
             {/* Conditional Navbar Rendering */}
+            {!shouldHideLayout && <PremiumNavbar />}
 
 
             {/* Main Routes */}
@@ -145,6 +144,9 @@ const App = () => {
 
                 {/* Online Program */}
                 <Route path='/online-program' element={<OnlineProgram />} />
+
+                {/* Bootcamp Gallery */}
+                <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
             </Routes>
 
             {/* Conditional Footer Rendering */}

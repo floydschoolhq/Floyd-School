@@ -92,8 +92,7 @@ const StepCard = ({ step, index, side }) => {
         <motion.div
             initial={{ opacity: 0, x: side === 'left' ? -40 : 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: side === 'left' ? -40 : 40 }}
-            viewport={{ once: false, margin: '-60px' }}
+            viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.55, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="relative mb-6 last:mb-0 w-full"
         >
@@ -176,7 +175,13 @@ const HowItWorksSection = () => {
             </div>
 
             {/* Full-width content */}
-            <div className="w-full px-6 xl:px-16 relative z-10">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="w-full px-6 xl:px-16 relative z-10"
+            >
                 {/* SVG Snake Path */}
                 <div className="absolute left-1/2 top-0 bottom-0 w-full -translate-x-1/2 hidden lg:block pointer-events-none">
                     <svg className="w-full h-full" viewBox="0 0 1000 1200" fill="none">
@@ -247,7 +252,7 @@ const HowItWorksSection = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             <div className="absolute top-1/4 -left-24 w-96 h-96 bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/4 -right-24 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />

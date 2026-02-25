@@ -14,6 +14,15 @@ const Hero = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const containerRef = useRef(null);
 
+    const handleEnrollNow = () => {
+        navigate('/online-program');
+    };
+
+    const handleExplore = () => {
+        // Navigate to gallery
+        navigate('/bootcamp-gallery');
+    };
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
@@ -25,15 +34,12 @@ const Hero = () => {
         restDelta: 0.001
     });
 
-    const [regType, setRegType] = useState('student');
     const [selectedExperience, setSelectedExperience] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
-        topic: '',
-        institutionName: '',
-        designation: ''
+        topic: ''
     });
     const [status, setStatus] = useState('idle');
 
@@ -43,34 +49,23 @@ const Hero = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if (regType === 'student') {
-            if (!selectedExperience || !formData.topic || !formData.name || !formData.phone || !formData.email) {
-                alert("Please fill in all details to proceed.");
-                return;
-            }
-        } else {
-            if (!formData.institutionName || !formData.name || !formData.phone || !formData.email) {
-                alert("Please fill in institution and contact details.");
-                return;
-            }
+        if (!selectedExperience || !formData.topic || !formData.name || !formData.phone || !formData.email) {
+            alert("Please fill in all details to proceed.");
+            return;
         }
 
         setStatus('loading');
         try {
-            const payload = regType === 'student' ? {
+            const payload = {
                 ...formData,
                 experience: selectedExperience,
                 source: 'hero_form_student',
                 type: 'course_enquiry'
-            } : {
-                ...formData,
-                source: 'hero_form_school',
-                type: 'school_partnership'
             };
 
             await api.post('/leads', payload);
             setStatus('success');
-            setFormData({ name: '', email: '', phone: '', topic: '', institutionName: '', designation: '' });
+            setFormData({ name: '', email: '', phone: '', topic: '' });
             setSelectedExperience('');
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
@@ -111,7 +106,7 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" ref={containerRef} className="relative pt-28 pb-20 overflow-hidden">
+        <section id="home" ref={containerRef} className="relative pt-24 pb-16 overflow-hidden">
             {/* Immersive Tech Backdrop with User Provided Image */}
             <div className="absolute inset-0 z-0">
                 {/* Background Image */}
@@ -145,7 +140,7 @@ const Hero = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 {/* Split Grid Layout */}
-                <div className="grid md:grid-cols-[1fr_460px] gap-16 items-center">
+                <div className="grid md:grid-cols-[1fr_420px] gap-12 items-center">
 
                     {/* Left Column: Bento Hub */}
                     <div className="grid grid-cols-2 gap-4 h-fit">
@@ -156,7 +151,7 @@ const Hero = () => {
                             viewport={{ once: true }}
                             whileHover={{ y: -6 }}
                             transition={{ duration: 0.5 }}
-                            className="col-span-2 relative p-8 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            className="col-span-2 relative p-7 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
                             {/* Gradient top edge */}
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
@@ -164,12 +159,12 @@ const Hero = () => {
                             <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-600/15 rounded-full blur-[80px] group-hover:bg-blue-600/25 transition-all duration-700" />
                             <div className="relative z-10 flex items-center justify-between gap-6">
                                 <div className="flex items-center gap-5">
-                                    <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-[0_0_30px_rgba(37,99,235,0.5)] shrink-0">
-                                        <Terminal className="w-7 h-7" />
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-[0_0_30px_rgba(37,99,235,0.5)] shrink-0">
+                                        <Terminal className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-tight mb-1">Technical Excellence</h3>
-                                        <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.25em]">Industrial Grade Systems</span>
+                                        <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-tight mb-1">Practical Training</h3>
+                                        <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.25em]">Industrial Tech Bootcamps</span>
                                     </div>
                                 </div>
                                 <div className="text-right shrink-0 hidden sm:block">
@@ -185,7 +180,7 @@ const Hero = () => {
                             viewport={{ once: true }}
                             whileHover={{ y: -6 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="relative p-6 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            className="relative p-5 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-500/40 to-transparent" />
                             <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-slate-700/20 rounded-full blur-[50px] group-hover:bg-blue-700/15 transition-all duration-500" />
@@ -193,8 +188,8 @@ const Hero = () => {
                                 <div className="w-11 h-11 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Cpu className="w-5 h-5" />
                                 </div>
-                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Live Ops</h4>
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-[0.2em]">Deployment</span>
+                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Live Projects</h4>
+                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-[0.2em]">Real-World Exposure</span>
                             </div>
                         </motion.div>
 
@@ -205,7 +200,7 @@ const Hero = () => {
                             viewport={{ once: true }}
                             whileHover={{ y: -6 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="relative p-6 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            className="relative p-5 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
                         >
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
                             <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-700/10 rounded-full blur-[50px] group-hover:bg-blue-600/20 transition-all duration-500" />
@@ -213,17 +208,27 @@ const Hero = () => {
                                 <div className="w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Code2 className="w-5 h-5" />
                                 </div>
-                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Engineering</h4>
-                                <span className="text-xs font-semibold text-blue-500/70 uppercase tracking-[0.2em]">Finality</span>
+                                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Career Track</h4>
+                                <span className="text-xs font-semibold text-blue-500/70 uppercase tracking-[0.2em]">Placement & Portfolio</span>
                             </div>
                         </motion.div>
 
                         {/* CTA Bento Tile */}
                         <motion.div
-                            className="col-span-2 mt-4 p-2 rounded-[3rem] bg-slate-900 shadow-2xl flex items-center gap-2"
+                            className="col-span-2 mt-4 p-1.5 rounded-[2.5rem] bg-slate-900 shadow-2xl flex items-center gap-2"
                         >
-                            <button className="flex-1 py-5 rounded-[2.5rem] bg-[#2563EB] text-white font-extrabold uppercase text-xs tracking-[0.2em] hover:bg-blue-600 transition-all">Enroll Now</button>
-                            <button className="flex-1 py-5 rounded-[2.5rem] bg-slate-800 text-white font-extrabold uppercase text-xs tracking-[0.2em] hover:bg-slate-700 transition-all">Explore</button>
+                            <button
+                                onClick={handleEnrollNow}
+                                className="flex-1 py-4 rounded-[2rem] bg-[#2563EB] text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-blue-600 transition-all active:scale-95"
+                            >
+                                Enroll Now
+                            </button>
+                            <button
+                                onClick={handleExplore}
+                                className="flex-1 py-4 rounded-[2rem] bg-slate-800 text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-slate-700 transition-all active:scale-95"
+                            >
+                                Explore
+                            </button>
                         </motion.div>
                     </div>
 
@@ -244,7 +249,7 @@ const Hero = () => {
                         >
                             <div className="absolute -inset-[2px] bg-gradient-to-r from-[#2563EB] via-blue-400 to-[#2563EB] rounded-[4rem] p-[2.5px] opacity-100 shadow-[0_0_60px_rgba(37,99,235,0.4)] blur-[1px] transition-opacity duration-700" />
 
-                            <div id="registration-form" className="relative bg-slate-950/90 group-hover:bg-black/95 backdrop-blur-3xl rounded-[3.5rem] p-6 md:p-10 shadow-3xl overflow-hidden relative z-10 transition-all duration-700">
+                            <div id="registration-form" className="relative bg-slate-950/90 group-hover:bg-black/95 backdrop-blur-3xl rounded-[3rem] p-7 md:p-11 shadow-3xl overflow-hidden relative z-10 transition-all duration-700">
                                 {/* Intense Permanent Backdrop Glow */}
                                 <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-900/10 transition-colors duration-700 pointer-events-none" />
                                 {/* Interior Glass Highlight */}
@@ -266,53 +271,38 @@ const Hero = () => {
                                 ) : (
                                     <>
                                         <div className="mb-6 relative z-10">
-                                            {/* Tabs */}
-                                            {/* Tabs */}
-                                            <div className="flex gap-2 mb-6 p-1 bg-white/5 rounded-[2rem]">
-                                                <button type="button" onClick={() => setRegType('student')} className={`flex-1 py-2.5 rounded-[1.5rem] text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${regType === 'student' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>Student Solo</button>
-                                                <button type="button" onClick={() => setRegType('school')} className={`flex-1 py-2.5 rounded-[1.5rem] text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${regType === 'school' ? 'bg-[#2563EB] text-white shadow-xl shadow-blue-500/20' : 'text-white/40 hover:text-white/60'}`}>School Partner</button>
-                                            </div>
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="w-1.5 h-7 bg-[#2563EB] rounded-full" />
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <div className="w-1.5 h-6 bg-[#2563EB] rounded-full" />
                                                 <h3 className="text-xl font-extrabold text-white leading-tight uppercase">
-                                                    {regType === 'student' ? 'Start Your Journey' : 'Partner with Us'}
+                                                    Start Your Journey
                                                 </h3>
                                             </div>
-                                            <p className="text-white/30 text-[9px] font-bold uppercase tracking-widest pl-5">Begin your learning experience</p>
+                                            <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest pl-5">Begin your learning experience</p>
                                         </div>
 
-                                        <form className="space-y-3.5 relative z-10" onSubmit={handleFormSubmit}>
-                                            {regType === 'student' ? (
-                                                <>
-                                                    <div className="grid grid-cols-2 gap-2">
-                                                        {["Class 8-9", "Class 9-10", "Class 11-12", "College (1st/2nd Yr)", "College (3rd/4th Yr)"].map((option, idx) => (
-                                                            <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/10 text-white/40 border border-transparent hover:border-white/10'}`}>{option}</button>
-                                                        ))}
-                                                    </div>
-                                                    <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white appearance-none focus:outline-none focus:bg-white/15 font-bold uppercase tracking-widest cursor-pointer shadow-lg">
-                                                        <option value="" className="bg-slate-900">Select Course</option>
-                                                        <option value="Full Stack" className="bg-slate-900">Full Stack</option>
-                                                        <option value="AI & ML" className="bg-slate-900">AI & ML</option>
-                                                        <option value="Cyber Security" className="bg-slate-900">Cyber Intelligence</option>
-                                                        <option value="Robotics" className="bg-slate-900">Robotics</option>
-                                                    </select>
-                                                </>
-                                            ) : (
-                                                <div className="space-y-3">
-                                                    <input type="text" name="institutionName" value={formData.institutionName} onChange={handleInputChange} required placeholder="School Name" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
-                                                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="Designation" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
-                                                </div>
-                                            )}
-                                            <div className="space-y-3">
-                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
-                                                <div className="grid grid-cols-2 gap-3">
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
-                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[11px] p-3 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                        <form className="space-y-6 relative z-10" onSubmit={handleFormSubmit}>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {["Class 8-9", "Class 9-10", "Class 11-12", "College"].map((option, idx) => (
+                                                    <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2.5 px-1 rounded-xl text-[11px] font-bold uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/10 text-white/40 border border-transparent hover:border-white/10'}`}>{option}</button>
+                                                ))}
+                                            </div>
+                                            <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white appearance-none focus:outline-none focus:bg-white/15 font-bold uppercase tracking-widest cursor-pointer shadow-lg">
+                                                <option value="" className="bg-slate-900">Select Course</option>
+                                                <option value="Full Stack" className="bg-slate-900">Full Stack</option>
+                                                <option value="AI & ML" className="bg-slate-900">AI & ML</option>
+                                                <option value="Cyber Security" className="bg-slate-900">Cyber Intelligence</option>
+                                                <option value="Robotics" className="bg-slate-900">Robotics</option>
+                                            </select>
+                                            <div className="space-y-4">
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
                                                 </div>
                                             </div>
                                             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] transition-all bg-[#2563EB] hover:bg-blue-600 shadow-2xl shadow-blue-500/30">
                                                 <div className="py-3.5 text-white font-extrabold text-base uppercase tracking-widest flex items-center justify-center gap-2">
-                                                    {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={16} /></>}
+                                                    {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={14} /></>}
                                                 </div>
                                             </motion.button>
                                             <p className="text-center text-[8px] text-white/20 uppercase tracking-widest">Secure Registration</p>

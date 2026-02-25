@@ -72,6 +72,20 @@ const FEATURES = [
             { label: "Regulatory Compliance", desc: "Learning environment aligned with international data privacy standards." },
             { label: "Granular Access Control", desc: "Multi-layered authentication and identity management systems." }
         ]
+    },
+    {
+        title: "Neural Mentorship Network",
+        miniTitle: "AI Diagnostics",
+        icon: <FaRobot />,
+        desc: "Advanced neural processing center providing real-time code analysis and pedagogical course correction.",
+        color: "text-blue-600",
+        bg: "bg-blue-50",
+        meta: ["Neural: Sync", "QPU: Active"],
+        details: [
+            { label: "Real-time Diagnostics", desc: "AI-driven identification of logic anomalies and architectural inefficiencies." },
+            { label: "Neural Pair Programming", desc: "Synthetic mentorship providing contextual logic hints and refactoring advice." },
+            { label: "Cognitive Load Mapping", desc: "Dynamic pacing adjustment to maintain optimal state of flow for students." }
+        ]
     }
 ];
 

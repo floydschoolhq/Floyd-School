@@ -53,14 +53,20 @@ const DetailedProgram = () => {
     };
 
     return (
-        <section id="programs" className="relative bg-[#020617] py-24 overflow-hidden border-t border-white/5 cyber-mesh">
+        <section id="engineering-programs" className="relative bg-[#020617] py-20 overflow-hidden border-t border-white/5 cyber-mesh">
             {/* Energy Field Backgrounds */}
             <div className="absolute top-0 right-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 rounded-full blur-[120px] pointer-events-none animate-float-orb"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none animate-float-orb" style={{ animationDelay: '-5s' }}></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+            >
                 {/* Header */}
-                <div className="text-center mb-20">
+                <div className="text-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +79,7 @@ const DetailedProgram = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none mb-6"
+                        className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none mb-6"
                     >
                         Specialized <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] via-blue-400 to-indigo-500">Engineering</span> Programs
                     </motion.h2>
@@ -99,7 +105,7 @@ const DetailedProgram = () => {
                                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
                                 whileHover={{ y: -8 }}
                                 onClick={() => setSelectedCourse(course)}
-                                className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2.5rem] p-8 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
+                                className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-7 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
                             >
                                 {/* Intensity Glow Filter */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl" />
@@ -108,8 +114,8 @@ const DetailedProgram = () => {
                                 <div className="glass-shine-effect" />
 
                                 <div className="relative z-10 flex flex-col h-full">
-                                    <div className={`w-12 h-12 rounded-xl bg-slate-950 flex items-center justify-center mb-8 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
-                                        {getIcon(course.icon, "w-6 h-6 text-[#2563EB] group-hover:text-white transition-colors")}
+                                    <div className={`w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center mb-6 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
+                                        {getIcon(course.icon, "w-5 h-5 text-[#2563EB] group-hover:text-white transition-colors")}
                                     </div>
 
                                     <div className="flex items-center gap-1 mb-4">
@@ -127,12 +133,12 @@ const DetailedProgram = () => {
                                         {course.description}
                                     </p>
 
-                                    <div className="mt-auto flex items-center justify-between pt-6 border-t border-white/5">
+                                    <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/5">
                                         <span className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-white transition-colors">
                                             <Clock size={10} className="text-[#2563EB]" /> {course.duration}
                                         </span>
                                         <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
-                                            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                                            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +184,7 @@ const DetailedProgram = () => {
                                             </div>
                                         </div>
                                         <button
-                                            onClick={() => navigate('/student/signup')}
+                                            onClick={() => navigate('/online-program')}
                                             className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-bold text-[12px] uppercase tracking-[0.25em] py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20"
                                         >
                                             Enroll Now
@@ -237,15 +243,15 @@ const DetailedProgram = () => {
                 </AnimatePresence>
 
                 {/* More Programs Button */}
-                <div className="text-center mt-24">
+                <div className="text-center mt-20">
                     <button
                         onClick={() => navigate('/course')}
-                        className="px-16 py-6 rounded-2xl bg-[#2563EB] text-white font-extrabold uppercase text-[12px] tracking-[0.3em] hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 hover:-translate-y-1"
+                        className="px-14 py-5 rounded-2xl bg-[#2563EB] text-white font-extrabold uppercase text-[11px] tracking-[0.3em] hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 hover:-translate-y-1"
                     >
                         Explore Programs
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };

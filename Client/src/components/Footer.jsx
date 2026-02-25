@@ -21,8 +21,8 @@ const Footer = () => {
     {
       title: 'Products',
       links: [
-        { name: 'Future Tech Bootcamp', href: '#programs' },
-        { name: 'ThinkSkool Certifications', href: '#programs' },
+        { name: 'Future Tech Bootcamp', href: '#engineering-programs' },
+        { name: 'ThinkSkool Certifications', href: '#engineering-programs' },
         { name: 'Code 360', href: '/student/coding-lab' },
       ],
     },

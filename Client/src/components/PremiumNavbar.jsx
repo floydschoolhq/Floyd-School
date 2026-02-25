@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -21,9 +21,12 @@ const PremiumNavbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [source, setSource] = useState('navbar');
     const navigate = useNavigate();
     const { user } = useContext(PortalContext);
     const [courses, setCourses] = useState([]);
+    const location = useLocation();
+    const isDarkPage = location.pathname === '/bootcamp-gallery' || location.pathname === '/online-program';
 
     const { scrollY } = useScroll();
 
@@ -66,8 +69,14 @@ const PremiumNavbar = () => {
         if (!user) {
             navigate('/student/signup');
         } else {
+            setSource('briefing');
             setIsModalOpen(true);
         }
+    };
+
+    const handleContactClick = () => {
+        setSource('contact');
+        setIsModalOpen(true);
     };
 
     // Permission Check: If user exists and is a student, check permissions. Guests see everything (Marketing).
@@ -76,12 +85,16 @@ const PremiumNavbar = () => {
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: 'auto' });
         } else {
             navigate('/');
+            // Extended delay to ensure the Home page components are mounted
             setTimeout(() => {
-                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+                const target = document.getElementById(id);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'auto' });
+                }
+            }, 300);
         }
     };
 
@@ -99,7 +112,7 @@ const PremiumNavbar = () => {
                 ...(collegeCourses.length > 0 ? collegeCourses : [])
             ]
         }] : []),
-        { name: 'Our Programs', id: 'programs' },
+        { name: 'Our Courses', id: 'engineering-programs' },
         { name: 'Infrastructure', id: 'infrastructure' },
         { name: 'Support', id: 'support' },
         { name: 'How It Works', id: 'how-it-works' },
@@ -112,7 +125,7 @@ const PremiumNavbar = () => {
             <motion.div
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-[60] h-7 flex items-center overflow-hidden bg-white border-b border-slate-100 shadow-sm"
+                className={`fixed top-0 left-0 right-0 z-[60] h-6 flex items-center overflow-hidden ${isDarkPage ? 'bg-slate-900 border-white/5' : 'bg-white border-slate-100'} border-b shadow-sm`}
             >
                 <div className="w-full overflow-hidden relative h-full flex items-center">
                     <motion.div
@@ -128,22 +141,22 @@ const PremiumNavbar = () => {
                         className="flex items-center gap-24 whitespace-nowrap px-8"
                     >
                         <div className="flex items-center gap-4">
-                            <Sparkles size={12} className="text-[#2563EB] animate-pulse" />
-                            <span className="text-slate-500 font-bold uppercase tracking-[0.4em] text-[8.5px]">School Bootcamps | Independent Online Mastery</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mx-4" />
-                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[8.5px]">
-                                Institutional Partnership Request
-                                <ArrowRight size={12} />
+                            <Sparkles size={10} className="text-[#2563EB] animate-pulse" />
+                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[10px]`}>School Bootcamps | Independent Online Mastery</span>
+                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
+                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[10px]">
+                                Purchase Batch
+                                <ArrowRight size={10} />
                             </Link>
                         </div>
 
                         {/* Repeat for seamless loop */}
                         <div className="flex items-center gap-4">
                             <Sparkles size={12} className="text-[#2563EB] animate-pulse" />
-                            <span className="text-slate-500 font-bold uppercase tracking-[0.4em] text-[8.5px]">School Bootcamps | Independent Online Mastery</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mx-4" />
-                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[8.5px]">
-                                Institutional Partnership Request
+                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[11px]`}>School Bootcamps | Independent Online Mastery</span>
+                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
+                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[11px]">
+                                Purchase Batch
                                 <ArrowRight size={12} />
                             </Link>
                         </div>
@@ -152,7 +165,7 @@ const PremiumNavbar = () => {
             </motion.div>
 
             <motion.nav
-                className="fixed top-7 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
+                className="fixed top-6 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: isVisible ? 0 : -100, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
@@ -160,8 +173,8 @@ const PremiumNavbar = () => {
                 <div
                     className={`pointer-events-auto transition-all duration-700 ease-[0.23,1,0.32,1] flex items-center justify-center
                         ${isScrolled
-                            ? 'w-full md:w-[75%] lg:w-[65%] rounded-full bg-white/80 backdrop-blur-3xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border border-white/40 px-6 py-2 h-12'
-                            : 'w-full rounded-none bg-white/40 backdrop-blur-2xl px-6 py-4 h-16 border-b border-slate-100'
+                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-slate-900/60' : 'bg-white/80'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border ${isDarkPage ? 'border-white/10' : 'border-white/40'} px-6 py-1.5 h-11`
+                            : `w-full rounded-none ${isDarkPage ? 'bg-slate-900/40' : 'bg-white/40'} backdrop-blur-2xl px-6 py-3 h-14 border-b ${isDarkPage ? 'border-white/5' : 'border-slate-100'}`
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
@@ -173,7 +186,7 @@ const PremiumNavbar = () => {
                             <div className="w-8 h-8 rounded-xl bg-[#2563EB] flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:scale-110 transition-transform">
                                 <span className="text-white font-extrabold text-lg">TS</span>
                             </div>
-                            <h1 className="text-xl font-extrabold tracking-tighter text-slate-900 uppercase">
+                            <h1 className={`text-xl font-extrabold tracking-tighter ${isDarkPage ? 'text-white' : 'text-slate-900'} uppercase`}>
                                 think<span className="text-[#2563EB]">skool</span>
                             </h1>
                         </div>
@@ -184,7 +197,7 @@ const PremiumNavbar = () => {
                                 <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
                                     <motion.div
                                         onClick={() => item.id && scrollToSection(item.id)}
-                                        className="relative flex items-center gap-1.5 text-slate-500 hover:text-blue-600 font-extrabold uppercase text-[9px] tracking-[0.15em] transition-all py-2 px-1"
+                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-500 hover:text-blue-600'} font-extrabold uppercase text-[10px] tracking-[0.15em] transition-all py-1.5 px-1`}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -205,7 +218,7 @@ const PremiumNavbar = () => {
                                                     <Link
                                                         key={idx}
                                                         to={sub.link}
-                                                        className="block px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
+                                                        className="block px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
                                                     >
                                                         {sub.name}
                                                     </Link>
@@ -220,8 +233,8 @@ const PremiumNavbar = () => {
                         {/* Right Actions */}
                         <div className="hidden md:flex items-center gap-4">
                             <button
-                                onClick={handleBookSession}
-                                className="px-5 py-2.5 text-[9px] font-black text-slate-600 hover:text-blue-600 transition-all uppercase tracking-widest hover:scale-105"
+                                onClick={handleContactClick}
+                                className={`px-4 py-2 text-[10px] font-black ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-600 hover:text-blue-600'} transition-all uppercase tracking-widest hover:scale-105`}
                             >
                                 Contact
                             </button>
@@ -230,7 +243,7 @@ const PremiumNavbar = () => {
                                     if (user) navigate('/student');
                                     else navigate('/student/login');
                                 }}
-                                className="px-6 py-2.5 text-[9px] font-black text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
+                                className="px-5 py-2 text-[10px] font-black text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                 Classroom
@@ -239,7 +252,7 @@ const PremiumNavbar = () => {
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 text-slate-600 rounded-xl hover:bg-white/20 transition-colors backdrop-blur-md"
+                            className={`md:hidden p-2 ${isDarkPage ? 'text-white' : 'text-slate-600'} rounded-xl hover:bg-white/20 transition-colors backdrop-blur-md`}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
@@ -297,7 +310,7 @@ const PremiumNavbar = () => {
             </AnimatePresence>
 
 
-            <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source="navbar" />
+            <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source={source} />
         </>
     );
 };
