@@ -24,7 +24,7 @@ const SchoolPartnership = () => {
         // Trigger download
         const link = document.createElement('a');
         link.href = Brochure;
-        link.download = "ThinkSkool_Brochure.pdf";
+        link.download = "thinkskool_Brochure.pdf";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -165,7 +165,7 @@ const SchoolPartnership = () => {
                                 </div>
                                 <code className="text-sm font-mono text-blue-300">
                                     <span className="text-purple-400">const</span> <span className="text-yellow-300">studentSuccess</span> = <span className="text-purple-400">async</span> () ={">"} {"{"}<br />
-                                    &nbsp;&nbsp;<span className="text-purple-400">await</span> school.upgrade(<span className="text-green-300">'ThinkSkool'</span>);<br />
+                                    &nbsp;&nbsp;<span className="text-purple-400">await</span> school.upgrade(<span className="text-green-300">'thinkskool'</span>);<br />
                                     &nbsp;&nbsp;<span className="text-blue-300">return</span> <span className="text-green-300">'Innovation Leader'</span>;<br />
                                     {"}"}
                                 </code>

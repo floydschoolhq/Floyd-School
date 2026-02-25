@@ -34,7 +34,7 @@ const SCHOOL_STEPS = [
         icon: 'Cpu',
         phase: "Phase 03",
         tagline: "Permanent Engineering Hub",
-        detail: "We configure a dedicated ThinkSkool Engineering Hub inside your school — full hardware stack, project servers, and AI workstations all managed by us, permanently available to students.",
+        detail: "We configure a dedicated <span className='text-[#2563EB]'>think</span><span className='text-[#FF7A00]'>skool</span> Engineering Hub inside your school — full hardware stack, project servers, and AI workstations all managed by us, permanently available to students.",
         bullets: ["Dedicated Hardware Setup", "AI Workstation Fleet", "24/7 Remote Monitoring"]
     },
     {
@@ -42,7 +42,7 @@ const SCHOOL_STEPS = [
         icon: 'Trophy',
         phase: "Phase 04",
         tagline: "Industry-Grade Credentials",
-        detail: "Graduates receive globally recognized ThinkSkool certifications co-signed by Fortune 500 industry partners — blockchain-verified, publicly queryable, and resume-grade from day one.",
+        detail: "Graduates receive globally recognized <span className='text-[#2563EB]'>think</span><span className='text-[#FF7A00]'>skool</span> certifications co-signed by Fortune 500 industry partners — blockchain-verified, publicly queryable, and resume-grade from day one.",
         bullets: ["Blockchain Verification", "Fortune 500 Co-Sign", "Public Certificate Registry"]
     }
 ];
@@ -52,8 +52,8 @@ const STUDENT_STEPS = [
         title: "Portal Access",
         icon: 'Globe',
         phase: "Phase 01",
-        tagline: "ThinkSkool Pulse Platform",
-        detail: "Instant access to the ThinkSkool Pulse — a premium engineering platform with AI-powered diagnostics, real-time progress tracking, peer leaderboard, and a curated resource vault for self-directed mastery.",
+        tagline: "<span className='text-[#2563EB]'>think</span><span className='text-[#FF7A00]'>skool</span> Pulse Platform",
+        detail: "Instant access to the <span className='text-[#2563EB]'>think</span><span className='text-[#FF7A00]'>skool</span> Pulse — a premium engineering platform with AI-powered diagnostics, real-time progress tracking, peer leaderboard, and a curated resource vault for self-directed mastery.",
         bullets: ["AI Learning Diagnostics", "Real-Time Progress Tracker", "Global Peer Leaderboard"]
     },
     {
@@ -242,7 +242,7 @@ const HowItWorksSection = () => {
                             </div>
                             <div>
                                 <h3 className="text-xl font-black text-white tracking-tighter uppercase leading-none mb-1">Online Course</h3>
-                                <p className="text-xs font-black text-blue-300 uppercase tracking-widest">ThinkSkool Pulse</p>
+                                <p className="text-xs font-black uppercase tracking-widest text-[#2563EB]">think<span className='text-[#FF7A00]'>skool</span> Pulse</p>
                             </div>
                         </div>
                         <div className="flex flex-col items-start">

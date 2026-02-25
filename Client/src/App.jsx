@@ -59,6 +59,7 @@ const HomePage = () => {
                 <Hero />
                 <Marque />
                 <DualModelSection />
+                <Faculty />
                 <HowItWorksSection />
                 <SupportEcosystem />
                 <IndustrialNetwork />
@@ -68,7 +69,6 @@ const HomePage = () => {
                 <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />
                 <StudentEcosystem />
-                <Faculty />
                 <HeroParallaxDemo />
                 <About />
             </div>

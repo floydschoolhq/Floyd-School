@@ -50,20 +50,20 @@ const About = () => {
 
   return (
     <section className="py-16 md:py-24 bg-slate-950 text-white" id="about">
-      <h2 className='text-6xl flex justify-center items-center font-bold mb-10 text-white'>About us</h2>
+      <h2 className='text-4xl md:text-5xl flex justify-center items-center font-bold mb-10 text-white'>About us</h2>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* --- Left Side: Text Content (Updated) --- */}
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl md:text-4xl font-semibold text-white mb-8 leading-tight">
+            <h1 className="text-2xl md:text-3xl font-semibold text-white mb-8 leading-tight">
               Who We Are
             </h1>
 
             {/* ThinkSkool Description */}
             <p className="text-lg text-slate-300 mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto lg:mx-0">
-              ThinkSkool is a school-integrated STEM education program designed to make
+              <span className="text-[#2563EB] font-bold">think</span><span className="text-[#FF7A00] font-bold">skool</span> is a school-integrated STEM education program designed to make
               technology learning accessible, practical, and engaging. We follow a
               project-first methodology supported by cloud labs, dashboards, and
               well-structured learning paths.

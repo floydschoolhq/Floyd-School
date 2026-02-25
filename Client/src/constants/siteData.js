@@ -62,7 +62,7 @@ export const studentBenefits = [
     { title: "Production Portal", desc: "Build in real-world IDEs." },
     { title: "Direct Mentorship", desc: "1-on-1 support from architects." },
     { title: "Independent Portfolio", desc: "Graduate with active GitHub apps." },
-    { title: "ThinkSkool Online Batches", desc: "High-octane online curriculum." }
+    { title: "thinkskool Online Batches", desc: "High-octane online curriculum." }
 ];
 
 export const supportRoles = [

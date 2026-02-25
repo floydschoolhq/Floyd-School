@@ -110,7 +110,7 @@ const ComparisonSection = () => {
                         <div className="flex items-center justify-between mb-16 relative z-10">
                             <span className="px-6 py-2.5 bg-[#2563EB] text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-2xl shadow-blue-500/40 flex items-center gap-2">
                                 <Sparkles size={14} />
-                                ThinkSkool Method
+                                <span className="text-white">think</span><span className="text-[#FF7A00]">skool</span> Method
                             </span>
                             <TrendingUp className="text-[#2563EB]" size={24} />
                         </div>
@@ -161,7 +161,7 @@ const ComparisonSection = () => {
                         Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
                     <p className="text-slate-500 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">
-                        ThinkSkool doesn't just teach code; it remodeled the student's problem-solving core, moving them from passive consumers to professional engineering creators.
+                        <span className="text-[#2563EB]">think</span><span className="text-[#FF7A00]">skool</span> doesn't just teach code; it remodeled the student's problem-solving core, moving them from passive consumers to professional engineering creators.
                     </p>
                 </motion.div>
 

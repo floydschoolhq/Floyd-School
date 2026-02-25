@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
 import { PortalContext } from '../../components/Context/PortalProvider';
+import BrandLogo from '../../components/common/BrandLogo';
 
 const StudentLoginPage = () => {
   const [email, setEmail] = useState('');
@@ -71,13 +72,8 @@ const StudentLoginPage = () => {
           <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#2563EB] to-transparent"></div>
 
           <header className="flex justify-between items-center mb-10">
-            <div className="flex items-center gap-2 cursor-pointer group/logo" onClick={handleExit}>
-              <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-lg group-hover/logo:scale-110 transition-transform duration-300">
-                <span className="text-white font-black text-xl">TS</span>
-              </div>
-              <h1 className="text-2xl font-black tracking-tighter text-slate-800">
-                think<span className="text-[#2563EB]">skool</span>
-              </h1>
+            <div className="flex items-center cursor-pointer group/logo" onClick={handleExit}>
+              <BrandLogo size="md" />
             </div>
           </header>
 

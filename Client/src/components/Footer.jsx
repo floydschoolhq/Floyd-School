@@ -6,6 +6,7 @@ import {
   FaInstagram,
   FaPaperPlane
 } from 'react-icons/fa';
+import BrandLogo from './common/BrandLogo';
 
 const Footer = () => {
   const footerLinks = [
@@ -44,8 +45,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 mb-24">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <div className="flex items-center font-black text-3xl mb-8 uppercase tracking-tighter">
-              <span className='text-white'>think</span><span className='text-[#2563EB]'>skool</span>
+            <div className="mb-8">
+              <BrandLogo size="lg" />
             </div>
             <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em] mb-10 leading-loose max-w-sm">
               Architecting the next generation of global engineering excellence through industrial immersion.

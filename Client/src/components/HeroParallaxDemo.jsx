@@ -28,7 +28,7 @@ export function HeroParallaxDemo() {
                         Get Recognized with <span className="text-[#2563EB]">Industry Standard</span> Certificates
                     </h2>
                     <p className="text-lg text-slate-500 mb-8 leading-relaxed font-medium">
-                        Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from ThinkSkool and our partners.
+                        Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from <span className="text-[#2563EB]">think</span><span className="text-[#FF7A00]">skool</span> and our partners.
                     </p>
                     <button className="px-10 py-4 bg-[#2D2D2D] text-white font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl">
                         View Sample Certificate

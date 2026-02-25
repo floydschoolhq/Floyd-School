@@ -8,6 +8,7 @@ import { PortalContext } from './Context/PortalProvider';
 // import NotificationDropdown from './common/NotificationDropdown';
 import MaintenanceBanner from './MaintenanceBanner';
 import api from '../api/axios';
+import BrandLogo from './common/BrandLogo';
 
 const FALLBACK_COURSES = [
     { title: "IoT & Robotics", level: "Beginner", link: "/course" },
@@ -178,17 +179,11 @@ const PremiumNavbar = () => {
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
-                        {/* Logo Section */}
                         <div
-                            className="flex items-center gap-2 cursor-pointer group"
+                            className="flex items-center cursor-pointer group"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
-                            <div className="w-8 h-8 rounded-xl bg-[#2563EB] flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:scale-110 transition-transform">
-                                <span className="text-white font-extrabold text-lg">TS</span>
-                            </div>
-                            <h1 className={`text-xl font-extrabold tracking-tighter ${isDarkPage ? 'text-white' : 'text-slate-900'} uppercase`}>
-                                think<span className="text-[#2563EB]">skool</span>
-                            </h1>
+                            <BrandLogo size="md" className={isDarkPage ? '!text-white' : ''} />
                         </div>
 
                         {/* Desktop Navigation */}

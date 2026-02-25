@@ -162,7 +162,7 @@ const CommandPalette = ({ isOpen, onClose, onNavigate, onTheme }) => {
                                 <span className="flex items-center gap-1"><kbd className="bg-white/5 rounded px-1 py-0.5 text-white/30">↵</kbd> Select</span>
                                 <span className="ml-auto flex items-center gap-1">
                                     <Command className="w-3 h-3" />
-                                    <span>ThinkSkool Command</span>
+                                    <span>thinkskool Command</span>
                                 </span>
                             </div>
                         </div>

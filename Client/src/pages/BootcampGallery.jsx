@@ -31,7 +31,7 @@ const BootcampGallery = () => {
     const handleDownloadBrochure = () => {
         const link = document.createElement('a');
         link.href = brochurePdf;
-        link.download = 'ThinkSkool_Industrial_Brochure.pdf';
+        link.download = 'thinkskool_Industrial_Brochure.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -56,7 +56,7 @@ const BootcampGallery = () => {
                             animate={{ opacity: 1, y: 0 }}
                         >
                             <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Visual Journey</p>
-                            <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">Bootcamp <span className="text-[#2563EB]">Exhibitions.</span></h1>
+                            <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">Bootcamp <span className="text-[#2563EB]">Exhibitions.</span></h1>
                         </motion.div>
                     </div>
 

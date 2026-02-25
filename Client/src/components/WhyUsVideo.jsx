@@ -103,7 +103,9 @@ const WhyUsVideo = () => {
                         <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[80px] pointer-events-none"></div>
 
                         <div className="mb-10">
-                            <span className="inline-block px-4 py-1 rounded-full bg-[#EBF3FF] text-[#2563EB] text-[10px] font-bold uppercase tracking-widest mb-4">ThinkSkool Ecosystem</span>
+                            <span className="inline-block px-4 py-1 rounded-full bg-[#EBF3FF] text-[10px] font-bold uppercase tracking-widest mb-4">
+                                <span className="text-[#2563EB]">think</span><span className="text-[#FF7A00]">skool</span> Ecosystem
+                            </span>
                             <h3 className="text-3xl font-extrabold text-slate-900 mb-2">Active <span className="text-[#2563EB]">Mastery</span></h3>
                             <div className="flex gap-4 mt-6">
                                 <div className="px-6 py-3 bg-white rounded-2xl border border-[#2563EB]/20 shadow-lg shadow-[#2563EB]/5">

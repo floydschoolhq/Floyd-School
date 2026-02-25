@@ -19,8 +19,8 @@ const About = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           className="text-center mb-16"
         >
-          <span className="text-[#2563EB] font-bold uppercase tracking-[0.5em] text-[8px] mb-4 block">ThinkSkool Philosophy</span>
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter leading-none uppercase">
+          <span className="font-bold uppercase tracking-[0.5em] text-[8px] mb-4 block text-[#2563EB]">Think<span className="text-[#FF7A00]">Skool</span> Philosophy</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-none uppercase">
             Engineering <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500">Excellence.</span>
           </h2>
         </motion.div>
@@ -79,7 +79,7 @@ const About = () => {
                 <h3 className="text-2xl lg:text-3xl font-extrabold text-white mb-6 tracking-tighter uppercase">Global <span className="text-[#2563EB]">Mastery</span></h3>
 
                 <p className="text-[11px] text-slate-500 mb-8 leading-relaxed font-bold uppercase tracking-widest">
-                  Forge professional supremacy in AI and Robotics via ThinkSkool Pulse—the world's most advanced autonomous learning ecosystem.
+                  Forge professional supremacy in AI and Robotics via <span className="text-[#2563EB]">think</span><span className="text-[#FF7A00]">skool</span>—the world's most advanced autonomous learning ecosystem.
                   <span className="block mt-6 text-[#2563EB] font-bold uppercase tracking-[0.3em] text-[9px]">HYBRID PRODUCTION PIPELINES.</span>
                 </p>
 
