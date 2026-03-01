@@ -18,7 +18,6 @@ import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import StudentSignupPage from './pages/Student/StudentSignupPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import renderPage from './pages/Student/renderPage.jsx';
-import DetailedProgram from './components/DetailedProgram.jsx';
 import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
@@ -26,49 +25,40 @@ import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
-import ThreeDLandingPage from './pages/ThreeDLandingPage.jsx';
 
 
-
-import { HeroParallaxDemo } from './components/HeroParallaxDemo';
-
-import { TextRevealCardPreview } from './components/TextRevealCardPreview';
 
 import Logo from './components/Logo.jsx';
 import StickyBottomBar from './components/StickyBottomBar.jsx';
 import Faculty from './components/Faculty.jsx';
 import Masterclasses from './components/Masterclasses.jsx';
-import AmbitiousSection from './components/AmbitiousSection.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
+import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
 
 
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
-import HowItWorksSection from './components/HowItWorksSection';
 import SupportEcosystem from './components/SupportEcosystem';
 
 
 // --- Home Page Component ---
 const HomePage = () => {
     return (
-        <div className="bg-[#000000] text-white font-['Space_Grotesk']">
+        <div>
             <GlobalNotificationListener />
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative'>
                 <Hero />
                 <Marque />
+                <OnlineCourseFocus />
                 <Faculty />
-                <HowItWorksSection />
                 <SupportEcosystem />
                 <IndustrialNetwork />
-                <AmbitiousSection />
-                <DetailedProgram />
                 <Masterclasses />
                 <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />
                 <StudentEcosystem />
-                <HeroParallaxDemo />
                 <About />
             </div>
             <StickyBottomBar />
@@ -93,8 +83,7 @@ const App = () => {
         '/student',
         '/downloads',
         '/contact',
-        '/online-program',
-        '/3d'
+        '/online-program'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -147,9 +136,6 @@ const App = () => {
 
                 {/* Bootcamp Gallery */}
                 <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
-
-                {/* 3D Landing Page */}
-                <Route path='/3d' element={<ThreeDLandingPage />} />
             </Routes>
 
             {/* Conditional Footer Rendering */}

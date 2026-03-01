@@ -93,14 +93,14 @@ const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);
 
     return (
-        <section id="infrastructure" className="bg-[#000000] py-16 relative overflow-hidden border-t border-white/5">
+        <section id="infrastructure" className="bg-[#f8fafc] py-16 relative overflow-hidden border-t border-slate-100">
             {/* Technical Grid Background */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
             {/* Subtle Gradient Background */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[100px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 rounded-full blur-[100px]" />
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/40 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-50/40 rounded-full blur-[100px]" />
             </div>
 
             {/* Animated Particles */}
@@ -119,7 +119,7 @@ const StudentEcosystem = () => {
                             ease: "easeInOut",
                             delay: i * 1
                         }}
-                        className="absolute w-1 h-1 bg-blue-500/40 rounded-full"
+                        className="absolute w-1 h-1 bg-blue-500/20 rounded-full"
                         style={{
                             left: `${15 + i * 15}%`,
                             top: `${20 + i * 10}%`
@@ -134,7 +134,7 @@ const StudentEcosystem = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6 shadow-sm"
+                        className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/5 border border-blue-500/10 rounded-full mb-6 shadow-sm"
                     >
                         <div className="w-1 h-1 rounded-full bg-[#2563EB] animate-pulse shadow-[0_0_6px_#2563EB]" />
                         <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.5em]">Industrial Infrastructure</span>
@@ -143,9 +143,9 @@ const StudentEcosystem = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tighter uppercase leading-none"
+                        className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter uppercase leading-none"
                     >
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-blue-400">Education Ecosystem.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-blue-500">Education Ecosystem.</span>
                     </motion.h2>
 
                 </div>
@@ -161,38 +161,38 @@ const StudentEcosystem = () => {
                             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             whileHover={{ y: -6, transition: { duration: 0.4 } }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/5 backdrop-blur-3xl rounded-[2.2rem] p-8 border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[0_30px_70px_rgba(37,99,235,0.15)] hover:border-blue-500/30"
+                            className="group relative bg-white/[0.6] backdrop-blur-2xl rounded-[2.2rem] p-8 border border-white shadow-[0_15px_50px_rgba(0,0,0,0.03)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[0_30px_70px_rgba(37,99,235,0.08)] hover:border-blue-500/20"
                         >
                             {/* Scanning Line Animation */}
-                            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none" />
+                            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none" />
 
                             {/* Accent Glow */}
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-all duration-700" />
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/[0.02] rounded-full blur-3xl group-hover:bg-blue-500/[0.08] transition-all duration-700" />
 
                             {/* Shine Effect */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
+                                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12" />
                             </div>
 
                             <div className="relative z-10 flex flex-col h-full">
                                 <div className="flex justify-between items-start mb-8">
-                                    <div className="w-12 h-12 bg-white/5 rounded-[1.2rem] flex items-center justify-center text-2xl text-white group-hover:bg-[#2563EB] group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-xl border border-white/10">
+                                    <div className="w-12 h-12 bg-slate-900 rounded-[1.2rem] flex items-center justify-center text-2xl text-white group-hover:bg-[#2563EB] group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-xl shadow-slate-900/10">
                                         {feature.icon}
                                     </div>
                                     <div className="flex flex-col gap-1.5 items-end">
                                         {feature.meta.map((m, i) => (
-                                            <span key={i} className="text-[7px] font-black text-white/40 uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-full border border-white/5 group-hover:text-blue-400 group-hover:border-blue-500/20 transition-colors">
+                                            <span key={i} className="text-[7px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-2 py-0.5 rounded-full border border-slate-100 group-hover:text-blue-500 group-hover:border-blue-100 transition-colors">
                                                 {m}
                                             </span>
                                         ))}
                                     </div>
                                 </div>
                                 <p className="text-[8px] font-black text-blue-500 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
-                                <h3 className="text-xl font-black text-white mb-6 tracking-tighter uppercase leading-tight group-hover:text-blue-400 transition-colors">{feature.title}</h3>
+                                <h3 className="text-xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
 
-                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/40 group-hover:text-white transition-colors">System Analysis</span>
-                                    <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-[9px] text-white/40 group-hover:bg-blue-500 group-hover:text-white transition-all transform group-hover:rotate-45">
+                                <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
+                                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-900 transition-colors">System Analysis</span>
+                                    <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[9px] text-slate-400 group-hover:bg-blue-500 group-hover:text-white transition-all transform group-hover:rotate-45">
                                         <FaArrowRight size={8} />
                                     </div>
                                 </div>
@@ -209,33 +209,33 @@ const StudentEcosystem = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/10 backdrop-blur-md"
                         onClick={() => setSelectedFeature(null)}
                     >
                         <motion.div
                             initial={{ scale: 0.95, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            className="bg-[#111111] rounded-[3rem] w-full max-w-2xl overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/10"
+                            className="bg-white rounded-[3rem] w-full max-w-2xl overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-white"
                             onClick={e => e.stopPropagation()}
                         >
                             <div className="p-12 relative">
                                 <button
                                     onClick={() => setSelectedFeature(null)}
-                                    className="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all border border-white/10"
+                                    className="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#2563EB] hover:bg-blue-50 transition-all border border-slate-100"
                                 >
                                     <FaTimes size={14} />
                                 </button>
 
                                 <div className="flex items-center gap-8 mb-16">
-                                    <div className={`w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center text-4xl text-white shadow-2xl border border-white/10`}>
+                                    <div className={`w-20 h-20 bg-slate-900 rounded-[1.5rem] flex items-center justify-center text-4xl text-white shadow-2xl shadow-slate-900/20`}>
                                         {selectedFeature.icon}
                                     </div>
                                     <div>
-                                        <p className="text-blue-500 font-black uppercase tracking-[0.5em] text-[10px] mb-2">
+                                        <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-2">
                                             {selectedFeature.miniTitle}
                                         </p>
-                                        <h3 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">
+                                        <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
                                             {selectedFeature.title}
                                         </h3>
                                     </div>
@@ -248,15 +248,15 @@ const StudentEcosystem = () => {
                                                 <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_#2563EB]" />
                                             </div>
                                             <div>
-                                                <h4 className="text-[14px] font-black text-white mb-1.5 uppercase tracking-tight">{detail.label}</h4>
-                                                <p className="text-[11px] text-white/50 font-bold uppercase tracking-[0.1em] leading-relaxed">{detail.desc}</p>
+                                                <h4 className="text-[14px] font-black text-slate-900 mb-1.5 uppercase tracking-tight">{detail.label}</h4>
+                                                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.1em] leading-relaxed">{detail.desc}</p>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="pt-10 border-t border-white/5 flex items-center justify-between">
-                                    <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.4em]">
+                                <div className="pt-10 border-t border-slate-100 flex items-center justify-between">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
                                         System Protocol: Verified
                                     </p>
                                     <button

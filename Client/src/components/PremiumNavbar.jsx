@@ -126,7 +126,7 @@ const PremiumNavbar = () => {
             <motion.div
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="fixed top-0 left-0 right-0 z-[60] h-6 flex items-center overflow-hidden bg-transparent"
+                className={`fixed top-0 left-0 right-0 z-[60] h-6 flex items-center overflow-hidden ${isDarkPage ? 'bg-slate-900 border-white/5' : 'bg-white border-slate-100'} border-b shadow-sm`}
             >
                 <div className="w-full overflow-hidden relative h-full flex items-center">
                     <motion.div
@@ -142,10 +142,10 @@ const PremiumNavbar = () => {
                         className="flex items-center gap-24 whitespace-nowrap px-8"
                     >
                         <div className="flex items-center gap-4">
-                            <Sparkles size={10} className="text-blue-400 animate-pulse" />
-                            <span className="text-white/90 font-bold uppercase tracking-[0.4em] text-[11px]">School Bootcamps | Independent Online Mastery</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/30 mx-4" />
-                            <Link to="/online-program" className="text-blue-400 font-extrabold hover:text-blue-300 flex items-center gap-2 uppercase tracking-widest transition-colors text-[11px]">
+                            <Sparkles size={10} className="text-[#2563EB] animate-pulse" />
+                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[10px]`}>School Bootcamps | Independent Online Mastery</span>
+                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
+                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[10px]">
                                 Purchase Batch
                                 <ArrowRight size={10} />
                             </Link>
@@ -153,10 +153,10 @@ const PremiumNavbar = () => {
 
                         {/* Repeat for seamless loop */}
                         <div className="flex items-center gap-4">
-                            <Sparkles size={12} className="text-blue-400 animate-pulse" />
-                            <span className="text-white/90 font-bold uppercase tracking-[0.4em] text-[11px]">School Bootcamps | Independent Online Mastery</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/30 mx-4" />
-                            <Link to="/online-program" className="text-blue-400 font-extrabold hover:text-blue-300 flex items-center gap-2 uppercase tracking-widest transition-colors text-[11px]">
+                            <Sparkles size={12} className="text-[#2563EB] animate-pulse" />
+                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[11px]`}>School Bootcamps | Independent Online Mastery</span>
+                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
+                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[11px]">
                                 Purchase Batch
                                 <ArrowRight size={12} />
                             </Link>
@@ -174,8 +174,8 @@ const PremiumNavbar = () => {
                 <div
                     className={`pointer-events-auto transition-all duration-700 ease-[0.23,1,0.32,1] flex items-center justify-center
                         ${isScrolled
-                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/60 backdrop-blur-2xl border border-white/10 px-6 py-1.5 h-11`
-                            : `w-full rounded-none bg-transparent px-6 py-3 h-14`
+                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-slate-900/60' : 'bg-white/80'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border ${isDarkPage ? 'border-white/10' : 'border-white/40'} px-6 py-1.5 h-11`
+                            : `w-full rounded-none ${isDarkPage ? 'bg-slate-900/40' : 'bg-white/40'} backdrop-blur-2xl px-6 py-3 h-14 border-b ${isDarkPage ? 'border-white/5' : 'border-slate-100'}`
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
@@ -183,7 +183,7 @@ const PremiumNavbar = () => {
                             className="flex items-center cursor-pointer group"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
-                            <BrandLogo size="md" className="!text-white drop-shadow-md" />
+                            <BrandLogo size="md" className={isDarkPage ? '!text-white' : ''} />
                         </div>
 
                         {/* Desktop Navigation */}
@@ -192,7 +192,7 @@ const PremiumNavbar = () => {
                                 <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
                                     <motion.div
                                         onClick={() => item.id && scrollToSection(item.id)}
-                                        className="relative flex items-center gap-1.5 text-white/90 hover:text-white font-extrabold uppercase text-[12px] tracking-[0.15em] transition-all py-1.5 px-1 drop-shadow-md"
+                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-500 hover:text-blue-600'} font-extrabold uppercase text-[10px] tracking-[0.15em] transition-all py-1.5 px-1`}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -229,7 +229,7 @@ const PremiumNavbar = () => {
                         <div className="hidden md:flex items-center gap-4">
                             <button
                                 onClick={handleContactClick}
-                                className="px-4 py-2 text-[12px] font-black text-white/90 hover:text-white transition-all uppercase tracking-widest hover:scale-105 drop-shadow-md"
+                                className={`px-4 py-2 text-[10px] font-black ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-600 hover:text-blue-600'} transition-all uppercase tracking-widest hover:scale-105`}
                             >
                                 Contact
                             </button>
@@ -238,7 +238,7 @@ const PremiumNavbar = () => {
                                     if (user) navigate('/student');
                                     else navigate('/student/login');
                                 }}
-                                className="px-5 py-2 text-[12px] font-black text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/50 active:scale-95"
+                                className="px-5 py-2 text-[10px] font-black text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                 Classroom
@@ -247,7 +247,7 @@ const PremiumNavbar = () => {
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 text-white rounded-xl hover:bg-white/20 transition-colors backdrop-blur-md drop-shadow-md"
+                            className={`md:hidden p-2 ${isDarkPage ? 'text-white' : 'text-slate-600'} rounded-xl hover:bg-white/20 transition-colors backdrop-blur-md`}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}

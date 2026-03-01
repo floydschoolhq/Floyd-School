@@ -20,32 +20,31 @@ import image18 from "../assets/images/image002.jpg";
 
 export function HeroParallaxDemo() {
     return (
-        <div className="w-full bg-[#000000] py-24 border-y border-white/5" id="certification">
+        <div className="w-full bg-[#FCF8F8] py-24 border-y border-[#FBEFEF]" id="certification">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
                 <div className="md:w-1/2">
-                    <p className="text-blue-500 font-black uppercase tracking-[0.4em] text-[10px] mb-4">Global Recognition</p>
-                    <h2 className="text-5xl font-black text-white mb-6 tracking-tighter">
-                        Get Recognized with <span className="text-blue-500">Industry Standard</span> Certificates
+                    <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[10px] mb-4">Global Recognition</p>
+                    <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tighter">
+                        Get Recognized with <span className="text-[#2563EB]">Industry Standard</span> Certificates
                     </h2>
-                    <p className="text-lg text-white/50 mb-8 leading-relaxed font-medium">
-                        Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from <span className="text-blue-500">think</span><span className="text-[#FF7A00]">skool</span> and our partners.
+                    <p className="text-lg text-slate-500 mb-8 leading-relaxed font-medium">
+                        Earn certificates that are valued by top tech companies. Showcase your skills with verifiable credentials from <span className="text-[#2563EB]">think</span><span className="text-[#FF7A00]">skool</span> and our partners.
                     </p>
-                    <button className="px-10 py-4 bg-white/5 text-white border border-white/10 font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-blue-600 hover:border-transparent transition-all shadow-xl">
+                    <button className="px-10 py-4 bg-[#2D2D2D] text-white font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#2563EB] transition-all shadow-xl">
                         View Sample Certificate
                     </button>
                 </div>
                 <div className="md:w-1/2 flex justify-center">
-                    <div className="relative w-full max-w-md aspect-[4/3] bg-white/5 backdrop-blur-3xl rounded-[2.5rem] shadow-2xl border border-white/10 p-8 flex items-center justify-center group overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="relative w-full max-w-md aspect-[4/3] bg-white rounded-[2.5rem] shadow-2xl border border-[#FBEFEF] p-8 flex items-center justify-center">
                         {/* Abstract Certificate Placeholder */}
-                        <div className="relative z-10 text-center border-4 border-double border-white/10 p-8 w-full h-full flex flex-col justify-center">
-                            <div className="w-16 h-16 bg-white/5 rounded-full mx-auto mb-4 flex items-center justify-center border border-white/10">
+                        <div className="text-center border-4 border-double border-[#FBEFEF] p-8 w-full h-full flex flex-col justify-center">
+                            <div className="w-16 h-16 bg-[#FBEFEF] rounded-full mx-auto mb-4 flex items-center justify-center">
                                 <span className="text-3xl">🏆</span>
                             </div>
-                            <h3 className="text-2xl font-black text-white mb-2">Certificate of Completion</h3>
-                            <p className="text-white/30 text-[10px] font-black uppercase tracking-widest">Validates that</p>
-                            <p className="text-2xl font-black text-blue-400 my-4">Certified Student</p>
-                            <p className="text-white/30 text-[10px] font-black uppercase tracking-widest">has successfully completed the technical curriculum.</p>
+                            <h3 className="text-2xl font-black text-slate-800 mb-2">Certificate of Completion</h3>
+                            <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Validates that</p>
+                            <p className="text-2xl font-black text-slate-900 my-4">Certified Student</p>
+                            <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">has successfully completed the technical curriculum.</p>
                         </div>
                     </div>
                 </div>

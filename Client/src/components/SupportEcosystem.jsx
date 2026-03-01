@@ -89,7 +89,7 @@ const SupportEcosystem = () => {
     ];
 
     return (
-        <section id="support" ref={containerRef} className="relative bg-[#000000] py-20 overflow-hidden border-t border-white/5">
+        <section id="support" ref={containerRef} className="relative bg-[#FFF9FA] py-10 overflow-hidden border-t border-white/5">
             {/* Ambient Background Energy */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
@@ -102,7 +102,7 @@ const SupportEcosystem = () => {
                 className="max-w-7xl mx-auto px-4 relative z-10"
             >
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
@@ -112,7 +112,7 @@ const SupportEcosystem = () => {
                         <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.4em]">The Industrial Engine</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none mb-6">
+                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter uppercase leading-none mb-6">
                         Our <span className="text-[#2563EB]">Team.</span>
                     </h2>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] max-w-lg mx-auto leading-relaxed">
@@ -121,7 +121,7 @@ const SupportEcosystem = () => {
                 </div>
 
                 {/* Features Grid - Unified 6-Card Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     {allFeatures.map((item, idx) => (
                         <FeatureCard key={idx} item={item} index={idx} />
                     ))}
@@ -131,10 +131,10 @@ const SupportEcosystem = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="bg-white/[0.03] backdrop-blur-3xl rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10"
+                    className="bg-white rounded-[2.5rem] p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100 shadow-sm"
                 >
                     <div className="relative z-10 text-center md:text-left">
-                        <h3 className="text-3xl font-black text-white uppercase tracking-tighter leading-none mb-3">
+                        <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-3">
                             Global <span className="text-[#2563EB]">Response.</span>
                         </h3>
                         <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">Integrated Tech-Support Intelligence</p>
@@ -142,10 +142,10 @@ const SupportEcosystem = () => {
 
                     <div className="relative z-10 flex items-center gap-12">
                         <div className="text-center">
-                            <span className="block text-4xl font-black text-white tracking-tighter leading-none mb-1">1:1</span>
+                            <span className="block text-4xl font-black text-slate-900 tracking-tighter leading-none mb-1">1:1</span>
                             <span className="text-[9px] font-black text-blue-500 uppercase tracking-[0.2em]">Ratio</span>
                         </div>
-                        <div className="w-px h-12 bg-white/10" />
+                        <div className="w-px h-12 bg-slate-100" />
                         <div className="text-center">
                             <span className="block text-4xl font-black text-[#2563EB] tracking-tighter leading-none mb-1">24/7</span>
                             <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Active</span>
