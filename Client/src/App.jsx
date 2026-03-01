@@ -26,6 +26,7 @@ import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
+import ThreeDLandingPage from './pages/ThreeDLandingPage.jsx';
 
 
 
@@ -46,19 +47,17 @@ import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
 import HowItWorksSection from './components/HowItWorksSection';
 import SupportEcosystem from './components/SupportEcosystem';
-import DualModelSection from './components/DualModelSection';
 
 
 // --- Home Page Component ---
 const HomePage = () => {
     return (
-        <div>
+        <div className="bg-[#000000] text-white font-['Space_Grotesk']">
             <GlobalNotificationListener />
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative'>
                 <Hero />
                 <Marque />
-                <DualModelSection />
                 <Faculty />
                 <HowItWorksSection />
                 <SupportEcosystem />
@@ -94,7 +93,8 @@ const App = () => {
         '/student',
         '/downloads',
         '/contact',
-        '/online-program'
+        '/online-program',
+        '/3d'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -147,6 +147,9 @@ const App = () => {
 
                 {/* Bootcamp Gallery */}
                 <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
+
+                {/* 3D Landing Page */}
+                <Route path='/3d' element={<ThreeDLandingPage />} />
             </Routes>
 
             {/* Conditional Footer Rendering */}

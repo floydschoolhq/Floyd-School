@@ -89,7 +89,7 @@ const SupportEcosystem = () => {
     ];
 
     return (
-        <section id="support" ref={containerRef} className="relative bg-[#020617] py-20 overflow-hidden border-t border-white/5">
+        <section id="support" ref={containerRef} className="relative bg-[#000000] py-20 overflow-hidden border-t border-white/5">
             {/* Ambient Background Energy */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />

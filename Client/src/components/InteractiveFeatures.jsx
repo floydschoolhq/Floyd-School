@@ -44,7 +44,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
 
 
   return (
-    <section className="py-16 md:py-24 bg-slate-900 text-slate-200 border-y border-slate-800">
+    <section className="py-16 md:py-24 bg-[#000000] text-slate-200 border-y border-white/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Collapsible Content Area */}

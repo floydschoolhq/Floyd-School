@@ -22,14 +22,14 @@ const logos = [
 
 const Marque = () => {
   return (
-    <div className="w-full bg-[#FCF8F8] py-14 border-b border-[#FBEFEF] relative z-10">
+    <div className="w-full bg-[#000000] py-14 border-b border-white/5 relative z-10">
       <div className="text-center mb-6">
-        <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] opacity-60">Technologies We Master</p>
+        <p className="text-blue-500 font-bold uppercase tracking-[0.4em] text-[9px] opacity-60">Technologies We Master</p>
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#FCF8F8] to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#FCF8F8] to-transparent z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10"></div>
 
         <motion.div
           className="flex gap-20 min-w-max items-center"

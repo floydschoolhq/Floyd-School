@@ -6,7 +6,7 @@ import { GlowingCard } from './ui/GlowingCard';
 
 const About = () => {
   return (
-    <div className="bg-[#0A0F1E] py-20 relative overflow-hidden" id="about">
+    <div className="bg-[#000000] py-20 relative overflow-hidden" id="about">
       {/* Background Decorative Mesh */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#2563EB]/5 rounded-full blur-[100px] animate-pulse"></div>

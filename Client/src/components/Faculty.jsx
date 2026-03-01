@@ -99,14 +99,14 @@ const Faculty = () => {
     const marqueeItems = [...LEADERS, ...LEADERS];
 
     return (
-        <section className="bg-[#FCF8F8] py-20 border-t border-[#FBEFEF] relative overflow-hidden">
-            <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-50 rounded-full blur-[120px] pointer-events-none" />
+        <section className="bg-[#000000] py-20 border-t border-white/5 relative overflow-hidden">
+            <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-4">Distinguished Faculty</p>
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-none">
-                        Industry Visionaries & <span className="text-[#2563EB]">Engineering</span> Leaders
+                    <p className="text-blue-500 font-black uppercase tracking-[0.5em] text-[10px] mb-4">Distinguished Faculty</p>
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-none">
+                        Industry Visionaries & <span className="text-blue-500">Engineering</span> Leaders
                     </h2>
                 </div>
 
@@ -115,11 +115,11 @@ const Faculty = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-20 bg-white rounded-[3.5rem] p-8 lg:p-12 shadow-2xl border border-[#FBEFEF] relative overflow-hidden shadow-blue-500/5 transition-all duration-700 hover:shadow-blue-500/10"
+                    className="mb-20 bg-white/5 backdrop-blur-3xl rounded-[3.5rem] p-8 lg:p-12 shadow-2xl border border-white/10 relative overflow-hidden shadow-blue-500/5 transition-all duration-700 hover:shadow-blue-500/10"
                 >
                     <div className="flex flex-col lg:flex-row gap-20 items-center relative z-10">
                         {/* Video Side */}
-                        <div className="w-full lg:w-1/2 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl border border-[#FBEFEF] relative bg-slate-950 group">
+                        <div className="w-full lg:w-1/2 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 relative bg-slate-950 group">
                             <video
                                 autoPlay
                                 loop
@@ -131,9 +131,9 @@ const Faculty = () => {
                                 Your browser does not support the video tag.
                             </video>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/90 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white shadow-2xl ring-1 ring-black/5">
+                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/10 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white/20 shadow-2xl">
                                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                                <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.25em]">
+                                <span className="text-[10px] font-black text-white uppercase tracking-[0.25em]">
                                     Live Bootcamp Session
                                 </span>
                             </div>
@@ -142,12 +142,28 @@ const Faculty = () => {
                         {/* Features Side */}
                         <div className="w-full lg:w-1/2 space-y-6">
                             <div className="grid sm:grid-cols-2 gap-5">
-                                <FeatureItem icon={Headphones} title="1:1 Support" desc="Instant Mentor Access" />
-                                <FeatureItem icon={MessageSquare} title="Post-Class Chat" desc="24/7 Doubt Clearance" />
-                                <FeatureItem icon={PlayCircle} title="Live Classes" desc="Interactive Coding" />
-                                <FeatureItem icon={Star} title="Expert sessions" desc="Industry Insights" />
-                                <FeatureItem icon={Award} title="Certifications" desc="Global Recognition" />
-                                <FeatureItem icon={Briefcase} title="Hands-On Projects" desc="Production Systems" />
+                                {[
+                                    { icon: Headphones, title: "1:1 Support", desc: "Instant Mentor Access" },
+                                    { icon: MessageSquare, title: "Post-Class Chat", desc: "24/7 Doubt Clearance" },
+                                    { icon: PlayCircle, title: "Live Classes", desc: "Interactive Coding" },
+                                    { icon: Star, title: "Expert sessions", desc: "Industry Insights" },
+                                    { icon: Award, title: "Certifications", desc: "Global Recognition" },
+                                    { icon: Briefcase, title: "Hands-On Projects", desc: "Production Systems" }
+                                ].map((feature, i) => (
+                                    <motion.div
+                                        key={i}
+                                        whileHover={{ x: 6 }}
+                                        className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-blue-500/20 hover:bg-white/10 transition-all group"
+                                    >
+                                        <div className="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 border border-blue-500/20 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                                            <feature.icon size={18} />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-xs font-bold text-white uppercase tracking-widest">{feature.title}</span>
+                                            <span className="text-[9px] font-bold text-white/40 uppercase tracking-wider mt-0.5">{feature.desc}</span>
+                                        </div>
+                                    </motion.div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -156,12 +172,12 @@ const Faculty = () => {
 
             {/* Infinite Leader Marquee */}
             <div className="relative w-full overflow-hidden py-10">
-                <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#FCF8F8] to-transparent z-20 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#FCF8F8] to-transparent z-20 pointer-events-none" />
+                <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
 
                 <motion.div
                     className="flex gap-8 px-4"
-                    animate={{ x: [0, -2560] }} // Adjust based on card width + gap
+                    animate={{ x: [0, -2560] }}
                     transition={{
                         x: {
                             repeat: Infinity,
@@ -170,12 +186,12 @@ const Faculty = () => {
                             ease: "linear",
                         },
                     }}
-                    whileHover={{ transition: { duration: 100 } }} // Optional: slow down on hover
+                    whileHover={{ transition: { duration: 100 } }}
                 >
                     {marqueeItems.map((mentor, index) => (
                         <div
                             key={index}
-                            className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 min-w-[300px] w-[300px]"
+                            className="bg-[#111111] rounded-[2rem] overflow-hidden border border-white/5 shadow-sm group cursor-pointer hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 min-w-[300px] w-[300px]"
                         >
                             <div className="relative h-48 overflow-hidden bg-slate-950">
                                 <img
@@ -184,7 +200,7 @@ const Faculty = () => {
                                     className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 opacity-50 group-hover:opacity-100 group-hover:scale-110"
                                 />
                                 <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent">
-                                    <div className="flex items-center gap-2 text-[#2563EB]">
+                                    <div className="flex items-center gap-2 text-blue-400">
                                         <div className="p-1.5 bg-white/10 rounded-lg backdrop-blur-md">
                                             {React.cloneElement(mentor.companyIcon, { size: 12 })}
                                         </div>
@@ -194,17 +210,17 @@ const Faculty = () => {
                             </div>
 
                             <div className="p-6">
-                                <h3 className="text-lg font-black text-slate-900 mb-1 uppercase tracking-tight truncate group-hover:text-[#2563EB] transition-colors">{mentor.name}</h3>
-                                <p className="text-[#2563EB] font-black text-[10px] mb-4 uppercase tracking-[0.25em] truncate">{mentor.role}</p>
-                                <p className="text-slate-500 text-[11px] mb-6 leading-relaxed font-bold uppercase tracking-widest opacity-70 line-clamp-2">
+                                <h3 className="text-lg font-black text-white mb-1 uppercase tracking-tight truncate group-hover:text-blue-400 transition-colors">{mentor.name}</h3>
+                                <p className="text-blue-500 font-black text-[10px] mb-4 uppercase tracking-[0.25em] truncate">{mentor.role}</p>
+                                <p className="text-white/40 text-[11px] mb-6 leading-relaxed font-bold uppercase tracking-widest opacity-70 line-clamp-2">
                                     {mentor.bio}
                                 </p>
 
-                                <div className="flex justify-between items-center border-t border-slate-50 pt-5">
-                                    <div className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-[#2563EB] transition-all">
+                                <div className="flex justify-between items-center border-t border-white/5 pt-5">
+                                    <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-blue-600/10 group-hover:text-blue-400 transition-all">
                                         <FaLinkedinIn size={16} />
                                     </div>
-                                    <button className="text-[10px] font-black text-slate-600 bg-slate-50 px-5 py-2.5 rounded-xl hover:bg-[#2563EB] hover:text-white transition-all uppercase tracking-[0.2em] border border-slate-100 hover:border-transparent shadow-sm">
+                                    <button className="text-[10px] font-black text-white/60 bg-white/5 px-5 py-2.5 rounded-xl hover:bg-blue-600 hover:text-white transition-all uppercase tracking-[0.2em] border border-white/10 hover:border-transparent shadow-sm">
                                         Profile
                                     </button>
                                 </div>

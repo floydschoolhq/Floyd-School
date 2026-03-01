@@ -2,69 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
-import dualModelBg from '../assets/images/dual-model-bg.png';
-
-/* ─── Typewriter hook ─────────────────────────────────────── */
-const useTypewriter = (text, active, speed = 18) => {
-    const [out, setOut] = useState('');
-    const ref = useRef(null);
-    useEffect(() => {
-        if (active) {
-            setOut('');
-            let i = 0;
-            ref.current = setInterval(() => {
-                setOut(text.slice(0, ++i));
-                if (i >= text.length) clearInterval(ref.current);
-            }, speed);
-        } else {
-            clearInterval(ref.current);
-            setOut('');
-        }
-        return () => clearInterval(ref.current);
-    }, [active, text]);
-    return out;
-};
 
 /* ─── Single feature row ──────────────────────────────────── */
 const FeatureRow = ({ feature, accent, isLast, align = 'left' }) => {
-    const [hovered, setHovered] = useState(false);
-    const typed = useTypewriter(feature.detail, hovered);
-
     return (
-        <div
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className={`group cursor-default py-6 transition-all duration-300`}
-        >
-            <div className={`flex items-start gap-4 ${align === 'right' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
-                <motion.div
-                    animate={{
-                        scale: hovered ? 1.5 : 1,
-                        backgroundColor: hovered ? (accent === 'blue' ? '#3b82f6' : '#6366f1') : 'rgba(255,255,255,0.1)'
-                    }}
-                    className={`w-2 h-2 rounded-full mt-2 shrink-0 border border-white/10`}
+        <div className="group cursor-default py-4 transition-all duration-500">
+            <div className={`flex items-center gap-4 ${align === 'right' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
+                {/* Custom animated bullet */}
+                <div
+                    className={`w-2 h-2 rounded-full shrink-0 border border-white/10 transition-all duration-500 group-hover:scale-150 ${accent === 'blue' ? 'group-hover:bg-blue-500 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.6)]' : 'group-hover:bg-indigo-500 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.6)]'} bg-white/10`}
                 />
+
                 <div className="flex-1">
-                    <h4 className={`text-lg font-black tracking-tight uppercase transition-colors duration-300 ${hovered ? 'text-white' : 'text-slate-100/40'}`}>
+                    {/* Main Category Name */}
+                    <h4 className={`text-lg md:text-xl font-black tracking-tight uppercase transition-colors duration-500 text-slate-100/40 group-hover:text-white drop-shadow-sm`}>
                         {feature.name}
                     </h4>
-
-                    <AnimatePresence>
-                        {hovered && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                className="overflow-hidden"
-                            >
-                                <p className="pt-3 text-[13px] leading-relaxed font-bold text-slate-500 uppercase tracking-wider">
-                                    {typed}
-                                    <span className="inline-block w-1.5 h-3 bg-blue-500 ml-1 animate-pulse" />
-                                </p>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
             </div>
         </div>
@@ -111,13 +64,40 @@ const DualModelSection = () => {
         }
     ];
 
+    const courses1 = "FULL STACK MERN • FRONTEND REACT • BACKEND NODEJS • DEVOPS CLOUD • SYSTEM DESIGN • ";
+    const courses2 = "DATA SCIENCE • MACHINE LEARNING • AI & WEB3 • BLOCKCHAIN • PYTHON MASTERY • ";
+
     return (
-        <section id="models" className="relative py-32 overflow-hidden bg-[#020617] selection:bg-blue-500/30">
+        <section id="models" className="relative py-32 overflow-hidden bg-[#000000] selection:bg-blue-500/30">
             {/* Immersive Background */}
-            <div className="absolute inset-0 z-0">
-                <img src={dualModelBg} alt="" className="w-full h-full object-cover opacity-20 grayscale brightness-50" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,99,235,0.1),transparent_50%)]" />
+            <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
+                {/* Floating Course Names Marquee */}
+                <div className="absolute inset-0 flex flex-col justify-around py-32 overflow-hidden pointer-events-none select-none opacity-[0.15] z-0">
+                    <motion.div
+                        initial={{ x: "0%" }}
+                        animate={{ x: "-50%" }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 360 }}
+                        className="flex whitespace-nowrap w-max"
+                    >
+                        <h1 className="text-4xl md:text-6xl lg:text-8xl font-black uppercase tracking-widest text-white/5" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
+                            {courses1.repeat(20)}
+                        </h1>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ x: "-50%" }}
+                        animate={{ x: "0%" }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 440 }}
+                        className="flex whitespace-nowrap w-max"
+                    >
+                        <h1 className="text-4xl md:text-6xl lg:text-8xl font-black uppercase tracking-widest text-white/5" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
+                            {courses2.repeat(20)}
+                        </h1>
+                    </motion.div>
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-b from-[#000000] via-[#000000]/60 to-[#000000]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,99,235,0.15),transparent_60%)]" />
             </div>
 
             <div className="relative z-10 w-full px-6 xl:px-16 2xl:px-24 max-w-[1600px] mx-auto">
@@ -140,15 +120,6 @@ const DualModelSection = () => {
                     >
                         Two <span className="text-[#FF7A00]">Paths</span>
                     </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-slate-500 text-[11px] font-bold mt-6 uppercase tracking-[0.4em]"
-                    >
-                        Hover Features for Details
-                    </motion.p>
                 </div>
 
                 {/* Integrated Split-Panel Design */}

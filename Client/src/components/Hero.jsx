@@ -7,6 +7,7 @@ import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
 import api from '../api/axios';
 import heroBg from '../assets/images/2.png';
+import ThreeDBackground from './ui/ThreeDBackground.jsx';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -75,14 +76,6 @@ const Hero = () => {
         }
     };
 
-    const handleAuthAction = (action) => {
-        if (!user) {
-            navigate('/student/signup');
-            return;
-        }
-        action();
-    };
-
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -106,60 +99,34 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" ref={containerRef} className="relative pt-24 pb-16 overflow-hidden">
-            {/* Immersive Tech Backdrop with User Provided Image */}
+        <section id="home" ref={containerRef} className="relative w-full min-h-screen bg-[#000000] overflow-hidden selection:bg-blue-500/30">
+            {/* Black Hole Background Scene */}
             <div className="absolute inset-0 z-0">
-                {/* Background Image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: `url(${heroBg})`,
-                        imageRendering: 'auto',
-                        WebkitBackfaceVisibility: 'hidden', // Prevents shimmering/blur during scroll
-                        transform: 'translateZ(0)' // Forced GPU acceleration for sharper rendering
-                    }}
-                />
-
-                {/* Refined Contrast Overlays - Removed Blur to preserve image quality */}
-                <div className="absolute inset-0 bg-white/30" />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/40 to-white/10 opacity-90" />
-                <div className="absolute inset-0 bg-[radial-gradient(#2563EB_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.05]" />
-
-                {/* Animated Floating Gradients for Depth */}
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.3, 0.5, 0.3],
-                        x: [0, 50, 0],
-                        y: [0, -50, 0]
-                    }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px]"
-                />
+                <ThreeDBackground />
+                {/* Cinematic Vignette */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_90%)]" />
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
-                {/* Split Grid Layout */}
+            {/* Navbar Placeholder space since we have PremiumNavbar floating */}
+            <div className="h-24 md:h-28" />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                 <div className="grid md:grid-cols-[1fr_420px] gap-12 items-center">
 
-                    {/* Left Column: Bento Hub */}
+                    {/* Left Column: Bento Hub with "Suction" Entry */}
                     <div className="grid grid-cols-2 gap-4 h-fit">
-                        {/* Major Tile - Technical Excellence */}
+                        {/* Tile 01 - Practical Training - Sucked from Top Left */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -6 }}
-                            transition={{ duration: 0.5 }}
-                            className="col-span-2 relative p-7 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            initial={{ opacity: 0, x: -500, y: -500, scale: 0.2, rotate: -45 }}
+                            animate={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 1.5, type: "spring", bounce: 0.2 }}
+                            className="col-span-2 relative p-7 rounded-3xl bg-slate-950/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden group"
                         >
-                            {/* Gradient top edge */}
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
-                            {/* Ambient glow */}
-                            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-600/15 rounded-full blur-[80px] group-hover:bg-blue-600/25 transition-all duration-700" />
+                            <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-600/10 rounded-full blur-[80px] group-hover:bg-blue-600/20 transition-all duration-700" />
                             <div className="relative z-10 flex items-center justify-between gap-6">
                                 <div className="flex items-center gap-5">
-                                    <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-[0_0_30px_rgba(37,99,235,0.5)] shrink-0">
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-[0_0_30px_rgba(37,99,235,0.2)] shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
                                         <Terminal className="w-6 h-6" />
                                     </div>
                                     <div>
@@ -168,44 +135,40 @@ const Hero = () => {
                                     </div>
                                 </div>
                                 <div className="text-right shrink-0 hidden sm:block">
-                                    <p className="text-4xl font-black text-white/10 group-hover:text-blue-500/20 transition-colors duration-500 select-none">01</p>
+                                    <p className="text-4xl font-black text-white/5 group-hover:text-blue-500/10 transition-colors duration-500 select-none">01</p>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Secondary Tile - Live Ops */}
+                        {/* Tile 02 - Live Ops - Sucked from Bottom Left */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -6 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                            className="relative p-5 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            initial={{ opacity: 0, x: -400, y: 400, scale: 0.2, rotate: -30 }}
+                            animate={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 1.5, delay: 0.1, type: "spring", bounce: 0.2 }}
+                            className="relative p-5 rounded-3xl bg-slate-950/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden group"
                         >
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-500/40 to-transparent" />
-                            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-slate-700/20 rounded-full blur-[50px] group-hover:bg-blue-700/15 transition-all duration-500" />
+                            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-600/5 rounded-full blur-[50px] group-hover:bg-blue-600/15 transition-all duration-500" />
                             <div className="relative z-10">
-                                <div className="w-11 h-11 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
+                                <div className="w-11 h-11 rounded-xl bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Cpu className="w-5 h-5" />
                                 </div>
                                 <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Live Projects</h4>
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-[0.2em]">Real-World Exposure</span>
+                                <span className="text-xs font-semibold text-white/30 uppercase tracking-[0.2em]">Real-World Exposure</span>
                             </div>
                         </motion.div>
 
-                        {/* Secondary Tile - Engineering */}
+                        {/* Tile 03 - Engineering - Sucked from Bottom */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -6 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="relative p-5 rounded-3xl bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden group"
+                            initial={{ opacity: 0, x: 0, y: 500, scale: 0.2 }}
+                            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 1.5, delay: 0.2, type: "spring", bounce: 0.2 }}
+                            className="relative p-5 rounded-3xl bg-slate-950/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden group"
                         >
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-                            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-700/10 rounded-full blur-[50px] group-hover:bg-blue-600/20 transition-all duration-500" />
+                            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-600/10 rounded-full blur-[50px] group-hover:bg-blue-600/20 transition-all duration-500" />
                             <div className="relative z-10">
-                                <div className="w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
+                                <div className="w-11 h-11 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-5 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all duration-300">
                                     <Code2 className="w-5 h-5" />
                                 </div>
                                 <h4 className="text-xl font-black text-white uppercase tracking-tight leading-tight mb-1">Career Track</h4>
@@ -213,31 +176,34 @@ const Hero = () => {
                             </div>
                         </motion.div>
 
-                        {/* CTA Bento Tile */}
+                        {/* CTA Bento Tile - Centered Expansion */}
                         <motion.div
-                            className="col-span-2 mt-4 p-1.5 rounded-[2.5rem] bg-slate-900 shadow-2xl flex items-center gap-2"
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            className="col-span-2 mt-4 p-1.5 rounded-[2.5rem] bg-slate-900 border border-white/10 shadow-2xl flex items-center gap-2"
                         >
                             <button
                                 onClick={handleEnrollNow}
-                                className="flex-1 py-4 rounded-[2rem] bg-[#2563EB] text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-blue-600 transition-all active:scale-95"
+                                className="flex-1 py-4 rounded-[2rem] bg-blue-600 text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-blue-500 transition-all active:scale-95 shadow-lg shadow-blue-600/20"
                             >
                                 Enroll Now
                             </button>
                             <button
                                 onClick={handleExplore}
-                                className="flex-1 py-4 rounded-[2rem] bg-slate-800 text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-slate-700 transition-all active:scale-95"
+                                className="flex-1 py-4 rounded-[2rem] bg-slate-800 text-white font-extrabold uppercase text-[11px] tracking-[0.2em] hover:bg-slate-700 transition-all active:scale-95 border border-white/5"
                             >
                                 Explore
                             </button>
                         </motion.div>
                     </div>
 
-                    {/* Right Column: 3D Interactive Form */}
-                    <div className="perspective-[2000px] flex justify-center items-center origin-top md:origin-right">
+                    {/* Right Column: 3D Form - Sucked from Bottom Right */}
+                    <div className="perspective-[2000px] flex justify-center items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: 40, rotateY: 10 }}
-                            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-                            viewport={{ once: true }}
+                            initial={{ opacity: 0, x: 500, y: 500, scale: 0.2, rotateY: 30, rotate: 15 }}
+                            animate={{ opacity: 1, x: 0, y: 0, scale: 1, rotateY: 0, rotate: 0 }}
+                            transition={{ duration: 1.8, delay: 0.3, type: "spring", bounce: 0.1 }}
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
                             style={{
@@ -247,13 +213,10 @@ const Hero = () => {
                             }}
                             className="relative w-full group"
                         >
-                            <div className="absolute -inset-[2px] bg-gradient-to-r from-[#2563EB] via-blue-400 to-[#2563EB] rounded-[4rem] p-[2.5px] opacity-100 shadow-[0_0_60px_rgba(37,99,235,0.4)] blur-[1px] transition-opacity duration-700" />
+                            <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-600/50 via-blue-400/50 to-blue-600/50 rounded-[4rem] p-[2px] opacity-100 shadow-[0_0_60px_rgba(37,99,235,0.2)] blur-[0.5px]" />
 
-                            <div id="registration-form" className="relative bg-slate-950/90 group-hover:bg-black/95 backdrop-blur-3xl rounded-[3rem] p-7 md:p-11 shadow-3xl overflow-hidden relative z-10 transition-all duration-700">
-                                {/* Intense Permanent Backdrop Glow */}
+                            <div id="registration-form" className="relative bg-slate-950/60 group-hover:bg-black/80 backdrop-blur-3xl rounded-[3rem] p-7 md:p-11 shadow-3xl overflow-hidden z-10 transition-all duration-700 border border-white/10">
                                 <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-900/10 transition-colors duration-700 pointer-events-none" />
-                                {/* Interior Glass Highlight */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
 
                                 {status === 'success' ? (
                                     <motion.div
@@ -266,13 +229,13 @@ const Hero = () => {
                                         </div>
                                         <h3 className="text-2xl font-extrabold text-white mb-3 uppercase">Success</h3>
                                         <p className="text-white/40 text-xs font-medium max-w-[240px] mx-auto">Details submitted successfully.</p>
-                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-[#2563EB] hover:text-white uppercase tracking-[0.3em]">← New Request</button>
+                                        <button onClick={() => setStatus('idle')} className="mt-8 text-[10px] font-black text-blue-500 hover:text-white uppercase tracking-[0.3em]">← New Request</button>
                                     </motion.div>
                                 ) : (
                                     <>
                                         <div className="mb-6 relative z-10">
                                             <div className="flex items-center gap-3 mb-3">
-                                                <div className="w-1.5 h-6 bg-[#2563EB] rounded-full" />
+                                                <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
                                                 <h3 className="text-xl font-extrabold text-white leading-tight uppercase">
                                                     Start Your Journey
                                                 </h3>
@@ -283,29 +246,29 @@ const Hero = () => {
                                         <form className="space-y-6 relative z-10" onSubmit={handleFormSubmit}>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {["Class 8-9", "Class 9-10", "Class 11-12", "College"].map((option, idx) => (
-                                                    <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2.5 px-1 rounded-xl text-[11px] font-bold uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/10 text-white/40 border border-transparent hover:border-white/10'}`}>{option}</button>
+                                                    <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-2.5 px-1 rounded-xl text-[11px] font-bold uppercase tracking-wide transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/5 text-white/40 border border-white/5 hover:border-white/10'}`}>{option}</button>
                                                 ))}
                                             </div>
-                                            <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white appearance-none focus:outline-none focus:bg-white/15 font-bold uppercase tracking-widest cursor-pointer shadow-lg">
-                                                <option value="" className="bg-slate-900">Select Course</option>
-                                                <option value="Full Stack" className="bg-slate-900">Full Stack</option>
-                                                <option value="AI & ML" className="bg-slate-900">AI & ML</option>
-                                                <option value="Cyber Security" className="bg-slate-900">Cyber Intelligence</option>
-                                                <option value="Robotics" className="bg-slate-900">Robotics</option>
+                                            <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[13px] p-3.5 rounded-xl bg-white/5 border border-white/10 text-white appearance-none focus:outline-none focus:bg-white/10 font-bold uppercase tracking-widest cursor-pointer shadow-lg outline-none">
+                                                <option value="" className="bg-slate-950">Select Course</option>
+                                                <option value="Full Stack" className="bg-slate-950">Full Stack</option>
+                                                <option value="AI & ML" className="bg-slate-950">AI & ML</option>
+                                                <option value="Cyber Security" className="bg-slate-950">Cyber Intelligence</option>
+                                                <option value="Robotics" className="bg-slate-950">Robotics</option>
                                             </select>
                                             <div className="space-y-4">
-                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[13px] p-3.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 shadow-lg outline-none" />
                                                 <div className="grid grid-cols-2 gap-4">
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
-                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[13px] p-3.5 rounded-xl bg-white/10 border border-transparent text-white focus:outline-none focus:bg-white/15 placeholder:text-white/20 shadow-lg" />
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[13px] p-3.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 shadow-lg outline-none" />
+                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[13px] p-3.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 shadow-lg outline-none" />
                                                 </div>
                                             </div>
-                                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] transition-all bg-[#2563EB] hover:bg-blue-600 shadow-2xl shadow-blue-500/30">
+                                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] transition-all bg-blue-600 hover:bg-blue-500 shadow-2xl shadow-blue-600/20">
                                                 <div className="py-3.5 text-white font-extrabold text-base uppercase tracking-widest flex items-center justify-center gap-2">
                                                     {status === 'loading' ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <>Get Started <ArrowRight size={14} /></>}
                                                 </div>
                                             </motion.button>
-                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest">Secure Registration</p>
+                                            <p className="text-center text-[8px] text-white/20 uppercase tracking-widest">Secure Registration Active</p>
                                         </form>
                                     </>
                                 )}
