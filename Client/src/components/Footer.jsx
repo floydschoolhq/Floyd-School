@@ -11,7 +11,7 @@ import BrandLogo from './common/BrandLogo';
 const Footer = () => {
   const footerLinks = [
     {
-      title: 'ThinkSkool',
+      title: <span className="text-blue-600">ThinkSkool</span>,
       links: [
         { name: 'About Us', href: '#how-it-works' },
         { name: 'Careers', href: '/careers' },
@@ -23,7 +23,7 @@ const Footer = () => {
       title: 'Products',
       links: [
         { name: 'Future Tech Bootcamp', href: '#engineering-programs' },
-        { name: 'ThinkSkool Certifications', href: '#engineering-programs' },
+        { name: <><span className="text-blue-600">ThinkSkool</span> Certifications</>, href: '#engineering-programs' },
         { name: 'Code 360', href: '/student/coding-lab' },
       ],
     },
@@ -88,7 +88,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">&copy; 2025 ThinkSkool Subsystems</p>
+            <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">&copy; 2025 <span className="text-blue-600">ThinkSkool</span> Subsystems</p>
             <div className="w-1.5 h-1.5 rounded-full bg-blue-500/20 hidden md:block" />
             <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">Integrated Learning Infrastructure</p>
           </div>

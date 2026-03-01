@@ -39,35 +39,26 @@ const OnlineCourseFocus = () => {
     };
 
     return (
-        <section id="online-focus" className="relative py-10 bg-[#FFF9FA] overflow-hidden">
+        <section id="online-focus" className="relative pt-8 pb-10 bg-[#FFF9FA] overflow-hidden">
             {/* Ambient Background Elements */}
             <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                 {/* Header Section */}
-                <div className="text-center mb-10">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4"
-                    >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-400">Main Focus: Online Batches</span>
-                    </motion.div>
+                <div className="text-center mb-8">
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="text-2xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter leading-none"
                     >
-                        Elite Online <span className="text-blue-600">Engineering</span> Batches.
+                        <span className="text-blue-600">ThinkSkool</span> <span className="text-blue-600">Premium</span> Batches.
                     </motion.h2>
                 </div>
 
                 {/* Enrollment Roadmap */}
-                <div className="grid md:grid-cols-3 gap-6 mb-24">
+                <div className="grid md:grid-cols-3 gap-6 mb-12">
                     {enrollmentSteps.map((step, idx) => (
                         <motion.div
                             key={idx}
@@ -75,7 +66,8 @@ const OnlineCourseFocus = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            className="relative p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-500/20 transition-all group overflow-hidden shadow-sm hover:shadow-md"
+                            className="relative p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-500/20 transition-all group overflow-hidden shadow-sm hover:shadow-md cursor-pointer"
+                            onClick={() => navigate('/online-program')}
                         >
                             <div className={`absolute top-0 right-0 w-24 h-24 ${step.bg} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity`} />
                             <div className="relative z-10">
@@ -92,7 +84,7 @@ const OnlineCourseFocus = () => {
                 </div>
 
                 {/* Featured Programs Grid */}
-                <div className="mb-24">
+                <div className="mb-12">
                     <div className="flex items-center gap-4 mb-12">
                         <h3 className="text-xl font-black text-slate-900 uppercase tracking-widest">Featured Programs</h3>
                         <div className="flex-1 h-px bg-white/10" />

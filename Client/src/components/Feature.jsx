@@ -143,7 +143,7 @@ const Feature = () => {
           >
             <MediaSlideshow
               media={thinkSkoolMedia}
-              subtitle="ThinkSkool Path"
+              subtitle={<><span className="text-blue-600">ThinkSkool</span> Path</>}
               title="Interactive Mastery"
               isTraditional={false}
             />

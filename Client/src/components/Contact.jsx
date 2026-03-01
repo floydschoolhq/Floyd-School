@@ -209,7 +209,7 @@ const Contact = () => {
                             className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed"
                             variants={itemVariants}
                         >
-                            Join the ThinkSkool ecosystem. Let's discuss how we can accelerate your engineering journey to industry mastery.
+                            Join the <span className="text-blue-600">ThinkSkool</span> ecosystem. Let's discuss how we can accelerate your engineering journey to industry mastery.
                         </motion.p>
 
                         {/* Contact Details Grid */}
@@ -224,9 +224,9 @@ const Contact = () => {
                                 </div>
                                 <a
                                     href="mailto:thinkskool.office@gmail.com"
-                                    className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition tracking-tight"
+                                    className="text-lg font-black text-blue-600 hover:text-slate-900 transition tracking-tight"
                                 >
-                                    thinkskool.office@gmail.com
+                                    <span className="text-blue-600">thinkskool</span>.office@gmail.com
                                 </a>
                             </motion.div>
 

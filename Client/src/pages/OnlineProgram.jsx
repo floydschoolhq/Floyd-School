@@ -348,7 +348,7 @@ const OnlineProgram = () => {
                                     <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-black text-white">TS</div>
                                     <div>
                                         <p className="text-white font-black uppercase text-sm">Industrial Director</p>
-                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">thinkskool Engineering</p>
+                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest"><span className="text-blue-600">thinkskool</span> Engineering</p>
                                     </div>
                                 </div>
                             </div>
