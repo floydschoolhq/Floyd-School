@@ -4,7 +4,7 @@ import { Briefcase, Award, Headphones } from 'lucide-react';
 
 const IndustrialNetwork = () => {
     return (
-        <section id="infrastructure" className="relative bg-[#020617] pt-6 pb-16 overflow-hidden border-t border-white/5 cyber-mesh">
+        <section id="network" className="relative bg-[#020617] pt-6 pb-16 overflow-hidden border-t border-white/5 cyber-mesh">
             {/* Ambient Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#2563EB]/5 blur-[120px] pointer-events-none" />
 

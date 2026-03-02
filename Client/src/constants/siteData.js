@@ -4,44 +4,48 @@ export const FALLBACK_COURSES = [
     {
         _id: '1',
         title: "AI & Machine Learning",
+        image: "/images/programs/ai_ml.png",
         icon: 'Cpu',
         description: "Neural networks, predictive modeling, and deep learning.",
         color: "text-[#2563EB]",
         rating: 4.9,
-        duration: "6 Months",
+        duration: "3-4 Months",
         tags: ["AI", "Python", "ML"],
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } }
     },
     {
         _id: '2',
         title: "Web Architecture",
+        image: "/images/programs/web_arch_fallback.jpg",
         icon: 'Code',
         description: "Full-stack engineering with scalable cloud infrastructure.",
         color: "text-[#2563EB]",
         rating: 4.8,
-        duration: "6 Months",
+        duration: "3-4 Months",
         tags: ["React", "Node", "Cloud"],
         deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } }
     },
     {
         _id: '3',
         title: "IoT & Robotics",
+        image: "/images/programs/iot_robotics.png",
         icon: 'Terminal',
         description: "Hardware-software integration and autonomous systems.",
         color: "text-[#2563EB]",
         rating: 4.7,
-        duration: "4 Months",
+        duration: "3-4 Months",
         tags: ["Embedded", "C++", "Sensors"],
         deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } }
     },
     {
         _id: '4',
         title: "Cybersecurity Ops",
+        image: "/images/programs/cyber_fallback.jpg",
         icon: 'Shield',
         description: "Threat analysis and zero-trust protocol mastery.",
         color: "text-[#2563EB]",
         rating: 4.9,
-        duration: "5 Months",
+        duration: "3-4 Months",
         tags: ["SecOps", "Networking", "Hacking"],
         deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } }
     }
@@ -67,31 +71,64 @@ export const studentBenefits = [
 
 export const supportRoles = [
     {
-        title: "Expert Mentors",
-        role: "Technical Architects",
-        desc: "Industrial veterans who guide you through complex engineering hurdles and code architecture.",
-        benefits: ["Live Debugging", "Architecture Review", "Skill Specialization"],
-        icon: 'Users',
-        color: "from-slate-700 to-slate-900",
+        title: "Adaptive Learning Systems",
+        role: "Cognitive Engine",
+        image: "/images/ecosystem/adaptive_learning.jpg",
+        desc: "Personalized AI-driven learning paths that adapt to individual student progress.",
+        benefits: ["Personalized Pace", "Gap Analysis", "Dynamic Content"],
+        icon: 'Brain',
+        color: "from-blue-600 to-indigo-600",
         delay: 0
     },
     {
-        title: "Growth Associates",
-        role: "Career Catalysts",
-        desc: "Your personal success partners who ensure your learning path aligns with your professional goals.",
-        benefits: ["Career Mapping", "Portfolio Design", "Industry Networking"],
-        icon: 'Zap',
-        color: "from-[#2563EB] to-blue-100",
+        title: "Professional Cloud IDE",
+        role: "Engineering Workspace",
+        image: "/images/ecosystem/cloud_ide.jpg",
+        desc: "Industry-standard cloud development environment for real-world engineering.",
+        benefits: ["Zero Setup", "Cloud Power", "Collab Tools"],
+        icon: 'Code',
+        color: "from-blue-500 to-cyan-400",
         delay: 0.1
     },
     {
-        title: "System Admins",
-        role: "Platform Managers",
-        desc: "Silent engines ensuring the cloud infrastructure and portal response remains 100% efficient.",
-        benefits: ["24/7 Availability", "Resource Allocation", "System Optimization"],
-        icon: 'ShieldCheck',
-        color: "from-slate-600 to-slate-800",
+        title: "Performance Analytics Center",
+        role: "Industrial Dashboard",
+        image: "/images/ecosystem/performance.jpg",
+        desc: "Deep insights into student technical growth and skill acquisition metrics.",
+        benefits: ["Real-time Tracking", "Skill Heatmaps", "Progress Reports"],
+        icon: 'Target',
+        color: "from-slate-700 to-slate-900",
         delay: 0.2
+    },
+    {
+        title: "Global Industry Network",
+        role: "Professional Placement",
+        image: "/images/ecosystem/networking.jpg",
+        desc: "Connection to elite industrial partners and technical career opportunities.",
+        benefits: ["Job Referrals", "Portfolio Review", "Exhibition Space"],
+        icon: 'Globe',
+        color: "from-blue-600 to-blue-800",
+        delay: 0.3
+    },
+    {
+        title: "Enterprise Security Protocols",
+        role: "Data Protection",
+        image: "/images/ecosystem/security.jpg",
+        desc: "Advanced security training and zero-trust protocol implementation mastery.",
+        benefits: ["Threat Models", "Zero Trust", "Data Privacy"],
+        icon: 'ShieldCheck',
+        color: "from-indigo-600 to-purple-600",
+        delay: 0.4
+    },
+    {
+        title: "Neural Mentorship Network",
+        role: "AI Diagnostics",
+        image: "/images/ecosystem/mentorship.jpg",
+        desc: "Direct access to AI-augmented mentorship for immediate technical clearing.",
+        benefits: ["Instant Doubt Clear", "Code Review", "Expert AMA"],
+        icon: 'Zap',
+        color: "from-slate-800 to-black",
+        delay: 0.5
     }
 ];
 

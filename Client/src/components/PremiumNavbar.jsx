@@ -113,9 +113,9 @@ const PremiumNavbar = () => {
                 ...(collegeCourses.length > 0 ? collegeCourses : [])
             ]
         }] : []),
-        { name: 'Our Courses', id: 'engineering-programs' },
-        { name: 'Infrastructure', id: 'infrastructure' },
-        { name: 'Support', id: 'support' },
+        { name: 'Programs', id: 'online-focus' },
+        { name: 'Faculty', id: 'experts' },
+        { name: 'Ecosystem', id: 'infrastructure' },
         { name: 'How It Works', id: 'how-it-works' },
     ];
 

@@ -13,7 +13,7 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto' }) => {
     return (
         <div className={`flex items-center font-black ${sizeClasses[size] || sizeClasses.md} uppercase tracking-tighter transition-all duration-300 ${className}`}>
             <span className="text-[#2563EB]">think</span>
-            <span className="text-[#FF7A00]">skool</span>
+            <span className="text-[#F97316]">skool</span>
         </div>
     );
 };

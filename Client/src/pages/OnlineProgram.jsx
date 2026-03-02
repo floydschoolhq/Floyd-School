@@ -223,9 +223,17 @@ const OnlineProgram = () => {
                         }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
-                        {FALLBACK_COURSES.map(course => (
-                            <CourseCard key={course._id} course={course} />
-                        ))}
+                        {FALLBACK_COURSES.length > 0 ? (
+                            FALLBACK_COURSES.map(course => (
+                                <CourseCard key={course._id} course={course} />
+                            ))
+                        ) : (
+                            <div className="col-span-full py-20 bg-white/5 backdrop-blur-3xl border border-dashed border-white/10 rounded-[3rem] flex flex-col items-center justify-center text-center">
+                                <Rocket size={48} className="text-[#2563EB]/20 mb-6" />
+                                <h4 className="text-xl font-black text-white uppercase tracking-tighter">New Industrial Tracks In Alpha</h4>
+                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">We are calibrating the curriculum with top-tier industrial directors.</p>
+                            </div>
+                        )}
                     </motion.div>
                 </div>
 

@@ -55,8 +55,8 @@ const DetailedProgram = () => {
     return (
         <section id="engineering-programs" className="relative bg-[#020617] py-20 overflow-hidden border-t border-white/5 cyber-mesh">
             {/* Energy Field Backgrounds */}
-            <div className="absolute top-0 right-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 rounded-full blur-[120px] pointer-events-none animate-float-orb"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none animate-float-orb" style={{ animationDelay: '-5s' }}></div>
+            <div className="absolute top-0 right-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 rounded-full blur-[80px] pointer-events-none opacity-50 animate-float-orb"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none opacity-50 animate-float-orb" style={{ animationDelay: '-5s' }}></div>
 
             <motion.div
                 initial={{ opacity: 0, x: 100 }}
@@ -96,54 +96,62 @@ const DetailedProgram = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {courses.map((course, index) => (
-                            <motion.div
-                                key={course._id || index}
-                                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-                                whileHover={{ y: -8 }}
-                                onClick={() => setSelectedCourse(course)}
-                                className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-7 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
-                            >
-                                {/* Intensity Glow Filter */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl" />
+                        {courses.length > 0 ? (
+                            courses.map((course, index) => (
+                                <motion.div
+                                    key={course._id || index}
+                                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+                                    whileHover={{ y: -8 }}
+                                    onClick={() => setSelectedCourse(course)}
+                                    className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-7 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
+                                >
+                                    {/* Intensity Glow Filter */}
+                                    <div className="absolute inset-0 bg-[#2563EB]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
 
-                                {/* Glass Shine Sweep */}
-                                <div className="glass-shine-effect" />
+                                    {/* Glass Shine Sweep */}
+                                    <div className="glass-shine-effect" />
 
-                                <div className="relative z-10 flex flex-col h-full">
-                                    <div className={`w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center mb-6 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
-                                        {getIcon(course.icon, "w-5 h-5 text-[#2563EB] group-hover:text-white transition-colors")}
-                                    </div>
+                                    <div className="relative z-10 flex flex-col h-full">
+                                        <div className={`w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center mb-6 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
+                                            {getIcon(course.icon, "w-5 h-5 text-[#2563EB] group-hover:text-white transition-colors")}
+                                        </div>
 
-                                    <div className="flex items-center gap-1 mb-4">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-800"} />
-                                        ))}
-                                        <span className="text-[9px] font-black text-slate-500 ml-1 tracking-widest">{course.rating}</span>
-                                    </div>
+                                        <div className="flex items-center gap-1 mb-4">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-800"} />
+                                            ))}
+                                            <span className="text-[9px] font-black text-slate-500 ml-1 tracking-widest">{course.rating}</span>
+                                        </div>
 
-                                    <h3 className="text-[18px] font-black text-white mb-4 tracking-tight uppercase leading-none group-hover:text-blue-400 transition-colors">
-                                        {course.title}
-                                    </h3>
+                                        <h3 className="text-[18px] font-black text-white mb-4 tracking-tight uppercase leading-none group-hover:text-blue-400 transition-colors">
+                                            {course.title}
+                                        </h3>
 
-                                    <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-8 line-clamp-3 leading-relaxed">
-                                        {course.description}
-                                    </p>
+                                        <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-8 line-clamp-3 leading-relaxed">
+                                            {course.description}
+                                        </p>
 
-                                    <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/5">
-                                        <span className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-white transition-colors">
-                                            <Clock size={10} className="text-[#2563EB]" /> {course.duration}
-                                        </span>
-                                        <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
-                                            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                                        <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/5">
+                                            <span className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-white transition-colors">
+                                                <Clock size={10} className="text-[#2563EB]" /> {course.duration}
+                                            </span>
+                                            <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                                                <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                                </motion.div>
+                            ))
+                        ) : (
+                            <div className="col-span-full py-20 bg-white/5 backdrop-blur-3xl border border-dashed border-white/10 rounded-[3rem] flex flex-col items-center justify-center text-center">
+                                <Globe size={48} className="text-[#2563EB]/20 mb-6" />
+                                <h4 className="text-xl font-black text-white uppercase tracking-tighter">Undergoing Global Scale-Up</h4>
+                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">We are finalizing industrial engineering tracks for the next cohort.</p>
+                            </div>
+                        )}
                     </div>
                 )}
 

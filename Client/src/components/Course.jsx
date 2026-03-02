@@ -7,33 +7,33 @@ const Course = () => {
     // Define the course data with titles, descriptions, and corresponding icons
     const courseData = [
         {
-            title: "AI & Machine Learning",
+            title: "Advanced AI",
+            description: "Neural networks, predictive modeling, and deep learning architectures.",
             icon: Cpu,
-            description: "Students explore how AI identifies patterns and makes predictions. They train simple models and understand how intelligent systems respond to different inputs.",
-            color: "text-[#2563EB]",
-            bg: "bg-[#FBEFEF]",
+            bg: "bg-blue-600/10",
+            color: "text-blue-400"
         },
         {
-            title: "Cybersecurity",
-            icon: ShieldCheck,
-            description: "Students learn about digital safety, online risks, and protective measures. Ethical hacking simulations help them understand how cyberattacks happen.",
-            color: "text-[#2D2D2D]",
-            bg: "bg-[#FBEFEF]",
-        },
-        {
-            title: "IoT & Robotics",
-            icon: Zap,
-            description: "Students work with sensors, microcontrollers, and automation. They observe how devices interact and build simple automated systems.",
-            color: "text-[#2563EB]",
-            bg: "bg-[#FBEFEF]",
-        },
-        {
-            title: "Web/App Development",
+            title: "Web Engine",
+            description: "Full-stack engineering with scalable cloud infrastructure and real-time systems.",
             icon: Code,
-            description: "Students learn the structure of digital products by designing basic web layouts and understanding how user interfaces connect logically.",
-            color: "text-[#2D2D2D]",
-            bg: "bg-[#FBEFEF]",
+            bg: "bg-blue-600/10",
+            color: "text-blue-400"
         },
+        {
+            title: "Robotics Ops",
+            description: "Hardware-software integration, autonomous systems, and sensor fusion.",
+            icon: Terminal,
+            bg: "bg-blue-600/10",
+            color: "text-blue-400"
+        },
+        {
+            title: "Cyber Defense",
+            description: "Threat analysis, zero-trust protocols, and industrial security mastery.",
+            icon: ShieldCheck,
+            bg: "bg-blue-600/10",
+            color: "text-blue-400"
+        }
     ];
 
     // Framer Motion variants for the main container (staggering)
@@ -92,24 +92,32 @@ const Course = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }} // Triggers animation on scroll
                 >
-                    {courseData.map((course, index) => (
-                        <motion.div
-                            key={index}
-                            className={`flex flex-col text-left p-8 rounded-[2.5rem] bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-12px_rgba(245,175,175,0.15)] transition-all duration-500 border border-[#FBEFEF] hover:border-[#2563EB]/20`}
-                            variants={cardVariants}
-                            whileHover={{ scale: 1.05, translateY: -5 }} // Interactive lift on hover
-                        >
-                            <div className={`p-4 rounded-2xl mb-6 w-fit ${course.bg} ${course.color} shadow-sm`}>
-                                <course.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">
-                                {course.title}
-                            </h3>
-                            <p className="text-slate-600 leading-relaxed grow text-sm font-medium">
-                                {course.description}
-                            </p>
-                        </motion.div>
-                    ))}
+                    {courseData.length > 0 ? (
+                        courseData.map((course, index) => (
+                            <motion.div
+                                key={index}
+                                className={`flex flex-col text-left p-8 rounded-[2.5rem] bg-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(37,99,235,0.1)] transition-all duration-500 border border-[#FBEFEF] hover:border-[#2563EB]/20`}
+                                variants={cardVariants}
+                                whileHover={{ scale: 1.02, translateY: -5 }} // Interactive lift on hover
+                            >
+                                <div className={`p-4 rounded-2xl mb-6 w-fit ${course.bg} ${course.color} shadow-sm`}>
+                                    <course.icon className="w-8 h-8" />
+                                </div>
+                                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">
+                                    {course.title}
+                                </h3>
+                                <p className="text-slate-600 leading-relaxed grow text-sm font-medium">
+                                    {course.description}
+                                </p>
+                            </motion.div>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-20 bg-white border border-dashed border-blue-100 rounded-[3rem] flex flex-col items-center justify-center text-center">
+                            <Zap size={48} className="text-blue-500/20 mb-6" />
+                            <h4 className="text-2xl font-black text-slate-400 uppercase tracking-tighter">Technology Programs Under Construction</h4>
+                            <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mt-3">We are syncing with industrial standards to bring you the best curriculum.</p>
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Call to action at the bottom */}

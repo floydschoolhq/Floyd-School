@@ -7,6 +7,7 @@ const FEATURES = [
         title: "Adaptive Learning Systems",
         miniTitle: "Cognitive Engine",
         icon: <FaBrain />,
+        image: "/images/ecosystem/adaptive_learning.jpg",
         desc: "Advanced algorithmic sequencing that adapts curriculum delivery to individual learning trajectories.",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -21,6 +22,7 @@ const FEATURES = [
         title: "Professional Cloud IDE",
         miniTitle: "Engineering Workspace",
         icon: <FaTerminal />,
+        image: "/images/ecosystem/cloud_ide.jpg",
         desc: "High-performance distributed development environment optimized for industrial engineering workflows.",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -35,6 +37,7 @@ const FEATURES = [
         title: "Performance Analytics Center",
         miniTitle: "Industrial Dashboard",
         icon: <FaChartLine />,
+        image: "/images/ecosystem/performance.jpg",
         desc: "Comprehensive monitoring of professional growth across 50+ validated industrial performance benchmarks.",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -49,6 +52,7 @@ const FEATURES = [
         title: "Global Industry Network",
         miniTitle: "Professional Placement",
         icon: <FaUserTie />,
+        image: "/images/ecosystem/networking.jpg",
         desc: "Direct integration with global engineering ecosystems and Tier-1 technology recruitment pipelines.",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -63,6 +67,7 @@ const FEATURES = [
         title: "Enterprise Security Protocols",
         miniTitle: "Data Protection",
         icon: <FaShieldAlt />,
+        image: "/images/ecosystem/security.jpg",
         desc: "Secure-by-design infrastructure protecting intellectual property and sensitive academic data assets.",
         color: "text-slate-600",
         bg: "bg-slate-50",
@@ -77,6 +82,7 @@ const FEATURES = [
         title: "Neural Mentorship Network",
         miniTitle: "AI Diagnostics",
         icon: <FaRobot />,
+        image: "/images/ecosystem/mentorship.jpg",
         desc: "Advanced neural processing center providing real-time code analysis and pedagogical course correction.",
         color: "text-blue-600",
         bg: "bg-blue-50",
@@ -175,11 +181,20 @@ const StudentEcosystem = () => {
                             </div>
 
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className="flex justify-between items-start mb-8">
-                                    <div className="w-12 h-12 bg-slate-900 rounded-[1.2rem] flex items-center justify-center text-2xl text-white group-hover:bg-[#2563EB] group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-xl shadow-slate-900/10">
+                                {/* Image Container */}
+                                <div className="w-full h-32 rounded-[1.5rem] overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
+                                    <img
+                                        src={feature.image}
+                                        alt={feature.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute top-3 left-3 w-8 h-8 bg-slate-900/40 backdrop-blur-md rounded-lg flex items-center justify-center text-sm text-white border border-white/20">
                                         {feature.icon}
                                     </div>
-                                    <div className="flex flex-col gap-1.5 items-end">
+                                </div>
+
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex flex-col gap-1.5 items-start">
                                         {feature.meta.map((m, i) => (
                                             <span key={i} className="text-[7px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-2 py-0.5 rounded-full border border-slate-100 group-hover:text-blue-500 group-hover:border-blue-100 transition-colors">
                                                 {m}
@@ -209,65 +224,77 @@ const StudentEcosystem = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/10 backdrop-blur-md"
-                        onClick={() => setSelectedFeature(null)}
+                        className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/10 backdrop-blur-md"
                     >
-                        <motion.div
-                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            className="bg-white rounded-[3rem] w-full max-w-2xl overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-white"
-                            onClick={e => e.stopPropagation()}
+                        <div
+                            className="min-h-full flex items-center justify-center p-4"
+                            onClick={() => setSelectedFeature(null)}
                         >
-                            <div className="p-12 relative">
-                                <button
-                                    onClick={() => setSelectedFeature(null)}
-                                    className="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#2563EB] hover:bg-blue-50 transition-all border border-slate-100"
-                                >
-                                    <FaTimes size={14} />
-                                </button>
-
-                                <div className="flex items-center gap-8 mb-16">
-                                    <div className={`w-20 h-20 bg-slate-900 rounded-[1.5rem] flex items-center justify-center text-4xl text-white shadow-2xl shadow-slate-900/20`}>
-                                        {selectedFeature.icon}
-                                    </div>
-                                    <div>
-                                        <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-2">
-                                            {selectedFeature.miniTitle}
-                                        </p>
-                                        <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
-                                            {selectedFeature.title}
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-8 mb-16">
-                                    {selectedFeature.details.map((detail, idx) => (
-                                        <div key={idx} className="flex items-start gap-6 group/item">
-                                            <div className="mt-1.5 flex-shrink-0">
-                                                <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_#2563EB]" />
-                                            </div>
-                                            <div>
-                                                <h4 className="text-[14px] font-black text-slate-900 mb-1.5 uppercase tracking-tight">{detail.label}</h4>
-                                                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.1em] leading-relaxed">{detail.desc}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="pt-10 border-t border-slate-100 flex items-center justify-between">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
-                                        System Protocol: Verified
-                                    </p>
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                className="bg-white rounded-[3rem] w-full max-w-2xl overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-white"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className="p-12 relative">
                                     <button
                                         onClick={() => setSelectedFeature(null)}
-                                        className="bg-[#2563EB] hover:bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-blue-500/20 hover:-translate-y-1"
+                                        className="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#2563EB] hover:bg-blue-50 transition-all border border-slate-100"
                                     >
-                                        Exit Deep Dive
+                                        <FaTimes size={14} />
                                     </button>
+
+                                    <div className="w-full h-48 rounded-[2rem] overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
+                                        <img
+                                            src={selectedFeature.image}
+                                            alt={selectedFeature.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute top-6 left-6 w-12 h-12 rounded-xl bg-slate-950/20 backdrop-blur-md flex items-center justify-center text-2xl text-white border border-white/20 shadow-xl">
+                                            {selectedFeature.icon}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-8 mb-12">
+                                        <div>
+                                            <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-2">
+                                                {selectedFeature.miniTitle}
+                                            </p>
+                                            <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+                                                {selectedFeature.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-8 mb-16">
+                                        {selectedFeature.details.map((detail, idx) => (
+                                            <div key={idx} className="flex items-start gap-6 group/item">
+                                                <div className="mt-1.5 flex-shrink-0">
+                                                    <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_#2563EB]" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-[14px] font-black text-slate-900 mb-1.5 uppercase tracking-tight">{detail.label}</h4>
+                                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.1em] leading-relaxed">{detail.desc}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="pt-10 border-t border-slate-100 flex items-center justify-between">
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
+                                            System Protocol: Verified
+                                        </p>
+                                        <button
+                                            onClick={() => setSelectedFeature(null)}
+                                            className="bg-[#2563EB] hover:bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-blue-500/20 hover:-translate-y-1"
+                                        >
+                                            Exit Deep Dive
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence >

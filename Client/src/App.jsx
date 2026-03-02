@@ -39,7 +39,6 @@ import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
-import SupportEcosystem from './components/SupportEcosystem';
 
 
 // --- Home Page Component ---
@@ -53,7 +52,6 @@ const HomePage = () => {
                 <Marque />
                 <OnlineCourseFocus />
                 <Faculty />
-                <SupportEcosystem />
                 <IndustrialNetwork />
                 <Masterclasses />
                 <Feature />

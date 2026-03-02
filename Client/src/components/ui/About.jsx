@@ -62,8 +62,8 @@ const About = () => {
             </h1>
 
             {/* ThinkSkool Description */}
-            <p className="text-lg text-slate-300 mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto lg:mx-0">
-              <span className="text-[#2563EB] font-bold">think</span><span className="text-[#FF7A00] font-bold">skool</span> is a school-integrated STEM education program designed to make
+            <p className="text-lg text-slate-300 mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto lg:mx-0 font-medium">
+              <span className="text-[#2563EB] font-black uppercase tracking-tighter">think</span><span className="text-[#F97316] font-black uppercase tracking-tighter">skool</span> is a school-integrated STEM education program designed to make
               technology learning accessible, practical, and engaging. We follow a
               project-first methodology supported by cloud labs, dashboards, and
               well-structured learning paths.
