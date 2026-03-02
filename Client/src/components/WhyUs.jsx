@@ -20,13 +20,13 @@ const WhyUs = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
                     >
-                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.4em]">Transformation Path</span>
+                        <span className="text-[11px] font-bold text-[#2563EB] uppercase tracking-[0.4em]">Transformation Path</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none mb-6">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight uppercase leading-none mb-6">
                         From <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] to-blue-400">Classroom</span> to <span className="text-white">Career</span>
                     </h2>
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[9px] max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-slate-500 font-semibold uppercase tracking-[0.3em] text-[11px] max-w-2xl mx-auto leading-relaxed">
                         A structured industrial trajectory transforming the academic core into professional engineering excellence.
                     </p>
                 </div>
@@ -53,7 +53,7 @@ const WhyUs = () => {
                             className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-3.5 rounded-[2rem] inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <div className="w-10 h-10 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-white text-base shadow-2xl">🏫</div>
-                            <h3 className="text-[13px] font-black text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
+                            <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
                         </motion.div>
 
                         <div className="space-y-10">
@@ -61,9 +61,10 @@ const WhyUs = () => {
                                 <div key={idx} className="relative md:grid md:grid-cols-2 md:gap-32 items-center">
                                     <div className={`${idx % 2 === 0 ? 'md:text-right md:pr-12' : 'md:col-start-2 md:text-left md:pl-12'} pl-[60px] md:pl-0 text-left`}>
                                         <motion.div
-                                            initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
+                                            initial={{ opacity: 0, x: idx % 2 === 0 ? -60 : 60, y: 40 }}
+                                            whileInView={{ opacity: 1, x: 0, y: 0 }}
                                             viewport={{ once: true }}
+                                            transition={{ type: "spring", damping: 20, stiffness: 80 }}
                                             whileHover={{ y: -5 }}
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
@@ -86,7 +87,7 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-slate-950 px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.5em] text-[#2563EB] rounded-full z-10 shadow-[0_0_30px_rgba(37,99,235,0.2)] border border-[#2563EB]/30"
+                            className="bg-slate-950 px-8 py-3.5 text-[11px] font-bold uppercase tracking-[0.5em] text-[#2563EB] rounded-full z-10 shadow-[0_0_30px_rgba(37,99,235,0.2)] border border-[#2563EB]/30"
                         >
                             Ecosystem Convergence
                         </motion.div>
@@ -102,7 +103,7 @@ const WhyUs = () => {
                             className="bg-[#2563EB]/10 backdrop-blur-2xl border border-[#2563EB]/20 p-3.5 rounded-[2rem] inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <div className="w-10 h-10 rounded-2xl bg-[#020617] border border-[#2563EB]/20 flex items-center justify-center text-[#2563EB] text-base shadow-2xl">🎓</div>
-                            <h3 className="text-[13px] font-black text-white pr-4 uppercase tracking-wider">Engineering Identity</h3>
+                            <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Engineering Identity</h3>
                         </motion.div>
 
                         <div className="space-y-10">
@@ -132,13 +133,13 @@ const WhyUs = () => {
 
                 {/* Final CTA */}
                 <div className="text-center mt-24">
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.4em] text-[9px] mb-8">Global Transformation Initiative</p>
+                    <p className="text-slate-500 font-bold uppercase tracking-[0.4em] text-[11px] mb-8">Global Transformation Initiative</p>
                     <button
                         onClick={() => {
                             const el = document.getElementById('registration-form');
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="bg-[#2563EB] text-white px-10 py-5 rounded-[2rem] font-black uppercase text-[10px] tracking-[0.3em] hover:bg-blue-600 transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-blue-400/20"
+                        className="bg-[#2563EB] text-white px-10 py-5 rounded-[2rem] font-bold uppercase text-[12px] tracking-[0.3em] hover:bg-blue-600 transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-blue-400/20"
                     >
                         Enable The Ecosystem <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>

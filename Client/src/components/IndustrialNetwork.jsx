@@ -28,7 +28,7 @@ const IndustrialNetwork = () => {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.5 }}
                             whileHover={{ y: -4, scale: 1.01 }}
-                            className="group flex flex-col items-center text-center gap-5 p-7 rounded-[2rem] bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-2xl hover:border-[#2563EB]/40 hover:bg-white/[0.05] transition-all duration-500"
+                            className="group flex flex-col items-center text-center gap-4 p-6 rounded-[1.8rem] bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-2xl hover:border-[#2563EB]/40 hover:bg-white/[0.05] transition-all duration-500"
                         >
                             <div className="w-14 h-14 rounded-[1.5rem] bg-slate-950 flex items-center justify-center text-[#2563EB] border border-white/10 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-500 shadow-xl group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
                                 {item.icon}

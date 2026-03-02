@@ -62,9 +62,7 @@ const PremiumNavbar = () => {
         fetchCourses();
     }, []);
 
-    // Filter Logic
-    const schoolCourses = courses.filter(c => c.level === 'Beginner' || c.level === 'Intermediate').map(c => ({ name: c.title, link: '/school-partnerships' }));
-    const collegeCourses = courses.filter(c => c.level === 'Intermediate' || c.level === 'Advanced').map(c => ({ name: c.title, link: '/online-program' }));
+
 
     const handleBookSession = () => {
         if (!user) {
@@ -80,8 +78,7 @@ const PremiumNavbar = () => {
         setIsModalOpen(true);
     };
 
-    // Permission Check: If user exists and is a student, check permissions. Guests see everything (Marketing).
-    const canViewCourses = !user || user.role !== 'student' || user.permissions?.canAccessCourses;
+
 
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
@@ -100,19 +97,6 @@ const PremiumNavbar = () => {
     };
 
     const navItems = [
-        ...(canViewCourses ? [{
-            name: 'Offline Programs',
-            hasDropdown: true,
-            subItems: schoolCourses.length > 0 ? schoolCourses : [{ name: 'Explore Offline', link: '/school-partnerships' }]
-        },
-        {
-            name: 'Online Programs',
-            hasDropdown: true,
-            subItems: [
-                { name: 'Enroll Now', link: '/online-program' },
-                ...(collegeCourses.length > 0 ? collegeCourses : [])
-            ]
-        }] : []),
         { name: 'Programs', id: 'online-focus' },
         { name: 'Faculty', id: 'experts' },
         { name: 'Ecosystem', id: 'infrastructure' },
@@ -192,7 +176,7 @@ const PremiumNavbar = () => {
                                 <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
                                     <motion.div
                                         onClick={() => item.id && scrollToSection(item.id)}
-                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-500 hover:text-blue-600'} font-extrabold uppercase text-[10px] tracking-[0.15em] transition-all py-1.5 px-1`}
+                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-600 hover:text-blue-600'} font-semibold uppercase text-[12px] tracking-[0.2em] transition-all py-1.5 px-1`}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -213,7 +197,7 @@ const PremiumNavbar = () => {
                                                     <Link
                                                         key={idx}
                                                         to={sub.link}
-                                                        className="block px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
+                                                        className="block px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
                                                     >
                                                         {sub.name}
                                                     </Link>
@@ -229,7 +213,7 @@ const PremiumNavbar = () => {
                         <div className="hidden md:flex items-center gap-4">
                             <button
                                 onClick={handleContactClick}
-                                className={`px-4 py-2 text-[10px] font-black ${isDarkPage ? 'text-white/60 hover:text-white' : 'text-slate-600 hover:text-blue-600'} transition-all uppercase tracking-widest hover:scale-105`}
+                                className={`px-4 py-2 text-[12px] font-bold ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-600 hover:text-blue-600'} transition-all uppercase tracking-[0.2em] hover:scale-105`}
                             >
                                 Contact
                             </button>
@@ -238,7 +222,7 @@ const PremiumNavbar = () => {
                                     if (user) navigate('/student');
                                     else navigate('/student/login');
                                 }}
-                                className="px-5 py-2 text-[10px] font-black text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
+                                className="px-5 py-2 text-[12px] font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                 Classroom
@@ -285,7 +269,7 @@ const PremiumNavbar = () => {
                                                 setIsMobileMenuOpen(false);
                                             }
                                         }}
-                                        className="w-full text-left px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors flex justify-between items-center"
+                                        className="w-full text-left px-4 py-3 text-[13px] font-bold uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors flex justify-between items-center"
                                     >
                                         {item.name}
                                         {item.id ? null : (item.hasDropdown && <FaChevronDown size={12} />)}
@@ -294,7 +278,7 @@ const PremiumNavbar = () => {
                                 <div className="h-px bg-[#FBEFEF] my-2" />
                                 <button
                                     onClick={() => navigate('/classroom')}
-                                    className="w-full text-center px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
+                                    className="w-full text-center px-4 py-3 text-[13px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
                                 >
                                     My Classroom
                                 </button>

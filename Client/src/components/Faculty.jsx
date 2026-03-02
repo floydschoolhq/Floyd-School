@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn, FaBuilding, FaGlobe, FaGoogle, FaAmazon, FaMicrosoft } from 'react-icons/fa';
 import { Headphones, MessageSquare, PlayCircle, Star, Award, Briefcase, X, ArrowRight } from 'lucide-react';
 import api from '../api/axios';
+import shivamImg from '../assets/tutors/shivam.jpg';
+import raghavImg from '../assets/tutors/raghav.jpg';
+import abhayImg from '../assets/tutors/abhay.jpg';
+
 
 const FeatureItem = ({ icon: Icon, title, desc }) => (
     <motion.div
@@ -25,7 +29,7 @@ const LEADERS = [
         role: "Founder of ThinkSkool | AI/ML Engineer",
         company: "ThinkSkool",
         companyIcon: <FaBuilding />,
-        image: "/src/assets/tutors/shivam.jpg",
+        image: shivamImg,
         bio: "Visionary founder of ThinkSkool, architecting the future of STEM education through advanced AI and machine learning integration.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder", "Visionary"]
@@ -35,7 +39,7 @@ const LEADERS = [
         role: "Lead Mentor & Product Architect",
         company: "ThinkSkool",
         companyIcon: <FaBuilding />,
-        image: "/src/assets/tutors/raghav.jpg",
+        image: raghavImg,
         bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["Lead Mentor", "Architect", "Industrial Eng"]
@@ -45,7 +49,7 @@ const LEADERS = [
         role: "ThinkSkool Management & Web Development",
         company: "ThinkSkool",
         companyIcon: <FaBuilding />,
-        image: "/src/assets/tutors/abhay.jpg",
+        image: abhayImg,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Management", "Full Stack"]
@@ -59,13 +63,13 @@ const Faculty = () => {
     const marqueeItems = [...LEADERS, ...LEADERS, ...LEADERS];
 
     return (
-        <section id="experts" className="bg-[#FFF9FA] py-10 border-t border-[#FBEFEF] relative overflow-hidden">
+        <section id="experts" className="bg-[#FFF9FA] py-8 border-t border-[#FBEFEF] relative overflow-hidden">
             <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-50 rounded-full blur-[80px] pointer-events-none opacity-50" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-10">
-                    <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-4">Distinguished Faculty</p>
-                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-none">
+                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.5em] text-[11px] mb-4">Distinguished Faculty</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 tracking-tight uppercase leading-none">
                         Industry Visionaries & <span className="text-[#2563EB]">Engineering</span> Leaders
                     </h2>
                 </div>
@@ -93,7 +97,7 @@ const Faculty = () => {
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
                             <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/90 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white shadow-2xl ring-1 ring-black/5">
                                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                                <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.25em]">
+                                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-[0.25em]">
                                     Live Bootcamp Session
                                 </span>
                             </div>
@@ -115,71 +119,90 @@ const Faculty = () => {
             </div>
 
             {/* Infinite Leader Marquee */}
-            <div className="relative w-full overflow-hidden py-6">
+            <div className="relative w-full overflow-hidden py-12">
                 <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#FFF9FA] to-transparent z-20 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#FFF9FA] to-transparent z-20 pointer-events-none" />
 
                 <motion.div
-                    className="flex gap-8 px-4 w-max"
-                    animate={{ x: [0, "-50%"] }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: LEADERS.length * 10, // Adjust speed based on item count
-                            ease: "linear",
-                        },
-                    }}
-                    whileHover={{ transition: { duration: 100 } }} // Optional: slow down on hover
+                    initial={{ opacity: 0, x: -60, y: -40 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", damping: 15, stiffness: 60 }}
+                    className="text-center mb-16"
                 >
-                    {marqueeItems.map((mentor, index) => (
-                        <div
-                            key={index}
-                            onClick={() => setSelectedMentor(mentor)}
-                            className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 min-w-[300px] w-[300px]"
-                        >
-                            <div className="relative h-48 overflow-hidden bg-slate-950">
-                                <img
-                                    src={mentor.image}
-                                    alt={mentor.name}
-                                    className="w-full h-full object-cover object-center scale-[4.2] group-hover:scale-[4.5] transition-all duration-700"
-                                />
-                                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-slate-950/80 to-transparent">
-                                    <div className="flex items-center gap-2">
-                                        <div className="p-1.5 bg-white/10 rounded-lg backdrop-blur-md">
-                                            {React.cloneElement(mentor.companyIcon, { size: 12, className: "text-white" })}
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none uppercase">
+                        Our Team <span className="text-[#2563EB]">Members</span>
+                    </h2>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, type: "spring", damping: 25, stiffness: 40 }}
+                >
+                    <motion.div
+                        className="flex gap-8 px-4 w-max"
+                        animate={{ x: [0, "-50%"] }}
+                        transition={{
+                            x: {
+                                repeat: Infinity,
+                                repeatType: "loop",
+                                duration: 30,
+                                ease: "linear",
+                            },
+                        }}
+                    >
+                        {marqueeItems.map((mentor, index) => (
+                            <div
+                                key={index}
+                                onClick={() => setSelectedMentor(mentor)}
+                                className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 min-w-[300px] w-[300px]"
+                            >
+                                <div className="relative h-56 overflow-hidden bg-slate-900">
+                                    <img
+                                        src={mentor.image}
+                                        alt={mentor.name}
+                                        className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 scale-[2.5] group-hover:scale-[2.7]"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                                    <div className="absolute inset-x-0 bottom-0 p-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="p-1.5 bg-white/10 rounded-lg backdrop-blur-md">
+                                                {React.cloneElement(mentor.companyIcon, { size: 12, className: "text-white" })}
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.25em]">
+                                                <span className="text-[#2563EB]">think</span>
+                                                <span className="text-[#F97316]">skool</span>
+                                            </span>
                                         </div>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.25em]">
-                                            <span className="text-[#2563EB]">think</span>
-                                            <span className="text-[#F97316]">skool</span>
-                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="p-5">
+                                    <h3 className="text-[18px] font-bold text-slate-800 mb-1 uppercase tracking-wide truncate group-hover:text-[#2563EB] transition-colors">{mentor.name}</h3>
+                                    <p className="text-[#2563EB] font-bold text-[11px] mb-4 uppercase tracking-[0.25em] truncate">{mentor.role}</p>
+
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {mentor.tags.map(tag => (
+                                            <span key={tag} className="px-3 py-1 bg-blue-50 rounded-full text-[10px] font-bold text-[#2563EB] uppercase tracking-widest border border-blue-100">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex justify-between items-center border-t border-slate-50 pt-5">
+                                        <div className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-[#2563EB] transition-all">
+                                            <FaLinkedinIn size={16} />
+                                        </div>
+                                        <button className="text-[10px] font-bold text-slate-600 bg-slate-50 px-4 py-2 rounded-xl hover:bg-[#2563EB] hover:text-white transition-all uppercase tracking-[0.2em] border border-slate-100 hover:border-transparent shadow-sm">
+                                            View Profile
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="p-6">
-                                <h3 className="text-lg font-black text-slate-900 mb-1 uppercase tracking-tight truncate group-hover:text-[#2563EB] transition-colors">{mentor.name}</h3>
-                                <p className="text-[#2563EB] font-black text-[10px] mb-4 uppercase tracking-[0.25em] truncate">{mentor.role}</p>
-
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {mentor.tags.map(tag => (
-                                        <span key={tag} className="px-3 py-1 bg-blue-50 rounded-full text-[9px] font-black text-[#2563EB] uppercase tracking-widest border border-blue-100">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="flex justify-between items-center border-t border-slate-50 pt-5">
-                                    <div className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-[#2563EB] transition-all">
-                                        <FaLinkedinIn size={16} />
-                                    </div>
-                                    <button className="text-[10px] font-black text-slate-600 bg-slate-50 px-5 py-2.5 rounded-xl hover:bg-[#2563EB] hover:text-white transition-all uppercase tracking-[0.2em] border border-slate-100 hover:border-transparent shadow-sm">
-                                        View Profile
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </motion.div>
                 </motion.div>
             </div>
 
@@ -203,7 +226,7 @@ const Faculty = () => {
                         >
                             <div className="flex flex-col md:flex-row h-full">
                                 {/* Left Side: Industrial Profile Photo */}
-                                <div className="md:w-[42%] h-[450px] md:h-auto relative bg-slate-900 overflow-hidden group/modal-img">
+                                <div className="md:w-[42%] h-[450px] md:h-auto relative overflow-hidden group/modal-img">
                                     <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,42,0.4)_100%)]" />
 
                                     {/* Scanline Effect */}
@@ -212,7 +235,8 @@ const Faculty = () => {
                                     <img
                                         src={selectedMentor.image}
                                         alt={selectedMentor.name}
-                                        className="w-full h-full object-cover object-center scale-[3.8] transition-transform duration-1000 group-hover/modal-img:scale-[4]"
+                                        className="absolute inset-0 min-w-full min-h-full w-full h-full object-cover object-center transition-transform duration-1000 group-hover/modal-img:scale-110"
+                                        style={{ objectFit: 'cover' }}
                                     />
 
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent z-10" />
@@ -229,8 +253,8 @@ const Faculty = () => {
                                         </div>
 
                                         <div className="backdrop-blur-md bg-white/5 border border-white/10 p-6 rounded-3xl">
-                                            <h2 className="text-3xl font-black text-white uppercase tracking-tight leading-none mb-1">{selectedMentor.name}</h2>
-                                            <p className="text-[#2563EB] font-black text-[9px] uppercase tracking-[0.3em] opacity-90">Industrial Grade Portfolio</p>
+                                            <h2 className="text-3xl font-bold text-white uppercase tracking-tight leading-none mb-1">{selectedMentor.name}</h2>
+                                            <p className="text-[#2563EB] font-bold text-[10px] uppercase tracking-[0.3em] opacity-90">Industrial Grade Portfolio</p>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +274,7 @@ const Faculty = () => {
                                             <p className="text-[#2563EB] font-black uppercase tracking-[0.3em] text-[8px]">Verification Active</p>
                                         </div>
 
-                                        <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-6 leading-[1.1]">{selectedMentor.role}</h3>
+                                        <h3 className="text-2xl font-bold text-slate-800 uppercase tracking-tight mb-6 leading-[1.1]">{selectedMentor.role}</h3>
 
                                         <div className="w-12 h-1 bg-[#2563EB] mb-8 rounded-full" />
 

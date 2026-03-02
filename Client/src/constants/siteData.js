@@ -1,10 +1,14 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
+import AI_IMG from '../assets/images/AI_course.png';
+import IOT_IMG from '../assets/images/IOT_course.png';
+import WEB_IMG from '../assets/images/WEBDEV_course.png';
+import CYBER_IMG from '../assets/images/cybersecurity_course.png';
 
 export const FALLBACK_COURSES = [
     {
         _id: '1',
         title: "AI & Machine Learning",
-        image: "/images/programs/ai_ml.png",
+        image: AI_IMG,
         icon: 'Cpu',
         description: "Neural networks, predictive modeling, and deep learning.",
         color: "text-[#2563EB]",
@@ -16,7 +20,7 @@ export const FALLBACK_COURSES = [
     {
         _id: '2',
         title: "Web Architecture",
-        image: "/images/programs/web_arch_fallback.jpg",
+        image: WEB_IMG,
         icon: 'Code',
         description: "Full-stack engineering with scalable cloud infrastructure.",
         color: "text-[#2563EB]",
@@ -28,7 +32,7 @@ export const FALLBACK_COURSES = [
     {
         _id: '3',
         title: "IoT & Robotics",
-        image: "/images/programs/iot_robotics.png",
+        image: IOT_IMG,
         icon: 'Terminal',
         description: "Hardware-software integration and autonomous systems.",
         color: "text-[#2563EB]",
@@ -40,7 +44,7 @@ export const FALLBACK_COURSES = [
     {
         _id: '4',
         title: "Cybersecurity Ops",
-        image: "/images/programs/cyber_fallback.jpg",
+        image: CYBER_IMG,
         icon: 'Shield',
         description: "Threat analysis and zero-trust protocol mastery.",
         color: "text-[#2563EB]",

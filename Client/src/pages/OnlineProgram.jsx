@@ -108,6 +108,18 @@ const OnlineProgram = () => {
     const navigate = useNavigate();
     const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
+    React.useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            const element = document.querySelector(hash);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [window.location.hash]);
+
     const openLeadModal = () => setIsLeadModalOpen(true);
 
     const pricing = [
@@ -291,7 +303,7 @@ const OnlineProgram = () => {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+                <div id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
                     <div className="text-center mb-24">
                         <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Transparent Pricing</p>
                         <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Choose Your <span className="text-[#2563EB]">Path.</span></h2>

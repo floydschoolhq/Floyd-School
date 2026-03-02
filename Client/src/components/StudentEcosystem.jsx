@@ -99,7 +99,7 @@ const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);
 
     return (
-        <section id="infrastructure" className="bg-[#f8fafc] py-16 relative overflow-hidden border-t border-slate-100">
+        <section id="infrastructure" className="bg-[#FFF9FA] py-12 relative overflow-hidden border-t border-slate-100">
             {/* Technical Grid Background */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
@@ -143,7 +143,7 @@ const StudentEcosystem = () => {
                         className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/5 border border-blue-500/10 rounded-full mb-6 shadow-sm"
                     >
                         <div className="w-1 h-1 rounded-full bg-[#2563EB] animate-pulse shadow-[0_0_6px_#2563EB]" />
-                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.5em]">Industrial Infrastructure</span>
+                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.5em]">UNMATCHED BENEFITS</span>
                     </motion.div>
 
                     <motion.h2
@@ -151,13 +151,13 @@ const StudentEcosystem = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter uppercase leading-none"
                     >
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-blue-500">Education Ecosystem.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-blue-500">The ThinkSkool Edge.</span>
                     </motion.h2>
 
                 </div>
 
                 {/* Features Grid - Pro Bento Style */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
                     {FEATURES.map((feature, index) => (
                         <motion.div
                             key={index}
@@ -167,7 +167,7 @@ const StudentEcosystem = () => {
                             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             whileHover={{ y: -6, transition: { duration: 0.4 } }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/[0.6] backdrop-blur-2xl rounded-[2.2rem] p-8 border border-white shadow-[0_15px_50px_rgba(0,0,0,0.03)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[0_30px_70px_rgba(37,99,235,0.08)] hover:border-blue-500/20"
+                            className="group relative bg-white/[0.6] backdrop-blur-2xl rounded-[2rem] p-5 border border-white shadow-[0_12px_40px_rgba(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(37,99,235,0.06)] hover:border-blue-500/20"
                         >
                             {/* Scanning Line Animation */}
                             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none" />
@@ -181,8 +181,8 @@ const StudentEcosystem = () => {
                             </div>
 
                             <div className="relative z-10 flex flex-col h-full">
-                                {/* Image Container */}
-                                <div className="w-full h-32 rounded-[1.5rem] overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
+                                {/* Image Container - Enforced 16:9 Aspect Ratio */}
+                                <div className="w-full aspect-video rounded-[1.5rem] overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
                                     <img
                                         src={feature.image}
                                         alt={feature.title}

@@ -39,6 +39,8 @@ import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
+import LearningJourney from './components/LearningJourney.jsx';
+import BootcampExhibition from './components/BootcampExhibition.jsx';
 
 
 // --- Home Page Component ---
@@ -52,7 +54,9 @@ const HomePage = () => {
                 <Marque />
                 <OnlineCourseFocus />
                 <Faculty />
+                <LearningJourney />
                 <IndustrialNetwork />
+                <BootcampExhibition />
                 <Masterclasses />
                 <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />

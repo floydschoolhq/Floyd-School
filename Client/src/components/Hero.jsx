@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
-import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award } from 'lucide-react';
+import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award, Sparkles, Video, MessageSquare } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -11,31 +11,40 @@ import api from '../api/axios';
 const HUB_DATA = [
     {
         id: "practical",
-        title: "Hands-on Coding",
-        subtitle: "Learn by Doing",
-        icon: Terminal,
+        title: "Master & Upskill AI",
+        subtitle: "Master Generative Tools",
+        icon: Sparkles,
         tag: "01",
         color: "blue",
-        detail: "Start coding from day one. Our training focuses on building real software using professional tools, moving away from passive reading to active creation.",
-        features: ["Live Coding Env", "Professional Tools", "Expert Code Review"]
+        detail: "Master the future of work. Our training focuses on prompt engineering, LLM integration, and AI-driven workflows that augment your industrial engineering skills.",
+        features: ["Prompt Engineering", "LLM Workflows", "AI-Agent Design"]
+    },
+    {
+        id: "live",
+        title: "Live Sessions",
+        subtitle: "Real-time Learning",
+        icon: Video,
+        color: "slate",
+        detail: "Join interactive daily live classes with industry veterans. Get your doubts cleared instantly and participate in collaborative coding sessions that accelerate growth.",
+        features: ["Daily Live Classes", "Expert Q&A", "Pair Programming"]
     },
     {
         id: "projects",
         title: "Build Real Apps",
         subtitle: "Live Project Experience",
         icon: Cpu,
-        color: "slate",
+        color: "blue",
         detail: "Work on actual industry projects that people use. Build everything from fintech platforms to AI systems and see your work go live.",
         features: ["Active Industry Apps", "Real Team Work", "Live Portfolio"]
     },
     {
-        id: "career",
-        title: "Get Hired",
-        subtitle: "Job & Portfolio Help",
-        icon: Code2,
-        color: "blue",
-        detail: "We help you get your dream tech job. Our team works with you on your resume, LinkedIn, and high-impact portfolio to get you noticed by top firms.",
-        features: ["Resume & LinkedIn", "Mock Interviews", "Job Referrals"]
+        id: "doubts",
+        title: "1:1 Doubt Solving",
+        subtitle: "Personalized Support",
+        icon: MessageSquare,
+        color: "slate",
+        detail: "Never get stuck again. Our expert mentors provide one-on-one sessions to resolve your technical hurdles, refine your logic, and ensure you keep moving forward with confidence.",
+        features: ["Priority Help Desk", "Personal Mentoring", "Code Debugging"]
     }
 ];
 
@@ -75,8 +84,8 @@ const HubDetailModal = ({ isOpen, onClose, item }) => {
                                 <Icon size={32} />
                             </div>
                             <div>
-                                <h3 className="text-3xl font-black text-white uppercase tracking-tight">{item.title}</h3>
-                                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">{item.subtitle}</p>
+                                <h3 className="text-3xl font-bold text-white uppercase tracking-tight">{item.title}</h3>
+                                <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.25em]">{item.subtitle}</p>
                             </div>
                         </div>
 
@@ -217,26 +226,28 @@ const Hero = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 <div className="grid md:grid-cols-[1fr_420px] gap-12 items-center">
                     {/* Left Column: Bento Hub */}
-                    <div className="grid grid-cols-2 gap-4 h-fit">
+                    <div className="grid grid-cols-2 gap-3 h-fit">
                         {/* Practical Training - Major Tile */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -60, y: 60 }}
+                            whileInView={{ opacity: 1, x: 0, y: 0 }}
                             viewport={{ once: true }}
+                            transition={{ type: "spring", damping: 20, stiffness: 80 }}
                             whileHover={{ y: -6, scale: 1.01 }}
                             onClick={() => setSelectedHubItem(HUB_DATA[0])}
-                            className="col-span-2 relative p-6 md:p-8 rounded-[2.5rem] bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-2xl cursor-pointer group overflow-hidden"
+                            className="col-span-2 relative p-5 md:p-6 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                         >
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 rounded-full blur-[60px] group-hover:bg-blue-600/30 transition-all duration-700" />
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent group-hover:via-transparent transition-all duration-500" />
+                            <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
+                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
                             <div className="relative z-10 flex items-center justify-between">
-                                <div className="flex items-center gap-6">
-                                    <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-3xl shadow-blue-500/50">
-                                        <Terminal className="w-7 h-7" />
+                                <div className="flex items-center gap-5">
+                                    <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-3xl shadow-blue-500/50">
+                                        <Sparkles className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-none mb-1">{HUB_DATA[0].title}</h3>
-                                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">{HUB_DATA[0].subtitle}</span>
+                                        <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-none mb-2">{HUB_DATA[0].title}</h3>
+                                        <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.25em]">{HUB_DATA[0].subtitle}</span>
                                     </div>
                                 </div>
                                 <div className="text-4xl font-black text-white/5 tracking-tighter hidden md:block select-none">01</div>
@@ -249,46 +260,77 @@ const Hero = () => {
                             return (
                                 <motion.div
                                     key={item.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, x: idx === 0 ? -100 : -60, y: 100 }}
+                                    whileInView={{ opacity: 1, x: 0, y: 0 }}
                                     viewport={{ once: true }}
                                     whileHover={{ y: -6, scale: 1.02 }}
                                     onClick={() => setSelectedHubItem(item)}
-                                    transition={{ delay: 0.1 * (idx + 1) }}
-                                    className="relative p-6 rounded-[2rem] bg-slate-950/90 backdrop-blur-3xl border border-white/[0.07] shadow-xl cursor-pointer group overflow-hidden"
+                                    transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
+                                    className="relative p-5 rounded-[1.8rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/10 group-hover:border-white/5 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
                                 >
+                                    <div className="absolute inset-0 bg-blue-600/[0.07] group-hover:bg-blue-600/0 transition-colors duration-500" />
+                                    <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/[0.08] group-hover:bg-blue-600/0 rounded-full blur-[40px] transition-all duration-700" />
                                     <div className="relative z-10">
-                                        <div className={`w-12 h-12 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 ${item.color === 'blue' ? 'text-blue-500' : 'text-slate-400'}`}>
-                                            <Icon className="w-6 h-6" />
+                                        <div className={`w-10 h-10 rounded-xl bg-slate-950 border border-white/10 flex items-center justify-center mb-4 transition-all duration-300 ${item.color === 'blue' ? 'text-blue-400' : 'text-blue-500/60'}`}>
+                                            <Icon className="w-5 h-5" />
                                         </div>
-                                        <h4 className="text-lg font-black text-white uppercase tracking-tight leading-none mb-1">{item.title}</h4>
-                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{item.subtitle}</span>
+                                        <h4 className="text-[18px] font-bold text-white uppercase tracking-tight leading-none mb-1 group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{item.subtitle}</span>
                                     </div>
                                 </motion.div>
                             );
                         })}
 
+                        {/* Bottom Full-Width Tile: Doubt Solving */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3, type: "spring", damping: 20 }}
+                            whileHover={{ y: -6, scale: 1.01 }}
+                            onClick={() => setSelectedHubItem(HUB_DATA[3])}
+                            className="col-span-2 relative p-5 md:p-6 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                        >
+                            <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
+                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
+                            <div className="relative z-10 flex items-center justify-between">
+                                <div className="flex items-center gap-5">
+                                    <div className="w-12 h-12 rounded-xl bg-slate-950 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-xl group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                                        <MessageSquare className="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-[20px] md:text-2xl font-bold text-white uppercase tracking-tight leading-none mb-1 group-hover:text-blue-400 transition-colors">{HUB_DATA[3].title}</h3>
+                                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.25em]">{HUB_DATA[3].subtitle}</span>
+                                    </div>
+                                </div>
+                                <ArrowRight className="text-white/20 group-hover:text-blue-400 group-hover:translate-x-2 transition-all" size={24} />
+                            </div>
+                        </motion.div>
+
                         {/* CTA Bento Tile */}
-                        <motion.div className="col-span-2 mt-4 p-1.5 rounded-[2.5rem] bg-slate-900 shadow-2xl flex items-center gap-2">
-                            <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[2rem] bg-blue-600 text-white font-extrabold uppercase text-[10px] tracking-[0.2em] hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-600/20">Enroll Now</button>
-                            <button onClick={handleExplore} className="flex-1 py-4 rounded-[2rem] bg-slate-800 text-white font-extrabold uppercase text-[10px] tracking-[0.2em] hover:bg-slate-700 transition-all active:scale-95">Explore</button>
+                        <motion.div className="col-span-2 mt-3 p-1 rounded-[2.2rem] bg-slate-900 shadow-2xl flex items-center gap-2">
+                            <button onClick={handleEnrollNow} className="flex-1 py-3.5 rounded-[1.8rem] bg-blue-600 text-white font-bold uppercase text-[11px] tracking-[0.15em] hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-600/20">Enroll Now</button>
+                            <button onClick={handleExplore} className="flex-1 py-3.5 rounded-[1.8rem] bg-slate-800 text-white font-bold uppercase text-[11px] tracking-[0.15em] hover:bg-slate-700 transition-all active:scale-95">Explore</button>
                         </motion.div>
                     </div>
 
                     {/* Right Column: 3D Interactive Form */}
                     <div className="perspective-[2000px] flex justify-center items-center origin-top md:origin-right">
                         <motion.div
-                            initial={{ opacity: 0, x: 40, rotateY: 10 }}
-                            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                            initial={{ opacity: 0, x: 100, y: 100, rotateY: 10 }}
+                            whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+                            whileHover={{ scale: 1.02 }}
                             viewport={{ once: true }}
+                            transition={{ duration: 1, type: "spring", damping: 20 }}
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
                             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                             className="relative w-full group"
                         >
                             <div className="absolute -inset-[2px] bg-gradient-to-r from-blue-600 via-indigo-400 to-blue-600 rounded-[4rem] p-[2.5px] shadow-[0_0_60px_rgba(37,99,235,0.4)] blur-[1px]" />
-                            <div id="registration-form" className="relative bg-slate-950/95 backdrop-blur-3xl rounded-[3rem] p-7 md:p-10 shadow-3xl overflow-hidden z-10">
-                                <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-900/10 transition-colors duration-700" />
+                            <div id="registration-form" className="relative bg-slate-950/95 backdrop-blur-3xl rounded-[3rem] p-7 md:p-10 shadow-3xl overflow-hidden z-10 border border-blue-500/20 group-hover:border-white/5 transition-all duration-500">
+                                <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
+                                <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 group-hover:bg-blue-600/0 rounded-full blur-[80px] transition-all duration-700" />
                                 {status === 'success' ? (
                                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16 relative z-10">
                                         <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20"><CheckCircle className="w-10 h-10" /></div>
@@ -301,9 +343,9 @@ const Hero = () => {
                                         <div className="mb-8 relative z-10">
                                             <div className="flex items-center gap-3 mb-2">
                                                 <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
-                                                <h3 className="text-xl font-black text-white uppercase tracking-tight">Start Your Journey</h3>
+                                                <h3 className="text-xl font-bold text-white uppercase tracking-tight">Start Your Journey</h3>
                                             </div>
-                                            <p className="text-white/30 text-[9px] font-black uppercase tracking-[0.2em] pl-5">Begin your learning experience</p>
+                                            <p className="text-white/30 text-[11px] font-bold uppercase tracking-[0.2em] pl-5">Begin your learning experience</p>
                                         </div>
                                         <form className="space-y-6 relative z-10" onSubmit={handleFormSubmit}>
                                             <div className="grid grid-cols-2 gap-2">
