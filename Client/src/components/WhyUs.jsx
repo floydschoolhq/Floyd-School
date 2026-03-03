@@ -20,13 +20,13 @@ const WhyUs = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
                     >
-                        <span className="text-[11px] font-bold text-[#2563EB] uppercase tracking-[0.4em]">Transformation Path</span>
+                        <span className="text-[14px] font-medium text-[#2563EB] tracking-tight">Transformation Path</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight uppercase leading-none mb-6">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-none mb-6">
                         From <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] to-blue-400">Classroom</span> to <span className="text-white">Career</span>
                     </h2>
-                    <p className="text-slate-500 font-semibold uppercase tracking-[0.3em] text-[11px] max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-slate-500 font-medium tracking-tight text-[15px] max-w-2xl mx-auto leading-relaxed">
                         A structured industrial trajectory transforming the academic core into professional engineering excellence.
                     </p>
                 </div>
@@ -56,7 +56,7 @@ const WhyUs = () => {
                                 <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
                                 <FaSchool size={28} className="text-white drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
                             </div>
-                            <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
+                            <h3 className="text-[16px] font-bold text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
                         </motion.div>
 
                         <div className="space-y-10">
@@ -72,8 +72,8 @@ const WhyUs = () => {
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
                                             <div className="glass-shine-effect" />
-                                            <h4 className="font-black text-white text-base uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                            <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest">{item.desc}</p>
+                                            <h4 className="font-black text-white text-lg uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">
@@ -90,7 +90,7 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-slate-950 px-8 py-3.5 text-[11px] font-bold uppercase tracking-[0.5em] text-[#2563EB] rounded-full z-10 shadow-[0_0_30px_rgba(37,99,235,0.2)] border border-[#2563EB]/30"
+                            className="bg-slate-950 px-8 py-3.5 text-[14px] font-semibold tracking-tight text-[#2563EB] rounded-full z-10 shadow-[0_0_30px_rgba(37,99,235,0.2)] border border-[#2563EB]/30"
                         >
                             Ecosystem Convergence
                         </motion.div>
@@ -109,7 +109,7 @@ const WhyUs = () => {
                                 <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-110 opacity-100" />
                                 <FaGraduationCap size={28} className="text-[#2563EB] drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
                             </div>
-                            <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Engineering Identity</h3>
+                            <h3 className="text-[17px] font-bold text-white pr-4 tracking-tight">Engineering Identity</h3>
                         </motion.div>
 
                         <div className="space-y-10">
@@ -124,8 +124,8 @@ const WhyUs = () => {
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
                                             <div className="glass-shine-effect" />
-                                            <h4 className="font-black text-white text-base uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                            <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest">{item.desc}</p>
+                                            <h4 className="font-black text-white text-lg uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">
@@ -139,13 +139,13 @@ const WhyUs = () => {
 
                 {/* Final CTA */}
                 <div className="text-center mt-24">
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.4em] text-[11px] mb-8">Global Transformation Initiative</p>
+                    <p className="text-slate-500 font-semibold tracking-tight text-[12px] mb-8">Global Transformation Initiative</p>
                     <button
                         onClick={() => {
                             const el = document.getElementById('registration-form');
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="bg-[#2563EB] text-white px-10 py-5 rounded-[2rem] font-bold uppercase text-[12px] tracking-[0.3em] hover:bg-blue-600 transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-blue-400/20"
+                        className="bg-[#2563EB] text-white px-10 py-5 rounded-[2rem] font-bold text-[14px] tracking-tight hover:bg-blue-600 transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-blue-400/20"
                     >
                         Enable The Ecosystem <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>

@@ -51,7 +51,6 @@ const HomePage = () => {
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative'>
                 <Hero />
-                <Marque />
                 <OnlineCourseFocus />
                 <Faculty />
                 <LearningJourney />

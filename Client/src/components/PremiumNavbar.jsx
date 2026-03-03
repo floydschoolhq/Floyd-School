@@ -9,12 +9,13 @@ import { PortalContext } from './Context/PortalProvider';
 import MaintenanceBanner from './MaintenanceBanner';
 import api from '../api/axios';
 import BrandLogo from './common/BrandLogo';
+import LearnersMegaMenu from './LearnersMegaMenu';
 
 const FALLBACK_COURSES = [
-    { title: "IoT & Robotics", level: "Beginner", link: "/course" },
-    { title: "Web & App Architecture", level: "Intermediate", link: "/course" },
-    { title: "AI & Machine Learning", level: "Advanced", link: "/course" },
-    { title: "Cybersecurity Ops", level: "Advanced", link: "/course" }
+    { title: "IoT & Robotics", level: "Beginner", link: "/online-program#explore-programs" },
+    { title: "Web & App Architecture", level: "Intermediate", link: "/online-program#explore-programs" },
+    { title: "AI & Machine Learning", level: "Advanced", link: "/online-program#explore-programs" },
+    { title: "Cybersecurity Ops", level: "Advanced", link: "/online-program#explore-programs" }
 ];
 
 const PremiumNavbar = () => {
@@ -22,12 +23,13 @@ const PremiumNavbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
     const [source, setSource] = useState('navbar');
     const navigate = useNavigate();
     const { user } = useContext(PortalContext);
     const [courses, setCourses] = useState([]);
     const location = useLocation();
-    const isDarkPage = location.pathname === '/bootcamp-gallery' || location.pathname === '/online-program';
+    const isDarkPage = location.pathname === '/student/login';
 
     const { scrollY } = useScroll();
 
@@ -106,48 +108,22 @@ const PremiumNavbar = () => {
     return (
         <>
             <MaintenanceBanner />
-            {/* Top Banner - Unified Marquee */}
-            <motion.div
-                animate={{ y: isVisible ? 0 : -100 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className={`fixed top-0 left-0 right-0 z-[60] h-6 flex items-center overflow-hidden ${isDarkPage ? 'bg-slate-900 border-white/5' : 'bg-white border-slate-100'} border-b shadow-sm`}
+            {/* Top Banner - Static */}
+            <div
+                className={`fixed top-0 left-0 right-0 z-[60] h-6 flex items-center justify-center ${isDarkPage ? 'bg-black border-white/10' : 'bg-white border-slate-100'} border-b shadow-sm overflow-hidden`}
             >
-                <div className="w-full overflow-hidden relative h-full flex items-center">
-                    <motion.div
-                        animate={{ x: [0, -1000] }}
-                        transition={{
-                            x: {
-                                repeat: Infinity,
-                                repeatType: "loop",
-                                duration: 35, // Slightly slower for better readability at smaller size
-                                ease: "linear"
-                            }
-                        }}
-                        className="flex items-center gap-24 whitespace-nowrap px-8"
-                    >
-                        <div className="flex items-center gap-4">
-                            <Sparkles size={10} className="text-[#2563EB] animate-pulse" />
-                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[10px]`}>School Bootcamps | Independent Online Mastery</span>
-                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
-                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[10px]">
-                                Purchase Batch
-                                <ArrowRight size={10} />
-                            </Link>
-                        </div>
-
-                        {/* Repeat for seamless loop */}
-                        <div className="flex items-center gap-4">
-                            <Sparkles size={12} className="text-[#2563EB] animate-pulse" />
-                            <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-bold uppercase tracking-[0.4em] text-[11px]`}>School Bootcamps | Independent Online Mastery</span>
-                            <div className={`w-1.5 h-1.5 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-4`} />
-                            <Link to="/online-program" className="text-[#2563EB] font-extrabold hover:text-blue-800 flex items-center gap-2 uppercase tracking-widest transition-colors text-[11px]">
-                                Purchase Batch
-                                <ArrowRight size={12} />
-                            </Link>
-                        </div>
-                    </motion.div>
+                <div className="flex items-center gap-8 px-8">
+                    <div className="flex items-center gap-3">
+                        <Sparkles size={10} className="text-[#2563EB]" />
+                        <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-medium uppercase tracking-[0.2em] text-[8px]`}>School Bootcamps | Independent Online Mastery</span>
+                        <div className={`w-1 h-1 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-2`} />
+                        <Link to="/online-program" className="text-[#2563EB] font-bold hover:text-blue-800 flex items-center gap-2 tracking-wide transition-colors text-[9px]">
+                            Purchase Batch
+                            <ArrowRight size={10} />
+                        </Link>
+                    </div>
                 </div>
-            </motion.div>
+            </div>
 
             <motion.nav
                 className="fixed top-6 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
@@ -158,8 +134,8 @@ const PremiumNavbar = () => {
                 <div
                     className={`pointer-events-auto transition-all duration-700 ease-[0.23,1,0.32,1] flex items-center justify-center
                         ${isScrolled
-                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-slate-900/60' : 'bg-white/80'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border ${isDarkPage ? 'border-white/10' : 'border-white/40'} px-6 py-1.5 h-11`
-                            : `w-full rounded-none ${isDarkPage ? 'bg-slate-900/40' : 'bg-white/40'} backdrop-blur-2xl px-6 py-3 h-14 border-b ${isDarkPage ? 'border-white/5' : 'border-slate-100'}`
+                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-black/90' : 'bg-white/90'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border ${isDarkPage ? 'border-white/20' : 'border-white/60'} ring-1 ${isDarkPage ? 'ring-white/10' : 'ring-black/[0.03]'} px-6 py-1.5 h-11`
+                            : `w-full rounded-none ${isDarkPage ? 'bg-black/80' : 'bg-white/60'} backdrop-blur-2xl px-6 py-3 h-14 border-b ${isDarkPage ? 'border-white/20' : 'border-slate-200'} shadow-lg shadow-black/5`
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
@@ -171,12 +147,40 @@ const PremiumNavbar = () => {
                         </div>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-8 relative">
+                        <div className="hidden md:flex items-center gap-6 lg:gap-8 relative">
+                            {/* Mega Menu Trigger - For ThinkSkool Learners */}
+                            <div
+                                className="relative group cursor-pointer flex items-center h-full"
+                                onMouseEnter={() => setIsMegaMenuOpen(true)}
+                                onMouseLeave={() => setIsMegaMenuOpen(false)}
+                            >
+                                <motion.div
+                                    className={`relative flex items-center gap-2 py-2 px-4 rounded-xl transition-all duration-300 ${isMegaMenuOpen
+                                        ? (isDarkPage ? 'bg-white/10 text-white' : 'bg-blue-50 text-[#2563EB]')
+                                        : (isDarkPage ? 'text-white/90 hover:text-white' : 'text-slate-800 hover:text-blue-600')
+                                        }`}
+                                >
+                                    <span className="font-bold text-[13px] tracking-tight">For ThinkSkool Learners</span>
+                                    <FaChevronDown
+                                        size={9}
+                                        className={`transition-transform duration-500 ${isMegaMenuOpen ? 'rotate-180 opacity-100' : 'opacity-40'}`}
+                                    />
+                                </motion.div>
+
+                                <AnimatePresence>
+                                    {isMegaMenuOpen && (
+                                        <div className="absolute top-[calc(100%+0.5rem)] left-0">
+                                            <LearnersMegaMenu isDarkPage={isDarkPage} />
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
                                     <motion.div
                                         onClick={() => item.id && scrollToSection(item.id)}
-                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-600 hover:text-blue-600'} font-semibold uppercase text-[12px] tracking-[0.2em] transition-all py-1.5 px-1`}
+                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-blue-600'} font-medium text-[13px] tracking-tight transition-all py-1.5 px-0.5`}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -187,7 +191,7 @@ const PremiumNavbar = () => {
                                                 className="mt-0.5 opacity-40 group-hover:opacity-100 group-hover:rotate-180 transition-all duration-300"
                                             />
                                         )}
-                                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-blue-500 rounded-full group-hover:w-full transition-all duration-300" />
+                                        <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] ${isDarkPage ? 'bg-blue-400' : 'bg-blue-600'} rounded-full group-hover:w-full transition-all duration-300`}></div>
                                     </motion.div>
 
                                     {item.hasDropdown && (
@@ -197,7 +201,7 @@ const PremiumNavbar = () => {
                                                     <Link
                                                         key={idx}
                                                         to={sub.link}
-                                                        className="block px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
+                                                        className="block px-5 py-2.5 text-[12px] font-medium tracking-normal text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
                                                     >
                                                         {sub.name}
                                                     </Link>
@@ -213,7 +217,7 @@ const PremiumNavbar = () => {
                         <div className="hidden md:flex items-center gap-4">
                             <button
                                 onClick={handleContactClick}
-                                className={`px-4 py-2 text-[12px] font-bold ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-600 hover:text-blue-600'} transition-all uppercase tracking-[0.2em] hover:scale-105`}
+                                className={`px-4 py-2 text-[13px] font-medium ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-blue-600'} transition-all tracking-tight hover:scale-105`}
                             >
                                 Contact
                             </button>
@@ -222,7 +226,7 @@ const PremiumNavbar = () => {
                                     if (user) navigate('/student');
                                     else navigate('/student/login');
                                 }}
-                                className="px-5 py-2 text-[12px] font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95"
+                                className="px-5 py-2 text-[13px] font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all tracking-tight flex items-center gap-2 shadow-lg shadow-blue-500/10 active:scale-95"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                 Classroom
@@ -254,7 +258,7 @@ const PremiumNavbar = () => {
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         <motion.div
-                            className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-[#FBEFEF] shadow-2xl shadow-[#2563EB]/10"
+                            className={`absolute top-20 left-0 right-0 ${isDarkPage ? 'bg-black/98 border-white/10' : 'bg-white/95 border-slate-100'} backdrop-blur-md border-b shadow-2xl ${isDarkPage ? 'shadow-black' : 'shadow-blue-500/10'}`}
                             initial={{ y: -20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
@@ -269,16 +273,25 @@ const PremiumNavbar = () => {
                                                 setIsMobileMenuOpen(false);
                                             }
                                         }}
-                                        className="w-full text-left px-4 py-3 text-[13px] font-bold uppercase tracking-widest text-slate-700 rounded-lg hover:bg-[#FBEFEF] hover:text-[#2563EB] transition-colors flex justify-between items-center"
+                                        className={`w-full text-left px-4 py-3 text-[14px] font-medium tracking-tight ${isDarkPage ? 'text-white/80 hover:bg-white/10' : 'text-slate-700 hover:bg-slate-50'} rounded-lg transition-colors flex justify-between items-center`}
                                     >
                                         {item.name}
                                         {item.id ? null : (item.hasDropdown && <FaChevronDown size={12} />)}
                                     </button>
                                 ))}
                                 <div className="h-px bg-[#FBEFEF] my-2" />
+                                <Link
+                                    to="/online-program#explore-programs"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className={`w-full text-left px-4 py-3 text-[14px] font-bold tracking-tight ${isDarkPage ? 'text-white/90 bg-white/5' : 'text-[#2563EB] bg-blue-50'} rounded-lg transition-colors flex justify-between items-center`}
+                                >
+                                    For ThinkSkool Learners
+                                    <ArrowRight size={14} />
+                                </Link>
+                                <div className="h-px bg-[#FBEFEF] my-2" />
                                 <button
                                     onClick={() => navigate('/classroom')}
-                                    className="w-full text-center px-4 py-3 text-[13px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
+                                    className="w-full text-center px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
                                 >
                                     My Classroom
                                 </button>

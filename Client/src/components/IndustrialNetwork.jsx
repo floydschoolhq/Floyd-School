@@ -34,10 +34,10 @@ const IndustrialNetwork = () => {
                                 {item.icon}
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="text-sm font-extrabold uppercase tracking-[0.2em] text-white group-hover:text-blue-400 transition-colors">{item.label}</span>
-                                <span className="text-[9px] font-bold text-[#2563EB] uppercase tracking-[0.4em] mt-2">Tier-1 Partner Network</span>
+                                <span className="text-[17px] font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors">{item.label}</span>
+                                <span className="text-[13px] font-medium text-[#2563EB] tracking-tight mt-2">Tier-1 Partner Network</span>
                             </div>
-                            <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-[220px] uppercase tracking-widest text-[9px]">
+                            <p className="text-[14px] text-slate-500 font-medium leading-relaxed max-w-[220px] tracking-tight">
                                 Seamlessly integrated into our industrial learning ecosystem.
                             </p>
                         </motion.div>

@@ -11,11 +11,24 @@ export const FALLBACK_COURSES = [
         image: AI_IMG,
         icon: 'Cpu',
         description: "Neural networks, predictive modeling, and deep learning.",
-        color: "text-[#2563EB]",
+        detailedDescription: "Master the architecture of modern AI. This program takes you from foundational probability to building production-grade deep learning models using industry-standard frameworks.",
+        color: "#2563EB",
         rating: 4.9,
         duration: "3-4 Months",
         tags: ["AI", "Python", "ML"],
-        deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } }
+        deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
+        curriculum: [
+            "Neural Network Architectures",
+            "Natural Language Processing",
+            "Computer Vision & GANs",
+            "Reinforcement Learning"
+        ],
+        outcomes: [
+            "Build & Deploy LLMs",
+            "Optimize Inference Engines",
+            "Real-time Computer Vision"
+        ],
+        prerequisites: "Basic Python knowledge suggested"
     },
     {
         _id: '2',
@@ -23,11 +36,24 @@ export const FALLBACK_COURSES = [
         image: WEB_IMG,
         icon: 'Code',
         description: "Full-stack engineering with scalable cloud infrastructure.",
-        color: "text-[#2563EB]",
+        detailedDescription: "Architect the modern web. Learn to build resilient, distributed systems using React, Node.js, and advanced cloud patterns used by top-tier tech companies.",
+        color: "#2563EB",
         rating: 4.8,
         duration: "3-4 Months",
         tags: ["React", "Node", "Cloud"],
-        deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } }
+        deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } },
+        curriculum: [
+            "Distributed System Design",
+            "High-Performance Frontend",
+            "Microservices Architecture",
+            "CI/CD and Cloud Ops"
+        ],
+        outcomes: [
+            "Scalable System Design",
+            "Edge Computing Mastery",
+            "Full-cycle Product Launch"
+        ],
+        prerequisites: "Familiarity with JS is helpful"
     },
     {
         _id: '3',
@@ -35,11 +61,24 @@ export const FALLBACK_COURSES = [
         image: IOT_IMG,
         icon: 'Terminal',
         description: "Hardware-software integration and autonomous systems.",
-        color: "text-[#2563EB]",
+        detailedDescription: "Bridge the gap between code and physical reality. Build autonomous robots and smart IoT networks from the circuit level to high-level control algorithms.",
+        color: "#2563EB",
         rating: 4.7,
         duration: "3-4 Months",
         tags: ["Embedded", "C++", "Sensors"],
-        deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } }
+        deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } },
+        curriculum: [
+            "Embedded C++ Programming",
+            "Robotic Kinematics & ROS",
+            "IoT Protocol Engineering",
+            "Sensor Fusion Algorithms"
+        ],
+        outcomes: [
+            "Build Autonomous Drones",
+            "Smart City Infrastructure",
+            "Industrial Robot Control"
+        ],
+        prerequisites: "Logic and math fundamentals"
     },
     {
         _id: '4',
@@ -47,11 +86,24 @@ export const FALLBACK_COURSES = [
         image: CYBER_IMG,
         icon: 'Shield',
         description: "Threat analysis and zero-trust protocol mastery.",
-        color: "text-[#2563EB]",
+        detailedDescription: "Become the shield of the digital world. Master offensive and defensive security strategies, industrial network protection, and advanced threat hunting.",
+        color: "#2563EB",
         rating: 4.9,
         duration: "3-4 Months",
         tags: ["SecOps", "Networking", "Hacking"],
-        deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } }
+        deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } },
+        curriculum: [
+            "Ethical Hacking & Pentesting",
+            "Zero Trust Architecture",
+            "Cryptographic Engineering",
+            "Cloud Security Protocols"
+        ],
+        outcomes: [
+            "Incident Response Mastery",
+            "Secure System Architecture",
+            "Regulatory Compliance Lead"
+        ],
+        prerequisites: "Networking basics recommended"
     }
 ];
 

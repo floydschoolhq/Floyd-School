@@ -69,7 +69,7 @@ const HighlightText = ({ text, words }) => {
         <span>
             {parts.map((part, i) =>
                 words.some(w => w.toLowerCase() === part.toLowerCase())
-                    ? <span key={i} className="text-blue-400 font-black">{part}</span>
+                    ? <span key={i} className="text-blue-400 font-bold">{part}</span>
                     : <span key={i}>{part}</span>
             )}
         </span>
@@ -90,7 +90,7 @@ const ThinkSkoolAdvantage = () => {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-blue-400 font-black uppercase tracking-[0.4em] text-[11px] mb-3"
+                        className="text-blue-400 font-bold tracking-tight text-[14px] mb-3"
                     >
                         The ThinkSkool Advantage
                     </motion.p>
@@ -108,13 +108,13 @@ const ThinkSkoolAdvantage = () => {
                         <div />
                         {/* ThinkSkool Logo Column */}
                         <div className="flex flex-col items-center gap-1">
-                            <div className="px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 font-black text-white text-[10px] uppercase tracking-widest">thinkskool</div>
+                            <div className="px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 font-bold text-white text-[14px] tracking-tight">ThinkSkool</div>
                         </div>
                         <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-black text-xs uppercase tracking-widest">Free Resources</span>
+                            <span className="text-slate-400 font-bold text-[15px] tracking-tight">Free Resources</span>
                         </div>
                         <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-black text-xs uppercase tracking-widest">Other Courses</span>
+                            <span className="text-slate-400 font-bold text-[15px] tracking-tight">Other Courses</span>
                         </div>
                     </div>
 
@@ -129,7 +129,7 @@ const ThinkSkoolAdvantage = () => {
                             className={`grid grid-cols-[2fr_1fr_1fr_1fr] px-6 py-4 border-b border-white/5 last:border-b-0 hover:bg-white/3 transition-colors group`}
                         >
                             <div className="flex items-center">
-                                <span className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors">
+                                <span className="text-[15px] text-slate-300 font-bold group-hover:text-white transition-colors">
                                     <HighlightText text={row.feature} words={row.highlight} />
                                 </span>
                             </div>
@@ -151,9 +151,9 @@ const ThinkSkoolAdvantage = () => {
                         <div>
                             <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-2">
-                                    <div className="px-2 py-0.5 rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-black text-white text-[8px] uppercase tracking-tighter">thinkskool</div>
+                                    <div className="px-2 py-0.5 rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-white text-[12px] tracking-tight">ThinkSkool</div>
                                 </div>
-                                <span className="text-[10px] font-bold text-blue-400 italic">Structured. Mentored. Industry-Ready. ⚡</span>
+                                <span className="text-[12px] font-bold text-blue-400 italic">Structured. Mentored. Industry-Ready. ⚡</span>
                             </div>
                             <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
                                 <motion.div
@@ -169,8 +169,8 @@ const ThinkSkoolAdvantage = () => {
                         {/* Others Bar */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Others</span>
-                                <span className="text-[10px] font-bold text-slate-500 italic">Generic content, no structure</span>
+                                <span className="text-[15px] font-bold text-slate-400 tracking-tight">Others</span>
+                                <span className="text-[12px] font-bold text-slate-500 italic">Generic content, no structure</span>
                             </div>
                             <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
                                 <motion.div

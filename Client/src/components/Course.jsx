@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 // Icons from lucide-react for modern, clean visual representation
-import { Cpu, ShieldCheck, Zap, Code, BookOpen, GraduationCap } from 'lucide-react';
+import { Cpu, ShieldCheck, Zap, Code, BookOpen, GraduationCap, Terminal } from 'lucide-react';
 
 const Course = () => {
     // Define the course data with titles, descriptions, and corresponding icons
@@ -67,7 +67,7 @@ const Course = () => {
 
                 {/* Header and Introduction */}
                 <motion.h2
-                    className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter"
+                    className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -75,7 +75,7 @@ const Course = () => {
                     Core <span className="text-[#2563EB]">Technology</span> Programs
                 </motion.h2>
                 <motion.p
-                    className="text-lg text-slate-600 mb-20 max-w-2xl mx-auto font-medium leading-relaxed"
+                    className="text-xl text-slate-600 mb-20 max-w-2xl mx-auto font-medium leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -103,10 +103,10 @@ const Course = () => {
                                 <div className={`p-4 rounded-2xl mb-6 w-fit ${course.bg} ${course.color} shadow-sm`}>
                                     <course.icon className="w-8 h-8" />
                                 </div>
-                                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight">
+                                <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
                                     {course.title}
                                 </h3>
-                                <p className="text-slate-600 leading-relaxed grow text-sm font-medium">
+                                <p className="text-slate-600 leading-relaxed grow text-base font-medium">
                                     {course.description}
                                 </p>
                             </motion.div>
@@ -114,8 +114,8 @@ const Course = () => {
                     ) : (
                         <div className="col-span-full py-20 bg-white border border-dashed border-blue-100 rounded-[3rem] flex flex-col items-center justify-center text-center">
                             <Zap size={48} className="text-blue-500/20 mb-6" />
-                            <h4 className="text-2xl font-black text-slate-400 uppercase tracking-tighter">Technology Programs Under Construction</h4>
-                            <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mt-3">We are syncing with industrial standards to bring you the best curriculum.</p>
+                            <h4 className="text-2xl font-bold text-slate-400 tracking-tight">Technology Programs Under Construction</h4>
+                            <p className="text-[14px] font-medium text-slate-400 tracking-tight mt-3">We are syncing with industrial standards to bring you the best curriculum.</p>
                         </div>
                     )}
                 </motion.div>

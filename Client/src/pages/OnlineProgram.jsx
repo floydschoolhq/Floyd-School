@@ -3,66 +3,62 @@ import { motion } from 'framer-motion';
 import {
     Globe, Zap, Target, Users, ArrowRight, ShieldCheck,
     Cpu, Code, Terminal, Brain, Star, Calendar,
-    Video, Rocket, CheckCircle2, DollarSign, Clock
+    Video, Rocket, CheckCircle2, DollarSign, Clock, Check
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/common/SectionHeader';
 import LeadFormModal from '../components/LeadFormModal';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
 
-const CourseCard = ({ course }) => {
+const iconMap = {
+    Cpu: Cpu,
+    Code: Code,
+    Terminal: Terminal,
+    Shield: ShieldCheck,
+    Globe: Globe,
+    Rocket: Rocket,
+    Brain: Brain,
+};
+
+const CourseCard = ({ course, onClick }) => {
+    const Icon = iconMap[course.icon] || Code;
     return (
         <motion.div
-            variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.95 },
-                show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", damping: 15 } }
-            }}
-            whileHover={{ y: -10, scale: 1.02 }}
-            className="group relative bg-white/5 backdrop-blur-3xl rounded-[2.5rem] p-8 border border-white/5 hover:border-[#2563EB]/30 transition-all duration-500 overflow-hidden"
+            className={`flex flex-col p-4 md:p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-500/20 transition-all cursor-pointer shadow-lg hover:shadow-2xl group relative overflow-hidden`}
+            whileHover={{ y: -5 }}
+            onClick={onClick}
         >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#2563EB]/10 to-transparent blur-2xl group-hover:opacity-100 transition-opacity opacity-0" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors" />
 
-            <div className={`w-14 h-14 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center text-[#2563EB] mb-6 shadow-xl`}>
-                {course.icon === 'Cpu' && <Cpu size={28} />}
-                {course.icon === 'Code' && <Code size={28} />}
-                {course.icon === 'Terminal' && <Terminal size={28} />}
-                {course.icon === 'Shield' && <ShieldCheck size={28} />}
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-all duration-500">
+                <Icon size={24} className="text-blue-600 group-hover:text-white transition-colors" />
             </div>
-
-            <div className="flex items-center gap-2 mb-2">
-                <div className="flex text-yellow-500">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={12} fill={i < Math.floor(course.rating) ? "currentColor" : "none"} />)}
-                </div>
-                <span className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">{course.rating} Rating</span>
+            <div className="flex items-center gap-3 mb-3">
+                <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">{course.title}</h3>
             </div>
-
-            <h3 className="text-2xl font-black text-white uppercase mb-3 tracking-tight">{course.title}</h3>
-            <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6">
+            <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">
                 {course.description}
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
                 {course.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-black text-slate-300 uppercase tracking-widest border border-white/5">
+                    <span key={tag} className="px-3 py-1 bg-blue-50 rounded-full text-[10px] font-black text-blue-600 uppercase tracking-widest border border-blue-100">
                         {tag}
                     </span>
                 ))}
             </div>
 
-            <div className="flex items-center justify-between pt-6 border-t border-white/5">
+            <div className="flex items-center justify-between pt-6 border-t border-slate-50 mt-auto">
+                <button className="text-[11px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-700 transition-colors">Select Program →</button>
                 <div className="flex items-center gap-2">
-                    <Clock size={14} className="text-[#2563EB]" />
-                    <span className="text-xs font-bold text-slate-300 uppercase">{course.duration}</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{course.duration}</span>
                 </div>
-                <button className="text-[#2563EB] font-black text-xs uppercase tracking-widest flex items-center gap-2 group-hover:translate-x-1 transition-transform">
-                    Join Batch <ArrowRight size={14} />
-                </button>
             </div>
         </motion.div>
     );
 };
 
-const PricingTier = ({ title, price, features, recommended, onSelect }) => {
+const PricingTier = ({ tier, onSelect }) => {
     return (
         <motion.div
             variants={{
@@ -70,35 +66,32 @@ const PricingTier = ({ title, price, features, recommended, onSelect }) => {
                 show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", damping: 20 } }
             }}
             whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-            className={`relative p-10 rounded-[3rem] border ${recommended ? 'bg-[#2563EB] border-blue-400 shadow-2xl shadow-blue-500/20 text-white' : 'bg-white/5 backdrop-blur-3xl border-white/5 text-white'} overflow-hidden h-full flex flex-col`}
+            className={`p-8 rounded-[2.5rem] bg-white border ${tier.recommended ? 'border-blue-500 ring-4 ring-blue-500/5 shadow-2xl scale-105' : 'border-slate-100 shadow-xl'} relative overflow-hidden`}
         >
-            {recommended && (
-                <div className="absolute top-8 right-8 bg-white text-[#2563EB] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                    Popular
-                </div>
+            {tier.recommended && (
+                <div className="absolute top-0 right-0 py-2 px-6 bg-blue-500 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-bl-2xl">Recommended</div>
             )}
-
-            <h4 className="text-sm font-black uppercase tracking-[0.3em] mb-4 opacity-70">{title}</h4>
+            <h3 className="text-lg font-black text-slate-700 uppercase tracking-widest mb-2">{tier.name}</h3>
             <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-2xl font-black">₹</span>
-                <span className="text-6xl font-black tracking-tighter">{price}</span>
-                <span className="text-sm font-bold opacity-60">/slot</span>
+                <span className="text-4xl font-black text-slate-900">${tier.price}</span>
+                <span className="text-slate-400 text-sm font-bold uppercase tracking-widest">/Batch</span>
             </div>
-
-            <div className="space-y-4 mb-10 flex-grow">
-                {features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                        <CheckCircle2 size={16} className={recommended ? 'text-white' : 'text-[#2563EB]'} />
-                        <span className="text-sm font-medium opacity-90">{feature}</span>
+            <div className="space-y-4 mb-10">
+                {tier.features.map(f => (
+                    <div key={f} className="flex items-center gap-3 group/feature">
+                        <div className={`w-5 h-5 rounded-full ${tier.recommended ? 'bg-blue-50 text-blue-500' : 'bg-slate-50 text-slate-400'} flex items-center justify-center shrink-0`}>
+                            <Check size={12} strokeWidth={3} />
+                        </div>
+                        <span className="text-sm font-bold text-slate-600 tracking-tight">{f}</span>
                     </div>
                 ))}
             </div>
-
             <button
                 onClick={onSelect}
-                className={`w-full py-5 rounded-2xl font-black uppercase text-xs tracking-[0.2em] transition-all ${recommended ? 'bg-white text-slate-950 hover:bg-slate-100 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'}`}
+                className={`w-full py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all
+                ${tier.recommended ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-500/20' : 'bg-slate-900 text-white hover:bg-black'}`}
             >
-                Secure Slot
+                Enroll Now
             </button>
         </motion.div>
     );
@@ -107,6 +100,8 @@ const PricingTier = ({ title, price, features, recommended, onSelect }) => {
 const OnlineProgram = () => {
     const navigate = useNavigate();
     const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+    const [isCourseDetailModalOpen, setIsCourseDetailModalOpen] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState(null);
 
     React.useEffect(() => {
         const hash = window.location.hash;
@@ -121,22 +116,33 @@ const OnlineProgram = () => {
     }, [window.location.hash]);
 
     const openLeadModal = () => setIsLeadModalOpen(true);
+    const openCourseDetailModal = (course) => {
+        setSelectedCourse(course);
+        setIsCourseDetailModalOpen(true);
+    };
+
+    const handleExploreClick = () => {
+        const element = document.getElementById('explore-programs');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     const pricing = [
         {
-            title: "Starter",
+            name: "Starter",
             price: "1,999",
             features: ["Foundational Access", "Community Support", "Public Sandboxes", "Certification"],
             recommended: false
         },
         {
-            title: "Industrial",
+            name: "Industrial",
             price: "4,999",
             features: ["Advanced Modules", "1-on-1 Mentorship", "Premium Code Lab", "Career Support"],
             recommended: true
         },
         {
-            title: "Mastery",
+            name: "Mastery",
             price: "9,999",
             features: ["AI & Cloud Mastery", "Industrial Internship", "Production Deployment", "Placement Access"],
             recommended: false
@@ -144,79 +150,61 @@ const OnlineProgram = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#0A0F1E] overflow-x-hidden selection:bg-[#2563EB]/30 pt-24">
+        <div className="min-h-screen bg-[#FFF9FA] text-slate-900 font-sans selection:bg-blue-500 selection:text-white">
+            <PremiumNavbar />
             {/* Background Gradients */}
             <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#2563EB]/5 rounded-full blur-[150px] translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#2563EB]/5 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2" />
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 blur-[100px] pointer-events-none" />
             </div>
 
             <div className="relative z-10">
                 {/* Hero Section */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-32">
-                    <div className="text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    y: {
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut"
-                                    }
-                                }
-                            }}
-                            className="inline-flex items-center gap-3 px-6 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full mb-10"
-                        >
-                            <span className="relative flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#2563EB]"></span>
-                            </span>
-                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-blue-100">Live Industrial Portal Active</span>
-                        </motion.div>
-
-                        <SectionHeader
-                            title={<span>Elite Online <br className="md:hidden" /><span className="text-[#2563EB]">Engineering Batches.</span></span>}
-                            description={<span>World-class industrial technical education delivered directly to your home. No geography limits. Only elite code.</span>}
-                            light={false}
-                        />
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12"
-                        >
-                            <button
-                                onClick={openLeadModal}
-                                className="w-full sm:w-auto px-12 py-5 bg-[#2563EB] text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] hover:bg-blue-600 transition-all shadow-2xl shadow-blue-500/20"
-                            >
-                                Secure Your Seat
-                            </button>
-                            <div className="flex items-center gap-4 px-8 py-5 rounded-[2rem] bg-white/5 border border-white/5 backdrop-blur-xl">
-                                <Users className="text-[#2563EB]" size={20} />
-                                <div className="text-left">
-                                    <p className="text-xs font-black text-white uppercase tracking-widest">Next Batch</p>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase">Monday, 9:00 AM IST</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-48 text-center">
+                    <motion.div
+                        className="inline-flex items-center gap-3 px-6 py-2 bg-blue-50 rounded-full mb-10 group cursor-pointer"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                    >
+                        <div className="w-2.5 h-2.5 rounded-full bg-blue-500 group-hover:animate-ping" />
+                        <span className="text-[11px] font-black uppercase tracking-[0.4em] text-blue-500/80 group-hover:text-blue-500 transition-colors">Deep-Tech Specialization</span>
+                    </motion.div>
+                    <motion.h1
+                        className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-slate-900 mb-8"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Elite Online <br /> Engineering Batches.
+                    </motion.h1>
+                    <motion.p
+                        className="max-w-xl mx-auto text-lg md:text-xl text-slate-500 font-bold uppercase tracking-tight mb-12"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                    >
+                        Architecting the future through high-intensity industrial learning protocols.
+                    </motion.p>
+                    <motion.button
+                        onClick={handleExploreClick}
+                        className="group relative px-10 py-6 bg-blue-600 rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-500/20 active:scale-95 transition-all"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.5 }}
+                    >
+                        <div className="flex items-center gap-3 relative z-10 font-black text-white text-[13px] uppercase tracking-[0.3em]">
+                            Explore Programs <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                        </div>
+                    </motion.button>
                 </div>
 
                 {/* Course Grid */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-                    <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
+                <div id="explore-programs" className="max-w-[1400px] mx-auto px-4 md:px-12">
+                    <div className="flex items-end justify-between mb-16 px-4">
                         <div>
-                            <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Industrial Curriculum</p>
-                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Explore <span className="text-[#2563EB]">Programs.</span></h2>
-                        </div>
-                        <div className="flex gap-4">
-                            <span className="px-5 py-2 rounded-full border border-white/5 text-[10px] font-black text-white bg-white/5 uppercase tracking-widest">Live Interactive</span>
-                            <span className="px-5 py-2 rounded-full border border-white/5 text-[10px] font-black text-white bg-white/5 uppercase tracking-widest">Project-Based</span>
+                            <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Catalogue 2024</span>
+                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Academic Hub</h2>
                         </div>
                     </div>
 
@@ -237,12 +225,12 @@ const OnlineProgram = () => {
                     >
                         {FALLBACK_COURSES.length > 0 ? (
                             FALLBACK_COURSES.map(course => (
-                                <CourseCard key={course._id} course={course} />
+                                <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
                             ))
                         ) : (
-                            <div className="col-span-full py-20 bg-white/5 backdrop-blur-3xl border border-dashed border-white/10 rounded-[3rem] flex flex-col items-center justify-center text-center">
-                                <Rocket size={48} className="text-[#2563EB]/20 mb-6" />
-                                <h4 className="text-xl font-black text-white uppercase tracking-tighter">New Industrial Tracks In Alpha</h4>
+                            <div className="col-span-full py-20 bg-blue-50 border border-dashed border-blue-200 rounded-[3rem] flex flex-col items-center justify-center text-center">
+                                <Rocket size={48} className="text-blue-400 mb-6" />
+                                <h4 className="text-xl font-black text-slate-800 uppercase tracking-tighter">New Industrial Tracks In Alpha</h4>
                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">We are calibrating the curriculum with top-tier industrial directors.</p>
                             </div>
                         )}
@@ -250,11 +238,11 @@ const OnlineProgram = () => {
                 </div>
 
                 {/* Faculty Section */}
-                <div className="bg-white/2 py-32 border-y border-white/5">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="py-32">
+                    <div className="max-w-[1400px] mx-auto px-4 md:px-12">
                         <div className="text-center mb-24">
-                            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-6">Industrial <span className="text-[#2563EB]">Mentors.</span></h2>
-                            <p className="text-slate-400 text-lg font-medium max-w-2xl mx-auto uppercase tracking-wide">Learn from technical architects who build high-scale production systems daily.</p>
+                            <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Industry Leaders</span>
+                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Expert Mentorship</h2>
                         </div>
 
                         <motion.div
@@ -272,41 +260,51 @@ const OnlineProgram = () => {
                             }}
                             className="grid grid-cols-1 md:grid-cols-3 gap-12"
                         >
-                            {supportRoles.map((role, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    variants={{
-                                        hidden: { opacity: 0, y: 30 },
-                                        show: { opacity: 1, y: 0, transition: { type: "spring", damping: 20 } }
-                                    }}
-                                    whileHover={{ y: -10, scale: 1.02 }}
-                                    className="p-10 bg-white/5 backdrop-blur-3xl rounded-[3rem] border border-white/5 transition-colors hover:border-[#2563EB]/20"
-                                >
-                                    <div className="w-16 h-16 rounded-2xl bg-[#0A0F1E] border border-white/5 flex items-center justify-center text-[#2563EB] mb-8 shadow-xl">
-                                        <Users size={32} />
+                            <motion.div
+                                className="bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl relative overflow-hidden group"
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 blur-[100px] -mr-40 -mt-40 group-hover:bg-blue-500/10 transition-all duration-700" />
+                                <div className="grid md:grid-cols-2 gap-16 items-center">
+                                    <div className="relative">
+                                        <div className="w-24 h-24 bg-blue-50 rounded-3xl flex items-center justify-center mb-8">
+                                            <Cpu size={40} className="text-blue-600" />
+                                        </div>
+                                        <h3 className="text-4xl md:text-5xl font-black text-slate-800 uppercase tracking-tight mb-6">Expert Mentorship</h3>
+                                        <p className="text-lg text-slate-500 font-bold uppercase tracking-tight leading-relaxed mb-8">
+                                            Learn directly from architects who build the infrastructure of modern tech companies. High-density knowledge transfer protocols.
+                                        </p>
+                                        <button
+                                            onClick={openLeadModal}
+                                            className="px-8 py-4 bg-blue-600 text-white rounded-full font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
+                                        >
+                                            Meet Mentors
+                                        </button>
                                     </div>
-                                    <h3 className="text-2xl font-black text-white uppercase mb-2 tracking-tight">{role.title}</h3>
-                                    <p className="text-[#2563EB] text-xs font-black uppercase tracking-widest mb-6">{role.role}</p>
-                                    <p className="text-slate-400 text-sm font-medium leading-relaxed mb-8">{role.desc}</p>
-                                    <div className="space-y-3">
-                                        {role.benefits.map((benefit, bIdx) => (
-                                            <div key={bIdx} className="flex items-center gap-3">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
-                                                <span className="text-xs font-bold text-slate-300 uppercase">{benefit}</span>
+                                    <div className="relative">
+                                        <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-slate-100 border border-slate-200">
+                                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mentor" className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="absolute -bottom-8 -left-8 p-4 bg-white rounded-3xl shadow-xl border border-slate-100 flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <Star size={18} className="text-blue-500" />
                                             </div>
-                                        ))}
+                                            <span className="text-sm font-black text-slate-800 uppercase tracking-widest">5.0 Rating</span>
+                                        </div>
                                     </div>
-                                </motion.div>
-                            ))}
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </div>
                 </div>
 
                 {/* Pricing Section */}
-                <div id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-                    <div className="text-center mb-24">
-                        <p className="text-[#2563EB] font-black uppercase tracking-[0.4em] text-[11px] mb-4">Transparent Pricing</p>
-                        <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Choose Your <span className="text-[#2563EB]">Path.</span></h2>
+                <div id="pricing" className="max-w-[1400px] mx-auto px-4 md:px-12 py-32">
+                    <div className="text-center mb-20">
+                        <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Institutional Access</span>
+                        <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Tuition Structure</h2>
                     </div>
 
                     <motion.div
@@ -325,32 +323,32 @@ const OnlineProgram = () => {
                         className="grid grid-cols-1 md:grid-cols-3 gap-8"
                     >
                         {pricing.map((tier, idx) => (
-                            <PricingTier key={idx} {...tier} onSelect={openLeadModal} />
+                            <PricingTier key={idx} tier={tier} onSelect={openLeadModal} />
                         ))}
                     </motion.div>
                 </div>
 
                 {/* Schedule Section */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
-                    <div className="bg-gradient-to-br from-[#2563EB]/10 to-transparent p-12 md:p-20 rounded-[4rem] border border-white/5 backdrop-blur-3xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-12 opacity-10">
-                            <Calendar size={200} className="text-white" />
+                    <div className="bg-blue-50 p-12 md:p-20 rounded-[4rem] border border-blue-100 backdrop-blur-3xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-12 opacity-5">
+                            <Calendar size={200} className="text-blue-600" />
                         </div>
                         <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                             <div>
-                                <h3 className="text-3xl md:text-5xl font-black text-white uppercase mb-8 tracking-tighter">Flexible <br /><span className="text-[#2563EB]">Learning Cycles.</span></h3>
+                                <h3 className="text-3xl md:text-5xl font-black text-slate-900 uppercase mb-8 tracking-tighter">Flexible <br /><span className="text-blue-600 border-b-4 border-blue-200 pb-1">Learning Cycles.</span></h3>
                                 <div className="space-y-6">
                                     <div className="flex gap-6">
-                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#2563EB] shrink-0 border border-white/10">
+                                        <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 border border-blue-200">
                                             <Calendar size={20} />
                                         </div>
                                         <div>
-                                            <h4 className="text-lg font-black text-white uppercase tracking-tight">Active Batches</h4>
-                                            <p className="text-slate-400 text-sm font-medium">Mon-Wed-Fri (Evening Slot)</p>
+                                            <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">Active Batches</h4>
+                                            <p className="text-slate-500 text-sm font-medium">Mon-Wed-Fri (Evening Slot)</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-6">
-                                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#2563EB] shrink-0 border border-white/10">
+                                        <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 border border-blue-200">
                                             <Clock size={20} />
                                         </div>
                                         <div>
@@ -365,10 +363,10 @@ const OnlineProgram = () => {
                                     "The online model ensures that geography is no longer a barrier to elite industrial education. We bring the same production-grade experience to your screen."
                                 </p>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-black text-white">TS</div>
+                                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center font-black text-slate-950">TS</div>
                                     <div>
                                         <p className="text-white font-black uppercase text-sm">Industrial Director</p>
-                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest"><span className="text-blue-600">thinkskool</span> Engineering</p>
+                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest"><span className="text-white">thinkskool</span> Engineering</p>
                                     </div>
                                 </div>
                             </div>
@@ -377,7 +375,7 @@ const OnlineProgram = () => {
                 </div>
 
                 {/* Final CTA */}
-                <div className="py-32 bg-[#2563EB] relative overflow-hidden text-center">
+                <div className="py-32 bg-white relative overflow-hidden text-center">
                     <div className="absolute inset-0 opacity-10">
                         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                             <defs>
@@ -389,12 +387,12 @@ const OnlineProgram = () => {
                         </svg>
                     </div>
                     <div className="max-w-4xl mx-auto px-4 relative z-10">
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-10 tracking-tighter uppercase">
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-950 mb-10 tracking-tighter uppercase">
                             Start Your Industrial <br /> Engineering Journey.
                         </h2>
                         <button
                             onClick={openLeadModal}
-                            className="bg-white text-slate-950 px-16 py-6 rounded-[2rem] font-black uppercase text-sm tracking-[0.3em] hover:bg-slate-100 transition-all shadow-2xl flex items-center gap-4 mx-auto"
+                            className="bg-slate-950 text-white px-16 py-6 rounded-[2rem] font-black uppercase text-sm tracking-[0.3em] hover:bg-slate-900 transition-all shadow-2xl flex items-center gap-4 mx-auto"
                         >
                             Apply for Enrollment <ArrowRight size={20} />
                         </button>

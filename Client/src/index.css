@@ -107,12 +107,12 @@ h4,
 h5,
 h6 {
   font-family: 'Inter', sans-serif;
-  letter-spacing: -0.02em;
-  /* Slightly tighter for premium feel */
+  letter-spacing: -0.015em;
+  /* Premium tight tracking */
 }
 
 body {
-  background-color: #FFF9FA;
+  background-color: #FFF0F3;
   color: #0F172A;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;

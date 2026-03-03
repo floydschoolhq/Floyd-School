@@ -11,7 +11,7 @@ import BrandLogo from './common/BrandLogo';
 const Footer = () => {
   const footerLinks = [
     {
-      title: <span className="font-black uppercase tracking-tighter"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>,
+      title: <span className="font-bold tracking-tight"><span className="text-[#2563EB]">Think</span><span className="text-[#F97316]">Skool</span></span>,
       links: [
         { name: 'About Us', href: '#how-it-works' },
         { name: 'Careers', href: '/careers' },
@@ -23,7 +23,7 @@ const Footer = () => {
       title: 'Products',
       links: [
         { name: 'Future Tech Bootcamp', href: '#engineering-programs' },
-        { name: <><span className="font-black uppercase tracking-tighter"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span> Certifications</>, href: '#engineering-programs' },
+        { name: <><span className="font-bold tracking-tight"><span className="text-[#2563EB]">Think</span><span className="text-[#F97316]">Skool</span></span> Certifications</>, href: '#engineering-programs' },
         { name: 'Code 360', href: '/student/coding-lab' },
       ],
     },
@@ -48,7 +48,7 @@ const Footer = () => {
             <div className="mb-8">
               <BrandLogo size="lg" />
             </div>
-            <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em] mb-10 leading-loose max-w-sm">
+            <p className="text-slate-500 text-[14px] font-medium tracking-tight mb-10 leading-relaxed max-w-sm">
               Architecting the next generation of global engineering excellence through industrial immersion.
             </p>
 
@@ -68,13 +68,13 @@ const Footer = () => {
           {/* Links Columns */}
           {footerLinks.map((section, index) => (
             <div key={index}>
-              <h3 className="text-white font-black mb-8 uppercase text-[10px] tracking-[0.4em]">{section.title}</h3>
+              <h3 className="text-white font-bold mb-8 text-[15px] tracking-tight">{section.title}</h3>
               <ul className="space-y-4">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all duration-300"
+                      className="text-[14px] font-medium tracking-tight text-slate-500 hover:text-white transition-all duration-300"
                     >
                       {link.name}
                     </a>
@@ -88,9 +88,9 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">&copy; 2025 <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span> Subsystems</p>
+            <p className="text-slate-600 text-[13px] font-medium tracking-tight">&copy; 2025 <span className="text-[#2563EB]">Think</span><span className="text-[#F97316]">Skool</span> Subsystems</p>
             <div className="w-1.5 h-1.5 rounded-full bg-blue-500/20 hidden md:block" />
-            <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">Integrated Learning Infrastructure</p>
+            <p className="text-slate-600 text-[13px] font-medium tracking-tight">Integrated Learning Infrastructure</p>
           </div>
 
           <div className="flex gap-6 items-center">

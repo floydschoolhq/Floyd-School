@@ -73,17 +73,17 @@ const DetailedProgram = () => {
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
                     >
                         <Brain size={10} className="text-[#2563EB] animate-pulse" />
-                        <span className="text-[9px] font-black text-[#2563EB] uppercase tracking-[0.4em]">Advanced Learning Framework</span>
+                        <span className="text-[13px] font-bold text-[#2563EB] tracking-tight">Advanced Learning Framework</span>
                     </motion.div>
 
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none mb-6"
+                        className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-none mb-6"
                     >
                         Specialized <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] via-blue-400 to-indigo-500">Engineering</span> Programs
                     </motion.h2>
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[8.5px] max-w-xl mx-auto leading-relaxed">
+                    <p className="text-slate-500 font-medium tracking-tight text-[14px] max-w-xl mx-auto leading-relaxed">
                         Architecting professional competence through immersive technical mastery and expert-led innovation labs.
                     </p>
                 </div>
@@ -92,7 +92,7 @@ const DetailedProgram = () => {
                 {loading ? (
                     <div className="text-center py-20">
                         <div className="inline-block w-6 h-6 border-[2.5px] border-white/5 border-t-[#2563EB] rounded-full animate-spin"></div>
-                        <p className="mt-4 text-[9px] font-bold uppercase tracking-widest text-[#2563EB]">Loading Ecosystem...</p>
+                        <p className="mt-4 text-[13px] font-bold tracking-tight text-[#2563EB]">Loading Ecosystem...</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -123,19 +123,19 @@ const DetailedProgram = () => {
                                             {[...Array(5)].map((_, i) => (
                                                 <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-800"} />
                                             ))}
-                                            <span className="text-[9px] font-black text-slate-500 ml-1 tracking-widest">{course.rating}</span>
+                                            <span className="text-[12px] font-bold text-slate-500 ml-1 tracking-tight">{course.rating}</span>
                                         </div>
 
-                                        <h3 className="text-[18px] font-black text-white mb-4 tracking-tight uppercase leading-none group-hover:text-blue-400 transition-colors">
+                                        <h3 className="text-[18px] font-bold text-white mb-4 tracking-tight leading-none group-hover:text-blue-400 transition-colors">
                                             {course.title}
                                         </h3>
 
-                                        <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-8 line-clamp-3 leading-relaxed">
+                                        <p className="text-slate-500 text-[12px] font-medium tracking-tight mb-8 line-clamp-3 leading-relaxed">
                                             {course.description}
                                         </p>
 
                                         <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/5">
-                                            <span className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-white transition-colors">
+                                            <span className="flex items-center gap-2 text-[13px] font-bold tracking-tight text-slate-500 group-hover:text-white transition-colors">
                                                 <Clock size={10} className="text-[#2563EB]" /> {course.duration}
                                             </span>
                                             <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
@@ -148,8 +148,8 @@ const DetailedProgram = () => {
                         ) : (
                             <div className="col-span-full py-20 bg-white/5 backdrop-blur-3xl border border-dashed border-white/10 rounded-[3rem] flex flex-col items-center justify-center text-center">
                                 <Globe size={48} className="text-[#2563EB]/20 mb-6" />
-                                <h4 className="text-xl font-black text-white uppercase tracking-tighter">Undergoing Global Scale-Up</h4>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">We are finalizing industrial engineering tracks for the next cohort.</p>
+                                <h4 className="text-xl font-bold text-white tracking-tight">Undergoing Global Scale-Up</h4>
+                                <p className="text-[14px] font-medium text-slate-500 tracking-tight mt-3">We are finalizing industrial engineering tracks for the next cohort.</p>
                             </div>
                         )}
                     </div>
@@ -179,13 +179,13 @@ const DetailedProgram = () => {
                                             <div className="w-24 h-24 rounded-3xl bg-slate-950 shadow-2xl flex items-center justify-center mb-10 border border-white/10">
                                                 {getIcon(selectedCourse.icon, `text-4xl text-[#2563EB]`)}
                                             </div>
-                                            <h2 className="text-4xl font-extrabold text-white mb-6 tracking-tighter uppercase leading-none">{selectedCourse.title}</h2>
+                                            <h2 className="text-4xl font-bold text-white mb-6 tracking-tight leading-none">{selectedCourse.title}</h2>
                                             <p className="text-slate-400 text-sm font-medium leading-relaxed mb-10">
                                                 {selectedCourse.description}
                                             </p>
                                             <div className="flex flex-wrap gap-2">
                                                 {selectedCourse.tags?.map((tag, i) => (
-                                                    <span key={i} className="px-4 py-1.5 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-[#2563EB] rounded-xl border border-white/5">
+                                                    <span key={i} className="px-4 py-1.5 bg-white/5 text-[13px] font-semibold tracking-tight text-[#2563EB] rounded-xl border border-white/5">
                                                         {tag}
                                                     </span>
                                                 ))}
@@ -193,7 +193,7 @@ const DetailedProgram = () => {
                                         </div>
                                         <button
                                             onClick={() => navigate('/online-program')}
-                                            className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-bold text-[12px] uppercase tracking-[0.25em] py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20"
+                                            className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-bold text-[16px] tracking-tight py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20"
                                         >
                                             Enroll Now
                                         </button>
@@ -209,14 +209,14 @@ const DetailedProgram = () => {
                                         </button>
 
                                         <div className="mb-12">
-                                            <h3 className="text-[10px] font-bold text-[#2563EB] uppercase tracking-[0.4em] mb-10">Program Details</h3>
+                                            <h3 className="text-[12px] font-bold text-[#2563EB] tracking-tight mb-10">Program Details</h3>
                                             <div className="space-y-6">
                                                 <div className="flex items-start gap-5 p-6 bg-white/2 rounded-3xl border border-white/5 group hover:border-[#2563EB]/20 transition-all">
                                                     <div className="w-12 h-12 rounded-2xl bg-slate-950 shadow-2xl flex items-center justify-center text-[#2563EB] border border-white/10">
                                                         <Star size={24} fill="currentColor" />
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-bold text-white text-base mb-1 uppercase">Campus Bootcamp</h4>
+                                                        <h4 className="font-bold text-white text-base mb-1">Campus Bootcamp</h4>
                                                         <p className="text-xs text-slate-500 font-medium leading-relaxed">
                                                             {selectedCourse.deliveryDetails?.inSchool?.bootcamp || "Intensive 7-day technical bootcamp at campus."}
                                                         </p>
@@ -228,10 +228,10 @@ const DetailedProgram = () => {
                                                         <Globe size={24} />
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-bold text-white text-base mb-1 uppercase">Global Support Network</h4>
+                                                        <h4 className="font-bold text-white text-base mb-1">Global Support Network</h4>
                                                         <div className="grid grid-cols-2 gap-x-6 gap-y-3 mt-4">
-                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">1:1 Tutoring</div>
-                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">24/7 Support</div>
+                                                            <div className="text-[12px] font-medium text-slate-400 tracking-tight">1:1 Tutoring</div>
+                                                            <div className="text-[12px] font-medium text-slate-400 tracking-tight">24/7 Support</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -239,7 +239,7 @@ const DetailedProgram = () => {
                                         </div>
 
                                         <div className="pt-10 border-t border-white/5">
-                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-3">
+                                            <p className="text-[12px] font-bold text-slate-500 tracking-tight flex items-center gap-3">
                                                 <ShieldCheck size={16} className="text-blue-400" /> Professional Certification Achievement
                                             </p>
                                         </div>
@@ -253,8 +253,8 @@ const DetailedProgram = () => {
                 {/* More Programs Button */}
                 <div className="text-center mt-20">
                     <button
-                        onClick={() => navigate('/course')}
-                        className="px-14 py-5 rounded-2xl bg-[#2563EB] text-white font-extrabold uppercase text-[11px] tracking-[0.3em] hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 hover:-translate-y-1"
+                        onClick={() => navigate('/online-program#explore-programs')}
+                        className="px-14 py-5 rounded-2xl bg-[#2563EB] text-white font-bold text-[16px] tracking-tight hover:bg-blue-600 shadow-2xl shadow-blue-500/20 transition-all active:scale-95 hover:-translate-y-1"
                     >
                         Explore Programs
                     </button>
