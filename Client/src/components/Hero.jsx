@@ -15,7 +15,7 @@ const HUB_DATA = [
         subtitle: "MASTER GENERATIVE TOOLS",
         icon: Sparkles,
         tag: "01",
-        color: "slate",
+        color: "blue",
         detail: "Master the future of work. Our training focuses on prompt engineering, LLM integration, and AI-driven workflows that augment your industrial engineering skills.",
         features: ["Prompt Engineering", "LLM Workflows", "AI-Agent Design"]
     },
@@ -24,7 +24,7 @@ const HUB_DATA = [
         title: "LIVE SESSIONS",
         subtitle: "REAL-TIME LEARNING",
         icon: Video,
-        color: "slate",
+        color: "blue",
         detail: "Join interactive daily live classes with industry veterans. Get your doubts cleared instantly and participate in collaborative coding sessions that accelerate growth.",
         features: ["Daily Live Classes", "Expert Q&A", "Pair Programming"]
     },
@@ -33,7 +33,7 @@ const HUB_DATA = [
         title: "BUILD REAL APPS",
         subtitle: "LIVE PROJECT EXPERIENCE",
         icon: Cpu,
-        color: "slate",
+        color: "blue",
         detail: "Work on actual industry projects that people use. Build everything from fintech platforms to AI systems and see your work go live.",
         features: ["Active Industry Apps", "Real Team Work", "Live Portfolio"]
     },
@@ -42,7 +42,7 @@ const HUB_DATA = [
         title: "1:1 DOUBT SOLVING",
         subtitle: "PERSONALIZED SUPPORT",
         icon: MessageSquare,
-        color: "slate",
+        color: "blue",
         detail: "Never get stuck again. Our expert mentors provide one-on-one sessions to resolve your technical hurdles, refine your logic, and ensure you keep moving forward with confidence.",
         features: ["Priority Help Desk", "Personal Mentoring", "Code Debugging"]
     }
@@ -240,11 +240,11 @@ const Hero = () => {
                             transition={{ type: "spring", damping: 20, stiffness: 80 }}
                             whileHover={{ y: -6, scale: 1.01 }}
                             onClick={() => setSelectedHubItem(HUB_DATA[0])}
-                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-[#0A0F1E] backdrop-blur-3xl border border-white/10 group-hover:border-white/20 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                         >
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/40 transition-all duration-500" />
-                            <div className="absolute inset-0 bg-white/[0.02] group-hover:bg-transparent transition-colors duration-500" />
-                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/[0.03] group-hover:bg-transparent rounded-full blur-[60px] transition-all duration-700" />
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent group-hover:via-blue-400/40 transition-all duration-500" />
+                            <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
+                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[60px] transition-all duration-700" />
                             <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
                                 <h3 className="text-2xl md:text-4xl font-semibold text-white tracking-tight leading-none mb-2 uppercase">{HUB_DATA[0].title}</h3>
                                 <span className="text-[15px] font-medium text-white/40 tracking-tight">{HUB_DATA[0].subtitle}</span>
@@ -267,10 +267,10 @@ const Hero = () => {
                                     whileHover={{ y: -6, scale: 1.02 }}
                                     onClick={() => setSelectedHubItem(item)}
                                     transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
-                                    className="relative p-3 rounded-[1.0rem] bg-[#0A0F1E] backdrop-blur-3xl border border-white/10 group-hover:border-white/20 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                    className="relative p-3 rounded-[1.0rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
                                 >
-                                    <div className="absolute inset-0 bg-white/[0.02] group-hover:bg-transparent transition-colors duration-500" />
-                                    <div className="absolute -top-12 -right-12 w-24 h-24 bg-white/[0.03] group-hover:bg-transparent rounded-full blur-[40px] transition-all duration-700" />
+                                    <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
+                                    <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[40px] transition-all duration-700" />
                                     <div className="relative z-10 flex flex-col items-center text-center py-1">
                                         <h4 className="text-[20px] font-semibold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h4>
                                         <span className="text-[13px] font-medium text-white/40 tracking-tight">{item.subtitle}</span>
@@ -287,7 +287,7 @@ const Hero = () => {
                             transition={{ delay: 0.3, type: "spring", damping: 20 }}
                             whileHover={{ y: -6, scale: 1.01 }}
                             onClick={() => setSelectedHubItem(HUB_DATA[3])}
-                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-[#0A0F1E] backdrop-blur-3xl border border-white/10 group-hover:border-white/20 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                         >
                             <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
@@ -302,9 +302,9 @@ const Hero = () => {
                         </motion.div>
 
                         {/* CTA Bento Tile */}
-                        <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-[#0A0F1E] border border-white/10 shadow-2xl flex items-center gap-2">
-                            <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-white text-slate-950 font-bold text-[15px] tracking-tight hover:bg-slate-100 transition-all active:scale-95 shadow-xl shadow-white/5">Enroll Now</button>
-                            <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-white/5 text-white/60 font-semibold text-[14px] tracking-tight hover:bg-white/10 border border-white/5 transition-all active:scale-95">Explore</button>
+                        <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-slate-900 border border-blue-500/20 shadow-2xl flex items-center gap-2">
+                            <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-blue-600 text-white font-bold text-[14px] tracking-tight hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-500/20">Enroll Now</button>
+                            <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-slate-800 text-white/80 font-semibold text-[13px] tracking-tight hover:bg-slate-700 border border-blue-500/10 transition-all active:scale-95">Explore</button>
                         </motion.div>
                     </div>
 
@@ -321,10 +321,10 @@ const Hero = () => {
                             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                             className="relative w-full group"
                         >
-                            <div className="absolute -inset-[2px] bg-gradient-to-r from-white via-slate-400 to-white rounded-[4rem] p-[2.5px] shadow-[0_0_60px_rgba(255,255,255,0.1)] blur-[1px]" />
-                            <div id="registration-form" className="relative bg-[#0A0F1E] backdrop-blur-3xl rounded-[3rem] p-7 md:p-10 shadow-3xl overflow-hidden z-10 border border-white/10 group-hover:border-white/20 transition-all duration-500">
-                                <div className="absolute inset-0 bg-white/[0.02] group-hover:bg-transparent transition-colors duration-500" />
-                                <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/[0.05] group-hover:bg-transparent rounded-full blur-[80px] transition-all duration-700" />
+                            <div className="absolute -inset-[2px] bg-gradient-to-r from-blue-600 via-indigo-400 to-blue-600 rounded-[4rem] p-[2.5px] shadow-[0_0_60px_rgba(37,99,235,0.4)] blur-[1px]" />
+                            <div id="registration-form" className="relative bg-slate-950/95 backdrop-blur-3xl rounded-[3rem] p-7 md:p-10 shadow-3xl overflow-hidden z-10 border border-blue-500/20 group-hover:border-blue-500/30 transition-all duration-500">
+                                <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/5 transition-colors duration-500" />
+                                <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 group-hover:bg-blue-600/5 rounded-full blur-[80px] transition-all duration-700" />
 
                                 {status === 'success' ? (
                                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16 relative z-10">
@@ -337,7 +337,7 @@ const Hero = () => {
                                     <>
                                         <div className="mb-8 relative z-10">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <div className="w-1.5 h-6 bg-white rounded-full" />
+                                                <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
                                                 <h3 className="text-2xl font-semibold text-white tracking-tight uppercase">Start Your Journey</h3>
                                             </div>
                                             <p className="text-white/40 text-[14px] font-medium tracking-tight pl-5">Begin your learning experience</p>
