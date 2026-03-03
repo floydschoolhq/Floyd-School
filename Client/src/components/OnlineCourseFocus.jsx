@@ -23,15 +23,15 @@ const OnlineCourseFocus = () => {
 
             <div className="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10">
                 {/* Header Section */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-6">
                     <motion.h2
-                        initial={{ opacity: 0, y: -40 }}
+                        initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ type: "spring", damping: 15, stiffness: 60 }}
-                        className="text-2xl md:text-4xl font-bold tracking-tight uppercase leading-none"
+                        className="text-4xl md:text-6xl font-black tracking-tight uppercase leading-none"
                     >
-                        <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span> <span className="text-[#2563EB]">Premium</span> Batches.
+                        OUR BATCHES
                     </motion.h2>
                 </div>
 
@@ -48,19 +48,19 @@ const OnlineCourseFocus = () => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
                         {FALLBACK_COURSES.length > 0 ? (
                             FALLBACK_COURSES.map((course, idx) => {
                                 const Icon = iconMap[course.icon] || Code;
                                 return (
                                     <motion.div
                                         key={course._id}
-                                        initial={{ opacity: 0, x: idx % 2 === 0 ? -100 : 100, y: 50, scale: 0.95 }}
+                                        initial={{ opacity: 0, x: idx % 2 === 0 ? -10 : 10, y: 10, scale: 0.99 }}
                                         whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                                         viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.08, type: "spring", damping: 18 }}
-                                        whileHover={{ y: -8 }}
-                                        className="p-4 rounded-[1.8rem] bg-white border border-slate-100 hover:border-blue-500/30 transition-all cursor-pointer shadow-sm hover:shadow-xl group"
+                                        transition={{ delay: idx * 0.04, type: "spring", damping: 25 }}
+                                        whileHover={{ y: -2 }}
+                                        className="p-2.5 rounded-[1.2rem] bg-white border border-slate-100/60 hover:border-blue-500/10 transition-all cursor-pointer shadow-[0_1px_4px_-1px_rgba(0,0,0,0.03)] hover:shadow-lg group"
                                         onClick={() => setSelectedCourse(course)}
                                     >
                                         <div className="w-full h-52 rounded-[1.2rem] overflow-hidden mb-5 border border-slate-50 shadow-sm group-hover:shadow-md transition-shadow">
@@ -131,8 +131,13 @@ const OnlineCourseFocus = () => {
                                             alt={selectedCourse.title}
                                             className="w-full h-full object-cover"
                                         />
-                                        <div className="absolute top-6 left-6 w-12 h-12 rounded-xl bg-blue-950/20 flex items-center justify-center text-blue-500 backdrop-blur-md border border-white/20 shadow-xl">
-                                            {React.createElement(iconMap[selectedCourse.icon] || Target, { size: 24 })}
+                                        <div className="absolute top-6 left-6 flex items-center justify-center">
+                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
+                                            {React.createElement(iconMap[selectedCourse.icon] || Target, {
+                                                size: 32,
+                                                className: "text-blue-500 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10",
+                                                strokeWidth: 1.5
+                                            })}
                                         </div>
                                     </div>
                                     <div className="mb-8">

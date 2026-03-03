@@ -19,12 +19,12 @@ const JOURNEY_STEPS = [
         id: "infra",
         icon: Cloud,
         tag: "Phase 01",
-        title: "Smart Online Classes",
-        description: "Learn in our high-tech virtual classrooms. We use the latest tools to provide a smooth, lag-free learning experience.",
+        title: "Smart Infra",
+        description: "High-tech virtual labs. Zero lag. 4K stream.",
         features: [
-            "Smooth 4K Video",
-            "Ready-to-use Lab Setup",
-            "Live Group Coding"
+            "4K Video",
+            "Auto-Labs",
+            "Live Peer Coding"
         ],
         highlight: "Modern Setup",
         color: "blue"
@@ -33,12 +33,12 @@ const JOURNEY_STEPS = [
         id: "teaching",
         icon: Zap,
         tag: "Phase 02",
-        title: "Practical Learning",
-        description: "No boring lectures. We teach by building real software and showing you how top tech companies write code.",
+        title: "Real Builds",
+        description: "Stop watching. Start building. Production-scale.",
         features: [
-            "100% Real Projects",
-            "Learn by Doing",
-            "Industry Standards"
+            "100% Projects",
+            "Raw Tech",
+            "Industrial Flow"
         ],
         highlight: "Expert Led",
         color: "indigo"
@@ -47,26 +47,26 @@ const JOURNEY_STEPS = [
         id: "doubts",
         icon: MessageSquare,
         tag: "Phase 03",
-        title: "Weekly Doubt Solving",
-        description: "Get unstuck quickly. Every week, we have dedicated sessions to solve your problems and guide you 1:1.",
+        title: "1:1 Support",
+        description: "Never stay stuck. Weekly deep-dives. Expert help.",
         features: [
-            "Weekly 1:1 Sessions",
-            "Saturday Deep Dives",
-            "Expert Mentors"
+            "1:1 Sessions",
+            "Sat Solves",
+            "Instant Chat"
         ],
-        highlight: "Personal Support",
+        highlight: "Personal Care",
         color: "emerald"
     },
     {
         id: "ai-worth",
         icon: BrainCircuit,
         tag: "Phase 04",
-        title: "Master AI Skills",
-        description: "Stay ahead in the AI age. We teach you how to use AI tools to work faster and solve complex problems.",
+        title: "AI Native",
+        description: "Master AI workflows. Prompt like an architect.",
         features: [
-            "AI-Driven Workflows",
-            "Prompt Engineering",
-            "Future-Ready Skills"
+            "AI Workflows",
+            "Prompt Eng",
+            "Native Logic"
         ],
         highlight: "AI Focused",
         color: "blue"
@@ -74,7 +74,7 @@ const JOURNEY_STEPS = [
 ];
 
 const JourneyCard = ({ step, idx, isEven }) => {
-    const Icon = step.icon;
+    const navigate = useNavigate();
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -103,9 +103,12 @@ const JourneyCard = ({ step, idx, isEven }) => {
                 style={{ rotateX, rotateY, perspective: 1000 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className="w-full lg:w-[46%] relative z-10"
+                onClick={() => navigate('/online-program')}
+                className="w-full lg:w-[42%] relative z-10 cursor-pointer"
             >
-                <div className="p-[1px] rounded-[1.5rem] bg-gradient-to-br from-white/10 to-transparent hover:from-blue-500/30 transition-all duration-500 group relative overflow-hidden">
+                <div
+                    className="p-[1.5px] bg-gradient-to-br from-white/10 to-transparent hover:from-blue-500/30 transition-all duration-500 group relative overflow-hidden rounded-[2.5rem]"
+                >
                     {/* Spotlight Glow */}
                     <motion.div
                         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -117,32 +120,28 @@ const JourneyCard = ({ step, idx, isEven }) => {
                         }}
                     />
 
-                    <div className="bg-slate-900/90 backdrop-blur-xl rounded-[1.45rem] p-5 md:p-6 border border-white/5 group-hover:border-blue-500/40 transition-all shadow-lg relative z-10">
-                        <div className="flex items-center gap-4 mb-4">
-                            <motion.div
-                                whileHover={{ scale: 1.1, rotate: 5 }}
-                                className={`w-11 h-11 rounded-xl bg-slate-950 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-md`}
-                            >
-                                <Icon size={22} />
-                            </motion.div>
+                    <div
+                        className="bg-slate-900/90 backdrop-blur-xl p-4 md:p-5 border border-white/5 group-hover:border-blue-500/40 transition-all shadow-lg relative z-10 rounded-[2.5rem]"
+                    >
+                        <div className="flex flex-col items-center text-center mb-3">
                             <div>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">{step.tag}</span>
-                                <h3 className="text-xl font-black text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors leading-tight">
+                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none block mb-2">{step.tag}</span>
+                                <h3 className="text-2xl font-black text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors leading-tight">
                                     {step.title}
                                 </h3>
                             </div>
                         </div>
 
-                        <p className="text-slate-400 text-sm leading-relaxed mb-5">
+                        <p className="text-slate-400 text-sm font-bold uppercase tracking-tight mb-3 opacity-80 text-center">
                             {step.description}
                         </p>
 
-                        <div className="flex flex-wrap gap-2 mb-5">
+                        <div className="flex flex-wrap justify-center gap-2 mb-4">
                             {step.features.map((feature, fIdx) => (
                                 <motion.span
                                     key={fIdx}
                                     whileHover={{ scale: 1.05, backgroundColor: "rgba(37, 99, 235, 0.2)" }}
-                                    className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 uppercase tracking-widest border border-white/5 transition-colors"
+                                    className="px-3 py-1 bg-white/5 rounded-lg text-[9px] font-black text-slate-300 uppercase tracking-widest border border-white/5 transition-colors"
                                 >
                                     {feature}
                                 </motion.span>
@@ -248,7 +247,7 @@ const LearningJourney = () => {
                         </svg>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                         {JOURNEY_STEPS.map((step, idx) => (
                             <JourneyCard
                                 key={step.id}

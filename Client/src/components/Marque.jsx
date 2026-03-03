@@ -2,13 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 // Technology & Skill Focus Logos
-const ReactLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-cyan-500">React</span></span>;
-const NodeLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-green-600">Node.js</span></span>;
-const PythonLogo = () => <span className="text-2xl font-bold text-slate-500 flex items-center gap-1"><span className="text-blue-500">Python</span></span>;
-const AIMLLogo = () => <span className="text-2xl font-extrabold text-slate-500 flex items-center gap-1"><span className="text-purple-600">AI/ML</span></span>;
-const CloudLogo = () => <span className="text-2xl font-extrabold text-slate-500 flex items-center gap-1"><span className="text-[#2563EB]">Cloud</span></span>;
-const WebDevLogo = () => <span className="text-2xl font-extrabold text-slate-500 flex items-center gap-1"><span className="text-blue-600">Web Dev</span></span>;
-const MobileLogo = () => <span className="text-2xl font-extrabold text-slate-500 flex items-center gap-1"><span className="text-emerald-500">Mobile</span></span>;
+const ReactLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">React</span>;
+const NodeLogo = () => <span className="text-2xl font-black text-slate-900/80 flex items-center gap-1">Node.js</span>;
+const PythonLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Python</span>;
+const AIMLLogo = () => <span className="text-2xl font-black text-slate-900/70 flex items-center gap-1">AI/ML</span>;
+const CloudLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Cloud</span>;
+const WebDevLogo = () => <span className="text-2xl font-black text-slate-900/90 flex items-center gap-1">Web Dev</span>;
+const MobileLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Mobile</span>;
 
 const logos = [
   { id: 1, component: ReactLogo },
@@ -46,7 +46,7 @@ const Marque = () => {
           }}
         >
           {[...logos, ...logos, ...logos, ...logos].map((LogoItem, index) => (
-            <div key={index} className="opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer">
+            <div key={index} className="opacity-50 hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer">
               <LogoItem.component />
             </div>
           ))}

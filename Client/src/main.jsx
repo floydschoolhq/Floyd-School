@@ -8,6 +8,15 @@ import { SocketProvider } from './components/Context/SocketContext.jsx'
 import { ThemeProvider } from './components/Context/ThemeProvider.jsx'
 import { ToastProvider } from './components/Context/ToastProvider.jsx'
 
+// Clear out stale service workers from previous projects on this port
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
+
 createRoot(document.getElementById('root')).render(
 
   <BrowserRouter future={{ v7_startTransition: true }}>

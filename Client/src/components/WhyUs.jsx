@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUserGraduate, FaBuilding, FaArrowRight } from 'react-icons/fa';
+import { FaUserGraduate, FaBuilding, FaArrowRight, FaSchool, FaGraduationCap } from 'react-icons/fa';
 import SectionHeader from './common/SectionHeader';
 import { schoolBenefits, studentBenefits } from '../constants/siteData';
 
@@ -50,9 +50,12 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-3.5 rounded-[2rem] inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-3.5 rounded-[2rem] inline-flex items-center gap-6 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
-                            <div className="w-10 h-10 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-white text-base shadow-2xl">🏫</div>
+                            <div className="relative flex items-center justify-center">
+                                <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
+                                <FaSchool size={28} className="text-white drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
+                            </div>
                             <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
                         </motion.div>
 
@@ -100,9 +103,12 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-[#2563EB]/10 backdrop-blur-2xl border border-[#2563EB]/20 p-3.5 rounded-[2rem] inline-flex items-center gap-4 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-[#2563EB]/10 backdrop-blur-2xl border border-[#2563EB]/20 p-3.5 rounded-[2rem] inline-flex items-center gap-6 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
-                            <div className="w-10 h-10 rounded-2xl bg-[#020617] border border-[#2563EB]/20 flex items-center justify-center text-[#2563EB] text-base shadow-2xl">🎓</div>
+                            <div className="relative flex items-center justify-center">
+                                <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-110 opacity-100" />
+                                <FaGraduationCap size={28} className="text-[#2563EB] drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
+                            </div>
                             <h3 className="text-[14px] font-bold text-white pr-4 uppercase tracking-wider">Engineering Identity</h3>
                         </motion.div>
 

@@ -6,6 +6,7 @@ import LeadFormModal from '../components/LeadFormModal';
 import Brochure from '../assets/pdf/Brochure.pdf';
 import SectionHeader from '../components/common/SectionHeader';
 import { timelineSteps, valueProps } from '../constants/siteData';
+import BootcampExhibition from '../components/BootcampExhibition';
 
 const IconMap = {
     Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, School
@@ -183,6 +184,9 @@ const SchoolPartnership = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Bootcamp Exhibition Gallery */}
+            <BootcampExhibition />
 
             {/* Final CTA */}
             <div className="py-24 bg-[#2D2D2D] relative overflow-hidden">

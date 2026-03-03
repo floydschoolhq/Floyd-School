@@ -40,7 +40,7 @@ import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
 import LearningJourney from './components/LearningJourney.jsx';
-import BootcampExhibition from './components/BootcampExhibition.jsx';
+import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 
 
 // --- Home Page Component ---
@@ -55,8 +55,8 @@ const HomePage = () => {
                 <OnlineCourseFocus />
                 <Faculty />
                 <LearningJourney />
+                <ThinkSkoolAdvantage />
                 <IndustrialNetwork />
-                <BootcampExhibition />
                 <Masterclasses />
                 <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />

@@ -32,8 +32,13 @@ const FeatureCard = ({ item, index, onClick }) => {
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/20">
-                        <Icon size={18} />
+                    <div className="absolute top-4 left-4 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                        <Icon
+                            size={24}
+                            className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover/card:text-blue-400 transition-colors relative z-10"
+                            strokeWidth={1.5}
+                        />
                     </div>
                 </div>
 
@@ -184,8 +189,13 @@ const SupportEcosystem = () => {
                                             alt={selectedRole.title}
                                             className="w-full h-full object-cover"
                                         />
-                                        <div className="absolute top-6 left-6 w-12 h-12 rounded-xl bg-slate-950/20 backdrop-blur-md flex items-center justify-center text-blue-500 border border-white/20 shadow-xl">
-                                            {React.createElement(iconMap[selectedRole.icon] || Zap, { size: 24 })}
+                                        <div className="absolute top-6 left-6 flex items-center justify-center">
+                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
+                                            {React.createElement(iconMap[selectedRole.icon] || Zap, {
+                                                size: 32,
+                                                className: "text-blue-500 drop-shadow-[0_0_10px_rgba(37,99,235,0.5)] relative z-10",
+                                                strokeWidth: 1.5
+                                            })}
                                         </div>
                                     </div>
 

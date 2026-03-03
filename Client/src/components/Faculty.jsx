@@ -13,8 +13,9 @@ const FeatureItem = ({ icon: Icon, title, desc }) => (
         whileHover={{ x: 6 }}
         className="flex items-center gap-4 p-3 rounded-xl bg-white border border-[#FBEFEF] hover:border-[#2563EB]/20 hover:shadow-sm transition-all group"
     >
-        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#2563EB] border border-blue-100 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
-            <Icon size={18} />
+        <div className="shrink-0 relative flex items-center justify-center w-10 h-10">
+            <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <Icon size={20} className="text-[#2563EB] drop-shadow-[0_0_6px_rgba(37,99,235,0.3)] relative z-10 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
         </div>
         <div className="flex flex-col">
             <span className="text-xs font-bold text-slate-800 uppercase tracking-widest">{title}</span>
@@ -68,9 +69,8 @@ const Faculty = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-10">
-                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.5em] text-[11px] mb-4">Distinguished Faculty</p>
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 tracking-tight uppercase leading-none">
-                        Industry Visionaries & <span className="text-[#2563EB]">Engineering</span> Leaders
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-none">
+                        Why <span className="text-[#2563EB]">Us</span>
                     </h2>
                 </div>
 
@@ -131,9 +131,10 @@ const Faculty = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none uppercase">
-                        Our Team <span className="text-[#2563EB]">Members</span>
+                        <span className="text-[#2563EB]">Mentors</span>
                     </h2>
                 </motion.div>
+
 
                 <motion.div
                     initial={{ opacity: 0, y: 100 }}
@@ -243,8 +244,12 @@ const Faculty = () => {
 
                                     <div className="absolute bottom-10 left-10 right-10 z-20">
                                         <div className="flex items-center gap-3 mb-4">
-                                            <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-2xl flex items-center justify-center border border-white/20 shadow-xl">
-                                                {React.cloneElement(selectedMentor.companyIcon, { size: 20, className: "text-white" })}
+                                            <div className="relative flex items-center justify-center w-10 h-10">
+                                                <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
+                                                {React.cloneElement(selectedMentor.companyIcon, {
+                                                    size: 24,
+                                                    className: "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] relative z-10"
+                                                })}
                                             </div>
                                             <span className="text-[10px] font-black uppercase tracking-[0.4em]">
                                                 <span className="text-[#2563EB]">think</span>

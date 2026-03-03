@@ -80,8 +80,13 @@ const HubDetailModal = ({ isOpen, onClose, item }) => {
                         </button>
 
                         <div className="flex items-center gap-6 mb-8">
-                            <div className={`w-16 h-16 rounded-2xl bg-${item.color}-600/20 border border-${item.color}-500/30 flex items-center justify-center text-${item.color}-400`}>
-                                <Icon size={32} />
+                            <div className="relative flex items-center justify-center">
+                                <div className={`absolute inset-0 bg-${item.color}-500/20 blur-2xl rounded-full scale-150 opacity-100 transition-opacity duration-500`} />
+                                <Icon
+                                    size={36}
+                                    className={`text-${item.color}-400 drop-shadow-[0_0_12px_rgba(37,99,235,0.4)] relative z-10`}
+                                    strokeWidth={1.5}
+                                />
                             </div>
                             <div>
                                 <h3 className="text-3xl font-bold text-white uppercase tracking-tight">{item.title}</h3>
@@ -226,7 +231,7 @@ const Hero = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 <div className="grid md:grid-cols-[1fr_420px] gap-12 items-center">
                     {/* Left Column: Bento Hub */}
-                    <div className="grid grid-cols-2 gap-3 h-fit">
+                    <div className="grid grid-cols-2 gap-2 h-fit">
                         {/* Practical Training - Major Tile */}
                         <motion.div
                             initial={{ opacity: 0, x: -60, y: 60 }}
@@ -235,22 +240,18 @@ const Hero = () => {
                             transition={{ type: "spring", damping: 20, stiffness: 80 }}
                             whileHover={{ y: -6, scale: 1.01 }}
                             onClick={() => setSelectedHubItem(HUB_DATA[0])}
-                            className="col-span-2 relative p-5 md:p-6 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            className="col-span-2 relative p-4 md:p-5 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                         >
                             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent group-hover:via-transparent transition-all duration-500" />
                             <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
-                            <div className="relative z-10 flex items-center justify-between">
-                                <div className="flex items-center gap-5">
-                                    <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-3xl shadow-blue-500/50">
-                                        <Sparkles className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-none mb-2">{HUB_DATA[0].title}</h3>
-                                        <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.25em]">{HUB_DATA[0].subtitle}</span>
-                                    </div>
+                            <div className="relative z-10 flex flex-col items-center text-center justify-center py-4">
+                                <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-none mb-2">{HUB_DATA[0].title}</h3>
+                                <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.25em]">{HUB_DATA[0].subtitle}</span>
+
+                                <div className="absolute top-0 right-0 text-4xl font-black text-white/5 tracking-tighter hidden md:block select-none">
+                                    {HUB_DATA[0].tag}
                                 </div>
-                                <div className="text-4xl font-black text-white/5 tracking-tighter hidden md:block select-none">01</div>
                             </div>
                         </motion.div>
 
@@ -266,14 +267,11 @@ const Hero = () => {
                                     whileHover={{ y: -6, scale: 1.02 }}
                                     onClick={() => setSelectedHubItem(item)}
                                     transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
-                                    className="relative p-5 rounded-[1.8rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/10 group-hover:border-white/5 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                    className="relative p-4 rounded-[1.8rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/10 group-hover:border-white/5 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
                                 >
                                     <div className="absolute inset-0 bg-blue-600/[0.07] group-hover:bg-blue-600/0 transition-colors duration-500" />
                                     <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/[0.08] group-hover:bg-blue-600/0 rounded-full blur-[40px] transition-all duration-700" />
-                                    <div className="relative z-10">
-                                        <div className={`w-10 h-10 rounded-xl bg-slate-950 border border-white/10 flex items-center justify-center mb-4 transition-all duration-300 ${item.color === 'blue' ? 'text-blue-400' : 'text-blue-500/60'}`}>
-                                            <Icon className="w-5 h-5" />
-                                        </div>
+                                    <div className="relative z-10 flex flex-col items-center text-center py-2">
                                         <h4 className="text-[18px] font-bold text-white uppercase tracking-tight leading-none mb-1 group-hover:text-blue-400 transition-colors">{item.title}</h4>
                                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{item.subtitle}</span>
                                     </div>
@@ -289,21 +287,17 @@ const Hero = () => {
                             transition={{ delay: 0.3, type: "spring", damping: 20 }}
                             whileHover={{ y: -6, scale: 1.01 }}
                             onClick={() => setSelectedHubItem(HUB_DATA[3])}
-                            className="col-span-2 relative p-5 md:p-6 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            className="col-span-2 relative p-4 md:p-5 rounded-[2.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-white/10 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                         >
                             <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
-                            <div className="relative z-10 flex items-center justify-between">
-                                <div className="flex items-center gap-5">
-                                    <div className="w-12 h-12 rounded-xl bg-slate-950 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-xl group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                                        <MessageSquare className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-[20px] md:text-2xl font-bold text-white uppercase tracking-tight leading-none mb-1 group-hover:text-blue-400 transition-colors">{HUB_DATA[3].title}</h3>
-                                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.25em]">{HUB_DATA[3].subtitle}</span>
-                                    </div>
+                            <div className="relative z-10 flex flex-col items-center text-center justify-center py-4">
+                                <h3 className="text-[20px] md:text-2xl font-bold text-white uppercase tracking-tight leading-none mb-1 group-hover:text-blue-400 transition-colors">{HUB_DATA[3].title}</h3>
+                                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.25em]">{HUB_DATA[3].subtitle}</span>
+
+                                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-400 group-hover:translate-x-2 transition-all">
+                                    <ArrowRight size={24} />
                                 </div>
-                                <ArrowRight className="text-white/20 group-hover:text-blue-400 group-hover:translate-x-2 transition-all" size={24} />
                             </div>
                         </motion.div>
 
