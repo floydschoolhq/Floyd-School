@@ -165,7 +165,7 @@ const TrustIndicator = () => {
             <div className="flex flex-col gap-0.5">
                 <div className="flex items-center gap-2">
                     <span className="text-lg font-extrabold text-slate-900 tracking-[-0.03em] leading-none">
-                        <AnimatedCounter value={100} />+ <span className="font-medium text-slate-400 ml-0.5">Learners & Parents</span>
+                        <AnimatedCounter value={1000} />+ <span className="font-medium text-slate-400 ml-0.5">Learners & Parents</span>
                     </span>
                 </div>
                 <div className="flex items-center gap-3">
