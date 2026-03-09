@@ -136,7 +136,7 @@ const StudentEcosystem = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -167,10 +167,10 @@ const StudentEcosystem = () => {
                             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             whileHover={{ y: -6, transition: { duration: 0.4 } }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/[0.6] backdrop-blur-2xl rounded-[2rem] p-5 border border-white shadow-[0_12px_40px_rgba(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(37,99,235,0.06)] hover:border-blue-500/20"
+                            className="group relative bg-white/80 backdrop-blur-xl rounded-[2rem] p-4 border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-blue-500/30"
                         >
-                            {/* Scanning Line Animation */}
-                            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none" />
+                            {/* Subtler Scanning Animation */}
+                            <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none" />
 
                             {/* Accent Glow */}
                             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/[0.02] rounded-full blur-3xl group-hover:bg-blue-500/[0.08] transition-all duration-700" />
@@ -182,7 +182,7 @@ const StudentEcosystem = () => {
 
                             <div className="relative z-10 flex flex-col h-full">
                                 {/* Image Container - Enforced 16:9 Aspect Ratio */}
-                                <div className="w-full aspect-video rounded-[1.5rem] overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
+                                <div className="w-full aspect-video rounded-[1.5rem] overflow-hidden mb-4 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
                                     <img
                                         src={feature.image}
                                         alt={feature.title}
@@ -196,7 +196,7 @@ const StudentEcosystem = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-between items-start mb-6">
+                                <div className="flex justify-between items-start mb-4">
                                     <div className="flex flex-col gap-1.5 items-start">
                                         {feature.meta.map((m, i) => (
                                             <span key={i} className="text-[7px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-2 py-0.5 rounded-full border border-slate-100 group-hover:text-blue-500 group-hover:border-blue-100 transition-colors">
@@ -206,9 +206,9 @@ const StudentEcosystem = () => {
                                     </div>
                                 </div>
                                 <p className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
-                                <h3 className="text-xl font-bold text-slate-900 mb-6 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
+                                <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
 
-                                <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
+                                <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
                                     <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-900 transition-colors">System Analysis</span>
                                     <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-[9px] text-slate-400 group-hover:bg-blue-500 group-hover:text-white transition-all transform group-hover:rotate-45">
                                         <FaArrowRight size={8} />

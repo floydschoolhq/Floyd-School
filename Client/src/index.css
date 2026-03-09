@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
-/* 
+/*
   Tailwind v4 Theme Registration.
   We register the color token NAMES with @theme inline.
   The actual values come from CSS custom properties defined in :root / [data-theme].
@@ -13,8 +14,8 @@
   --color-text-muted: var(--text-muted);
   --color-accent-primary: var(--accent-primary);
   --color-accent-secondary: var(--accent-secondary);
-  --font-heading: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 

@@ -7,18 +7,17 @@ import { GlowingCard } from './ui/GlowingCard';
 // --- Visual Components ---
 
 const thinkSkoolMedia = [
-  { type: 'image', url: '/download (1).jpg', tags: ["Live IDE", "Industrial Coding"] },
-  { type: 'image', url: '/download (2).jpg', tags: ["3D Simulations", "Visual Logic"] },
-  { type: 'image', url: '/download (3).jpg', tags: ["AI Benchmarks", "Adaptive Learning"] },
-  { type: 'image', url: '/download (4).jpg', tags: ["Expert Mentorship", "Direct Access"] },
-  { type: 'image', url: '/download (5).jpg', tags: ["Production Apps", "Portfolio Build"] },
-  { type: 'video', url: '/grok-video-0e958d78-170d-42d9-a50e-06942a955b6c.mp4', tags: ["Interactive Demo", "Real-time Ops"] }
+  { type: 'image', url: '/images/interactive/lab_1.jpg', tags: ["Modern Labs", "Hands-on Tech"] },
+  { type: 'image', url: '/images/interactive/lab_2.jpg', tags: ["Expert Mentorship", "Skill Building"] },
+  { type: 'image', url: '/images/interactive/lab_3.jpg', tags: ["Studio Learning", "Interactive IDE"] },
+  { type: 'image', url: '/images/interactive/lab_4.jpg', tags: ["Team Collaboration", "Real Projects"] },
+  { type: 'video', url: '/grok-video-0e958d78-170d-42d9-a50e-06942a955b6c.mp4', tags: ["Live Training", "Deep Mastery"] }
 ];
 
 const traditionalMedia = [
-  { type: 'image', url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800', tags: ["Passive Reading"] },
-  { type: 'image', url: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=800', tags: ["Static Context"] },
-  { type: 'image', url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800', tags: ["Fragmented Loops"] }
+  { type: 'image', url: '/images/passive/govt_school_1.png', tags: ["Passive Reading", "Traditional Setup"] },
+  { type: 'image', url: '/images/passive/govt_school_2.png', tags: ["Static Context", "Lecturing Mode"] },
+  { type: 'image', url: '/images/passive/govt_school_3.png', tags: ["Fragmented Loops", "Limited Interaction"] }
 ];
 
 const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
@@ -34,8 +33,8 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
   const currentMedia = media[currentIndex];
 
   return (
-    <div className={`flex flex-col bg-white rounded-[2rem] p-5 lg:p-6 border ${isTraditional ? 'border-slate-100 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100' : 'border-[#2563EB]/20 shadow-[0_15px_30px_-10px_rgba(37,99,235,0.08)]'} transition-all duration-700 h-full`}>
-      <div className="mb-6 text-left">
+    <div className={`flex flex-col bg-white rounded-[2rem] p-4 lg:p-5 border ${isTraditional ? 'border-slate-100 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100' : 'border-[#2563EB]/20 shadow-[0_15px_30px_-10px_rgba(37,99,235,0.08)]'} transition-all duration-700 h-full`}>
+      <div className="mb-4 text-left">
         <span className={`inline-block px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-3 ${isTraditional ? 'bg-slate-50 text-slate-400 border border-slate-100' : 'bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/10'}`}>
           {subtitle}
         </span>
@@ -44,7 +43,7 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
         </h3>
       </div>
 
-      <div className="relative aspect-video rounded-[2.5rem] overflow-hidden bg-slate-900 shadow-2xl group/media">
+      <div className="relative aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-slate-900 shadow-2xl group/media">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -88,7 +87,7 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
         </div>
       </div>
 
-      <div className="mt-6 flex gap-2 flex-wrap min-h-[32px]">
+      <div className="mt-4 flex gap-2 flex-wrap min-h-[32px]">
         {currentMedia.tags?.map((tag, i) => (
           <span key={i} className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-xl border ${isTraditional ? 'bg-slate-50 text-slate-400 border-slate-100' : 'bg-[#FBEFEF] text-[#2563EB] border-[#F9DFDF]'}`}>
             {tag}
@@ -105,7 +104,7 @@ const Feature = () => {
       {/* Background patterns */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#2563EB_0.5px,transparent_0.5px)] [background-size:32px_32px] opacity-[0.03] pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto px-6">
+      <div className="max-w-[1050px] mx-auto px-6">
         <div className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: 10 }}

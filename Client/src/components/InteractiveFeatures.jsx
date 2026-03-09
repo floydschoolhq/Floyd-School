@@ -38,7 +38,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   const communityFeaturesList = [
     {
       icon: <Sparkles />,
-      title: 'Master & Upskill AI',
+      title: 'Master 23+ AI Tools',
       description: 'Master generative AI and prompt engineering for modern workflows',
       detail: 'Tailored solutions for your specific AI-driven challenges.',
       color: 'from-orange-500 to-red-500'

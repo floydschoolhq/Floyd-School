@@ -41,6 +41,7 @@ import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
 import LearningJourney from './components/LearningJourney.jsx';
 import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
+import Hackathon from './components/Hackathon.jsx';
 
 
 // --- Home Page Component ---
@@ -54,6 +55,7 @@ const HomePage = () => {
                 <OnlineCourseFocus />
                 <Faculty />
                 <LearningJourney />
+                <Hackathon />
                 <ThinkSkoolAdvantage />
                 <IndustrialNetwork />
                 <Masterclasses />

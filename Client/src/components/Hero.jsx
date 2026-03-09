@@ -11,8 +11,8 @@ import api from '../api/axios';
 const HUB_DATA = [
     {
         id: "practical",
-        title: "MASTER & UPSKILL AI",
-        subtitle: "MASTER GENERATIVE TOOLS",
+        title: "Master 23+ AI Tools",
+        subtitle: "Master Generative Tools",
         icon: Sparkles,
         tag: "01",
         color: "blue",
@@ -21,8 +21,8 @@ const HUB_DATA = [
     },
     {
         id: "live",
-        title: "LIVE SESSIONS",
-        subtitle: "REAL-TIME LEARNING",
+        title: "Live Sessions",
+        subtitle: "Real-time Learning",
         icon: Video,
         color: "blue",
         detail: "Join interactive daily live classes with industry veterans. Get your doubts cleared instantly and participate in collaborative coding sessions that accelerate growth.",
@@ -30,8 +30,8 @@ const HUB_DATA = [
     },
     {
         id: "projects",
-        title: "BUILD REAL APPS",
-        subtitle: "LIVE PROJECT EXPERIENCE",
+        title: "Build Real Apps",
+        subtitle: "Production Scale Projects",
         icon: Cpu,
         color: "blue",
         detail: "Work on actual industry projects that people use. Build everything from fintech platforms to AI systems and see your work go live.",
@@ -39,8 +39,8 @@ const HUB_DATA = [
     },
     {
         id: "doubts",
-        title: "1:1 DOUBT SOLVING",
-        subtitle: "PERSONALIZED SUPPORT",
+        title: "1:1 Doubt Solving",
+        subtitle: "Personalized Support",
         icon: MessageSquare,
         color: "blue",
         detail: "Never get stuck again. Our expert mentors provide one-on-one sessions to resolve your technical hurdles, refine your logic, and ensure you keep moving forward with confidence.",
@@ -141,35 +141,34 @@ const TrustIndicator = () => {
     const trustIcons = [Terminal, Cpu, Code2];
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 15 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
-            className="flex items-center gap-4 mb-8 px-5 py-3 rounded-[2rem] bg-white/60 border border-blue-200/50 backdrop-blur-xl w-fit mx-auto md:mx-0 shadow-lg shadow-blue-500/5 hover:border-blue-300/50 transition-colors group"
+            className="flex items-center gap-5 mb-10 px-6 py-3.5 rounded-full bg-white/90 border border-slate-200/60 backdrop-blur-xl w-fit mx-auto md:mx-0 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-500 group"
         >
-            <div className="flex -space-x-3">
+            <div className="flex -space-x-3.5">
                 {trustIcons.map((Icon, i) => (
                     <div
                         key={i}
-                        className="w-12 h-12 rounded-full border-2 border-white bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md relative overflow-hidden group-hover:scale-110 transition-transform duration-300"
+                        className="w-11 h-11 rounded-full border-[2.5px] border-white bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white shadow-sm relative overflow-hidden group-hover:scale-110 transition-transform duration-500"
                         style={{ transitionDelay: `${i * 50}ms` }}
                     >
-                        <div className="absolute inset-0 bg-white/10" />
-                        <Icon size={18} strokeWidth={2.5} />
+                        <div className="absolute inset-0 bg-white/5" />
+                        <Icon size={16} strokeWidth={2} />
                     </div>
                 ))}
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-[12px] font-bold text-white shadow-md group-hover:scale-110 transition-transform duration-300" style={{ transitionDelay: '200ms' }}>
+                <div className="w-11 h-11 rounded-full border-[2.5px] border-white bg-slate-950 flex items-center justify-center text-[11px] font-black text-white shadow-sm group-hover:scale-110 transition-transform duration-500" style={{ transitionDelay: '150ms' }}>
                     +
                 </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-0.5">
                 <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold text-slate-900 tracking-tight">
-                        <AnimatedCounter value={100} />+
+                    <span className="text-lg font-extrabold text-slate-900 tracking-[-0.03em] leading-none">
+                        <AnimatedCounter value={100} />+ <span className="font-medium text-slate-400 ml-0.5">Learners & Parents</span>
                     </span>
-                    <span className="text-[14px] font-medium text-slate-600 tracking-tight">Learners & Parents</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                     <div className="flex gap-0.5">
                         {[1, 2, 3, 4, 5].map((s) => (
                             <motion.svg
@@ -177,14 +176,14 @@ const TrustIndicator = () => {
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.5 + (s * 0.1) }}
-                                className="w-3.5 h-3.5 text-amber-500 fill-current"
+                                className="w-2.5 h-2.5 text-amber-500 fill-current"
                                 viewBox="0 0 20 20"
                             >
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </motion.svg>
                         ))}
                     </div>
-                    <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest">Trusted Experience</span>
+                    <span className="text-[9px] font-bold text-blue-600 uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100 transition-opacity">Trusted Experience</span>
                 </div>
             </div>
         </motion.div>
@@ -314,14 +313,14 @@ const Hero = () => {
                                 transition={{ type: "spring", damping: 20, stiffness: 80 }}
                                 whileHover={{ y: -6, scale: 1.01 }}
                                 onClick={() => setSelectedHubItem(HUB_DATA[0])}
-                                className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                className="col-span-2 relative p-4 md:p-5 rounded-[1.5rem] bg-slate-950/95 backdrop-blur-3xl border border-white/5 group-hover:border-blue-500/20 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                             >
                                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent group-hover:via-blue-400/40 transition-all duration-500" />
                                 <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
                                 <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[60px] transition-all duration-700" />
-                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
-                                    <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-none mb-3">{HUB_DATA[0].title}</h3>
-                                    <span className="text-[15px] font-medium text-white/50 tracking-tight">{HUB_DATA[0].subtitle}</span>
+                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-2">
+                                    <h3 className="text-3xl md:text-5xl font-extrabold text-white tracking-[-0.04em] leading-none mb-4">{HUB_DATA[0].title}</h3>
+                                    <span className="text-[14px] font-semibold text-white/40 uppercase tracking-[0.3em]">{HUB_DATA[0].subtitle}</span>
 
                                     <div className="absolute top-2 right-6 text-5xl font-bold text-white/[0.03] tracking-tighter hidden md:block select-none leading-none">
                                         {HUB_DATA[0].tag}
@@ -341,13 +340,13 @@ const Hero = () => {
                                         whileHover={{ y: -6, scale: 1.02 }}
                                         onClick={() => setSelectedHubItem(item)}
                                         transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
-                                        className="relative p-3 rounded-[1.0rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                        className="relative p-4 rounded-[1.2rem] bg-slate-950/95 backdrop-blur-3xl border border-white/5 group-hover:border-blue-500/20 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
                                     >
                                         <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
                                         <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[40px] transition-all duration-700" />
-                                        <div className="relative z-10 flex flex-col items-center text-center py-1">
-                                            <h4 className="text-[20px] font-bold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                            <span className="text-[13px] font-medium text-white/50 tracking-tight">{item.subtitle}</span>
+                                        <div className="relative z-10 flex flex-col items-center text-center py-2">
+                                            <h4 className="text-[18px] font-bold text-white tracking-tight leading-tight mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <span className="text-[11px] font-semibold text-white/30 uppercase tracking-[0.2em]">{item.subtitle}</span>
                                         </div>
                                     </motion.div>
                                 );
@@ -361,24 +360,24 @@ const Hero = () => {
                                 transition={{ delay: 0.3, type: "spring", damping: 20 }}
                                 whileHover={{ y: -6, scale: 1.01 }}
                                 onClick={() => setSelectedHubItem(HUB_DATA[3])}
-                                className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                className="col-span-2 relative p-4 md:p-5 rounded-[1.5rem] bg-slate-950/95 backdrop-blur-3xl border border-white/5 group-hover:border-blue-500/20 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
                             >
                                 <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                                 <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
-                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
-                                    <h3 className="text-[22px] md:text-3xl font-semibold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors uppercase">{HUB_DATA[3].title}</h3>
-                                    <span className="text-[14px] font-medium text-white/40 tracking-tight">{HUB_DATA[3].subtitle}</span>
+                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-2">
+                                    <h3 className="text-[20px] md:text-2xl font-bold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors uppercase">{HUB_DATA[3].title}</h3>
+                                    <span className="text-[12px] font-semibold text-white/30 tracking-[0.1em] uppercase">{HUB_DATA[3].subtitle}</span>
 
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/10 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">
-                                        <ArrowRight size={24} />
+                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">
+                                        <ArrowRight size={20} />
                                     </div>
                                 </div>
                             </motion.div>
 
                             {/* CTA Bento Tile */}
-                            <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-slate-900 border border-blue-500/20 shadow-2xl flex items-center gap-2">
-                                <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-blue-600 text-white font-bold text-[14px] tracking-tight hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-500/20">Enroll Now</button>
-                                <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-slate-800 text-white/80 font-semibold text-[13px] tracking-tight hover:bg-slate-700 border border-blue-500/10 transition-all active:scale-95">Explore</button>
+                            <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-slate-900/50 border border-blue-500/10 shadow-xl flex items-center gap-2">
+                                <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-blue-600 text-white font-bold text-[13px] uppercase tracking-[0.15em] hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-500/20">Enroll Now</button>
+                                <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-slate-950/40 text-white/60 font-bold text-[12px] uppercase tracking-[0.15em] hover:bg-slate-900/60 border border-white/5 transition-all active:scale-95">Explore</button>
                             </motion.div>
                         </div>
                     </div>
@@ -413,17 +412,17 @@ const Hero = () => {
                                         <div className="mb-8 relative z-10">
                                             <div className="flex items-center gap-3 mb-2">
                                                 <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
-                                                <h3 className="text-2xl font-semibold text-white tracking-tight uppercase">Start Your Journey</h3>
+                                                <h3 className="text-2xl font-bold text-white tracking-tight">Start Your Journey</h3>
                                             </div>
-                                            <p className="text-white/40 text-[14px] font-medium tracking-tight pl-5">Begin your learning experience</p>
+                                            <p className="text-white/30 text-[14px] font-semibold tracking-tight pl-5">Begin your learning experience</p>
                                         </div>
                                         <form className="space-y-6 relative z-10" onSubmit={handleFormSubmit}>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {["Class 8-9", "Class 9-10", "Class 11-12", "College"].map((option, idx) => (
-                                                    <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-3.5 px-1 rounded-xl text-[14px] font-medium tracking-tight transition-all ${selectedExperience === option ? 'bg-white text-slate-950' : 'bg-white/5 text-white/40 border border-white/5 hover:border-white/10'}`}>{option}</button>
+                                                    <button key={idx} type="button" onClick={() => setSelectedExperience(option)} className={`py-3.5 px-1 rounded-xl text-[13px] font-bold uppercase tracking-[0.1em] transition-all ${selectedExperience === option ? 'bg-white text-slate-950 font-extrabold' : 'bg-white/5 text-white/30 border border-white/5 hover:border-white/10'}`}>{option}</button>
                                                 ))}
                                             </div>
-                                            <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[15px] p-4 rounded-xl bg-white/5 border border-white/5 text-white appearance-none focus:outline-none focus:bg-white/10 font-medium tracking-tight cursor-pointer">
+                                            <select name="topic" value={formData.topic} onChange={handleInputChange} required className="w-full text-[14px] p-4 rounded-xl bg-white/5 border border-white/5 text-white/90 appearance-none focus:outline-none focus:bg-white/10 font-semibold tracking-tight cursor-pointer">
                                                 <option value="" className="bg-slate-900">Select Track</option>
                                                 <option value="Full Stack" className="bg-slate-900">Full Stack Engineering</option>
                                                 <option value="AI & ML" className="bg-slate-900">AI & Machine Learning</option>
@@ -431,12 +430,12 @@ const Hero = () => {
                                                 <option value="Robotics" className="bg-slate-900">Robotics & IoT</option>
                                             </select>
                                             <div className="space-y-4">
-                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[14px] p-4 rounded-xl bg-white/5 border border-white/5 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-medium" />
-                                                <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[14px] p-4 rounded-xl bg-white/5 border border-white/5 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-medium" />
-                                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[14px] p-4 rounded-xl bg-white/5 border border-white/5 text-white focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-medium" />
+                                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Full Name" className="w-full text-[13px] p-4 rounded-xl bg-white/5 border border-white/5 text-white/90 focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-semibold tracking-tight" />
+                                                <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="Phone Number" className="w-full text-[13px] p-4 rounded-xl bg-white/5 border border-white/5 text-white/90 focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-semibold tracking-tight" />
+                                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email Address" className="w-full text-[13px] p-4 rounded-xl bg-white/5 border border-white/5 text-white/90 focus:outline-none focus:bg-white/10 placeholder:text-white/20 font-semibold tracking-tight" />
                                             </div>
-                                            <motion.button type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] bg-white hover:bg-slate-100 py-4 shadow-3xl shadow-white/10">
-                                                <div className="text-slate-950 font-semibold text-sm tracking-[0.2em] flex items-center justify-center gap-2 uppercase">
+                                            <motion.button type="submit" disabled={status === 'loading'} className="w-full rounded-[2.5rem] bg-white hover:bg-slate-100 py-4 shadow-3xl shadow-white/10 active:scale-[0.98] transition-all">
+                                                <div className="text-slate-950 font-bold text-[13px] tracking-[0.2em] flex items-center justify-center gap-2 uppercase">
                                                     {status === 'loading' ? <div className="w-4 h-4 border-2 border-slate-950/20 border-t-slate-950 rounded-full animate-spin" /> : <>Get Started <ArrowRight size={16} /></>}
                                                 </div>
                                             </motion.button>
