@@ -85,15 +85,15 @@ const ThinkSkoolAdvantage = () => {
 
             <div className="max-w-5xl mx-auto px-4 relative z-10">
                 {/* Heading */}
-                <div className="text-center mb-12">
-                    <motion.p
+                <div className="text-center mb-16">
+                    <motion.h2
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-blue-400 font-bold tracking-tight text-[14px] mb-3"
+                        className="text-white text-4xl md:text-5xl font-bold tracking-tight mb-3"
                     >
-                        The ThinkSkool Advantage
-                    </motion.p>
+                        Why Us
+                    </motion.h2>
                 </div>
 
                 {/* Comparison Table */}

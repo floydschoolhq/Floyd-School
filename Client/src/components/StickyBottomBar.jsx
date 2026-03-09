@@ -9,8 +9,18 @@ const StickyBottomBar = () => {
     const [isHovered, setIsHovered] = useState(false);
     const hideTimeoutRef = useRef(null);
 
+    const handleDismiss = () => {
+        setIsVisible(false);
+        sessionStorage.setItem('sticky_bar_dismissed', 'true');
+    };
+
     useEffect(() => {
         const handleScroll = () => {
+            if (sessionStorage.getItem('sticky_bar_dismissed') === 'true') {
+                setIsVisible(false);
+                return;
+            }
+
             // Show bar only after scrolling past the Hero section (roughly 600px)
             if (window.scrollY > 600) {
                 setIsVisible(true);
@@ -28,10 +38,6 @@ const StickyBottomBar = () => {
             if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
         };
     }, []);
-
-    const handleDismiss = () => {
-        setIsVisible(false);
-    };
 
     return (
         <AnimatePresence>

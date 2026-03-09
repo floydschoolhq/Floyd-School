@@ -15,7 +15,7 @@ const FeatureRow = ({ feature, accent, isLast, align = 'left' }) => {
 
                 <div className="flex-1">
                     {/* Main Category Name */}
-                    <h4 className={`text-lg md:text-xl font-black tracking-tight uppercase transition-colors duration-500 text-slate-100/40 group-hover:text-white drop-shadow-sm`}>
+                    <h4 className={`text-lg md:text-xl font-bold tracking-tight transition-colors duration-500 text-slate-100/40 group-hover:text-white drop-shadow-sm`}>
                         {feature.name}
                     </h4>
                 </div>
@@ -116,7 +116,7 @@ const DualModelSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none"
+                        className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-none"
                     >
                         Two <span className="text-[#FF7A00]">Paths</span>
                     </motion.h2>
@@ -150,7 +150,7 @@ const DualModelSection = () => {
                                     </span>
                                 </div>
 
-                                <h3 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-2">
+                                <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-2">
                                     {model.title}
                                 </h3>
                                 <p className={`text-sm font-bold uppercase tracking-[0.4em] mb-12 ${model.accent === 'blue' ? 'text-blue-400/60' : 'text-indigo-400/60'}`}>
@@ -174,7 +174,7 @@ const DualModelSection = () => {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => navigate(model.path)}
-                                    className={`relative group px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.3em] transition-all duration-300 overflow-hidden
+                                    className={`relative group px-10 py-5 rounded-2xl text-sm font-bold uppercase tracking-[0.3em] transition-all duration-300 overflow-hidden
                                         ${model.accent === 'blue'
                                             ? 'bg-blue-600 text-white shadow-[0_10px_40px_rgba(37,99,235,0.3)]'
                                             : 'bg-indigo-600 text-white shadow-[0_10px_40px_rgba(79,70,229,0.3)]'

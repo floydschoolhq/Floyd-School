@@ -8,6 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/common/SectionHeader';
 import LeadFormModal from '../components/LeadFormModal';
+import PremiumNavbar from '../components/PremiumNavbar';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
 
 const iconMap = {
@@ -34,7 +35,7 @@ const CourseCard = ({ course, onClick }) => {
                 <Icon size={24} className="text-blue-600 group-hover:text-white transition-colors" />
             </div>
             <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">{course.title}</h3>
+                <h3 className="text-xl font-bold text-slate-800 tracking-tight">{course.title}</h3>
             </div>
             <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">
                 {course.description}
@@ -42,7 +43,7 @@ const CourseCard = ({ course, onClick }) => {
 
             <div className="flex flex-wrap gap-2 mb-8">
                 {course.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-blue-50 rounded-full text-[10px] font-black text-blue-600 uppercase tracking-widest border border-blue-100">
+                    <span key={tag} className="px-3 py-1 bg-blue-50 rounded-full text-[9px] font-bold text-blue-600 uppercase tracking-widest border border-blue-100">
                         {tag}
                     </span>
                 ))}
@@ -69,9 +70,9 @@ const PricingTier = ({ tier, onSelect }) => {
             className={`p-8 rounded-[2.5rem] bg-white border ${tier.recommended ? 'border-blue-500 ring-4 ring-blue-500/5 shadow-2xl scale-105' : 'border-slate-100 shadow-xl'} relative overflow-hidden`}
         >
             {tier.recommended && (
-                <div className="absolute top-0 right-0 py-2 px-6 bg-blue-500 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-bl-2xl">Recommended</div>
+                <div className="absolute top-0 right-0 py-2 px-6 bg-blue-500 text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-bl-2xl">Recommended</div>
             )}
-            <h3 className="text-lg font-black text-slate-700 uppercase tracking-widest mb-2">{tier.name}</h3>
+            <h3 className="text-base font-bold text-slate-700 uppercase tracking-widest mb-2">{tier.name}</h3>
             <div className="flex items-baseline gap-1 mb-8">
                 <span className="text-4xl font-black text-slate-900">${tier.price}</span>
                 <span className="text-slate-400 text-sm font-bold uppercase tracking-widest">/Batch</span>
@@ -160,18 +161,18 @@ const OnlineProgram = () => {
 
             <div className="relative z-10">
                 {/* Hero Section */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-48 text-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32 text-center">
                     <motion.div
-                        className="inline-flex items-center gap-3 px-6 py-2 bg-blue-50 rounded-full mb-10 group cursor-pointer"
+                        className="inline-flex items-center gap-3 px-6 py-2 bg-blue-50 rounded-full mb-6 group cursor-pointer"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                     >
                         <div className="w-2.5 h-2.5 rounded-full bg-blue-500 group-hover:animate-ping" />
-                        <span className="text-[11px] font-black uppercase tracking-[0.4em] text-blue-500/80 group-hover:text-blue-500 transition-colors">Deep-Tech Specialization</span>
+                        <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-blue-500/80 group-hover:text-blue-500 transition-colors">Deep-Tech Specialization</span>
                     </motion.div>
                     <motion.h1
-                        className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-slate-900 mb-8"
+                        className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-900 mb-6 tracking-tight leading-[0.95]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
@@ -179,7 +180,7 @@ const OnlineProgram = () => {
                         Elite Online <br /> Engineering Batches.
                     </motion.h1>
                     <motion.p
-                        className="max-w-xl mx-auto text-lg md:text-xl text-slate-500 font-bold uppercase tracking-tight mb-12"
+                        className="max-w-xl mx-auto text-base md:text-lg text-slate-500 font-medium tracking-tight mb-12"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
@@ -203,8 +204,8 @@ const OnlineProgram = () => {
                 <div id="explore-programs" className="max-w-[1400px] mx-auto px-4 md:px-12">
                     <div className="flex items-end justify-between mb-16 px-4">
                         <div>
-                            <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Catalogue 2024</span>
-                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Academic Hub</h2>
+                            <span className="text-[11px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-4 block">Catalogue 2024</span>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight">Academic Hub</h2>
                         </div>
                     </div>
 
@@ -241,70 +242,56 @@ const OnlineProgram = () => {
                 <div className="py-32">
                     <div className="max-w-[1400px] mx-auto px-4 md:px-12">
                         <div className="text-center mb-24">
-                            <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Industry Leaders</span>
-                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Expert Mentorship</h2>
+                            <span className="text-[11px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-4 block">Industry Leaders</span>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight">Expert Mentorship</h2>
                         </div>
 
-                        <motion.div
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, margin: "-100px" }}
-                            variants={{
-                                hidden: { opacity: 0 },
-                                show: {
-                                    opacity: 1,
-                                    transition: {
-                                        staggerChildren: 0.1
-                                    }
-                                }
-                            }}
-                            className="grid grid-cols-1 md:grid-cols-3 gap-12"
-                        >
+                        <div className="max-w-5xl mx-auto">
                             <motion.div
-                                className="bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl relative overflow-hidden group"
+                                className="bg-white p-8 md:p-16 rounded-[3rem] border border-slate-100 shadow-2xl relative overflow-hidden group"
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                             >
                                 <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 blur-[100px] -mr-40 -mt-40 group-hover:bg-blue-500/10 transition-all duration-700" />
-                                <div className="grid md:grid-cols-2 gap-16 items-center">
+                                <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
                                     <div className="relative">
-                                        <div className="w-24 h-24 bg-blue-50 rounded-3xl flex items-center justify-center mb-8">
-                                            <Cpu size={40} className="text-blue-600" />
+                                        <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8">
+                                            <Cpu size={28} className="text-blue-600" />
                                         </div>
-                                        <h3 className="text-4xl md:text-5xl font-black text-slate-800 uppercase tracking-tight mb-6">Expert Mentorship</h3>
-                                        <p className="text-lg text-slate-500 font-bold uppercase tracking-tight leading-relaxed mb-8">
-                                            Learn directly from architects who build the infrastructure of modern tech companies. High-density knowledge transfer protocols.
+                                        <h3 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight mb-6">Expert Mentorship</h3>
+                                        <p className="text-base text-slate-500 font-medium tracking-tight leading-relaxed mb-10">
+                                            Learn directly from architects who build the infrastructure of modern tech companies. High-density knowledge transfer protocols designed for industrial-grade engineering mastery.
                                         </p>
                                         <button
                                             onClick={openLeadModal}
-                                            className="px-8 py-4 bg-blue-600 text-white rounded-full font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
+                                            className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-blue-700 transition-all shadow-xl shadow-blue-500/20"
                                         >
                                             Meet Mentors
                                         </button>
                                     </div>
                                     <div className="relative">
-                                        <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-slate-100 border border-slate-200">
+                                        <div className="aspect-[4/3] md:aspect-square rounded-[2rem] overflow-hidden bg-slate-100 border border-slate-200">
                                             <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2835&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mentor" className="w-full h-full object-cover" />
                                         </div>
-                                        <div className="absolute -bottom-8 -left-8 p-4 bg-white rounded-3xl shadow-xl border border-slate-100 flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <Star size={18} className="text-blue-500" />
+                                        <div className="absolute -bottom-6 -left-6 p-4 bg-white rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <Star size={14} className="text-blue-500" />
                                             </div>
-                                            <span className="text-sm font-black text-slate-800 uppercase tracking-widest">5.0 Rating</span>
+                                            <span className="text-[10px] font-bold text-slate-800 uppercase tracking-widest">5.0 Expert Rating</span>
                                         </div>
                                     </div>
                                 </div>
                             </motion.div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
 
                 {/* Pricing Section */}
                 <div id="pricing" className="max-w-[1400px] mx-auto px-4 md:px-12 py-32">
                     <div className="text-center mb-20">
-                        <span className="text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] mb-4 block">Institutional Access</span>
-                        <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter">Tuition Structure</h2>
+                        <span className="text-[11px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-4 block">Institutional Access</span>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight">Tuition Structure</h2>
                     </div>
 
                     <motion.div
@@ -336,7 +323,7 @@ const OnlineProgram = () => {
                         </div>
                         <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                             <div>
-                                <h3 className="text-3xl md:text-5xl font-black text-slate-900 uppercase mb-8 tracking-tighter">Flexible <br /><span className="text-blue-600 border-b-4 border-blue-200 pb-1">Learning Cycles.</span></h3>
+                                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-8 tracking-tight leading-tight">Flexible <br /><span className="text-blue-600 border-b-4 border-blue-200 pb-1">Learning Cycles.</span></h3>
                                 <div className="space-y-6">
                                     <div className="flex gap-6">
                                         <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 border border-blue-200">
@@ -387,7 +374,7 @@ const OnlineProgram = () => {
                         </svg>
                     </div>
                     <div className="max-w-4xl mx-auto px-4 relative z-10">
-                        <h2 className="text-4xl md:text-6xl font-black text-slate-950 mb-10 tracking-tighter uppercase">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-950 mb-10 tracking-tight leading-tight">
                             Start Your Industrial <br /> Engineering Journey.
                         </h2>
                         <button

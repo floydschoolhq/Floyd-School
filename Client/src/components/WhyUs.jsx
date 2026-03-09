@@ -14,21 +14,19 @@ const WhyUs = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-24">
+                <div className="text-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-5"
                     >
-                        <span className="text-[14px] font-medium text-[#2563EB] tracking-tight">Transformation Path</span>
+                        <span className="text-[13px] font-black text-[#2563EB] tracking-wider uppercase">Master 15+ Advanced AI Tools</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-none mb-6">
-                        From <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] to-blue-400">Classroom</span> to <span className="text-white">Career</span>
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
+                        <span className="text-blue-500">50+ Industrial Projects</span> Powering Professional Engineering Mastery
                     </h2>
-                    <p className="text-slate-500 font-medium tracking-tight text-[15px] max-w-2xl mx-auto leading-relaxed">
-                        A structured industrial trajectory transforming the academic core into professional engineering excellence.
-                    </p>
+                    <div className="w-12 h-1 bg-blue-600/30 mx-auto rounded-full" />
                 </div>
 
                 <div className="relative mt-20">
@@ -72,8 +70,8 @@ const WhyUs = () => {
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
                                             <div className="glass-shine-effect" />
-                                            <h4 className="font-black text-white text-lg uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">{item.desc}</p>
+                                            <h4 className="font-bold text-white text-lg mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <p className="text-slate-500 text-[11px] font-medium uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">
@@ -124,8 +122,8 @@ const WhyUs = () => {
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
                                             <div className="glass-shine-effect" />
-                                            <h4 className="font-black text-white text-lg uppercase mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">{item.desc}</p>
+                                            <h4 className="font-bold text-white text-lg mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <p className="text-slate-500 text-[11px] font-medium uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">

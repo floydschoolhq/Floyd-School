@@ -149,7 +149,7 @@ const StudentEcosystem = () => {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter uppercase leading-none"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 tracking-tight leading-tight"
                     >
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-blue-500">The ThinkSkool Edge.</span>
                     </motion.h2>
@@ -205,8 +205,8 @@ const StudentEcosystem = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <p className="text-[8px] font-black text-blue-500 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
-                                <h3 className="text-xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
+                                <p className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-6 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
 
                                 <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
                                     <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-900 transition-colors">System Analysis</span>
@@ -267,7 +267,7 @@ const StudentEcosystem = () => {
                                             <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-2">
                                                 {selectedFeature.miniTitle}
                                             </p>
-                                            <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+                                            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
                                                 {selectedFeature.title}
                                             </h3>
                                         </div>

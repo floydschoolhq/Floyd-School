@@ -56,9 +56,9 @@ const ComparisonSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header */}
-                <div className="text-center mb-10">
-                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] mb-3">Performance Metrics</p>
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tighter uppercase leading-none">
+                <div className="text-center mb-16">
+                    <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] mb-4">Performance Metrics</p>
+                    <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                         Conventional vs <span className="text-[#2563EB]">Future Ready</span>
                     </h2>
                 </div>
@@ -132,7 +132,7 @@ const ComparisonSection = () => {
                                     ></motion.div>
                                     <p className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest mb-2">{step.stage}</p>
                                     <div className="flex items-center gap-4 mb-2">
-                                        <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-tight">{step.thinkskool.title}</h3>
+                                        <h3 className="text-lg font-bold text-slate-900 tracking-tight">{step.thinkskool.title}</h3>
                                         <div className="w-9 h-9 rounded-xl bg-slate-950 flex items-center justify-center group-hover:bg-[#2563EB] group-hover:text-white border border-white/5 transition-colors duration-300">
                                             {React.cloneElement(step.thinkskool.icon, { size: 18 })}
                                         </div>
@@ -157,7 +157,7 @@ const ComparisonSection = () => {
                     className="mt-8 bg-white rounded-[2rem] p-8 text-center relative overflow-hidden shadow-sm border border-[#FBEFEF]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <h3 className="text-2xl font-extrabold text-slate-900 mb-4 relative z-10 uppercase tracking-tight">
+                    <h3 className="text-3xl font-bold text-slate-900 mb-6 relative z-10 tracking-tight">
                         Transforming the <span className="text-[#2563EB]">Learning Identity</span>
                     </h3>
                     <p className="text-slate-500 text-sm max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">

@@ -21,7 +21,7 @@ const OnlineCourseFocus = () => {
             <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[80px] pointer-events-none opacity-50" />
             <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[60px] pointer-events-none opacity-50" />
 
-            <div className="max-w-[1400px] mx-auto px-4 md:px-6 relative z-10">
+            <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-6">
                     <motion.h2
@@ -29,7 +29,7 @@ const OnlineCourseFocus = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ type: "spring", damping: 15, stiffness: 60 }}
-                        className="text-4xl md:text-6xl font-black tracking-tight uppercase leading-none"
+                        className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-none"
                     >
                         OUR BATCHES
                     </motion.h2>

@@ -16,59 +16,59 @@ import {
 
 const JOURNEY_STEPS = [
     {
-        id: "infra",
-        icon: Cloud,
+        id: "demo-bootcamp",
+        icon: Video,
         tag: "Phase 01",
-        title: "Smart Infra",
-        description: "High-tech virtual labs. Zero lag. 4K stream.",
+        title: "Demo Bootcamp",
+        description: "Experience our elite ecosystem with a high-impact intro.",
         features: [
-            "4K Video",
-            "Auto-Labs",
-            "Live Peer Coding"
+            "Live Interaction",
+            "Tech Preview",
+            "System Audit"
         ],
-        highlight: "Modern Setup",
+        highlight: "Elite Entry",
         color: "blue"
     },
     {
-        id: "teaching",
-        icon: Zap,
+        id: "course-selection",
+        icon: Target,
         tag: "Phase 02",
-        title: "Real Builds",
-        description: "Stop watching. Start building. Production-scale.",
+        title: "Course Selection",
+        description: "Personalized pathways selected by students for their goals.",
         features: [
-            "100% Projects",
-            "Raw Tech",
-            "Industrial Flow"
+            "Aptitude Map",
+            "Goal Alignment",
+            "Expert Guide"
         ],
-        highlight: "Expert Led",
+        highlight: "Smart Choice",
         color: "indigo"
     },
     {
-        id: "doubts",
+        id: "live-sessions",
         icon: MessageSquare,
         tag: "Phase 03",
-        title: "1:1 Support",
-        description: "Never stay stuck. Weekly deep-dives. Expert help.",
+        title: "Live Sessions",
+        description: "Interactive expert-led sessions building production-grade logic.",
         features: [
-            "1:1 Sessions",
-            "Sat Solves",
-            "Instant Chat"
+            "Real-time Coding",
+            "Doubt Clearance",
+            "Architectural Depth"
         ],
-        highlight: "Personal Care",
+        highlight: "Expert Led",
         color: "emerald"
     },
     {
-        id: "ai-worth",
-        icon: BrainCircuit,
+        id: "real-world-projects",
+        icon: Monitor,
         tag: "Phase 04",
-        title: "AI Native",
-        description: "Master AI workflows. Prompt like an architect.",
+        title: "Real World Projects",
+        description: "Production implementation and industrial project learning.",
         features: [
-            "AI Workflows",
-            "Prompt Eng",
-            "Native Logic"
+            "Industrial Flow",
+            "Real-world APIs",
+            "Career Verified"
         ],
-        highlight: "AI Focused",
+        highlight: "Industrial",
         color: "blue"
     }
 ];
@@ -78,8 +78,8 @@ const JourneyCard = ({ step, idx, isEven }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    const rotateX = useTransform(y, [-100, 100], [10, -10]);
-    const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+    const rotateX = useTransform(y, [-100, 100], [8, -8]);
+    const rotateY = useTransform(x, [-100, 100], [-8, 8]);
 
     function handleMouseMove(event) {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -95,78 +95,78 @@ const JourneyCard = ({ step, idx, isEven }) => {
     }
 
     return (
-        <div className="relative flex items-center justify-center lg:justify-start lg:odd:justify-start lg:even:justify-end py-4">
+        <div className="relative flex items-center justify-center lg:justify-start lg:odd:justify-start lg:even:justify-end py-6">
             <motion.div
-                initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+                initial={{ opacity: 0, x: isEven ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                style={{ rotateX, rotateY, perspective: 1000 }}
+                style={{ rotateX, rotateY, perspective: 1200 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => navigate('/online-program')}
-                className="w-full lg:w-[42%] relative z-10 cursor-pointer"
+                className="w-full lg:w-[45%] relative z-10 cursor-pointer"
             >
                 <div
-                    className="p-[1.5px] bg-gradient-to-br from-white/10 to-transparent hover:from-blue-500/30 transition-all duration-500 group relative overflow-hidden rounded-[2.5rem]"
+                    className="p-[1px] bg-gradient-to-br from-white/20 to-transparent hover:from-blue-500/40 transition-all duration-700 group relative overflow-hidden rounded-[2rem]"
                 >
                     {/* Spotlight Glow */}
                     <motion.div
-                        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                         style={{
                             background: useTransform(
                                 [x, y],
-                                ([latestX, latestY]) => `radial-gradient(400px circle at ${latestX + 200}px ${latestY + 150}px, rgba(37, 99, 235, 0.15), transparent)`
+                                ([latestX, latestY]) => `radial-gradient(500px circle at ${latestX + 250}px ${latestY + 180}px, rgba(37, 99, 235, 0.12), transparent)`
                             )
                         }}
                     />
 
                     <div
-                        className="bg-slate-900/90 backdrop-blur-xl p-4 md:p-5 border border-white/5 group-hover:border-blue-500/40 transition-all shadow-lg relative z-10 rounded-[2.5rem]"
+                        className="bg-slate-900/60 backdrop-blur-3xl p-6 md:p-8 border border-white/10 group-hover:border-blue-500/30 transition-all duration-500 shadow-2xl relative z-10 rounded-[2rem]"
                     >
-                        <div className="flex flex-col items-center text-center mb-3">
-                            <div>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none block mb-2">{step.tag}</span>
-                                <h3 className="text-2xl font-black text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors leading-tight">
-                                    {step.title}
-                                </h3>
-                            </div>
+                        <div className="flex flex-col items-center text-center mb-4">
+                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mb-3 block px-3 py-1 bg-blue-500/5 rounded-full border border-blue-500/10">
+                                {step.tag}
+                            </span>
+                            <h3 className="text-3xl font-bold text-white tracking-tight group-hover:text-blue-400 transition-colors duration-500">
+                                {step.title}
+                            </h3>
                         </div>
 
-                        <p className="text-slate-400 text-sm font-bold uppercase tracking-tight mb-3 opacity-80 text-center">
+                        <p className="text-slate-400 text-[15px] font-medium leading-relaxed mb-6 text-center opacity-90">
                             {step.description}
                         </p>
 
-                        <div className="flex flex-wrap justify-center gap-2 mb-4">
+                        <div className="flex flex-wrap justify-center gap-2.5 mb-6">
                             {step.features.map((feature, fIdx) => (
                                 <motion.span
                                     key={fIdx}
-                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(37, 99, 235, 0.2)" }}
-                                    className="px-3 py-1 bg-white/5 rounded-lg text-[9px] font-black text-slate-300 uppercase tracking-widest border border-white/5 transition-colors"
+                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(37, 99, 235, 0.15)" }}
+                                    className="px-4 py-1.5 bg-white/5 rounded-xl text-[10px] font-bold text-slate-300 uppercase tracking-widest border border-white/5 transition-all"
                                 >
                                     {feature}
                                 </motion.span>
                             ))}
                         </div>
 
-                        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                            <span className="text-[10px] font-black text-blue-500/60 uppercase tracking-widest italic">{step.highlight}</span>
+                        <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                            <span className="text-[11px] font-bold text-blue-500/50 uppercase tracking-widest">{step.highlight}</span>
                             <motion.div
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ repeat: Infinity, duration: 1.5 }}
-                                className="text-slate-600 group-hover:text-blue-400"
+                                animate={{ x: [0, 4, 0] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                className="text-slate-500 group-hover:text-blue-400 transition-colors"
                             >
-                                <ArrowRight size={16} />
+                                <ArrowRight size={18} />
                             </motion.div>
                         </div>
                     </div>
                 </div>
 
                 {/* Timeline Node Connector */}
-                <div className={`absolute top-1/2 -translate-y-1/2 hidden lg:flex items-center ${isEven ? 'left-full ml-3' : 'right-full mr-3'}`}>
-                    <div className="w-6 h-px bg-white/10 group-hover:bg-blue-500/50 transition-colors" />
+                <div className={`absolute top-1/2 -translate-y-1/2 hidden lg:flex items-center ${isEven ? 'left-full ml-4' : 'right-full mr-4'}`}>
+                    <div className="w-8 h-px bg-white/10 group-hover:bg-blue-500/40 transition-colors duration-500" />
                     <motion.div
-                        whileHover={{ scale: 1.5 }}
-                        className="w-3 h-3 rounded-full bg-slate-950 border-2 border-slate-800 transition-all duration-300 group-hover:border-blue-400 shadow-[0_0_10px_rgba(37,99,235,0.3)]"
+                        whileHover={{ scale: 1.4 }}
+                        className="w-3.5 h-3.5 rounded-full bg-slate-950 border-2 border-slate-700 transition-all duration-500 group-hover:border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
                     />
                 </div>
             </motion.div>
@@ -196,21 +196,21 @@ const LearningJourney = () => {
 
             <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4"
+                        className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/5 border border-blue-500/10 mb-6"
                     >
                         <Zap className="w-4 h-4 text-blue-400" />
-                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em]">The ThinkSkool Experience</span>
+                        <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.3em]">The ThinkSkool Experience</span>
                     </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight"
+                        className="text-4xl md:text-6xl font-bold text-white tracking-tight"
                     >
                         Our Learning <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Journey</span>
                     </motion.h2>
@@ -261,18 +261,18 @@ const LearningJourney = () => {
 
                 {/* Why Enroll Conclusion */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     whileHover={{ y: -5 }}
-                    className="mt-16 p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-blue-600/90 to-indigo-700/90 backdrop-blur-xl relative overflow-hidden group border border-white/10 shadow-3xl shadow-blue-500/10"
+                    className="mt-20 p-10 md:p-14 rounded-[2.5rem] bg-gradient-to-br from-blue-600/80 to-indigo-800/80 backdrop-blur-3xl relative overflow-hidden group border border-white/10 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)]"
                 >
-                    <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center">
+                    <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-6 leading-none">
-                                Beyond Generic Coding <br /><span className="text-blue-200 opacity-80">The AI Architect Era</span>
+                            <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-8 leading-tight">
+                                Beyond Generic Coding <br /><span className="text-blue-200/80">The AI Architect Era</span>
                             </h3>
-                            <p className="text-blue-50/70 text-sm md:text-base leading-relaxed mb-8">
+                            <p className="text-blue-50/80 text-base md:text-lg leading-relaxed mb-10 font-medium">
                                 Enrolling with us future-proofs your career with the structural depth and AI-augmented logic required for 2026.
                             </p>
                             <button
@@ -285,18 +285,18 @@ const LearningJourney = () => {
 
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { label: "Infrastructure", value: "Elite" },
-                                { label: "AI Workflows", value: "Native" },
-                                { label: "Mentorship", value: "1:1" },
-                                { label: "Readiness", value: "2026" }
+                                { label: "Live Demo", value: "Elite" },
+                                { label: "Smart Map", value: "Native" },
+                                { label: "Expert Led", value: "Interactive" },
+                                { label: "Real Builds", value: "Industrial" }
                             ].map((stat, sIdx) => (
                                 <motion.div
                                     key={sIdx}
-                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
-                                    className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 transition-colors"
+                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                    className="p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-500"
                                 >
-                                    <div className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1 opacity-60">{stat.label}</div>
-                                    <div className="text-xl font-black text-white uppercase tracking-tighter">{stat.value}</div>
+                                    <div className="text-[11px] font-bold text-blue-200 uppercase tracking-widest mb-2 opacity-60">{stat.label}</div>
+                                    <div className="text-2xl font-bold text-white tracking-tight">{stat.value}</div>
                                 </motion.div>
                             ))}
                         </div>

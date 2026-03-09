@@ -44,11 +44,11 @@ const FeatureCard = ({ item, index, onClick }) => {
 
                 <div className="relative z-10 mb-6">
                     {item.role && (
-                        <p className="text-[8px] font-black uppercase tracking-[0.4em] text-[#2563EB] mb-3">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#2563EB] mb-3">
                             {item.role}
                         </p>
                     )}
-                    <h3 className="text-xl font-black text-slate-900 tracking-tight uppercase leading-tight group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">
                         {item.title}
                     </h3>
                 </div>
@@ -105,7 +105,7 @@ const SupportEcosystem = () => {
                         <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.4em]">The Industrial Engine</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-[#2563EB] tracking-tighter uppercase leading-none mb-6">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#2563EB] tracking-tight leading-tight mb-6">
                         Education Ecosystem.
                     </h2>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] max-w-lg mx-auto leading-relaxed hidden">
@@ -127,21 +127,21 @@ const SupportEcosystem = () => {
                     className="bg-white rounded-[2.5rem] p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100 shadow-sm"
                 >
                     <div className="relative z-10 text-center md:text-left">
-                        <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-3">
+                        <h3 className="text-3xl font-bold text-slate-900 tracking-tight leading-none mb-4">
                             Global <span className="text-[#2563EB]">Response.</span>
                         </h3>
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">Integrated Tech-Support Intelligence</p>
+                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em]">Integrated Tech-Support Intelligence</p>
                     </div>
 
                     <div className="relative z-10 flex items-center gap-12">
                         <div className="text-center">
-                            <span className="block text-4xl font-black text-slate-900 tracking-tighter leading-none mb-1">1:1</span>
-                            <span className="text-[9px] font-black text-blue-500 uppercase tracking-[0.2em]">Ratio</span>
+                            <span className="block text-4xl font-bold text-slate-900 tracking-tight leading-none mb-1">1:1</span>
+                            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.2em]">Ratio</span>
                         </div>
                         <div className="w-px h-12 bg-slate-100" />
                         <div className="text-center">
-                            <span className="block text-4xl font-black text-[#2563EB] tracking-tighter leading-none mb-1">24/7</span>
-                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Active</span>
+                            <span className="block text-4xl font-bold text-[#2563EB] tracking-tight leading-none mb-1">24/7</span>
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Active</span>
                         </div>
                     </div>
                 </motion.div>
@@ -208,7 +208,7 @@ const SupportEcosystem = () => {
                                                     <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Active</span>
                                                 </div>
                                             </div>
-                                            <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tighter leading-none">
+                                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
                                                 {selectedRole.title}
                                             </h2>
                                         </div>

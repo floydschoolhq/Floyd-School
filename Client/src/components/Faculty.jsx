@@ -8,6 +8,17 @@ import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 
 
+import slide1 from '../assets/slideshow/slide1.jpg';
+import slide2 from '../assets/slideshow/slide2.jpg';
+import slide3 from '../assets/slideshow/slide3.jpg';
+import slide4 from '../assets/slideshow/slide4.jpg';
+import slide5 from '../assets/slideshow/slide5.jpg';
+import slide6 from '../assets/slideshow/slide6.jpg';
+import slide7 from '../assets/slideshow/slide7.jpg';
+import slide8 from '../assets/slideshow/slide8.jpg';
+
+const SLIDES = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8];
+
 const FeatureItem = ({ icon: Icon, title, desc }) => (
     <motion.div
         whileHover={{ x: 6 }}
@@ -54,21 +65,39 @@ const LEADERS = [
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Management", "Full Stack"]
+    },
+    {
+        name: "Anamika Vashisth",
+        role: "Coordination in UI/UX and System Designing",
+        company: "ThinkSkool",
+        companyIcon: <FaBuilding />,
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+        bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
+        linkedin: "#",
+        tags: ["UI/UX", "System Design", "Coordination"]
     }
 ];
 
 
 const Faculty = () => {
     const [selectedMentor, setSelectedMentor] = React.useState(null);
+    const [currentSlide, setCurrentSlide] = React.useState(0);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+        }, 3000);
+        return () => clearInterval(timer);
+    }, []);
 
     return (
         <section id="experts" className="bg-[#FFF9FA] py-8 border-t border-[#FBEFEF] relative overflow-hidden">
             <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-50 rounded-full blur-[80px] pointer-events-none opacity-50" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-10">
-                    <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight leading-none">
-                        Why <span className="text-[#2563EB]">Us</span>
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1.1]">
+                        We deliver <span className="text-[#2563EB]">Engineering Excellence.</span>
                     </h2>
                 </div>
 
@@ -80,24 +109,35 @@ const Faculty = () => {
                     className="mb-10 bg-white rounded-[2.5rem] p-6 lg:p-8 shadow-2xl border border-[#FBEFEF] relative overflow-hidden shadow-blue-500/5 transition-all duration-700 hover:shadow-blue-500/10"
                 >
                     <div className="flex flex-col lg:flex-row gap-20 items-center relative z-10">
-                        {/* Video Side */}
+                        {/* Slideshow Side */}
                         <div className="w-full lg:w-1/2 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl border border-[#FBEFEF] relative bg-slate-950 group">
-                            <video
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                className="w-full h-full object-cover absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-700"
-                            >
-                                <source src="/Untitled video - Made with Clipchamp.mp4" type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
+                            <AnimatePresence mode="wait">
+                                <motion.img
+                                    key={currentSlide}
+                                    src={SLIDES[currentSlide]}
+                                    initial={{ opacity: 0, scale: 1.1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 1, ease: "easeInOut" }}
+                                    className="w-full h-full object-cover absolute inset-0 group-hover:scale-110 transition-transform duration-[3s]"
+                                />
+                            </AnimatePresence>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/90 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white shadow-2xl ring-1 ring-black/5">
-                                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                                <span className="text-[14px] font-semibold text-slate-800 tracking-tight">
-                                    Live Bootcamp Session
+                            <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/10 backdrop-blur-2xl px-5 py-2.5 rounded-2xl border border-white/20 shadow-2xl transition-all duration-500 hover:bg-white/20">
+                                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                                <span className="text-[14px] font-bold text-white tracking-tight">
+                                    Our Industrial Ecosystem
                                 </span>
+                            </div>
+
+                            {/* Slide Indicators */}
+                            <div className="absolute bottom-8 right-8 flex gap-2">
+                                {SLIDES.map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className={`h-1 rounded-full transition-all duration-500 ${i === currentSlide ? 'w-6 bg-blue-500' : 'w-2 bg-white/30'}`}
+                                    />
+                                ))}
                             </div>
                         </div>
 
@@ -119,13 +159,13 @@ const Faculty = () => {
             {/* Static Leader Grid */}
             <div className="relative w-full py-12">
                 <motion.div
-                    initial={{ opacity: 0, x: -60, y: -40 }}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ type: "spring", damping: 15, stiffness: 60 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight leading-none">
+                    <h2 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight">
                         <span className="text-[#2563EB]">Mentors</span>
                     </h2>
                 </motion.div>
@@ -136,14 +176,14 @@ const Faculty = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1, type: "spring", damping: 25, stiffness: 40 }}
-                    className="max-w-7xl mx-auto px-4"
+                    className="max-w-5xl mx-auto px-4"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
                         {LEADERS.map((mentor, index) => (
                             <div
                                 key={index}
                                 onClick={() => setSelectedMentor(mentor)}
-                                className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 w-full max-w-[360px]"
+                                className="bg-white rounded-[2rem] overflow-hidden border border-[#FBEFEF] shadow-sm group cursor-pointer hover:border-[#2563EB]/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 w-full max-w-[300px]"
                             >
                                 <div className="relative h-64 overflow-hidden bg-slate-900">
                                     <img

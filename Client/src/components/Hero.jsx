@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
-import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award, Sparkles, Video, MessageSquare } from 'lucide-react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence, animate } from 'framer-motion';
+import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award, Sparkles, Video, MessageSquare, Users } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -120,7 +120,79 @@ const HubDetailModal = ({ isOpen, onClose, item }) => {
     );
 };
 
+const AnimatedCounter = ({ value, duration = 2 }) => {
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest) => Math.round(latest));
+    const [display, setDisplay] = useState(0);
+
+    React.useEffect(() => {
+        const controls = animate(count, value, {
+            duration,
+            ease: "easeOut",
+            onUpdate: (latest) => setDisplay(Math.round(latest))
+        });
+        return controls.stop;
+    }, [value, duration, count]);
+
+    return <>{display}</>;
+};
+
+const TrustIndicator = () => {
+    const trustIcons = [Terminal, Cpu, Code2];
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
+            className="flex items-center gap-4 mb-8 px-5 py-3 rounded-[2rem] bg-white/60 border border-blue-200/50 backdrop-blur-xl w-fit mx-auto md:mx-0 shadow-lg shadow-blue-500/5 hover:border-blue-300/50 transition-colors group"
+        >
+            <div className="flex -space-x-3">
+                {trustIcons.map((Icon, i) => (
+                    <div
+                        key={i}
+                        className="w-12 h-12 rounded-full border-2 border-white bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md relative overflow-hidden group-hover:scale-110 transition-transform duration-300"
+                        style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                        <div className="absolute inset-0 bg-white/10" />
+                        <Icon size={18} strokeWidth={2.5} />
+                    </div>
+                ))}
+                <div className="w-12 h-12 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-[12px] font-bold text-white shadow-md group-hover:scale-110 transition-transform duration-300" style={{ transitionDelay: '200ms' }}>
+                    +
+                </div>
+            </div>
+            <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                    <span className="text-xl font-bold text-slate-900 tracking-tight">
+                        <AnimatedCounter value={100} />+
+                    </span>
+                    <span className="text-[14px] font-medium text-slate-600 tracking-tight">Learners & Parents</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="flex gap-0.5">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                            <motion.svg
+                                key={s}
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.5 + (s * 0.1) }}
+                                className="w-3.5 h-3.5 text-amber-500 fill-current"
+                                viewBox="0 0 20 20"
+                            >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </motion.svg>
+                        ))}
+                    </div>
+                    <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-widest">Trusted Experience</span>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
 const Hero = () => {
+    const { useEffect } = React;
     const navigate = useNavigate();
     const { user } = useContext(PortalContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -231,81 +303,84 @@ const Hero = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
                 <div className="grid md:grid-cols-[1fr_420px] gap-12 items-center">
                     {/* Left Column: Bento Hub */}
-                    <div className="grid grid-cols-2 gap-2 h-fit">
-                        {/* Practical Training - Major Tile */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -60, y: 60 }}
-                            whileInView={{ opacity: 1, x: 0, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ type: "spring", damping: 20, stiffness: 80 }}
-                            whileHover={{ y: -6, scale: 1.01 }}
-                            onClick={() => setSelectedHubItem(HUB_DATA[0])}
-                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
-                        >
-                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent group-hover:via-blue-400/40 transition-all duration-500" />
-                            <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
-                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[60px] transition-all duration-700" />
-                            <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
-                                <h3 className="text-2xl md:text-4xl font-semibold text-white tracking-tight leading-none mb-2 uppercase">{HUB_DATA[0].title}</h3>
-                                <span className="text-[15px] font-medium text-white/40 tracking-tight">{HUB_DATA[0].subtitle}</span>
+                    <div className="flex flex-col">
+                        <TrustIndicator />
+                        <div className="grid grid-cols-2 gap-2 h-fit">
+                            {/* Practical Training - Major Tile */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -60, y: 60 }}
+                                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ type: "spring", damping: 20, stiffness: 80 }}
+                                whileHover={{ y: -6, scale: 1.01 }}
+                                onClick={() => setSelectedHubItem(HUB_DATA[0])}
+                                className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            >
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent group-hover:via-blue-400/40 transition-all duration-500" />
+                                <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
+                                <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[60px] transition-all duration-700" />
+                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
+                                    <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-none mb-3">{HUB_DATA[0].title}</h3>
+                                    <span className="text-[15px] font-medium text-white/50 tracking-tight">{HUB_DATA[0].subtitle}</span>
 
-                                <div className="absolute top-2 right-6 text-5xl font-medium text-white/[0.03] tracking-tighter hidden md:block select-none leading-none">
-                                    {HUB_DATA[0].tag}
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Mid Row - 2 Tiles */}
-                        {HUB_DATA.slice(1, 3).map((item, idx) => {
-                            const Icon = item.icon;
-                            return (
-                                <motion.div
-                                    key={item.id}
-                                    initial={{ opacity: 0, x: idx === 0 ? -100 : -60, y: 100 }}
-                                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ y: -6, scale: 1.02 }}
-                                    onClick={() => setSelectedHubItem(item)}
-                                    transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
-                                    className="relative p-3 rounded-[1.0rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
-                                >
-                                    <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
-                                    <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[40px] transition-all duration-700" />
-                                    <div className="relative z-10 flex flex-col items-center text-center py-1">
-                                        <h4 className="text-[20px] font-semibold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                                        <span className="text-[13px] font-medium text-white/40 tracking-tight">{item.subtitle}</span>
+                                    <div className="absolute top-2 right-6 text-5xl font-bold text-white/[0.03] tracking-tighter hidden md:block select-none leading-none">
+                                        {HUB_DATA[0].tag}
                                     </div>
-                                </motion.div>
-                            );
-                        })}
-
-                        {/* Bottom Full-Width Tile: Doubt Solving */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3, type: "spring", damping: 20 }}
-                            whileHover={{ y: -6, scale: 1.01 }}
-                            onClick={() => setSelectedHubItem(HUB_DATA[3])}
-                            className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
-                        >
-                            <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
-                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
-                            <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
-                                <h3 className="text-[22px] md:text-3xl font-semibold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors uppercase">{HUB_DATA[3].title}</h3>
-                                <span className="text-[14px] font-medium text-white/40 tracking-tight">{HUB_DATA[3].subtitle}</span>
-
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/10 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">
-                                    <ArrowRight size={24} />
                                 </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
 
-                        {/* CTA Bento Tile */}
-                        <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-slate-900 border border-blue-500/20 shadow-2xl flex items-center gap-2">
-                            <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-blue-600 text-white font-bold text-[14px] tracking-tight hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-500/20">Enroll Now</button>
-                            <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-slate-800 text-white/80 font-semibold text-[13px] tracking-tight hover:bg-slate-700 border border-blue-500/10 transition-all active:scale-95">Explore</button>
-                        </motion.div>
+                            {/* Mid Row - 2 Tiles */}
+                            {HUB_DATA.slice(1, 3).map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                    <motion.div
+                                        key={item.id}
+                                        initial={{ opacity: 0, x: idx === 0 ? -100 : -60, y: 100 }}
+                                        whileInView={{ opacity: 1, x: 0, y: 0 }}
+                                        viewport={{ once: true }}
+                                        whileHover={{ y: -6, scale: 1.02 }}
+                                        onClick={() => setSelectedHubItem(item)}
+                                        transition={{ delay: 0.1 * (idx + 1), type: "spring", damping: 20 }}
+                                        className="relative p-3 rounded-[1.0rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-xl cursor-pointer group overflow-hidden transition-all duration-500"
+                                    >
+                                        <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-500" />
+                                        <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-600/10 group-hover:bg-blue-600/20 rounded-full blur-[40px] transition-all duration-700" />
+                                        <div className="relative z-10 flex flex-col items-center text-center py-1">
+                                            <h4 className="text-[20px] font-bold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <span className="text-[13px] font-medium text-white/50 tracking-tight">{item.subtitle}</span>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+
+                            {/* Bottom Full-Width Tile: Doubt Solving */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3, type: "spring", damping: 20 }}
+                                whileHover={{ y: -6, scale: 1.01 }}
+                                onClick={() => setSelectedHubItem(HUB_DATA[3])}
+                                className="col-span-2 relative p-3 md:p-4 rounded-[1.2rem] bg-slate-950/90 backdrop-blur-3xl border border-blue-500/20 group-hover:border-blue-500/40 shadow-2xl cursor-pointer group overflow-hidden transition-all duration-500"
+                            >
+                                <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/0 transition-colors duration-500" />
+                                <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-600/20 group-hover:bg-blue-600/0 rounded-full blur-[60px] transition-all duration-700" />
+                                <div className="relative z-10 flex flex-col items-center text-center justify-center py-1">
+                                    <h3 className="text-[22px] md:text-3xl font-semibold text-white tracking-tight leading-none mb-2 group-hover:text-blue-400 transition-colors uppercase">{HUB_DATA[3].title}</h3>
+                                    <span className="text-[14px] font-medium text-white/40 tracking-tight">{HUB_DATA[3].subtitle}</span>
+
+                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/10 group-hover:text-blue-400 group-hover:translate-x-1 transition-all">
+                                        <ArrowRight size={24} />
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* CTA Bento Tile */}
+                            <motion.div className="col-span-2 mt-2 p-1 rounded-[1.2rem] bg-slate-900 border border-blue-500/20 shadow-2xl flex items-center gap-2">
+                                <button onClick={handleEnrollNow} className="flex-1 py-4 rounded-[0.9rem] bg-blue-600 text-white font-bold text-[14px] tracking-tight hover:bg-blue-500 transition-all active:scale-95 shadow-xl shadow-blue-500/20">Enroll Now</button>
+                                <button onClick={handleExplore} className="flex-1 py-4 rounded-[0.9rem] bg-slate-800 text-white/80 font-semibold text-[13px] tracking-tight hover:bg-slate-700 border border-blue-500/10 transition-all active:scale-95">Explore</button>
+                            </motion.div>
+                        </div>
                     </div>
 
                     {/* Right Column: 3D Interactive Form */}
