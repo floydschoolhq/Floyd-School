@@ -74,7 +74,7 @@ const PricingTier = ({ tier, onSelect }) => {
             )}
             <h3 className="text-base font-bold text-slate-700 uppercase tracking-widest mb-2">{tier.name}</h3>
             <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-slate-900">${tier.price}</span>
+                <span className="text-4xl font-black text-slate-900">₹{tier.price}</span>
                 <span className="text-slate-400 text-sm font-bold uppercase tracking-widest">/Batch</span>
             </div>
             <div className="space-y-4 mb-10">
@@ -194,19 +194,19 @@ const OnlineProgram = () => {
     const pricing = [
         {
             name: "Starter",
-            price: "1,999",
+            price: "1,299",
             features: ["Foundational Access", "Community Support", "Public Sandboxes", "Certification"],
             recommended: false
         },
         {
             name: "Industrial",
-            price: "4,999",
+            price: "1,599",
             features: ["Advanced Modules", "1-on-1 Mentorship", "Premium Code Lab", "Career Support"],
             recommended: true
         },
         {
             name: "Mastery",
-            price: "9,999",
+            price: "1,799",
             features: ["AI & Cloud Mastery", "Industrial Internship", "Production Deployment", "Placement Access"],
             recommended: false
         }
