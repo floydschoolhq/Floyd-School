@@ -11,7 +11,8 @@ import {
     ShieldCheck,
     ArrowRight,
     BrainCircuit,
-    Video
+    Video,
+    Trophy
 } from 'lucide-react';
 
 const JOURNEY_STEPS = [
@@ -70,6 +71,20 @@ const JOURNEY_STEPS = [
         ],
         highlight: "Industrial",
         color: "blue"
+    },
+    {
+        id: "inter-batch-hackathon",
+        icon: Trophy,
+        tag: "Phase 05",
+        title: "Inter-Batch Hackathon",
+        description: "Compete with every batch. Build a real product in 48 hours and ship it live.",
+        features: [
+            "48-Hr Sprint",
+            "Cross-Batch Teams",
+            "Live Deployment"
+        ],
+        highlight: "Capstone",
+        color: "amber"
     }
 ];
 
@@ -107,7 +122,7 @@ const JourneyCard = ({ step, idx, isEven }) => {
                 className="w-full lg:w-[45%] relative z-10 cursor-pointer"
             >
                 <div
-                    className="p-[1px] bg-gradient-to-br from-white/20 to-transparent hover:from-blue-500/40 transition-all duration-700 group relative overflow-hidden rounded-[2rem]"
+                    className="p-[1px] bg-gradient-to-br from-white/[0.12] to-transparent hover:from-blue-500/30 transition-all duration-700 group relative overflow-hidden rounded-[2rem]"
                 >
                     {/* Spotlight Glow */}
                     <motion.div
@@ -115,13 +130,13 @@ const JourneyCard = ({ step, idx, isEven }) => {
                         style={{
                             background: useTransform(
                                 [x, y],
-                                ([latestX, latestY]) => `radial-gradient(500px circle at ${latestX + 250}px ${latestY + 180}px, rgba(37, 99, 235, 0.12), transparent)`
+                                ([latestX, latestY]) => `radial-gradient(500px circle at ${latestX + 250}px ${latestY + 180}px, rgba(37, 99, 235, 0.10), transparent)`
                             )
                         }}
                     />
 
                     <div
-                        className="bg-slate-900/60 backdrop-blur-3xl p-6 md:p-8 border border-white/10 group-hover:border-blue-500/30 transition-all duration-500 shadow-2xl relative z-10 rounded-[2rem]"
+                        className="bg-[#0D1628]/80 backdrop-blur-3xl p-6 md:p-8 border border-white/[0.07] group-hover:border-blue-500/25 transition-all duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative z-10 rounded-[2rem]"
                     >
                         <div className="flex flex-col items-center text-center mb-4">
                             <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mb-3 block px-3 py-1 bg-blue-500/5 rounded-full border border-blue-500/10">
@@ -189,10 +204,12 @@ const LearningJourney = () => {
     });
 
     return (
-        <section ref={containerRef} className="py-20 bg-slate-950 relative overflow-hidden">
-            {/* Background Accents */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[80px] pointer-events-none" />
+        <section ref={containerRef} className="py-20 bg-[#060C1B] relative overflow-hidden">
+            {/* Dot grid */}
+            <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+            {/* Glows */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-700/12 blur-[130px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-indigo-700/10 blur-[100px] rounded-full pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
                 {/* Header */}
