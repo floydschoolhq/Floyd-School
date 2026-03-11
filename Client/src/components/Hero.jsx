@@ -104,10 +104,10 @@ const ProgressCard = () => (
             <div>
                 <div className="flex justify-between items-center mb-2">
                     <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Artificial Intelligence</span>
-                    <span className="text-[13px] font-bold text-slate-900">100%</span>
+                    <span className="text-[13px] font-bold text-slate-900">95%</span>
                 </div>
                 <div className="h-2 bg-slate-100 overflow-hidden">
-                    <motion.div initial={{ width: 0 }} whileInView={{ width: '100%' }} transition={{ duration: 1, delay: 0.5 }} className="h-full bg-slate-900" />
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: '95%' }} transition={{ duration: 1, delay: 0.5 }} className="h-full bg-slate-900" />
                 </div>
             </div>
             <div>
