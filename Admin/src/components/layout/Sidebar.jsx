@@ -15,6 +15,7 @@ import {
     Monitor
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
+import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = () => {
     const { logout } = useAuth();
