@@ -26,11 +26,11 @@ const AnimatedCounter = ({ value, duration = 2 }) => {
 
 const TrustIndicator = () => {
     const trustItems = [
-        { char: 'A', bg: 'bg-slate-900' },
-        { char: 'P', bg: 'bg-slate-800' },
-        { char: 'R', bg: 'bg-slate-700' },
-        { char: 'S', bg: 'bg-slate-600' },
-        { char: 'M', bg: 'bg-slate-500' },
+        { char: 'T', bg: 'bg-slate-900' },
+        { char: 'H', bg: 'bg-slate-800' },
+        { char: 'I', bg: 'bg-slate-700' },
+        { char: 'N', bg: 'bg-slate-600' },
+        { char: 'K', bg: 'bg-slate-500' },
     ];
     return (
         <motion.div
