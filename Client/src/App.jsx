@@ -13,6 +13,7 @@ import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
 import PlatformPanels from './components/PlatformPanels';
 import SuccessStories from './components/SuccessStories';
+import LearningModel from './components/LearningModel';
 
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
@@ -58,6 +59,7 @@ const HomePage = () => {
                 <TechStackStats />
                 <SuccessStories />
                 <Hackathon />
+                <LearningModel />
                 <ThinkSkoolAdvantage />
                 <MentorGrid />
                 <PlatformPanels />

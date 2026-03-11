@@ -149,8 +149,8 @@ const StreakCard = () => (
         viewport={{ once: true }}
         className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl flex flex-col items-center justify-center text-center relative group"
     >
-        <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-4 text-orange-500">
-            <Video size={24} fill="currentColor" />
+        <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-600">
+            <Video size={24} />
         </div>
         <div className="text-xl font-black text-slate-900 mb-1 leading-tight">Free Demo<br/>Session</div>
         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 px-3 py-1 bg-slate-100 rounded-full">Book Now</div>
@@ -174,8 +174,8 @@ const ProjectCounterCard = () => (
         viewport={{ once: true }}
         className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group h-full"
     >
-        <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-500">
-            <Zap size={24} fill="currentColor" />
+        <div className="w-12 h-12 bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
+            <Zap size={24} />
         </div>
         <div className="text-4xl font-black text-slate-900 mb-1">50+</div>
         <div className="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Industrial Projects</div>
@@ -201,15 +201,13 @@ const LiveActivityCard = () => (
     >
         <div className="flex items-center gap-4 mb-8">
             <div className="relative">
-                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm border border-slate-100/50">📹</div>
-                <div className="absolute -top-1 -right-1 flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-800 shadow-sm border border-slate-100/50">
+                    <Video size={28} />
                 </div>
             </div>
             <div>
-                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Live Engineering Hub</h4>
-                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Students are watching us</p>
+                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Engineering Hub</h4>
+                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Industrial Sessions</p>
             </div>
         </div>
         <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
@@ -219,10 +217,10 @@ const LiveActivityCard = () => (
                         <div key={i} className="w-7 h-7 rounded-full border-2 border-[#F2F2F7] bg-slate-200" />
                     ))}
                 </div>
-                <span className="text-[11px] font-bold text-slate-600 tracking-tight">247+ users watching us</span>
+                <span className="text-[11px] font-bold text-slate-600 tracking-tight">Access to all sessions</span>
             </div>
-            <div className="px-3 py-1 bg-slate-900 text-white text-[10px] font-bold tracking-tight rounded-full flex items-center gap-1 shadow-sm">
-                JOIN <ArrowRight size={10} />
+            <div className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold tracking-tight rounded-full flex items-center gap-1">
+                VIEW <ArrowRight size={10} />
             </div>
         </div>
     </motion.div>
@@ -243,18 +241,32 @@ const CertificateCard = () => (
             }
         }}
         viewport={{ once: true }}
-        className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group h-full"
+        className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group"
     >
-        <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100/50 flex items-center justify-center text-2xl">🎓</div>
+        <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100/50 flex items-center justify-center text-slate-800">
+                <Award size={24} />
+            </div>
             <div>
                 <h4 className="text-[14px] font-bold text-slate-900 leading-tight">Accreditation</h4>
                 <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest mt-1">Verified Credits</p>
             </div>
         </div>
+        
+        <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-between p-3 bg-white/50 rounded-xl border border-white">
+                <div className="text-[11px] font-bold text-slate-600">Verification ID</div>
+                <div className="text-[10px] font-mono font-bold text-slate-400">TS-X9420</div>
+            </div>
+        </div>
+
         <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
             <div className="flex -space-x-1.5">
-                {[1, 2, 3].map(i => <div key={i} className="w-5 h-5 rounded-full border border-[#F2F2F7] bg-slate-200" />)}
+                {[1, 2, 3].map(i => (
+                    <div key={i} className="w-6 h-6 rounded-full border-2 border-[#F2F2F7] bg-slate-200 overflow-hidden shadow-sm">
+                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+20}`} alt="user" />
+                    </div>
+                ))}
             </div>
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">2k+ Alumni</div>
         </div>

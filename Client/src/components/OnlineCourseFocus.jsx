@@ -66,15 +66,7 @@ const OnlineCourseFocus = () => {
                                                     <span className="px-4 py-1.5 bg-white text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] shadow-xl">Coming Soon</span>
                                                 </div>
                                             )}
-                                            {course.live && (
-                                                <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1 bg-white/95 backdrop-blur-md rounded-lg shadow-sm border border-slate-100 transition-all">
-                                                    <span className="relative flex h-1.5 w-1.5">
-                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                                                    </span>
-                                                    <span className="text-[8px] font-black text-slate-900 uppercase tracking-[0.2em]">Live Now</span>
-                                                </div>
-                                            )}
+                                            {/* Live status removed */}
                                         </div>
                                         <h4 className="text-lg font-bold text-slate-800 uppercase tracking-tight mb-2 leading-none group-hover:text-blue-600 transition-colors">{course.title}</h4>
 

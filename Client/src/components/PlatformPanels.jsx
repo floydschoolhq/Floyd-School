@@ -51,8 +51,7 @@ const FeatureCard = ({ icon: Icon, title, desc, status, activeColor }) => (
             <div className={`p-2 rounded-xl bg-${activeColor}-500/10 text-${activeColor}-400 group-hover:scale-110 transition-transform`}>
                 <Icon size={20} />
             </div>
-            <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${status === 'Live' ? 'bg-emerald-500/5 text-emerald-600 border-emerald-500/10' : 'bg-slate-500/5 text-slate-500 border-slate-500/10'}`}>
-                {status === 'Live' && <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />}
+            <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${status === 'Live' ? 'bg-slate-500/5 text-slate-400 border-slate-500/10' : 'bg-slate-500/5 text-slate-500 border-slate-500/10'}`}>
                 {status}
             </span>
         </div>
@@ -69,73 +68,81 @@ const PlatformPanels = () => {
     const prevPanel = () => setActiveIndex((prev) => (prev - 1 + PANELS.length) % PANELS.length);
 
     return (
-        <section id="platform-panels" className="bg-[#fbfbf8] py-24 relative overflow-hidden border-t border-slate-100">
-            {/* Subtle Grid Background */}
-            <div className="absolute inset-0 opacity-[0.4] pointer-events-none" 
-                 style={{ backgroundImage: `radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0)`, backgroundSize: '40px 40px' }} 
-            />
+        <section id="platform-panels" className="bg-slate-950 py-24 relative overflow-hidden">
+            {/* Background Decor */}
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-12">
-                    <ScrollDarkenHeading>
-                        Panel Roles
-                    </ScrollDarkenHeading>
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                <div className="mb-16">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-2xl md:text-5xl font-black text-white tracking-tighter"
+                    >
+                        our panels <span className="text-slate-500">& roles</span>
+                    </motion.h2>
                 </div>
 
                 <div className="relative group/main max-w-6xl mx-auto">
                     {/* Main Interface Block */}
-                    <div className="bg-white border border-slate-100 rounded-[32px] p-8 md:p-12 lg:p-16 relative overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.02)]">
+                    <div className="bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activePanel.id}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0, scale: 0.98 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.98 }}
                                 transition={{ duration: 0.4 }}
                                 className="relative z-10"
                             >
-                                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+                                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
                                     {/* Left Content Side */}
                                     <div className="w-full lg:w-1/3 text-left">
-                                        <div className="inline-flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100 mb-8">
-                                            <div className="p-2.5 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-500/20">
-                                                <activePanel.icon size={22} />
+                                        <div className="inline-flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 mb-8 w-full">
+                                            <div className="p-3 bg-white text-black rounded-xl shadow-xl">
+                                                <activePanel.icon size={24} />
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-bold text-slate-800 tracking-tight">{activePanel.title}</h3>
-                                                <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">{activePanel.subtitle}</p>
+                                                <h3 className="text-xl font-bold text-white tracking-tight">{activePanel.title}</h3>
+                                                <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">{activePanel.subtitle}</p>
                                             </div>
                                         </div>
-                                        <p className="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
+                                        <p className="text-slate-400 text-lg leading-relaxed mb-10 font-medium">
                                             {activePanel.description}
                                         </p>
                                         
-                                        <div className="hidden lg:flex gap-4">
-                                            <div className="h-1 lg:w-32 bg-slate-100 rounded-full overflow-hidden">
+                                        <div className="hidden lg:block w-full">
+                                            <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                                                 <motion.div 
-                                                    className="h-full bg-blue-600"
+                                                    className="h-full bg-white"
                                                     initial={{ width: "0%" }}
                                                     animate={{ width: `${((activeIndex + 1) / PANELS.length) * 100}%` }}
                                                 />
+                                            </div>
+                                            <div className="flex justify-between mt-3">
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">0{activeIndex + 1}</span>
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">0{PANELS.length}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Right Grid Side */}
-                                    <div className="w-full lg:w-2/3 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div className="w-full lg:w-2/3 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                                         {activePanel.features.map((f, i) => (
-                                            <div key={i} className="bg-slate-50 border border-slate-100 p-6 rounded-2xl hover:border-blue-500/20 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all group">
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <div className="p-2 rounded-xl bg-white border border-slate-100 text-blue-600 shadow-sm group-hover:scale-110 transition-transform">
-                                                        <f.icon size={18} />
+                                            <div key={i} className="bg-white/[0.03] backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:border-white/30 hover:bg-white/[0.07] transition-all group/card shadow-xl">
+                                                <div className="flex justify-between items-start mb-6">
+                                                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white group-hover/card:scale-110 transition-transform">
+                                                        <f.icon size={20} />
                                                     </div>
-                                                    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${f.status === 'Live' ? 'bg-emerald-500/5 text-emerald-600 border-emerald-500/10' : 'bg-slate-500/5 text-slate-500 border-slate-500/10'}`}>
-                                                        {f.status === 'Live' && <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />}
+                                                    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${f.status === 'Live' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-500 border-slate-500/20'}`}>
+                                                        {f.status === 'Live' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />}
                                                         {f.status}
                                                     </span>
                                                 </div>
-                                                <h4 className="text-slate-800 font-bold text-[15px] mb-2 tracking-tight">{f.title}</h4>
-                                                <p className="text-slate-500 text-sm leading-relaxed font-medium">{f.desc}</p>
+                                                <h4 className="text-white font-bold text-[15px] mb-2 tracking-tight">{f.title}</h4>
+                                                <p className="text-slate-500 text-[13px] leading-relaxed font-medium">{f.desc}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -145,25 +152,25 @@ const PlatformPanels = () => {
                     </div>
 
                     {/* Navigation Buttons (Outside Container) */}
-                    <div className="absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-20 z-20">
-                        <button onClick={prevPanel} className="p-5 bg-white border border-slate-100 rounded-full text-slate-400 hover:text-blue-600 hover:border-blue-100 shadow-xl transition-all scale-90 hover:scale-110 group-active:scale-95">
-                            <ChevronLeft size={28} />
+                    <div className="absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-12 z-20">
+                        <button onClick={prevPanel} className="p-4 bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black shadow-2xl transition-all scale-90 hover:scale-110 active:scale-95">
+                            <ChevronLeft size={24} />
                         </button>
                     </div>
-                    <div className="absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-20 z-20">
-                        <button onClick={nextPanel} className="p-5 bg-white border border-slate-100 rounded-full text-slate-400 hover:text-blue-600 hover:border-blue-100 shadow-xl transition-all scale-90 hover:scale-110 group-active:scale-95">
-                            <ChevronRight size={28} />
+                    <div className="absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-12 z-20">
+                        <button onClick={nextPanel} className="p-4 bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black shadow-2xl transition-all scale-90 hover:scale-110 active:scale-95">
+                            <ChevronRight size={24} />
                         </button>
                     </div>
                 </div>
 
                 {/* Bottom Indicators */}
-                <div className="flex justify-center gap-3 mt-12">
+                <div className="flex justify-center gap-4 mt-12">
                     {PANELS.map((p, i) => (
                         <button
                             key={p.id}
                             onClick={() => setActiveIndex(i)}
-                            className={`h-1.5 rounded-full transition-all duration-500 ${i === activeIndex ? 'w-12 bg-blue-600' : 'w-4 bg-slate-200'}`}
+                            className={`h-1.5 rounded-full transition-all duration-500 ${i === activeIndex ? 'w-10 bg-white' : 'w-4 bg-white/10 hover:bg-white/20'}`}
                         />
                     ))}
                 </div>

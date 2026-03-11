@@ -71,7 +71,7 @@ const MentorShowcase = () => {
                             </AnimatePresence>
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
                             <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/10 backdrop-blur-2xl px-5 py-2.5 rounded-2xl border border-white/20 shadow-2xl transition-all duration-500 hover:bg-white/20">
-                                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                                <div className="w-2 h-2 rounded-full bg-blue-400" />
                                 <span className="text-[14px] font-bold text-white tracking-tight">
                                     Our Industrial Ecosystem
                                 </span>

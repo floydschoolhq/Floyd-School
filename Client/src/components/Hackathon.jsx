@@ -180,9 +180,8 @@ export default function Hackathon() {
                         />
 
                         {/* Live badge */}
-                        <span className="relative inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-blue-100 bg-blue-50 text-[11px] font-black text-blue-600 uppercase tracking-widest mb-8 z-10">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-                            Live Competition
+                        <span className="relative inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-slate-100 bg-slate-50 text-[11px] font-black text-slate-500 uppercase tracking-widest mb-8 z-10">
+                            Industrial Competition
                         </span>
 
                         {/* Copy */}

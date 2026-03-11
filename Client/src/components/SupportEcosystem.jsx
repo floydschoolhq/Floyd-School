@@ -201,11 +201,7 @@ const SupportEcosystem = () => {
                                     <div className="flex items-center gap-6 mb-10">
                                         <div>
                                              <div className="flex items-center gap-2 mb-2">
-                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">{selectedRole.role}</span>
-                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-900/5 rounded-full border border-slate-900/10">
-                                                    <div className="w-1 h-1 rounded-full bg-slate-900 animate-pulse" />
-                                                    <span className="text-[8px] font-black text-slate-900 uppercase tracking-widest">Active</span>
-                                                </div>
+                                                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">{selectedRole.role}</span>
                                             </div>
                                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
                                                 {selectedRole.title}

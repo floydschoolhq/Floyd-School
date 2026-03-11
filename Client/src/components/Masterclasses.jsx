@@ -132,8 +132,7 @@ const Masterclasses = () => {
                                 {/* Instructor Section */}
                                 <div className="flex items-center gap-5 py-8 border-y border-slate-100 mb-10 relative z-10">
                                     <div className="relative">
-                                        <img src={event.instructorImage} alt={event.instructorName} className="w-14 h-14 rounded-2xl object-cover ring-4 ring-white/5 group-hover:ring-[#2563EB]/20 transition-all shadow-2xl" />
-                                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-white rounded-full" />
+                                        <img src={event.instructorImage} alt={event.instructorName} className="w-14 h-14 rounded-2xl object-cover ring-4 ring-white/5 group-hover:ring-slate-900/20 transition-all shadow-2xl" />
                                     </div>
                                     <div>
                                         <p className="text-base font-extrabold text-slate-900 tracking-tight uppercase">{event.instructorName}</p>

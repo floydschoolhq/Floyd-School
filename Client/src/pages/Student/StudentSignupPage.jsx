@@ -75,7 +75,7 @@ const StudentSignupPage = () => {
 
                     <header className="flex justify-between items-center mb-10">
                         <div className="flex items-center cursor-pointer group/logo" onClick={handleExit}>
-                            <BrandLogo size="md" />
+                            <BrandLogo size="md" theme="brand" shine={true} />
                         </div>
                     </header>
 

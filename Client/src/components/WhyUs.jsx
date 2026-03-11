@@ -75,7 +75,7 @@ const WhyUs = () => {
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-slate-800 flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.3)] z-10">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400 animate-pulse" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400" />
                                     </div>
                                 </div>
                             ))}
@@ -127,7 +127,7 @@ const WhyUs = () => {
                                         </motion.div>
                                     </div>
                                     <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-slate-800 flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.3)] z-10">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400 animate-pulse" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400" />
                                     </div>
                                 </div>
                             ))}

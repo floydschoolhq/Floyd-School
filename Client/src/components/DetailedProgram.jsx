@@ -72,7 +72,7 @@ const DetailedProgram = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
                     >
-                        <Brain size={10} className="text-[#2563EB] animate-pulse" />
+                        <Brain size={10} className="text-[#2563EB]" />
                         <span className="text-[13px] font-bold text-[#2563EB] tracking-tight">Advanced Learning Framework</span>
                     </motion.div>
 

@@ -139,11 +139,16 @@ const PremiumNavbar = () => {
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
-                        <div
+                         <div
                             className="flex items-center cursor-pointer group"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
-                            <BrandLogo size="md" className={isDarkPage ? '!text-white' : ''} />
+                            <BrandLogo 
+                                size="md" 
+                                theme="brand"
+                                shine={true}
+                                className={isDarkPage ? '!text-white' : ''} 
+                            />
                         </div>
 
                         {/* Desktop Navigation */}
@@ -228,7 +233,7 @@ const PremiumNavbar = () => {
                                 }}
                                 className="px-6 py-2 bg-slate-900 text-white font-bold text-[13px] rounded-full hover:bg-black transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2"
                             >
-                                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                <div className="w-1.5 h-1.5 rounded-full bg-white" />
                                 Portal
                             </button>
                         </div>
