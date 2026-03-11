@@ -157,7 +157,7 @@ const StreakCard = () => (
     </motion.div>
 );
 
-const CoursesCard = () => (
+const ProjectCounterCard = () => (
     <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: [-20, 0, 0], y: [0, -6, 0] }}
@@ -182,6 +182,52 @@ const CoursesCard = () => (
     </motion.div>
 );
 
+const LiveActivityCard = () => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: [20, 0, -8, 0] }}
+        transition={{ 
+            opacity: { duration: 0.5 },
+            y: { 
+                times: [0, 0.2, 0.6, 1],
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5
+            }
+        }}
+        viewport={{ once: true }}
+        className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group"
+    >
+        <div className="flex items-center gap-4 mb-8">
+            <div className="relative">
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm border border-slate-100/50">📹</div>
+                <div className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </div>
+            </div>
+            <div>
+                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Live Engineering Hub</h4>
+                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Students are watching us</p>
+            </div>
+        </div>
+        <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="w-7 h-7 rounded-full border-2 border-[#F2F2F7] bg-slate-200" />
+                    ))}
+                </div>
+                <span className="text-[11px] font-bold text-slate-600 tracking-tight">247+ users watching us</span>
+            </div>
+            <div className="px-3 py-1 bg-slate-900 text-white text-[10px] font-bold tracking-tight rounded-full flex items-center gap-1 shadow-sm">
+                JOIN <ArrowRight size={10} />
+            </div>
+        </div>
+    </motion.div>
+);
+
 const CertificateCard = () => (
     <motion.div
         initial={{ opacity: 0, x: 20 }}
@@ -197,22 +243,20 @@ const CertificateCard = () => (
             }
         }}
         viewport={{ once: true }}
-        className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group"
+        className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative group h-full"
     >
-        <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 bg-slate-50 flex items-center justify-center text-3xl">🎖️</div>
+        <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100/50 flex items-center justify-center text-2xl">🎓</div>
             <div>
-                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Neural Systems Architecture</h4>
-                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Industrial Program</p>
+                <h4 className="text-[14px] font-bold text-slate-900 leading-tight">Accreditation</h4>
+                <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest mt-1">Verified Credits</p>
             </div>
         </div>
-        <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold text-slate-400 tracking-tight">Ishaan Mehta · Age 17</span>
+        <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
+            <div className="flex -space-x-1.5">
+                {[1, 2, 3].map(i => <div key={i} className="w-5 h-5 rounded-full border border-[#F2F2F7] bg-slate-200" />)}
             </div>
-            <div className="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold tracking-tight flex items-center gap-1.5">
-                Verified <CheckCircle size={10} strokeWidth={3} />
-            </div>
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">2k+ Alumni</div>
         </div>
     </motion.div>
 );
@@ -275,7 +319,7 @@ const Hero = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-4">
                                 <ProgressCard />
-                                <CoursesCard />
+                                <LiveActivityCard />
                             </div>
                             <div className="space-y-4 pt-12">
                                 <StreakCard />
