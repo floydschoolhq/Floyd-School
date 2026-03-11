@@ -51,9 +51,9 @@ const SuccessStories = () => {
                         <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-slate-900 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                             <Quote size={20} fill="currentColor" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight uppercase italic">
+                        <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
                             Transformed <br />
-                            <span className="text-slate-500 not-italic">by ThinkSkool</span>
+                            <span className="text-slate-500">by ThinkSkool</span>
                         </h2>
                     </div>
                     
