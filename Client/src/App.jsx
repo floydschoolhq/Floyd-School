@@ -40,7 +40,6 @@ import TechStackStats from './components/TechStackStats.jsx';
 
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
-import Feature from './components/Feature';
 import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 import ScrollTracker from './components/common/ScrollTracker.jsx';
@@ -64,7 +63,6 @@ const HomePage = () => {
                 <PlatformPanels />
                 <IndustrialNetwork />
                 <Masterclasses />
-                <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />
                 <StudentEcosystem />
             </div>
