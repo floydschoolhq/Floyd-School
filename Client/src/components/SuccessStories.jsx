@@ -39,7 +39,7 @@ const SuccessStories = () => {
     const filteredStories = STORIES.filter(story => story.category === activeCategory);
 
     return (
-        <section className="bg-black py-16 relative overflow-hidden">
+        <section className="bg-slate-950 py-16 relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute top-0 left-[10%] w-px h-full bg-gradient-to-b from-white/10 via-white/5 to-transparent border-l border-dashed border-white/10" />
