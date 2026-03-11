@@ -12,10 +12,10 @@ import Marque from './components/Marque';
 import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
 import PlatformPanels from './components/PlatformPanels';
+import SuccessStories from './components/SuccessStories';
 
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
-
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import StudentSignupPage from './pages/Student/StudentSignupPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
@@ -57,6 +57,7 @@ const HomePage = () => {
                 <Hero />
                 <OnlineCourseFocus />
                 <TechStackStats />
+                <SuccessStories />
                 <Hackathon />
                 <ThinkSkoolAdvantage />
                 <MentorGrid />
