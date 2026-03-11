@@ -329,10 +329,10 @@ const Hero = () => {
                     {/* Right Column: Bento Hub */}
                     <div className="relative">
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-4">
+                            <div className="space-y-4 flex flex-col pt-12">
                                 <ProgressCard />
                             </div>
-                            <div className="space-y-4 pt-12">
+                            <div className="space-y-4">
                                 <StreakCard />
                                 <LiveActivityCard />
                             </div>
