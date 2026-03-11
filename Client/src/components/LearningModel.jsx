@@ -68,7 +68,7 @@ const MockupDisplay = ({ id }) => {
                                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adrian" alt="mentor" />
                             </div>
                             <div>
-                                <div className="text-[11px] font-bold text-white">Adrian K. <span className="text-[9px] text-emerald-500 ml-2">Sr. Architect</span></div>
+                                <div className="text-[11px] font-bold text-white">Adrian K. <span className="text-[9px] text-slate-400 ml-2">Sr. Architect</span></div>
                                 <div className="text-[9px] text-slate-500">Leading the session on Scalability Patterns</div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ const MockupDisplay = ({ id }) => {
                         {/* Module Roadmap Cards */}
                         <div className="grid grid-cols-1 gap-3">
                             {[ 
-                                { title: 'Foundational Principles', progress: '85%', color: 'w-[85%] bg-emerald-500' },
+                                { title: 'Foundational Principles', progress: '85%', color: 'w-[85%] bg-white' },
                                 { title: 'Industrial System Design', progress: 'Locked', color: 'w-0 bg-slate-700' }
                             ].map((module, i) => (
                                 <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3 hover:bg-white/[0.08] transition-colors">
@@ -92,8 +92,8 @@ const MockupDisplay = ({ id }) => {
                         </div>
 
                         {/* Featured Resource Card */}
-                        <div className="mt-auto p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-transparent border border-emerald-500/20 flex gap-4 items-center">
-                            <div className="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/30">
+                        <div className="mt-auto p-4 rounded-xl bg-gradient-to-r from-white/10 to-transparent border border-white/10 flex gap-4 items-center">
+                            <div className="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center text-white border border-white/20">
                                 <Code2 size={24} />
                             </div>
                             <div className="flex-1">
@@ -111,9 +111,9 @@ const MockupDisplay = ({ id }) => {
                     <div className="p-0 h-full flex flex-col">
                         <div className="bg-slate-800 border-b border-white/10 px-5 py-3 flex items-center justify-between">
                             <div className="flex gap-2">
-                                <div className="w-3 h-3 rounded-full bg-red-500" />
-                                <div className="w-3 h-3 rounded-full bg-amber-500" />
-                                <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                                <div className="w-3 h-3 rounded-full bg-slate-600" />
+                                <div className="w-3 h-3 rounded-full bg-slate-500" />
+                                <div className="w-3 h-3 rounded-full bg-slate-400" />
                             </div>
                             <div className="text-[12px] text-slate-300 font-mono font-bold tracking-tight">sandbox.thinkskool.ai</div>
                         </div>
@@ -125,13 +125,13 @@ const MockupDisplay = ({ id }) => {
                                 <div className="mt-auto p-2 rounded hover:bg-white/5 text-slate-500"><Rocket size={16} /></div>
                             </div>
                             <div className="flex-1 p-8 font-mono text-[13px] space-y-3 leading-relaxed">
-                                <div className="text-emerald-400 font-bold">const thinkskool = async () =&gt; &#123;</div>
+                                <div className="text-slate-400 font-bold">const thinkskool = async () =&gt; &#123;</div>
                                 <div className="pl-6 text-white font-medium">await learn("core_concepts");</div>
                                 <div className="pl-6 text-white font-medium">await practice("live_sandbox");</div>
                                 <div className="pl-6 text-slate-400">await deploy("production");</div>
-                                <div className="text-emerald-400 font-bold">&#125;;</div>
+                                <div className="text-slate-400 font-bold">&#125;;</div>
                                 <div className="pt-6 text-slate-500 italic font-medium">// Terminal Output...</div>
-                                <div className="text-white bg-emerald-500/20 border border-emerald-500/40 px-4 py-2 rounded-lg inline-block font-bold">
+                                <div className="text-white bg-white/10 border border-white/20 px-4 py-2 rounded-lg inline-block font-bold">
                                     Success: Build generated in 1.2s
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ const MockupDisplay = ({ id }) => {
                                 { name: 'Elena R.', seed: '13' } 
                             ].map((user, i) => (
                                 <div key={i} className="aspect-square rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-3 shadow-lg hover:bg-white/[0.08] transition-all">
-                                    <div className="w-14 h-14 rounded-full p-0.5 bg-gradient-to-b from-emerald-500/50 to-transparent">
+                                    <div className="w-14 h-14 rounded-full p-0.5 bg-gradient-to-b from-slate-500/50 to-transparent">
                                         <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.seed}`} alt="user" className="w-full h-full rounded-full bg-slate-800" />
                                     </div>
                                     <div className="text-[10px] font-bold text-slate-400 capitalize">{user.name}</div>
@@ -158,13 +158,13 @@ const MockupDisplay = ({ id }) => {
                         <div className="flex-1 bg-white/10 rounded-3xl border border-white/20 p-6 space-y-6 relative overflow-hidden shadow-inner">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400"><Users2 size={20} /></div>
+                                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white"><Users2 size={20} /></div>
                                     <div className="space-y-0.5">
                                         <div className="text-[12px] font-bold text-white">Agile Sprint #4</div>
                                         <div className="text-[9px] text-slate-500">8 Days remaining</div>
                                     </div>
                                 </div>
-                                <div className="px-3 py-1 bg-emerald-500 text-black text-[9px] font-black rounded-full uppercase tracking-widest">In Progress</div>
+                                <div className="px-3 py-1 bg-white text-black text-[9px] font-black rounded-full uppercase tracking-widest">In Progress</div>
                             </div>
                             <div className="space-y-4">
                                 <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
@@ -181,7 +181,7 @@ const MockupDisplay = ({ id }) => {
                                 </div>
                             </div>
                             <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-900 to-transparent flex items-center px-6">
-                                <div className="h-8 w-full border border-emerald-500/30 rounded-full flex items-center justify-center text-[9px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 backdrop-blur-sm">
+                                <div className="h-8 w-full border border-white/20 rounded-full flex items-center justify-center text-[9px] font-bold text-white uppercase tracking-widest bg-white/10 backdrop-blur-sm">
                                     3 Open Pull Requests
                                 </div>
                             </div>
@@ -192,8 +192,8 @@ const MockupDisplay = ({ id }) => {
                 return (
                     <div className="h-full flex flex-col items-center justify-center p-8 gap-8 text-center">
                         <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
-                            <div className="absolute inset-0 rounded-full border border-emerald-500/20" />
-                            <Rocket size={40} className="text-emerald-400" />
+                            <div className="absolute inset-0 rounded-full border border-white/20" />
+                            <Rocket size={40} className="text-white" />
                         </div>
                         <div className="space-y-3">
                             <div className="text-2xl font-bold text-white">Project Live</div>

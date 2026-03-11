@@ -27,14 +27,14 @@ const IndustrialNetwork = () => {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.5 }}
                             whileHover={{ y: -4, scale: 1.01 }}
-                            className="group flex flex-col items-center text-center gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-blue-200 hover:bg-white transition-all duration-500"
+                            className="group flex flex-col items-center text-center gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-slate-200 hover:bg-slate-50 transition-all duration-500"
                         >
-                            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center text-blue-600 border border-slate-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center text-slate-800 border border-slate-100 group-hover:bg-slate-900 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-[0_0_20px_rgba(0,0,0,0.05)]">
                                 {item.icon}
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="text-[17px] font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">{item.label}</span>
-                                <span className="text-[13px] font-medium text-blue-600 tracking-tight mt-2">Tier-1 Partner Network</span>
+                                <span className="text-[17px] font-bold tracking-tight text-slate-900 group-hover:text-slate-900 transition-colors">{item.label}</span>
+                                <span className="text-[13px] font-medium text-slate-600 tracking-tight mt-2">Tier-1 Partner Network</span>
                             </div>
                             <p className="text-[14px] text-slate-500 font-medium leading-relaxed max-w-[220px] tracking-tight">
                                 Accessible within our professional learning environment.

@@ -36,7 +36,7 @@ const PANELS = [
         subtitle: "OPERATIONAL EDGE",
         description: "Fueling the ecosystem. Data-driven tools for scaling outreach, managing lead pipelines, and optimizing operations.",
         icon: TrendingUp,
-        color: "green",
+        color: "slate",
         features: [
             { icon: Database, title: "Lead Management", desc: "End-to-end tracking from first interaction to enrollment.", status: "Live" },
             { icon: TrendingUp, title: "Revenue Analytics", desc: "Detailed forecasting and performance visualizations.", status: "Live" },
@@ -71,7 +71,7 @@ const PlatformPanels = () => {
         <section id="platform-panels" className="bg-slate-950 py-24 relative overflow-hidden">
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/[0.02] blur-[120px] rounded-full pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
                 <div className="mb-16">
@@ -136,8 +136,8 @@ const PlatformPanels = () => {
                                                     <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-white group-hover/card:scale-110 transition-transform">
                                                         <f.icon size={20} />
                                                     </div>
-                                                    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${f.status === 'Live' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-500/10 text-slate-500 border-slate-500/20'}`}>
-                                                        {f.status === 'Live' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />}
+                                                    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${f.status === 'Live' ? 'bg-white/10 text-white border-white/20' : 'bg-slate-500/10 text-slate-500 border-slate-500/20'}`}>
+                                                        {f.status === 'Live' && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
                                                         {f.status}
                                                     </span>
                                                 </div>
