@@ -117,31 +117,36 @@ const StudentEcosystem = () => {
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/80 backdrop-blur-xl p-4 border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-slate-900/30"
+                            className="group relative bg-white/80 backdrop-blur-xl p-4 border-2 border-slate-900/20 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-slate-900/40"
                         >
-                            <div className="relative z-10 flex flex-col h-full">
+                            <div className="relative z-10 flex flex-col h-full bg-white">
                                 {/* Image Container - Enforced 16:9 Aspect Ratio */}
-                                <div className="w-full aspect-video overflow-hidden mb-4 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
+                                <div className="w-full aspect-video overflow-hidden border-b border-slate-100 relative group-hover:shadow-md transition-all">
                                     <img
                                         src={feature.image}
                                         alt={feature.title}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                     <div className="absolute top-3 left-3 flex items-center justify-center">
-                                        <div className="absolute inset-0 bg-slate-900/20 blur-xl scale-150 opacity-100 transition-opacity duration-500" />
+                                        <div className="absolute inset-0 bg-slate-900/40 blur-xl scale-150 transition-opacity duration-500" />
                                         <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:text-slate-200 transition-colors relative z-10 text-xl">
                                             {feature.icon}
                                         </div>
                                     </div>
                                 </div>
 
-                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
-                                <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-black transition-colors">{feature.title}</h3>
+                                {/* Content Body */}
+                                <div className="p-6 flex-1 flex flex-col">
+                                    <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-slate-900 transition-colors">{feature.miniTitle}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight leading-none group-hover:text-black transition-colors">{feature.title}</h3>
 
-                                <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-900 transition-colors">Program Details</span>
-                                    <div className="w-7 h-7 bg-slate-50 flex items-center justify-center text-[9px] text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all transform group-hover:rotate-45">
-                                        <FaArrowRight size={8} />
+                                    <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between group-hover:border-slate-200 transition-colors">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors flex items-center gap-2">
+                                            Program Details
+                                        </span>
+                                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all transform group-hover:translate-x-1 shadow-sm">
+                                            <FaArrowRight />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
