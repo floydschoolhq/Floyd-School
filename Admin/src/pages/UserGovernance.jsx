@@ -34,7 +34,7 @@ const UserGovernance = () => {
         name: '',
         email: '',
         password: '',
-        role: 'mentor'
+        role: 'student'
     });
 
     const fetchUsers = async () => {
@@ -77,7 +77,7 @@ const UserGovernance = () => {
         try {
             await api.post('/admin/users', formData);
             setShowModal(false);
-            setFormData({ name: '', email: '', password: '', role: 'mentor' });
+            setFormData({ name: '', email: '', password: '', role: 'student' });
             fetchUsers();
             alert('Node created successfully.');
         } catch (error) {
@@ -192,6 +192,7 @@ const UserGovernance = () => {
                                         onChange={e => setFormData({ ...formData, role: e.target.value })}
                                         className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors appearance-none"
                                     >
+                                        <option value="student">Student</option>
                                         <option value="mentor">Mentor</option>
                                         <option value="growth_associate">Growth Associate</option>
                                         <option value="admin">Admin</option>

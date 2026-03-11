@@ -132,11 +132,7 @@ const StudentLoginPage = () => {
               </span>
             </motion.button>
 
-            <div className="text-center pt-4 border-t border-slate-50">
-              <p className="text-[14px] font-bold text-slate-400 uppercase tracking-wide">
-                Don't have an account? <Link to="/student/signup" className="text-[#2563EB] hover:text-slate-900 transition-colors ml-1">Sign Up</Link>
-              </p>
-            </div>
+            {/* Signup link removed as per new access control policy */}
           </form>
         </div>
 

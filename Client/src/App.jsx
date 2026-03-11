@@ -18,7 +18,6 @@ import LearningModel from './components/LearningModel';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
-import StudentSignupPage from './pages/Student/StudentSignupPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import renderPage from './pages/Student/renderPage.jsx';
 import Contact from './components/Contact.jsx';
@@ -86,7 +85,6 @@ const App = () => {
     // 2. Define the paths where Navbar/Footer should be hidden
     const hideLayoutOnPaths = [
         '/student/login',
-        '/student/signup',
         '/student',
         '/downloads',
         '/contact',
@@ -130,8 +128,7 @@ const App = () => {
                 {/*Login*/}
                 <Route path='/student/login' element={<StudentLoginPage />} />
 
-                {/*Signup*/}
-                <Route path='/student/signup' element={<StudentSignupPage />} />
+                {/*Signup forms removed*/}
 
                 {/* School Partnership */}
                 <Route path='/school-partnerships' element={<SchoolPartnership />} />

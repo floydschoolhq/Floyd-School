@@ -68,7 +68,7 @@ const PremiumNavbar = () => {
 
     const handleBookSession = () => {
         if (!user) {
-            navigate('/student/signup');
+            navigate('/student/login');
         } else {
             setSource('briefing');
             setIsModalOpen(true);

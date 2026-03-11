@@ -1,15 +1,16 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // Generate JWT
-const generateToken = (id) => {
+const generateToken = (id, sessionToken) => {
     // Fallback to avoid hard crash if config is missing, but log a warning
     const secret = process.env.JWT_SECRET || 'fallback_secret_for_emergency_recovery_only';
     if (!process.env.JWT_SECRET) {
         console.warn('CRITICAL WARNING: JWT_SECRET is missing. Using insecure fallback secret.');
     }
-    return jwt.sign({ id }, secret, {
+    return jwt.sign({ id, sessionToken }, secret, {
         expiresIn: '30d',
     });
 };
@@ -50,13 +51,18 @@ const registerUser = async (req, res) => {
                 io.emit('new-user', { name: user.name, role: user.role });
             }
 
+            // Generate initial session token
+            const sessionToken = crypto.randomBytes(16).toString('hex');
+            user.sessionToken = sessionToken;
+            await user.save();
+
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
                 permissions: user.permissions,
-                token: generateToken(user._id),
+                token: generateToken(user._id, sessionToken),
             });
         } else {
             res.status(400).json({ message: 'Invalid user data' });
@@ -89,6 +95,11 @@ const loginUser = async (req, res) => {
         const isMatch = await user.matchPassword(password);
         if (isMatch) {
             console.log(`[Auth] Login successful for: ${email} (${user.role})`);
+            
+            // Single Device Login: Generate new session token and invalidate old ones
+            const sessionToken = crypto.randomBytes(16).toString('hex');
+            user.sessionToken = sessionToken;
+            
             // Update lastLogin
             user.lastLogin = Date.now();
             await user.save();
@@ -105,7 +116,7 @@ const loginUser = async (req, res) => {
                 email: user.email,
                 role: user.role,
                 permissions: user.permissions,
-                token: generateToken(user._id),
+                token: generateToken(user._id, sessionToken),
             });
         } else {
             console.warn(`[Auth] Password mismatch for: ${email}`);
