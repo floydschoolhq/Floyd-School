@@ -71,83 +71,117 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="absolute top-full left-1/2 -translate-x-[40%] mt-4 w-[850px] bg-[#0A0F1E] rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.4)] border border-white/10 overflow-hidden z-[100]"
+            className="absolute top-full left-1/2 -translate-x-[40%] mt-4 w-[900px] bg-white rounded-[2rem] shadow-[0_40px_100px_rgba(0,0,0,0.12)] border border-slate-100/80 overflow-hidden z-[100]"
         >
             <div className="flex min-h-[500px]">
                 {/* Left Panel: Domains */}
-                <div className="w-[35%] bg-white/5 p-8 border-r border-white/10 flex flex-col gap-2">
-                    <h3 className="text-[11px] font-medium text-white/40 uppercase tracking-widest mb-6 px-3">Domains</h3>
-                    {LEARNERS_DATA.map((domain) => (
-                        <button
-                            key={domain.id}
-                            onMouseEnter={() => setActiveDomain(domain)}
-                            className={`group flex items-start p-4 transition-all duration-300 text-left ${activeDomain?.id === domain.id
-                                ? "text-white"
-                                : "text-white/40 hover:text-white/80"
+                <div className="w-[38%] bg-slate-50 p-6 border-r border-slate-100 flex flex-col gap-2 relative">
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Domains</h3>
+                    {LEARNERS_DATA.map((domain) => {
+                        const isActive = activeDomain?.id === domain.id;
+                        return (
+                            <button
+                                key={domain.id}
+                                onMouseEnter={() => setActiveDomain(domain)}
+                                className={`group relative w-full flex items-start p-4 transition-all duration-300 rounded-2xl text-left ${
+                                    isActive ? "bg-white shadow-sm border border-slate-100/50" : "hover:bg-slate-100/50 border border-transparent"
                                 }`}
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="text-left">
-                                    <p className={`text-[13px] font-semibold tracking-tight leading-none uppercase ${activeDomain?.id === domain.id ? "text-white" : "text-white/40"}`}>{domain.label}</p>
-                                    <p className="text-[10px] font-medium mt-2 opacity-30 uppercase tracking-widest">{domain.description}</p>
+                            >
+                                {isActive && (
+                                    <motion.div 
+                                        layoutId="activeIndicator"
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full"
+                                    />
+                                )}
+                                <div className="flex gap-4 items-start w-full">
+                                    <div className={`mt-0.5 shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                                        <domain.icon size={20} strokeWidth={isActive ? 2.5 : 2} />
+                                    </div>
+                                    <div>
+                                        <p className={`text-[14px] font-bold tracking-tight mb-1 ${isActive ? "text-slate-900" : "text-slate-600"}`}>
+                                            {domain.label}
+                                        </p>
+                                        <p className="text-[12px] text-slate-500 leading-snug">
+                                            {domain.description}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                    ))}
+                            </button>
+                        );
+                    })}
                 </div>
 
-                {/* Right Panel: Courses */}
-                <div className="w-[65%] p-10 relative bg-[#0A0F1E]">
-                    {/* Background Glow */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-[80px] pointer-events-none" />
+                {/* Right Panel: Courses & Bootcamps */}
+                <div className="w-[62%] bg-white flex flex-col justify-between">
+                    <div className="p-8 pb-4 relative h-full">
+                        {/* Background Glow */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 blur-[80px] pointer-events-none" />
 
-                    <div className="grid grid-cols-2 gap-10 h-full relative z-10">
-                        {/* Certifications */}
-                        <div className="col-span-1">
-                            <h3 className="text-[11px] font-medium text-white/40 uppercase tracking-widest mb-6">Industrial Certifications</h3>
-                            <div className="flex flex-col gap-3">
-                                {activeDomain.certifications.map((cert, idx) => (
-                                    <Link
-                                        key={idx}
-                                        to="/online-program#explore-programs"
-                                        className="group py-4 transition-all duration-500 border-b border-white/[0.03] hover:border-white/10"
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                <p className="text-[13px] font-semibold text-white/80 group-hover:text-white uppercase tracking-tight transition-colors">{cert.title}</p>
-                                                <p className="text-[9px] font-medium text-white/30 uppercase tracking-widest mt-1">Industrial Program</p>
+                        <div className="grid grid-cols-2 gap-8 relative z-10">
+                            {/* Certifications (Left Col) */}
+                            <div>
+                                <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">Industrial Certifications</h3>
+                                <div className="flex flex-col gap-2">
+                                    {activeDomain.certifications.map((cert, idx) => (
+                                        <Link
+                                            key={idx}
+                                            to="/online-program#explore-programs"
+                                            className="group flex gap-3 p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-300 items-center justify-between"
+                                        >
+                                            <div className="flex gap-3 items-center">
+                                                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                                    <cert.icon size={16} strokeWidth={2.5} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[13px] font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">{cert.title}</p>
+                                                    <p className="text-[11px] font-medium text-slate-500 mt-0.5">Industrial Program</p>
+                                                </div>
                                             </div>
-                                            <ArrowRight size={14} className="text-white/10 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" />
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Bootcamps */}
-                        <div className="col-span-1">
-                            <h3 className="text-[11px] font-medium text-white/40 uppercase tracking-widest mb-6">Foundational Bootcamps</h3>
-                            <div className="space-y-1">
-                                {activeDomain.bootcamps.map((camp, idx) => (
-                                    <Link
-                                        key={idx}
-                                        to="/online-program#explore-programs"
-                                        className="block py-3 text-[11px] font-medium text-white/30 hover:text-white/80 transition-all tracking-widest uppercase"
-                                    >
-                                        {camp.title}
-                                    </Link>
-                                ))}
+                                            <ArrowRight size={14} className="text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="mt-12 py-8 border-t border-white/5 opacity-80 group cursor-pointer transition-all text-left">
-                                <p className="text-[10px] font-medium text-white/20 mb-2 uppercase tracking-widest">Ready to Master?</p>
-                                <p className="text-[13px] text-white font-medium leading-relaxed mb-6 uppercase tracking-tight">Join our global network of learners and start your engineering journey today.</p>
-                                <div className="flex items-center gap-3 text-[11px] font-semibold text-white uppercase tracking-widest group-hover:gap-5 transition-all">
-                                    Explore Industrial Academy <ArrowRight size={14} strokeWidth={2} />
+                            {/* Bootcamps (Right Col) */}
+                            <div>
+                                <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">Foundational Bootcamps</h3>
+                                <div className="flex flex-col gap-1">
+                                    {activeDomain.bootcamps.map((camp, idx) => (
+                                        <Link
+                                            key={idx}
+                                            to="/online-program#explore-programs"
+                                            className="group px-3 py-2.5 rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-between"
+                                        >
+                                            <span className="text-[13px] font-medium text-slate-600 group-hover:text-blue-600">{camp.title}</span>
+                                        </Link>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    {/* Bottom CTA Banner */}
+                    <Link to="/online-program#explore-programs" className="group">
+                        <div className="mx-6 mb-6 mt-4 p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-between hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 overflow-hidden relative">
+                            {/* Decorative Background Elements */}
+                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none" />
+                            <div className="absolute right-0 top-0 w-32 h-32 bg-white/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+                            
+                            <div className="relative z-10 flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md shrink-0">
+                                    <Rocket size={20} className="text-white fill-white/20" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-[14px] leading-tight mb-1">Join our global network of learners</p>
+                                    <p className="text-blue-100 text-[12px] font-medium">Start your engineering journey today.</p>
+                                </div>
+                            </div>
+                            <div className="relative z-10 bg-white/10 hover:bg-white/20 transition-colors p-2.5 rounded-full backdrop-blur-sm group-hover:scale-110 duration-300">
+                                <ArrowRight size={16} className="text-white" />
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </motion.div>

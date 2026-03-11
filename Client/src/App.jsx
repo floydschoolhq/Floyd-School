@@ -10,6 +10,8 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Marque from './components/Marque';
 import PremiumNavbar from './components/PremiumNavbar';
+import MentorGrid from './components/MentorGrid';
+import PlatformPanels from './components/PlatformPanels';
 
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
@@ -30,39 +32,40 @@ import BootcampGallery from './pages/BootcampGallery.jsx';
 
 import Logo from './components/Logo.jsx';
 import StickyBottomBar from './components/StickyBottomBar.jsx';
-import Faculty from './components/Faculty.jsx';
 import Masterclasses from './components/Masterclasses.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
+import TechStackStats from './components/TechStackStats.jsx';
 
 
 import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import Feature from './components/Feature';
-import LearningJourney from './components/LearningJourney.jsx';
 import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
+import ScrollTracker from './components/common/ScrollTracker.jsx';
 
 
 // --- Home Page Component ---
 const HomePage = () => {
     return (
         <div>
+            <ScrollTracker />
             <GlobalNotificationListener />
             {/* 3. Scrollable Content (The rest of your components) */}
             <div className='relative'>
                 <Hero />
                 <OnlineCourseFocus />
-                <Faculty />
-                <LearningJourney />
+                <TechStackStats />
                 <Hackathon />
                 <ThinkSkoolAdvantage />
+                <MentorGrid />
+                <PlatformPanels />
                 <IndustrialNetwork />
                 <Masterclasses />
                 <Feature />
                 <InteractiveFeatures isFeaturesExpanded={true} />
                 <StudentEcosystem />
-                <About />
             </div>
             <StickyBottomBar />
         </div>
@@ -110,8 +113,6 @@ const App = () => {
         <div>
             {/* Conditional Navbar Rendering */}
             {!shouldHideLayout && <PremiumNavbar />}
-
-
             {/* Main Routes */}
             <Routes>
                 {/* Marketing Pages */}
@@ -137,7 +138,7 @@ const App = () => {
                 {/* Online Program */}
                 <Route path='/online-program' element={<OnlineProgram />} />
 
-                {/* Bootcamp Gallery */}
+                {/* Bootcamp Exhibition Gallery */}
                 <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
             </Routes>
 

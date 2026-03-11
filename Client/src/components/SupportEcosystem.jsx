@@ -22,11 +22,11 @@ const FeatureCard = ({ item, index, onClick }) => {
             className="group relative h-full cursor-pointer"
             onClick={onClick}
         >
-            <div className="relative bg-white rounded-[2.5rem] p-6 h-full border border-slate-100 shadow-sm transition-all duration-500 flex flex-col hover:border-[#2563EB]/40 hover:shadow-xl hover:shadow-blue-500/5 overflow-hidden">
+            <div className="relative bg-white rounded-2xl p-6 h-full border border-slate-100 shadow-sm transition-all duration-500 flex flex-col hover:border-[#2563EB]/40 hover:shadow-xl hover:shadow-blue-500/5 overflow-hidden">
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Image Component */}
-                <div className="w-full h-56 rounded-2xl overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
+                <div className="w-full h-56 rounded-xl overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
                     <img
                         src={item.image}
                         alt={item.title}
@@ -55,7 +55,7 @@ const FeatureCard = ({ item, index, onClick }) => {
 
                 <div className="relative z-10 flex flex-wrap gap-2 mt-auto pt-6 border-t border-slate-50 w-full">
                     <div className="flex items-center justify-between w-full">
-                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">System Analysis</span>
+                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Program Details</span>
                         <ArrowRight size={10} className="text-slate-300 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all" />
                     </div>
                 </div>
@@ -72,17 +72,17 @@ const SupportEcosystem = () => {
         ...supportRoles.map(r => ({
             ...r,
             desc: r.benefits.join(" • "),
-            fullDesc: `Our ${r.title} are ${r.role} who provide end-to-end industrial support. From ${r.benefits[0].toLowerCase()} to ${r.benefits[1].toLowerCase()}, we ensure your engineering journey is backed by professional precision.`,
+            fullDesc: `Our ${r.title} are ${r.role} who provide end-to-end professional support. From ${r.benefits[0].toLowerCase()} to ${r.benefits[1].toLowerCase()}, we ensure your learning journey is backed by expert guidance.`,
             stats: [
                 { label: "Response", value: "Instant" },
                 { label: "Availability", value: "24/7" },
-                { label: "Expertise", value: "Industrial" }
+                { label: "Expertise", value: "Professional" }
             ]
         }))
     ];
 
     return (
-        <section id="support" ref={containerRef} className="relative bg-[#FFF9FA] py-10 overflow-hidden border-t border-white/5">
+        <section id="support" ref={containerRef} className="relative bg-white py-10 overflow-hidden border-t border-slate-200">
             {/* Ambient Background Energy */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
@@ -102,11 +102,11 @@ const SupportEcosystem = () => {
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
                     >
                         <Zap size={10} className="text-[#2563EB]" />
-                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.4em]">The Industrial Engine</span>
+                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.4em]">Integrated Support</span>
                     </motion.div>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#2563EB] tracking-tight leading-tight mb-6">
-                        Education Ecosystem.
+                        Support Ecosystem.
                     </h2>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] max-w-lg mx-auto leading-relaxed hidden">
                         Industrial veterans and technical architects dedicated to your engineering precision.
@@ -124,13 +124,13 @@ const SupportEcosystem = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="bg-white rounded-[2.5rem] p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100 shadow-sm"
+                    className="bg-white rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100 shadow-sm"
                 >
                     <div className="relative z-10 text-center md:text-left">
                         <h3 className="text-3xl font-bold text-slate-900 tracking-tight leading-none mb-4">
                             Global <span className="text-[#2563EB]">Response.</span>
                         </h3>
-                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em]">Integrated Tech-Support Intelligence</p>
+                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em]">Integrated Technical Support</p>
                     </div>
 
                     <div className="relative z-10 flex items-center gap-12">
@@ -160,7 +160,7 @@ const SupportEcosystem = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] overflow-y-auto bg-slate-950/40 backdrop-blur-md"
+                        className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/10 backdrop-blur-md"
                     >
                         <div
                             className="min-h-full flex items-center justify-center p-4 md:p-8"
@@ -170,20 +170,20 @@ const SupportEcosystem = () => {
                                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                                 animate={{ scale: 1, y: 0, opacity: 1 }}
                                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
-                                className="bg-white rounded-[3rem] w-full max-w-2xl shadow-2xl border border-white/20 relative group/modal"
+                                className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl border border-white/20 relative group/modal"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {/* Close Button */}
                                 <button
                                     onClick={() => setSelectedRole(null)}
-                                    className="absolute top-6 right-6 z-50 p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-2xl text-slate-900 transition-all border border-slate-900/5 hover:scale-110 active:scale-95"
+                                    className="absolute top-6 right-6 z-50 p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-xl text-slate-900 transition-all border border-slate-900/5 hover:scale-110 active:scale-95"
                                 >
                                     <X size={20} />
                                 </button>
 
                                 <div className="p-8 md:p-12">
                                     {/* Header with Image */}
-                                    <div className="w-full h-56 rounded-[2rem] overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
+                                    <div className="w-full h-56 rounded-xl overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
                                         <img
                                             src={selectedRole.image}
                                             alt={selectedRole.title}
@@ -216,7 +216,7 @@ const SupportEcosystem = () => {
 
                                     {/* Content */}
                                     <div className="space-y-8">
-                                        <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
+                                        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                                             <p className="text-slate-600 text-[13px] font-bold uppercase tracking-wider leading-relaxed">
                                                 {selectedRole.fullDesc}
                                             </p>
@@ -225,7 +225,7 @@ const SupportEcosystem = () => {
                                         {/* Stats Grid */}
                                         <div className="grid grid-cols-3 gap-4">
                                             {selectedRole.stats.map((stat, i) => (
-                                                <div key={i} className="p-4 rounded-2xl bg-white border border-slate-100 text-center shadow-sm">
+                                                <div key={i} className="p-4 rounded-xl bg-white border border-slate-100 text-center shadow-sm">
                                                     <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.label}</span>
                                                     <span className="block text-[13px] font-black text-slate-900 uppercase tracking-tight">{stat.value}</span>
                                                 </div>

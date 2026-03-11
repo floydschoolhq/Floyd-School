@@ -70,10 +70,9 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   };
 
   return (
-    <section id="how-it-works" className="py-24 bg-black text-white relative overflow-hidden">
+    <section id="how-it-works" className="py-24 bg-white text-slate-900 relative overflow-hidden transition-colors duration-500">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]" />
+        {/* Orbs removed for Apple White theme */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -91,11 +90,11 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
             <div>
               <div className="flex items-center gap-6 mb-12">
                 <div className="relative flex items-center justify-center">
-                  <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-110 opacity-100" />
-                  <Rocket className="text-blue-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" strokeWidth={1.5} />
+                  <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full scale-110 opacity-100" />
+                  <Rocket className="text-orange-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] relative z-10" strokeWidth={1.5} />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
-                  Interactive <span className="text-blue-600">Learning</span>
+                  Interactive <span className="text-orange-500">Learning</span>
                 </h2>
               </div>
 
@@ -115,11 +114,11 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
             <div>
               <div className="flex items-center gap-6 mb-12">
                 <div className="relative flex items-center justify-center">
-                  <div className="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full scale-110 opacity-100" />
-                  <Users className="text-indigo-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(79,70,229,0.4)] relative z-10" strokeWidth={1.5} />
+                  <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full scale-110 opacity-100" />
+                  <Users className="text-orange-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] relative z-10" strokeWidth={1.5} />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
-                  Community <span className="text-indigo-600">& Support</span>
+                  Community <span className="text-orange-500">& Support</span>
                 </h2>
               </div>
 
@@ -147,26 +146,26 @@ const FeatureCard = ({ feature }) => (
       hidden: { opacity: 0, y: 20 },
       visible: { opacity: 1, y: 0 }
     }}
-    whileHover={{ y: -5, scale: 1.02 }}
-    className="group relative p-6 rounded-[2rem] bg-white/[0.03] border border-white/10 backdrop-blur-sm hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 cursor-default overflow-hidden"
+    whileHover={{ }}
+    className="group relative p-6 rounded-2xl bg-white border border-slate-100 hover:border-blue-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 cursor-default overflow-hidden"
   >
     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500`} />
 
     <div className="flex items-start gap-8 relative z-10">
       <div className="shrink-0 relative flex items-center justify-center py-2">
         <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} blur-2xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-        <div className="relative z-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] group-hover:scale-125 transition-transform duration-500">
+        <div className="relative z-10 text-slate-900 drop-shadow-sm group-hover:scale-125 transition-transform duration-500">
           {React.cloneElement(feature.icon, { size: 32, strokeWidth: 1.5 })}
         </div>
       </div>
       <div>
-        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors uppercase tracking-tight">
+        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors uppercase tracking-tight text-slate-900">
           {feature.title}
         </h3>
-        <p className="text-slate-400 text-sm leading-relaxed mb-1">
+        <p className="text-slate-500 text-sm leading-relaxed mb-1 font-medium">
           {feature.description}
         </p>
-        <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500">
           {feature.detail}
         </p>
       </div>

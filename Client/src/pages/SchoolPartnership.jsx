@@ -7,6 +7,10 @@ import Brochure from '../assets/pdf/Brochure.pdf';
 import SectionHeader from '../components/common/SectionHeader';
 import { timelineSteps, valueProps } from '../constants/siteData';
 import BootcampExhibition from '../components/BootcampExhibition';
+import LearningJourney from '../components/LearningJourney';
+import About from '../components/About';
+import MentorShowcase from '../components/MentorShowcase';
+import Footer from '../components/Footer';
 
 const IconMap = {
     Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, School
@@ -107,7 +111,7 @@ const SchoolPartnership = () => {
                                     <div className={`w-12 h-12 ${step.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300 ring-4 ring-white text-white`}>
                                         {renderIcon(step.icon, "w-5 h-5")}
                                     </div>
-                                    <div className="bg-[#FCF8F8] p-8 rounded-3xl border border-slate-100 h-full hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                                    <div className="bg-[#FCF8F8] p-8 rounded-2xl border border-slate-100 h-full hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
                                         <div className="inline-block px-3 py-1 bg-white rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border border-slate-100">
                                             {step.phase}
                                         </div>
@@ -156,8 +160,8 @@ const SchoolPartnership = () => {
                         </div>
                     </div>
                     <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-100 rounded-[3rem] transform rotate-3 blur-sm" />
-                        <div className="relative bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-100 rounded-2xl transform rotate-3 blur-sm" />
+                        <div className="relative bg-white rounded-2xl p-10 border border-slate-100 shadow-2xl">
                             <div className="bg-slate-900 rounded-2xl p-6 mb-6">
                                 <div className="flex items-center gap-3 mb-4">
                                     <div className="w-3 h-3 rounded-full bg-blue-400" />
@@ -187,6 +191,13 @@ const SchoolPartnership = () => {
 
             {/* Bootcamp Exhibition Gallery */}
             <BootcampExhibition />
+
+            {/* Mentor Showcase Section (Slideshow + Industrial Benefits) */}
+            <MentorShowcase />
+
+            {/* Relocated Sections */}
+            <About />
+            <LearningJourney />
 
             {/* Final CTA */}
             <div className="py-24 bg-[#2D2D2D] relative overflow-hidden">

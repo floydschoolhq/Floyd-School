@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Cpu, Code, Terminal, ShieldCheck, Globe, Video, MessageSquare, Rocket, CheckCircle2, Zap, X, Check, Target, Layers } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import { FALLBACK_COURSES } from '../constants/siteData';
 
 const OnlineCourseFocus = () => {
@@ -16,23 +17,14 @@ const OnlineCourseFocus = () => {
     };
 
     return (
-        <section id="online-focus" className="relative pt-6 pb-8 bg-[#FFF9FA] overflow-hidden">
-            {/* Ambient Background Elements */}
-            <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[80px] pointer-events-none opacity-50" />
-            <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[60px] pointer-events-none opacity-50" />
+        <section id="online-focus" className="relative pt-6 pb-8 bg-white overflow-hidden">
 
             <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-6">
-                    <motion.h2
-                        initial={{ opacity: 0, y: -20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ type: "spring", damping: 15, stiffness: 60 }}
-                        className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-none"
-                    >
+                    <ScrollDarkenHeading>
                         OUR BATCHES
-                    </motion.h2>
+                    </ScrollDarkenHeading>
                 </div>
 
                 {/* Featured Programs Grid */}
@@ -60,15 +52,29 @@ const OnlineCourseFocus = () => {
                                         viewport={{ once: true }}
                                         transition={{ delay: idx * 0.04, type: "spring", damping: 25 }}
                                         whileHover={{ y: -2 }}
-                                        className="p-2.5 rounded-[1.2rem] bg-white border border-slate-100/60 hover:border-blue-500/10 transition-all cursor-pointer shadow-[0_1px_4px_-1px_rgba(0,0,0,0.03)] hover:shadow-lg group"
+                                        className="p-2.5 rounded-2xl bg-white border border-slate-100/60 hover:border-blue-500/10 transition-all cursor-pointer shadow-[0_1px_4px_-1px_rgba(0,0,0,0.03)] hover:shadow-lg group"
                                         onClick={() => setSelectedCourse(course)}
                                     >
-                                        <div className="w-full h-52 rounded-[1.2rem] overflow-hidden mb-5 border border-slate-50 shadow-sm group-hover:shadow-md transition-shadow">
+                                        <div className="w-full aspect-video rounded-xl overflow-hidden mb-5 border border-slate-50 shadow-sm group-hover:shadow-md transition-shadow relative">
                                             <img
                                                 src={course.image}
                                                 alt={course.title}
                                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                             />
+                                            {course.comingSoon && (
+                                                <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] flex items-center justify-center">
+                                                    <span className="px-4 py-1.5 bg-white text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] shadow-xl">Coming Soon</span>
+                                                </div>
+                                            )}
+                                            {course.live && (
+                                                <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/20">
+                                                    <span className="relative flex h-2 w-2">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                                    </span>
+                                                    <span className="text-[9px] font-black text-slate-900 uppercase tracking-widest">Live Now</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <h4 className="text-xl font-black text-slate-900 uppercase tracking-tighter mb-3 leading-none group-hover:text-blue-600 transition-colors">{course.title}</h4>
 
@@ -89,7 +95,7 @@ const OnlineCourseFocus = () => {
                             <div className="col-span-full py-16 bg-white border border-dashed border-blue-100 rounded-[2rem] flex flex-col items-center justify-center text-center">
                                 <Rocket size={40} className="text-blue-500/20 mb-4" />
                                 <h4 className="text-lg font-black text-slate-400 uppercase tracking-tighter">New Batches Launching Soon</h4>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-2">Secure your early access. Architecting the future of engineering.</p>
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-2">Secure your early access. Preparing the next generation of engineers.</p>
                             </div>
                         )}
                     </div>
@@ -114,18 +120,18 @@ const OnlineCourseFocus = () => {
                                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                                 animate={{ scale: 1, y: 0, opacity: 1 }}
                                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
-                                className="bg-white rounded-[3rem] w-full max-w-2xl shadow-2xl border border-white/20 relative"
+                                className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl border border-white/20 relative"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 <button
                                     onClick={() => setSelectedCourse(null)}
-                                    className="absolute top-6 right-6 p-2 bg-slate-950/05 hover:bg-slate-950/10 rounded-xl transition-colors"
+                                    className="absolute top-6 right-6 p-2 bg-slate-950/05 hover:bg-slate-950/10 rounded-lg transition-colors"
                                 >
                                     <X size={20} className="text-slate-900" />
                                 </button>
 
                                 <div className="p-8 md:p-12">
-                                    <div className="w-full h-48 rounded-[2rem] overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
+                                    <div className="w-full aspect-video rounded-xl overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
                                         <img
                                             src={selectedCourse.image}
                                             alt={selectedCourse.title}
@@ -150,7 +156,7 @@ const OnlineCourseFocus = () => {
                                     <div className="grid md:grid-cols-2 gap-8">
                                         <div className="space-y-6">
                                             <div>
-                                                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Program Brief</h4>
+                                                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Program Overview</h4>
                                                 <p className="text-slate-600 font-bold text-sm tracking-tight leading-relaxed">
                                                     {selectedCourse.description}
                                                 </p>
@@ -165,13 +171,14 @@ const OnlineCourseFocus = () => {
                                         </div>
 
                                         <div className="space-y-6">
-                                            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">What's Inside</h4>
+                                             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Program Highlights</h4>
                                             <div className="space-y-3">
                                                 {[
                                                     "7-Day Kickoff Bootcamp",
-                                                    "Production-Ready Labs",
-                                                    "Industrial Peer Learning",
-                                                    "Architect Portfolio Design"
+                                                    "Production-Ready Projects",
+                                                    "Collaborative Learning",
+                                                    "Personalized Mentorship",
+                                                    "Portfolio Development"
                                                 ].map((item, i) => (
                                                     <div key={i} className="flex items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
                                                         <Layers size={14} className="text-blue-500" />
@@ -184,15 +191,17 @@ const OnlineCourseFocus = () => {
 
                                     <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
                                         <div className="text-[16px] font-black uppercase tracking-tighter">
-                                            <span className="text-[#2563EB]">think</span>
-                                            <span className="text-[#F97316]">skool</span> // CAT
+                                            <span className="text-blue-600">think</span>
+                                            <span className="text-blue-600">skool</span>
                                         </div>
-                                        <button
-                                            onClick={() => navigate('/online-program')}
-                                            className="group flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20"
-                                        >
-                                            Apply Now <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                        </button>
+                                        {!selectedCourse.comingSoon && (
+                                            <button
+                                                onClick={() => navigate('/online-program')}
+                                                className="group flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20"
+                                            >
+                                                Apply Now <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>

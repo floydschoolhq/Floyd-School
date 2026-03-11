@@ -16,6 +16,7 @@ export const FALLBACK_COURSES = [
         rating: 4.9,
         duration: "3-4 Months",
         tags: ["AI", "Python", "ML"],
+        live: true,
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
         curriculum: [
             "Neural Network Architectures",
@@ -41,6 +42,7 @@ export const FALLBACK_COURSES = [
         rating: 4.8,
         duration: "3-4 Months",
         tags: ["React", "Node", "Cloud"],
+        comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } },
         curriculum: [
             "Distributed System Design",
@@ -66,6 +68,7 @@ export const FALLBACK_COURSES = [
         rating: 4.7,
         duration: "3-4 Months",
         tags: ["Embedded", "C++", "Sensors"],
+        comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } },
         curriculum: [
             "Embedded C++ Programming",
@@ -91,6 +94,7 @@ export const FALLBACK_COURSES = [
         rating: 4.9,
         duration: "3-4 Months",
         tags: ["SecOps", "Networking", "Hacking"],
+        comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } },
         curriculum: [
             "Ethical Hacking & Pentesting",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, X } from 'lucide-react';
+import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 const ADVANTAGES = [
     {
@@ -31,37 +32,34 @@ const ADVANTAGES = [
         free: false,
         others: false,
     },
-    {
-        feature: "Expert Mentor Access (Industry Pros)",
-        highlight: ["Expert", "Industry"],
-        thinkskool: true,
-        free: false,
-        others: true,
-    },
-    {
-        feature: "Project-Based + Production Deployment",
-        highlight: ["Production", "Project-Based"],
-        thinkskool: true,
-        free: false,
-        others: true,
-    },
 ];
 
 const Check = () => (
     <span className="flex items-center justify-center">
-        <span className="w-6 h-6 rounded-full bg-blue-600/15 border border-blue-500/30 flex items-center justify-center">
-            <CheckCircle2 size={13} className="text-blue-400" strokeWidth={2.5} />
-        </span>
+        <motion.svg 
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            viewBox="0 0 24 24" 
+            className="w-7 h-7 text-blue-600" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="4" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+        >
+            <path d="M5 13l4 4L19 7" />
+        </motion.svg>
     </span>
 );
 
 const Cross = () => (
     <span className="flex items-center justify-center">
-        <X size={14} className="text-slate-700" strokeWidth={2} />
+        <X size={18} className="text-slate-400" strokeWidth={2} />
     </span>
 );
 
-// Highlight specific words in bold blue
 const HighlightText = ({ text, words }) => {
     let result = text;
     const parts = text.split(new RegExp(`(${words.join('|')})`, 'gi'));
@@ -69,70 +67,65 @@ const HighlightText = ({ text, words }) => {
         <span>
             {parts.map((part, i) =>
                 words.some(w => w.toLowerCase() === part.toLowerCase())
-                    ? <span key={i} className="text-blue-400 font-bold">{part}</span>
+                    ? <span key={i} className="text-blue-600 font-bold">{part}</span>
                     : <span key={i}>{part}</span>
             )}
         </span>
     );
 };
 
+const CornerBorders = () => (
+    <>
+        <span style={{ position:'absolute', top:8, left:8, width:14, height:14, borderTop:'1.5px solid rgba(15,23,42,0.18)', borderLeft:'1.5px solid rgba(15,23,42,0.18)', pointerEvents:'none', zIndex:20 }} />
+        <span style={{ position:'absolute', top:8, right:8, width:14, height:14, borderTop:'1.5px solid rgba(15,23,42,0.18)', borderRight:'1.5px solid rgba(15,23,42,0.18)', pointerEvents:'none', zIndex:20 }} />
+        <span style={{ position:'absolute', bottom:8, left:8, width:14, height:14, borderBottom:'1.5px solid rgba(15,23,42,0.18)', borderLeft:'1.5px solid rgba(15,23,42,0.18)', pointerEvents:'none', zIndex:20 }} />
+        <span style={{ position:'absolute', bottom:8, right:8, width:14, height:14, borderBottom:'1.5px solid rgba(15,23,42,0.18)', borderRight:'1.5px solid rgba(15,23,42,0.18)', pointerEvents:'none', zIndex:20 }} />
+    </>
+);
+
 const ThinkSkoolAdvantage = () => {
     return (
-        <section className="py-20 bg-[#060C1B] relative overflow-hidden">
-            {/* Dot grid */}
-            <div className="absolute inset-0 opacity-[0.06] bg-[radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
-            {/* Top center glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-700/15 blur-[120px] rounded-full pointer-events-none" />
-            {/* Bottom right warm accent */}
-            <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-indigo-700/10 blur-[100px] rounded-full pointer-events-none" />
+        <section id="why-us" className="pt-8 pb-24 bg-white relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Orbs removed for pure white theme */}
+            </div>
 
-            <div className="max-w-5xl mx-auto px-4 relative z-10">
-                {/* Heading */}
-                <div className="text-center mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-white text-4xl md:text-5xl font-bold tracking-tight mb-3"
-                    >
+            <div className="max-w-6xl mx-auto px-4 relative z-10">
+                <div className="text-center mb-8">
+                    <ScrollDarkenHeading>
                         Why Us
-                    </motion.h2>
+                    </ScrollDarkenHeading>
                 </div>
 
-                {/* Comparison Table */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="rounded-[2rem] border border-white/[0.08] overflow-hidden bg-[#0D1628]/90 backdrop-blur-xl shadow-[0_32px_64px_rgba(0,0,0,0.4)]"
+                    className="border border-slate-100 overflow-hidden bg-white shadow-[0_32px_64px_rgba(0,0,0,0.02)] relative"
                 >
-                    {/* Header Row */}
-                    <div className="grid grid-cols-[2fr_1fr_1fr_1fr] border-b border-white/8 px-6 py-5">
-                        <div />
-                        {/* ThinkSkool Logo Column */}
-                        <div className="flex flex-col items-center gap-1">
-                            <div className="px-3.5 py-1 rounded-lg bg-white/[0.06] border border-blue-500/25 font-bold text-blue-300 text-[13px] tracking-tight">ThinkSkool</div>
+                    <CornerBorders />
+                    <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr] border-b border-slate-100 px-8 py-8 bg-white">
+                        <div className="flex items-center">
+                            <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">Learning Features</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="px-8 py-3 bg-blue-600 text-white font-black text-[14px] uppercase tracking-wider shadow-xl shadow-blue-500/30">ThinkSkool</div>
                         </div>
                         <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-bold text-[15px] tracking-tight">Free Resources</span>
+                            <span className="text-slate-400 font-bold text-[13px] uppercase tracking-tight">Free Resources</span>
                         </div>
                         <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-bold text-[15px] tracking-tight">Other Courses</span>
+                            <span className="text-slate-400 font-bold text-[13px] uppercase tracking-tight">Other Courses</span>
                         </div>
                     </div>
 
-                    {/* Feature Rows */}
                     {ADVANTAGES.map((row, idx) => (
-                        <motion.div
+                        <div
                             key={idx}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.07 }}
-                            className={`grid grid-cols-[2fr_1fr_1fr_1fr] px-6 py-4 border-b border-white/5 last:border-b-0 hover:bg-white/3 transition-colors group`}
+                            className={`grid grid-cols-[1.5fr_1fr_1fr_1fr] px-8 py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50 transition-colors group`}
                         >
                             <div className="flex items-center">
-                                <span className="text-[15px] text-slate-300 font-bold group-hover:text-white transition-colors">
+                                 <span className="text-[18px] text-slate-700 font-bold group-hover:text-slate-900 transition-colors tracking-tight">
                                     <HighlightText text={row.feature} words={row.highlight} />
                                 </span>
                             </div>
@@ -145,38 +138,9 @@ const ThinkSkoolAdvantage = () => {
                             <div className="flex items-center justify-center">
                                 {row.others ? <Check /> : <Cross />}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-
-                    {/* Clean summary footer */}
-                    <div className="grid grid-cols-2 gap-px bg-white/[0.05] border-t border-white/[0.06]">
-                        {/* ThinkSkool side */}
-                        <div className="bg-[#0D1628]/80 px-8 py-6 flex flex-col gap-1">
-                            <div className="inline-flex items-center gap-2 mb-3">
-                                <div className="px-2.5 py-1 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 font-bold text-white text-[12px] tracking-tight">ThinkSkool</div>
-                                <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest">6 / 6 features</span>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {['Structured', 'Mentored', 'Industry-Ready', 'Project-Based'].map(tag => (
-                                    <span key={tag} className="text-[11px] font-semibold text-slate-300 bg-white/[0.05] border border-white/[0.08] px-2.5 py-1 rounded-full">{tag}</span>
-                                ))}
-                            </div>
-                        </div>
-                        {/* Others side */}
-                        <div className="bg-[#0D1628]/40 px-8 py-6 flex flex-col gap-1">
-                            <div className="inline-flex items-center gap-2 mb-3">
-                                <span className="text-[13px] font-bold text-slate-400 tracking-tight">Others</span>
-                                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">2 / 6 features</span>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {['Generic Content', 'No Mentorship', 'No Deployment'].map(tag => (
-                                    <span key={tag} className="text-[11px] font-semibold text-slate-600 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1 rounded-full">{tag}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
                 </motion.div>
-
             </div>
         </section>
     );

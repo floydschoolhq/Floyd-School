@@ -100,9 +100,9 @@ const PremiumNavbar = () => {
 
     const navItems = [
         { name: 'Programs', id: 'online-focus' },
-        { name: 'Faculty', id: 'experts' },
-        { name: 'Ecosystem', id: 'infrastructure' },
-        { name: 'How It Works', id: 'how-it-works' },
+        { name: 'Why Us', id: 'why-us' },
+        { name: 'Hackathon', id: 'hackathon' },
+        { name: 'Mentors', id: 'mentors-grid' },
     ];
 
     return (
@@ -118,7 +118,7 @@ const PremiumNavbar = () => {
                         <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-medium uppercase tracking-[0.2em] text-[8px]`}>School Bootcamps | Independent Online Mastery</span>
                         <div className={`w-1 h-1 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-2`} />
                         <Link to="/online-program" className="text-[#2563EB] font-bold hover:text-blue-800 flex items-center gap-2 tracking-wide transition-colors text-[9px]">
-                            Purchase Batch
+                            Enroll Now
                             <ArrowRight size={10} />
                         </Link>
                     </div>
@@ -160,7 +160,7 @@ const PremiumNavbar = () => {
                                         : (isDarkPage ? 'text-white/90 hover:text-white' : 'text-slate-800 hover:text-blue-600')
                                         }`}
                                 >
-                                    <span className="font-bold text-[13px] tracking-tight">For ThinkSkool Learners</span>
+                                    <span className="font-bold text-[13px] tracking-tight">For Students</span>
                                     <FaChevronDown
                                         size={9}
                                         className={`transition-transform duration-500 ${isMegaMenuOpen ? 'rotate-180 opacity-100' : 'opacity-40'}`}
@@ -229,7 +229,7 @@ const PremiumNavbar = () => {
                                 className="px-5 py-2 text-[13px] font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all tracking-tight flex items-center gap-2 shadow-lg shadow-blue-500/10 active:scale-95"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                                Classroom
+                                Portal
                             </button>
                         </div>
 
@@ -285,15 +285,15 @@ const PremiumNavbar = () => {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className={`w-full text-left px-4 py-3 text-[14px] font-bold tracking-tight ${isDarkPage ? 'text-white/90 bg-white/5' : 'text-[#2563EB] bg-blue-50'} rounded-lg transition-colors flex justify-between items-center`}
                                 >
-                                    For ThinkSkool Learners
+                                    For Students
                                     <ArrowRight size={14} />
                                 </Link>
                                 <div className="h-px bg-[#FBEFEF] my-2" />
                                 <button
-                                    onClick={() => navigate('/classroom')}
+                                    onClick={() => navigate('/student/login')}
                                     className="w-full text-center px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
                                 >
-                                    My Classroom
+                                    My Portal
                                 </button>
                             </div>
                         </motion.div>

@@ -122,7 +122,7 @@ const JourneyCard = ({ step, idx, isEven }) => {
                 className="w-full lg:w-[45%] relative z-10 cursor-pointer"
             >
                 <div
-                    className="p-[1px] bg-gradient-to-br from-white/[0.12] to-transparent hover:from-blue-500/30 transition-all duration-700 group relative overflow-hidden rounded-[2rem]"
+                    className="p-[1px] bg-gradient-to-br from-white/[0.12] to-transparent hover:from-blue-500/30 transition-all duration-700 group relative overflow-hidden rounded-2xl"
                 >
                     {/* Spotlight Glow */}
                     <motion.div
@@ -136,7 +136,7 @@ const JourneyCard = ({ step, idx, isEven }) => {
                     />
 
                     <div
-                        className="bg-[#0D1628]/80 backdrop-blur-3xl p-6 md:p-8 border border-white/[0.07] group-hover:border-blue-500/25 transition-all duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative z-10 rounded-[2rem]"
+                        className="bg-[#0D1628]/80 backdrop-blur-3xl p-6 md:p-8 border border-white/[0.07] group-hover:border-blue-500/25 transition-all duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative z-10 rounded-2xl"
                     >
                         <div className="flex flex-col items-center text-center mb-4">
                             <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mb-3 block px-3 py-1 bg-blue-500/5 rounded-full border border-blue-500/10">
@@ -229,7 +229,7 @@ const LearningJourney = () => {
                         viewport={{ once: true }}
                         className="text-4xl md:text-6xl font-bold text-white tracking-tight"
                     >
-                        Our Learning <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Journey</span>
+                        Program <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Roadmap</span>
                     </motion.h2>
                 </div>
 
@@ -282,7 +282,7 @@ const LearningJourney = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     whileHover={{ y: -5 }}
-                    className="mt-20 p-10 md:p-14 rounded-[2.5rem] bg-gradient-to-br from-blue-600/80 to-indigo-800/80 backdrop-blur-3xl relative overflow-hidden group border border-white/10 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)]"
+                    className="mt-20 p-10 md:p-14 rounded-2xl bg-gradient-to-br from-blue-600/80 to-indigo-800/80 backdrop-blur-3xl relative overflow-hidden group border border-white/10 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)]"
                 >
                     <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         <div>

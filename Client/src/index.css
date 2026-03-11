@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import 'tailwindcss';
 
 /*
@@ -14,8 +14,8 @@
   --color-text-muted: var(--text-muted);
   --color-accent-primary: var(--accent-primary);
   --color-accent-secondary: var(--accent-secondary);
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Outfit', sans-serif;
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
@@ -24,11 +24,11 @@
 [data-theme='modern'] {
   --surface-base: #FFFFFF;
   --surface-soft: #F8FAFC;
-  --surface-el: #E2E8F0;
+  --surface-el: #F1F5F9;
   --text-main: #0F172A;
-  --text-muted: #475569;
-  --accent-primary: #2563EB;
-  --accent-secondary: #7C3AED;
+  --text-muted: #64748B;
+  --accent-primary: #3B82F6; /* Brand Blue */
+  --accent-secondary: #8B5CF6;
 }
 
 /* ─── Studio (Dark) ─────────────────────────────────────────── */
@@ -98,7 +98,7 @@ html {
 }
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 h1,
@@ -107,13 +107,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', sans-serif;
   letter-spacing: -0.015em;
   /* Premium tight tracking */
 }
 
 body {
-  background-color: #FFF0F3;
+  background-color: #FFFFFF;
   color: #0F172A;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -130,22 +130,19 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
-  /* Dark Brand Background */
+  background: #FFFFFF;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2563EB;
-  /* Brand Blue */
-  border-radius: 6px;
-  border: 3px solid #020617;
-  /* Creates padding/floating effect */
+  background: #3B82F6; /* Brand Blue */
+  border-radius: 10px;
+  border: 4px solid #FFFFFF;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1d4ed8;
-  /* Darker Blue on Hover */
+  background: #2563EB; /* Darker Blue on Hover */
 }
+
 
 /* Optimized Landing for Navbar Navigation */
 #engineering-programs,

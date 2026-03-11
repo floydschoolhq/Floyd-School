@@ -4,9 +4,8 @@ import { Briefcase, Award, Headphones } from 'lucide-react';
 
 const IndustrialNetwork = () => {
     return (
-        <section id="network" className="relative bg-[#020617] pt-6 pb-16 overflow-hidden border-t border-white/5 cyber-mesh">
-            {/* Ambient Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#2563EB]/5 blur-[120px] pointer-events-none" />
+        <section id="network" className="relative bg-white pt-6 pb-16 overflow-hidden border-t border-slate-100">
+            {/* Ambient Tints removed for Apple White theme */}
 
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
@@ -28,17 +27,17 @@ const IndustrialNetwork = () => {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.5 }}
                             whileHover={{ y: -4, scale: 1.01 }}
-                            className="group flex flex-col items-center text-center gap-4 p-6 rounded-[1.8rem] bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-2xl hover:border-[#2563EB]/40 hover:bg-white/[0.05] transition-all duration-500"
+                            className="group flex flex-col items-center text-center gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-blue-200 hover:bg-white transition-all duration-500"
                         >
-                            <div className="w-14 h-14 rounded-[1.5rem] bg-slate-950 flex items-center justify-center text-[#2563EB] border border-white/10 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-500 shadow-xl group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center text-blue-600 border border-slate-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
                                 {item.icon}
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="text-[17px] font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors">{item.label}</span>
-                                <span className="text-[13px] font-medium text-[#2563EB] tracking-tight mt-2">Tier-1 Partner Network</span>
+                                <span className="text-[17px] font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">{item.label}</span>
+                                <span className="text-[13px] font-medium text-blue-600 tracking-tight mt-2">Tier-1 Partner Network</span>
                             </div>
                             <p className="text-[14px] text-slate-500 font-medium leading-relaxed max-w-[220px] tracking-tight">
-                                Seamlessly integrated into our industrial learning ecosystem.
+                                Accessible within our professional learning environment.
                             </p>
                         </motion.div>
                     ))}
