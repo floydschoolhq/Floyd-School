@@ -72,6 +72,8 @@ const HomePage = () => {
     )
 };
 
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+
 const App = () => {
 
     const usePortal = () => useContext(PortalContext);
@@ -120,9 +122,13 @@ const App = () => {
                 <Route path='/course' element={<Course />} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
-                <Route path='/student' element={<MainLayout>
-                    {renderPage(usePortal().currentView, usePortal())}
-                </MainLayout>} />
+                <Route path='/student' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            {renderPage(usePortal().currentView, usePortal())}
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
                 <Route path='/downloads' element={<DownloadPage />} />
 
                 {/*Login*/}

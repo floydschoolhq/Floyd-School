@@ -22,4 +22,22 @@ api.interceptors.request.use(
     }
 );
 
+// Add a response interceptor to handle specialized logout on 401
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Clear credentials on authentication failure (Session Expired/Invalid)
+            localStorage.removeItem('token');
+            localStorage.removeItem('userInfo');
+            
+            // Force redirect to login page if we are in the student portal
+            if (window.location.pathname.startsWith('/student')) {
+                window.location.href = '/student/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export default api;
