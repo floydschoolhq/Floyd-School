@@ -8,7 +8,7 @@ const PANELS = [
         id: 'admin',
         title: "Admin Panel",
         subtitle: "CONTROL & MANAGEMENT",
-        description: "The central nervous system of ThinkSkool. Manage global permissions, architect course structures, and monitor system health.",
+        description: "the central nervous system of thinkskool. Manage global permissions, architect course structures, and monitor system health.",
         icon: Shield,
         color: "orange",
         features: [
@@ -51,7 +51,8 @@ const FeatureCard = ({ icon: Icon, title, desc, status, activeColor }) => (
             <div className={`p-2 rounded-xl bg-${activeColor}-500/10 text-${activeColor}-400 group-hover:scale-110 transition-transform`}>
                 <Icon size={20} />
             </div>
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${status === 'Live' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-orange-500/10 text-orange-400 border border-orange-500/20'}`}>
+            <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${status === 'Live' ? 'bg-emerald-500/5 text-emerald-600 border-emerald-500/10' : 'bg-slate-500/5 text-slate-500 border-slate-500/10'}`}>
+                {status === 'Live' && <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />}
                 {status}
             </span>
         </div>
@@ -128,7 +129,8 @@ const PlatformPanels = () => {
                                                     <div className="p-2 rounded-xl bg-white border border-slate-100 text-blue-600 shadow-sm group-hover:scale-110 transition-transform">
                                                         <f.icon size={18} />
                                                     </div>
-                                                    <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase tracking-wider ${f.status === 'Live' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'}`}>
+                                                    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.15em] border transition-all ${f.status === 'Live' ? 'bg-emerald-500/5 text-emerald-600 border-emerald-500/10' : 'bg-slate-500/5 text-slate-500 border-slate-500/10'}`}>
+                                                        {f.status === 'Live' && <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />}
                                                         {f.status}
                                                     </span>
                                                 </div>

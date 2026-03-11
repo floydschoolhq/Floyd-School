@@ -20,11 +20,11 @@ const WhyUs = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-5"
                     >
-                        <span className="text-[13px] font-black text-[#2563EB] tracking-wider uppercase">Master 15+ Advanced AI Tools</span>
+                        <span className="text-[13px] font-black text-slate-500 tracking-wider uppercase">Master 15+ Advanced AI Tools</span>
                     </motion.div>
 
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
-                        <span className="text-blue-500">50+ Industrial Projects</span> Powering Professional Engineering Mastery
+                        <span className="text-slate-400">50+ Industrial Projects</span> Powering Professional Engineering Mastery
                     </h2>
                     <div className="w-12 h-1 bg-blue-600/30 mx-auto rounded-full" />
                 </div>
@@ -37,7 +37,7 @@ const WhyUs = () => {
                             whileInView={{ height: '100%' }}
                             viewport={{ once: true }}
                             transition={{ duration: 2, ease: "easeInOut" }}
-                            className="w-full bg-gradient-to-b from-[#2563EB] via-blue-400 to-indigo-500 shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                            className="w-full bg-gradient-to-b from-slate-900 via-slate-500 to-slate-900 shadow-[0_0_15px_rgba(0,0,0,0.4)]"
                         />
                     </div>
 
@@ -51,8 +51,8 @@ const WhyUs = () => {
                             className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-3.5 rounded-[2rem] inline-flex items-center gap-6 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <div className="relative flex items-center justify-center">
-                                <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
-                                <FaSchool size={28} className="text-white drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
+                                <div className="absolute inset-0 bg-slate-500/10 blur-xl rounded-full scale-150 opacity-100" />
+                                <FaSchool size={28} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] relative z-10" />
                             </div>
                             <h3 className="text-[16px] font-bold text-white pr-4 uppercase tracking-wider">Institutional Architecture</h3>
                         </motion.div>
@@ -74,8 +74,8 @@ const WhyUs = () => {
                                             <p className="text-slate-500 text-[11px] font-medium uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
-                                    <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-[#2563EB] animate-pulse" />
+                                    <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-slate-800 flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.3)] z-10">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400 animate-pulse" />
                                     </div>
                                 </div>
                             ))}
@@ -88,7 +88,7 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-slate-950 px-8 py-3.5 text-[14px] font-semibold tracking-tight text-[#2563EB] rounded-full z-10 shadow-[0_0_30px_rgba(37,99,235,0.2)] border border-[#2563EB]/30"
+                            className="bg-slate-950 px-8 py-3.5 text-[14px] font-semibold tracking-tight text-slate-400 rounded-full z-10 shadow-[0_0_30px_rgba(0,0,0,0.2)] border border-slate-800"
                         >
                             Ecosystem Convergence
                         </motion.div>
@@ -101,11 +101,11 @@ const WhyUs = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="bg-[#2563EB]/10 backdrop-blur-2xl border border-[#2563EB]/20 p-3.5 rounded-[2rem] inline-flex items-center gap-6 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
+                            className="bg-slate-900/40 backdrop-blur-2xl border border-slate-800 p-3.5 rounded-[2rem] inline-flex items-center gap-6 relative z-10 md:left-1/2 md:-translate-x-1/2 mb-16 md:w-auto w-[calc(100%-60px)] ml-[50px] md:ml-0"
                         >
                             <div className="relative flex items-center justify-center">
-                                <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-110 opacity-100" />
-                                <FaGraduationCap size={28} className="text-[#2563EB] drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10" />
+                                <div className="absolute inset-0 bg-slate-500/10 blur-xl rounded-full scale-110 opacity-100" />
+                                <FaGraduationCap size={28} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] relative z-10" />
                             </div>
                             <h3 className="text-[17px] font-bold text-white pr-4 tracking-tight">Engineering Identity</h3>
                         </motion.div>
@@ -122,12 +122,12 @@ const WhyUs = () => {
                                             className="bg-white/[0.03] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/10 shadow-3xl relative overflow-hidden group"
                                         >
                                             <div className="glass-shine-effect" />
-                                            <h4 className="font-bold text-white text-lg mb-2 tracking-tight leading-tight group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                                            <h4 className="font-bold text-white text-lg mb-2 tracking-tight leading-tight group-hover:text-slate-200 transition-colors">{item.title}</h4>
                                             <p className="text-slate-500 text-[11px] font-medium uppercase tracking-widest">{item.desc}</p>
                                         </motion.div>
                                     </div>
-                                    <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-[#2563EB]/40 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse" />
+                                    <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#020617] border border-slate-800 flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.3)] z-10">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400 animate-pulse" />
                                     </div>
                                 </div>
                             ))}
@@ -143,7 +143,7 @@ const WhyUs = () => {
                             const el = document.getElementById('registration-form');
                             if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="bg-[#2563EB] text-white px-10 py-5 rounded-[2rem] font-bold text-[14px] tracking-tight hover:bg-blue-600 transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-blue-400/20"
+                        className="bg-slate-900 hover:bg-black text-white px-10 py-5 font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-slate-900/10 hover:-translate-y-1 flex items-center gap-3 mx-auto group border border-slate-200/20"
                     >
                         Enable The Ecosystem <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>

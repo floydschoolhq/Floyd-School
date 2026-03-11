@@ -53,7 +53,7 @@ const StickyBottomBar = () => {
                         className="pointer-events-auto relative group w-full max-w-7xl lg:w-fit"
                     >
                         {/* Premium Glow Effect */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 via-orange-500/10 to-blue-600/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                        <div className="absolute -inset-1 bg-gradient-to-r from-slate-900/10 via-slate-400/5 to-slate-900/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
                         <div className="relative flex flex-col md:flex-row items-center bg-white/70 backdrop-blur-2xl border border-white/30 rounded-xl px-4 md:px-6 py-1 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.01] gap-3 md:gap-6">
 
@@ -62,8 +62,8 @@ const StickyBottomBar = () => {
                                 <div className="flex-1 md:min-w-[120px]">
                                     <div className="flex items-center gap-2">
                                         <h4 className="text-slate-800 font-semibold text-[13px] tracking-tight leading-none">Online Mastery</h4>
-                                        <div className="px-1.5 py-0.5 bg-blue-500/5 rounded-md">
-                                            <span className="text-[9px] font-bold text-blue-500/80 tracking-tight">Enroll Now</span>
+                                        <div className="px-1.5 py-0.5 bg-slate-900/5 rounded-md">
+                                            <span className="text-[9px] font-bold text-slate-900/80 tracking-tight">Enroll Now</span>
                                         </div>
                                     </div>
                                     <p className="text-slate-400 text-[10px] font-medium tracking-tight mt-1">Self-Paced Program</p>

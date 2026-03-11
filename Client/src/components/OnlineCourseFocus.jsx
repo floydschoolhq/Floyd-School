@@ -51,11 +51,11 @@ const OnlineCourseFocus = () => {
                                         whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: idx * 0.04, type: "spring", damping: 25 }}
-                                        whileHover={{ y: -2 }}
-                                        className="p-2.5 rounded-2xl bg-white border border-slate-100/60 hover:border-blue-500/10 transition-all cursor-pointer shadow-[0_1px_4px_-1px_rgba(0,0,0,0.03)] hover:shadow-lg group"
+                                        whileHover={{ y: -8 }}
+                                        className="relative p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-transparent transition-all duration-300 cursor-pointer shadow-sm hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] group"
                                         onClick={() => setSelectedCourse(course)}
                                     >
-                                        <div className="w-full aspect-video rounded-xl overflow-hidden mb-5 border border-slate-50 shadow-sm group-hover:shadow-md transition-shadow relative">
+                                        <div className="w-full aspect-video rounded-xl overflow-hidden mb-5 border border-slate-50 shadow-sm relative z-10">
                                             <img
                                                 src={course.image}
                                                 alt={course.title}
@@ -67,16 +67,16 @@ const OnlineCourseFocus = () => {
                                                 </div>
                                             )}
                                             {course.live && (
-                                                <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/20">
-                                                    <span className="relative flex h-2 w-2">
-                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                                <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1 bg-white/95 backdrop-blur-md rounded-lg shadow-sm border border-slate-100 transition-all">
+                                                    <span className="relative flex h-1.5 w-1.5">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                                                     </span>
-                                                    <span className="text-[9px] font-black text-slate-900 uppercase tracking-widest">Live Now</span>
+                                                    <span className="text-[8px] font-black text-slate-900 uppercase tracking-[0.2em]">Live Now</span>
                                                 </div>
                                             )}
                                         </div>
-                                        <h4 className="text-xl font-black text-slate-900 uppercase tracking-tighter mb-3 leading-none group-hover:text-blue-600 transition-colors">{course.title}</h4>
+                                        <h4 className="text-lg font-bold text-slate-800 uppercase tracking-tight mb-2 leading-none group-hover:text-blue-600 transition-colors">{course.title}</h4>
 
                                         <p className="text-slate-500 text-xs font-medium leading-relaxed mb-6 line-clamp-2">
                                             {course.description}
@@ -197,7 +197,7 @@ const OnlineCourseFocus = () => {
                                         {!selectedCourse.comingSoon && (
                                             <button
                                                 onClick={() => navigate('/online-program')}
-                                                className="group flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20"
+                                                className="group flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-slate-900/10"
                                             >
                                                 Apply Now <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                                             </button>

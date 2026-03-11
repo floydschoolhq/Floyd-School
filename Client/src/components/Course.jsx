@@ -80,7 +80,7 @@ const Course = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    <span className="text-blue-600">ThinkSkool</span> offers practical, industry-relevant technology programs that help
+                    <span className="text-blue-600">thinkskool</span> offers practical, industry-relevant technology programs that help
                     students understand and apply modern concepts through hands-on learning.
                 </motion.p>
 

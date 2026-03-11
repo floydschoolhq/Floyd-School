@@ -16,7 +16,7 @@ const LEADERS = [
         role: "Founder | AI/ML Engineer",
         image: shivamImg,
         imageScale: 1.9,
-        bio: "Visionary founder of ThinkSkool, architecting the future of STEM education through advanced AI and machine learning integration.",
+        bio: "visionary founder of thinkskool, architecting the future of STEM education through advanced AI and machine learning integration.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder", "Visionary"]
     },
@@ -157,7 +157,7 @@ const MentorGrid = () => {
                                             style={{ scale: mentor.imageScale }}
                                         />
                                     </div>
-                                    <div className="absolute -bottom-1 -right-1 p-2 bg-white rounded-full border border-slate-100 text-slate-400 group-hover:text-blue-600 transition-all shadow-sm z-10">
+                                    <div className="absolute -bottom-1 -right-1 p-2 bg-white rounded-full border border-slate-100 text-slate-400 group-hover:text-slate-900 group-hover:border-slate-300 transition-all shadow-sm z-10">
                                         <FaLinkedinIn size={14} />
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@ const MentorGrid = () => {
                                         <p className="text-slate-500 font-bold text-[14px] tracking-[0.2em] uppercase opacity-80 truncate mb-4">
                                             {mentor.role}
                                         </p>
-                                        <div className="w-16 h-[2px] bg-slate-100 group-hover:bg-blue-600/30 transition-colors rounded-full" />
+                                        <div className="w-16 h-[2px] bg-slate-100 group-hover:bg-slate-300 transition-colors rounded-full" />
                                     </div>
 
                                     <p className="text-slate-500 text-[16px] leading-relaxed mb-6 line-clamp-2 font-medium">
@@ -232,7 +232,7 @@ const MentorGrid = () => {
                                     </button>
 
                                     <div className="max-w-md">
-                                        <span className="text-blue-600 font-black text-[10px] tracking-[0.3em] uppercase mb-4 block">ThinkSkool // Mentor</span>
+                                        <span className="text-slate-400 font-bold text-[10px] tracking-[0.3em] lowercase mb-4 block">thinkskool // mentor</span>
                                         <h2 className="text-4xl font-bold text-slate-900 tracking-tighter leading-none mb-4 uppercase">{selectedMentor.name}</h2>
                                         <p className="text-slate-500 font-bold text-sm tracking-widest uppercase mb-8 opacity-60">{selectedMentor.role}</p>
                                         

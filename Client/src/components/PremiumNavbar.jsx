@@ -114,10 +114,10 @@ const PremiumNavbar = () => {
             >
                 <div className="flex items-center gap-8 px-8">
                     <div className="flex items-center gap-3">
-                        <Sparkles size={10} className="text-[#2563EB]" />
-                        <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-medium uppercase tracking-[0.2em] text-[8px]`}>School Bootcamps | Independent Online Mastery</span>
+                        <Sparkles size={10} className="text-slate-400" />
+                        <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-medium uppercase tracking-[0.2em] text-[8px]`}>Premium Online Batches</span>
                         <div className={`w-1 h-1 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-2`} />
-                        <Link to="/online-program" className="text-[#2563EB] font-bold hover:text-blue-800 flex items-center gap-2 tracking-wide transition-colors text-[9px]">
+                        <Link to="/online-program" className="text-slate-900 font-bold hover:text-black flex items-center gap-2 tracking-wide transition-colors text-[9px]">
                             Enroll Now
                             <ArrowRight size={10} />
                         </Link>
@@ -156,8 +156,8 @@ const PremiumNavbar = () => {
                             >
                                 <motion.div
                                     className={`relative flex items-center gap-2 py-2 px-4 rounded-xl transition-all duration-300 ${isMegaMenuOpen
-                                        ? (isDarkPage ? 'bg-white/10 text-white' : 'bg-blue-50 text-[#2563EB]')
-                                        : (isDarkPage ? 'text-white/90 hover:text-white' : 'text-slate-800 hover:text-blue-600')
+                                        ? (isDarkPage ? 'bg-white/10 text-white' : 'bg-slate-900 text-white')
+                                        : (isDarkPage ? 'text-white/90 hover:text-white' : 'text-slate-800 hover:text-black')
                                         }`}
                                 >
                                     <span className="font-bold text-[13px] tracking-tight">For Students</span>
@@ -180,7 +180,7 @@ const PremiumNavbar = () => {
                                 <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
                                     <motion.div
                                         onClick={() => item.id && scrollToSection(item.id)}
-                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-blue-600'} font-medium text-[13px] tracking-tight transition-all py-1.5 px-0.5`}
+                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-black'} font-medium text-[13px] tracking-tight transition-all py-1.5 px-0.5`}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -191,7 +191,7 @@ const PremiumNavbar = () => {
                                                 className="mt-0.5 opacity-40 group-hover:opacity-100 group-hover:rotate-180 transition-all duration-300"
                                             />
                                         )}
-                                        <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] ${isDarkPage ? 'bg-blue-400' : 'bg-blue-600'} rounded-full group-hover:w-full transition-all duration-300`}></div>
+                                        <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] ${isDarkPage ? 'bg-slate-400' : 'bg-slate-900'} rounded-full group-hover:w-full transition-all duration-300`}></div>
                                     </motion.div>
 
                                     {item.hasDropdown && (
@@ -226,7 +226,7 @@ const PremiumNavbar = () => {
                                     if (user) navigate('/student');
                                     else navigate('/student/login');
                                 }}
-                                className="px-5 py-2 text-[13px] font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all tracking-tight flex items-center gap-2 shadow-lg shadow-blue-500/10 active:scale-95"
+                                className="px-6 py-2 bg-slate-900 text-white font-bold text-[13px] rounded-full hover:bg-black transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2"
                             >
                                 <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                 Portal

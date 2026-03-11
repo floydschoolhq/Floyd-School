@@ -10,7 +10,7 @@ const TechStackStats = () => {
 
     const stats = [
         { label: "Joined us", value: "1K+", icon: <Users className="w-5 h-5" /> },
-        { label: "Demo bootcamp", value: "7 Days", icon: <CheckCircle className="w-5 h-5" /> },
+        { label: "Premium AI Courses", value: "3 Months", icon: <CheckCircle className="w-5 h-5" /> },
         { label: "Active courses", value: "4+", icon: <BookOpen className="w-5 h-5" /> },
         { label: "Average rating", value: "4.9★", icon: <Star className="w-5 h-5" /> },
     ];
@@ -58,10 +58,10 @@ const TechStackStats = () => {
                                     <span className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter">
                                         {stat.value}
                                     </span>
-                                    {stat.icon && <div className="text-blue-500 opacity-20 group-hover:opacity-100 transition-opacity">{stat.icon}</div>}
+                                    {stat.icon && <div className="text-slate-900 opacity-20 group-hover:opacity-100 transition-opacity">{stat.icon}</div>}
                                 </div>
                                 <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest flex items-center gap-1.5 justify-center">
-                                    <CheckCircle size={10} className="text-blue-500" /> {stat.label}
+                                    <CheckCircle size={10} className="text-slate-400" /> {stat.label}
                                 </span>
                             </div>
                         ))}

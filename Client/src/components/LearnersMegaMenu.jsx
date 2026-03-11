@@ -90,11 +90,11 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
                                 {isActive && (
                                     <motion.div 
                                         layoutId="activeIndicator"
-                                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full"
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-slate-900 rounded-r-full"
                                     />
                                 )}
                                 <div className="flex gap-4 items-start w-full">
-                                    <div className={`mt-0.5 shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                                    <div className={`mt-0.5 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-600'}`}>
                                         <domain.icon size={20} strokeWidth={isActive ? 2.5 : 2} />
                                     </div>
                                     <div>
@@ -115,7 +115,7 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
                 <div className="w-[62%] bg-white flex flex-col justify-between">
                     <div className="p-8 pb-4 relative h-full">
                         {/* Background Glow */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 blur-[80px] pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-slate-200/50 blur-[80px] pointer-events-none" />
 
                         <div className="grid grid-cols-2 gap-8 relative z-10">
                             {/* Certifications (Left Col) */}
@@ -129,15 +129,15 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
                                             className="group flex gap-3 p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-300 items-center justify-between"
                                         >
                                             <div className="flex gap-3 items-center">
-                                                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                                <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-900 flex items-center justify-center shrink-0">
                                                     <cert.icon size={16} strokeWidth={2.5} />
                                                 </div>
                                                 <div>
-                                                    <p className="text-[13px] font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">{cert.title}</p>
+                                                    <p className="text-[13px] font-semibold text-slate-800 group-hover:text-slate-900 transition-colors">{cert.title}</p>
                                                     <p className="text-[11px] font-medium text-slate-500 mt-0.5">Industrial Program</p>
                                                 </div>
                                             </div>
-                                            <ArrowRight size={14} className="text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
                                         </Link>
                                     ))}
                                 </div>
@@ -153,7 +153,7 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
                                             to="/online-program#explore-programs"
                                             className="group px-3 py-2.5 rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-between"
                                         >
-                                            <span className="text-[13px] font-medium text-slate-600 group-hover:text-blue-600">{camp.title}</span>
+                                            <span className="text-[13px] font-medium text-slate-600 group-hover:text-slate-900">{camp.title}</span>
                                         </Link>
                                     ))}
                                 </div>
@@ -163,21 +163,20 @@ const LearnersMegaMenu = ({ isDarkPage }) => {
 
                     {/* Bottom CTA Banner */}
                     <Link to="/online-program#explore-programs" className="group">
-                        <div className="mx-6 mb-6 mt-4 p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-between hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 overflow-hidden relative">
+                        <div className="mx-6 mb-6 mt-4 p-5 rounded-2xl bg-slate-900 text-white flex items-center justify-between hover:shadow-lg hover:shadow-slate-900/10 transition-all duration-300 overflow-hidden relative">
                             {/* Decorative Background Elements */}
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none" />
-                            <div className="absolute right-0 top-0 w-32 h-32 bg-white/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+                            <div className="absolute right-0 top-0 w-32 h-32 bg-white/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
                             
                             <div className="relative z-10 flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md shrink-0">
-                                    <Rocket size={20} className="text-white fill-white/20" />
+                                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md shrink-0">
+                                    <Rocket size={20} className="text-white fill-white/10" />
                                 </div>
                                 <div>
                                     <p className="font-bold text-[14px] leading-tight mb-1">Join our global network of learners</p>
-                                    <p className="text-blue-100 text-[12px] font-medium">Start your engineering journey today.</p>
+                                    <p className="text-slate-400 text-[12px] font-medium">Start your engineering journey today.</p>
                                 </div>
                             </div>
-                            <div className="relative z-10 bg-white/10 hover:bg-white/20 transition-colors p-2.5 rounded-full backdrop-blur-sm group-hover:scale-110 duration-300">
+                            <div className="relative z-10 bg-white/5 hover:bg-white/10 transition-colors p-2.5 rounded-full backdrop-blur-sm group-hover:scale-110 duration-300">
                                 <ArrowRight size={16} className="text-white" />
                             </div>
                         </div>

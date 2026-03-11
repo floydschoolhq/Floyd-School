@@ -26,11 +26,11 @@ const AnimatedCounter = ({ value, duration = 2 }) => {
 
 const TrustIndicator = () => {
     const trustItems = [
-        { char: 'A', bg: 'bg-indigo-400' },
-        { char: 'P', bg: 'bg-pink-400' },
-        { char: 'R', bg: 'bg-emerald-400' },
-        { char: 'S', bg: 'bg-orange-400' },
-        { char: 'M', bg: 'bg-blue-500' },
+        { char: 'A', bg: 'bg-slate-900' },
+        { char: 'P', bg: 'bg-slate-800' },
+        { char: 'R', bg: 'bg-slate-700' },
+        { char: 'S', bg: 'bg-slate-600' },
+        { char: 'M', bg: 'bg-slate-500' },
     ];
     return (
         <motion.div
@@ -54,7 +54,7 @@ const TrustIndicator = () => {
             <div className="flex flex-col gap-0.5">
                 <div className="flex items-center gap-2">
                     <span className="text-lg font-extrabold text-slate-800 tracking-[-0.03em] leading-none">
-                        <AnimatedCounter value={12000} />+ <span className="font-medium text-slate-400 ml-0.5">Active Students</span>
+                        <AnimatedCounter value={1000} />+ <span className="font-medium text-slate-400 ml-0.5">Active Students</span>
                     </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -72,7 +72,7 @@ const TrustIndicator = () => {
                             </motion.svg>
                         ))}
                     </div>
-                    <span className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100 transition-opacity">Verified Industrial Stats</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100 transition-opacity">Verified Industrial Stats</span>
                 </div>
             </div>
         </motion.div>
@@ -96,14 +96,14 @@ const ProgressCard = () => (
         className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl relative overflow-hidden group"
     >
         <div className="flex items-center gap-3 mb-8">
-            <span className="px-4 py-1.5 bg-blue-50 text-blue-600 text-[11px] font-bold tracking-tight uppercase">Full-Stack Learning</span>
+            <span className="px-4 py-1.5 bg-slate-200 text-slate-600 text-[11px] font-bold tracking-tight uppercase">Course Demand</span>
         </div>
-        <h3 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Active Learning Progress</h3>
+        <h3 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Demand among students</h3>
         
         <div className="space-y-6">
             <div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">System Design</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Artificial Intelligence</span>
                     <span className="text-[13px] font-bold text-slate-900">100%</span>
                 </div>
                 <div className="h-2 bg-slate-100 overflow-hidden">
@@ -112,20 +112,20 @@ const ProgressCard = () => (
             </div>
             <div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Backend Engineering</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Web & Cloud</span>
                     <span className="text-[13px] font-bold text-slate-900">78%</span>
                 </div>
                 <div className="h-2 bg-slate-100 overflow-hidden">
-                    <motion.div initial={{ width: 0 }} whileInView={{ width: '78%' }} transition={{ duration: 1, delay: 0.7 }} className="h-full bg-blue-500" />
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: '78%' }} transition={{ duration: 1, delay: 0.7 }} className="h-full bg-slate-700" />
                 </div>
             </div>
             <div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Frontend Architecture</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-tight">Robotics & IoT</span>
                     <span className="text-[13px] font-bold text-slate-900">42%</span>
                 </div>
                 <div className="h-2 bg-slate-100 overflow-hidden">
-                    <motion.div initial={{ width: 0 }} whileInView={{ width: '42%' }} transition={{ duration: 1, delay: 0.9 }} className="h-full bg-emerald-500" />
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: '42%' }} transition={{ duration: 1, delay: 0.9 }} className="h-full bg-slate-400" />
                 </div>
             </div>
         </div>
@@ -149,15 +149,11 @@ const StreakCard = () => (
         viewport={{ once: true }}
         className="bg-[#F2F2F7] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-slate-100 rounded-2xl flex flex-col items-center justify-center text-center relative group"
     >
-        <div className="text-5xl font-black text-slate-900 mb-2">3</div>
-        <div className="text-[13px] font-bold text-slate-400 uppercase tracking-widest mb-6">month sprint</div>
-        <div className="flex gap-1.5">
-            {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                <div key={i} className={`w-7 h-7 flex items-center justify-center text-[9px] font-black ${i < 6 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-300'}`}>
-                    {day}
-                </div>
-            ))}
+        <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-4 text-orange-500">
+            <Video size={24} fill="currentColor" />
         </div>
+        <div className="text-xl font-black text-slate-900 mb-1 leading-tight">Free Demo<br/>Session</div>
+        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 px-3 py-1 bg-slate-100 rounded-full">Book Now</div>
     </motion.div>
 );
 
@@ -206,8 +202,8 @@ const CertificateCard = () => (
         <div className="flex items-center gap-4 mb-8">
             <div className="w-14 h-14 bg-slate-50 flex items-center justify-center text-3xl">🎖️</div>
             <div>
-                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Advanced AI Engineering</h4>
-                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Industrial Credentials</p>
+                <h4 className="text-[15px] font-bold text-slate-900 leading-tight">Neural Systems Architecture</h4>
+                <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest mt-1">Industrial Program</p>
             </div>
         </div>
         <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
@@ -248,7 +244,7 @@ const Hero = () => {
                             className="text-5xl md:text-7xl lg:text-8xl font-black text-slate-800 tracking-tight leading-[0.9] mb-10"
                         >
                             Future of <br />
-                            <span className="text-[#0066CC]">Engineering.</span>
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-950 via-slate-800 to-slate-500">Engineering.</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -267,7 +263,7 @@ const Hero = () => {
                         >
                             <button
                                 onClick={handleEnrollNow}
-                                className="w-full sm:w-auto px-10 py-5 bg-[#0066CC] text-white font-black text-[13px] uppercase tracking-[0.2em] hover:bg-[#0055BB] transition-all shadow-2xl shadow-blue-500/20 active:scale-95"
+                                className="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white font-black text-[13px] uppercase tracking-[0.2em] hover:bg-black transition-all shadow-2xl shadow-slate-900/10 active:scale-95"
                             >
                                 Enroll Now
                             </button>

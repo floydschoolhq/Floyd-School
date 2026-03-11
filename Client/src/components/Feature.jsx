@@ -44,7 +44,7 @@ const MediaSlideshow = ({ media, title, subtitle, isTraditional }) => {
         </h3>
       </div>
 
-      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 shadow-2xl group/media">
+      <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-900 shadow-2xl group/media">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -108,9 +108,8 @@ const Feature = () => {
       <div className="max-w-[1050px] mx-auto px-6">
         <div className="text-center mb-8">
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
-            Experience the Difference
+            PASSIVE / ACTIVE (US)
           </ScrollDarkenHeading>
-          <p className="text-slate-500 font-semibold text-sm max-w-xl mx-auto">Witness the transition from passive absorbing to active creation in real-time.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">

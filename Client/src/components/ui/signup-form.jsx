@@ -10,8 +10,8 @@ import {
 } from "@tabler/icons-react";
 
 export function SignupForm({
-    title = "Welcome to ThinkSkool",
-    description = "Login to ThinkSkool to access your dashboard",
+    title = "Welcome to thinkskool",
+    description = "Login to thinkskool to access your dashboard",
     onSubmit,
     children
 }) {

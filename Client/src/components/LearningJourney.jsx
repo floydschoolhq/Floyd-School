@@ -221,7 +221,7 @@ const LearningJourney = () => {
                         className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/5 border border-blue-500/10 mb-6"
                     >
                         <Zap className="w-4 h-4 text-blue-400" />
-                        <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.3em]">The ThinkSkool Experience</span>
+                        <span className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.3em]">the thinkskool experience</span>
                     </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 15 }}

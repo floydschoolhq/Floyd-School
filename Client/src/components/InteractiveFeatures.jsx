@@ -9,6 +9,7 @@ import {
   Rocket,
   MessageSquare
 } from 'lucide-react';
+import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   const interactiveFeaturesList = [
@@ -88,14 +89,10 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
             {/* Interactive Learning Section */}
             <div>
-              <div className="flex items-center gap-6 mb-12">
-                <div className="relative flex items-center justify-center">
-                  <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full scale-110 opacity-100" />
-                  <Rocket className="text-orange-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] relative z-10" strokeWidth={1.5} />
-                </div>
-                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
-                  Interactive <span className="text-orange-500">Learning</span>
-                </h2>
+              <div className="mb-12">
+                <ScrollDarkenHeading sizeClass="text-3xl md:text-5xl">
+                  Interactive Learning
+                </ScrollDarkenHeading>
               </div>
 
               <motion.div
@@ -112,14 +109,10 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
 
             {/* Community & Support Section */}
             <div>
-              <div className="flex items-center gap-6 mb-12">
-                <div className="relative flex items-center justify-center">
-                  <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full scale-110 opacity-100" />
-                  <Users className="text-orange-500 w-8 h-8 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] relative z-10" strokeWidth={1.5} />
-                </div>
-                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
-                  Community <span className="text-orange-500">& Support</span>
-                </h2>
+              <div className="mb-12">
+                <ScrollDarkenHeading sizeClass="text-3xl md:text-5xl">
+                  Community & Support
+                </ScrollDarkenHeading>
               </div>
 
               <motion.div

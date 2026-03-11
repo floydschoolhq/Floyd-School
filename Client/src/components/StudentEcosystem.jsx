@@ -10,8 +10,8 @@ const FEATURES = [
         icon: <FaBrain />,
         image: "/images/ecosystem/adaptive_learning.jpg",
         desc: "Advanced systems that adapt curriculum delivery to your individual learning pace.",
-        color: "text-blue-600",
-        bg: "bg-blue-50",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
         details: [
             { label: "Personalized Study", desc: "Course content that adjusts based on your real-time progress." },
             { label: "Progress Tracking", desc: "Identify areas that need more attention early on." },
@@ -24,8 +24,8 @@ const FEATURES = [
         icon: <FaTerminal />,
         image: "/images/ecosystem/cloud_ide.jpg",
         desc: "High-performance coding environment ready for real-world projects.",
-        color: "text-blue-600",
-        bg: "bg-blue-50",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
         details: [
             { label: "Industry Ready", desc: "Pre-configured environments that match modern industry standards." },
             { label: "Pair Programming", desc: "Collaborate in real-time with mentors and peers." },
@@ -38,8 +38,8 @@ const FEATURES = [
         icon: <FaChartLine />,
         image: "/images/ecosystem/performance.jpg",
         desc: "Detailed tracking of your professional growth according to industry benchmarks.",
-        color: "text-blue-600",
-        bg: "bg-blue-50",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
         details: [
             { label: "Skill Assessment", desc: "See exactly where you stand against international standards." },
             { label: "Career Milestones", desc: "Monitor your progress towards your career goals." },
@@ -52,8 +52,8 @@ const FEATURES = [
         icon: <FaUserTie />,
         image: "/images/ecosystem/networking.jpg",
         desc: "Connect directly with global engineering teams and top technology recruiters.",
-        color: "text-blue-600",
-        bg: "bg-blue-50",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
         details: [
             { label: "Industry Connections", desc: "Network with senior engineers and technology leaders." },
             { label: "Hiring Opportunities", desc: "Direct access to job openings in top-tier tech companies." },
@@ -80,8 +80,8 @@ const FEATURES = [
         icon: <FaRobot />,
         image: "/images/ecosystem/mentorship.jpg",
         desc: "Smart AI tools providing real-time code reviews and learning suggestions.",
-        color: "text-blue-600",
-        bg: "bg-blue-50",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
         details: [
             { label: "Smart Reviews", desc: "AI-powered feedback on your code and project structure." },
             { label: "Intelligent Guidance", desc: "Get helpful hints and suggestions while you code." },
@@ -102,7 +102,7 @@ const StudentEcosystem = () => {
                 <div className="text-center mb-6">
 
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
-                        The ThinkSkool Advantage
+                        the thinkskool advantage
                     </ScrollDarkenHeading>
 
                 </div>
@@ -117,7 +117,7 @@ const StudentEcosystem = () => {
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/80 backdrop-blur-xl p-4 border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-blue-500/30"
+                            className="group relative bg-white/80 backdrop-blur-xl p-4 border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-slate-900/30"
                         >
                             <div className="relative z-10 flex flex-col h-full">
                                 {/* Image Container - Enforced 16:9 Aspect Ratio */}
@@ -128,19 +128,19 @@ const StudentEcosystem = () => {
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                     <div className="absolute top-3 left-3 flex items-center justify-center">
-                                        <div className="absolute inset-0 bg-blue-500/20 blur-xl scale-150 opacity-100 transition-opacity duration-500" />
-                                        <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:text-blue-400 transition-colors relative z-10 text-xl">
+                                        <div className="absolute inset-0 bg-slate-900/20 blur-xl scale-150 opacity-100 transition-opacity duration-500" />
+                                        <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:text-slate-200 transition-colors relative z-10 text-xl">
                                             {feature.icon}
                                         </div>
                                     </div>
                                 </div>
 
-                                <p className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
-                                <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">{feature.title}</h3>
+                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em] mb-2 group-hover:translate-x-1 transition-transform">{feature.miniTitle}</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-black transition-colors">{feature.title}</h3>
 
                                 <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
                                     <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-900 transition-colors">Program Details</span>
-                                    <div className="w-7 h-7 bg-slate-50 flex items-center justify-center text-[9px] text-slate-400 group-hover:bg-blue-500 group-hover:text-white transition-all transform group-hover:rotate-45">
+                                    <div className="w-7 h-7 bg-slate-50 flex items-center justify-center text-[9px] text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all transform group-hover:rotate-45">
                                         <FaArrowRight size={8} />
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@ const StudentEcosystem = () => {
                                 <div className="p-12 relative">
                                     <button
                                         onClick={() => setSelectedFeature(null)}
-                                        className="absolute top-10 right-10 w-12 h-12 bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#2563EB] hover:bg-blue-50 transition-all border border-slate-100"
+                                        className="absolute top-10 right-10 w-12 h-12 bg-slate-50 flex items-center justify-center text-slate-400 hover:text-black hover:bg-slate-100 transition-all border border-slate-100"
                                     >
                                         <FaTimes size={14} />
                                     </button>
@@ -194,7 +194,7 @@ const StudentEcosystem = () => {
 
                                     <div className="flex items-center gap-8 mb-12">
                                         <div>
-                                            <p className="text-[#2563EB] font-black uppercase tracking-[0.5em] text-[10px] mb-2">
+                                            <p className="text-slate-400 font-black uppercase tracking-[0.5em] text-[10px] mb-2">
                                                 {selectedFeature.miniTitle}
                                             </p>
                                             <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
@@ -207,7 +207,7 @@ const StudentEcosystem = () => {
                                         {selectedFeature.details.map((detail, idx) => (
                                             <div key={idx} className="flex items-start gap-6 group/item">
                                                 <div className="mt-1.5 flex-shrink-0">
-                                                    <div className="w-2 h-2 bg-blue-500 shadow-[0_0_12px_#2563EB]" />
+                                                    <div className="w-2 h-2 bg-slate-900 shadow-[0_0_12px_rgba(0,0,0,0.1)]" />
                                                 </div>
                                                 <div>
                                                     <h4 className="text-[14px] font-black text-slate-900 mb-1.5 uppercase tracking-tight">{detail.label}</h4>
@@ -223,7 +223,7 @@ const StudentEcosystem = () => {
                                         </p>
                                         <button
                                             onClick={() => setSelectedFeature(null)}
-                                            className="bg-[#2563EB] hover:bg-blue-600 text-white px-10 py-5 font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-blue-500/20 hover:-translate-y-1"
+                                            className="bg-slate-900 hover:bg-black text-white px-10 py-5 font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-slate-900/10 hover:-translate-y-1"
                                         >
                                             Close
                                         </button>

@@ -38,7 +38,7 @@ export const PremiumBentoCard = ({
             onMouseEnter={handleFocus}
             onMouseLeave={handleBlur}
             className={cn(
-                "relative row-span-1 rounded-3xl group/bento overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md transition-all duration-500 shadow-xl flex flex-col space-y-4 justify-between p-6 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-white/20",
+                "relative row-span-1 rounded-3xl group/bento overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md transition-all duration-500 shadow-xl flex flex-col space-y-4 justify-between p-6 hover:shadow-2xl hover:shadow-white/5 hover:border-white/20",
                 className
             )}
         >
@@ -65,7 +65,7 @@ export const PremiumBentoCard = ({
                 <div className="group-hover/bento:translate-x-2 transition duration-300 mt-4">
                     <div className="flex items-center gap-3 mb-2">
                         {icon}
-                        <div className="font-sans font-extrabold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-200 to-white">
+                        <div className="font-sans font-extrabold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-200 via-white to-slate-400">
                             {title}
                         </div>
                     </div>

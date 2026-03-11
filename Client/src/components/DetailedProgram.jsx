@@ -81,7 +81,7 @@ const DetailedProgram = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-none mb-6"
                     >
-                        Specialized <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] via-blue-400 to-indigo-500">Engineering</span> Programs
+                        Specialized <span className="text-slate-200">Engineering</span> Programs
                     </motion.h2>
                     <p className="text-slate-500 font-medium tracking-tight text-[14px] max-w-xl mx-auto leading-relaxed">
                         Architecting professional competence through immersive technical mastery and expert-led innovation labs.
@@ -106,22 +106,22 @@ const DetailedProgram = () => {
                                     transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
                                     whileHover={{ y: -8 }}
                                     onClick={() => setSelectedCourse(course)}
-                                    className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-7 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-[#2563EB]/40 hover:bg-white/[0.05]"
+                                    className="group relative bg-white/[0.03] backdrop-blur-2xl rounded-[2rem] p-7 border border-white/10 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden hover:border-slate-900/40 hover:bg-white/[0.05]"
                                 >
                                     {/* Intensity Glow Filter */}
-                                    <div className="absolute inset-0 bg-[#2563EB]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+                                    <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
 
                                     {/* Glass Shine Sweep */}
                                     <div className="glass-shine-effect" />
 
                                     <div className="relative z-10 flex flex-col h-full">
-                                        <div className={`w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center mb-6 border border-white/10 group-hover:bg-[#2563EB] group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500 shadow-2xl`}>
-                                            {getIcon(course.icon, "w-5 h-5 text-[#2563EB] group-hover:text-white transition-colors")}
+                                        <div className={`w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center mb-6 border border-white/10 group-hover:bg-slate-900 group-hover:shadow-[0_0_20px_rgba(0,0,0,0.2)] transition-all duration-500 shadow-2xl`}>
+                                            {getIcon(course.icon, "w-5 h-5 text-slate-400 group-hover:text-white transition-colors")}
                                         </div>
 
                                         <div className="flex items-center gap-1 mb-4">
                                             {[...Array(5)].map((_, i) => (
-                                                <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-[#2563EB] fill-[#2563EB]" : "text-slate-800"} />
+                                                <Star key={i} size={9} className={i < Math.floor(course.rating) ? "text-amber-500 fill-amber-500" : "text-slate-800"} />
                                             ))}
                                             <span className="text-[12px] font-bold text-slate-500 ml-1 tracking-tight">{course.rating}</span>
                                         </div>
@@ -138,7 +138,7 @@ const DetailedProgram = () => {
                                             <span className="flex items-center gap-2 text-[13px] font-bold tracking-tight text-slate-500 group-hover:text-white transition-colors">
                                                 <Clock size={10} className="text-[#2563EB]" /> {course.duration}
                                             </span>
-                                            <div className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:bg-[#2563EB] border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                                            <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:bg-black border border-white/10 group-hover:border-transparent transition-all duration-500 shadow-xl group-hover:shadow-[0_0_15px_rgba(0,0,0,0.2)]">
                                                 <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
                                             </div>
                                         </div>
@@ -193,7 +193,7 @@ const DetailedProgram = () => {
                                         </div>
                                         <button
                                             onClick={() => navigate('/online-program')}
-                                            className="w-full mt-12 bg-[#2563EB] hover:bg-blue-600 text-white font-bold text-[16px] tracking-tight py-6 rounded-2xl transition-all shadow-2xl shadow-blue-500/20"
+                                            className="w-full mt-12 bg-slate-900 hover:bg-black text-white font-bold text-[16px] tracking-tight py-6 rounded-2xl transition-all shadow-2xl shadow-slate-900/10"
                                         >
                                             Enroll Now
                                         </button>

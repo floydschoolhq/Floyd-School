@@ -42,7 +42,7 @@ const Check = () => (
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             viewBox="0 0 24 24" 
-            className="w-7 h-7 text-blue-600" 
+            className="w-7 h-7 text-slate-900" 
             fill="none" 
             stroke="currentColor" 
             strokeWidth="4" 
@@ -67,7 +67,7 @@ const HighlightText = ({ text, words }) => {
         <span>
             {parts.map((part, i) =>
                 words.some(w => w.toLowerCase() === part.toLowerCase())
-                    ? <span key={i} className="text-blue-600 font-bold">{part}</span>
+                    ? <span key={i} className="text-slate-900 font-bold">{part}</span>
                     : <span key={i}>{part}</span>
             )}
         </span>
@@ -109,7 +109,7 @@ const ThinkSkoolAdvantage = () => {
                             <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">Learning Features</span>
                         </div>
                         <div className="flex flex-col items-center">
-                            <div className="px-8 py-3 bg-blue-600 text-white font-black text-[14px] uppercase tracking-wider shadow-xl shadow-blue-500/30">ThinkSkool</div>
+                            <div className="px-8 py-3 bg-slate-900 text-white font-bold text-[14px] lowercase tracking-wider shadow-xl shadow-slate-900/10">thinkskool</div>
                         </div>
                         <div className="flex items-center justify-center">
                             <span className="text-slate-400 font-bold text-[13px] uppercase tracking-tight">Free Resources</span>

@@ -10,7 +10,7 @@ const FeatureRow = ({ feature, accent, isLast, align = 'left' }) => {
             <div className={`flex items-center gap-4 ${align === 'right' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
                 {/* Custom animated bullet */}
                 <div
-                    className={`w-2 h-2 rounded-full shrink-0 border border-white/10 transition-all duration-500 group-hover:scale-150 ${accent === 'blue' ? 'group-hover:bg-blue-500 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.6)]' : 'group-hover:bg-indigo-500 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.6)]'} bg-white/10`}
+                    className={`w-2 h-2 rounded-full shrink-0 border border-white/10 transition-all duration-500 group-hover:scale-150 ${accent === 'blue' ? 'group-hover:bg-slate-400 group-hover:shadow-[0_0_15px_rgba(148,163,184,0.6)]' : 'group-hover:bg-slate-500 group-hover:shadow-[0_0_15px_rgba(100,116,139,0.6)]'} bg-white/10`}
                 />
 
                 <div className="flex-1">
@@ -97,7 +97,7 @@ const DualModelSection = () => {
                 </div>
 
                 <div className="absolute inset-0 bg-gradient-to-b from-[#000000] via-[#000000]/60 to-[#000000]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,99,235,0.15),transparent_60%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent_60%)]" />
             </div>
 
             <div className="relative z-10 w-full px-6 xl:px-16 2xl:px-24 max-w-[1600px] mx-auto">
@@ -106,9 +106,9 @@ const DualModelSection = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6"
+                        className="inline-block px-4 py-1 rounded-full bg-slate-100/10 border border-white/10 mb-6"
                     >
-                        <p className="text-blue-400 font-bold uppercase tracking-[0.4em] text-[10px]">
+                        <p className="text-slate-400 font-bold uppercase tracking-[0.4em] text-[10px]">
                             Industrial Training Models
                         </p>
                     </motion.div>
@@ -125,9 +125,9 @@ const DualModelSection = () => {
                 {/* Integrated Split-Panel Design */}
                 <div className="relative">
                     {/* Central Glowing Spine */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/40 to-transparent hidden lg:block">
-                        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
-                        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.8)]" />
+                    <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent hidden lg:block">
+                        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-400 shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
+                        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-500 shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32 items-stretch">
@@ -142,10 +142,10 @@ const DualModelSection = () => {
                             >
                                 {/* Platform Label */}
                                 <div className={`flex items-center gap-4 mb-4 ${idx === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${model.accent === 'blue' ? 'bg-blue-600/20 text-blue-400' : 'bg-indigo-600/20 text-indigo-400'}`}>
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${model.accent === 'blue' ? 'bg-slate-400/20 text-slate-200' : 'bg-slate-500/20 text-slate-300'}`}>
                                         <Zap size={20} />
                                     </div>
-                                    <span className={`text-xs font-black uppercase tracking-[0.3em] ${model.accent === 'blue' ? 'text-blue-500' : 'text-indigo-400'}`}>
+                                    <span className={`text-xs font-black uppercase tracking-[0.3em] ${model.accent === 'blue' ? 'text-slate-400' : 'text-slate-500'}`}>
                                         {model.badge} Platform
                                     </span>
                                 </div>
@@ -153,7 +153,7 @@ const DualModelSection = () => {
                                 <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-2">
                                     {model.title}
                                 </h3>
-                                <p className={`text-sm font-bold uppercase tracking-[0.4em] mb-12 ${model.accent === 'blue' ? 'text-blue-400/60' : 'text-indigo-400/60'}`}>
+                                <p className={`text-sm font-bold uppercase tracking-[0.4em] mb-12 ${model.accent === 'blue' ? 'text-slate-400/60' : 'text-slate-500/60'}`}>
                                     {model.id === 'school' ? 'Industrial Bootcamps' : <><span>think</span><span className="text-[#FF7A00]">skool</span></>}
                                 </p>
 
@@ -176,8 +176,8 @@ const DualModelSection = () => {
                                     onClick={() => navigate(model.path)}
                                     className={`relative group px-10 py-5 rounded-2xl text-sm font-bold uppercase tracking-[0.3em] transition-all duration-300 overflow-hidden
                                         ${model.accent === 'blue'
-                                            ? 'bg-blue-600 text-white shadow-[0_10px_40px_rgba(37,99,235,0.3)]'
-                                            : 'bg-indigo-600 text-white shadow-[0_10px_40px_rgba(79,70,229,0.3)]'
+                                            ? 'bg-slate-900 text-white shadow-[0_10px_40px_rgba(0,0,0,0.1)]'
+                                            : 'bg-slate-800 text-white shadow-[0_10px_40px_rgba(0,0,0,0.1)]'
                                         }`}
                                 >
                                     <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
@@ -211,12 +211,12 @@ const DualModelSection = () => {
                             ))}
                         </div>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            <span className="text-blue-500">142+</span> Production Nodes Active
+                            <span className="text-white">142+</span> Production Nodes Active
                         </p>
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <button className="text-[11px] font-black text-white uppercase tracking-[0.4em] hover:text-blue-500 transition-colors">
+                        <button className="text-[11px] font-black text-white uppercase tracking-[0.4em] hover:text-slate-300 transition-colors">
                             Technical Docs
                         </button>
                         <button className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-[11px] font-black text-white uppercase tracking-[0.4em] hover:bg-white/10 transition-all">

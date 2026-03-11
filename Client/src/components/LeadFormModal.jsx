@@ -147,7 +147,7 @@ const LeadFormModal = ({ isOpen, onClose, source = 'generic' }) => {
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
-                                        className="w-full bg-[#2563EB] text-white font-black py-5 rounded-2xl hover:bg-blue-600 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-[10px] shadow-2xl active:scale-95 group/btn"
+                                        className="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-black transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-[10px] shadow-2xl active:scale-95 group/btn"
                                     >
                                         {status === 'loading' ? <FaSpinner className="animate-spin" /> : (
                                             <>

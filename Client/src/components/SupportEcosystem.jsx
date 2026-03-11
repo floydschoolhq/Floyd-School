@@ -22,8 +22,8 @@ const FeatureCard = ({ item, index, onClick }) => {
             className="group relative h-full cursor-pointer"
             onClick={onClick}
         >
-            <div className="relative bg-white rounded-2xl p-6 h-full border border-slate-100 shadow-sm transition-all duration-500 flex flex-col hover:border-[#2563EB]/40 hover:shadow-xl hover:shadow-blue-500/5 overflow-hidden">
-                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative bg-white rounded-2xl p-6 h-full border border-slate-100 shadow-sm transition-all duration-500 flex flex-col hover:border-slate-900/40 hover:shadow-xl hover:shadow-slate-900/5 overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Image Component */}
                 <div className="w-full h-56 rounded-xl overflow-hidden mb-6 border border-slate-50 shadow-sm relative group-hover:shadow-md transition-all">
@@ -33,10 +33,10 @@ const FeatureCard = ({ item, index, onClick }) => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute top-4 left-4 flex items-center justify-center">
-                        <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-slate-900/20 blur-xl rounded-full scale-150 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
                         <Icon
                             size={24}
-                            className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover/card:text-blue-400 transition-colors relative z-10"
+                            className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover/card:text-slate-200 transition-colors relative z-10"
                             strokeWidth={1.5}
                         />
                     </div>
@@ -44,11 +44,11 @@ const FeatureCard = ({ item, index, onClick }) => {
 
                 <div className="relative z-10 mb-6">
                     {item.role && (
-                        <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#2563EB] mb-3">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-slate-400 mb-3">
                             {item.role}
                         </p>
                     )}
-                    <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight group-hover:text-black transition-colors">
                         {item.title}
                     </h3>
                 </div>
@@ -56,7 +56,7 @@ const FeatureCard = ({ item, index, onClick }) => {
                 <div className="relative z-10 flex flex-wrap gap-2 mt-auto pt-6 border-t border-slate-50 w-full">
                     <div className="flex items-center justify-between w-full">
                         <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Program Details</span>
-                        <ArrowRight size={10} className="text-slate-300 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all" />
+                        <ArrowRight size={10} className="text-slate-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
                     </div>
                 </div>
             </div>
@@ -84,8 +84,8 @@ const SupportEcosystem = () => {
     return (
         <section id="support" ref={containerRef} className="relative bg-white py-10 overflow-hidden border-t border-slate-200">
             {/* Ambient Background Energy */}
-            <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-slate-900/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-slate-400/5 rounded-full blur-[100px] pointer-events-none" />
 
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
@@ -99,13 +99,13 @@ const SupportEcosystem = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-900/5 border border-slate-900/10 rounded-full mb-6"
                     >
-                        <Zap size={10} className="text-[#2563EB]" />
-                        <span className="text-[8px] font-black text-[#2563EB] uppercase tracking-[0.4em]">Integrated Support</span>
+                        <Zap size={10} className="text-slate-900" />
+                        <span className="text-[8px] font-black text-slate-900 uppercase tracking-[0.4em]">Integrated Support</span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#2563EB] tracking-tight leading-tight mb-6">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight mb-6">
                         Support Ecosystem.
                     </h2>
                     <p className="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] max-w-lg mx-auto leading-relaxed hidden">
@@ -128,7 +128,7 @@ const SupportEcosystem = () => {
                 >
                     <div className="relative z-10 text-center md:text-left">
                         <h3 className="text-3xl font-bold text-slate-900 tracking-tight leading-none mb-4">
-                            Global <span className="text-[#2563EB]">Response.</span>
+                            Global <span className="text-slate-400">Response.</span>
                         </h3>
                         <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em]">Integrated Technical Support</p>
                     </div>
@@ -136,11 +136,11 @@ const SupportEcosystem = () => {
                     <div className="relative z-10 flex items-center gap-12">
                         <div className="text-center">
                             <span className="block text-4xl font-bold text-slate-900 tracking-tight leading-none mb-1">1:1</span>
-                            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.2em]">Ratio</span>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase tracking-[0.2em]">Ratio</span>
                         </div>
                         <div className="w-px h-12 bg-slate-100" />
                         <div className="text-center">
-                            <span className="block text-4xl font-bold text-[#2563EB] tracking-tight leading-none mb-1">24/7</span>
+                             <span className="block text-4xl font-bold text-slate-900 tracking-tight leading-none mb-1">24/7</span>
                             <span className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Active</span>
                         </div>
                     </div>
@@ -148,8 +148,8 @@ const SupportEcosystem = () => {
 
                 {/* Subtle industrial background element */}
                 <div className="absolute bottom-10 right-10 pointer-events-none opacity-[0.05] select-none text-[80px] font-black leading-none tracking-tighter uppercase whitespace-nowrap z-0">
-                    <span className="text-[#2563EB]">think</span>
-                    <span className="text-[#F97316]">skool</span> // OS
+                    <span className="text-slate-900">think</span>
+                    <span className="text-slate-400">skool</span> // OS
                 </div>
             </motion.div>
 
@@ -182,18 +182,17 @@ const SupportEcosystem = () => {
                                 </button>
 
                                 <div className="p-8 md:p-12">
-                                    {/* Header with Image */}
-                                    <div className="w-full h-56 rounded-xl overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
+                                    {/* Header with Image */}                                    <div className="w-full h-56 rounded-xl overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
                                         <img
                                             src={selectedRole.image}
                                             alt={selectedRole.title}
                                             className="w-full h-full object-cover"
                                         />
                                         <div className="absolute top-6 left-6 flex items-center justify-center">
-                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
+                                            <div className="absolute inset-0 bg-slate-900/20 blur-xl rounded-full scale-150 opacity-100" />
                                             {React.createElement(iconMap[selectedRole.icon] || Zap, {
                                                 size: 32,
-                                                className: "text-blue-500 drop-shadow-[0_0_10px_rgba(37,99,235,0.5)] relative z-10",
+                                                className: "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] relative z-10",
                                                 strokeWidth: 1.5
                                             })}
                                         </div>
@@ -201,11 +200,11 @@ const SupportEcosystem = () => {
 
                                     <div className="flex items-center gap-6 mb-10">
                                         <div>
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-[0.4em]">{selectedRole.role}</span>
-                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-blue-500/10 rounded-full border border-blue-500/20">
-                                                    <div className="w-1 h-1 rounded-full bg-blue-500 animate-pulse" />
-                                                    <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Active</span>
+                                             <div className="flex items-center gap-2 mb-2">
+                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">{selectedRole.role}</span>
+                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-900/5 rounded-full border border-slate-900/10">
+                                                    <div className="w-1 h-1 rounded-full bg-slate-900 animate-pulse" />
+                                                    <span className="text-[8px] font-black text-slate-900 uppercase tracking-widest">Active</span>
                                                 </div>
                                             </div>
                                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
@@ -239,12 +238,12 @@ const SupportEcosystem = () => {
                                                 <div className="flex-1 h-px bg-slate-100" />
                                             </h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {selectedRole.benefits.map((benefit, i) => (
-                                                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50/50 border border-slate-100 group/item hover:bg-blue-50 hover:border-blue-100 transition-all">
-                                                        <div className="w-5 h-5 rounded-lg bg-white flex items-center justify-center text-blue-500 shadow-sm border border-slate-100 group-hover/item:bg-blue-500 group-hover/item:text-white transition-colors">
+                                                 {selectedRole.benefits.map((benefit, i) => (
+                                                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50/50 border border-slate-100 group/item hover:bg-slate-100 hover:border-slate-200 transition-all">
+                                                        <div className="w-5 h-5 rounded-lg bg-white flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 group-hover/item:bg-slate-900 group-hover/item:text-white transition-colors">
                                                             <Check size={10} strokeWidth={4} />
                                                         </div>
-                                                        <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/item:text-blue-600">
+                                                        <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/item:text-black">
                                                             {benefit}
                                                         </span>
                                                     </div>
@@ -255,13 +254,13 @@ const SupportEcosystem = () => {
 
                                     {/* Footer Logo Decoration */}
                                     <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
-                                        <div className="text-[14px] font-black uppercase tracking-tighter">
-                                            <span className="text-[#2563EB]">think</span>
-                                            <span className="text-[#F97316]">skool</span> // OS
+                                         <div className="text-[14px] font-black uppercase tracking-tighter">
+                                            <span className="text-slate-900">think</span>
+                                            <span className="text-slate-400">skool</span> // OS
                                         </div>
                                         <button
                                             onClick={() => setSelectedRole(null)}
-                                            className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 hover:shadow-blue-600/20"
+                                            className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-slate-900/10 hover:shadow-black/20"
                                         >
                                             Close Folder <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                         </button>

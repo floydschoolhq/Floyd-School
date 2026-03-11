@@ -97,8 +97,8 @@ export const InfiniteScrollCards = ({
                                 {item.title}
                             </span>
                             <span className="relative z-20 text-sm leading-[1.6] text-slate-300 font-normal">
-                                <span className="text-blue-400">Think</span>
-                                <span className="text-yellow-400">Skool</span> Program
+                                <span className="text-white">think</span>
+                                <span className="text-slate-400">skool</span> program
                             </span>
                         </div>
                     </li>

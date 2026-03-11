@@ -129,26 +129,9 @@ export default function Hackathon() {
 
                 {/* ══ HEADER ════════════════════════════════════════════ */}
                 <div className="text-center mb-16 max-w-3xl mx-auto">
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="text-xs font-black tracking-[0.3em] uppercase text-blue-600 mb-4 flex items-center justify-center gap-2"
-                    >
-                        <Zap className="w-3 h-3" />
-                        Post-Course · Capstone Event
-                    </motion.p>
                     <ScrollDarkenHeading>Hackathon</ScrollDarkenHeading>
-                    <motion.p
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2, duration: 0.6 }}
-                        className="text-slate-500 text-base font-medium leading-relaxed mt-4 max-w-xl mx-auto"
-                    >
-                        No slideshows. No mock demos. You build a production-grade app from scratch and ship it live in 48 hours.
-                    </motion.p>
+
+
                 </div>
 
                 {/* ══ STATS ROW ═════════════════════════════════════════ */}
