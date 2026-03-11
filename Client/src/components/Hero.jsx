@@ -331,11 +331,10 @@ const Hero = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-4">
                                 <ProgressCard />
-                                <LiveActivityCard />
                             </div>
                             <div className="space-y-4 pt-12">
                                 <StreakCard />
-                                <CertificateCard />
+                                <LiveActivityCard />
                             </div>
                         </div>
 
