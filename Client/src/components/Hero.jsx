@@ -153,11 +153,7 @@ const Hero = () => {
                         </div>
 
                         <p className="text-slate-600 font-medium leading-[1.6] text-[16px] md:text-[20px] tracking-tight text-center relative z-10">
-                            <span className="flex items-center justify-center gap-3 mb-2">
-                                <span className="h-px w-8 bg-slate-200" />
-                                <span className="text-slate-500 text-[14px] font-bold tracking-tight">The Problem</span>
-                                <span className="h-px w-8 bg-slate-200" />
-                            </span>
+
                             Most schools still teach the same syllabus they did 20 years ago. 
                             <span className="mx-2 text-slate-300">|</span>
                             <span className="font-black text-slate-900 px-1">
