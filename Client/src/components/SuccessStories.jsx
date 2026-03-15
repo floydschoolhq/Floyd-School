@@ -81,33 +81,33 @@ const ReviewCard = ({ review, index = 0 }) => {
     const theme = THEME_COLORS[index % THEME_COLORS.length];
     
     return (
-    <div className={`flex-shrink-0 w-full md:w-[400px] p-8 bg-white border border-slate-200/80 rounded-[2.5rem] group hover:bg-white transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-center text-center ${theme.border} ${theme.shadow}`}>
+    <div className={`flex-shrink-0 w-full md:w-[420px] p-10 bg-white border border-slate-100 rounded-[2.5rem] group hover:bg-white transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-start text-left ${theme.shadow}`}>
         {/* Subtle Color Reflection */}
         <div className={`absolute top-0 right-0 w-[150%] h-[150%] bg-gradient-to-bl ${theme.glow} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-bl-full`} />
         
-        {/* Quote watermark */}
-        <div className="absolute -top-4 -right-4 text-slate-100 group-hover:text-slate-200 transition-colors">
-            <Quote size={120} fill="currentColor" />
+        {/* Quote watermark - Subtle */}
+        <div className="absolute top-8 right-8 text-slate-50 group-hover:text-slate-100 transition-colors">
+            <Quote size={60} fill="currentColor" />
         </div>
         
-        <div className="relative z-10 flex flex-col items-center">
-            <div className="flex flex-col items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-2xl overflow-hidden border border-slate-100 group-hover:border-slate-300 transition-colors">
-                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-500" />
+        <div className="relative z-10 flex flex-col items-start w-full font-sans">
+            <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-100 bg-slate-50">
+                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover transition-all duration-500" />
                 </div>
                 <div>
-                    <h4 className="text-sm font-semibold text-slate-900 tracking-tight">{review.name}</h4>
-                    <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-0.5">{review.role}</p>
+                    <h4 className="text-[17px] font-bold text-slate-900 tracking-tight">{review.name}</h4>
+                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-1">{review.role}</p>
                 </div>
             </div>
             
-            <p className="text-[14px] text-slate-600 leading-relaxed font-normal">
+            <p className="text-[15px] text-slate-600 leading-relaxed font-medium mb-8">
                 "{review.content}"
             </p>
 
-            <div className="mt-6 flex gap-1.5 justify-center">
+            <div className="mt-auto flex gap-1.5">
                 {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-slate-800 transition-colors duration-300" />
+                    <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-100 group-hover:bg-slate-900 transition-colors duration-300" />
                 ))}
             </div>
         </div>

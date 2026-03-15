@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
-import ThinkSkoolAdvantage from '../components/ThinkSkoolAdvantage';
+import thinkskoolAdvantage from '../components/thinkskoolAdvantage';
 import MentorGrid from '../components/MentorGrid';
 import Hackathon from '../components/Hackathon';
 import PlatformPanels from '../components/PlatformPanels';
@@ -146,7 +146,7 @@ const CourseDetails = () => {
                 <Hackathon />
 
                 {/* Why Us Section - thinkskool advantage */}
-                <ThinkSkoolAdvantage />
+                <thinkskoolAdvantage />
 
                 {/* Student Reviews Section */}
                 <CourseReviews courseId={courseId} />

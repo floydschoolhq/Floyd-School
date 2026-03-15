@@ -13,7 +13,7 @@ const ScrollTracker = () => {
     });
 
     // We only want the tracker to be visible when scrolled past the hero section
-    // and hidden after ThinkSkoolAdvantage. 
+    // and hidden after thinkskoolAdvantage. 
     // Since it's tricky to get exact absolute pixel values of components dynamically without refs, 
     // a common approach is a fixed line whose height grows, and opacity fades based on raw scroll percentage.
     const opacity = useTransform(

@@ -61,9 +61,9 @@ const About = () => {
               Who We Are
             </h1>
 
-            {/* ThinkSkool Description */}
+            {/* thinkskool Description */}
             <p className="text-lg text-slate-300 mb-6 leading-relaxed max-w-xl lg:max-w-none mx-auto lg:mx-0 font-medium">
-              <span className="text-[#2563EB] font-black uppercase tracking-tighter">think</span><span className="text-[#F97316] font-black uppercase tracking-tighter">skool</span> is a school-integrated STEM education program designed to make
+              <span className="text-[#2563EB] font-black tracking-tighter">think</span><span className="text-[#F97316] font-black tracking-tighter">skool</span> is a school-integrated STEM education program designed to make
               technology learning accessible, practical, and engaging. We follow a
               project-first methodology supported by cloud labs, dashboards, and
               well-structured learning paths.
@@ -108,7 +108,7 @@ const About = () => {
                 <MdOutlineLightbulb /> {/* Changed icon to one representing innovation/approach */}
               </div>
 
-              {/* Feature List (Updated to reflect ThinkSkool's approach) */}
+              {/* Feature List (Updated to reflect thinkskool's approach) */}
               <ul className="relative z-10 space-y-8 mt-10 md:mt-16">
                 {features.map((feature, index) => (
                   <motion.li

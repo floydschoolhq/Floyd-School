@@ -10,7 +10,7 @@ function greet(name) {
     return \`Hello, \${name}!\`;
 }
 
-console.log(greet("ThinkSkool"));`
+console.log(greet("thinkskool"));`
     },
     71: {
         // Python
@@ -22,7 +22,7 @@ print("Hello, World!")
 def greet(name):
     return f"Hello, {name}!"
 
-print(greet("ThinkSkool"))`
+print(greet("thinkskool"))`
     },
     62: {
         // Java
@@ -32,7 +32,7 @@ print(greet("ThinkSkool"))`
         System.out.println("Hello, World!");
         
         // Your code here
-        String message = greet("ThinkSkool");
+        String message = greet("thinkskool");
         System.out.println(message);
     }
     
@@ -52,7 +52,7 @@ int main() {
     cout << "Hello, World!" << endl;
     
     // Your code here
-    string name = "ThinkSkool";
+    string name = "thinkskool";
     cout << "Hello, " << name << "!" << endl;
     
     return 0;
@@ -67,7 +67,7 @@ int main() {
     printf("Hello, World!\\n");
     
     // Your code here
-    char name[] = "ThinkSkool";
+    char name[] = "thinkskool";
     printf("Hello, %s!\\n", name);
     
     return 0;
@@ -83,7 +83,7 @@ class Program {
         Console.WriteLine("Hello, World!");
         
         // Your code here
-        string message = Greet("ThinkSkool");
+        string message = Greet("thinkskool");
         Console.WriteLine(message);
     }
     
@@ -103,7 +103,7 @@ def greet(name)
   "Hello, #{name}!"
 end
 
-puts greet("ThinkSkool")`
+puts greet("thinkskool")`
     },
     68: {
         // PHP
@@ -116,7 +116,7 @@ function greet($name) {
     return "Hello, $name!";
 }
 
-echo greet("ThinkSkool");
+echo greet("thinkskool");
 ?>`
     },
     60: {
@@ -130,7 +130,7 @@ func main() {
     fmt.Println("Hello, World!")
     
     // Your code here
-    message := greet("ThinkSkool")
+    message := greet("thinkskool")
     fmt.Println(message)
 }
 
@@ -145,7 +145,7 @@ func greet(name string) string {
     println("Hello, World!")
     
     // Your code here
-    val message = greet("ThinkSkool")
+    val message = greet("thinkskool")
     println(message)
 }
 
@@ -164,7 +164,7 @@ function greet(name: string): string {
     return \`Hello, \${name}!\`;
 }
 
-console.log(greet("ThinkSkool"));`
+console.log(greet("thinkskool"));`
     },
     83: {
         // Swift
@@ -178,7 +178,7 @@ func greet(name: String) -> String {
     return "Hello, \\(name)!"
 }
 
-print(greet(name: "ThinkSkool"))`
+print(greet(name: "thinkskool"))`
     }
 };
 

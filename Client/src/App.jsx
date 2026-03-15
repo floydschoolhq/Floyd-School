@@ -41,7 +41,7 @@ import TechStackStats from './components/TechStackStats.jsx';
 
 
 import InteractiveFeatures from './components/InteractiveFeatures';
-import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
+import ThinkskoolAdvantage from './components/thinkskoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 
 
@@ -57,7 +57,7 @@ const HomePage = () => {
                 <GlobalNotificationListener />
                 <div className='relative'>
                     <Hero />
-                    <ThinkSkoolAdvantage />
+                    <ThinkskoolAdvantage />
                     <TechStackStats />
                     <OnlineCourseFocus />
                     <MentorGrid />

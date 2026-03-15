@@ -22,7 +22,7 @@ const ScrollingAvatars = () => {
                 ))}
             </div>
             <div className="text-[14px] md:text-[16px] font-semibold text-slate-600 tracking-tight">
-                <span className="text-[#F97316]">1000+</span> Students
+                Trusted by <span className="text-[#F97316]">1000+</span> Students
             </div>
         </div>
     );
@@ -38,7 +38,7 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-24 overflow-hidden bg-white">
+        <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-white">
             {/* Background Accents - Premium Pinkish Glow */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-rose-500/[0.04] rounded-full blur-[120px] animate-pulse" />
@@ -152,15 +152,14 @@ const Hero = () => {
                             <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
                         </div>
 
-                        <p className="text-slate-600 font-medium leading-[1.6] text-[16px] md:text-[20px] tracking-tight text-center relative z-10">
-
+                        <p className="text-slate-600 font-medium leading-[1.8] text-[16px] md:text-[20px] tracking-tight text-center relative z-10 px-2 sm:px-0">
                             Most schools still teach the same syllabus they did 20 years ago. 
                             <span className="mx-2 text-slate-300">|</span>
-                            <span className="font-black text-slate-900 px-1">
+                            <span className="font-black text-slate-900 inline-flex items-center">
                                 <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
                             </span> fills that gap. 
-                            <span className="block mt-2 text-slate-500 font-semibold">
-                                Students master <span className="text-slate-900 font-bold bg-slate-100 px-2.5 py-1 rounded-lg">AI</span>, 
+                            <span className="block text-slate-500 font-semibold mt-1">
+                                Students master <span className="text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded-lg">AI</span>, 
                                 <span className="text-slate-900 font-bold px-1">Engineering</span>, and 
                                 <span className="text-slate-900 font-bold px-1">Robotics</span> through live industrial sessions and real-world engineering protocols.
                             </span>

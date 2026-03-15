@@ -161,10 +161,9 @@ const MentorGrid = ({ title = "Mentors" }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
-                <div className="flex flex-col md:flex-row items-center md:items-end justify-between mb-12 gap-8 text-center md:text-left">
+                <div className="flex flex-col items-center justify-center mb-12 text-center">
                     <div className="w-full">
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 block">Industrial Faculty</span>
-                        <div className="flex justify-center md:justify-start">
+                        <div className="flex justify-center">
                             <ScrollDarkenHeading>
                                 {title}
                             </ScrollDarkenHeading>

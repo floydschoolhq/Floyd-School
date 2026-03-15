@@ -42,17 +42,17 @@ const OnlineCourseFocus = () => {
                                             y: -8,
                                             transition: { type: "spring", stiffness: 300, damping: 20 }
                                         }}
-                                        className="relative p-6 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-md border border-white/10 cursor-pointer shadow-2xl group flex flex-col gap-6 overflow-hidden"
+                                        className="relative p-6 rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/10 cursor-pointer shadow-2xl group flex flex-col gap-5 overflow-hidden"
                                         onClick={() => navigate(`/course/${course._id}`)}
                                     >
                                         {/* Premium Glowing Outline - Visible only on hover */}
-                                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-[2.5rem] transition-all duration-500" />
+                                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-3xl transition-all duration-500" />
                                         
                                         {/* Animated Background Shine */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl" />
 
                                         {/* Course Image Container */}
-                                        <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border border-white/5 shadow-2xl relative z-10 bg-slate-900/50 group/imgContainer">
+                                        <div className="w-full aspect-[16/10] rounded-xl overflow-hidden border border-white/5 shadow-2xl relative z-10 bg-slate-900/50 group/imgContainer">
                                             {/* Refined Shimmer Placeholder Background */}
                                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[shimmer_3s_infinite] pointer-events-none" />
                                             
@@ -71,11 +71,16 @@ const OnlineCourseFocus = () => {
                                             />
                                         </div>
 
-                                        <div className="flex-1 relative z-10 flex flex-col justify-end mt-auto">
-                                            <h4 className="text-xl font-normal text-white uppercase tracking-tight transition-colors line-clamp-1 mb-4">{course.title}</h4>
+                                        <div className="flex-1 relative z-10 flex flex-col mt-4">
+                                            <h4 className="text-xl font-bold text-white uppercase tracking-tight transition-colors line-clamp-1 mb-2">
+                                                {course.title}
+                                            </h4>
+                                            <p className="text-slate-400 text-sm font-medium leading-relaxed line-clamp-4">
+                                                {course.description}
+                                            </p>
                                         </div>
                                         
-                                        <div className="pt-4 border-t border-white/5 flex items-center justify-between text-slate-300 font-medium text-[11px] uppercase tracking-widest group-hover:text-white transition-all relative z-10">
+                                        <div className="pt-4 border-t border-white/5 flex items-center justify-between text-slate-400 font-bold text-[10px] uppercase tracking-widest group-hover:text-white transition-all relative z-10">
                                             <span>Explore Program</span> 
                                             <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white/5 group-hover:bg-white group-hover:text-slate-900 transition-all">
                                                 <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
