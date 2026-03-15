@@ -4,7 +4,7 @@ import { Briefcase, Award, Headphones } from 'lucide-react';
 
 const IndustrialNetwork = () => {
     return (
-        <section id="network" className="relative bg-white pt-6 pb-16 overflow-hidden border-t border-slate-100">
+        <section id="network" className="relative bg-[#F1F1F1] pt-6 pb-16 overflow-hidden border-t border-slate-100">
             {/* Ambient Tints removed for Apple White theme */}
 
             <motion.div

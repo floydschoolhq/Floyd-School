@@ -18,6 +18,7 @@ import LearningModel from './components/LearningModel';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
+import ClassroomPage from './pages/Student/ClassRoomPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import renderPage from './pages/Student/renderPage.jsx';
 import Contact from './components/Contact.jsx';
@@ -27,6 +28,7 @@ import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
+import CourseDetails from './pages/CourseDetails.jsx';
 
 
 
@@ -42,33 +44,31 @@ import InteractiveFeatures from './components/InteractiveFeatures';
 import StudentEcosystem from './components/StudentEcosystem.jsx';
 import ThinkSkoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
-import ScrollTracker from './components/common/ScrollTracker.jsx';
 
+
+import { MotionConfig } from 'framer-motion';
+import useIsMobile from './hooks/useIsMobile.js';
 
 // --- Home Page Component ---
 const HomePage = () => {
+    const isMobile = useIsMobile();
     return (
-        <div>
-            <ScrollTracker />
-            <GlobalNotificationListener />
-            {/* 3. Scrollable Content (The rest of your components) */}
-            <div className='relative'>
-                <Hero />
-                <OnlineCourseFocus />
-                <TechStackStats />
-                <SuccessStories />
-                <Hackathon />
-                <LearningModel />
-                <ThinkSkoolAdvantage />
-                <MentorGrid />
-                <PlatformPanels />
-                <IndustrialNetwork />
-                <Masterclasses />
-                <InteractiveFeatures isFeaturesExpanded={true} />
-                <StudentEcosystem />
+        <MotionConfig transition={isMobile ? { duration: 0 } : undefined}>
+            <div>
+                <GlobalNotificationListener />
+                <div className='relative'>
+                    <Hero />
+                    <StudentEcosystem />
+                    <TechStackStats />
+                    <OnlineCourseFocus />
+                    <MentorGrid />
+                    <LearningModel />
+                    <InteractiveFeatures isFeaturesExpanded={true} />
+                    <SuccessStories />
+                </div>
+                <StickyBottomBar />
             </div>
-            <StickyBottomBar />
-        </div>
+        </MotionConfig>
     )
 };
 
@@ -90,7 +90,8 @@ const App = () => {
         '/student',
         '/downloads',
         '/contact',
-        '/online-program'
+        '/online-program',
+        '/classroom'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -120,6 +121,7 @@ const App = () => {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/course' element={<Course />} />
+                <Route path='/course/:courseId' element={<CourseDetails />} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={
@@ -144,6 +146,15 @@ const App = () => {
 
                 {/* Bootcamp Exhibition Gallery */}
                 <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
+
+                {/* Classroom Access */}
+                <Route path='/classroom' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <ClassroomPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
             </Routes>
 
             {/* Conditional Footer Rendering */}

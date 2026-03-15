@@ -99,34 +99,18 @@ const PremiumNavbar = () => {
     };
 
     const navItems = [
-        { name: 'Programs', id: 'online-focus' },
-        { name: 'Why Us', id: 'why-us' },
-        { name: 'Hackathon', id: 'hackathon' },
-        { name: 'Mentors', id: 'mentors-grid' },
+        { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+        { name: 'Courses', id: 'online-focus' },
+        { name: 'Partner with us', link: '/school-partnerships' },
+        { name: 'Request Callback', action: handleContactClick, highlight: true },
     ];
 
     return (
         <>
             <MaintenanceBanner />
-            {/* Top Banner - Static */}
-            <div
-                className={`fixed top-0 left-0 right-0 z-[60] h-6 flex items-center justify-center ${isDarkPage ? 'bg-black border-white/10' : 'bg-white border-slate-100'} border-b shadow-sm overflow-hidden`}
-            >
-                <div className="flex items-center gap-8 px-8">
-                    <div className="flex items-center gap-3">
-                        <Sparkles size={10} className="text-slate-400" />
-                        <span className={`${isDarkPage ? 'text-white/40' : 'text-slate-500'} font-medium uppercase tracking-[0.2em] text-[8px]`}>Premium Online Batches</span>
-                        <div className={`w-1 h-1 rounded-full ${isDarkPage ? 'bg-white/10' : 'bg-slate-200'} mx-2`} />
-                        <Link to="/online-program" className="text-slate-900 font-bold hover:text-black flex items-center gap-2 tracking-wide transition-colors text-[9px]">
-                            Enroll Now
-                            <ArrowRight size={10} />
-                        </Link>
-                    </div>
-                </div>
-            </div>
 
             <motion.nav
-                className="fixed top-6 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
+                className="fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: isVisible ? 0 : -100, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
@@ -134,8 +118,8 @@ const PremiumNavbar = () => {
                 <div
                     className={`pointer-events-auto transition-all duration-700 ease-[0.23,1,0.32,1] flex items-center justify-center
                         ${isScrolled
-                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-black/90' : 'bg-white/90'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border ${isDarkPage ? 'border-white/20' : 'border-white/60'} ring-1 ${isDarkPage ? 'ring-white/10' : 'ring-black/[0.03]'} px-6 py-1.5 h-11`
-                            : `w-full rounded-none ${isDarkPage ? 'bg-black/80' : 'bg-white/60'} backdrop-blur-2xl px-6 py-3 h-14 border-b ${isDarkPage ? 'border-white/20' : 'border-slate-200'} shadow-lg shadow-black/5`
+                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-black/90' : 'bg-white/95'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border ${isDarkPage ? 'border-white/20' : 'border-slate-100'} ring-1 ${isDarkPage ? 'ring-white/10' : 'ring-black/[0.01]'} px-6 py-1.5 h-16`
+                            : `w-full rounded-none ${isDarkPage ? 'bg-black/80' : 'bg-white'} backdrop-blur-none px-6 py-4 h-20 border-b ${isDarkPage ? 'border-white/20' : 'border-slate-100'} shadow-none`
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
@@ -147,94 +131,48 @@ const PremiumNavbar = () => {
                                 size="md" 
                                 theme="brand"
                                 shine={true}
+                                showTagline={true}
+                                scrolled={isScrolled}
                                 className={isDarkPage ? '!text-white' : ''} 
                             />
                         </div>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-6 lg:gap-8 relative">
-                            {/* Mega Menu Trigger - For ThinkSkool Learners */}
-                            <div
-                                className="relative group cursor-pointer flex items-center h-full"
-                                onMouseEnter={() => setIsMegaMenuOpen(true)}
-                                onMouseLeave={() => setIsMegaMenuOpen(false)}
-                            >
-                                <motion.div
-                                    className={`relative flex items-center gap-2 py-2 px-4 rounded-xl transition-all duration-300 ${isMegaMenuOpen
-                                        ? (isDarkPage ? 'bg-white/10 text-white' : 'bg-slate-900 text-white')
-                                        : (isDarkPage ? 'text-white/90 hover:text-white' : 'text-slate-800 hover:text-black')
-                                        }`}
-                                >
-                                    <span className="font-bold text-[13px] tracking-tight">For Students</span>
-                                    <FaChevronDown
-                                        size={9}
-                                        className={`transition-transform duration-500 ${isMegaMenuOpen ? 'rotate-180 opacity-100' : 'opacity-40'}`}
-                                    />
-                                </motion.div>
-
-                                <AnimatePresence>
-                                    {isMegaMenuOpen && (
-                                        <div className="absolute top-[calc(100%+0.5rem)] left-0">
-                                            <LearnersMegaMenu isDarkPage={isDarkPage} />
-                                        </div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
+                        <div className="hidden md:flex items-center gap-8 lg:gap-12 relative h-full">
 
                             {navItems.map((item) => (
-                                <div key={item.name} className="relative group cursor-pointer flex items-center h-full">
-                                    <motion.div
-                                        onClick={() => item.id && scrollToSection(item.id)}
-                                        className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-black'} font-medium text-[13px] tracking-tight transition-all py-1.5 px-0.5`}
-                                        whileHover={{ y: -1 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <span>{item.name}</span>
-                                        {item.hasDropdown && (
-                                            <FaChevronDown
-                                                size={8}
-                                                className="mt-0.5 opacity-40 group-hover:opacity-100 group-hover:rotate-180 transition-all duration-300"
-                                            />
-                                        )}
-                                        <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] ${isDarkPage ? 'bg-slate-400' : 'bg-slate-900'} rounded-full group-hover:w-full transition-all duration-300`}></div>
-                                    </motion.div>
-
-                                    {item.hasDropdown && (
-                                        <div className="absolute top-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 scale-95 group-hover:scale-100 z-[70]">
-                                            <div className="bg-white/90 backdrop-blur-3xl rounded-[1.8rem] shadow-[0_30px_70px_rgba(0,0,0,0.1)] border border-white p-2 w-52 overflow-hidden ring-1 ring-black/[0.03]">
-                                                {item.subItems.map((sub, idx) => (
-                                                    <Link
-                                                        key={idx}
-                                                        to={sub.link}
-                                                        className="block px-5 py-2.5 text-[12px] font-medium tracking-normal text-slate-500 hover:bg-blue-50/50 hover:text-blue-600 rounded-2xl transition-all border-l-2 border-transparent hover:border-blue-500"
-                                                    >
-                                                        {sub.name}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        </div>
+                                <div key={item.name} className="relative group cursor-pointer flex items-center">
+                                    {item.link ? (
+                                        <Link
+                                            to={item.link}
+                                            className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-800 hover:text-black'} font-bold text-[16px] tracking-tight transition-all py-1.5 px-0.5`}
+                                        >
+                                            <span>{item.name}</span>
+                                        </Link>
+                                    ) : (
+                                        <motion.div
+                                            onClick={() => {
+                                                if (item.action) item.action();
+                                                else if (item.id) scrollToSection(item.id);
+                                            }}
+                                            className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-800 hover:text-black'} font-bold text-[16px] tracking-tight transition-all py-1.5 px-0.5`}
+                                            whileHover={{ y: -1 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <span>{item.name}</span>
+                                        </motion.div>
                                     )}
                                 </div>
                             ))}
                         </div>
 
                         {/* Right Actions */}
-                        <div className="hidden md:flex items-center gap-4">
+                        <div className="hidden md:flex items-center">
                             <button
-                                onClick={handleContactClick}
-                                className={`px-4 py-2 text-[13px] font-medium ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-700 hover:text-blue-600'} transition-all tracking-tight hover:scale-105`}
+                                onClick={() => navigate('/student/login')}
+                                className="px-12 py-2.5 bg-[#F97316] text-white font-black text-[17px] rounded-xl hover:bg-[#EA580C] transition-all shadow-md shadow-orange-500/20 flex items-center gap-2"
                             >
-                                Contact
-                            </button>
-                            <button
-                                onClick={() => {
-                                    if (user) navigate('/student');
-                                    else navigate('/student/login');
-                                }}
-                                className="px-6 py-2 bg-slate-900 text-white font-bold text-[13px] rounded-full hover:bg-black transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2"
-                            >
-                                <div className="w-1.5 h-1.5 rounded-full bg-white" />
-                                Portal
+                                Sign In
                             </button>
                         </div>
 
@@ -273,32 +211,31 @@ const PremiumNavbar = () => {
                                     <button
                                         key={item.name}
                                         onClick={() => {
-                                            if (item.id) {
+                                            if (item.action) {
+                                                item.action();
+                                                setIsMobileMenuOpen(false);
+                                            } else if (item.link) {
+                                                navigate(item.link);
+                                                setIsMobileMenuOpen(false);
+                                            } else if (item.id) {
                                                 scrollToSection(item.id);
                                                 setIsMobileMenuOpen(false);
                                             }
                                         }}
-                                        className={`w-full text-left px-4 py-3 text-[14px] font-medium tracking-tight ${isDarkPage ? 'text-white/80 hover:bg-white/10' : 'text-slate-700 hover:bg-slate-50'} rounded-lg transition-colors flex justify-between items-center`}
+                                        className={`w-full text-left px-4 py-3 text-[14px] font-bold tracking-tight ${isDarkPage ? 'text-white/80 hover:bg-white/10' : 'text-slate-700 hover:bg-slate-50'} rounded-lg transition-colors flex justify-between items-center`}
                                     >
                                         {item.name}
-                                        {item.id ? null : (item.hasDropdown && <FaChevronDown size={12} />)}
                                     </button>
                                 ))}
-                                <div className="h-px bg-[#FBEFEF] my-2" />
-                                <Link
-                                    to="/online-program#explore-programs"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`w-full text-left px-4 py-3 text-[14px] font-bold tracking-tight ${isDarkPage ? 'text-white/90 bg-white/5' : 'text-[#2563EB] bg-blue-50'} rounded-lg transition-colors flex justify-between items-center`}
-                                >
-                                    For Students
-                                    <ArrowRight size={14} />
-                                </Link>
-                                <div className="h-px bg-[#FBEFEF] my-2" />
+                                <div className="h-px bg-slate-100 my-2" />
                                 <button
-                                    onClick={() => navigate('/student/login')}
-                                    className="w-full text-center px-4 py-3 text-[11px] font-bold uppercase tracking-widest text-slate-700 border border-[#FBEFEF] rounded-lg hover:bg-[#FCF8F8]"
+                                    onClick={() => {
+                                        navigate('/student/login');
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className="w-full text-center px-4 py-3 text-[13px] font-bold text-white bg-[#F97316] rounded-xl hover:bg-[#EA580C] shadow-lg shadow-orange-500/10"
                                 >
-                                    My Portal
+                                    Sign In
                                 </button>
                             </div>
                         </motion.div>

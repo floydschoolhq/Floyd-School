@@ -3,9 +3,12 @@ import { ShieldAlert, X } from 'lucide-react';
 import api from '../api/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import useIsMobile from '../hooks/useIsMobile';
+
 const MaintenanceBanner = () => {
     const [maintenance, setMaintenance] = useState(null);
     const [isVisible, setIsVisible] = useState(true);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         const checkStatus = async () => {
@@ -32,14 +35,15 @@ const MaintenanceBanner = () => {
     return (
         <AnimatePresence>
             <motion.div
-                initial={{ height: 0, opacity: 0 }}
+                initial={isMobile ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
+                transition={isMobile ? { duration: 0 } : {}}
                 className="bg-blue-500 text-white fixed top-0 left-0 right-0 z-[200] shadow-lg shadow-blue-500/20"
             >
                 <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="bg-white/20 p-1.5 rounded-lg animate-pulse">
+                        <div className={`bg-white/20 p-1.5 rounded-lg ${!isMobile ? 'animate-pulse' : ''}`}>
                             <ShieldAlert size={16} />
                         </div>
                         <p className="text-xs font-black uppercase tracking-widest">

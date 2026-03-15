@@ -1,19 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const WaveText = ({ text, className = '' }) => {
     // Split text into arrays of letters
     const letters = text.split("");
+    const isMobile = useIsMobile();
     
     // Animation variants for the "shine" effect
     const shineVariants = {
         animate: (i) => ({
-            filter: [
+            filter: isMobile ? "brightness(1)" : [
                 "brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))",
                 "brightness(1.8) drop-shadow(0 0 15px rgba(255,255,255,0.4))",
                 "brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))"
             ],
-            transition: {
+            transition: isMobile ? { duration: 0 } : {
                 duration: 2.5,
                 repeat: Infinity,
                 ease: "easeInOut",
@@ -38,7 +40,7 @@ const WaveText = ({ text, className = '' }) => {
                             custom={i}
                             className={`${colorClass} inline-block leading-none`}
                             style={{ 
-                                fontSize: 'clamp(3rem, 12vw, 15rem)', // Large responsive scale
+                                fontSize: 'clamp(3rem, 15vw, 15rem)', // Large responsive scale
                             }}
                         >
                             {char}

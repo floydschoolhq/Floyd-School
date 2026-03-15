@@ -10,6 +10,8 @@ import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 
 
+import useIsMobile from '../hooks/useIsMobile';
+
 const LEADERS = [
     {
         name: "Shivam Mishra",
@@ -49,148 +51,162 @@ const LEADERS = [
     }
 ];
 
-const AUTO_SLIDE_INTERVAL = 3500; // ms between auto-slides
 
-const MentorGrid = () => {
-    const [selectedMentor, setSelectedMentor] = useState(null);
-    const scrollContainerRef = useRef(null);
-    const autoSlideRef = useRef(null);
-    const isManualRef = useRef(false);
-
-    const getCardWidth = useCallback(() => {
-        if (!scrollContainerRef.current) return 0;
-        const card = scrollContainerRef.current.querySelector('.snap-center');
-        return card ? card.offsetWidth + 24 : 0; // 24 = gap-6
-    }, []);
-
-    const doAutoSlide = useCallback(() => {
-        const el = scrollContainerRef.current;
-        if (!el) return;
-        const cardWidth = getCardWidth();
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        const next = el.scrollLeft + cardWidth >= maxScroll - 4
-            ? 0
-            : el.scrollLeft + cardWidth;
-        el.scrollTo({ left: next, behavior: 'smooth' });
-    }, [getCardWidth]);
-
-    const startAutoSlide = useCallback(() => {
-        clearInterval(autoSlideRef.current);
-        autoSlideRef.current = setInterval(doAutoSlide, AUTO_SLIDE_INTERVAL);
-    }, [doAutoSlide]);
-
-    const stopAutoSlide = useCallback(() => {
-        clearInterval(autoSlideRef.current);
-    }, []);
-
-    useEffect(() => {
-        startAutoSlide();
-        return () => stopAutoSlide();
-    }, [startAutoSlide, stopAutoSlide]);
-
-    const scroll = (direction) => {
-        if (scrollContainerRef.current) {
-            isManualRef.current = true;
-            stopAutoSlide(); // Stop auto-slide permanently on manual interaction
-            const cardWidth = getCardWidth();
-            const { scrollLeft } = scrollContainerRef.current;
-            const scrollTo = direction === 'left' ? scrollLeft - cardWidth : scrollLeft + cardWidth;
-            scrollContainerRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
-        }
-    };
-
+const MentorCard = React.memo(({ mentor, index, onSelect }) => {
+    const isMobile = useIsMobile();
     return (
-        <section id="mentors-grid" className="bg-white py-12 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-10">
-                    <ScrollDarkenHeading>
-                        Mentors
-                    </ScrollDarkenHeading>
+        <motion.div
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={!isMobile ? { y: -10, scale: 1.02 } : {}}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onSelect(mentor)}
+            style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
+            className="snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] group cursor-pointer hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100 transition-shadow duration-500 flex flex-col md:flex-row items-center p-8 md:p-10 gap-6 md:gap-10 relative"
+        >
+            {/* Background Decorative Mesh (Slight) */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-blue-50/30 rounded-full blur-3xl -mr-24 -mt-24 pointer-events-none group-hover:bg-blue-100/40 transition-colors duration-700" />
+            
+            {/* Image Section: High-End Industrial Housing */}
+            <div className="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 relative">
+                {/* Rotating Border Aura */}
+                <motion.div 
+                    animate={isMobile ? {} : { rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+                    style={{ translateZ: 0 }}
+                    className="absolute inset-[-12px] rounded-full border border-dashed border-slate-200 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+                />
+                
+                {/* Main Profile Housing */}
+                <div className="absolute inset-0 rounded-full p-[6px] bg-white border border-slate-100 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] group-hover:border-blue-200/50 group-hover:shadow-blue-100/20 transition-all duration-700 z-10">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 relative">
+                         <img
+                            src={mentor.image}
+                            alt={mentor.name}
+                            className="w-full h-full object-cover object-top transition-all duration-1000 group-hover:scale-105"
+                            style={{ transform: `scale(${mentor.imageScale})` }}
+                        />
+                        {/* Glass Overlay on Image */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/40 via-transparent to-white/10 opacity-30 group-hover:opacity-10 transition-opacity duration-700" />
+                    </div>
                 </div>
 
-                <div className="relative group/slider">
-                    {/* Navigation Buttons (Outside Container) */}
-                    <div className="absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-20 z-20 pointer-events-none">
-                        <button 
-                            onClick={() => scroll('left')}
-                            className="p-5 bg-white border border-slate-100 rounded-full text-slate-400 hover:text-slate-800 hover:border-slate-200 shadow-xl transition-all scale-90 hover:scale-110 active:scale-95 pointer-events-auto"
-                        >
-                            <ChevronLeft size={28} />
-                        </button>
-                    </div>
-                    <div className="absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-20 z-20 pointer-events-none">
-                        <button 
-                            onClick={() => scroll('right')}
-                            className="p-5 bg-white border border-slate-100 rounded-full text-slate-400 hover:text-slate-800 hover:border-slate-200 shadow-xl transition-all scale-90 hover:scale-110 active:scale-95 pointer-events-auto"
-                        >
-                            <ChevronRight size={28} />
-                        </button>
-                    </div>
+                {/* Integrated LinkedIn Tag */}
+                <a 
+                    href={mentor.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute bottom-2 right-2 w-9 h-9 md:w-11 md:h-11 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-2xl hover:bg-blue-600 hover:scale-110 active:scale-95 transition-all duration-300 z-20 border-[3px] border-white group/linkedin"
+                >
+                    <FaLinkedinIn size={14} className="group-hover/linkedin:rotate-3" />
+                </a>
+            </div>
 
-                    {/* Scrollable Container */}
-                    <div 
-                        ref={scrollContainerRef}
-                        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-8 px-4 -mx-4"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        {LEADERS.map((mentor, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                onClick={() => setSelectedMentor(mentor)}
-                                whileHover={{ y: -6 }}
-                                className="snap-center flex-shrink-0 w-[450px] md:w-[550px] aspect-video bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] group cursor-pointer hover:shadow-[0_28px_48px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-shadow duration-500 flex items-center p-8 gap-8"
-                            >
-                                {/* Circular Image Section (Left) */}
-                                <div className="w-[30%] aspect-square flex-shrink-0 relative">
-                                    {/* Outer ring */}
-                                    <div className="absolute inset-0 rounded-full border-2 border-slate-100 group-hover:border-slate-200 transition-colors" />
-                                    {/* Image fills the circle fully */}
-                                    <div className="absolute inset-[6px] rounded-full overflow-hidden">
-                                        <img
-                                            src={mentor.image}
-                                            alt={mentor.name}
-                                            className="w-full h-full object-cover object-top transition-transform duration-700"
-                                            style={{ scale: mentor.imageScale }}
-                                        />
-                                    </div>
-                                    <div className="absolute -bottom-1 -right-1 p-2 bg-white rounded-full border border-slate-100 text-slate-400 group-hover:text-slate-900 group-hover:border-slate-300 transition-all shadow-sm z-10">
-                                        <FaLinkedinIn size={14} />
-                                    </div>
-                                </div>
+            {/* Content Core: Pure Data Hierarchy */}
+            <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left min-w-0 relative z-10 w-full">
+                <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center md:items-start">
+                    <h3 className="text-xl md:text-3xl font-bold text-slate-900 tracking-tight uppercase leading-none truncate group-hover:text-blue-600 transition-colors w-full">
+                        {mentor.name}
+                    </h3>
+                    <p className="text-slate-400 font-semibold text-[11px] md:text-[13px] tracking-wide uppercase truncate pb-4">
+                        {mentor.role}
+                    </p>
+                    <div className="w-12 h-1 bg-slate-100 group-hover:w-24 group-hover:bg-blue-600 transition-all duration-500 rounded-full" />
+                </div>
 
-                                {/* Content Section (Right) */}
-                                <div className="flex-grow flex flex-col justify-center min-w-0">
-                                    <div className="mb-5">
-                                        <h3 className="text-[26px] font-black text-slate-800 mb-1 tracking-tight uppercase truncate">
-                                            {mentor.name}
-                                        </h3>
-                                        <p className="text-slate-500 font-bold text-[14px] tracking-[0.2em] uppercase opacity-80 truncate mb-4">
-                                            {mentor.role}
-                                        </p>
-                                        <div className="w-16 h-[2px] bg-slate-100 group-hover:bg-slate-300 transition-colors rounded-full" />
-                                    </div>
+                <p className="text-slate-500 text-[14px] md:text-[15px] leading-relaxed mb-6 md:mb-8 line-clamp-2 font-medium">
+                    {mentor.bio}
+                </p>
 
-                                    <p className="text-slate-500 text-[16px] leading-relaxed mb-6 line-clamp-2 font-medium">
-                                        {mentor.bio}
-                                    </p>
-
-                                    <div className="flex flex-wrap gap-2 mt-auto">
-                                        {mentor.tags.slice(0, 2).map(tag => (
-                                            <div key={tag} className="px-4 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-black text-slate-400 uppercase tracking-widest">
-                                                {tag}
-                                            </div>
-                                        ))}
-                                        <span className="text-[11px] font-black text-slate-300 ml-auto uppercase tracking-[0.15em] pt-1.5">
-                                            Profile →
-                                        </span>
-                                    </div>
-                                </div>
-                            </motion.div>
+                {/* Interaction Footer */}
+                <div className="flex items-center justify-between pt-2 w-full">
+                    <div className="flex gap-4">
+                        {mentor.tags.slice(0, 2).map(tag => (
+                            <span key={tag} className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-500 transition-colors">
+                                #{tag}
+                            </span>
                         ))}
+                    </div>
+                    <div className="flex items-center gap-2 group/btn">
+                        <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover/btn:text-slate-900 transition-colors">
+                            Full Profile
+                        </span>
+                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover/btn:bg-slate-900 group-hover/btn:text-white transition-all transform group-hover/btn:translate-x-1">
+                             <ChevronRight size={14} strokeWidth={3} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+});
+
+const MentorGrid = ({ title = "Mentors" }) => {
+    const [selectedMentor, setSelectedMentor] = useState(null);
+    const isMobile = useIsMobile();
+
+    return (
+        <section 
+            id="mentors-grid" 
+            className="bg-white py-14 relative overflow-hidden"
+        >
+            {/* Background Architecture */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50/50 rounded-full blur-[120px] -mr-96 -mt-96" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-slate-50 rounded-full blur-[100px] -ml-48 -mb-48" />
+            </div>
+
+            <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+                <div className="flex flex-col md:flex-row items-center md:items-end justify-between mb-12 gap-8 text-center md:text-left">
+                    <div className="w-full">
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 block">Industrial Faculty</span>
+                        <div className="flex justify-center md:justify-start">
+                            <ScrollDarkenHeading>
+                                {title}
+                            </ScrollDarkenHeading>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="relative group/marquee">
+                    {/* Continuous Auto-Scrolling Container */}
+                    <div className="overflow-hidden py-6 -mx-2 px-2">
+                        <motion.div 
+                            animate={isMobile ? { x: 0 } : { x: ["0%", "-50%"] }}
+                            transition={isMobile ? { duration: 0 } : { 
+                                duration: 35, 
+                                repeat: Infinity, 
+                                ease: "linear" 
+                            }}
+                            whileHover={isMobile ? {} : { animationPlayState: "paused" }}
+                            className="flex w-max items-center gap-8"
+                        >
+                            {(isMobile ? LEADERS : [...LEADERS, ...LEADERS, ...LEADERS, ...LEADERS]).map((mentor, index) => (
+                                <MentorCard 
+                                    key={index}
+                                    mentor={mentor}
+                                    index={index}
+                                    onSelect={setSelectedMentor}
+                                />
+                            ))}
+                        </motion.div>
+                    </div>
+
+                    {/* Industrial Progress Indicator */}
+                    <div className="mt-8 flex items-center gap-6 max-w-sm mx-auto">
+                        <div className="h-[2px] flex-1 bg-slate-100 rounded-full overflow-hidden">
+                            <motion.div 
+                                className="h-full bg-blue-600"
+                                initial={{ width: "30%" }}
+                                whileInView={{ width: "100%" }}
+                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                            />
+                        </div>
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Carousel Active</span>
                     </div>
                 </div>
             </div>
@@ -210,6 +226,7 @@ const MentorGrid = () => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             exit={{ scale: 0.95, opacity: 0, y: 30 }}
+                            style={{ willChange: 'transform, opacity' }}
                             className="bg-white rounded-[40px] w-full max-w-5xl overflow-hidden relative shadow-2xl border border-white/20"
                             onClick={e => e.stopPropagation()}
                         >
@@ -232,18 +249,18 @@ const MentorGrid = () => {
                                     </button>
 
                                     <div className="max-w-md">
-                                        <span className="text-slate-400 font-bold text-[10px] tracking-[0.3em] lowercase mb-4 block">thinkskool // mentor</span>
+                                        <span className="text-slate-400 font-bold text-[10px] tracking-[0.3em] uppercase mb-4 block">thinkskool</span>
                                         <h2 className="text-4xl font-bold text-slate-900 tracking-tighter leading-none mb-4 uppercase">{selectedMentor.name}</h2>
                                         <p className="text-slate-500 font-bold text-sm tracking-widest uppercase mb-8 opacity-60">{selectedMentor.role}</p>
                                         
-                                        <p className="text-slate-400 font-medium tracking-tight text-lg leading-relaxed mb-10 pl-6 border-l-2 border-slate-100">
+                                        <p className="text-slate-400 font-medium text-lg leading-relaxed mb-10 pl-6 border-l-2 border-slate-100">
                                             {selectedMentor.bio}
                                         </p>
 
-                                        <div className="flex flex-wrap gap-2 mb-12">
+                                        <div className="flex flex-wrap gap-4 mb-12">
                                             {selectedMentor.tags.map(tag => (
-                                                <span key={tag} className="px-4 py-2 bg-slate-50 rounded-xl text-[12px] font-bold text-slate-500 tracking-tight border border-slate-100">
-                                                    #{tag.toUpperCase()}
+                                                <span key={tag} className="text-[13px] font-bold text-slate-400 tracking-tight uppercase">
+                                                    #{tag}
                                                 </span>
                                             ))}
                                         </div>

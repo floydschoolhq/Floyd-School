@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false }) => {
+const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false, scrolled = false, showTagline = true }) => {
     const sizeClasses = {
         xs: 'text-sm',
         sm: 'text-xl',
-        md: 'text-2xl',
-        lg: 'text-4xl',
-        xl: 'text-6xl',
+        md: scrolled ? 'text-[24px]' : 'text-[32px]',
+        lg: 'text-5xl',
+        xl: 'text-7xl',
     };
 
     const themeStyles = {
@@ -38,23 +38,31 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false 
     };
 
     return (
-        <div className={`flex items-center font-bold ${sizeClasses[size] || sizeClasses.md} lowercase tracking-tight transition-all duration-300 ${className}`}>
-            {letters.map((char, i) => {
-                const isThink = i < 5;
-                const colorClass = isThink ? colors.think : colors.skool;
-                
-                return (
-                    <motion.span
-                        key={i}
-                        variants={shineVariants}
-                        animate={shine ? "animate" : ""}
-                        custom={i}
-                        className={`${colorClass} inline-block`}
-                    >
-                        {char}
-                    </motion.span>
-                );
-            })}
+        <div className={`flex flex-col items-center ${className}`}>
+            <div className={`flex items-center font-bold ${sizeClasses[size] || sizeClasses.md} lowercase tracking-tight transition-all duration-300`}>
+                {letters.map((char, i) => {
+                    const isThink = i < 5;
+                    const colorClass = isThink ? colors.think : colors.skool;
+                    const isLastOfThink = i === 4;
+                    
+                    return (
+                        <motion.span
+                            key={i}
+                            variants={shineVariants}
+                            animate={shine ? "animate" : ""}
+                            custom={i}
+                            className={`${colorClass} inline-block ${isLastOfThink ? 'mr-[0.5px]' : ''}`}
+                        >
+                            {char}
+                        </motion.span>
+                    );
+                })}
+            </div>
+            {showTagline && (
+                <span className={`text-[11px] text-slate-400 font-bold tracking-tight transition-all duration-300 ${scrolled ? 'mt-[-4px]' : 'mt-[-6px]'} block text-center`}>
+                    Learn Beyond Classroom
+                </span>
+            )}
         </div>
     );
 };

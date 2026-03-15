@@ -31,8 +31,14 @@ const CourseCard = ({ course, onClick }) => {
         >
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors" />
 
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-all duration-500">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-all duration-500 relative">
                 <Icon size={24} className="text-blue-600 group-hover:text-white transition-colors" />
+                {course.live && (
+                    <div className="absolute -top-2 -right-2 flex items-center gap-1.5 px-2.5 py-1 bg-blue-600 rounded-lg border-4 border-white shadow-lg">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                        <span className="text-[7px] font-black text-white uppercase tracking-widest">Live</span>
+                    </div>
+                )}
             </div>
             <div className="flex items-center gap-3 mb-3">
                 <h3 className="text-xl font-bold text-slate-800 tracking-tight">{course.title}</h3>
@@ -163,8 +169,6 @@ const MentorSlideshow = () => {
 const OnlineProgram = () => {
     const navigate = useNavigate();
     const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
-    const [isCourseDetailModalOpen, setIsCourseDetailModalOpen] = useState(false);
-    const [selectedCourse, setSelectedCourse] = useState(null);
 
     React.useEffect(() => {
         const hash = window.location.hash;
@@ -180,8 +184,7 @@ const OnlineProgram = () => {
 
     const openLeadModal = () => setIsLeadModalOpen(true);
     const openCourseDetailModal = (course) => {
-        setSelectedCourse(course);
-        setIsCourseDetailModalOpen(true);
+        navigate(`/course/${course._id}`);
     };
 
     const handleExploreClick = () => {

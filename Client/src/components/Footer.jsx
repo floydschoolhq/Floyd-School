@@ -41,9 +41,12 @@ const Footer = () => {
     <footer className="bg-slate-950 text-slate-400 pt-20 pb-4 border-t border-white/5 relative overflow-hidden">
       {/* Footer Ambient Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+      
+      {/* Subtle Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 mb-20">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="mb-8">
@@ -58,7 +61,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href="#"
-                  className="w-11 h-11 bg-white/5 rounded-xl border border-white/5 flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-950 hover:border-white transition-all duration-500 shadow-2xl"
+                  className="w-11 h-11 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-950 transition-all duration-500 shadow-xl"
                 >
                   <Icon size={18} />
                 </a>

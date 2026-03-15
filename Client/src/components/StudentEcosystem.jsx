@@ -90,36 +90,50 @@ const FEATURES = [
     }
 ];
 
+import useIsMobile from '../hooks/useIsMobile';
+
 const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);
+    const isMobile = useIsMobile();
 
     return (
-        <section id="infrastructure" className="bg-white py-12 relative overflow-hidden border-t border-slate-100">
+        <section id="infrastructure" className="bg-white py-12 md:py-24 relative overflow-hidden border-t border-slate-100">
             {/* Background elements neutralized for Apple White theme */}
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-6">
-
+                <div className="text-center mb-12">
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
                         the thinkskool advantage
                     </ScrollDarkenHeading>
-
                 </div>
 
                 {/* Features Grid - Pro Bento Style */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {FEATURES.map((feature, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30, scale: 0.98 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                            initial={isMobile ? { opacity: 1, scale: 1, y: 0, rotate: 0 } : { opacity: 0, scale: 0.8, y: 50, rotate: index % 2 === 0 ? -2 : 2 }}
+                            whileInView={{ 
+                                opacity: 1, 
+                                scale: 1, 
+                                y: 0, 
+                                rotate: 0,
+                                transition: { 
+                                    duration: 0.8, 
+                                    delay: index * 0.1, 
+                                    ease: [0.16, 1, 0.3, 1] 
+                                } 
+                            }}
+                            whileHover={!isMobile ? { 
+                                y: -12,
+                                transition: { type: "spring", stiffness: 400, damping: 10 }
+                            } : {}}
+                            viewport={{ once: true, margin: "-50px" }}
                             onClick={() => setSelectedFeature(feature)}
-                            className="group relative bg-white/80 backdrop-blur-xl p-4 border-2 border-slate-900/20 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)] hover:border-slate-900/40"
+                            className="group relative bg-white p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)]"
                         >
-                            <div className="relative z-10 flex flex-col h-full bg-white">
+                            <div className="relative z-10 flex flex-col h-full bg-white items-center text-center md:items-start md:text-left">
                                 {/* Image Container - Enforced 16:9 Aspect Ratio */}
                                 <div className="w-full aspect-video overflow-hidden border-b border-slate-100 relative group-hover:shadow-md transition-all">
                                     <img
@@ -136,12 +150,11 @@ const StudentEcosystem = () => {
                                 </div>
 
                                 {/* Content Body */}
-                                <div className="p-6 flex-1 flex flex-col">
-                                    <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-slate-900 transition-colors">{feature.miniTitle}</p>
-                                    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight leading-none group-hover:text-black transition-colors">{feature.title}</h3>
+                                <div className="p-4 flex-1 flex flex-col w-full justify-end">
+                                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-black transition-colors">{feature.title}</h3>
 
-                                    <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between group-hover:border-slate-200 transition-colors">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors flex items-center gap-2">
+                                    <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between group-hover:border-slate-200 transition-colors">
+                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors flex items-center gap-2">
                                             Program Details
                                         </span>
                                         <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all transform group-hover:translate-x-1 shadow-sm">

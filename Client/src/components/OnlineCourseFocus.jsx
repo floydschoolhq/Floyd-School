@@ -4,90 +4,94 @@ import { ArrowRight, Cpu, Code, Terminal, ShieldCheck, Globe, Video, MessageSqua
 import { useNavigate } from 'react-router-dom';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import { FALLBACK_COURSES } from '../constants/siteData';
+const iconMap = {
+    Cpu: Cpu,
+    Code: Code,
+    Terminal: Terminal,
+    Shield: ShieldCheck
+};
+
+// Fallback icon if course.icon is missing
+const DefaultIcon = Code;
 
 const OnlineCourseFocus = () => {
     const navigate = useNavigate();
-    const [selectedCourse, setSelectedCourse] = useState(null);
-
-    const iconMap = {
-        Cpu: Cpu,
-        Code: Code,
-        Terminal: Terminal,
-        Shield: ShieldCheck
-    };
+    // Use course._id as key to avoid index-based issues
 
     return (
-        <section id="online-focus" className="relative pt-6 pb-8 bg-white overflow-hidden">
+        <section id="online-focus" className="relative pt-12 pb-24 bg-slate-950 overflow-hidden">
 
-            <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
+            <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-6">
-                    <ScrollDarkenHeading>
+                    <ScrollDarkenHeading variant="dark">
                         OUR BATCHES
                     </ScrollDarkenHeading>
                 </div>
 
-                {/* Featured Programs Grid */}
+                    {/* Featured Programs Grid */}
                 <div className="mb-12">
-                    <div className="flex items-center gap-4 mb-12">
-                        <h3 className="text-lg font-bold text-slate-700 uppercase tracking-[0.3em]">Featured Programs</h3>
-                        <div className="flex-1 h-px bg-white/10" />
-                        <button
-                            onClick={() => navigate('/online-program')}
-                            className="text-[12px] font-black text-blue-500 uppercase tracking-[0.3em] hover:text-white transition-colors"
-                        >
-                            View All →
-                        </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {FALLBACK_COURSES.length > 0 ? (
                             FALLBACK_COURSES.map((course, idx) => {
                                 const Icon = iconMap[course.icon] || Code;
                                 return (
                                     <motion.div
                                         key={course._id}
-                                        initial={{ opacity: 0, x: idx % 2 === 0 ? -10 : 10, y: 10, scale: 0.99 }}
-                                        whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.04, type: "spring", damping: 25 }}
-                                        whileHover={{ y: -8 }}
-                                        className="relative p-2.5 rounded-2xl bg-white border border-slate-200 hover:border-transparent transition-all duration-300 cursor-pointer shadow-sm hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] group"
-                                        onClick={() => setSelectedCourse(course)}
+                                        whileHover={{ 
+                                            y: -8,
+                                            transition: { type: "spring", stiffness: 300, damping: 20 }
+                                        }}
+                                        className="relative p-6 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-md border border-white/10 cursor-pointer shadow-2xl group flex flex-col gap-6 overflow-hidden"
+                                        onClick={() => navigate(`/course/${course._id}`)}
                                     >
-                                        <div className="w-full aspect-video rounded-xl overflow-hidden mb-5 border border-slate-50 shadow-sm relative z-10">
+                                        {/* Premium Glowing Outline - Visible only on hover */}
+                                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-[2.5rem] transition-all duration-500" />
+                                        
+                                        {/* Animated Background Shine */}
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl" />
+
+                                        {/* Course Image Container */}
+                                        <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border border-white/5 shadow-2xl relative z-10 bg-slate-900/50 group/imgContainer">
+                                            {/* Refined Shimmer Placeholder Background */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[shimmer_3s_infinite] pointer-events-none" />
+                                            
+                                            {/* Subtler Scanning Line Effect */}
+                                            <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden pointer-events-none">
+                                                <div className="w-full h-[1px] bg-white/30 blur-[1px] absolute top-[-10%] animate-[scan_4s_linear_infinite]" />
+                                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent_70%)]" />
+                                            </div>
+                                            
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+                                            
                                             <img
                                                 src={course.image}
                                                 alt={course.title}
-                                                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                                className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
                                             />
-                                            {course.comingSoon && (
-                                                <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] flex items-center justify-center">
-                                                    <span className="px-4 py-1.5 bg-white text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] shadow-xl">Coming Soon</span>
-                                                </div>
-                                            )}
-                                            {/* Live status removed */}
                                         </div>
-                                        <h4 className="text-lg font-bold text-slate-800 uppercase tracking-tight mb-2 leading-none group-hover:text-blue-600 transition-colors">{course.title}</h4>
 
-                                        <p className="text-slate-500 text-xs font-medium leading-relaxed mb-6 line-clamp-2">
-                                            {course.description}
-                                        </p>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {course.tags.slice(0, 2).map(tag => (
-                                                <span key={tag} className="px-2 py-0.5 bg-slate-50 rounded-full text-[9px] font-bold text-slate-400 uppercase tracking-widest border border-slate-100">
-                                                    {tag}
-                                                </span>
-                                            ))}
+                                        <div className="flex-1 relative z-10 flex flex-col justify-end mt-auto">
+                                            <h4 className="text-xl font-normal text-white uppercase tracking-tight transition-colors line-clamp-1 mb-4">{course.title}</h4>
                                         </div>
+                                        
+                                        <div className="pt-4 border-t border-white/5 flex items-center justify-between text-slate-300 font-medium text-[11px] uppercase tracking-widest group-hover:text-white transition-all relative z-10">
+                                            <span>Explore Program</span> 
+                                            <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white/5 group-hover:bg-white group-hover:text-slate-900 transition-all">
+                                                <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                                            </div>
+                                        </div>
+
+                                        {/* Subtle Corner Accents */}
+                                        <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </motion.div>
                                 );
                             })
                         ) : (
                             <div className="col-span-full py-16 bg-white border border-dashed border-blue-100 rounded-[2rem] flex flex-col items-center justify-center text-center">
                                 <Rocket size={40} className="text-blue-500/20 mb-4" />
-                                <h4 className="text-lg font-black text-slate-400 uppercase tracking-tighter">New Batches Launching Soon</h4>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-2">Secure your early access. Preparing the next generation of engineers.</p>
+                                <h4 className="text-lg font-medium text-slate-400 uppercase tracking-tighter">New Batches Launching Soon</h4>
+                                <p className="text-[10px] font-normal text-slate-400 uppercase tracking-[0.2em] mt-2">Secure your early access. Preparing the next generation of engineers.</p>
                             </div>
                         )}
                     </div>
@@ -95,112 +99,6 @@ const OnlineCourseFocus = () => {
 
             </div>
 
-            {/* Course Modal */}
-            <AnimatePresence>
-                {selectedCourse && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] overflow-y-auto bg-slate-950/40 backdrop-blur-md"
-                    >
-                        <div
-                            className="min-h-full flex items-center justify-center p-4"
-                            onClick={() => setSelectedCourse(null)}
-                        >
-                            <motion.div
-                                initial={{ scale: 0.9, y: 20, opacity: 0 }}
-                                animate={{ scale: 1, y: 0, opacity: 1 }}
-                                exit={{ scale: 0.9, y: 20, opacity: 0 }}
-                                className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl border border-white/20 relative"
-                                onClick={(e) => e.stopPropagation()}
-                            >
-                                <button
-                                    onClick={() => setSelectedCourse(null)}
-                                    className="absolute top-6 right-6 p-2 bg-slate-950/05 hover:bg-slate-950/10 rounded-lg transition-colors"
-                                >
-                                    <X size={20} className="text-slate-900" />
-                                </button>
-
-                                <div className="p-8 md:p-12">
-                                    <div className="w-full aspect-video rounded-xl overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
-                                        <img
-                                            src={selectedCourse.image}
-                                            alt={selectedCourse.title}
-                                            className="w-full h-full object-cover"
-                                        />
-                                        <div className="absolute top-6 left-6 flex items-center justify-center">
-                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-150 opacity-100" />
-                                            {React.createElement(iconMap[selectedCourse.icon] || Target, {
-                                                size: 32,
-                                                className: "text-blue-500 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10",
-                                                strokeWidth: 1.5
-                                            })}
-                                        </div>
-                                    </div>
-                                    <div className="mb-8">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em]">{selectedCourse.duration} Program</span>
-                                        </div>
-                                        <h3 className="text-3xl font-bold text-slate-800 uppercase tracking-tight leading-none">{selectedCourse.title}</h3>
-                                    </div>
-
-                                    <div className="grid md:grid-cols-2 gap-8">
-                                        <div className="space-y-6">
-                                            <div>
-                                                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Program Overview</h4>
-                                                <p className="text-slate-600 font-bold text-sm tracking-tight leading-relaxed">
-                                                    {selectedCourse.description}
-                                                </p>
-                                            </div>
-                                            <div className="flex flex-wrap gap-2">
-                                                {selectedCourse.tags.map(tag => (
-                                                    <span key={tag} className="px-3 py-1 bg-slate-50 rounded-lg text-[9px] font-black text-slate-600 uppercase tracking-widest border border-slate-100">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-6">
-                                             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Program Highlights</h4>
-                                            <div className="space-y-3">
-                                                {[
-                                                    "7-Day Kickoff Bootcamp",
-                                                    "Production-Ready Projects",
-                                                    "Collaborative Learning",
-                                                    "Personalized Mentorship",
-                                                    "Portfolio Development"
-                                                ].map((item, i) => (
-                                                    <div key={i} className="flex items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
-                                                        <Layers size={14} className="text-blue-500" />
-                                                        <span className="text-[10px] font-black text-blue-700 uppercase tracking-widest">{item}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
-                                        <div className="text-[16px] font-black uppercase tracking-tighter">
-                                            <span className="text-blue-600">think</span>
-                                            <span className="text-blue-600">skool</span>
-                                        </div>
-                                        {!selectedCourse.comingSoon && (
-                                            <button
-                                                onClick={() => navigate('/online-program')}
-                                                className="group flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-slate-900/10"
-                                            >
-                                                Apply Now <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </section>
     );
 };

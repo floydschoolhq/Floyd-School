@@ -1,56 +1,55 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { LogoLoop } from './common/LogoLoop';
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss, 
+  SiPython, 
+  SiNodedotjs, 
+  SiUnity, 
+  SiUnrealengine,
+  SiGooglecloud,
+  SiFramer,
+  SiJavascript
+} from 'react-icons/si';
 
-// Technology & Skill Focus Logos
-const ReactLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">React</span>;
-const NodeLogo = () => <span className="text-2xl font-black text-slate-900/80 flex items-center gap-1">Node.js</span>;
-const PythonLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Python</span>;
-const AIMLLogo = () => <span className="text-2xl font-black text-slate-900/70 flex items-center gap-1">AI/ML</span>;
-const CloudLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Cloud</span>;
-const WebDevLogo = () => <span className="text-2xl font-black text-slate-900/90 flex items-center gap-1">Web Dev</span>;
-const MobileLogo = () => <span className="text-2xl font-black text-slate-800 flex items-center gap-1">Mobile</span>;
-
-const logos = [
-  { id: 1, component: ReactLogo },
-  { id: 2, component: NodeLogo },
-  { id: 3, component: PythonLogo },
-  { id: 4, component: AIMLLogo },
-  { id: 5, component: CloudLogo },
-  { id: 6, component: WebDevLogo },
-  { id: 7, component: MobileLogo },
+const techLogos = [
+  { node: <SiReact size={32} className="text-[#61DAFB]" />, title: "React", href: "https://react.dev" },
+  { node: <SiNextdotjs size={32} className="text-[#000000]" />, title: "Next.js", href: "https://nextjs.org" },
+  { node: <SiTypescript size={32} className="text-[#3178C6]" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+  { node: <SiTailwindcss size={32} className="text-[#06B6D4]" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  { node: <SiPython size={32} className="text-[#3776AB]" />, title: "Python", href: "https://www.python.org" },
+  { node: <SiNodedotjs size={32} className="text-[#339933]" />, title: "Node.js", href: "https://nodejs.org" },
+  { node: <SiUnity size={32} className="text-[#000000]" />, title: "Unity", href: "https://unity.com" },
+  { node: <SiUnrealengine size={32} className="text-[#000000]" />, title: "Unreal Engine", href: "https://www.unrealengine.com" },
+  { node: <SiGooglecloud size={32} className="text-[#4285F4]" />, title: "Cloud", href: "https://cloud.google.com" },
+  { node: <div className="text-[16px] font-bold text-slate-800 whitespace-nowrap">Cybersecurity</div>, title: "Cybersecurity" },
+  { node: <div className="text-[16px] font-bold text-slate-800 whitespace-nowrap">Full Stack</div>, title: "Full Stack" },
+  { node: <SiJavascript size={30} className="text-[#F7DF1E]" />, title: "JavaScript", href: "https://javascript.info" },
+  { node: <SiFramer size={32} className="text-[#0055FF]" />, title: "Framer", href: "https://www.framer.com" },
 ];
 
 const Marque = () => {
   return (
-    <div className="w-full bg-[#FFF9FA] py-8 border-b border-[#FBEFEF] relative z-10">
-      <div className="text-center mb-6">
-        <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[9px] opacity-60">Technologies We Master</p>
+    <div className="w-full bg-[#FFF9FA] py-10 border-b border-[#FBEFEF] relative z-10 overflow-hidden">
+      <div className="text-center mb-10">
+        <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[10px] opacity-60">Technologies We Master</p>
       </div>
 
-      <div className="relative w-full overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#FFF9FA] to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#FFF9FA] to-transparent z-10"></div>
-
-        <motion.div
-          className="flex gap-20 min-w-max items-center"
-          animate={{
-            x: ['0%', '-50%'],
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 40,
-              ease: "linear",
-            },
-          }}
-        >
-          {[...logos, ...logos, ...logos, ...logos].map((LogoItem, index) => (
-            <div key={index} className="opacity-50 hover:opacity-100 transition-all duration-500 hover:scale-110 cursor-pointer">
-              <LogoItem.component />
-            </div>
-          ))}
-        </motion.div>
+      <div className="max-w-7xl mx-auto px-4">
+        <LogoLoop
+          logos={techLogos}
+          speed={45}
+          direction="left"
+          logoHeight={45}
+          gap={80}
+          pauseOnHover={true}
+          scaleOnHover={true}
+          fadeOut={true}
+          fadeOutColor="#FFF9FA"
+          ariaLabel="Technology stack"
+        />
       </div>
     </div>
   );

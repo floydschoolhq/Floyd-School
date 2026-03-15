@@ -74,15 +74,10 @@ const PlatformPanels = () => {
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/[0.02] blur-[120px] rounded-full pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-                <div className="mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-2xl md:text-5xl font-black text-white tracking-tighter"
-                    >
-                        our panels <span className="text-slate-500">& roles</span>
-                    </motion.h2>
+                <div className="text-center mb-16">
+                    <ScrollDarkenHeading variant="dark">
+                        OUR PANELS & ROLES
+                    </ScrollDarkenHeading>
                 </div>
 
                 <div className="relative group/main max-w-6xl mx-auto">

@@ -42,10 +42,10 @@ const Check = () => (
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             viewBox="0 0 24 24" 
-            className="w-7 h-7 text-slate-900" 
+            className="w-7 h-7 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" 
             fill="none" 
             stroke="currentColor" 
-            strokeWidth="4" 
+            strokeWidth="3" 
             strokeLinecap="round" 
             strokeLinejoin="round"
         >
@@ -56,7 +56,7 @@ const Check = () => (
 
 const Cross = () => (
     <span className="flex items-center justify-center">
-        <X size={18} className="text-slate-400" strokeWidth={2} />
+        <X size={18} className="text-slate-700" strokeWidth={2} />
     </span>
 );
 
@@ -67,8 +67,8 @@ const HighlightText = ({ text, words }) => {
         <span>
             {parts.map((part, i) =>
                 words.some(w => w.toLowerCase() === part.toLowerCase())
-                    ? <span key={i} className="text-slate-900 font-bold">{part}</span>
-                    : <span key={i}>{part}</span>
+                    ? <span key={i} className="text-white font-semibold">{part}</span>
+                    : <span key={i} className="text-slate-400 font-normal">{part}</span>
             )}
         </span>
     );
@@ -85,62 +85,85 @@ const CornerBorders = () => (
 
 const ThinkSkoolAdvantage = () => {
     return (
-        <section id="why-us" className="pt-8 pb-24 bg-white relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-                {/* Orbs removed for pure white theme */}
-            </div>
+        <section id="why-us" className="pt-12 pb-32 bg-slate-950 relative overflow-hidden">
+            {/* Premium Dark Background Architecture */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_2px,transparent_2px)] [background-size:32px_32px]" />
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-slate-800/40 rounded-full blur-[120px] -mr-48 -mt-48 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-slate-800/20 rounded-full blur-[120px] -ml-48 -mb-48 pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 relative z-10">
-                <div className="text-center mb-8">
-                    <ScrollDarkenHeading>
-                        Why Us
+                <div className="text-center mb-16">
+                    <ScrollDarkenHeading variant="dark">
+                        WHY US
                     </ScrollDarkenHeading>
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="border border-slate-100 overflow-hidden bg-white shadow-[0_32px_64px_rgba(0,0,0,0.02)] relative"
-                >
-                    <CornerBorders />
-                    <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr] border-b border-slate-100 px-8 py-8 bg-white">
-                        <div className="flex items-center">
-                            <span className="text-[14px] font-black text-slate-400 uppercase tracking-widest">Learning Features</span>
+                <div className="relative group/table">
+                    {/* Dark Glassmorphism Table Container */}
+                    <div className="relative border border-slate-800/80 rounded-[2rem] overflow-hidden bg-slate-900/40 backdrop-blur-2xl shadow-[0_32px_64px_rgba(0,0,0,0.5)]">
+                        
+                        {/* Header Row */}
+                        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr] items-stretch border-b border-slate-800">
+                            <div className="p-10 flex items-center bg-slate-900/60">
+                                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.3em]">Operational Metrics</span>
+                            </div>
+                            <div className="p-10 flex flex-col items-center justify-center bg-slate-800/50 border-x border-slate-700/50 relative overflow-hidden">
+                                {/* Shiny Top Border */}
+                                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-50" />
+                                <div className="px-5 py-2 bg-white text-slate-950 font-black text-[12px] uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(255,255,255,0.1)] rounded-sm relative z-10">
+                                    thinkskool
+                                </div>
+                            </div>
+                            <div className="p-10 flex items-center justify-center bg-slate-900/20">
+                                <span className="text-slate-500 font-semibold text-[11px] uppercase tracking-widest">Free</span>
+                            </div>
+                            <div className="p-10 flex items-center justify-center bg-slate-900/20">
+                                <span className="text-slate-500 font-semibold text-[11px] uppercase tracking-widest">Others</span>
+                            </div>
                         </div>
-                        <div className="flex flex-col items-center">
-                            <div className="px-8 py-3 bg-slate-900 text-white font-bold text-[14px] lowercase tracking-wider shadow-xl shadow-slate-900/10">thinkskool</div>
-                        </div>
-                        <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-bold text-[13px] uppercase tracking-tight">Free Resources</span>
-                        </div>
-                        <div className="flex items-center justify-center">
-                            <span className="text-slate-400 font-bold text-[13px] uppercase tracking-tight">Other Courses</span>
+
+                        {/* Content Rows */}
+                        <div className="divide-y divide-slate-800/50">
+                            {ADVANTAGES.map((row, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-20px" }}
+                                    transition={{ delay: idx * 0.03 }}
+                                    style={{ willChange: 'transform, opacity' }}
+                                    className="grid grid-cols-[1.5fr_1fr_1fr_1fr] hover:bg-slate-800/40 transition-all duration-300 group/row relative"
+                                >
+                                    {/* Feature Col */}
+                                    <div className="p-8 px-10 flex items-center bg-transparent transition-colors">
+                                        <div className="flex flex-col">
+                                            <span className="text-[16px] tracking-tight transition-colors uppercase mb-1">
+                                                <HighlightText text={row.feature} words={row.highlight} />
+                                            </span>
+                                            <div className="w-8 h-[2px] bg-slate-800 group-hover/row:w-16 group-hover/row:bg-white transition-all duration-500 rounded-full mt-2" />
+                                        </div>
+                                    </div>
+
+                                    {/* ThinkSkool Col */}
+                                    <div className="p-8 flex items-center justify-center bg-slate-800/30 border-x border-slate-700/30 group-hover/row:bg-slate-800/60 transition-colors relative">
+                                        <div className="absolute inset-0 bg-white/0 group-hover/row:bg-white/5 transition-colors duration-500 pointer-events-none" />
+                                        <div className="transform group-hover/row:scale-110 transition-transform duration-500 relative z-10">
+                                            {row.thinkskool ? <Check /> : <Cross />}
+                                        </div>
+                                    </div>
+
+                                    {/* Comparisons */}
+                                    <div className="p-8 flex items-center justify-center opacity-50 group-hover/row:opacity-100 transition-all">
+                                        {row.free ? <Check /> : <Cross />}
+                                    </div>
+                                    <div className="p-8 flex items-center justify-center opacity-50 group-hover/row:opacity-100 transition-all">
+                                        {row.others ? <Check /> : <Cross />}
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
-
-                    {ADVANTAGES.map((row, idx) => (
-                        <div
-                            key={idx}
-                            className={`grid grid-cols-[1.5fr_1fr_1fr_1fr] px-8 py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50 transition-colors group`}
-                        >
-                            <div className="flex items-center">
-                                 <span className="text-[18px] text-slate-700 font-bold group-hover:text-slate-900 transition-colors tracking-tight">
-                                    <HighlightText text={row.feature} words={row.highlight} />
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-center">
-                                {row.thinkskool ? <Check /> : <Cross />}
-                            </div>
-                            <div className="flex items-center justify-center">
-                                {row.free ? <Check /> : <Cross />}
-                            </div>
-                            <div className="flex items-center justify-center">
-                                {row.others ? <Check /> : <Cross />}
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

@@ -70,7 +70,7 @@ const Masterclasses = () => {
     }
 
     return (
-        <section className="bg-white py-32 border-t border-slate-100">
+        <section className="bg-[#F1F1F1] py-32 border-t border-slate-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
                     <div className="space-y-6">

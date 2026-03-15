@@ -113,163 +113,95 @@ function CornerBorders({ size = 14, thickness = 1.5, color = 'rgba(15,23,42,0.18
 
 export default function Hackathon() {
     return (
-        <section id="hackathon" className="relative bg-white pt-20 pb-16 overflow-hidden">
-
+        <section id="hackathon" className="relative bg-white py-12 overflow-hidden">
             {/* Subtle background grid */}
             <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-[0.015]"
+                className="pointer-events-none absolute inset-0 opacity-[0.01]"
                 style={{
                     backgroundImage: 'linear-gradient(#0f172a 1px, transparent 1px), linear-gradient(90deg, #0f172a 1px, transparent 1px)',
-                    backgroundSize: '48px 48px',
+                    backgroundSize: '40px 40px',
                 }}
             />
 
-            <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
-
-                {/* ══ HEADER ════════════════════════════════════════════ */}
-                <div className="text-center mb-16 max-w-3xl mx-auto">
-                    <ScrollDarkenHeading>Hackathon</ScrollDarkenHeading>
-
-
+            <div className="relative max-w-6xl mx-auto px-6">
+                <div className="text-center mb-10">
+                    <ScrollDarkenHeading>
+                        HACKATHON
+                    </ScrollDarkenHeading>
                 </div>
 
-                {/* ══ STATS ROW ═════════════════════════════════════════ */}
-                <div className="grid grid-cols-3 divide-x divide-slate-100 border border-slate-100 rounded-3xl overflow-hidden mb-14 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-                    {STATS.map((s, i) => (
-                        <motion.div
-                            key={s.label}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                            className="flex flex-col items-center justify-center py-8 px-4 bg-white hover:bg-slate-50/60 transition-colors group"
-                        >
-                            <p className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-1.5 group-hover:text-blue-600 transition-colors duration-300">
-                                <Counter to={s.value} suffix={s.suffix} />
-                            </p>
-                            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">{s.label}</p>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* ══ MAIN GRID ═════════════════════════════════════════ */}
-                <div className="grid lg:grid-cols-5 gap-6 items-stretch mb-8">
-
-                    {/* Left hero card — 3 cols */}
+                <div className="grid lg:grid-cols-[1.5fr_1fr] gap-6 items-stretch">
+                    {/* Compact Main Dashboard */}
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                        className="lg:col-span-3 relative rounded-[2rem] overflow-hidden border border-slate-100 bg-white p-10 flex flex-col justify-between min-h-[380px] shadow-[0_4px_24px_rgba(0,0,0,0.03)] group hover:shadow-[0_12px_40px_rgba(37,99,235,0.07)] transition-shadow duration-500"
+                        className="relative rounded-[2.5rem] overflow-hidden border border-slate-100 bg-white p-10 shadow-[0_4px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between"
                     >
                         <CornerBorders />
-                        {/* Animated rotating ring (decorative) */}
-                        <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 18, ease: 'linear' }}
-                            aria-hidden
-                            className="absolute -top-20 -right-20 w-64 h-64 rounded-full border-[1.5px] border-dashed border-blue-100 opacity-60"
-                        />
-                        <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ repeat: Infinity, duration: 26, ease: 'linear' }}
-                            aria-hidden
-                            className="absolute -top-10 -right-10 w-40 h-40 rounded-full border border-slate-100 opacity-50"
-                        />
+                        
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-3 mb-8">
+                                <span className="px-3 py-1 rounded-full bg-blue-50 text-[10px] font-black text-blue-600 uppercase tracking-widest border border-blue-100/50">Industrial Focus</span>
+                                <div className="h-px flex-1 bg-slate-100" />
+                            </div>
 
-                        {/* Live badge */}
-                        <span className="relative inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-slate-100 bg-slate-50 text-[11px] font-black text-slate-500 uppercase tracking-widest mb-8 z-10">
-                            Industrial Competition
-                        </span>
-
-                        {/* Copy */}
-                        <div className="relative z-10 flex-grow flex flex-col justify-center">
-                            <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] mb-3">What you build</p>
-                            <h3 className="text-3xl lg:text-4xl font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-5">
-                                A production-grade app —
-                                <br />
+                            <h3 className="text-3xl lg:text-4xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-6 uppercase">
+                                BUILD Real-World Apps <br />
                                 <span className="text-blue-600">in 48 hours.</span>
                             </h3>
-                            <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-sm">
-                                You deploy a fully functional application and present it to a panel of industry engineers. What you build is what you ship.
-                            </p>
+
+                            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-slate-50">
+                                {STATS.map(s => (
+                                    <div key={s.label}>
+                                        <p className="text-2xl font-black text-slate-900 tracking-tighter mb-1">
+                                            <Counter to={s.value} suffix={s.suffix} />
+                                        </p>
+                                        <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 leading-tight">{s.label}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
-                        {/* Proof row */}
-                        <div className="relative z-10 mt-8 pt-6 border-t border-slate-100 flex items-center gap-3">
-                            <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
-                            <p className="text-xs text-slate-500 font-medium">
-                                Your project URL is publicly verifiable — shareable on LinkedIn & your portfolio.
-                            </p>
+                        <div className="mt-10 p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 group cursor-default">
+                             <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
+                             <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide">Publicly verifiable project URL & LinkedIn verification included.</p>
                         </div>
                     </motion.div>
 
-                    {/* Right feature cards — 2 cols */}
-                    <div className="lg:col-span-2 flex flex-col gap-4">
+                    {/* Compact Feature Sidebar */}
+                    <div className="flex flex-col gap-4">
                         {FEATURES.map((f, i) => (
                             <motion.div
                                 key={f.title}
-                                initial={{ opacity: 0, x: 30 }}
+                                initial={{ opacity: 0, x: 20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                                whileHover={{ x: 4 }}
-                                className={`group flex items-start gap-4 rounded-[1.5rem] border border-slate-100 bg-gradient-to-br ${f.accent} hover:border-slate-200 hover:shadow-[0_6px_24px_rgba(0,0,0,0.05)] transition-all duration-300 p-5 cursor-default relative overflow-hidden`}
+                                transition={{ delay: i * 0.1 }}
+                                className={`flex items-center gap-4 p-5 rounded-2xl border border-slate-100 bg-gradient-to-br ${f.accent} hover:border-blue-200 transition-all hover:shadow-lg hover:shadow-blue-500/5 group`}
                             >
-                                <CornerBorders size={10} thickness={1} />
-                                <div className={`shrink-0 mt-0.5 w-9 h-9 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                                    <f.icon className={`w-4 h-4 ${f.iconColor}`} strokeWidth={2} />
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-500">
+                                    <f.icon size={18} className="text-slate-400 group-hover:text-white transition-colors" />
                                 </div>
                                 <div>
-                                    <p className="text-[14px] font-bold text-slate-900 tracking-tight mb-1">{f.title}</p>
-                                    <p className="text-[12px] text-slate-500 font-medium leading-relaxed">{f.desc}</p>
+                                    <p className="text-sm font-bold text-slate-800 tracking-tight leading-none mb-1 group-hover:text-blue-600 transition-colors">{f.title}</p>
+                                    <p className="text-[11px] text-slate-400 font-medium leading-relaxed">{f.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
+
+                        <motion.a
+                            href="#enroll"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="mt-2 flex items-center justify-center gap-3 bg-slate-900 text-white p-5 rounded-2xl font-black text-[12px] uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 group"
+                        >
+                            Enroll to Compete <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </motion.a>
                     </div>
                 </div>
-
-                {/* ══ BOTTOM CTA STRIP ═════════════════════════════════ */}
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 rounded-[2rem] border border-slate-100 bg-white px-8 py-7 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
-                >
-                    <CornerBorders />
-                    {/* Subtle animated gradient blob */}
-                    <motion.div
-                        animate={{ x: [0, 20, 0], opacity: [0.03, 0.06, 0.03] }}
-                        transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
-                        aria-hidden
-                        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-violet-500 pointer-events-none"
-                    />
-
-                    <div className="relative z-10">
-                        <p className="text-slate-900 font-bold text-lg tracking-tight">
-                            Hackathon available after course completion
-                        </p>
-                        <p className="text-slate-500 text-sm font-medium mt-0.5">
-                            Open to all enrolled learners across every batch
-                        </p>
-                    </div>
-                    <a
-                        href="#enroll"
-                        className="relative z-10 shrink-0 inline-flex items-center gap-2 bg-slate-900 hover:bg-blue-600 transition-all duration-300 text-white text-sm font-bold px-6 py-4 rounded-2xl shadow-lg shadow-slate-900/10 hover:shadow-blue-500/20 group"
-                    >
-                        Enroll to Participate
-                        <motion.span
-                            animate={{ x: [0, 3, 0] }}
-                            transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-                        >
-                            <ArrowUpRight className="w-4 h-4" />
-                        </motion.span>
-                    </a>
-                </motion.div>
-
             </div>
         </section>
     );
