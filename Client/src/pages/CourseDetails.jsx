@@ -22,6 +22,7 @@ import MentorGrid from '../components/MentorGrid';
 import Hackathon from '../components/Hackathon';
 import PlatformPanels from '../components/PlatformPanels';
 import LeadFormModal from '../components/LeadFormModal';
+import CourseReviews from '../components/CourseReviews';
 
 const iconMap = {
     Cpu: Cpu,
@@ -146,6 +147,9 @@ const CourseDetails = () => {
 
                 {/* Why Us Section - thinkskool advantage */}
                 <ThinkSkoolAdvantage />
+
+                {/* Student Reviews Section */}
+                <CourseReviews courseId={courseId} />
 
                 {/* Final CTA */}
                 <section className="py-32 bg-slate-50 text-center">
