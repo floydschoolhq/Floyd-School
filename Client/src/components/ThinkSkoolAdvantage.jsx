@@ -47,129 +47,102 @@ const ADVANTAGES = [
         details: ["Advanced AI & ML", "Cybersecurity protocols", "Hands-on Robotics & IoT"]
     },
 ];
-const AdvantageCard = ({ card, index }) => {
-    const Icon = card.icon;
-    
+const AdvantageCard = ({ card, index, isHovered }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, x: 100, scale: 0.9 }}
+            initial={{ opacity: 0, x: 100 }}
             whileInView={{ 
                 opacity: 1, 
-                x: 0,
-                scale: 1,
+                x: isHovered ? 0 : 60, // Settle to right by default, move to center on hover
                 transition: { 
                     duration: 0.8, 
-                    delay: index * 0.1,
+                    delay: index * 0.05,
                     ease: [0.16, 1, 0.3, 1]
                 }
             }}
-            viewport={{ once: true, margin: "-50px" }}
-            whileHover={{ 
-                scale: 1.05,
-                y: -15,
-                zIndex: 20,
-                transition: { duration: 0.4, ease: "easeOut" }
+            animate={{ 
+                x: isHovered ? 0 : (4 - index) * 30, // Stack/Settle to right logic
+                scale: isHovered ? 1.02 : 1,
+                zIndex: isHovered ? 20 : 1,
             }}
-            className="group relative flex-shrink-0 w-[300px] md:w-full h-[580px] bg-white border border-slate-100 rounded-[3rem] overflow-hidden cursor-pointer hover:shadow-[0_40px_100px_-20px_rgba(15,23,42,0.15)] hover:border-blue-200 transition-all duration-500"
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
+            className="group relative flex-shrink-0 w-[280px] md:w-[320px] h-[550px] bg-slate-900 overflow-hidden cursor-pointer shadow-2xl"
         >
-            {/* Image Section */}
-            <div className="h-[42%] w-full overflow-hidden relative bg-slate-50">
-                <img 
-                    src={card.image} 
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+            <img 
+                src={card.image} 
+                alt={card.title}
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-70 group-hover:opacity-100"
+            />
+            
+            {/* Visual Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+            
+            {/* Minimal HUD Border */}
+            <div className="absolute inset-0 border-[0.5px] border-white/10 group-hover:border-blue-500/50 transition-colors pointer-events-none" />
+
+            {/* Content Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "40px" }}
+                    className="h-1 bg-blue-600 mb-4"
                 />
-                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500" />
-                <div className="absolute top-6 left-6 w-12 h-12 bg-white/95 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-lg border border-white/50">
-                    <Icon size={20} className="text-slate-900" />
-                </div>
-            </div>
-
-            {/* Content Section */}
-            <div className="p-10 flex flex-col h-[58%] font-sans bg-white relative">
-                <div className="mb-auto">
-                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mb-4 block">Engineered Stage // 0{index + 1}</span>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-5 leading-tight tracking-tight group-hover:text-blue-600 transition-colors">
-                        {card.title}
-                    </h3>
-                    <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">
-                        {card.description}
-                    </p>
-                </div>
-                
-                {/* Details Tags */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                    {card.details.slice(0, 2).map((detail, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                            {detail}
-                        </span>
-                    ))}
-                </div>
-
-                {/* Footer */}
-                <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em]">View Protocol</span>
-                    <div className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center transition-all duration-500 group-hover:bg-blue-600 group-hover:scale-110">
-                        <ArrowRight size={16} />
-                    </div>
-                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-white uppercase leading-none tracking-tighter max-w-[200px]">
+                    {card.title}
+                </h3>
             </div>
         </motion.div>
     );
 };
 
 const ThinkskoolAdvantage = () => {
-    const scrollContainerRef = useRef(null);
+    const [isContainerHovered, setIsContainerHovered] = useState(false);
 
     return (
         <section id="advantage" className="py-24 md:py-32 bg-white relative overflow-hidden">
             {/* Background Decor */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-blue-50/30 rounded-full blur-[120px] opacity-30" />
-                <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-blue-50/20 rounded-full blur-[120px] opacity-20" />
+                <div className="absolute inset-0 opacity-[0.01]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
             </div>
 
-            <div className="max-w-[1400px] mx-auto relative z-10">
+            <div className="max-w-[1440px] mx-auto relative z-10">
                 {/* Header Area Area */}
-                <div className="px-6 md:px-12 mb-20 md:mb-24 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+                <div className="px-6 md:px-12 mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
                     <div className="max-w-3xl">
                         <motion.span 
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-[11px] font-black text-blue-600 uppercase tracking-[0.4em] mb-6 block"
+                            className="text-[11px] font-black text-blue-600 uppercase tracking-[0.5em] mb-4 block"
                         >
-                            The Industrial Edge
+                            The Industrial Core
                         </motion.span>
                         <motion.h2 
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9] uppercase"
+                            className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter leading-[0.85] uppercase"
                         >
-                            We teach you <br /> to build <span className="text-blue-600">real things.</span>
+                            Built for <br /> <span className="text-blue-600">Action.</span>
                         </motion.h2>
                     </div>
-                    <motion.p 
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-slate-500 font-bold text-lg md:text-xl max-w-sm border-l-2 border-slate-100 pl-8 leading-relaxed"
-                    >
-                        Mastery is born through action. We replace lectures with engineering loops.
-                    </motion.p>
                 </div>
 
-                {/* Horizontal Slide Container - Using overflow-visible to prevent shadow clipping */}
-                <div className="relative px-6 md:px-12">
-                    <div 
-                        ref={scrollContainerRef}
-                        className="flex md:grid md:grid-cols-4 gap-6 md:gap-8 pb-24 overflow-x-auto md:overflow-visible no-scrollbar"
-                    >
+                {/* Horizontal Slide Container */}
+                <div 
+                    className="relative flex justify-center py-10"
+                    onMouseEnter={() => setIsContainerHovered(true)}
+                    onMouseLeave={() => setIsContainerHovered(false)}
+                >
+                    <div className="flex items-center gap-1 md:gap-2 px-6 overflow-x-auto no-scrollbar pb-10">
                         {ADVANTAGES.map((card, index) => (
-                            <AdvantageCard key={card.id} card={card} index={index} />
+                            <AdvantageCard 
+                                key={card.id} 
+                                card={card} 
+                                index={index} 
+                                isHovered={isContainerHovered}
+                            />
                         ))}
                     </div>
                 </div>
