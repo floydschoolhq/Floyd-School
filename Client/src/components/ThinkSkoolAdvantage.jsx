@@ -109,22 +109,14 @@ const ThinkskoolAdvantage = () => {
 
             <div className="w-full relative z-10">
                 {/* Header Area Area - Centered Headline */}
-                <div className="max-w-[1400px] mx-auto px-6 mb-16 flex flex-col items-center text-center">
-                    <motion.span 
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-[11px] font-black text-blue-600 uppercase tracking-[0.7em] mb-4 block"
-                    >
-                        Industrial Protocol
-                    </motion.span>
+                <div className="max-w-7xl mx-auto px-6 mb-16 flex flex-col items-center text-center">
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-7xl lg:text-9xl font-black text-slate-900 tracking-tighter leading-[0.8] uppercase"
+                        className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter leading-none uppercase whitespace-nowrap"
                     >
-                        Built for <span className="text-blue-600">Action.</span>
+                        the <span className="text-blue-600">thinkskool</span> advantage
                     </motion.h2>
                 </div>
 
