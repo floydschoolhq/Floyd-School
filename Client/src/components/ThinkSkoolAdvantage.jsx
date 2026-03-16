@@ -47,37 +47,50 @@ const ADVANTAGES = [
         details: ["Advanced AI & ML", "Cybersecurity protocols", "Hands-on Robotics & IoT"]
     },
 ];
-const AdvantageCard = ({ card, index, scrollX }) => {
+const AdvantageCard = ({ card, index, baseX, spreadFactor }) => {
+    // Each card's position is a combination of the global group move (baseX)
+    // and its individual spreading position based on its index.
+    const x = useTransform(
+        [baseX, spreadFactor],
+        ([latestBaseX, latestSpread]) => latestBaseX + (index - 1.5) * latestSpread
+    );
+
     return (
         <motion.div
-            style={{ x: scrollX }}
+            style={{ x }}
             whileHover={{ 
                 scale: 1.05,
-                zIndex: 30,
+                zIndex: 40,
+                y: -10,
                 transition: { duration: 0.3 }
             }}
-            className="group relative flex-shrink-0 w-[280px] md:w-[340px] h-[550px] bg-slate-900 border border-orange-50/5 overflow-hidden cursor-pointer shadow-[0_0_20px_rgba(255,165,0,0.05)] hover:shadow-[0_0_50px_rgba(255,180,100,0.2)] hover:border-orange-100/30 transition-all duration-500"
+            className="absolute top-0 left-1/2 -translate-x-1/2 group w-[280px] md:w-[340px] h-[550px] bg-slate-900 border border-orange-50/15 overflow-hidden cursor-pointer shadow-[0_0_30px_rgba(255,165,0,0.08)] hover:shadow-[0_0_60px_rgba(255,180,100,0.25)] hover:border-orange-100/40 transition-shadow duration-500"
         >
             <img 
                 src={card.image} 
                 alt={card.title}
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-90 group-hover:opacity-100"
             />
             
-            {/* Visual Overlay - High Contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-95 group-hover:opacity-60 transition-opacity" />
+            {/* Base Gradient Overlay - Less intense by default to show image detail */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-40 group-hover:opacity-0 transition-opacity duration-500" />
             
-            {/* Glowing HUD Border Subtle */}
-            <div className="absolute inset-0 border-[0.5px] border-white/5 transition-colors pointer-events-none group-hover:border-orange-200/40" />
+            {/* Subtle HUD Glow Border */}
+            <div className="absolute inset-0 border-[0.5px] border-white/5 transition-colors pointer-events-none group-hover:border-orange-200/30" />
 
-            {/* Content Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-10 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
-                <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "80px" }}
-                    className="h-1.5 bg-blue-600 mb-8 shadow-[0_0_15px_rgba(37,99,235,0.5)]"
-                />
-                <h3 className="text-3xl md:text-5xl font-black text-white uppercase leading-[0.75] tracking-[-0.05em] max-w-[240px]">
+            {/* Orange Gradient Overlay - Visible on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-orange-600/90 via-orange-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+
+            {/* Top Badge: Arrow Button - Visible on Hover */}
+            <div className="absolute top-6 right-6 z-20 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white shadow-xl hover:bg-white hover:text-black transition-colors cursor-pointer">
+                    <ArrowRight size={20} />
+                </div>
+            </div>
+
+            {/* Heading Content - Fade up on hover */}
+            <div className="absolute bottom-0 left-0 right-0 p-10 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out z-30">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-black text-white uppercase leading-none tracking-tight">
                     {card.title}
                 </h3>
             </div>
@@ -92,46 +105,48 @@ const ThinkskoolAdvantage = () => {
         offset: ["start end", "center center"]
     });
 
-    // Transform scroll progress to X position
-    const rawX = useTransform(scrollYProgress, [0, 1], [800, 0]);
-    const scrollX = useSpring(rawX, {
-        stiffness: 40,
-        damping: 15,
-        restDelta: 0.001
-    });
+    // 1. Group Base Move (Right to Center)
+    const rawBaseX = useTransform(scrollYProgress, [0, 1], [800, 0]);
+    const baseX = useSpring(rawBaseX, { stiffness: 40, damping: 15 });
+
+    // 2. Card Spreading (Tight to Fanned out)
+    // 360 is roughly the card width + gap
+    const rawSpread = useTransform(scrollYProgress, [0, 1], [40, 360]); 
+    const spreadFactor = useSpring(rawSpread, { stiffness: 40, damping: 15 });
 
     return (
         <section ref={sectionRef} id="advantage" className="py-24 bg-white relative overflow-hidden w-full">
-            {/* Minimal Background Decor */}
+            {/* Subtle Background Elements */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-0 w-[1000px] h-[1000px] bg-blue-50/10 rounded-full blur-[140px] opacity-20" />
             </div>
 
             <div className="w-full relative z-10">
-                {/* Header Area Area - Centered Headline */}
-                <div className="max-w-7xl mx-auto px-6 mb-20 flex flex-col items-center text-center">
+                {/* Single Row Headline */}
+                <div className="max-w-7xl mx-auto px-6 mb-24 flex flex-col items-center text-center">
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter leading-none uppercase whitespace-nowrap"
+                        className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-400 tracking-tighter leading-none uppercase whitespace-nowrap flex items-baseline gap-2 md:gap-4"
                     >
-                        the <span className="text-blue-600">thinkskool</span> advantage
+                        <span><span className="text-black text-[1.2em]">t</span>he</span>
+                        <span><span className="text-black text-[1.2em]">t</span>hinkskool</span>
+                        <span><span className="text-black text-[1.2em]">a</span>dvantage</span>
                     </motion.h2>
                 </div>
 
-                {/* Horizontal Slide Container - With Gaps and Centering */}
-                <div className="relative w-full overflow-visible px-6">
-                    <div className="flex justify-center items-center gap-6 md:gap-8 relative">
-                        {ADVANTAGES.map((card, index) => (
-                            <AdvantageCard 
-                                key={card.id} 
-                                card={card} 
-                                index={index} 
-                                scrollX={scrollX}
-                            />
-                        ))}
-                    </div>
+                {/* Animated Cards Container - Absolute layout for precise spreading */}
+                <div className="relative h-[650px] w-full max-w-[1400px] mx-auto overflow-visible">
+                    {ADVANTAGES.map((card, index) => (
+                        <AdvantageCard 
+                            key={card.id} 
+                            card={card} 
+                            index={index} 
+                            baseX={baseX}
+                            spreadFactor={spreadFactor}
+                        />
+                    ))}
                 </div>
             </div>
         </section>
