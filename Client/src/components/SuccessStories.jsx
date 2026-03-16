@@ -132,7 +132,7 @@ const SuccessStories = () => {
                 <div className="px-6 md:px-12 text-center mb-16 md:mb-24">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-4 block">Proven Excellence</span>
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
-                        Students Reviews & Feedback
+                        transformed by thinkskool
                     </ScrollDarkenHeading>
                 </div>
 
