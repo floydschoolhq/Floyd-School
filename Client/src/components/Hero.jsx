@@ -60,82 +60,20 @@ const Hero = () => {
 
                     {/* Headline Group */}
                     <div className="w-full px-2 sm:px-0 flex flex-col items-center relative">
-                        <motion.h1
-                            className="text-[40px] sm:text-6xl md:text-7xl lg:text-[88px] xl:text-[96px] font-black leading-[0.85] w-full uppercase select-none relative z-10"
-                            style={{ perspective: "1000px" }}
-                        >
-                            <div className="flex flex-wrap justify-center gap-x-[0.2em] overflow-visible mb-2">
-                                {"MAKE SURE YOUR CHILD".split(" ").map((word, i) => (
-                                    <div key={i} className="overflow-visible py-1 px-1">
-                                        <motion.span
-                                            initial={isMobile ? { y: 0, rotateX: 0, opacity: 1 } : { y: "100%", rotateX: 30, opacity: 0 }}
-                                            animate={{ y: 0, rotateX: 0, opacity: 1 }}
-                                            transition={isMobile ? { duration: 0 } : { 
-                                                duration: 1.2, 
-                                                delay: i * 0.1, 
-                                                ease: [0.16, 1, 0.3, 1] 
-                                            }}
-                                            className="inline-block origin-bottom bg-gradient-to-b from-[#0F172A] via-[#0F172A] to-slate-500 bg-clip-text text-transparent"
-                                            style={{
-                                                letterSpacing: "-0.05em",
-                                                filter: "drop-shadow(0 15px 15px rgba(15, 23, 42, 0.08))"
-                                            }}
-                                        >
-                                            {word.split("").map((char, charIdx) => (
-                                                <motion.span
-                                                    key={charIdx}
-                                                    whileHover={{ 
-                                                        y: -10, 
-                                                        scale: 1.15,
-                                                        color: "#2563EB",
-                                                        transition: { type: "spring", stiffness: 300, damping: 15 } 
-                                                    }}
-                                                    className="inline-block cursor-default"
-                                                >
-                                                    {char}
-                                                </motion.span>
-                                            ))}
-                                        </motion.span>
-                                    </div>
-                                ))}
+                        <h1 className="text-[40px] sm:text-6xl md:text-7xl lg:text-[88px] xl:text-[96px] font-black leading-[0.85] w-full uppercase select-none relative z-10 text-[#0F172A] mb-2">
+                            <div className="flex flex-wrap justify-center items-baseline gap-x-[0.2em] mb-6">
+                                <span>MAKE</span>
+                                <span>SURE</span>
+                                <span className="flex items-baseline">
+                                    <span className="text-[#2563EB] text-[1.15em] leading-none">Y</span>
+                                    <span className="tracking-tighter">OUR</span>
+                                </span>
+                                <span>CHILD</span>
                             </div>
-                            <div className="flex flex-wrap justify-center gap-x-[0.15em] overflow-visible">
-                                {"IS READY".split(" ").map((word, i) => (
-                                    <div key={i} className="overflow-visible py-1 px-1">
-                                        <motion.span
-                                            initial={isMobile ? { y: 0, rotateX: 0, opacity: 1 } : { y: "100%", rotateX: 30, opacity: 0 }}
-                                            animate={{ y: 0, rotateX: 0, opacity: 1 }}
-                                            transition={isMobile ? { duration: 0 } : { 
-                                                duration: 1.4, 
-                                                delay: 0.4 + (i * 0.1), 
-                                                ease: [0.16, 1, 0.3, 1] 
-                                            }}
-                                            className="inline-block origin-bottom bg-gradient-to-br from-[#F97316] via-[#F97316] to-[#d44317] bg-clip-text text-transparent relative group/ready"
-                                            style={{
-                                                letterSpacing: "-0.05em",
-                                                filter: "drop-shadow(0 10px 25px rgba(249, 115, 22, 0.25))"
-                                            }}
-                                        >
-                                            {word.split("").map((char, charIdx) => (
-                                                <motion.span
-                                                    key={charIdx}
-                                                    whileHover={{ 
-                                                        y: -10, 
-                                                        scale: 1.15,
-                                                        transition: { type: "spring", stiffness: 300, damping: 15 } 
-                                                    }}
-                                                    className="inline-block cursor-default"
-                                                >
-                                                    {char}
-                                                </motion.span>
-                                            ))}
-                                            {/* Industrial Glow Underline */}
-                                            <div className="absolute -bottom-2 left-0 w-0 h-[3px] bg-gradient-to-r from-[#F97316] to-[#d44317] rounded-full group-hover/ready:w-full transition-all duration-700 shadow-[0_0_15px_rgba(249,115,22,0.5)]" />
-                                        </motion.span>
-                                    </div>
-                                ))}
+                            <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight">
+                                IS READY
                             </div>
-                        </motion.h1>
+                        </h1>
                     </div>
 
                     {/* Paragraph Area - Industrial Tech Container */}
