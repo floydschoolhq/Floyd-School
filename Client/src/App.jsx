@@ -41,7 +41,7 @@ import TechStackStats from './components/TechStackStats.jsx';
 
 
 import InteractiveFeatures from './components/InteractiveFeatures';
-import ThinkskoolAdvantage from './components/thinkskoolAdvantage.jsx';
+import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 
 
