@@ -60,7 +60,7 @@ const CourseDetails = () => {
 
             <div className="relative z-10">
                 {/* Course Hero */}
-                <section className="relative pt-32 pb-20 overflow-hidden">
+                <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-6 relative z-10">
                         <button 
                             onClick={() => navigate(-1)}
