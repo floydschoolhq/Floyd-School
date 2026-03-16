@@ -233,7 +233,6 @@ const OnlineProgram = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <span className="text-[11px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-4 block">Catalogue 2024</span>
                             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-tight uppercase">Academic Hub</h2>
                             <p className="mt-4 text-slate-500 font-medium max-w-xl">Deep-tech specialization tracks architected for high-intensity industrial learning.</p>
                         </motion.div>
