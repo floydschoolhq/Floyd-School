@@ -50,44 +50,46 @@ const ADVANTAGES = [
 const AdvantageCard = ({ card, index, isHovered }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 200 }}
             whileInView={{ 
                 opacity: 1, 
-                x: isHovered ? 0 : 60, // Settle to right by default, move to center on hover
+                x: 0,
                 transition: { 
-                    duration: 0.8, 
-                    delay: index * 0.05,
+                    duration: 1, 
+                    delay: index * 0.1,
                     ease: [0.16, 1, 0.3, 1]
                 }
             }}
             animate={{ 
-                x: isHovered ? 0 : (4 - index) * 30, // Stack/Settle to right logic
-                scale: isHovered ? 1.02 : 1,
-                zIndex: isHovered ? 20 : 1,
+                x: isHovered 
+                    ? -180 - (index * 10) // Slide towards center on hover
+                    : 140 - (index * 25), // Settle into the right edge
+                scale: isHovered ? 1 : 0.96,
+                zIndex: isHovered ? 20 - index : 1,
             }}
-            transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className="group relative flex-shrink-0 w-[280px] md:w-[320px] h-[550px] bg-slate-900 overflow-hidden cursor-pointer shadow-2xl"
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="group relative flex-shrink-0 w-[280px] md:w-[360px] h-[600px] bg-slate-900 border-l border-white/5 overflow-hidden cursor-pointer shadow-[20px_0_40px_rgba(0,0,0,0.4)]"
         >
             <img 
                 src={card.image} 
                 alt={card.title}
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-60 group-hover:opacity-100"
             />
             
-            {/* Visual Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+            {/* Visual Overlay - High Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-95 group-hover:opacity-60 transition-opacity" />
             
-            {/* Minimal HUD Border */}
-            <div className="absolute inset-0 border-[0.5px] border-white/10 group-hover:border-blue-500/50 transition-colors pointer-events-none" />
+            {/* HUD Border Subtle */}
+            <div className="absolute inset-0 border-[0.5px] border-white/10 transition-colors pointer-events-none group-hover:border-blue-500/50" />
 
             {/* Content Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+            <div className="absolute bottom-0 left-0 right-0 p-10 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
                 <motion.div
                     initial={{ width: 0 }}
-                    whileInView={{ width: "40px" }}
-                    className="h-1 bg-blue-600 mb-4"
+                    whileInView={{ width: "80px" }}
+                    className="h-1.5 bg-blue-600 mb-8"
                 />
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase leading-none tracking-tighter max-w-[200px]">
+                <h3 className="text-3xl md:text-5xl font-black text-white uppercase leading-[0.75] tracking-[ -0.05em] max-w-[260px]">
                     {card.title}
                 </h3>
             </div>
@@ -99,43 +101,40 @@ const ThinkskoolAdvantage = () => {
     const [isContainerHovered, setIsContainerHovered] = useState(false);
 
     return (
-        <section id="advantage" className="py-24 md:py-32 bg-white relative overflow-hidden">
-            {/* Background Decor */}
+        <section id="advantage" className="py-24 bg-white relative overflow-hidden w-full">
+            {/* Minimal Background Decor */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-blue-50/20 rounded-full blur-[120px] opacity-20" />
-                <div className="absolute inset-0 opacity-[0.01]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+                <div className="absolute top-1/2 left-0 w-[1000px] h-[1000px] bg-blue-50/10 rounded-full blur-[140px] opacity-20" />
             </div>
 
-            <div className="max-w-[1440px] mx-auto relative z-10">
-                {/* Header Area Area */}
-                <div className="px-6 md:px-12 mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
-                    <div className="max-w-3xl">
-                        <motion.span 
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-[11px] font-black text-blue-600 uppercase tracking-[0.5em] mb-4 block"
-                        >
-                            The Industrial Core
-                        </motion.span>
-                        <motion.h2 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter leading-[0.85] uppercase"
-                        >
-                            Built for <br /> <span className="text-blue-600">Action.</span>
-                        </motion.h2>
-                    </div>
+            <div className="w-full relative z-10">
+                {/* Header Area Area - Centered Headline */}
+                <div className="max-w-[1400px] mx-auto px-6 mb-16 flex flex-col items-center text-center">
+                    <motion.span 
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-[11px] font-black text-blue-600 uppercase tracking-[0.7em] mb-4 block"
+                    >
+                        Industrial Protocol
+                    </motion.span>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl md:text-7xl lg:text-9xl font-black text-slate-900 tracking-tighter leading-[0.8] uppercase"
+                    >
+                        Built for <span className="text-blue-600">Action.</span>
+                    </motion.h2>
                 </div>
 
-                {/* Horizontal Slide Container */}
+                {/* Horizontal Slide Container - FLUSH TO RIGHT */}
                 <div 
-                    className="relative flex justify-center py-10"
+                    className="relative w-full overflow-visible"
                     onMouseEnter={() => setIsContainerHovered(true)}
                     onMouseLeave={() => setIsContainerHovered(false)}
                 >
-                    <div className="flex items-center gap-1 md:gap-2 px-6 overflow-x-auto no-scrollbar pb-10">
+                    <div className="flex justify-end items-center -mr-20 md:-mr-40 relative">
                         {ADVANTAGES.map((card, index) => (
                             <AdvantageCard 
                                 key={card.id} 
