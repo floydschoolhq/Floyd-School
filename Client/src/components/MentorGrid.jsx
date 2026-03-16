@@ -146,11 +146,24 @@ const MentorCard = React.memo(({ mentor, index, onSelect }) => {
 
 const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null }) => {
     const [selectedMentor, setSelectedMentor] = useState(null);
+    const scrollRef = useRef(null);
     const isMobile = useIsMobile();
 
     const filteredLeaders = excludeName 
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { current } = scrollRef;
+            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
+            if (direction === 'left') {
+                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
 
     return (
         <section 
@@ -176,8 +189,33 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null })
                 </div>
 
                 <div className="relative group/marquee">
-                    {/* Continuous Auto-Scrolling Container */}
-                    <div className="overflow-hidden py-6 -mx-2 px-2">
+                    {/* Navigation Buttons for Static Mode */}
+                    {isStatic && (
+                        <>
+                            <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-12 z-20">
+                                <button 
+                                    onClick={() => scroll('left')}
+                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
+                                >
+                                    <ChevronLeft size={24} />
+                                </button>
+                            </div>
+                            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-12 z-20">
+                                <button 
+                                    onClick={() => scroll('right')}
+                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
+                                >
+                                    <ChevronRight size={24} />
+                                </button>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Continuous Auto-Scrolling or Manual Scroll Container */}
+                    <div 
+                        ref={isStatic ? scrollRef : null}
+                        className={`overflow-hidden py-10 -mx-4 px-4 ${isStatic ? "overflow-x-auto no-scrollbar snap-x snap-mandatory" : ""}`}
+                    >
                         <motion.div 
                             animate={isStatic || isMobile ? { x: 0 } : { x: ["0%", "-50%"] }}
                             transition={isStatic || isMobile ? { duration: 0 } : { 
@@ -185,7 +223,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null })
                                 repeat: Infinity, 
                                 ease: "linear" 
                             }}
-                            className={`flex w-max items-center gap-8 ${isStatic ? "md:grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 md:w-full md:max-w-[1440px] md:mx-auto md:justify-items-center" : ""}`}
+                            className={`flex items-center gap-8 ${isStatic ? "w-max" : "w-max"}`}
                         >
                             {(isStatic || isMobile ? filteredLeaders : [...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders]).map((mentor, index) => (
                                 <MentorCard 
