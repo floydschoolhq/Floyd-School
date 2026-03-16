@@ -144,7 +144,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect }) => {
     );
 });
 
-const MentorGrid = ({ title = "Mentors" }) => {
+const MentorGrid = ({ title = "Mentors", isStatic = false }) => {
     const [selectedMentor, setSelectedMentor] = useState(null);
     const isMobile = useIsMobile();
 
@@ -175,16 +175,16 @@ const MentorGrid = ({ title = "Mentors" }) => {
                     {/* Continuous Auto-Scrolling Container */}
                     <div className="overflow-hidden py-6 -mx-2 px-2">
                         <motion.div 
-                            animate={isMobile ? { x: 0 } : { x: ["0%", "-50%"] }}
-                            transition={isMobile ? { duration: 0 } : { 
+                            animate={isStatic || isMobile ? { x: 0 } : { x: ["0%", "-50%"] }}
+                            transition={isStatic || isMobile ? { duration: 0 } : { 
                                 duration: 35, 
                                 repeat: Infinity, 
                                 ease: "linear" 
                             }}
-                            whileHover={isMobile ? {} : { animationPlayState: "paused" }}
-                            className="flex w-max items-center gap-8"
+                            whileHover={isStatic || isMobile ? {} : { animationPlayState: "paused" }}
+                            className={`flex w-max items-center gap-8 ${isStatic ? "md:grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 md:w-full md:max-w-7xl md:mx-auto md:justify-items-center" : ""}`}
                         >
-                            {(isMobile ? LEADERS : [...LEADERS, ...LEADERS, ...LEADERS, ...LEADERS]).map((mentor, index) => (
+                            {(isStatic || isMobile ? LEADERS : [...LEADERS, ...LEADERS, ...LEADERS, ...LEADERS]).map((mentor, index) => (
                                 <MentorCard 
                                     key={index}
                                     mentor={mentor}
@@ -196,17 +196,19 @@ const MentorGrid = ({ title = "Mentors" }) => {
                     </div>
 
                     {/* Industrial Progress Indicator */}
-                    <div className="mt-8 flex items-center gap-6 max-w-sm mx-auto">
-                        <div className="h-[2px] flex-1 bg-slate-100 rounded-full overflow-hidden">
-                            <motion.div 
-                                className="h-full bg-blue-600"
-                                initial={{ width: "30%" }}
-                                whileInView={{ width: "100%" }}
-                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                            />
+                    {!isStatic && (
+                        <div className="mt-8 flex items-center gap-6 max-w-sm mx-auto">
+                            <div className="h-[2px] flex-1 bg-slate-100 rounded-full overflow-hidden">
+                                <motion.div 
+                                    className="h-full bg-blue-600"
+                                    initial={{ width: "30%" }}
+                                    whileInView={{ width: "100%" }}
+                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                />
+                            </div>
+                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Carousel Active</span>
                         </div>
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Carousel Active</span>
-                    </div>
+                    )}
                 </div>
             </div>
 

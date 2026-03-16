@@ -137,7 +137,7 @@ const CourseDetails = () => {
 
 
                 {/* Mentor Panel Section */}
-                <MentorGrid title="Faculty" />
+
 
                 {/* Platform Panels Section */}
                 <PlatformPanels />
@@ -150,6 +150,9 @@ const CourseDetails = () => {
 
                 {/* Student Reviews Section */}
                 <CourseReviews courseId={courseId} />
+
+                {/* Mentor Panel Section */}
+                <MentorGrid title="Faculty" isStatic={true} />
 
                 {/* Final CTA */}
                 <section className="py-32 bg-slate-50 text-center">
