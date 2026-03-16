@@ -152,7 +152,7 @@ const CourseDetails = () => {
                 <CourseReviews courseId={courseId} />
 
                 {/* Mentor Panel Section */}
-                <MentorGrid title="Faculty" isStatic={true} />
+                <MentorGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" />
 
                 {/* Final CTA */}
                 <section className="py-32 bg-slate-50 text-center">

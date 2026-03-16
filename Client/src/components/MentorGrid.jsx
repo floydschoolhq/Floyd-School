@@ -144,9 +144,13 @@ const MentorCard = React.memo(({ mentor, index, onSelect }) => {
     );
 });
 
-const MentorGrid = ({ title = "Mentors", isStatic = false }) => {
+const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null }) => {
     const [selectedMentor, setSelectedMentor] = useState(null);
     const isMobile = useIsMobile();
+
+    const filteredLeaders = excludeName 
+        ? LEADERS.filter(m => m.name !== excludeName)
+        : LEADERS;
 
     return (
         <section 
@@ -181,10 +185,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false }) => {
                                 repeat: Infinity, 
                                 ease: "linear" 
                             }}
-                            whileHover={isStatic || isMobile ? {} : { animationPlayState: "paused" }}
-                            className={`flex w-max items-center gap-8 ${isStatic ? "md:grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 md:w-full md:max-w-7xl md:mx-auto md:justify-items-center" : ""}`}
+                            className={`flex w-max items-center gap-8 ${isStatic ? "md:grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 md:w-full md:max-w-[1440px] md:mx-auto md:justify-items-center" : ""}`}
                         >
-                            {(isStatic || isMobile ? LEADERS : [...LEADERS, ...LEADERS, ...LEADERS, ...LEADERS]).map((mentor, index) => (
+                            {(isStatic || isMobile ? filteredLeaders : [...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders]).map((mentor, index) => (
                                 <MentorCard 
                                     key={index}
                                     mentor={mentor}
