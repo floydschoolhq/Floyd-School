@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { 
     Zap, 
     Layout, 
@@ -47,28 +47,16 @@ const ADVANTAGES = [
         details: ["Advanced AI & ML", "Cybersecurity protocols", "Hands-on Robotics & IoT"]
     },
 ];
-const AdvantageCard = ({ card, index, isHovered }) => {
+const AdvantageCard = ({ card, index, scrollX }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, x: 200 }}
-            whileInView={{ 
-                opacity: 1, 
-                x: 0,
-                transition: { 
-                    duration: 1, 
-                    delay: index * 0.1,
-                    ease: [0.16, 1, 0.3, 1]
-                }
+            style={{ x: scrollX }}
+            whileHover={{ 
+                scale: 1.05,
+                zIndex: 30,
+                transition: { duration: 0.3 }
             }}
-            animate={{ 
-                x: isHovered 
-                    ? -180 - (index * 10) // Slide towards center on hover
-                    : 140 - (index * 25), // Settle into the right edge
-                scale: isHovered ? 1 : 0.96,
-                zIndex: isHovered ? 20 - index : 1,
-            }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            className="group relative flex-shrink-0 w-[280px] md:w-[360px] h-[600px] bg-slate-900 border-l border-white/5 overflow-hidden cursor-pointer shadow-[20px_0_40px_rgba(0,0,0,0.4)]"
+            className="group relative flex-shrink-0 w-[280px] md:w-[340px] h-[550px] bg-slate-900 border border-orange-50/5 overflow-hidden cursor-pointer shadow-[0_0_20px_rgba(255,165,0,0.05)] hover:shadow-[0_0_50px_rgba(255,180,100,0.2)] hover:border-orange-100/30 transition-all duration-500"
         >
             <img 
                 src={card.image} 
@@ -79,17 +67,17 @@ const AdvantageCard = ({ card, index, isHovered }) => {
             {/* Visual Overlay - High Contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-95 group-hover:opacity-60 transition-opacity" />
             
-            {/* HUD Border Subtle */}
-            <div className="absolute inset-0 border-[0.5px] border-white/10 transition-colors pointer-events-none group-hover:border-blue-500/50" />
+            {/* Glowing HUD Border Subtle */}
+            <div className="absolute inset-0 border-[0.5px] border-white/5 transition-colors pointer-events-none group-hover:border-orange-200/40" />
 
             {/* Content Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-10 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
                 <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "80px" }}
-                    className="h-1.5 bg-blue-600 mb-8"
+                    className="h-1.5 bg-blue-600 mb-8 shadow-[0_0_15px_rgba(37,99,235,0.5)]"
                 />
-                <h3 className="text-3xl md:text-5xl font-black text-white uppercase leading-[0.75] tracking-[ -0.05em] max-w-[260px]">
+                <h3 className="text-3xl md:text-5xl font-black text-white uppercase leading-[0.75] tracking-[-0.05em] max-w-[240px]">
                     {card.title}
                 </h3>
             </div>
@@ -98,10 +86,22 @@ const AdvantageCard = ({ card, index, isHovered }) => {
 };
 
 const ThinkskoolAdvantage = () => {
-    const [isContainerHovered, setIsContainerHovered] = useState(false);
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "center center"]
+    });
+
+    // Transform scroll progress to X position
+    const rawX = useTransform(scrollYProgress, [0, 1], [800, 0]);
+    const scrollX = useSpring(rawX, {
+        stiffness: 40,
+        damping: 15,
+        restDelta: 0.001
+    });
 
     return (
-        <section id="advantage" className="py-24 bg-white relative overflow-hidden w-full">
+        <section ref={sectionRef} id="advantage" className="py-24 bg-white relative overflow-hidden w-full">
             {/* Minimal Background Decor */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-0 w-[1000px] h-[1000px] bg-blue-50/10 rounded-full blur-[140px] opacity-20" />
@@ -109,7 +109,7 @@ const ThinkskoolAdvantage = () => {
 
             <div className="w-full relative z-10">
                 {/* Header Area Area - Centered Headline */}
-                <div className="max-w-7xl mx-auto px-6 mb-16 flex flex-col items-center text-center">
+                <div className="max-w-7xl mx-auto px-6 mb-20 flex flex-col items-center text-center">
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -120,19 +120,15 @@ const ThinkskoolAdvantage = () => {
                     </motion.h2>
                 </div>
 
-                {/* Horizontal Slide Container - FLUSH TO RIGHT */}
-                <div 
-                    className="relative w-full overflow-visible"
-                    onMouseEnter={() => setIsContainerHovered(true)}
-                    onMouseLeave={() => setIsContainerHovered(false)}
-                >
-                    <div className="flex justify-end items-center -mr-20 md:-mr-40 relative">
+                {/* Horizontal Slide Container - With Gaps and Centering */}
+                <div className="relative w-full overflow-visible px-6">
+                    <div className="flex justify-center items-center gap-6 md:gap-8 relative">
                         {ADVANTAGES.map((card, index) => (
                             <AdvantageCard 
                                 key={card.id} 
                                 card={card} 
                                 index={index} 
-                                isHovered={isContainerHovered}
+                                scrollX={scrollX}
                             />
                         ))}
                     </div>
