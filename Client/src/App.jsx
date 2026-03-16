@@ -33,7 +33,7 @@ import CourseDetails from './pages/CourseDetails.jsx';
 
 
 import Logo from './components/Logo.jsx';
-import StickyBottomBar from './components/StickyBottomBar.jsx';
+
 import Masterclasses from './components/Masterclasses.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
@@ -65,7 +65,7 @@ const HomePage = () => {
                     <InteractiveFeatures isFeaturesExpanded={true} />
                     <SuccessStories />
                 </div>
-                <StickyBottomBar />
+
             </div>
         </MotionConfig>
     )
