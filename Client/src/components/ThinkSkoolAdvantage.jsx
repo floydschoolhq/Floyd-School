@@ -178,4 +178,4 @@ const ThinkskoolAdvantage = () => {
     );
 };
 
-export default ThinkskoolAdvantage;e;
+export default ThinkskoolAdvantage;
