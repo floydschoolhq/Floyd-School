@@ -30,54 +30,91 @@ import {
 
 import useIsMobile from '../hooks/useIsMobile';
 
-const TechIcon = ({ icon: Icon, label, color }) => {
+const TechIcon = ({ icon: Icon, label, color, url }) => {
     const isMobile = useIsMobile();
+    
+    const handleClick = (e) => {
+        if (url) {
+            e.stopPropagation();
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     return (
-        <div className="group relative flex flex-col items-center gap-4 py-4">
-            {/* Glow Effect */}
-            {!isMobile && (
-                <div 
-                    className="absolute inset-x-0 top-6 bottom-12 opacity-0 group-hover:opacity-15 blur-2xl transition-opacity duration-500 rounded-full"
-                    style={{ backgroundColor: color }}
-                />
-            )}
+        <motion.div 
+            onClick={handleClick}
+            className={`group relative flex flex-col items-center gap-4 py-8 cursor-pointer ${!isMobile ? "perspective-[1000px]" : ""}`}
+            whileHover={!isMobile ? { scale: 1.05 } : {}}
+        >
+            {/* Glow/Shadow Base */}
+            <div 
+                className="absolute inset-x-0 top-1/2 -bottom-4 opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-700 rounded-full z-0"
+                style={{ backgroundColor: color }}
+            />
             
-            {/* Icon Container - Glassmorphism touch */}
-            <div className={`relative z-10 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white border border-slate-100/80 shadow-[0_10px_40px_rgba(0,0,0,0.03)] rounded-[1.5rem] transition-all duration-500 ease-[0.23,1,0.32,1] ${!isMobile ? "group-hover:-translate-y-3 group-hover:shadow-[0_25px_50px_rgba(0,0,0,0.06)] group-hover:border-slate-200" : ""}`}>
-                <Icon size={isMobile ? 32 : 40} style={{ color: color }} className="filter drop-shadow-sm transition-transform duration-500 group-hover:scale-110" />
-            </div>
+            {/* 3D Icon Card */}
+            <motion.div 
+                className="relative z-10 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center bg-white border border-slate-100/50 shadow-[0_10px_40px_rgba(0,0,0,0.02)] rounded-[2rem] transition-all duration-700 ease-[0.23,1,0.32,1] transform-style-3d group-hover:border-slate-200"
+                style={{ transformStyle: 'preserve-3d' }}
+                whileHover={!isMobile ? { 
+                    rotateY: 15, 
+                    rotateX: -15,
+                    translateZ: 20,
+                    boxShadow: "0 40px 80px -20px rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.05)"
+                } : {}}
+            >
+                {/* 3D Depth Layer 1 (Inner Shadow) */}
+                <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/80 via-transparent to-black/5 pointer-events-none" />
+                
+                {/* 3D Depth Layer 2 (Outer Side) */}
+                <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-tr from-transparent via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                <motion.div 
+                    className="relative z-20 flex items-center justify-center p-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]"
+                    style={{ transform: 'translateZ(30px)' }}
+                >
+                    <Icon 
+                        size={isMobile ? 36 : 48} 
+                        style={{ color: color }} 
+                        className="transition-transform duration-700 group-hover:scale-110" 
+                    />
+                </motion.div>
+            </motion.div>
             
-            {/* Label - Premium Typography */}
-            <span className="text-[9px] md:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] transition-all duration-300 group-hover:text-slate-900 group-hover:tracking-[0.25em]">
+            {/* Label with 3D lift */}
+            <motion.span 
+                className="text-[10px] md:text-[12px] font-black text-slate-400 uppercase tracking-[0.3em] transition-all duration-500 group-hover:text-slate-900 group-hover:tracking-[0.4em]"
+                style={{ transform: !isMobile ? 'translateZ(10px)' : 'none' }}
+            >
                 {label}
-            </span>
-        </div>
+            </motion.span>
+        </motion.div>
     );
 };
 
 const techLogos = [
-    { node: <TechIcon icon={SiReact} label="React" color="#61DAFB" />, title: "React" },
-    { node: <TechIcon icon={SiNextdotjs} label="Next.js" color="#000000" />, title: "Next.js" },
-    { node: <TechIcon icon={SiTensorflow} label="TensorFlow" color="#FF6F00" />, title: "TensorFlow" },
-    { node: <TechIcon icon={SiArduino} label="Arduino" color="#00979D" />, title: "Arduino" },
-    { node: <TechIcon icon={SiTypescript} label="TypeScript" color="#3178C6" />, title: "TypeScript" },
-    { node: <TechIcon icon={SiPython} label="Python" color="#3776AB" />, title: "Python" },
-    { node: <TechIcon icon={SiPytorch} label="PyTorch" color="#EE4C2C" />, title: "PyTorch" },
-    { node: <TechIcon icon={SiRaspberrypi} label="Raspberry Pi" color="#C51A4A" />, title: "Raspberry Pi" },
-    { node: <TechIcon icon={SiTailwindcss} label="Tailwind" color="#06B6D4" />, title: "Tailwind" },
-    { node: <TechIcon icon={SiNodedotjs} label="Node.js" color="#339933" />, title: "Node.js" },
-    { node: <TechIcon icon={SiOpenai} label="OpenAI" color="#412991" />, title: "OpenAI" },
-    { node: <TechIcon icon={SiRos} label="ROS" color="#22314E" />, title: "ROS" },
-    { node: <TechIcon icon={SiUnity} label="Unity" color="#000000" />, title: "Unity" },
-    { node: <TechIcon icon={SiCplusplus} label="C++" color="#00599C" />, title: "C++" },
-    { node: <TechIcon icon={SiFirebase} label="Firebase" color="#FFCA28" />, title: "Firebase" },
-    { node: <TechIcon icon={SiMongodb} label="MongoDB" color="#47A248" />, title: "MongoDB" },
-    { node: <TechIcon icon={SiUnrealengine} label="Unreal" color="#000000" />, title: "Unreal" },
-    { node: <TechIcon icon={SiFlutter} label="Flutter" color="#02569B" />, title: "Flutter" },
-    { node: <TechIcon icon={SiLinux} label="Linux" color="#FCC624" />, title: "Linux" },
-    { node: <TechIcon icon={SiOpencv} label="OpenCV" color="#5C3EE8" />, title: "OpenCV" },
-    { node: <TechIcon icon={SiGooglecloud} label="Cloud" color="#4285F4" />, title: "Cloud" },
-    { node: <TechIcon icon={SiJavascript} label="JS" color="#F7DF1E" />, title: "JS" },
+    { node: <TechIcon icon={SiReact} label="React" color="#61DAFB" url="https://react.dev" />, title: "React", href: "https://react.dev" },
+    { node: <TechIcon icon={SiNextdotjs} label="Next.js" color="#000000" url="https://nextjs.org" />, title: "Next.js", href: "https://nextjs.org" },
+    { node: <TechIcon icon={SiTensorflow} label="TensorFlow" color="#FF6F00" url="https://www.tensorflow.org" />, title: "TensorFlow", href: "https://www.tensorflow.org" },
+    { node: <TechIcon icon={SiArduino} label="Arduino" color="#00979D" url="https://www.arduino.cc" />, title: "Arduino", href: "https://www.arduino.cc" },
+    { node: <TechIcon icon={SiTypescript} label="TypeScript" color="#3178C6" url="https://www.typescriptlang.org" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+    { node: <TechIcon icon={SiPython} label="Python" color="#3776AB" url="https://www.python.org" />, title: "Python", href: "https://www.python.org" },
+    { node: <TechIcon icon={SiPytorch} label="PyTorch" color="#EE4C2C" url="https://pytorch.org" />, title: "PyTorch", href: "https://pytorch.org" },
+    { node: <TechIcon icon={SiRaspberrypi} label="Raspberry Pi" color="#C51A4A" url="https://www.raspberrypi.com" />, title: "Raspberry Pi", href: "https://www.raspberrypi.com" },
+    { node: <TechIcon icon={SiTailwindcss} label="Tailwind" color="#06B6D4" url="https://tailwindcss.com" />, title: "Tailwind", href: "https://tailwindcss.com" },
+    { node: <TechIcon icon={SiNodedotjs} label="Node.js" color="#339933" url="https://nodejs.org" />, title: "Node.js", href: "https://nodejs.org" },
+    { node: <TechIcon icon={SiOpenai} label="OpenAI" color="#412991" url="https://openai.com" />, title: "OpenAI", href: "https://openai.com" },
+    { node: <TechIcon icon={SiRos} label="ROS" color="#22314E" url="https://www.ros.org" />, title: "ROS", href: "https://www.ros.org" },
+    { node: <TechIcon icon={SiUnity} label="Unity" color="#000000" url="https://unity.com" />, title: "Unity", href: "https://unity.com" },
+    { node: <TechIcon icon={SiCplusplus} label="C++" color="#00599C" url="https://isocpp.org" />, title: "C++", href: "https://isocpp.org" },
+    { node: <TechIcon icon={SiFirebase} label="Firebase" color="#FFCA28" url="https://firebase.google.com" />, title: "Firebase", href: "https://firebase.google.com" },
+    { node: <TechIcon icon={SiMongodb} label="MongoDB" color="#47A248" url="https://www.mongodb.com" />, title: "MongoDB", href: "https://www.mongodb.com" },
+    { node: <TechIcon icon={SiUnrealengine} label="Unreal" color="#000000" url="https://www.unrealengine.com" />, title: "Unreal", href: "https://www.unrealengine.com" },
+    { node: <TechIcon icon={SiFlutter} label="Flutter" color="#02569B" url="https://flutter.dev" />, title: "Flutter", href: "https://flutter.dev" },
+    { node: <TechIcon icon={SiLinux} label="Linux" color="#FCC624" url="https://www.kernel.org" />, title: "Linux", href: "https://www.kernel.org" },
+    { node: <TechIcon icon={SiOpencv} label="OpenCV" color="#5C3EE8" url="https://opencv.org" />, title: "OpenCV", href: "https://opencv.org" },
+    { node: <TechIcon icon={SiGooglecloud} label="Cloud" color="#4285F4" url="https://cloud.google.com" />, title: "Cloud", href: "https://cloud.google.com" },
+    { node: <TechIcon icon={SiJavascript} label="JS" color="#F7DF1E" url="https://developer.mozilla.org/en-US/docs/Web/JavaScript" />, title: "JS", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
 ];
 
 const TechStackStats = () => {
