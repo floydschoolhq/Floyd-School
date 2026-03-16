@@ -107,27 +107,26 @@ const CourseDetails = () => {
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                                 className="relative"
                             >
-                                <div className="w-full aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl border border-white">
+                                <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 bg-slate-50/50">
                                     <img 
                                         src={course.image} 
                                         alt={course.title} 
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent" />
                                 </div>
                                 {/* Industry Rating */}
-                                <div className="absolute -bottom-8 lg:bottom-0 -left-6 lg:-left-12 flex items-center gap-4 bg-transparent">
-                                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-sm">
-                                        <Target size={24} />
+                                <div className="absolute -bottom-6 right-6 flex items-center gap-3 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl border border-slate-100 shadow-xl">
+                                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                                        <Target size={20} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Industry Rating</span>
-                                        <span className="text-2xl font-bold text-slate-900 tracking-tight leading-none">{course.rating}/5.0</span>
+                                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Industry Rating</span>
+                                        <span className="text-xl font-bold text-slate-900 tracking-tight leading-none">{course.rating}/5.0</span>
                                     </div>
                                 </div>
                             </motion.div>
