@@ -49,10 +49,10 @@ const MockupDisplay = ({ id }) => {
         switch (id) {
             case 'ignite':
                 return (
-                    <div className="p-8 h-full flex flex-col gap-6 bg-slate-950 font-sans">
+                    <div className="p-8 h-full flex flex-col gap-6 bg-[#080808] font-sans">
                         <div className="flex items-center justify-between border-b border-white/5 pb-6">
                             <div className="flex items-center gap-4">
-                                <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
+                                <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500">
                                     <Zap size={18} />
                                 </div>
                                 <div>
@@ -67,9 +67,9 @@ const MockupDisplay = ({ id }) => {
                                 { day: 'Day 3', task: 'Logic Gates & Circuits', status: 'Live' },
                                 { day: 'Day 7', task: 'First Mini-Engine build', status: 'Locked' }
                             ].map((item, i) => (
-                                <div key={i} className={`p-4 rounded-xl border flex items-center justify-between transition-colors ${item.status === 'Live' ? 'bg-blue-600/10 border-blue-600/30' : 'bg-white/[0.02] border-white/5 opacity-50'}`}>
+                                <div key={i} className={`p-4 rounded-xl border flex items-center justify-between transition-colors ${item.status === 'Live' ? 'bg-orange-500/10 border-orange-500/30' : 'bg-white/[0.02] border-white/5 opacity-50'}`}>
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-wider mb-1">{item.day}</span>
+                                        <span className="text-[9px] font-bold text-orange-500 uppercase tracking-wider mb-1">{item.day}</span>
                                         <span className="text-[13px] font-medium text-white tracking-tight">{item.task}</span>
                                     </div>
                                     <span className="text-[9px] font-bold text-white/30 uppercase tracking-widest">{item.status}</span>
@@ -80,15 +80,15 @@ const MockupDisplay = ({ id }) => {
                 );
             case 'learn':
                 return (
-                    <div className="p-8 h-full flex flex-col gap-6 bg-slate-950 font-sans">
+                    <div className="p-8 h-full flex flex-col gap-6 bg-[#080808] font-sans">
                         <div className="flex items-center justify-between border-b border-white/5 pb-6">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+                                <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500">
                                     <Brain size={18} />
                                 </div>
                                 <div className="text-[15px] font-bold text-white tracking-tight">Path to Engineer</div>
                             </div>
-                            <div className="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-[9px] font-bold text-indigo-400 uppercase tracking-widest">3 Months</div>
+                            <div className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[9px] font-bold text-amber-400 uppercase tracking-widest">3 Months</div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             {[
@@ -97,11 +97,11 @@ const MockupDisplay = ({ id }) => {
                                 { module: '03', title: 'App Architecture', level: 'Pro' },
                                 { module: '04', title: 'Cloud Systems', level: 'Enterprise' }
                             ].map((item, i) => (
-                                <div key={i} className="p-4 bg-white/[0.02] border border-white/5 rounded-xl hover:border-indigo-500/30 transition-colors">
+                                <div key={i} className="p-4 bg-white/[0.02] border border-white/5 rounded-xl hover:border-amber-500/30 transition-colors">
                                     <div className="text-[9px] font-bold text-slate-600 mb-1">{item.module}</div>
                                     <div className="text-[12px] font-semibold text-white tracking-tight mb-2">{item.title}</div>
                                     <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden">
-                                        <div className="h-full bg-indigo-500 w-2/3" />
+                                        <div className="h-full bg-amber-500 w-2/3" />
                                     </div>
                                 </div>
                             ))}
@@ -110,23 +110,23 @@ const MockupDisplay = ({ id }) => {
                 );
             case 'build':
                 return (
-                    <div className="p-8 h-full flex flex-col gap-6 bg-slate-950 font-sans">
+                    <div className="p-8 h-full flex flex-col gap-6 bg-[#080808] font-sans">
                         <div className="flex items-center justify-between border-b border-white/5 pb-6">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                                <div className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500">
                                     <Code2 size={18} />
                                 </div>
                                 <div className="text-[15px] font-bold text-white tracking-tight">Studio Lab</div>
                             </div>
-                            <div className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest animate-pulse">Industrial Project</div>
+                            <div className="text-[9px] font-bold text-orange-500 uppercase tracking-widest animate-pulse">Industrial Project</div>
                         </div>
                         <div className="space-y-4">
-                            <div className="p-5 bg-gradient-to-r from-emerald-600/5 to-transparent border border-emerald-600/20 rounded-xl">
-                                <div className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest mb-2">Active Build</div>
-                                <h5 className="text-white font-bold text-lg tracking-tight mb-3">AI Traffic System</h5>
+                            <div className="p-5 bg-gradient-to-r from-orange-600/5 to-transparent border border-orange-600/20 rounded-xl">
+                                <div className="text-[9px] font-bold text-orange-500 uppercase tracking-widest mb-2">Active Build</div>
+                                <h5 className="text-white font-bold text-lg tracking-tight mb-3">Your Own School Website</h5>
                                 <div className="flex gap-2">
-                                    <span className="px-2 py-0.5 bg-white/5 text-[9px] font-medium text-slate-400 rounded">TensorFlow</span>
-                                    <span className="px-2 py-0.5 bg-white/5 text-[9px] font-medium text-slate-400 rounded">IoT Core</span>
+                                    <span className="px-2 py-0.5 bg-white/5 text-[9px] font-medium text-slate-400 rounded">React</span>
+                                    <span className="px-2 py-0.5 bg-white/5 text-[9px] font-medium text-slate-400 rounded">Node.js</span>
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
@@ -144,12 +144,12 @@ const MockupDisplay = ({ id }) => {
                 );
             case 'showcase':
                 return (
-                    <div className="p-8 h-full flex flex-col bg-slate-950 font-sans">
-                        <div className="mb-10 p-6 bg-gradient-to-br from-amber-600/5 to-black border border-amber-600/20 rounded-2xl relative">
-                            <div className="absolute top-4 right-4 text-amber-500 opacity-40">
+                    <div className="p-8 h-full flex flex-col bg-[#080808] font-sans">
+                        <div className="mb-10 p-6 bg-gradient-to-br from-orange-600/10 to-transparent border border-orange-600/20 rounded-2xl relative">
+                            <div className="absolute top-4 right-4 text-orange-500 opacity-40">
                                 <Award size={24} />
                             </div>
-                            <div className="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-4">Identity Verified</div>
+                            <div className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-4">Identity Verified</div>
                             <h4 className="text-xl font-bold text-white tracking-tight mb-2">Tech Credential</h4>
                             <p className="text-slate-500 text-[11px] leading-relaxed max-w-[180px]">
                                 Internationally recognized laboratory certification.
@@ -158,11 +158,11 @@ const MockupDisplay = ({ id }) => {
                         <div className="space-y-3">
                             <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 uppercase tracking-widest border-b border-white/5 pb-2">
                                 <span>Portfolio</span>
-                                <span className="text-amber-500">Verified</span>
+                                <span className="text-orange-500 text-[9px]">Verified</span>
                             </div>
                             {['App Prototypes', 'Production Repos', 'Case Studies'].map((asset, i) => (
                                 <div key={i} className="flex items-center gap-3 text-white text-[13px] font-medium tracking-tight">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500/40" />
+                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500/40" />
                                     {asset}
                                 </div>
                             ))}
@@ -196,13 +196,13 @@ const LearningModel = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="bg-slate-950 py-16 md:py-24 relative overflow-hidden min-h-[900px] md:min-h-[1050px] flex flex-col justify-center">
+        <section className="bg-[#050505] py-16 md:py-24 relative overflow-hidden min-h-[900px] md:min-h-[1050px] flex flex-col justify-center border-t border-white/5">
             {/* Background Decor */}
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-orange-500/[0.02] to-transparent pointer-events-none" />
             
             <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
                 <div className="mb-12 md:mb-16 text-center">
-                    <ScrollDarkenHeading variant="dark" sizeClass="text-4xl md:text-6xl">
+                    <ScrollDarkenHeading variant="dark" sizeClass="text-3xl md:text-5xl lg:text-6xl">
                         The 4-Stage Model
                     </ScrollDarkenHeading>
                     <motion.p
@@ -210,7 +210,7 @@ const LearningModel = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={isMobile ? { duration: 0 } : { delay: 0.2 }}
-                        className="text-slate-500 font-bold text-lg mt-4 mx-auto max-w-xl"
+                        className="text-slate-500 font-bold text-base md:text-lg mt-4 mx-auto max-w-xl"
                     >
                         Schools teach outdated theory. thinkskool teaches the future through a high-intensity industrial model.
                     </motion.p>
@@ -228,7 +228,7 @@ const LearningModel = () => {
                                         height: `${(STAGES.findIndex(s => s.id === activeStage.id) / (STAGES.length - 1)) * 100}%` 
                                     }}
                                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                    className="w-full bg-slate-400 absolute top-0 left-0"
+                                    className="w-full bg-orange-500/40 absolute top-0 left-0"
                                 />
                                 
                                 {/* Animated Motor Slider & Styled Pointer */}
@@ -299,7 +299,7 @@ const LearningModel = () => {
                                                             <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center pb-2">
                                                                 {stage.metrics.map((m, i) => (
                                                                     <div key={i} className="flex items-center gap-2.5">
-                                                                        <div className="w-1 h-1 rounded-full bg-slate-500" />
+                                                                         <div className="w-1 h-1 rounded-full bg-orange-500" />
                                                                         <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{m}</span>
                                                                     </div>
                                                                 ))}
@@ -325,9 +325,9 @@ const LearningModel = () => {
                             className="relative group"
                         >
                             {/* Glow behind the mockup */}
-                            <div className="absolute -inset-4 bg-white/5 blur-3xl rounded-[3rem] opacity-30 group-hover:opacity-60 transition-opacity duration-700" />
+                            <div className="absolute -inset-4 bg-orange-500/5 blur-3xl rounded-[3rem] opacity-30 group-hover:opacity-60 transition-opacity duration-700" />
                             
-                            <div className="relative aspect-[16/10] bg-slate-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
+                            <div className="relative aspect-[16/10] bg-[#050505] border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
                                 <AnimatePresence mode="wait">
                                     <MockupDisplay key={activeStage.id} id={activeStage.id} />
                                 </AnimatePresence>

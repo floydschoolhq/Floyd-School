@@ -7,7 +7,7 @@ import CYBER_IMG from '../assets/images/cybersecurity.png';
 export const FALLBACK_COURSES = [
     {
         _id: '1',
-        title: "AI & Machine Learning",
+        title: "Fundamentals of AI & Machine Learning",
         image: AI_IMG,
         icon: 'Cpu',
         description: "Master neural networks, predictive modeling, and deep learning architectures. Build production-grade AI models that solve real-world problems and push the boundaries of machine intelligence.",

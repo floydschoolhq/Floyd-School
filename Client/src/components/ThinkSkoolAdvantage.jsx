@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
-import { 
-    Zap, 
-    Layout, 
-    Users, 
-    Sparkles, 
-    Target, 
+import {
+    Zap,
+    Layout,
+    Users,
+    Sparkles,
+    Target,
     Hammer,
     ArrowRight,
     X,
@@ -26,7 +26,7 @@ const ADVANTAGES = [
         id: 2,
         title: "Portfolio, not just a certificate",
         description: "By the end you will have built real projects you can show anyone. An AI chatbot, a working app, an IoT device. Things that prove what you can do.",
-        image: "/images/ecosystem/performance.jpg",
+        image: "/images/ecosystem/security.jpg",
         icon: Layout,
         details: ["Production-ready GitHub", "Live project hosting", "Technical case studies"]
     },
@@ -47,7 +47,7 @@ const ADVANTAGES = [
         details: ["Advanced AI & ML", "Cybersecurity protocols", "Hands-on Robotics & IoT"]
     },
 ];
-const AdvantageCard = ({ card, index, baseX, spreadFactor }) => {
+const AdvantageCard = ({ card, index, baseX, spreadFactor, isStatic }) => {
     // Each card's position is a combination of the global group move (baseX)
     // and its individual spreading position based on its index.
     const x = useTransform(
@@ -57,24 +57,24 @@ const AdvantageCard = ({ card, index, baseX, spreadFactor }) => {
 
     return (
         <motion.div
-            style={{ x }}
-            whileHover={{ 
+            style={{ x: isStatic ? 0 : x }}
+            whileHover={!isStatic ? {
                 scale: 1.05,
                 zIndex: 40,
                 y: -10,
                 transition: { duration: 0.3 }
-            }}
-            className="absolute top-0 left-1/2 -translate-x-1/2 group w-[280px] md:w-[340px] h-[550px] bg-slate-900 border border-orange-50/15 overflow-hidden cursor-pointer shadow-[0_0_30px_rgba(255,165,0,0.08)] hover:shadow-[0_0_60px_rgba(255,180,100,0.25)] hover:border-orange-100/40 transition-shadow duration-500"
+            } : {}}
+            className={`advantage-card absolute top-0 left-1/2 -translate-x-1/2 group w-[280px] md:w-[340px] h-[550px] bg-slate-900 border border-orange-50/15 overflow-hidden cursor-pointer shadow-[0_0_30px_rgba(255,165,0,0.08)] hover:shadow-[0_0_60px_rgba(255,180,100,0.25)] hover:border-orange-100/40 transition-shadow duration-500`}
         >
-            <img 
-                src={card.image} 
+            <img
+                src={card.image}
                 alt={card.title}
                 className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-90 group-hover:opacity-100"
             />
-            
-            {/* Base Gradient Overlay - Less intense by default to show image detail */}
+
+            {/* Base Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-40 group-hover:opacity-0 transition-opacity duration-500" />
-            
+
             {/* Subtle HUD Glow Border */}
             <div className="absolute inset-0 border-[0.5px] border-white/5 transition-colors pointer-events-none group-hover:border-orange-200/30" />
 
@@ -100,18 +100,28 @@ const AdvantageCard = ({ card, index, baseX, spreadFactor }) => {
 
 const ThinkskoolAdvantage = () => {
     const sectionRef = useRef(null);
+    const [isLandscape, setIsLandscape] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkLandscape = () => {
+            setIsLandscape(window.innerHeight < 500 && window.innerWidth > window.innerHeight);
+        };
+        checkLandscape();
+        window.addEventListener('resize', checkLandscape);
+        return () => window.removeEventListener('resize', checkLandscape);
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "center center"]
     });
 
-    // 1. Group Base Move (Right to Center)
+    // 1. Group Base Move
     const rawBaseX = useTransform(scrollYProgress, [0, 1], [800, 0]);
     const baseX = useSpring(rawBaseX, { stiffness: 40, damping: 15 });
 
-    // 2. Card Spreading (Tight to Fanned out)
-    // 360 is roughly the card width + gap
-    const rawSpread = useTransform(scrollYProgress, [0, 1], [40, 360]); 
+    // 2. Card Spreading
+    const rawSpread = useTransform(scrollYProgress, [0, 1], [40, 360]);
     const spreadFactor = useSpring(rawSpread, { stiffness: 40, damping: 15 });
 
     return (
@@ -122,29 +132,32 @@ const ThinkskoolAdvantage = () => {
             </div>
 
             <div className="w-full relative z-10">
-                {/* Single Row Headline */}
+                {/* Heading with Scroll Darken Effect */}
                 <div className="max-w-7xl mx-auto px-6 mb-24 flex flex-col items-center text-center">
-                    <motion.h2 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl md:text-6xl lg:text-8xl font-black text-slate-400 tracking-tighter leading-none uppercase whitespace-nowrap flex items-baseline gap-2 md:gap-4"
+                    <ScrollDarkenHeading
+                        sizeClass="text-3xl md:text-5xl lg:text-7xl"
+                        className="whitespace-nowrap flex items-baseline gap-2 md:gap-4 justify-center"
+                        variant="light"
+                        uppercase={false}
                     >
-                        <span><span className="text-black text-[1.2em]">t</span>he</span>
-                        <span><span className="text-black text-[1.2em]">t</span>hinkskool</span>
-                        <span><span className="text-black text-[1.2em]">a</span>dvantage</span>
-                    </motion.h2>
+                        THE
+                        <span className="flex items-center font-black tracking-tight mt-2">
+                            <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
+                        </span>
+                        ADVANTAGE
+                    </ScrollDarkenHeading>
                 </div>
 
-                {/* Animated Cards Container - Absolute layout for precise spreading */}
-                <div className="relative h-[650px] w-full max-w-[1400px] mx-auto overflow-visible">
+                {/* Animated/Static Cards Container */}
+                <div className={`advantage-card-container relative h-[650px] w-full max-w-[1400px] mx-auto ${isLandscape ? 'flex flex-row overflow-x-auto gap-4 px-4 h-auto' : 'overflow-visible'}`}>
                     {ADVANTAGES.map((card, index) => (
-                        <AdvantageCard 
-                            key={card.id} 
-                            card={card} 
-                            index={index} 
+                        <AdvantageCard
+                            key={card.id}
+                            card={card}
+                            index={index}
                             baseX={baseX}
                             spreadFactor={spreadFactor}
+                            isStatic={isLandscape}
                         />
                     ))}
                 </div>

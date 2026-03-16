@@ -40,7 +40,7 @@ const WaveText = ({ text, className = '' }) => {
                             custom={i}
                             className={`${colorClass} inline-block leading-none`}
                             style={{ 
-                                fontSize: 'clamp(3rem, 15vw, 15rem)', // Large responsive scale
+                                fontSize: 'clamp(2.5rem, 12vw, 10rem)', // More balanced responsive scale
                             }}
                         >
                             {char}

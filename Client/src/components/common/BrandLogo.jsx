@@ -11,7 +11,7 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false,
     };
 
     const themeStyles = {
-        dark: { think: 'text-white', skool: 'text-slate-500' },
+        dark: { think: 'text-[#2563EB]', skool: 'text-[#F97316]' },
         light: { think: 'text-slate-900', skool: 'text-slate-500' },
         brand: { think: 'text-[#2563EB]', skool: 'text-[#F97316]' },
         auto: { think: 'text-current', skool: 'text-slate-500' }

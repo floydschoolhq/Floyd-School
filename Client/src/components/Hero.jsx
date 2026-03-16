@@ -38,12 +38,12 @@ const Hero = () => {
     };
 
     return (
-        <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-white">
-            {/* Background Accents - Premium Pinkish Glow */}
+        <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-[#FDFCFB]">
+            {/* Background Accents - Premium Orange-White Glow */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-rose-500/[0.04] rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-500/[0.03] rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-100/[0.15] rounded-full blur-[140px]" />
+                <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-orange-500/[0.06] rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-amber-200/[0.05] rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-100/[0.1] rounded-full blur-[140px]" />
             </div>
 
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 w-full flex flex-col items-center mt-4">
@@ -81,7 +81,7 @@ const Hero = () => {
                         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={isMobile ? { duration: 0 } : { delay: 0.8 }}
-                        className="max-w-4xl w-full px-6 md:px-12 py-4 md:py-5 bg-slate-50/40 backdrop-blur-xl rounded-[2rem] border border-slate-200/60 relative group mt-4"
+                        className="max-w-7xl w-full px-6 md:px-12 py-4 md:py-5 bg-slate-50/40 backdrop-blur-xl rounded-[2rem] border border-slate-200/60 relative group mt-4"
                     >
                         {/* HUD Elements */}
                         <div className="absolute top-4 left-6 flex gap-1.5 opacity-30">
@@ -93,10 +93,10 @@ const Hero = () => {
                         <p className="text-slate-600 font-medium leading-[1.8] text-[16px] md:text-[20px] tracking-tight text-center relative z-10 px-2 sm:px-0">
                             Most schools still teach the same syllabus they did 20 years ago. 
                             <span className="mx-2 text-slate-300">|</span>
-                            <span className="font-black text-slate-900 inline-flex items-center">
+                            <span className="inline-flex items-center font-black">
                                 <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
                             </span> fills that gap. 
-                            <span className="block text-slate-500 font-semibold mt-1">
+                            <span className="text-slate-500 font-semibold ml-1">
                                 Students master <span className="text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded-lg">AI</span>, 
                                 <span className="text-slate-900 font-bold px-1">Engineering</span>, and 
                                 <span className="text-slate-900 font-bold px-1">Robotics</span> through live industrial sessions and real-world engineering protocols.

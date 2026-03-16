@@ -59,11 +59,11 @@ const HomePage = () => {
                     <Hero />
                     <ThinkskoolAdvantage />
                     <TechStackStats />
-                    <OnlineCourseFocus />
+                    <OnlineCourseFocus variant="dark" />
                     <MentorGrid />
                     <LearningModel />
                     <InteractiveFeatures isFeaturesExpanded={true} />
-                    <SuccessStories />
+                    <SuccessStories variant="dark" />
                 </div>
 
             </div>

@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Sparkles, ArrowRight } from 'lucide-react';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
-// import NotificationDropdown from './common/NotificationDropdown';
 import MaintenanceBanner from './MaintenanceBanner';
 import api from '../api/axios';
 import BrandLogo from './common/BrandLogo';
-import LearnersMegaMenu from './LearnersMegaMenu';
 
 const FALLBACK_COURSES = [
     { title: "IoT & Robotics", level: "Beginner", link: "/online-program#explore-programs" },
@@ -18,18 +15,16 @@ const FALLBACK_COURSES = [
     { title: "Cybersecurity Ops", level: "Advanced", link: "/online-program#explore-programs" }
 ];
 
-const PremiumNavbar = () => {
+const PremiumNavbar = ({ variant }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
     const [source, setSource] = useState('navbar');
     const navigate = useNavigate();
     const { user } = useContext(PortalContext);
     const [courses, setCourses] = useState([]);
     const location = useLocation();
-    const isDarkPage = location.pathname === '/student/login';
 
     const { scrollY } = useScroll();
 
@@ -43,44 +38,24 @@ const PremiumNavbar = () => {
         setIsScrolled(latest > 20);
     });
 
-    // Fetch and Filter Courses
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                // Try fetching from API
                 const res = await api.get('/courses');
                 let data = Array.isArray(res.data) ? res.data : res.data.data || [];
-
-                // If API returns empty, use fallback to ensure UI works for demo
                 if (data.length === 0) data = FALLBACK_COURSES;
-
                 setCourses(data);
-            } catch (error) {
-                console.warn("Course fetch failed, using fallback navigation data.");
+            } catch {
                 setCourses(FALLBACK_COURSES);
             }
         };
-
         fetchCourses();
     }, []);
-
-
-
-    const handleBookSession = () => {
-        if (!user) {
-            navigate('/student/login');
-        } else {
-            setSource('briefing');
-            setIsModalOpen(true);
-        }
-    };
 
     const handleContactClick = () => {
         setSource('contact');
         setIsModalOpen(true);
     };
-
-
 
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
@@ -88,12 +63,9 @@ const PremiumNavbar = () => {
             element.scrollIntoView({ behavior: 'auto' });
         } else {
             navigate('/');
-            // Extended delay to ensure the Home page components are mounted
             setTimeout(() => {
                 const target = document.getElementById(id);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'auto' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'auto' });
             }, 300);
         }
     };
@@ -102,7 +74,7 @@ const PremiumNavbar = () => {
         { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
         { name: 'Courses', id: 'online-focus' },
         { name: 'Partner with us', link: '/school-partnerships' },
-        { name: 'Request Callback', action: handleContactClick, highlight: true },
+        { name: 'Request Callback', action: handleContactClick },
     ];
 
     return (
@@ -116,38 +88,40 @@ const PremiumNavbar = () => {
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
                 <div
-                    className={`pointer-events-auto transition-all duration-700 ease-[0.23,1,0.32,1] flex items-center justify-center
+                    className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center
                         ${isScrolled
-                            ? `w-full md:w-[90%] lg:w-[85%] rounded-full ${isDarkPage ? 'bg-black/90' : 'bg-white/95'} backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border ${isDarkPage ? 'border-white/20' : 'border-slate-100'} ring-1 ${isDarkPage ? 'ring-white/10' : 'ring-black/[0.01]'} px-6 py-1.5 h-16`
-                            : `w-full rounded-none ${isDarkPage ? 'bg-black/80' : 'bg-white'} backdrop-blur-none px-6 py-4 h-20 border-b ${isDarkPage ? 'border-white/20' : 'border-slate-100'} shadow-none`
+                            ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-black/95 backdrop-blur-2xl border border-white/[0.07] shadow-[0_8px_40px_rgba(0,0,0,0.9)] px-6 py-0 h-14'
+                            : 'w-full rounded-none bg-[#020202]/97 backdrop-blur-xl px-6 py-0 h-[68px] border-b border-white/[0.06]'
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
-                         <div
+
+                        {/* Logo */}
+                        <div
                             className="flex items-center cursor-pointer group"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
-                            <BrandLogo 
-                                size="md" 
-                                theme="brand"
+                            <BrandLogo
+                                size="md"
+                                theme="dark"
                                 shine={true}
-                                showTagline={true}
+                                showTagline={!isScrolled}
                                 scrolled={isScrolled}
-                                className={isDarkPage ? '!text-white' : ''} 
                             />
                         </div>
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-8 lg:gap-12 relative h-full">
-
+                        {/* Desktop Nav */}
+                        <div className="hidden md:flex items-center gap-2 relative h-full">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer flex items-center">
                                     {item.link ? (
                                         <Link
                                             to={item.link}
-                                            className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-800 hover:text-black'} font-bold text-[16px] tracking-tight transition-all py-1.5 px-0.5`}
+                                            className="relative flex flex-col items-start gap-1.5 text-white/60 hover:text-white font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3"
                                         >
-                                            <span>{item.name}</span>
+                                            {item.name}
+                                            {/* Orange underline */}
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                                         </Link>
                                     ) : (
                                         <motion.div
@@ -155,33 +129,34 @@ const PremiumNavbar = () => {
                                                 if (item.action) item.action();
                                                 else if (item.id) scrollToSection(item.id);
                                             }}
-                                            className={`relative flex items-center gap-1.5 ${isDarkPage ? 'text-white/70 hover:text-white' : 'text-slate-800 hover:text-black'} font-bold text-[16px] tracking-tight transition-all py-1.5 px-0.5`}
-                                            whileHover={{ y: -1 }}
-                                            whileTap={{ scale: 0.95 }}
+                                            className="relative flex flex-col items-start text-white/60 hover:text-white font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 cursor-pointer"
+                                            whileTap={{ scale: 0.97 }}
                                         >
-                                            <span>{item.name}</span>
+                                            {item.name}
+                                            {/* Orange underline */}
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                                         </motion.div>
                                     )}
                                 </div>
                             ))}
                         </div>
 
-                        {/* Right Actions */}
+                        {/* Right CTA */}
                         <div className="hidden md:flex items-center">
                             <button
                                 onClick={() => navigate('/student/login')}
-                                className="px-12 py-2.5 bg-[#F97316] text-white font-black text-[17px] rounded-xl hover:bg-[#EA580C] transition-all shadow-md shadow-orange-500/20 flex items-center gap-2"
+                                className="px-10 py-2.5 bg-[#F97316] text-white font-black text-[15px] rounded-xl hover:bg-[#EA580C] transition-all shadow-md shadow-orange-500/20"
                             >
                                 Sign In
                             </button>
                         </div>
 
-                        {/* Mobile Menu Button */}
+                        {/* Mobile menu toggle */}
                         <button
-                            className={`md:hidden p-2 ${isDarkPage ? 'text-white' : 'text-slate-600'} rounded-xl hover:bg-white/20 transition-colors backdrop-blur-md`}
+                            className="md:hidden p-2 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
-                            {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+                            {isMobileMenuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
                         </button>
                     </div>
                 </div>
@@ -197,43 +172,36 @@ const PremiumNavbar = () => {
                         exit={{ opacity: 0 }}
                     >
                         <div
-                            className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         <motion.div
-                            className={`absolute top-20 left-0 right-0 ${isDarkPage ? 'bg-black/98 border-white/10' : 'bg-white/95 border-slate-100'} backdrop-blur-md border-b shadow-2xl ${isDarkPage ? 'shadow-black' : 'shadow-blue-500/10'}`}
-                            initial={{ y: -20, opacity: 0 }}
+                            className="absolute top-[68px] left-0 right-0 bg-black/99 backdrop-blur-2xl border-b border-white/[0.06] shadow-2xl shadow-black"
+                            initial={{ y: -16, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -20, opacity: 0 }}
+                            exit={{ y: -16, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeOut' }}
                         >
-                            <div className="p-4 flex flex-col gap-2">
+                            <div className="p-4 flex flex-col gap-1">
                                 {navItems.map((item) => (
                                     <button
                                         key={item.name}
                                         onClick={() => {
-                                            if (item.action) {
-                                                item.action();
-                                                setIsMobileMenuOpen(false);
-                                            } else if (item.link) {
-                                                navigate(item.link);
-                                                setIsMobileMenuOpen(false);
-                                            } else if (item.id) {
-                                                scrollToSection(item.id);
-                                                setIsMobileMenuOpen(false);
-                                            }
+                                            if (item.action) { item.action(); setIsMobileMenuOpen(false); }
+                                            else if (item.link) { navigate(item.link); setIsMobileMenuOpen(false); }
+                                            else if (item.id) { scrollToSection(item.id); setIsMobileMenuOpen(false); }
                                         }}
-                                        className={`w-full text-left px-4 py-3 text-[14px] font-bold tracking-tight ${isDarkPage ? 'text-white/80 hover:bg-white/10' : 'text-slate-700 hover:bg-slate-50'} rounded-lg transition-colors flex justify-between items-center`}
+                                        className="w-full text-left px-4 py-3 text-[14px] font-semibold tracking-wide text-white/60 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all"
                                     >
                                         {item.name}
                                     </button>
                                 ))}
-                                <div className="h-px bg-slate-100 my-2" />
+
+                                <div className="h-px bg-white/[0.06] my-3" />
+
                                 <button
-                                    onClick={() => {
-                                        navigate('/student/login');
-                                        setIsMobileMenuOpen(false);
-                                    }}
-                                    className="w-full text-center px-4 py-3 text-[13px] font-bold text-white bg-[#F97316] rounded-xl hover:bg-[#EA580C] shadow-lg shadow-orange-500/10"
+                                    onClick={() => { navigate('/student/login'); setIsMobileMenuOpen(false); }}
+                                    className="w-full text-center px-4 py-3 text-[13px] font-black text-white bg-[#F97316] rounded-xl hover:bg-[#EA580C] transition-all shadow-lg shadow-orange-500/10"
                                 >
                                     Sign In
                                 </button>
@@ -243,11 +211,9 @@ const PremiumNavbar = () => {
                 )}
             </AnimatePresence>
 
-
             <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source={source} />
         </>
     );
 };
 
 export default PremiumNavbar;
-

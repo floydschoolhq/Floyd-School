@@ -104,7 +104,7 @@ const StudentEcosystem = () => {
                 {/* Header */}
                 <div className="text-center mb-12">
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
-                        the thinkskool advantage
+                        THE <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span> ADVANTAGE
                     </ScrollDarkenHeading>
                 </div>
 
