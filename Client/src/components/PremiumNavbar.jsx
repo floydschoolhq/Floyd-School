@@ -90,8 +90,8 @@ const PremiumNavbar = ({ variant }) => {
                 <div
                     className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center
                         ${isScrolled
-                            ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-black/95 backdrop-blur-2xl border border-white/[0.07] shadow-[0_8px_40px_rgba(0,0,0,0.9)] px-6 py-0 h-14'
-                            : 'w-full rounded-none bg-[#020202]/97 backdrop-blur-xl px-6 py-0 h-[68px] border-b border-white/[0.06]'
+                            ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-orange-50/95 backdrop-blur-2xl border border-orange-200/50 shadow-[0_8px_40px_rgba(251,146,60,0.3)] px-6 py-0 h-14'
+                            : 'w-full rounded-none bg-gradient-to-r from-orange-50 to-orange-100/97 backdrop-blur-xl px-6 py-0 h-[68px] border-b border-orange-200/50'
                         }`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
@@ -117,11 +117,11 @@ const PremiumNavbar = ({ variant }) => {
                                     {item.link ? (
                                         <Link
                                             to={item.link}
-                                            className="relative flex flex-col items-start gap-1.5 text-white/60 hover:text-white font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3"
+                                            className="relative flex flex-col items-start gap-1.5 text-orange-700/80 hover:text-orange-900 font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3"
                                         >
                                             {item.name}
                                             {/* Orange underline */}
-                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                                         </Link>
                                     ) : (
                                         <motion.div
@@ -129,12 +129,12 @@ const PremiumNavbar = ({ variant }) => {
                                                 if (item.action) item.action();
                                                 else if (item.id) scrollToSection(item.id);
                                             }}
-                                            className="relative flex flex-col items-start text-white/60 hover:text-white font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 cursor-pointer"
+                                            className="relative flex flex-col items-start text-orange-700/80 hover:text-orange-900 font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 cursor-pointer"
                                             whileTap={{ scale: 0.97 }}
                                         >
                                             {item.name}
                                             {/* Orange underline */}
-                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                                         </motion.div>
                                     )}
                                 </div>
@@ -145,7 +145,7 @@ const PremiumNavbar = ({ variant }) => {
                         <div className="hidden md:flex items-center">
                             <button
                                 onClick={() => navigate('/student/login')}
-                                className="px-10 py-2.5 bg-[#F97316] text-white font-black text-[15px] rounded-xl hover:bg-[#EA580C] transition-all shadow-md shadow-orange-500/20"
+                                className="px-10 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-[15px] rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-md shadow-orange-500/25"
                             >
                                 Sign In
                             </button>
@@ -153,7 +153,7 @@ const PremiumNavbar = ({ variant }) => {
 
                         {/* Mobile menu toggle */}
                         <button
-                            className="md:hidden p-2 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-colors"
+                            className="md:hidden p-2 text-orange-700/70 hover:text-orange-900 rounded-xl hover:bg-orange-100/50 transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
@@ -176,7 +176,7 @@ const PremiumNavbar = ({ variant }) => {
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         <motion.div
-                            className="absolute top-[68px] left-0 right-0 bg-black/99 backdrop-blur-2xl border-b border-white/[0.06] shadow-2xl shadow-black"
+                            className="absolute top-[68px] left-0 right-0 bg-gradient-to-r from-orange-50 to-orange-100/99 backdrop-blur-2xl border-b border-orange-200/50 shadow-2xl shadow-orange-200/30"
                             initial={{ y: -16, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -16, opacity: 0 }}
@@ -191,17 +191,17 @@ const PremiumNavbar = ({ variant }) => {
                                             else if (item.link) { navigate(item.link); setIsMobileMenuOpen(false); }
                                             else if (item.id) { scrollToSection(item.id); setIsMobileMenuOpen(false); }
                                         }}
-                                        className="w-full text-left px-4 py-3 text-[14px] font-semibold tracking-wide text-white/60 hover:text-white hover:bg-white/[0.06] rounded-lg transition-all"
+                                        className="w-full text-left px-4 py-3 text-[14px] font-semibold tracking-wide text-orange-700/80 hover:text-orange-900 hover:bg-orange-100/50 rounded-lg transition-all"
                                     >
                                         {item.name}
                                     </button>
                                 ))}
 
-                                <div className="h-px bg-white/[0.06] my-3" />
+                                <div className="h-px bg-orange-200/50 my-3" />
 
                                 <button
                                     onClick={() => { navigate('/student/login'); setIsMobileMenuOpen(false); }}
-                                    className="w-full text-center px-4 py-3 text-[13px] font-black text-white bg-[#F97316] rounded-xl hover:bg-[#EA580C] transition-all shadow-lg shadow-orange-500/10"
+                                    className="w-full text-center px-4 py-3 text-[13px] font-black text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg shadow-orange-500/15"
                                 >
                                     Sign In
                                 </button>
