@@ -182,14 +182,14 @@ const ProjectCard = ({ project, index, isFeatured }) => {
   if (isMobile) {
     return (
       <div
-        className={`relative bg-white rounded-2xl border overflow-hidden transition-all duration-300 ${
+        className={`relative bg-white rounded-lg border overflow-hidden transition-all duration-300 ${
           isFeatured 
-            ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-xl` 
-            : 'border-slate-200/60 shadow-lg'
+            ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-md` 
+            : 'border-slate-200/60 shadow-sm'
         }`}
       >
         {/* Main Card - Mobile Static */}
-        <div className="relative h-48 overflow-hidden bg-slate-100">
+        <div className="relative h-24 overflow-hidden bg-slate-100">
           <img
             src={project.image}
             alt={project.title}
@@ -200,56 +200,56 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
           
           {/* Category Badge */}
-          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800">
+          <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
             {project.category}
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-2.5">
           {/* Title */}
-          <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2">
+          <h3 className="text-xs font-bold text-slate-900 mb-1.5 line-clamp-2">
             {project.title}
           </h3>
 
           {/* Description */}
-          <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="text-slate-600 text-[10px] leading-relaxed mb-2 line-clamp-2">
             {project.description}
           </p>
 
           {/* Tech Stack */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.tech.slice(0, 3).map((tech, i) => (
+          <div className="flex flex-wrap gap-0.5 mb-2">
+            {project.tech.slice(0, 2).map((tech, i) => (
               <TechIcon key={i} tech={tech} index={i} />
             ))}
-            {project.tech.length > 3 && (
-              <span className="text-xs text-slate-500">+{project.tech.length - 3} more</span>
+            {project.tech.length > 2 && (
+              <span className="text-[6px] text-slate-500">+{project.tech.length - 2}</span>
             )}
           </div>
 
           {/* Author Info */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
               <img
                 src={project.author.avatar}
                 alt={project.author.name}
-                className="w-8 h-8 rounded-full border-2 border-white shadow-sm"
+                className="w-4 h-4 rounded-full border border-white shadow-sm"
               />
               <div>
-                <p className="text-sm font-semibold text-slate-800">{project.author.name}</p>
-                <p className="text-xs text-slate-500">{project.author.course}</p>
+                <p className="text-[9px] font-semibold text-slate-800">{project.author.name}</p>
+                <p className="text-[6px] text-slate-500">{project.author.course}</p>
               </div>
             </div>
 
             {/* Stats */}
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="flex items-center gap-1">
-                <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-medium">{project.stats.stars}</span>
+            <div className="flex items-center gap-1.5 text-slate-500">
+              <div className="flex items-center gap-0.5">
+                <Star size={8} className="text-yellow-500 fill-yellow-500" />
+                <span className="text-[6px] font-medium">{project.stats.stars}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Eye size={14} />
-                <span className="text-xs font-medium">{project.stats.views}</span>
+              <div className="flex items-center gap-0.5">
+                <Eye size={8} />
+                <span className="text-[6px] font-medium">{project.stats.views}</span>
               </div>
             </div>
           </div>
@@ -474,33 +474,33 @@ const StudentProjects = () => {
 
   if (isMobile) {
     return (
-      <section className="py-16 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
+      <section className="py-8 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
         {/* Simplified Background for Mobile */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 right-10 w-24 h-24 bg-orange-500/3 rounded-full blur-2xl" />
-          <div className="absolute bottom-20 left-10 w-20 h-20 bg-blue-500/2 rounded-full blur-2xl" />
+          <div className="absolute top-10 right-5 w-12 h-12 bg-orange-500/3 rounded-full blur-xl" />
+          <div className="absolute bottom-10 left-5 w-10 h-10 bg-blue-500/2 rounded-full blur-xl" />
         </div>
 
-        <div className="max-w-95% mx-auto px-4 relative z-10">
+        <div className="max-w-95% mx-auto px-2 relative z-10">
           {/* Header - Mobile */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black text-slate-900 mb-4 leading-tight">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-black text-slate-900 mb-2 leading-tight">
               Student Projects
             </h2>
-            <p className="text-slate-600 text-base leading-relaxed px-2">
-              Real projects built by our students applying industry skills learned in our courses.
+            <p className="text-slate-600 text-sm leading-relaxed px-1">
+              Real projects built by our students.
             </p>
           </div>
 
           {/* Filter Tabs - Mobile */}
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex justify-center gap-2 mb-4">
             {['all', 'featured'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setFilter(tab)}
-                className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
+                className={`px-2 py-1 rounded-md font-bold text-xs transition-all duration-300 ${
                   filter === tab
-                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
                     : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                 }`}
               >
@@ -509,29 +509,47 @@ const StudentProjects = () => {
             ))}
           </div>
 
-          {/* Projects Grid - Mobile */}
-          <div className="space-y-6 mb-12">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
-                isFeatured={project.featured}
-              />
-            ))}
+          {/* Projects Grid - Mobile Horizontal Scrolling */}
+          <div className="mb-8">
+            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
+              {filteredProjects.map((project, index) => (
+                <div 
+                  key={project.id} 
+                  className="flex-shrink-0 w-72" 
+                  style={{ scrollSnapAlign: 'start' }}
+                >
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    isFeatured={project.featured}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* CTA Section - Mobile */}
           <div className="text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-xl shadow-lg w-full max-w-[300px]">
-              <Rocket size={18} />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-lg shadow-md w-full max-w-[200px]">
+              <Rocket size={12} />
               Start Building
             </div>
-            <p className="text-slate-600 text-sm mt-3 px-4">
-              Join our courses and turn your ideas into reality
+            <p className="text-slate-600 text-xs mt-2 px-2">
+              Join our courses and turn ideas into reality
             </p>
           </div>
         </div>
+
+        {/* Custom scrollbar styles */}
+        <style jsx>{`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
       </section>
     );
   }

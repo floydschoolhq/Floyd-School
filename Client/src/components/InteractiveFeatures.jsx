@@ -357,51 +357,70 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   
   if (isMobile) {
     return (
-      <section id="how-it-works" className="py-16 bg-[#050505] text-white relative overflow-hidden">
-        <div className="max-w-95% mx-auto px-4 relative z-10">
+      <section id="how-it-works" className="py-8 bg-[#050505] text-white relative overflow-hidden">
+        <div className="max-w-95% mx-auto px-2 relative z-10">
           <div className="flex flex-col">
             {/* Header - Mobile */}
-            <div className="text-center mb-12">
-              <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-white/50 mb-4 font-sans">Experience the future</h2>
-              <h3 className="text-2xl font-black text-white leading-tight">
+            <div className="text-center mb-6">
+              <h2 className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-sans">Experience the future</h2>
+              <h3 className="text-lg font-black text-white leading-tight">
                 Interactive Learning & Support
               </h3>
             </div>
 
-            {/* Features Grid - Mobile */}
-            <div className="space-y-6">
+            {/* Features Grid - Mobile Horizontal Scrolling */}
+            <div className="mb-8">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
                 {allFeatures.map((feature, index) => (
-                    <div key={index} className="p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90">
-                        {/* Icon */}
-                        <div className="mb-4">
-                            <div className="w-12 h-12 rounded-xl flex items-center justify-center border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80">
-                                {React.cloneElement(feature.icon, { size: 20, strokeWidth: 2 })}
-                            </div>
+                  <div 
+                    key={index} 
+                    className="flex-shrink-0 w-64" 
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    <div className="p-2.5 rounded-lg border border-white/10 bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 h-full">
+                      {/* Icon */}
+                      <div className="mb-1.5">
+                        <div className="w-6 h-6 rounded-md flex items-center justify-center border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80">
+                          {React.cloneElement(feature.icon, { size: 12, strokeWidth: 2 })}
                         </div>
-                        
-                        {/* Content */}
-                        <h4 className="text-lg font-bold text-white mb-2">
-                            {feature.title}
-                        </h4>
-                        
-                        <p className="text-white/70 text-sm leading-relaxed mb-4">
-                            {feature.description}
-                        </p>
+                      </div>
+                      
+                      {/* Content */}
+                      <h4 className="text-xs font-bold text-white mb-1">
+                        {feature.title}
+                      </h4>
+                      
+                      <p className="text-white/60 text-[10px] leading-relaxed mb-1.5">
+                        {feature.description}
+                      </p>
 
-                        {/* Footer */}
-                        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <Sparkles size={12} className="text-orange-400" />
-                                <span className="text-xs font-bold text-white/60 uppercase">
-                                    {feature.detail}
-                                </span>
-                            </div>
+                      {/* Footer */}
+                      <div className="pt-1.5 border-t border-white/5 flex items-center justify-between">
+                        <div className="flex items-center gap-0.5">
+                          <Sparkles size={6} className="text-orange-400" />
+                          <span className="text-[6px] font-bold text-white/60 uppercase">
+                            {feature.detail}
+                          </span>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 ))}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Custom scrollbar styles */}
+        <style jsx>{`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
       </section>
     );
   }

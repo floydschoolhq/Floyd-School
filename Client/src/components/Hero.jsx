@@ -14,18 +14,18 @@ import useIsMobile from '../hooks/useIsMobile';
 const ScrollingAvatars = ({ isMobile }) => {
     if (isMobile) {
         return (
-            <div className="flex flex-col items-center gap-3">
-                <div className="flex -space-x-2 justify-center">
+            <div className="flex flex-col items-center gap-2">
+                <div className="flex -space-x-1 justify-center">
                     {[1, 2, 3].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full border-[2px] border-white bg-slate-200 overflow-hidden shadow-sm">
+                        <div key={i} className="w-5 h-5 rounded-full border-[1.5px] border-white bg-slate-200 overflow-hidden shadow-sm">
                             <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${['Felix', 'Lily', 'Leo'][i-1]}`} alt="student" className="w-full h-full object-cover" />
                         </div>
                     ))}
-                    <div className="w-8 h-8 rounded-full border-[2px] border-white bg-orange-500 flex items-center justify-center shadow-sm">
-                        <span className="text-white text-xs font-bold">+2</span>
+                    <div className="w-5 h-5 rounded-full border-[1.5px] border-white bg-orange-500 flex items-center justify-center shadow-sm">
+                        <span className="text-white text-[8px] font-bold">+2</span>
                     </div>
                 </div>
-                <div className="text-[12px] font-semibold text-slate-600 text-center">
+                <div className="text-[10px] font-semibold text-slate-600 text-center">
                     Trusted by <span className="text-[#F97316]">1000+</span> Students
                 </div>
             </div>
@@ -59,25 +59,25 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-[#FDFCFB]">
+            <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-12 overflow-hidden bg-[#FDFCFB]">
                 {/* Simplified Background for Mobile */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] right-[-5%] w-[300px] h-[300px] bg-orange-500/[0.04] rounded-full blur-[80px]" />
-                    <div className="absolute bottom-[-10%] left-[-5%] w-[250px] h-[250px] bg-amber-200/[0.03] rounded-full blur-[60px]" />
+                    <div className="absolute top-[-10%] right-[-5%] w-[150px] h-[150px] bg-orange-500/[0.04] rounded-full blur-[40px]" />
+                    <div className="absolute bottom-[-10%] left-[-5%] w-[120px] h-[120px] bg-amber-200/[0.03] rounded-full blur-[30px]" />
                 </div>
 
-                <div className="max-w-[95%] mx-auto px-4 relative z-10 w-full flex flex-col items-center">
-                    <div className="flex flex-col items-center justify-center text-center space-y-4 w-full">
+                <div className="max-w-[90%] mx-auto px-3 relative z-10 w-full flex flex-col items-center">
+                    <div className="flex flex-col items-center justify-center text-center space-y-3 w-full">
                         {/* Top Text - Mobile Optimized */}
-                        <h2 className="text-base font-medium text-slate-600 leading-tight px-2">
+                        <h2 className="text-xs font-medium text-slate-600 leading-tight px-1">
                             Tomorrow's careers will demand <span className="text-blue-600 font-black">NEW SKILLS.</span>
                         </h2>
 
                         {/* Headline Group - Mobile Optimized */}
                         <div className="w-full flex flex-col items-center relative">
-                            <h1 className="text-[28px] font-black leading-[0.9] w-full uppercase select-none relative z-10 text-[#0F172A] mb-2">
-                                <div className="flex flex-col items-center gap-y-1">
-                                    <div className="flex flex-wrap justify-center items-baseline gap-x-1">
+                            <h1 className="text-[18px] font-black leading-[0.9] w-full uppercase select-none relative z-10 text-[#0F172A] mb-1">
+                                <div className="flex flex-col items-center gap-y-0.5">
+                                    <div className="flex flex-wrap justify-center items-baseline gap-x-0.5">
                                         <span>MAKE</span>
                                         <span>SURE</span>
                                     </div>
@@ -87,45 +87,45 @@ const Hero = () => {
                                     </span>
                                     <span>CHILD</span>
                                 </div>
-                                <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight mt-1">
+                                <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight mt-0.5">
                                     IS READY
                                 </div>
                             </h1>
                         </div>
 
                         {/* Paragraph Area - Mobile Optimized */}
-                        <div className="w-full px-4 py-3 bg-slate-50/80 backdrop-blur-xl rounded-[1rem] border border-slate-200/60 relative mt-4">
+                        <div className="w-full px-3 py-2 bg-slate-50/80 backdrop-blur-xl rounded-[0.5rem] border border-slate-200/60 relative mt-2">
                             {/* Simplified HUD Elements */}
-                            <div className="absolute top-2 left-3 flex gap-1 opacity-30">
-                                <div className="w-1 h-1 rounded-full bg-slate-400" />
-                                <div className="w-1 h-1 rounded-full bg-slate-400" />
-                                <div className="w-1 h-1 rounded-full bg-slate-400" />
+                            <div className="absolute top-1 left-2 flex gap-0.5 opacity-30">
+                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
+                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
+                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
                             </div>
 
-                            <p className="text-slate-600 font-medium leading-[1.6] text-[14px] tracking-tight text-center relative z-10 px-1">
+                            <p className="text-slate-600 font-medium leading-[1.4] text-[10px] tracking-tight text-center relative z-10 px-1">
                                 Most schools still teach the same syllabus they did 20 years ago. 
-                                <span className="mx-1 text-slate-300">|</span>
+                                <span className="mx-0.5 text-slate-300">|</span>
                                 <span className="inline-flex items-center font-black">
                                     <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
                                 </span> fills that gap. 
-                                <span className="text-slate-500 font-semibold ml-1 block mt-1">
-                                    Students master <span className="text-slate-900 font-bold bg-slate-100 px-2 py-0.5 rounded text-sm">AI</span>, 
+                                <span className="text-slate-500 font-semibold ml-0.5 block mt-0.5">
+                                    Students master <span className="text-slate-900 font-bold bg-slate-100 px-1 py-0.25 rounded text-[8px]">AI</span>, 
                                     <span className="text-slate-900 font-bold">Engineering</span>, and 
                                     <span className="text-slate-900 font-bold">Robotics</span> through live industrial sessions.
                                 </span>
                             </p>
 
                             {/* Bottom Accent Line */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rounded-full" />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rounded-full" />
                         </div>
 
                         {/* Social Proof Group - Mobile Optimized */}
-                        <div className="space-y-4 flex flex-col items-center w-full">
+                        <div className="space-y-3 flex flex-col items-center w-full">
                             <ScrollingAvatars isMobile={true} />
                             
                             <button
                                 onClick={handleEnrollNow}
-                                className="px-8 py-3 bg-[#E84E1B] text-white font-black text-lg rounded-xl shadow-lg flex items-center justify-center gap-2 min-w-[200px] w-full max-w-[280px]"
+                                className="px-4 py-2 bg-[#E84E1B] text-white font-black text-sm rounded-lg shadow-lg flex items-center justify-center gap-1 min-w-[120px] w-full max-w-[180px]"
                             >
                                 Enroll now →
                             </button>
