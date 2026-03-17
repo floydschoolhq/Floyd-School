@@ -164,7 +164,7 @@ const Hero = () => {
                                 <span>MAKE</span>
                                 <span>SURE</span>
                                 <span className="flex items-baseline">
-                                    <span className="text-[#2563EB] text-[1.15em] leading-none">Y</span>
+                                    <span className="text-black">Y</span>
                                     <span className="tracking-tighter">OUR</span>
                                 </span>
                                 <span>CHILD</span>
@@ -175,34 +175,7 @@ const Hero = () => {
                         </h1>
                     </div>
 
-                    {/* Paragraph Area - Industrial Tech Container */}
-                    <motion.div
-                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={isMobile ? { duration: 0 } : { delay: 0.8 }}
-                        className="max-w-7xl w-full px-6 md:px-12 py-4 md:py-5 bg-slate-50/40 backdrop-blur-xl rounded-[2rem] border border-slate-200/60 relative group mt-4"
-                    >
-                        {/* HUD Elements */}
-                        <div className="absolute top-4 left-6 flex gap-1.5 opacity-30">
-                            <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                        </div>
-
-                        <p className="text-slate-600 font-medium leading-[1.8] text-[16px] md:text-[20px] tracking-tight text-center relative z-10 px-2 sm:px-0">
-                            Most schools still teach the same syllabus they did 20 years ago. 
-                            <span className="mx-2 text-slate-300">|</span>
-                            <span className="inline-flex items-center font-black">
-                                <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
-                            </span> fills that gap. 
-                            <span className="text-slate-500 font-semibold ml-1">
-                                Students master <span className="text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded-lg">AI</span>, 
-                                <span className="text-slate-900 font-bold px-1">Engineering</span>, and 
-                                <span className="text-slate-900 font-bold px-1">Robotics</span> through live industrial sessions and real-world engineering protocols.
-                            </span>
-                        </p>
-                    </motion.div>
-
+                    
                     {/* Social Proof Group */}
                     <motion.div
                         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

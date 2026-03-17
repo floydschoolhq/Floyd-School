@@ -147,8 +147,7 @@ const ThinkskoolAdvantage = () => {
                 <div className="max-w-7xl mx-auto px-4 relative z-10">
                     {/* Simple Mobile Header */}
                     <div className="text-center mt-16 mb-8 sm:mt-20 md:mt-16">
-                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Thinkskool Advantage</h2>
-                        <p className="text-sm text-slate-600">Why choose us for your learning journey</p>
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Schools teach concepts.<br />We teach students to build real things.</h2>
                     </div>
 
                     {/* Mobile Cards Grid with Horizontal Scrolling */}
@@ -249,15 +248,14 @@ const ThinkskoolAdvantage = () => {
                 <div className="max-w-7xl mx-auto px-6 mt-16 mb-24 flex flex-col items-center text-center sm:mt-20 md:mt-16">
                     <ScrollDarkenHeading
                         sizeClass="text-3xl md:text-5xl lg:text-7xl"
-                        className="whitespace-nowrap flex items-baseline gap-2 md:gap-4 justify-center"
+                        className="flex flex-col items-center text-center gap-2 md:gap-4 justify-center"
                         variant="light"
                         uppercase={false}
                     >
-                        THE
-                        <span className="flex items-center font-black tracking-tight mt-2">
-                            <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
+                        Schools teach concepts.
+                        <span className="font-black tracking-tight text-[#F97316]">
+                            We teach students to build real things.
                         </span>
-                        ADVANTAGE
                     </ScrollDarkenHeading>
                 </div>
 

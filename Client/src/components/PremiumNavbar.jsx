@@ -42,14 +42,14 @@ const PremiumNavbar = memo(({ variant }) => {
     const styles = {
         navbar: isCoursesPage 
             ? isScrolled 
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-[#050505]/60 backdrop-blur-3xl border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.3)] px-6 py-0 h-14'
-                : 'w-full rounded-none bg-gradient-to-r from-[#050505]/60 to-[#0a0a0a]/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-white/20'
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/60 backdrop-blur-3xl border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.3)] px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-slate-900/60 to-slate-800/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-white/20'
             : isScrolled
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-orange-50/60 backdrop-blur-3xl border border-orange-200/60 shadow-[0_8px_40px_rgba(251,146,60,0.2)] px-6 py-0 h-14'
-                : 'w-full rounded-none bg-gradient-to-r from-orange-50/60 to-orange-100/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-orange-200/60',
-        navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-orange-700/80 hover:text-orange-900',
-        underline: isCoursesPage ? 'bg-white' : 'bg-orange-500',
-        mobileMenu: isCoursesPage ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-orange-700/70 hover:text-orange-900 hover:bg-orange-100/50'
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/60 backdrop-blur-3xl border border-pink-200/60 shadow-[0_8px_40px_rgba(251,146,60,0.2)] px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-pink-50/60 to-pink-100/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-pink-200/60',
+        navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black',
+        underline: isCoursesPage ? 'bg-white' : 'bg-black',
+        mobileMenu: isCoursesPage ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-black/70 hover:text-black hover:bg-black/5'
     };
 
     // Optimized scroll handler with throttling and direction detection
@@ -172,7 +172,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         <div className="hidden md:flex items-center">
                             <button
                                 onClick={() => navigate('/student/login')}
-                                className="px-10 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-[15px] rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-md shadow-orange-500/25"
+                                className="px-10 py-2.5 bg-blue-500 text-white font-black text-[15px] rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 border border-white/10"
                             >
                                 Sign In
                             </button>
@@ -207,7 +207,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         {/* Modern Mobile Menu Panel */}
                         <motion.div
                             className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl
-                                ${isCoursesPage ? 'bg-[#050505]' : 'bg-white'}`}
+                                ${isCoursesPage ? 'bg-slate-900' : 'bg-white'}`}
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
@@ -215,7 +215,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         >
                             {/* Menu Header */}
                             <div className={`p-6 text-white
-                                ${isCoursesPage ? 'bg-gradient-to-r from-[#1a1a1a] to-[#0a0a0a]' : 'bg-gradient-to-r from-orange-500 to-orange-600'}`}>
+                                ${isCoursesPage ? 'bg-gradient-to-r from-[#1a1a1a] to-[#0a0a0a]' : 'bg-gradient-to-r from-blue-900 via-black to-blue-800'}`}>
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-lg font-bold">Menu</h3>
                                     <button
@@ -249,22 +249,22 @@ const PremiumNavbar = memo(({ variant }) => {
                                                     }
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                                className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-orange-50 rounded-xl transition-all group"
-                                            >
-                                                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                                                    <Icon className="text-orange-600" size={18} />
-                                                </div>
-                                                <div className="flex-1 text-left">
-                                                    <div className="font-semibold text-slate-900">{item.label}</div>
-                                                </div>
-                                                <div className="text-slate-400">
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                        <path d="M9 18l6-6-6-6" />
-                                                    </svg>
-                                                </div>
-                                            </motion.button>
-                                        );
-                                    })}
+                                            className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-blue-50 rounded-xl transition-all group"
+                                        >
+                                            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                                                <Icon className="text-blue-600" size={18} />
+                                            </div>
+                                            <div className="flex-1 text-left">
+                                                <div className="font-semibold text-slate-900">{item.label}</div>
+                                            </div>
+                                            <div className="text-slate-400">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M9 18l6-6-6-6" />
+                                                </svg>
+                                            </div>
+                                        </motion.button>
+                                    );
+                                })}
                                 </div>
                                 
                                 {/* CTA Section */}
@@ -274,7 +274,7 @@ const PremiumNavbar = memo(({ variant }) => {
                                             navigate('/student/login');
                                             setIsMobileMenuOpen(false);
                                         }}
-                                        className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg"
+                                        className="w-full py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 border border-white/10"
                                     >
                                         Sign In
                                     </button>

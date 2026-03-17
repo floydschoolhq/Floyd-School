@@ -32,12 +32,13 @@ const OnlineCourseFocus = ({ variant }) => {
     };
 
     return (
-        <section id="online-focus" className={`relative pt-24 pb-32 sm:pt-40 sm:pb-48 md:pt-24 md:pb-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#050505]' : 'bg-slate-50}'}`}>
-            {/* Ambient Background Glows */}
-            <div className={`absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700
-                ${isDark ? 'bg-orange-500/[0.03]' : 'bg-blue-500/[0.02]'}`} />
-            <div className={`absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none transition-colors duration-700
-                ${isDark ? 'bg-amber-500/[0.02]' : 'bg-slate-200'}`} />
+        <section id="online-focus" className={`relative pt-24 pb-32 sm:pt-40 sm:pb-48 md:pt-24 md:pb-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50}'}`}>
+            {/* Background mesh - matching CourseReviews */}
+            <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors duration-700
+                ${isDark ? 'bg-blue-600/5' : 'bg-blue-50'}`} />
+            <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors duration-700
+                ${isDark ? 'bg-amber-600/5' : 'bg-slate-200'}`} />
 
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}
@@ -103,7 +104,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                         className={`relative pt-2 pb-0 rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
                                             ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
                                             ${isDark
-                                                ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-orange-500/30'
+                                                ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-blue-500/30'
                                                 : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}
                                             ${isMobile ? 'flex-shrink-0 w-72' : ''}`}
                                         style={isMobile ? { scrollSnapAlign: 'start' } : {}}
@@ -112,7 +113,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                         {/* Premium Glowing Outline - Visible only on hover for live courses */}
                                         {!isComingSoon && (
                                             <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                                                ${isDark ? 'bg-gradient-to-br from-orange-500/20 to-transparent' : 'bg-gradient-to-br from-blue-500/5 to-transparent'}`} />
+                                                ${isDark ? 'bg-gradient-to-br from-blue-500/20 to-transparent' : 'bg-gradient-to-br from-blue-500/5 to-transparent'}`} />
                                         )}
 
                                         {/* Mac Dots Header */}
@@ -179,7 +180,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                             <span>{isComingSoon ? 'Coming Soon' : 'Explore Program'}</span>
                                             {!isComingSoon && (
                                                 <div className={`flex items-center justify-center w-8 h-8 rounded-full transition-all
-                                                    ${isDark ? 'bg-white/5 group-hover:bg-orange-500 group-hover:text-white' : 'bg-slate-50 group-hover:bg-blue-600 group-hover:text-white'}`}>
+                                                    ${isDark ? 'bg-white/5 group-hover:bg-blue-500 group-hover:text-white' : 'bg-slate-50 group-hover:bg-blue-600 group-hover:text-white'}`}>
                                                     <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                                                 </div>
                                             )}
@@ -189,7 +190,7 @@ const OnlineCourseFocus = ({ variant }) => {
                             })
                         ) : (
                             <div className="col-span-full py-16 bg-black border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center text-center">
-                                <Rocket size={40} className="text-orange-500/20 mb-4" />
+                                <Rocket size={40} className="text-blue-500/20 mb-4" />
                                 <h4 className="text-lg font-bold text-slate-500 uppercase tracking-tighter">New Batches Launching Soon</h4>
                                 <p className="text-[10px] font-normal text-slate-600 uppercase tracking-[0.2em] mt-2">Preparing the next generation of engineers.</p>
                             </div>

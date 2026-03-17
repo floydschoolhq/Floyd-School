@@ -1,5 +1,5 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
-import AI_IMG from '../assets/images/ai and ml.png';
+import AI_IMG from '../../../WhatsApp Image 2026-03-17 at 3.11.57 PM.jpeg';
 import IOT_IMG from '../assets/images/robotics.png';
 import WEB_IMG from '../assets/images/full stack web development.png';
 import CYBER_IMG from '../assets/images/cybersecurity.png';
@@ -7,7 +7,7 @@ import CYBER_IMG from '../assets/images/cybersecurity.png';
 export const FALLBACK_COURSES = [
     {
         _id: '1',
-        title: "Fundamentals of AI & Machine Learning",
+        title: "Foundation of AI and Machine Learning",
         image: AI_IMG,
         icon: 'Cpu',
         description: "Master neural networks, predictive modeling, and deep learning architectures. Build production-grade AI models that solve real-world problems and push the boundaries of machine intelligence.",

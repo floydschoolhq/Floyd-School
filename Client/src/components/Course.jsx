@@ -60,21 +60,19 @@ const Course = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
-            {/* Background Decorative Mesh - Industrial Dark */}
-            <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
-                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-orange-500/10 rounded-full blur-[160px] -mr-96 -mt-96" />
-                <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[140px] -ml-48 -mb-48" />
-                {/* Grid Overlay */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
-            </div>
+        <div className="min-h-screen bg-[#060C1B] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+            {/* Dot grid - matching Program Roadmap */}
+            <div className="fixed inset-0 opacity-[0.05] bg-[radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none z-0" />
+            {/* Glows - matching Program Roadmap */}
+            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-700/12 blur-[130px] rounded-full pointer-events-none z-0" />
+            <div className="fixed bottom-0 right-0 w-[400px] h-[300px] bg-indigo-700/10 blur-[100px] rounded-full pointer-events-none z-0" />
 
             <div className="relative z-10">
                 {/* Technical Specializations Section */}
                 <section className="py-24 md:py-32 relative overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         {/* Header and Introduction */}
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
                             <Zap size={12} fill="currentColor" />
                             <span>Technical Specializations</span>
                         </div>
@@ -86,7 +84,7 @@ const Course = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                         >
-                            Core <span className="text-orange-500">Technology</span> Programs
+                            Core <span className="text-blue-500">Technology</span> Programs
                         </motion.h2>
                         <motion.p
                             className="text-xl text-slate-400 mb-24 max-w-2xl mx-auto font-medium leading-relaxed"
@@ -114,14 +112,14 @@ const Course = () => {
                                         variants={cardVariants}
                                     >
                                         <motion.div
-                                            className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all duration-500 flex flex-col text-left p-8 pt-16 h-full cursor-pointer relative z-10"
+                                            className="bg-blue-50/95 backdrop-blur-xl border border-blue-300/60 rounded-xl overflow-hidden shadow-2xl transition-all duration-500 flex flex-col text-left p-8 pt-16 h-full cursor-pointer relative z-10"
                                             style={{ transformStyle: 'preserve-3d' }}
                                             whileHover={{ 
                                                 rotateY: 8, 
                                                 rotateX: -8, 
                                                 z: 40,
                                                 boxShadow: "0 40px 100px -20px rgba(0,0,0,0.6)",
-                                                borderColor: "rgba(249,115,22,0.3)"
+                                                borderColor: "rgba(59,130,246,0.6)"
                                             }}
                                         >
                                             {/* Mac Dots Overlay */}
@@ -133,7 +131,7 @@ const Course = () => {
 
                                             {/* Icon with 3D lift */}
                                             <div 
-                                                className={`p-4 rounded-2xl mb-8 w-fit bg-orange-500/10 text-orange-500 border border-orange-500/20 shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white`}
+                                                className={`p-4 rounded-2xl mb-8 w-fit bg-blue-500/10 text-blue-500 border border-blue-500/20 shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white`}
                                                 style={{ transform: 'translateZ(60px)' }}
                                             >
                                                 <course.icon className="w-8 h-8" />
@@ -141,7 +139,7 @@ const Course = () => {
                                             
                                             {/* Title with 3D lift */}
                                             <h3 
-                                                className="text-2xl font-black text-white mb-4 tracking-tighter uppercase transition-colors duration-500 group-hover:text-orange-500"
+                                                className="text-2xl font-black text-slate-900 mb-4 tracking-tighter uppercase transition-colors duration-500 group-hover:text-blue-600"
                                                 style={{ transform: 'translateZ(50px)' }}
                                             >
                                                 {course.title}
@@ -149,19 +147,19 @@ const Course = () => {
                                             
                                             {/* Description with subtle lift */}
                                             <p 
-                                                className="text-slate-400 leading-relaxed grow text-base font-medium"
+                                                className="text-slate-600 leading-relaxed grow text-base font-medium"
                                                 style={{ transform: 'translateZ(30px)' }}
                                             >
                                                 {course.description}
                                             </p>
 
                                             {/* Play Button Subtle Overlay - Icon Only */}
-                                            <div className="absolute top-8 right-8 text-white/5 group-hover:text-orange-500 transition-colors" style={{ transform: 'translateZ(60px)' }}>
+                                            <div className="absolute top-8 right-8 text-white/5 group-hover:text-blue-500 transition-colors" style={{ transform: 'translateZ(60px)' }}>
                                                 <ArrowRight size={24} />
                                             </div>
 
                                             {/* 3D Depth Decoration */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                                         </motion.div>
                                     </motion.div>
                                 ))

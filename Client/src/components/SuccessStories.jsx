@@ -80,9 +80,9 @@ const THEME_COLORS = [
 const ReviewCard = ({ review, index = 0, variant }) => {
     const isDark = variant === 'dark';
     const themes = isDark ? [
-        { border: "hover:border-orange-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(249,115,22,0.1)]", glow: "from-orange-500/10" },
+        { border: "hover:border-blue-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(59,130,246,0.1)]", glow: "from-blue-500/10" },
         { border: "hover:border-amber-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(245,158,11,0.1)]", glow: "from-amber-500/10" },
-        { border: "hover:border-orange-600/30", shadow: "hover:shadow-[0_20px_60px_rgba(234,88,12,0.1)]", glow: "from-orange-600/10" },
+        { border: "hover:border-cyan-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(6,182,212,0.1)]", glow: "from-cyan-500/10" },
     ] : THEME_COLORS;
     
     const theme = themes[index % themes.length];
@@ -122,7 +122,7 @@ const ReviewCard = ({ review, index = 0, variant }) => {
             <div className="mt-auto flex gap-1.5">
                 {[...Array(5)].map((_, i) => (
                     <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors duration-300
-                        ${isDark ? 'bg-white/10 group-hover:bg-orange-500' : 'bg-slate-100 group-hover:bg-slate-900'}`} />
+                        ${isDark ? 'bg-white/10 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-900'}`} />
                 ))}
             </div>
         </div>
@@ -137,18 +137,18 @@ const SuccessStories = ({ variant }) => {
     const isDark = variant === 'dark';
     return (
         <section className={`py-16 md:py-32 relative overflow-hidden transition-colors duration-500
-            ${isDark ? 'bg-[#050505] border-t border-white/5' : 'bg-slate-100 border-t border-slate-200'}`}>
-            {/* Background elements */}
+            ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5' : 'bg-slate-100 border-t border-slate-200'}`}>
+            {/* Background mesh - matching CourseReviews */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className={`absolute inset-0 opacity-[0.03] ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-                <div className={`absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[100px] -mr-96 -mt-96
-                    ${isDark ? 'bg-orange-500/5' : 'bg-white'}`} />
-                <div className={`absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] -ml-48 -mb-48
-                    ${isDark ? 'bg-white/5' : 'bg-slate-200/50'}`} />
+                <div className={`absolute inset-0 opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+                <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors
+                    ${isDark ? 'bg-blue-600/5' : 'bg-white'}`} />
+                <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors
+                    ${isDark ? 'bg-amber-600/5' : 'bg-slate-200/50'}`} />
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-[10%]">
+                <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-[7%]">
                     <ScrollDarkenHeading sizeClass="text-3xl md:text-4xl lg:text-5xl" variant={variant} uppercase={false}>
                         transformed by <span className="font-black tracking-tight"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </ScrollDarkenHeading>

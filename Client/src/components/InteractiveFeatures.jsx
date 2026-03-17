@@ -19,7 +19,7 @@ const colorMap = {
   amber: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20',
   warm: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-orange-600/50 hover:shadow-xl hover:shadow-orange-600/20',
   coral: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-rose-500/50 hover:shadow-xl hover:shadow-rose-500/20',
-  sunset: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-pink-500/50 hover:shadow-xl hover:shadow-pink-500/20',
+  sunset: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/20',
   gold: 'bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 border-white/10 hover:from-[#1a1a1a] hover:to-[#151515]/95 hover:border-yellow-500/50 hover:shadow-xl hover:shadow-yellow-500/20'
 };
 
@@ -28,7 +28,7 @@ const iconColorMap = {
   amber: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-amber-400 group-hover:shadow-amber-500/30',
   warm: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-orange-300 group-hover:shadow-orange-600/30',
   coral: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-rose-400 group-hover:shadow-rose-500/30',
-  sunset: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-pink-400 group-hover:shadow-pink-500/30',
+  sunset: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-blue-400 group-hover:shadow-blue-500/30',
   gold: 'text-white bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80 border-white/10 shadow-lg shadow-black/20 group-hover:text-yellow-400 group-hover:shadow-yellow-500/30'
 };
 
@@ -37,7 +37,7 @@ const accentColorMap = {
   amber: 'text-amber-400',
   warm: 'text-orange-300',
   coral: 'text-rose-400',
-  sunset: 'text-pink-400',
+  sunset: 'text-blue-400',
   gold: 'text-yellow-400'
 };
 
@@ -136,7 +136,7 @@ const FeatureCard = React.memo(({ feature, index }) => {
                   delay: i * 0.2,
                   ease: "easeOut"
                 }}
-                className="absolute w-1 h-1 bg-orange-400/40 rounded-full"
+                className="absolute w-1 h-1 bg-blue-500/40 rounded-full"
                 style={{
                   top: `${20 + i * 25}%`,
                   left: `${10 + i * 30}%`
@@ -372,7 +372,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
 
   if (isMobile) {
     return (
-      <section id="how-it-works" className="py-12 pb-32 bg-[#050505] text-white relative overflow-hidden">
+      <section id="how-it-works" className="py-12 pb-32 bg-slate-900 text-white relative overflow-hidden">
         {/* Ambient Background Glows - Mobile */}
         <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none transition-colors duration-700 bg-purple-500/[0.02]" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none transition-colors duration-700 bg-blue-500/[0.01]" />
@@ -470,7 +470,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   }
 
   return (
-    <section id="how-it-works" className="py-20 md:py-32 pb-40 bg-[#050505] text-white relative overflow-hidden">
+    <section id="how-it-works" className="py-20 md:py-32 pb-40 bg-slate-900 text-white relative overflow-hidden">
       {/* Ambient Background Glows */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700 bg-purple-500/[0.03]" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none transition-colors duration-700 bg-blue-500/[0.02]" />

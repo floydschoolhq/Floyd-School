@@ -1,13 +1,14 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
+import a5jImg from '../../../a5j.png';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -33,8 +34,8 @@ const LEADERS = [
     {
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
-        image: abhayImg,
-        imageScale: 1.9,
+        image: a5jImg,
+        imageScale: 2.4,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
@@ -50,7 +51,7 @@ const LEADERS = [
     }
 ];
 
-const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
+const CourseFacultyCard = React.memo(({ mentor, index, onSelect, variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     return (
@@ -63,7 +64,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
             whileTap={{ scale: 0.98 }}
             onClick={() => onSelect(mentor)}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative cursor-pointer group
+            className={`snap-center flex-shrink-0 w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center p-6 md:p-8 gap-6 relative cursor-pointer group
                 ${isDark 
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-white/[0.04] hover:border-blue-500/20' 
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100'}`}
@@ -73,7 +74,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
             
             {/* Image Section: High-End Industrial Housing */}
-            <div className="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 relative">
+            <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 relative">
                 {/* Rotating Border Aura */}
                 <motion.div 
                     animate={isMobile ? {} : { rotate: 360 }}
@@ -84,11 +85,11 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
                 />
                 
                 {/* Main Profile Housing */}
-                <div className={`w-full h-full rounded-2xl md:rounded-[3rem] overflow-hidden relative border-2 transition-all duration-700
+                <div className={`w-full h-full rounded-2xl overflow-hidden relative border-2 transition-all duration-700
                     ${isDark ? 'border-white/10 group-hover:border-blue-500/30' : 'border-slate-200 group-hover:border-blue-200'}`}>
                     {/* Dynamic Background */}
                     <div className={`absolute inset-0 transition-colors duration-700
-                        ${isDark ? 'bg-gradient-to-br from-orange-950/20 via-transparent to-blue-950/20' : 'bg-gradient-to-br from-blue-50 via-transparent to-slate-50'}`} />
+                        ${isDark ? 'bg-gradient-to-br from-blue-950/20 via-transparent to-blue-950/20' : 'bg-gradient-to-br from-blue-50 via-transparent to-slate-50'}`} />
                     
                     {/* Profile Image */}
                     <img 
@@ -103,18 +104,18 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
                     
                     {/* Industrial Overlay */}
                     <div className={`absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100
-                        ${isDark ? 'bg-gradient-to-t from-orange-500/10 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
+                        ${isDark ? 'bg-gradient-to-t from-blue-500/10 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
                 </div>
             </div>
 
             {/* Content Core: Pure Data Hierarchy */}
-            <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left min-w-0 relative z-10 w-full">
-                <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center md:items-start">
-                    <h3 className={`text-xl md:text-3xl font-bold tracking-tight uppercase leading-none truncate transition-colors w-full
-                        ${isDark ? 'text-white group-hover:text-orange-500' : 'text-slate-900 group-hover:text-blue-600'}`}>
+            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+                <div className="space-y-1 mb-4 flex flex-col items-center">
+                    <h3 className={`text-xl md:text-2xl font-bold tracking-tight uppercase leading-none truncate transition-colors w-full
+                        ${isDark ? 'text-white group-hover:text-blue-500' : 'text-slate-900 group-hover:text-blue-600'}`}>
                         {mentor.name}
                     </h3>
-                    <p className={`font-semibold text-[11px] md:text-[13px] tracking-wide uppercase truncate pb-4
+                    <p className={`font-semibold text-[11px] md:text-[12px] tracking-wide uppercase truncate pb-4
                         ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
                         {mentor.role}
                     </p>
@@ -122,7 +123,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
                         ${isDark ? 'bg-white/10 group-hover:w-24 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:w-24 group-hover:bg-blue-600'}`} />
                 </div>
 
-                <p className={`text-[14px] md:text-[15px] leading-relaxed mb-6 md:mb-8 line-clamp-2 font-medium
+                <p className={`text-[14px] md:text-[15px] leading-relaxed mb-6 line-clamp-2 font-medium
                     ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     {mentor.bio}
                 </p>
@@ -132,7 +133,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
                     <div className="flex gap-4">
                         {mentor.tags.slice(0, 2).map(tag => (
                             <span key={tag} className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-colors
-                                ${isDark ? 'text-slate-500 group-hover:text-orange-500' : 'text-slate-400 group-hover:text-blue-500'}`}>
+                                ${isDark ? 'text-slate-500 group-hover:text-blue-500' : 'text-slate-400 group-hover:text-blue-500'}`}>
                                 #{tag}
                             </span>
                         ))}
@@ -163,11 +164,10 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
     );
 });
 
-MentorCard.displayName = 'MentorCard';
+CourseFacultyCard.displayName = 'CourseFacultyCard';
 
-const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, variant = 'light' }) => {
+const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeName = null, variant = 'light' }) => {
     const [selectedMentor, setSelectedMentor] = useState(null);
-    const scrollRef = useRef(null);
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
 
@@ -175,21 +175,9 @@ const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, v
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
 
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            const { current } = scrollRef;
-            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
-            if (direction === 'left') {
-                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
-        }
-    };
-
     return (
         <section 
-            id="mentors-grid" 
+            id="course-faculty-grid" 
             className={`py-14 relative overflow-hidden transition-colors duration-500
                 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-white'}`}
         >
@@ -213,89 +201,19 @@ const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, v
                     </div>
                 </div>
 
-                <div className="relative group/marquee">
-                    {/* Navigation Buttons for Static Mode */}
-                    {isStatic && (
-                        <>
-                            <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-12 z-20">
-                                <button 
-                                    onClick={() => scroll('left')}
-                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
-                                >
-                                    <ChevronLeft size={24} />
-                                </button>
-                            </div>
-                            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-12 z-20">
-                                <button 
-                                    onClick={() => scroll('right')}
-                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
-                                >
-                                    <ChevronRight size={24} />
-                                </button>
-                            </div>
-                        </>
-                    )}
-
-                    {/* Continuous Auto-Scrolling or Manual Scroll Container */}
-                    <div 
-                        ref={isStatic ? scrollRef : null}
-                        className={`overflow-hidden py-10 -mx-4 px-4 ${isStatic ? "overflow-x-auto snap-x snap-mandatory" : ""}`}
-                        style={{ 
-                            scrollbarWidth: 'none', 
-                            msOverflowStyle: 'none',
-                            scrollPaddingLeft: '1rem',
-                            scrollPaddingRight: '1rem'
-                        }}
-                    >
-                        {/* webkit-scrollbar hiding applied via a hacky style tag */}
-                        <style>{`
-                            #mentors-grid .overflow-x-auto::-webkit-scrollbar { display: none; }
-                        `}</style>
-                        <motion.div 
-                            animate={isStatic || isMobile ? { x: 0 } : { x: ["0%", "-50%"] }}
-                            transition={isStatic || isMobile ? { duration: 0 } : { 
-                                duration: 35, 
-                                repeat: Infinity, 
-                                ease: "linear" 
-                            }}
-                            className={`flex items-center gap-8 ${isStatic ? "w-max" : "w-max"}`}
-                        >
-                            {(isStatic || isMobile ? filteredLeaders : [...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders]).map((mentor, index) => (
-                                <MentorCard 
-                                    key={index}
-                                    mentor={mentor}
-                                    index={index}
-                                    onSelect={setSelectedMentor}
-                                    variant={variant}
-                                />
-                            ))}
-                        </motion.div>
+                {/* Static 3-Column Grid for Faculty */}
+                <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                        {filteredLeaders.slice(0, 3).map((mentor, index) => (
+                            <CourseFacultyCard 
+                                key={index}
+                                mentor={mentor}
+                                index={index}
+                                onSelect={setSelectedMentor}
+                                variant={variant}
+                            />
+                        ))}
                     </div>
-
-                    {/* Industrial Progress Indicator */}
-                    {!isStatic && (
-                        <div className="mt-8 flex items-center gap-6 max-w-sm mx-auto">
-                            <div className={`h-[2px] flex-1 rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-slate-100'}`}>
-                                <motion.div 
-                                    className={`h-full ${isDark ? 'bg-blue-500' : 'bg-blue-600'}`}
-                                    initial={{ width: "30%" }}
-                                    whileInView={{ width: "100%" }}
-                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                                />
-                            </div>
-                            <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-white/30' : 'text-slate-300'}`}>
-                                SCROLLING
-                            </span>
-                            <div className={`h-[2px] flex-1 rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-slate-100'}`}>
-                                <motion.div 
-                                    className={`h-full ${isDark ? 'bg-blue-500' : 'bg-blue-600'}`}
-                                    initial={{ width: "30%" }}
-                                    whileInView={{ width: "100%" }}
-                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                                />
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
 
@@ -337,7 +255,7 @@ const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, v
                                 <h2 className={`text-3xl md:text-4xl font-black mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                     {selectedMentor.name}
                                 </h2>
-                                <p className={`text-lg font-semibold mb-6 ${isDark ? 'text-orange-500' : 'text-blue-600'}`}>
+                                <p className={`text-lg font-semibold mb-6 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
                                     {selectedMentor.role}
                                 </p>
                                 
@@ -359,7 +277,7 @@ const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, v
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-sm tracking-widest uppercase shadow-xl transition-all
-                                            ${isDark ? 'bg-blue-500 text-white hover:bg-white hover:text-orange-500' : 'bg-slate-900 text-white hover:bg-black'}`}
+                                            ${isDark ? 'bg-blue-500 text-white hover:bg-white hover:text-blue-500' : 'bg-slate-900 text-white hover:bg-black'}`}
                                     >
                                         <FaLinkedinIn size={14} /> Profile
                                     </a>
@@ -380,4 +298,4 @@ const MentorGrid = ({ title = "MENTORS", isStatic = false, excludeName = null, v
     );
 };
 
-export default MentorGrid;
+export default CourseFacultyGrid;

@@ -14,7 +14,6 @@ import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
 import PlatformPanels from './components/PlatformPanels';
 import StudentProjects from './components/StudentProjects';
-import InteractiveFeatures from './components/InteractiveFeatures';
 import SuccessStories from './components/SuccessStories';
 import TechStackStats from './components/TechStackStats';
 import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
@@ -56,7 +55,6 @@ const HomePage = () => {
                     <TechStackStats />
                     <OnlineCourseFocus variant="dark" />
                     <MentorGrid isStatic={true} />
-                    <InteractiveFeatures isFeaturesExpanded={true} />
                     <StudentProjects />
                     <SuccessStories variant="dark" />
                 </div>

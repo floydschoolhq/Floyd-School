@@ -102,7 +102,7 @@ const TECH_CATEGORIES = [
   {
     title: "AI/ML",
     icon: Cpu,
-    color: "from-purple-500 to-pink-500",
+    color: "from-purple-500 to-blue-500",
     technologies: [
       { icon: SiTensorflow, name: "TensorFlow", color: "#FF6F00" },
       { icon: SiPytorch, name: "PyTorch", color: "#EE4C2C" },
@@ -266,26 +266,9 @@ const TechStackStats = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="inline-flex flex-col items-center"
                 >
-                    <div className="flex items-center gap-6 md:gap-8 mb-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full border border-blue-500/30 flex items-center justify-center">
-                                <div className="w-1 h-1 rounded-full bg-blue-600 animate-pulse" />
-                            </div>
-                            <div className="h-[1px] w-8 md:w-16 bg-slate-200/60" />
-                        </div>
-                        
-                        <h2 className="text-slate-950 font-black uppercase tracking-[0.2em] md:tracking-[0.55em] text-[10px] md:text-[16px] leading-none whitespace-nowrap text-center">
-                            Technologies we master
-                        </h2>
-
-                        <div className="flex items-center gap-3">
-                            <div className="h-[1px] w-8 md:w-16 bg-slate-200/60" />
-                            <div className="w-2 h-2 rounded-full border border-blue-500/30 flex items-center justify-center">
-                                <div className="w-1 h-1 rounded-full bg-blue-600 animate-pulse" />
-                            </div>
-                        </div>
-                    </div>
-
+                    <h2 className="text-slate-900 font-black uppercase tracking-[0.2em] md:tracking-[0.55em] text-[16px] md:text-[24px] leading-none whitespace-nowrap text-center">
+                        Technologies we master
+                    </h2>
                 </motion.div>
             </div>
 

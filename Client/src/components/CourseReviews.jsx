@@ -206,9 +206,9 @@ const FeaturedCard = ({ review, variant }) => {
                         </div>
                         <div>
                             <h4 className={`text-lg font-bold tracking-tight transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[11px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-orange-500' : c.highlight}`}>{review.role}</p>
+                            <p className={`text-[11px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-blue-500' : c.highlight}`}>{review.role}</p>
                             <div className="flex items-center gap-3 mt-2">
-                                <StarRating rating={review.rating} colorClass={isDark ? 'text-orange-500' : c.star} />
+                                <StarRating rating={review.rating} colorClass={isDark ? 'text-blue-500' : c.star} />
                                 <span className={`text-[10px] font-semibold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.batch}</span>
                             </div>
                         </div>
@@ -216,7 +216,7 @@ const FeaturedCard = ({ review, variant }) => {
 
                     {/* Achievement badge */}
                     <div className={`md:ml-auto flex items-center gap-2 px-4 py-2.5 rounded-2xl border text-[11px] font-semibold self-start transition-all
-                        ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-500' : `${c.badge}`}`}>
+                        ${isDark ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : `${c.badge}`}`}>
                         <Sparkles size={12} />
                         <span>{review.achievement}</span>
                     </div>
@@ -281,7 +281,7 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                     <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
                     <p className={`text-[10px] font-medium uppercase tracking-widest truncate mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
                 </div>
-                <StarRating rating={review.rating} colorClass={isDark ? 'text-orange-500' : c.star} />
+                <StarRating rating={review.rating} colorClass={isDark ? 'text-blue-500' : c.star} />
             </div>
             {isActive && (
                 <p className="text-[12px] text-slate-500 mt-3 pl-2 line-clamp-2 leading-relaxed">
@@ -306,12 +306,12 @@ const CourseReviews = ({ courseId, variant }) => {
 
     return (
         <section className={`py-24 md:py-32 relative overflow-hidden transition-all duration-500
-            ${isDark ? 'bg-[#050505] border-t border-white/5' : 'bg-white border-t border-slate-100'}`}>
+            ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5' : 'bg-white border-t border-slate-100'}`}>
             {/* Background mesh */}
             <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`}
                 style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
             <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors
-                ${isDark ? 'bg-orange-600/5' : 'bg-blue-50'}`} />
+                ${isDark ? 'bg-blue-600/5' : 'bg-blue-50'}`} />
             <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors
                 ${isDark ? 'bg-amber-600/5' : 'bg-indigo-50'}`} />
 
@@ -319,13 +319,13 @@ const CourseReviews = ({ courseId, variant }) => {
                 {/* Section Header */}
                 <div className="text-center mb-16">
                     <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-bold uppercase tracking-widest mb-6 transition-all
-                        ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-500' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
+                        ${isDark ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
                         <Brain size={12} />
                         <span>Student Voices</span>
                     </div>
                     <h2 className={`text-3xl md:text-5xl font-black tracking-tight uppercase leading-none mb-4 transition-colors
                         ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        Course <span className={isDark ? 'text-orange-500' : 'text-blue-600'}>Reviews</span> & Feedback
+                        Course <span className={isDark ? 'text-blue-500' : 'text-blue-600'}>Reviews</span> & Feedback
                     </h2>
                     <p className={`text-lg max-w-xl mx-auto font-medium transition-colors
                         ${isDark ? 'text-slate-400' : 'text-slate-50'}`}>

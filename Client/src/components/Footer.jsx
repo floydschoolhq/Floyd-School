@@ -38,13 +38,11 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#050505] text-slate-400 pt-24 md:pb-12 pb-32 border-t border-white/5 relative overflow-hidden">
-      {/* Premium Ambient Glows */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none -mr-48 -mt-48" />
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-amber-500/[0.03] rounded-full blur-[120px] pointer-events-none -ml-32" />
-      
-      {/* Industrial Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:40px_40px]" />
+    <footer className="bg-gradient-to-br from-black via-slate-950 to-black text-slate-400 pt-24 md:pb-12 pb-32 border-t border-white/5 relative overflow-hidden">
+      {/* Background mesh - matching CourseReviews */}
+      <div className="absolute inset-0 pointer-events-none opacity-30 invert brightness-200" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 bg-blue-600/5" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 bg-amber-600/5" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 mb-24">
@@ -62,7 +60,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href="#"
-                  className="w-12 h-12 bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-slate-500 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all duration-700 shadow-2xl group"
+                  className="w-12 h-12 bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-slate-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-700 shadow-2xl group"
                 >
                   <Icon size={18} className="group-hover:scale-110 transition-transform" />
                 </a>

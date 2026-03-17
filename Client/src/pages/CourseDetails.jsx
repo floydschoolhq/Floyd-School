@@ -19,8 +19,7 @@ import {
 } from 'lucide-react';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
-import MentorGrid from '../components/MentorGrid';
-import LeadFormModal from '../components/LeadFormModal';
+import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
 
 const iconMap = {
@@ -49,11 +48,11 @@ const CourseDetails = () => {
     const Icon = iconMap[course.icon] || Code;
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+        <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none z-10">
-                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-orange-500/10 rounded-full blur-[160px] -mr-96 -mt-96" />
+                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-blue-500/10 rounded-full blur-[160px] -mr-96 -mt-96" />
                 <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[140px] -ml-48 -mb-48" />
                 {/* Grid Overlay */}
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
@@ -65,7 +64,7 @@ const CourseDetails = () => {
                     <div className="max-w-7xl mx-auto px-6 relative z-10">
                         <button 
                             onClick={() => navigate(-1)}
-                            className="flex items-center gap-2 text-slate-500 hover:text-orange-500 transition-colors font-bold uppercase text-[10px] tracking-[0.3em] mb-12 group"
+                            className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors font-bold uppercase text-[10px] tracking-[0.3em] mb-12 group"
                         >
                             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Programs
                         </button>
@@ -77,10 +76,10 @@ const CourseDetails = () => {
                                 transition={{ duration: 0.8 }}
                             >
                                 <div className="flex items-center gap-3 mb-6">
-                                    <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                                        <Icon size={16} className="text-orange-500" />
+                                    <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                        <Icon size={16} className="text-white" />
                                     </div>
-                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-orange-500">{course.duration} Intensive</span>
+                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-white">{course.duration} Intensive</span>
                                 </div>
                                 <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-[0.95] uppercase">
                                     {course.title}
@@ -156,34 +155,11 @@ const CourseDetails = () => {
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
 
-                <div className="bg-[#050505] border-t border-white/5 py-24">
-                    <MentorGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
+                <div className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 py-24">
+                    <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
                 </div>
 
-                {/* Final CTA - Aggressive Dark Style */}
-                <section className="py-32 bg-[#050505] text-center relative overflow-hidden border-t border-white/5">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[120px] rounded-full pointer-events-none" />
-                    <div className="max-w-4xl mx-auto px-6 relative z-10">
-                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-10 tracking-tighter uppercase leading-[1.1]">
-                            BEGIN YOUR <br/><span className="text-orange-500">ENGINEERING</span> <br/>MANIFESTO
-                        </h2>
-                        <button 
-                            onClick={() => setIsLeadModalOpen(true)}
-                            className="px-12 md:px-16 py-6 md:py-7 bg-white text-black rounded-2xl font-black uppercase text-[13px] md:text-[14px] tracking-[0.3em] hover:bg-orange-500 hover:text-white transition-all shadow-[0_30px_60px_rgba(0,0,0,0.4)] flex items-center gap-4 mx-auto group active:scale-95"
-                        >
-                            ENROLL IN {course.title} <Zap size={22} className="fill-current group-hover:scale-125 transition-transform" />
-                        </button>
-                        <p className="mt-12 text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] flex items-center justify-center gap-3">
-                            <CheckCircle2 size={14} className="text-emerald-500" /> INDUSTRIAL INTERNSHIP & GLOBAL PLACEMENT
-                        </p>
-                    </div>
-                </section>
-
-                <LeadFormModal 
-                    isOpen={isLeadModalOpen} 
-                    onClose={() => setIsLeadModalOpen(false)} 
-                    source={`course_details_${courseId}`}
-                />
+                
             </div>
         </div>
     );

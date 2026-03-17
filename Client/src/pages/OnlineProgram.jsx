@@ -10,6 +10,7 @@ import SectionHeader from '../components/common/SectionHeader';
 import LeadFormModal from '../components/LeadFormModal';
 import PremiumNavbar from '../components/PremiumNavbar';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
+import useIsMobile from '../hooks/useIsMobile';
 
 const iconMap = {
     Cpu: Cpu,
@@ -40,7 +41,7 @@ const CourseCard = ({ course, onClick }) => {
                     </div>
                 )}
                 
-                <div className="absolute top-0 right-0 w-16 h-16 bg-orange-500/5 blur-xl rounded-full -mr-8 -mt-8 group-hover:bg-orange-500/10 transition-colors" />
+                <div className="absolute top-0 right-0 w-16 h-16 bg-pink-500/5 blur-xl rounded-full -mr-8 -mt-8 group-hover:bg-blue-500/10 transition-colors" />
 
                 <div className="w-full aspect-[16/10] mac-browser-frame mb-4 group/imgContainer relative z-10 border-white/10">
                     {/* Mac Dots Overlay */}
@@ -66,7 +67,7 @@ const CourseCard = ({ course, onClick }) => {
 
                 <div className="flex items-center gap-2 mb-2 relative z-10">
                     <h3 className={`text-sm font-black uppercase tracking-tight transition-colors ${
-                        isComingSoon ? 'text-white/60' : 'text-white group-hover:text-orange-500'
+                        isComingSoon ? 'text-white/60' : 'text-white group-hover:text-white'
                     }`}>{course.title}</h3>
                 </div>
                 
@@ -88,7 +89,7 @@ const CourseCard = ({ course, onClick }) => {
                     }`}>
                         {isComingSoon ? 'Coming Soon' : 'Select TRACK →'}
                     </button>
-                    <span className="text-[7px] font-bold text-orange-500 uppercase tracking-widest">{course.duration}</span>
+                    <span className="text-[7px] font-bold text-white uppercase tracking-widest">{course.duration}</span>
                 </div>
             </div>
         );
@@ -109,7 +110,7 @@ const CourseCard = ({ course, onClick }) => {
                 </div>
             )}
             
-            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-orange-500/10 transition-colors" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors" />
 
             <div className="w-full aspect-[16/10] mac-browser-frame mb-8 group/imgContainer relative z-10 border-white/10">
                 {/* Mac Dots Overlay */}
@@ -134,7 +135,7 @@ const CourseCard = ({ course, onClick }) => {
             </div>
 
             <div className="flex items-center gap-3 mb-3 relative z-10">
-                <h3 className={`text-xl font-black uppercase tracking-tight transition-colors ${isComingSoon ? 'text-white/60' : 'text-white group-hover:text-orange-500'}`}>{course.title}</h3>
+                <h3 className={`text-xl font-black uppercase tracking-tight transition-colors ${isComingSoon ? 'text-white/60' : 'text-white group-hover:text-white'}`}>{course.title}</h3>
             </div>
             
             <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6 line-clamp-2 relative z-10">
@@ -153,7 +154,7 @@ const CourseCard = ({ course, onClick }) => {
                 <button className={`text-[10px] font-black uppercase tracking-widest transition-colors ${isComingSoon ? 'text-white/40 cursor-not-allowed' : 'text-slate-400 group-hover:text-white cursor-pointer'}`}>
                     {isComingSoon ? 'Coming Soon' : 'Select TRACK →'}
                 </button>
-                <span className="text-[9px] font-bold text-orange-500 uppercase tracking-widest">{course.duration}</span>
+                <span className="text-[9px] font-bold text-white uppercase tracking-widest">{course.duration}</span>
             </div>
         </motion.div>
     );
@@ -170,7 +171,7 @@ const PricingTier = ({ tier, onSelect }) => {
             className={`p-10 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-xl border ${tier.recommended ? 'border-orange-500 shadow-[0_0_50px_rgba(249,115,22,0.1)] scale-105' : 'border-white/10 shadow-2xl'} relative overflow-hidden`}
         >
             {tier.recommended && (
-                <div className="absolute top-0 right-0 py-2 px-6 bg-orange-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-bl-2xl">Recommended</div>
+                <div className="absolute top-0 right-0 py-2 px-6 bg-pink-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-bl-2xl">Recommended</div>
             )}
             <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.3em] mb-4">{tier.name}</h3>
             <div className="flex items-baseline gap-2 mb-10">
@@ -180,7 +181,7 @@ const PricingTier = ({ tier, onSelect }) => {
             <div className="space-y-5 mb-12">
                 {tier.features.map(f => (
                     <div key={f} className="flex items-center gap-4 group/feature">
-                        <div className={`w-6 h-6 rounded-lg ${tier.recommended ? 'bg-orange-500/10 text-orange-500' : 'bg-white/5 text-slate-500'} flex items-center justify-center shrink-0 border border-white/5`}>
+                        <div className={`w-6 h-6 rounded-lg ${tier.recommended ? 'bg-pink-500/10 text-white' : 'bg-white/5 text-slate-500'} flex items-center justify-center shrink-0 border border-white/5`}>
                             <Check size={14} strokeWidth={3} />
                         </div>
                         <span className="text-sm font-bold text-slate-300 tracking-tight">{f}</span>
@@ -190,7 +191,7 @@ const PricingTier = ({ tier, onSelect }) => {
             <button
                 onClick={onSelect}
                 className={`w-full py-6 rounded-xl font-black text-xs uppercase tracking-[0.3em] transition-all
-                ${tier.recommended ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-[0_20px_40px_rgba(249,115,22,0.25)]' : 'bg-white text-black hover:bg-orange-500 hover:text-white'}`}
+                ${tier.recommended ? 'bg-pink-500 text-white hover:bg-orange-600 shadow-[0_20px_40px_rgba(249,115,22,0.25)]' : 'bg-white text-black hover:bg-blue-500 hover:text-white'}`}
             >
                 Start Journey
             </button>
@@ -312,12 +313,12 @@ const OnlineProgram = () => {
 
     if (isMobile) {
         return (
-            <div className="min-h-screen bg-[#050505] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+            <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
                 <PremiumNavbar variant="dark" />
                 
                 {/* Background Decorative Mesh - Mobile */}
                 <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/5 rounded-full blur-[80px] -mr-32 -mt-32" />
+                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-pink-500/5 rounded-full blur-[80px] -mr-32 -mt-32" />
                     <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-amber-500/3 rounded-full blur-[70px] -ml-24 -mb-24" />
                 </div>
 
@@ -325,12 +326,12 @@ const OnlineProgram = () => {
                     {/* Academic Hub Hero - Mobile */}
                     <div id="explore-programs" className="max-w-[95%] mx-auto px-3 pt-24 pb-12">
                         <div className="flex flex-col items-center text-center mb-12">
-                            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[8px] font-bold uppercase tracking-[0.2em] mb-4">
+                            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-pink-500/10 border border-orange-500/20 text-white text-[8px] font-bold uppercase tracking-[0.2em] mb-4">
                                 <Globe size={8} />
                                 <span>Global Specializations</span>
                             </div>
                             <h2 className="text-2xl font-black text-white tracking-tighter leading-[0.9] uppercase mb-4">
-                                Academic <br/><span className="text-orange-500">Hub</span>
+                                Academic <br/><span className="text-white">Hub</span>
                             </h2>
                             <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs">
                                 Deep-tech specialization tracks for industrial learning.
@@ -358,7 +359,7 @@ const OnlineProgram = () => {
                                     ))
                                 ) : (
                                     <div className="flex-shrink-0 w-64 py-16 bg-black border border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center text-center">
-                                        <Rocket size={24} className="text-orange-500/20 mb-3" />
+                                        <Rocket size={24} className="text-white/20 mb-3" />
                                         <h4 className="text-sm font-black text-white uppercase tracking-tighter">Tracks In Alpha</h4>
                                         <p className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-2">Calibrating curriculum.</p>
                                     </div>
@@ -368,7 +369,7 @@ const OnlineProgram = () => {
                     </div>
 
                     {/* Final CTA - Mobile */}
-                    <div className="py-24 bg-[#050505] relative overflow-hidden text-center border-t border-white/5">
+                    <div className="py-24 bg-gradient-to-br from-black via-slate-950 to-black relative overflow-hidden text-center border-t border-white/5">
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[80px] rounded-full pointer-events-none" />
                         <div className="relative z-10 max-w-[95%] mx-auto px-3">
                             <h3 className="text-xl font-black text-white mb-6">Ready to Build Your Future?</h3>
@@ -397,12 +398,12 @@ const OnlineProgram = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+        <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
             <PremiumNavbar variant="dark" />
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
-                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-orange-500/5 rounded-full blur-[160px] -mr-96 -mt-96" />
+                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-pink-500/5 rounded-full blur-[160px] -mr-96 -mt-96" />
                 <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/3 rounded-full blur-[140px] -ml-48 -mb-48" />
                 {/* Grid Overlay */}
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
@@ -418,12 +419,12 @@ const OnlineProgram = () => {
                             viewport={{ once: true }}
                             className="max-w-3xl"
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-orange-500/20 text-white text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
                                 <Globe size={12} />
                                 <span>Global Specializations</span>
                             </div>
                             <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-[0.9] uppercase mb-8">
-                                Academic <br/><span className="text-orange-500">Hub</span>
+                                Academic <br/><span className="text-white">Hub</span>
                             </h2>
                             <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-xl">
                                 Deep-tech specialization tracks architected for high-intensity industrial learning and production-scale mastery.
@@ -463,7 +464,7 @@ const OnlineProgram = () => {
                             ))
                         ) : (
                             <div className="col-span-full py-32 bg-black border border-dashed border-white/10 rounded-[2.5rem] flex flex-col items-center justify-center text-center">
-                                <Rocket size={48} className="text-orange-500/20 mb-6" />
+                                <Rocket size={48} className="text-white/20 mb-6" />
                                 <h4 className="text-2xl font-black text-white uppercase tracking-tighter">Industrial Tracks In Alpha</h4>
                                 <p className="text-[12px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-3">We are calibrating the curriculum with top-tier industrial directors.</p>
                             </div>
@@ -472,15 +473,15 @@ const OnlineProgram = () => {
                 </div>
 
                 {/* Final CTA - Dark Industrial */}
-                <div className="py-48 bg-[#050505] relative overflow-hidden text-center border-t border-white/5">
+                <div className="py-48 bg-gradient-to-br from-black via-slate-950 to-black relative overflow-hidden text-center border-t border-white/5">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[120px] rounded-full pointer-events-none" />
                     <div className="max-w-5xl mx-auto px-6 relative z-10">
                         <h2 className="text-5xl md:text-8xl font-black text-white mb-14 tracking-tighter uppercase leading-[0.85]">
-                            ELEVATE YOUR <br/><span className="text-orange-500">ENGINEERING</span> <br/>STANDARD.
+                            ELEVATE YOUR <br/><span className="text-white">ENGINEERING</span> <br/>STANDARD.
                         </h2>
                         <button
                             onClick={openLeadModal}
-                            className="bg-white text-black px-20 py-8 rounded-xl font-black uppercase text-[15px] tracking-[0.4em] hover:bg-orange-500 hover:text-white transition-all shadow-3xl flex items-center gap-4 mx-auto group active:scale-95"
+                            className="bg-white text-black px-20 py-8 rounded-xl font-black uppercase text-[15px] tracking-[0.4em] hover:bg-blue-500 hover:text-white transition-all shadow-3xl flex items-center gap-4 mx-auto group active:scale-95"
                         >
                             SECURE ENROLLMENT <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
                         </button>
