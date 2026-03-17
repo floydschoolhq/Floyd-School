@@ -354,6 +354,58 @@ const allFeatures = [
 
 const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   const isMobile = useIsMobile();
+  
+  if (isMobile) {
+    return (
+      <section id="how-it-works" className="py-16 bg-[#050505] text-white relative overflow-hidden">
+        <div className="max-w-95% mx-auto px-4 relative z-10">
+          <div className="flex flex-col">
+            {/* Header - Mobile */}
+            <div className="text-center mb-12">
+              <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-white/50 mb-4 font-sans">Experience the future</h2>
+              <h3 className="text-2xl font-black text-white leading-tight">
+                Interactive Learning & Support
+              </h3>
+            </div>
+
+            {/* Features Grid - Mobile */}
+            <div className="space-y-6">
+                {allFeatures.map((feature, index) => (
+                    <div key={index} className="p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90">
+                        {/* Icon */}
+                        <div className="mb-4">
+                            <div className="w-12 h-12 rounded-xl flex items-center justify-center border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80">
+                                {React.cloneElement(feature.icon, { size: 20, strokeWidth: 2 })}
+                            </div>
+                        </div>
+                        
+                        {/* Content */}
+                        <h4 className="text-lg font-bold text-white mb-2">
+                            {feature.title}
+                        </h4>
+                        
+                        <p className="text-white/70 text-sm leading-relaxed mb-4">
+                            {feature.description}
+                        </p>
+
+                        {/* Footer */}
+                        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Sparkles size={12} className="text-orange-400" />
+                                <span className="text-xs font-bold text-white/60 uppercase">
+                                    {feature.detail}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="how-it-works" className="py-20 md:py-28 bg-[#050505] text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
