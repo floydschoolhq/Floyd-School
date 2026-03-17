@@ -23,12 +23,23 @@ const iconMap = {
 
 const CourseCard = ({ course, onClick }) => {
     const Icon = iconMap[course.icon] || Code;
+    const isComingSoon = course.comingSoon;
+    
     return (
         <motion.div
-            className={`flex flex-col p-6 rounded-[2rem] bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-orange-500/30 transition-all cursor-pointer shadow-2xl group relative overflow-hidden`}
-            whileHover={{ y: -8 }}
-            onClick={onClick}
+            className={`flex flex-col p-6 rounded-[2rem] bg-white/[0.03] backdrop-blur-xl border ${isComingSoon ? 'border-white/5 cursor-not-allowed opacity-75' : 'border-white/10 hover:border-orange-500/30 transition-all cursor-pointer'} shadow-2xl group relative overflow-hidden`}
+            whileHover={isComingSoon ? {} : { y: -8 }}
+            onClick={isComingSoon ? undefined : onClick}
         >
+            {/* Coming Soon Overlay */}
+            {isComingSoon && (
+                <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
+                    <span className="text-white text-lg font-bold tracking-wide drop-shadow-lg select-none">
+                        Coming Soon
+                    </span>
+                </div>
+            )}
+            
             <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-orange-500/10 transition-colors" />
 
             <div className="w-full aspect-[16/10] mac-browser-frame mb-8 group/imgContainer relative z-10 border-white/10">
@@ -38,12 +49,14 @@ const CourseCard = ({ course, onClick }) => {
                     <div className="mac-browser-dot mac-dot-yellow" />
                     <div className="mac-browser-dot mac-dot-green" />
                 </div>
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-90 group-hover:scale-100">
-                    <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-2xl">
-                        <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                {/* Play Button Overlay - Only for non-coming-soon courses */}
+                {!isComingSoon && (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-90 group-hover:scale-100">
+                        <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-2xl">
+                            <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-white border-b-[8px] border-b-transparent ml-1" />
+                        </div>
                     </div>
-                </div>
+                )}
                 <img
                     src={course.image}
                     alt={course.title}
@@ -52,7 +65,7 @@ const CourseCard = ({ course, onClick }) => {
             </div>
 
             <div className="flex items-center gap-3 mb-3 relative z-10">
-                <h3 className="text-xl font-black text-white uppercase tracking-tight group-hover:text-orange-500 transition-colors">{course.title}</h3>
+                <h3 className={`text-xl font-black uppercase tracking-tight transition-colors ${isComingSoon ? 'text-white/60' : 'text-white group-hover:text-orange-500'}`}>{course.title}</h3>
             </div>
             
             <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6 line-clamp-2 relative z-10">
@@ -68,7 +81,9 @@ const CourseCard = ({ course, onClick }) => {
             </div>
 
             <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-auto relative z-10">
-                <button className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-white transition-colors">Select TRACK →</button>
+                <button className={`text-[10px] font-black uppercase tracking-widest transition-colors ${isComingSoon ? 'text-white/40 cursor-not-allowed' : 'text-slate-400 group-hover:text-white cursor-pointer'}`}>
+                    {isComingSoon ? 'Coming Soon' : 'Select TRACK →'}
+                </button>
                 <span className="text-[9px] font-bold text-orange-500 uppercase tracking-widest">{course.duration}</span>
             </div>
         </motion.div>

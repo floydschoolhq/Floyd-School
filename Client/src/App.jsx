@@ -12,9 +12,13 @@ import Marque from './components/Marque';
 import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
 import PlatformPanels from './components/PlatformPanels';
+import StudentProjects from './components/StudentProjects';
+import InteractiveFeatures from './components/InteractiveFeatures';
 import SuccessStories from './components/SuccessStories';
-import LearningModel from './components/LearningModel';
-
+import TechStackStats from './components/TechStackStats';
+import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
+import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
+import Hackathon from './components/Hackathon.jsx';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
@@ -30,20 +34,10 @@ import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 
-
-
 import Logo from './components/Logo.jsx';
 
 import Masterclasses from './components/Masterclasses.jsx';
 import IndustrialNetwork from './components/IndustrialNetwork.jsx';
-import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
-import TechStackStats from './components/TechStackStats.jsx';
-
-
-import InteractiveFeatures from './components/InteractiveFeatures';
-import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
-import Hackathon from './components/Hackathon.jsx';
-
 
 import { MotionConfig } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile.js';
@@ -61,8 +55,8 @@ const HomePage = () => {
                     <TechStackStats />
                     <OnlineCourseFocus variant="dark" />
                     <MentorGrid />
-                    <LearningModel />
                     <InteractiveFeatures isFeaturesExpanded={true} />
+                    <StudentProjects />
                     <SuccessStories variant="dark" />
                 </div>
 

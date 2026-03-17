@@ -86,7 +86,7 @@ const TechStackStats = () => {
     return (
         <section className="bg-white py-12 md:py-20 overflow-hidden">
             {/* Tech Showcase Header - Multi-layered HUD style */}
-            <div className="max-w-7xl mx-auto px-4 text-center mb-16">
+            <div className="w-full max-w-7xl mx-auto px-4 text-center mb-16">
                 <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -116,7 +116,7 @@ const TechStackStats = () => {
             </div>
 
             {/* Full Width Tech Loop */}
-            <div className="w-full relative mb-20">
+            <div className="w-full max-w-7xl mx-auto relative mb-20">
                 <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-white via-transparent to-white w-24 md:w-64 left-0" />
                 <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-l from-white via-transparent to-white w-24 md:w-64 right-0" />
                 
@@ -145,7 +145,7 @@ const TechStackStats = () => {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="w-full max-w-7xl mx-auto px-4">
                 {/* Stats Grid removed permanently */}
             </div>
         </section>
