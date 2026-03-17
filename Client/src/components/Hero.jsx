@@ -56,7 +56,10 @@ const Hero = () => {
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
     const handleEnrollNow = () => {
-        setIsRegistrationModalOpen(true);
+        const element = document.getElementById('online-focus');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     };
 
     if (isMobile) {

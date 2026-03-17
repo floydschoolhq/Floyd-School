@@ -115,7 +115,7 @@ const OnlineCourseFocus = ({ variant }) => {
 
                                         {/* Course Title */}
                                         <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight transition-all duration-300 mb-4 leading-tight
-                                            ${isDark ? 'text-white group-hover:text-blue-400' : 'text-slate-900 group-hover:text-blue-600'}`}>
+                                            ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                                             {FALLBACK_COURSES[0].title}
                                         </h3>
 
@@ -177,28 +177,52 @@ const OnlineCourseFocus = ({ variant }) => {
                         )}
                     </div>
 
-                    {/* Second Row - Three Course Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {FALLBACK_COURSES.slice(1).map((course) => {
-                            const isComingSoon = !!course.comingSoon;
-                            return (
-                                <motion.div
-                                    key={course._id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
-                                    whileHover={isComingSoon ? {} : {
-                                        y: -8,
-                                        transition: { type: 'spring', stiffness: 300, damping: 20 }
-                                    }}
-                                    className={`relative pt-2 pb-0 rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
-                                        ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
-                                        ${isDark
-                                            ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-blue-500/30'
-                                            : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}`}
-                                    onClick={() => !isComingSoon && navigate(`/course/${course._id}`)}
-                                >
+                    {/* Second Row - Three Course Cards with Cinematic Animation */}
+                    <div className="relative max-w-6xl mx-auto">
+                        {/* Hidden container for cinematic reveal */}
+                        <motion.div 
+                            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                            initial={{ y: -200, opacity: 0 }}
+                            whileInView={{ 
+                                y: 0, 
+                                opacity: 1,
+                                transition: {
+                                    duration: 0.8,
+                                    ease: [0.25, 0.46, 0.45, 0.94],
+                                    staggerChildren: 0.15
+                                }
+                            }}
+                            viewport={{ once: false, margin: "-100px" }}
+                        >
+                            {FALLBACK_COURSES.slice(1).map((course, index) => {
+                                const isComingSoon = !!course.comingSoon;
+                                return (
+                                    <motion.div
+                                        key={course._id}
+                                        initial={{ y: -200, opacity: 0, scale: 0.9 }}
+                                        whileInView={{ 
+                                            y: 0, 
+                                            opacity: 1, 
+                                            scale: 1,
+                                            transition: {
+                                                duration: 0.6,
+                                                delay: index * 0.15,
+                                                ease: [0.25, 0.46, 0.45, 0.94]
+                                            }
+                                        }}
+                                        viewport={{ once: false, margin: "-100px" }}
+                                        whileHover={isComingSoon ? {} : {
+                                            y: -8,
+                                            scale: 1.02,
+                                            transition: { type: 'spring', stiffness: 300, damping: 20 }
+                                        }}
+                                        className={`relative pt-2 pb-0 rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
+                                            ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
+                                            ${isDark
+                                                ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-blue-500/30'
+                                                : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}`}
+                                        onClick={() => !isComingSoon && navigate(`/course/${course._id}`)}
+                                    >
                                     {/* Premium Glowing Outline - Visible only on hover for live courses */}
                                     {!isComingSoon && (
                                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
@@ -278,6 +302,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                 </motion.div>
                             );
                         })}
+                        </motion.div>
                     </div>
                 </div>
             </div>

@@ -23,17 +23,17 @@ const LEADERS = [
         tags: ["AI/ML", "Founder", "Visionary"]
     },
     {
-        name: "Raghav",
-        role: "Lead Mentor & Product Architect",
-        image: raghavImg,
-        imageScale: 1.9,
-        bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
-        linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-        tags: ["Lead Mentor", "Architect", "Eng"]
+        name: "Anamika Vashisth",
+        role: "Growth Associate",
+        image: ananimikaImg,
+        imageScale: 1.15,
+        bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
+        linkedin: "#",
+        tags: ["UI/UX", "Design", "Product"]
     },
     {
         name: "Abhay Singh Chauhan",
-        role: "Management & Web Development",
+        role: "Help Associate",
         image: a5jImg,
         imageScale: 2.4,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
@@ -41,13 +41,13 @@ const LEADERS = [
         tags: ["Web Dev", "Manager", "Full Stack"]
     },
     {
-        name: "Anamika Vashisth",
-        role: "UI/UX & System Designer",
-        image: ananimikaImg,
-        imageScale: 1.15,
-        bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
-        linkedin: "#",
-        tags: ["UI/UX", "Design", "Product"]
+        name: "Raghav",
+        role: "Mentor",
+        image: raghavImg,
+        imageScale: 1.9,
+        bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
+        linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+        tags: ["Lead Mentor", "Architect", "Eng"]
     }
 ];
 
