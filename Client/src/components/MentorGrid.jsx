@@ -117,7 +117,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
             {/* Content Core: Pure Data Hierarchy */}
             <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center md:items-start">
-                    <h3 className={`text-xl md:text-3xl font-bold tracking-tight uppercase leading-none truncate transition-colors w-full
+                    <h3 className={`text-xl md:text-3xl font-bold tracking-tight uppercase leading-none transition-colors w-full pl-1
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
                         {mentor.name}
                     </h3>
@@ -168,8 +168,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
 
+    // Start animation on mount
     useEffect(() => {
-        if (!isMobile && hoveredCard === null) {
+        if (!isMobile) {
             controls.start({
                 x: ["0%", "-50%"],
                 transition: {
@@ -178,8 +179,26 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     ease: "linear"
                 }
             });
-        } else if (hoveredCard !== null) {
-            controls.stop();
+        }
+    }, [isMobile, controls]);
+
+    // Handle hover pause/resume
+    useEffect(() => {
+        if (!isMobile) {
+            if (hoveredCard !== null) {
+                // Pause animation
+                controls.stop();
+            } else {
+                // Resume animation
+                controls.start({
+                    x: ["0%", "-50%"],
+                    transition: {
+                        duration: 35,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }
+                });
+            }
         }
     }, [hoveredCard, isMobile, controls]);
 
@@ -226,28 +245,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                 </div>
 
                 <div className="relative group/marquee">
-                    {/* Navigation Buttons for Static Mode */}
-                    {isStatic && (
-                        <>
-                            <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-12 z-20">
-                                <button 
-                                    onClick={() => scroll('left')}
-                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
-                                >
-                                    <ChevronLeft size={24} />
-                                </button>
-                            </div>
-                            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-12 z-20">
-                                <button 
-                                    onClick={() => scroll('right')}
-                                    className="p-4 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-xl transition-all scale-90 hover:scale-100 active:scale-95"
-                                >
-                                    <ChevronRight size={24} />
-                                </button>
-                            </div>
-                        </>
-                    )}
-
                     {/* Continuous Auto-Scrolling Container */}
                     <div 
                         className="overflow-hidden py-10 -mx-4 px-4"
