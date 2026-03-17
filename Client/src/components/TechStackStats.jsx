@@ -266,7 +266,7 @@ const TechStackStats = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="inline-flex flex-col items-center"
                 >
-                    <h2 className="text-slate-900 font-black uppercase tracking-[0.2em] md:tracking-[0.55em] text-[16px] md:text-[24px] leading-none whitespace-nowrap text-center">
+                    <h2 className="text-slate-900 font-black uppercase tracking-[0.2em] md:tracking-[0.55em] text-2xl md:text-4xl leading-none whitespace-nowrap text-center">
                         Technologies we master
                     </h2>
                 </motion.div>

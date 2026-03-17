@@ -45,7 +45,7 @@ const PremiumNavbar = memo(({ variant }) => {
                 ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/60 backdrop-blur-3xl border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.3)] px-6 py-0 h-14'
                 : 'w-full rounded-none bg-gradient-to-r from-slate-900/60 to-slate-800/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-white/20'
             : isScrolled
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/60 backdrop-blur-3xl border border-pink-200/60 shadow-[0_8px_40px_rgba(251,146,60,0.2)] px-6 py-0 h-14'
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/60 backdrop-blur-3xl border border-pink-200/60 shadow-[0_8px_40px_rgba(0,0,0,0.15)] px-6 py-0 h-14'
                 : 'w-full rounded-none bg-gradient-to-r from-pink-50/60 to-pink-100/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-pink-200/60',
         navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black',
         underline: isCoursesPage ? 'bg-white' : 'bg-black',

@@ -10,6 +10,7 @@ import BrandLogo from './common/BrandLogo';
 import Magnet from './common/Magnet';
 
 import useIsMobile from '../hooks/useIsMobile';
+import RegistrationForm from './RegistrationForm';
 
 const ScrollingAvatars = ({ isMobile }) => {
     if (isMobile) {
@@ -52,9 +53,10 @@ const Hero = () => {
     const navigate = useNavigate();
     const containerRef = useRef(null);
     const isMobile = useIsMobile();
+    const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
     const handleEnrollNow = () => {
-        navigate('/online-program');
+        setIsRegistrationModalOpen(true);
     };
 
     if (isMobile) {
@@ -209,6 +211,13 @@ const Hero = () => {
                     </motion.div>
                 </div>
             </div>
+            
+            {/* Registration Form Modal */}
+            <RegistrationForm 
+                isOpen={isRegistrationModalOpen} 
+                onClose={() => setIsRegistrationModalOpen(false)} 
+                courseTitle=""
+            />
         </section>
     );
 };

@@ -43,7 +43,7 @@ const OnlineCourseFocus = ({ variant }) => {
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}
                 <div className="text-center mt-16 mb-16 sm:mt-20 sm:mb-20 md:mt-16 md:mb-20">
-                    <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl" variant={variant}>
+                    <ScrollDarkenHeading sizeClass="text-5xl md:text-8xl" variant={variant}>
                         OUR BATCHES
                     </ScrollDarkenHeading>
                 </div>

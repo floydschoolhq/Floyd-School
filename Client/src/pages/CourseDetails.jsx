@@ -21,6 +21,7 @@ import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
 import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
+import RegistrationForm from '../components/RegistrationForm';
 
 const iconMap = {
     Cpu: Cpu,
@@ -33,7 +34,7 @@ const CourseDetails = () => {
     const { courseId } = useParams();
     const navigate = useNavigate();
     const [course, setCourse] = useState(null);
-    const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+    const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
     useEffect(() => {
         const foundCourse = FALLBACK_COURSES.find(c => c._id === courseId);
@@ -90,7 +91,7 @@ const CourseDetails = () => {
                                 
                                 <div className="flex flex-wrap gap-5">
                                     <button 
-                                        onClick={() => setIsLeadModalOpen(true)}
+                                        onClick={() => setIsRegistrationModalOpen(true)}
                                         className="px-12 py-5 bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(249,115,22,0.25)] flex items-center gap-3 group"
                                     >
                                         Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -159,6 +160,12 @@ const CourseDetails = () => {
                     <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
                 </div>
 
+                {/* Registration Form Modal */}
+                <RegistrationForm 
+                    isOpen={isRegistrationModalOpen} 
+                    onClose={() => setIsRegistrationModalOpen(false)} 
+                    courseTitle={course?.title || ''}
+                />
                 
             </div>
         </div>

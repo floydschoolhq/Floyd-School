@@ -636,7 +636,7 @@ const StudentProjects = () => {
           className="text-center mt-16 mb-16 sm:mt-20 md:mt-16"
         >
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
-            Student Projects Showcase
+            These are real projects students actually build.
           </ScrollDarkenHeading>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -645,8 +645,7 @@ const StudentProjects = () => {
             transition={{ delay: 0.2 }}
             className="text-slate-600 text-lg mt-6 max-w-3xl mx-auto leading-relaxed"
           >
-            Real projects built by our students applying industry skills learned in our courses. 
-            From AI applications to IoT solutions, see the amazing work created by the next generation of tech leaders.
+            By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
           </motion.p>
         </motion.div>
 

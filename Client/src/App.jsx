@@ -28,6 +28,7 @@ import renderPage from './pages/Student/renderPage.jsx';
 import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
+import BackendStatus from './components/BackendStatus.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
@@ -156,6 +157,9 @@ const App = () => {
                     <Footer />
                 </>
             )}
+            
+            {/* Backend Status Indicator */}
+            <BackendStatus />
         </div >
     );
 };

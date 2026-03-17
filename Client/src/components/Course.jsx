@@ -1,38 +1,57 @@
-import { Cpu, ShieldCheck, Zap, Code, BookOpen, GraduationCap, Terminal, ArrowRight } from 'lucide-react';
+import { Cpu, ShieldCheck, Zap, Code, BookOpen, GraduationCap, Terminal, ArrowRight, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import OnlineCourseFocus from './OnlineCourseFocus';
 
 const Course = () => {
-    // Define the course data with titles, descriptions, and corresponding icons
+    const navigate = useNavigate();
+    
+    // Define the course data with actual course information
     const courseData = [
         {
-            title: "Advanced AI",
-            description: "Neural networks, predictive modeling, and deep learning architectures.",
+            _id: '1',
+            title: "Foundation of AI and Machine Learning",
+            description: "Master neural networks, predictive modeling, and deep learning architectures. Build production-grade AI models that solve real-world problems.",
             icon: Cpu,
-            bg: "bg-blue-600/10",
-            color: "text-blue-400"
+            duration: "3-4 Months",
+            rating: 4.9,
+            tags: ["AI", "Python", "ML"],
+            live: true
         },
         {
-            title: "Web Engine",
-            description: "Full-stack engineering with scalable cloud infrastructure and real-time systems.",
+            _id: '2',
+            title: "Web Architecture",
+            description: "Engineer high-performance full-stack applications with scalable cloud infrastructure. Architect resilient, distributed systems.",
             icon: Code,
-            bg: "bg-blue-600/10",
-            color: "text-blue-400"
+            duration: "3-4 Months",
+            rating: 4.8,
+            tags: ["React", "Node", "Cloud"],
+            comingSoon: true
         },
         {
-            title: "Robotics Ops",
-            description: "Hardware-software integration, autonomous systems, and sensor fusion.",
+            _id: '3',
+            title: "IoT & Robotics",
+            description: "Bridge the gap between hardware and software with autonomous systems. Design, build, and program smart robotic networks.",
             icon: Terminal,
-            bg: "bg-blue-600/10",
-            color: "text-blue-400"
+            duration: "3-4 Months",
+            rating: 4.7,
+            tags: ["Embedded", "C++", "Sensors"],
+            comingSoon: true
         },
         {
-            title: "Cyber Defense",
-            description: "Threat analysis, zero-trust protocols, and industrial security mastery.",
+            _id: '4',
+            title: "Cybersecurity Ops",
+            description: "Become the shield of the digital world through threat analysis and zero-trust protocols. Master offensive and defensive strategies.",
             icon: ShieldCheck,
-            bg: "bg-blue-600/10",
-            color: "text-blue-400"
+            duration: "3-4 Months",
+            rating: 4.7,
+            tags: ["Security", "Networks", "Defense"],
+            comingSoon: true
         }
     ];
+
+    const handleCardClick = (course) => {
+        navigate(`/course/${course._id}`);
+    };
 
     // Framer Motion variants for the main container (staggering)
     const containerVariants = {
@@ -96,19 +115,20 @@ const Course = () => {
                             <span className="font-bold tracking-tight lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span> architected practical, industry-relevant curriculum tracks that transform students into modern software creators.
                         </motion.p>
 
-                        {/* Course Cards Grid */}
+                        {/* Course Cards Grid - Two Column Layout */}
                         <motion.div
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                            className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
                             variants={containerVariants}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
                         >
-                            {courseData.length > 0 ? (
-                                courseData.map((course, index) => (
+                            {/* First Column - Foundation of AI Course (Live) */}
+                            <div className="flex justify-center lg:justify-end">
+                                {courseData.length > 0 && courseData[0].live && (
                                     <motion.div
-                                        key={index}
-                                        className="group relative perspective-[1500px]"
+                                        key="ai-course"
+                                        className="group relative perspective-[1500px] w-full max-w-md"
                                         variants={cardVariants}
                                     >
                                         <motion.div
@@ -119,51 +139,134 @@ const Course = () => {
                                                 rotateX: -8, 
                                                 z: 40,
                                                 boxShadow: "0 40px 100px -20px rgba(0,0,0,0.6)",
-                                                borderColor: "rgba(59,130,246,0.6)"
+                                                borderColor: "rgba(59, 130, 246, 0.8)"
                                             }}
+                                            onClick={() => handleCardClick(courseData[0])}
                                         >
-                                            {/* Mac Dots Overlay */}
-                                            <div className="mac-browser-dots">
-                                                <div className="mac-browser-dot mac-dot-red" />
-                                                <div className="mac-browser-dot mac-dot-yellow" />
-                                                <div className="mac-browser-dot mac-dot-green" />
-                                            </div>
-
-                                            {/* Icon with 3D lift */}
-                                            <div 
-                                                className={`p-4 rounded-2xl mb-8 w-fit bg-blue-500/10 text-blue-500 border border-blue-500/20 shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white`}
-                                                style={{ transform: 'translateZ(60px)' }}
-                                            >
-                                                <course.icon className="w-8 h-8" />
+                                            {/* Course content for AI course */}
+                                            <div className="flex items-center gap-4 mb-6">
+                                                <div className="p-3 rounded-xl bg-white/80 backdrop-blur-sm border border-blue-200/50 shadow-lg">
+                                                    {(() => {
+                                                        const IconComponent = courseData[0].icon;
+                                                        return <IconComponent size={28} className="text-blue-600" />;
+                                                    })()}
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-2">
+                                                        <span className="text-[11px] font-bold text-blue-600 uppercase tracking-widest">{courseData[0].duration}</span>
+                                                        {courseData[0].live && (
+                                                            <span className="px-2 py-1 rounded-full bg-emerald-500 text-white text-[9px] font-bold uppercase">
+                                                                LIVE
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <Star key={i} size={12} className={i < Math.floor(courseData[0].rating) ? "text-yellow-400 fill-yellow-400" : "text-slate-300"} />
+                                                        ))}
+                                                        <span className="text-[11px] font-semibold text-slate-600 ml-1">{courseData[0].rating}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
-                                            {/* Title with 3D lift */}
-                                            <h3 
-                                                className="text-2xl font-black text-slate-900 mb-4 tracking-tighter uppercase transition-colors duration-500 group-hover:text-blue-600"
-                                                style={{ transform: 'translateZ(50px)' }}
-                                            >
+                                            <h3 className="text-xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-blue-600 transition-colors">
+                                                {courseData[0].title}
+                                            </h3>
+                                            
+                                            <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 group-hover:text-slate-700 transition-colors">
+                                                {courseData[0].description}
+                                            </p>
+
+                                            <div className="flex flex-wrap gap-2 mb-6">
+                                                {courseData[0].tags.map(tag => (
+                                                    <span key={tag} className="px-3 py-1 rounded-full bg-blue-100/80 text-blue-700 text-[10px] font-semibold uppercase tracking-wide">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+
+                                            <div className="mt-auto flex items-center justify-between">
+                                                <span className="text-blue-600 font-black text-sm uppercase tracking-widest group-hover:text-blue-700 transition-colors">
+                                                    Explore Program
+                                                </span>
+                                                <ArrowRight size={16} className="text-blue-600 group-hover:translate-x-1 transition-transform" />
+                                            </div>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                            </div>
+
+                            {/* Second Column - Other Three Courses (Coming Soon) */}
+                            <div className="flex flex-col gap-6">
+                                {courseData.slice(1).map((course, index) => (
+                                    <motion.div
+                                        key={index}
+                                        className="group relative perspective-[1500px]"
+                                        variants={cardVariants}
+                                    >
+                                        <motion.div
+                                            className="bg-blue-50/95 backdrop-blur-xl border border-blue-300/60 rounded-xl overflow-hidden shadow-2xl transition-all duration-500 flex flex-col text-left p-6 pt-12 h-full cursor-pointer relative z-10"
+                                            style={{ transformStyle: 'preserve-3d' }}
+                                            whileHover={{ 
+                                                rotateY: 8, 
+                                                rotateX: -8, 
+                                                z: 40,
+                                                boxShadow: "0 40px 100px -20px rgba(0,0,0,0.6)",
+                                                borderColor: "rgba(59, 130, 246, 0.8)"
+                                            }}
+                                            onClick={() => handleCardClick(course)}
+                                        >
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="p-2 rounded-lg bg-white/80 backdrop-blur-sm border border-blue-200/50 shadow-lg">
+                                                    {(() => {
+                                                        const IconComponent = course.icon;
+                                                        return <IconComponent size={20} className="text-blue-600" />;
+                                                    })()}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest">{course.duration}</span>
+                                                        {course.comingSoon && (
+                                                            <span className="px-2 py-0.5 rounded-full bg-orange-500 text-white text-[8px] font-bold uppercase">
+                                                                COMING SOON
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <Star key={i} size={10} className={i < Math.floor(course.rating) ? "text-yellow-400 fill-yellow-400" : "text-slate-300"} />
+                                                        ))}
+                                                        <span className="text-[9px] font-semibold text-slate-600 ml-1">{course.rating}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <h3 className="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors">
                                                 {course.title}
                                             </h3>
                                             
-                                            {/* Description with subtle lift */}
-                                            <p 
-                                                className="text-slate-600 leading-relaxed grow text-base font-medium"
-                                                style={{ transform: 'translateZ(30px)' }}
-                                            >
+                                            <p className="text-slate-600 text-xs leading-relaxed mb-4 line-clamp-3 group-hover:text-slate-700 transition-colors">
                                                 {course.description}
                                             </p>
 
-                                            {/* Play Button Subtle Overlay - Icon Only */}
-                                            <div className="absolute top-8 right-8 text-white/5 group-hover:text-blue-500 transition-colors" style={{ transform: 'translateZ(60px)' }}>
-                                                <ArrowRight size={24} />
+                                            <div className="flex flex-wrap gap-1 mb-4">
+                                                {course.tags.map(tag => (
+                                                    <span key={tag} className="px-2 py-0.5 rounded-full bg-blue-100/80 text-blue-700 text-[8px] font-semibold uppercase tracking-wide">
+                                                        {tag}
+                                                    </span>
+                                                ))}
                                             </div>
 
-                                            {/* 3D Depth Decoration */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                            <div className="mt-auto flex items-center justify-between">
+                                                <span className="text-blue-600 font-black text-xs uppercase tracking-widest group-hover:text-blue-700 transition-colors">
+                                                    Explore
+                                                </span>
+                                                <ArrowRight size={14} className="text-blue-600 group-hover:translate-x-1 transition-transform" />
+                                            </div>
                                         </motion.div>
                                     </motion.div>
-                                ))
-                            ) : null}
+                                ))}
+                            </div>
                         </motion.div>
                     </div>
                 </section>
@@ -178,4 +281,3 @@ const Course = () => {
 };
 
 export default Course;
-
