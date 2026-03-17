@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback, memo } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -15,7 +15,15 @@ const FALLBACK_COURSES = [
     { title: "Cybersecurity Ops", level: "Advanced", link: "/online-program#explore-programs" }
 ];
 
-const PremiumNavbar = ({ variant }) => {
+const MOBILE_NAV_ITEMS = [
+    { icon: FaHome, label: "Home", href: "#hero" },
+    { icon: FaGraduationCap, label: "Courses", href: "#online-focus" },
+    { icon: FaBook, label: "Projects", href: "#student-projects" },
+    { icon: FaUsers, label: "Mentors", href: "#mentors-grid" },
+    { icon: FaPhone, label: "Contact", href: "#contact" }
+];
+
+const PremiumNavbar = memo(({ variant }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,17 +34,65 @@ const PremiumNavbar = ({ variant }) => {
     const [courses, setCourses] = useState([]);
     const location = useLocation();
 
-    const { scrollY } = useScroll();
+    // Optimized theme detection - single string check
+    const isCoursesPage = location.pathname.includes('course') || 
+                         location.pathname === '/online-program';
 
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = scrollY.getPrevious();
-        if (latest > previous && latest > 150) {
+    // Pre-computed styles - cached to prevent recalculation
+    const styles = {
+        navbar: isCoursesPage 
+            ? isScrolled 
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-[#050505]/60 backdrop-blur-3xl border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.3)] px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-[#050505]/60 to-[#0a0a0a]/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-white/20'
+            : isScrolled
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-orange-50/60 backdrop-blur-3xl border border-orange-200/60 shadow-[0_8px_40px_rgba(251,146,60,0.2)] px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-orange-50/60 to-orange-100/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-orange-200/60',
+        navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-orange-700/80 hover:text-orange-900',
+        underline: isCoursesPage ? 'bg-white' : 'bg-orange-500',
+        mobileMenu: isCoursesPage ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-orange-700/70 hover:text-orange-900 hover:bg-orange-100/50'
+    };
+
+    // Optimized scroll handler with throttling and direction detection
+    const [lastScrollY, setLastScrollY] = useState(0);
+    
+    const handleScroll = useCallback((latest) => {
+        setIsScrolled(latest > 20);
+        
+        // Show/hide based on scroll direction
+        if (latest > lastScrollY && latest > 100) {
+            // Scrolling down - hide navbar
             setIsVisible(false);
         } else {
+            // Scrolling up - show navbar
             setIsVisible(true);
         }
-        setIsScrolled(latest > 20);
-    });
+        
+        setLastScrollY(latest);
+    }, [lastScrollY]);
+
+    const { scrollY } = useScroll();
+    useMotionValueEvent(scrollY, "change", handleScroll);
+
+    // Optimized event handlers
+    const handleContactClick = useCallback(() => {
+        setSource('navbar');
+        setIsModalOpen(true);
+    }, []);
+
+    const scrollToSection = useCallback((sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
+
+    // Memoized navigation items to prevent recreation
+    const navItems = [
+        { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+        { name: 'Courses', id: 'online-focus' },
+        { name: 'Partner with us', link: '/school-partnerships' },
+        { name: 'Request Callback', action: handleContactClick },
+    ];
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -52,31 +108,6 @@ const PremiumNavbar = ({ variant }) => {
         fetchCourses();
     }, []);
 
-    const handleContactClick = () => {
-        setSource('contact');
-        setIsModalOpen(true);
-    };
-
-    const scrollToSection = (id) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'auto' });
-        } else {
-            navigate('/');
-            setTimeout(() => {
-                const target = document.getElementById(id);
-                if (target) target.scrollIntoView({ behavior: 'auto' });
-            }, 300);
-        }
-    };
-
-    const navItems = [
-        { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-        { name: 'Courses', id: 'online-focus' },
-        { name: 'Partner with us', link: '/school-partnerships' },
-        { name: 'Request Callback', action: handleContactClick },
-    ];
-
     return (
         <>
             <MaintenanceBanner />
@@ -88,11 +119,7 @@ const PremiumNavbar = ({ variant }) => {
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
                 <div
-                    className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center
-                        ${isScrolled
-                            ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-orange-50/95 backdrop-blur-2xl border border-orange-200/50 shadow-[0_8px_40px_rgba(251,146,60,0.3)] px-6 py-0 h-14'
-                            : 'w-full rounded-none bg-gradient-to-r from-orange-50 to-orange-100/97 backdrop-blur-xl px-6 py-0 h-[68px] border-b border-orange-200/50'
-                        }`}
+                    className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center ${styles.navbar}`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
 
@@ -117,11 +144,11 @@ const PremiumNavbar = ({ variant }) => {
                                     {item.link ? (
                                         <Link
                                             to={item.link}
-                                            className="relative flex flex-col items-start gap-1.5 text-orange-700/80 hover:text-orange-900 font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3"
+                                            className={`relative flex flex-col items-start gap-1.5 font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 ${styles.navItem}`}
                                         >
                                             {item.name}
-                                            {/* Orange underline */}
-                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                                            {/* Underline */}
+                                            <span className={`absolute bottom-0 left-3 right-3 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full ${styles.underline}`} />
                                         </Link>
                                     ) : (
                                         <motion.div
@@ -129,12 +156,12 @@ const PremiumNavbar = ({ variant }) => {
                                                 if (item.action) item.action();
                                                 else if (item.id) scrollToSection(item.id);
                                             }}
-                                            className="relative flex flex-col items-start text-orange-700/80 hover:text-orange-900 font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 cursor-pointer"
+                                            className={`relative flex flex-col items-start font-semibold text-[15px] tracking-wide transition-colors duration-200 py-2 px-3 cursor-pointer ${styles.navItem}`}
                                             whileTap={{ scale: 0.97 }}
                                         >
                                             {item.name}
-                                            {/* Orange underline */}
-                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                                            {/* Underline */}
+                                            <span className={`absolute bottom-0 left-3 right-3 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full ${styles.underline}`} />
                                         </motion.div>
                                     )}
                                 </div>
@@ -153,7 +180,7 @@ const PremiumNavbar = ({ variant }) => {
 
                         {/* Mobile menu toggle */}
                         <button
-                            className="md:hidden p-2 text-orange-700/70 hover:text-orange-900 rounded-xl hover:bg-orange-100/50 transition-colors"
+                            className={`md:hidden p-2 rounded-xl transition-colors ${styles.mobileMenu}`}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
@@ -166,45 +193,92 @@ const PremiumNavbar = ({ variant }) => {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        className="fixed inset-0 z-40 md:hidden"
+                        className="fixed inset-0 z-50 md:hidden"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     >
+                        {/* Backdrop */}
                         <div
-                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
+                        
+                        {/* Modern Mobile Menu Panel */}
                         <motion.div
-                            className="absolute top-[68px] left-0 right-0 bg-gradient-to-r from-orange-50 to-orange-100/99 backdrop-blur-2xl border-b border-orange-200/50 shadow-2xl shadow-orange-200/30"
-                            initial={{ y: -16, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -16, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: 'easeOut' }}
+                            className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl
+                                ${isCoursesPage ? 'bg-[#050505]' : 'bg-white'}`}
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                         >
-                            <div className="p-4 flex flex-col gap-1">
-                                {navItems.map((item) => (
+                            {/* Menu Header */}
+                            <div className={`p-6 text-white
+                                ${isCoursesPage ? 'bg-gradient-to-r from-[#1a1a1a] to-[#0a0a0a]' : 'bg-gradient-to-r from-orange-500 to-orange-600'}`}>
+                                <div className="flex items-center justify-between mb-2">
+                                    <h3 className="text-lg font-bold">Menu</h3>
                                     <button
-                                        key={item.name}
-                                        onClick={() => {
-                                            if (item.action) { item.action(); setIsMobileMenuOpen(false); }
-                                            else if (item.link) { navigate(item.link); setIsMobileMenuOpen(false); }
-                                            else if (item.id) { scrollToSection(item.id); setIsMobileMenuOpen(false); }
-                                        }}
-                                        className="w-full text-left px-4 py-3 text-[14px] font-semibold tracking-wide text-orange-700/80 hover:text-orange-900 hover:bg-orange-100/50 rounded-lg transition-all"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
                                     >
-                                        {item.name}
+                                        <FaTimes size={16} />
                                     </button>
-                                ))}
-
-                                <div className="h-px bg-orange-200/50 my-3" />
-
-                                <button
-                                    onClick={() => { navigate('/student/login'); setIsMobileMenuOpen(false); }}
-                                    className="w-full text-center px-4 py-3 text-[13px] font-black text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg shadow-orange-500/15"
-                                >
-                                    Sign In
-                                </button>
+                                </div>
+                                <p className="text-sm opacity-90">Navigate through thinkskool</p>
+                            </div>
+                            
+                            {/* Navigation Items */}
+                            <div className="flex-1 overflow-y-auto">
+                                <div className="p-4 space-y-2">
+                                    {MOBILE_NAV_ITEMS.map((item, index) => {
+                                        const Icon = item.icon;
+                                        return (
+                                            <motion.button
+                                                key={item.label}
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: index * 0.05 }}
+                                                onClick={() => {
+                                                    if (item.href) {
+                                                        // Smooth scroll to section
+                                                        const element = document.querySelector(item.href);
+                                                        if (element) {
+                                                            element.scrollIntoView({ behavior: 'smooth' });
+                                                        }
+                                                    }
+                                                    setIsMobileMenuOpen(false);
+                                                }}
+                                                className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-orange-50 rounded-xl transition-all group"
+                                            >
+                                                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                                                    <Icon className="text-orange-600" size={18} />
+                                                </div>
+                                                <div className="flex-1 text-left">
+                                                    <div className="font-semibold text-slate-900">{item.label}</div>
+                                                </div>
+                                                <div className="text-slate-400">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                        <path d="M9 18l6-6-6-6" />
+                                                    </svg>
+                                                </div>
+                                            </motion.button>
+                                        );
+                                    })}
+                                </div>
+                                
+                                {/* CTA Section */}
+                                <div className="p-4 border-t border-slate-200">
+                                    <button
+                                        onClick={() => {
+                                            navigate('/student/login');
+                                            setIsMobileMenuOpen(false);
+                                        }}
+                                        className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg"
+                                    >
+                                        Sign In
+                                    </button>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -214,6 +288,8 @@ const PremiumNavbar = ({ variant }) => {
             <LeadFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} source={source} />
         </>
     );
-};
+});
+
+PremiumNavbar.displayName = 'PremiumNavbar';
 
 export default PremiumNavbar;

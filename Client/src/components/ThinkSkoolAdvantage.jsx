@@ -9,9 +9,12 @@ import {
     Hammer,
     ArrowRight,
     X,
-    CheckCircle2
+    CheckCircle2,
+    ChevronLeft,
+    ChevronRight
 } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
+import useIsMobile from '../hooks/useIsMobile';
 
 const ADVANTAGES = [
     {
@@ -101,6 +104,8 @@ const AdvantageCard = ({ card, index, baseX, spreadFactor, isStatic }) => {
 const ThinkskoolAdvantage = () => {
     const sectionRef = useRef(null);
     const [isLandscape, setIsLandscape] = React.useState(false);
+    const isMobile = useIsMobile();
+    const scrollRef = useRef(null);
 
     React.useEffect(() => {
         const checkLandscape = () => {
@@ -110,6 +115,18 @@ const ThinkskoolAdvantage = () => {
         window.addEventListener('resize', checkLandscape);
         return () => window.removeEventListener('resize', checkLandscape);
     }, []);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { current } = scrollRef;
+            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
+            if (direction === 'left') {
+                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -124,8 +141,104 @@ const ThinkskoolAdvantage = () => {
     const rawSpread = useTransform(scrollYProgress, [0, 1], [40, 360]);
     const spreadFactor = useSpring(rawSpread, { stiffness: 40, damping: 15 });
 
+    if (isMobile) {
+        return (
+            <section ref={sectionRef} id="advantage" className="py-12 pb-20 bg-white relative overflow-hidden w-full" style={{ position: 'relative' }}>
+                <div className="max-w-7xl mx-auto px-4 relative z-10">
+                    {/* Simple Mobile Header */}
+                    <div className="text-center mt-16 mb-8 sm:mt-20 md:mt-16">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Thinkskool Advantage</h2>
+                        <p className="text-sm text-slate-600">Why choose us for your learning journey</p>
+                    </div>
+
+                    {/* Mobile Cards Grid with Horizontal Scrolling */}
+                    <div className="relative mb-8">
+                        {/* Navigation Buttons */}
+                        <div className="absolute top-1/2 -translate-y-1/2 -left-2 z-20">
+                            <button 
+                                onClick={() => scroll('left')}
+                                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                            >
+                                <ChevronLeft size={16} />
+                            </button>
+                        </div>
+                        <div className="absolute top-1/2 -translate-y-1/2 -right-2 z-20">
+                            <button 
+                                onClick={() => scroll('right')}
+                                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                            >
+                                <ChevronRight size={16} />
+                            </button>
+                        </div>
+                        
+                        <div 
+                            ref={scrollRef}
+                            className="overflow-hidden py-10 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory" 
+                            style={{ 
+                                scrollbarWidth: 'none', 
+                                msOverflowStyle: 'none',
+                                scrollPaddingLeft: '1rem',
+                                scrollPaddingRight: '1rem'
+                            }}
+                        >
+                            {/* webkit-scrollbar hiding applied via a hacky style tag */}
+                            <style>{`
+                                .thinkskool-advantage .overflow-x-auto::-webkit-scrollbar { display: none; }
+                            `}</style>
+                            <div className="flex gap-3 w-max">
+                            {ADVANTAGES.map((card, index) => {
+                                const Icon = card.icon;
+                                return (
+                                    <div 
+                                        key={card.id} 
+                                        className="flex-shrink-0 w-72" 
+                                        style={{ scrollSnapAlign: 'start' }}
+                                    >
+                                        <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm h-full">
+                                            <div className="relative h-32 w-full bg-gradient-to-br from-orange-50 to-orange-100">
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                                <div className="absolute top-3 left-3">
+                                                    <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                        <Icon size={16} className="text-orange-600" />
+                                                    </div>
+                                                </div>
+                                                {/* Optional: Add image if it exists */}
+                                                {card.image && (
+                                                    <img
+                                                        src={card.image}
+                                                        alt={card.title}
+                                                        className="w-full h-full object-cover opacity-50"
+                                                        onError={(e) => {
+                                                            e.target.style.display = 'none';
+                                                        }}
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className="p-4">
+                                                <h3 className="text-sm font-semibold text-slate-900 mb-1">{card.title}</h3>
+                                                <p className="text-xs text-slate-600 leading-relaxed mb-2">{card.description}</p>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {card.details.slice(0, 3).map((feature, idx) => (
+                                                        <span key={idx} className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
+                                                            {feature}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                            </div>
+                        </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
-        <section ref={sectionRef} id="advantage" className="py-24 bg-white relative overflow-hidden w-full">
+        <section ref={sectionRef} id="advantage" className="py-24 pb-32 bg-white relative overflow-hidden w-full" style={{ position: 'relative' }}>
             {/* Subtle Background Elements */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-0 w-[1000px] h-[1000px] bg-blue-50/10 rounded-full blur-[140px] opacity-20" />
@@ -133,7 +246,7 @@ const ThinkskoolAdvantage = () => {
 
             <div className="w-full relative z-10">
                 {/* Heading with Scroll Darken Effect */}
-                <div className="max-w-7xl mx-auto px-6 mb-24 flex flex-col items-center text-center">
+                <div className="max-w-7xl mx-auto px-6 mt-16 mb-24 flex flex-col items-center text-center sm:mt-20 md:mt-16">
                     <ScrollDarkenHeading
                         sizeClass="text-3xl md:text-5xl lg:text-7xl"
                         className="whitespace-nowrap flex items-baseline gap-2 md:gap-4 justify-center"
@@ -148,7 +261,6 @@ const ThinkskoolAdvantage = () => {
                     </ScrollDarkenHeading>
                 </div>
 
-                {/* Animated/Static Cards Container */}
                 <div className={`advantage-card-container relative h-[650px] w-full max-w-[1400px] mx-auto ${isLandscape ? 'flex flex-row overflow-x-auto gap-4 px-4 h-auto' : 'overflow-visible'}`}>
                     {ADVANTAGES.map((card, index) => (
                         <AdvantageCard

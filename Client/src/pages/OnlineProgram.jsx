@@ -30,7 +30,7 @@ const CourseCard = ({ course, onClick }) => {
         return (
             <div className={`flex flex-col p-4 rounded-xl bg-white/[0.03] backdrop-blur-xl border ${
                 isComingSoon ? 'border-white/5 cursor-not-allowed opacity-75' : 'border-white/10 hover:border-orange-500/30 transition-all cursor-pointer'
-            } shadow-xl group relative overflow-hidden flex-shrink-0 w-64`} style={{ scrollSnapAlign: 'start' }}>
+            } shadow-xl group relative overflow-hidden flex-shrink-0 w-56`} style={{ scrollSnapAlign: 'start' }}>
                 {/* Coming Soon Overlay */}
                 {isComingSoon && (
                     <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
@@ -351,7 +351,7 @@ const OnlineProgram = () => {
 
                         {/* Courses Grid - Mobile Horizontal Scrolling */}
                         <div className="mb-12">
-                            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
+                            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
                                 {FALLBACK_COURSES.length > 0 ? (
                                     FALLBACK_COURSES.map(course => (
                                         <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
@@ -383,7 +383,7 @@ const OnlineProgram = () => {
                 </div>
 
                 {/* Custom scrollbar styles */}
-                <style jsx>{`
+                <style>{`
                     .scrollbar-hide::-webkit-scrollbar {
                         display: none;
                     }

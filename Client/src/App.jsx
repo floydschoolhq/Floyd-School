@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLoca
 // Layout Components (Always visible or shared)
 
 import Footer from './components/Footer';
+import MobileBottomNav from './components/MobileBottomNav';
 
 // Static Marketing Page Components (Should only be visible on the Home route)
 import Hero from './components/Hero';
@@ -54,7 +55,7 @@ const HomePage = () => {
                     <ThinkskoolAdvantage />
                     <TechStackStats />
                     <OnlineCourseFocus variant="dark" />
-                    <MentorGrid />
+                    <MentorGrid isStatic={true} />
                     <InteractiveFeatures isFeaturesExpanded={true} />
                     <StudentProjects />
                     <SuccessStories variant="dark" />
@@ -151,7 +152,12 @@ const App = () => {
             </Routes>
 
             {/* Conditional Footer Rendering */}
-            {!shouldHideLayout && <Footer />}
+            {!shouldHideLayout && (
+                <>
+                    <MobileBottomNav />
+                    <Footer />
+                </>
+            )}
         </div >
     );
 };

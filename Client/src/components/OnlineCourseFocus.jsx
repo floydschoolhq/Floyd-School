@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Cpu, Code, Terminal, ShieldCheck, Rocket } from 'lucide-react';
+import { ArrowRight, Cpu, Code, Terminal, ShieldCheck, Rocket, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import { FALLBACK_COURSES } from '../constants/siteData';
+import useIsMobile from '../hooks/useIsMobile';
 
 const iconMap = {
     Cpu: Cpu,
@@ -15,9 +16,23 @@ const iconMap = {
 const OnlineCourseFocus = ({ variant }) => {
     const navigate = useNavigate();
     const isDark = variant === 'dark';
+    const isMobile = useIsMobile();
+    const scrollRef = React.useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { current } = scrollRef;
+            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
+            if (direction === 'left') {
+                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
 
     return (
-        <section id="online-focus" className={`relative pt-24 pb-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#050505]' : 'bg-slate-50'}`}>
+        <section id="online-focus" className={`relative pt-24 pb-32 sm:pt-40 sm:pb-48 md:pt-24 md:pb-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#050505]' : 'bg-slate-50}'}`}>
             {/* Ambient Background Glows */}
             <div className={`absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700
                 ${isDark ? 'bg-orange-500/[0.03]' : 'bg-blue-500/[0.02]'}`} />
@@ -26,15 +41,55 @@ const OnlineCourseFocus = ({ variant }) => {
 
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}
-                <div className="text-center mb-20">
+                <div className="text-center mt-16 mb-16 sm:mt-20 sm:mb-20 md:mt-16 md:mb-20">
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl" variant={variant}>
                         OUR BATCHES
                     </ScrollDarkenHeading>
                 </div>
 
                 {/* Featured Programs Grid */}
-                <div className="mb-12">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="mb-12 sm:mb-16 md:mb-12 relative">
+                    {/* Navigation Buttons for Mobile */}
+                    {isMobile && (
+                        <>
+                            <div className="absolute top-1/2 -translate-y-1/2 -left-2 z-20">
+                                <button 
+                                    onClick={() => scroll('left')}
+                                    className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                                >
+                                    <ChevronLeft size={16} />
+                                </button>
+                            </div>
+                            <div className="absolute top-1/2 -translate-y-1/2 -right-2 z-20">
+                                <button 
+                                    onClick={() => scroll('right')}
+                                    className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                                >
+                                    <ChevronRight size={16} />
+                                </button>
+                            </div>
+                        </>
+                    )}
+                    
+                    <div 
+                        ref={scrollRef}
+                        className={`overflow-hidden py-10 -mx-4 px-4 ${isMobile ? "overflow-x-auto snap-x snap-mandatory" : ""}`} 
+                        style={{ 
+                            scrollbarWidth: 'none', 
+                            msOverflowStyle: 'none',
+                            scrollPaddingLeft: '1rem',
+                            scrollPaddingRight: '1rem'
+                        }}
+                    >
+                        {/* webkit-scrollbar hiding applied via a hacky style tag */}
+                        <style>{`
+                            .online-course-focus .overflow-x-auto::-webkit-scrollbar { display: none; }
+                        `}</style>
+                        <div className={`gap-8 ${isMobile ? 'flex w-max' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`} 
+                             style={isMobile ? { 
+                                display: 'flex',
+                                flexDirection: 'row'
+                            } : { display: 'grid' }}>
                         {FALLBACK_COURSES.length > 0 ? (
                             FALLBACK_COURSES.map((course) => {
                                 const isComingSoon = !!course.comingSoon;
@@ -49,7 +104,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                             ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
                                             ${isDark
                                                 ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-orange-500/30'
-                                                : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}`}
+                                                : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}
+                                            ${isMobile ? 'flex-shrink-0 w-72' : ''}`}
+                                        style={isMobile ? { scrollSnapAlign: 'start' } : {}}
                                         onClick={() => !isComingSoon && navigate(`/course/${course._id}`)}
                                     >
                                         {/* Premium Glowing Outline - Visible only on hover for live courses */}
@@ -137,6 +194,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                 <p className="text-[10px] font-normal text-slate-600 uppercase tracking-[0.2em] mt-2">Preparing the next generation of engineers.</p>
                             </div>
                         )}
+                        </div>
                     </div>
                 </div>
             </div>

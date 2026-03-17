@@ -162,7 +162,7 @@ const Contact = () => {
     };
 
     return (
-        <LampContainer className="pt-32 md:pt-48">
+        <LampContainer className="pt-32 md:pt-48" id="contact">
             <motion.div
                 initial={{ opacity: 0.5, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}

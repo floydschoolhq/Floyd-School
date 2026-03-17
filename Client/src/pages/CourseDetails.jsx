@@ -52,14 +52,14 @@ const CourseDetails = () => {
         <div className="min-h-screen bg-[#050505] text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
             
             {/* Background Decorative Mesh - Industrial Dark */}
-            <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
+            <div className="fixed inset-0 pointer-events-none z-10">
                 <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-orange-500/10 rounded-full blur-[160px] -mr-96 -mt-96" />
                 <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[140px] -ml-48 -mb-48" />
                 {/* Grid Overlay */}
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
             </div>
 
-            <div className="relative z-10">
+            <div className="relative z-20">
                 {/* Course Hero - Dark Mode Refined */}
                 <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-6 relative z-10">

@@ -38,7 +38,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#050505] text-slate-400 pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
+    <footer className="bg-[#050505] text-slate-400 pt-24 md:pb-12 pb-32 border-t border-white/5 relative overflow-hidden">
       {/* Premium Ambient Glows */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none -mr-48 -mt-48" />
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-amber-500/[0.03] rounded-full blur-[120px] pointer-events-none -ml-32" />

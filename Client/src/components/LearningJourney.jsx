@@ -204,7 +204,7 @@ const LearningJourney = () => {
     });
 
     return (
-        <section ref={containerRef} className="py-20 bg-[#060C1B] relative overflow-hidden">
+        <section ref={containerRef} className="py-20 pb-32 bg-[#060C1B] relative overflow-hidden" style={{ position: 'relative' }}>
             {/* Dot grid */}
             <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
             {/* Glows */}

@@ -198,7 +198,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
             </div>
 
             <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
-                <div className="flex flex-col items-center justify-center mb-12 text-center">
+                <div className="flex flex-col items-center justify-center mt-16 mb-12 text-center sm:mt-20 md:mt-16">
                     <div className="w-full">
                         <div className="flex justify-center">
                             <ScrollDarkenHeading variant={variant}>
@@ -235,7 +235,12 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     <div 
                         ref={isStatic ? scrollRef : null}
                         className={`overflow-hidden py-10 -mx-4 px-4 ${isStatic ? "overflow-x-auto snap-x snap-mandatory" : ""}`}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        style={{ 
+                            scrollbarWidth: 'none', 
+                            msOverflowStyle: 'none',
+                            scrollPaddingLeft: '1rem',
+                            scrollPaddingRight: '1rem'
+                        }}
                     >
                         {/* webkit-scrollbar hiding applied via a hacky style tag */}
                         <style>{`

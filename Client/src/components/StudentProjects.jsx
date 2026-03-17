@@ -18,6 +18,8 @@ import {
   Cpu,
   Smartphone,
   Globe,
+  ChevronLeft,
+  ChevronRight,
   Database
 } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
@@ -466,15 +468,28 @@ const ProjectCard = ({ project, index, isFeatured }) => {
 const StudentProjects = () => {
   const [filter, setFilter] = useState('all');
   const isMobile = useIsMobile();
+  const scrollRef = useRef(null);
 
   const featuredProjects = PROJECTS_DATA.filter(p => p.featured);
   const allProjects = PROJECTS_DATA;
 
   const filteredProjects = filter === 'featured' ? featuredProjects : allProjects;
 
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+        const { current } = scrollRef;
+        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
+        if (direction === 'left') {
+            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    }
+};
+
   if (isMobile) {
     return (
-      <section className="py-8 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
+      <section id="student-projects" className="py-8 pb-16 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
         {/* Simplified Background for Mobile */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-10 right-5 w-12 h-12 bg-orange-500/3 rounded-full blur-xl" />
@@ -483,7 +498,7 @@ const StudentProjects = () => {
 
         <div className="max-w-95% mx-auto px-2 relative z-10">
           {/* Header - Mobile */}
-          <div className="text-center mb-6">
+          <div className="text-center mt-16 mb-6 sm:mt-20 md:mt-16">
             <h2 className="text-xl font-black text-slate-900 mb-2 leading-tight">
               Student Projects
             </h2>
@@ -510,23 +525,55 @@ const StudentProjects = () => {
           </div>
 
           {/* Projects Grid - Mobile Horizontal Scrolling */}
-          <div className="mb-8">
-            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
-              {filteredProjects.map((project, index) => (
-                <div 
-                  key={project.id} 
-                  className="flex-shrink-0 w-72" 
-                  style={{ scrollSnapAlign: 'start' }}
-                >
-                  <ProjectCard
-                    project={project}
-                    index={index}
-                    isFeatured={project.featured}
-                  />
-                </div>
-              ))}
+          <div className="mb-8 relative">
+            {/* Navigation Buttons */}
+            <div className="absolute top-1/2 -translate-y-1/2 -left-2 z-20">
+              <button 
+                onClick={() => scroll('left')}
+                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+              >
+                <ChevronLeft size={16} />
+              </button>
             </div>
-          </div>
+            <div className="absolute top-1/2 -translate-y-1/2 -right-2 z-20">
+              <button 
+                onClick={() => scroll('right')}
+                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+            
+            <div 
+              ref={scrollRef}
+              className="overflow-hidden py-10 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory" 
+              style={{ 
+                  scrollbarWidth: 'none', 
+                  msOverflowStyle: 'none',
+                  scrollPaddingLeft: '1rem',
+                  scrollPaddingRight: '1rem'
+              }}
+            >
+              {/* webkit-scrollbar hiding applied via a hacky style tag */}
+              <style>{`
+                .student-projects .overflow-x-auto::-webkit-scrollbar { display: none; }
+              `}</style>
+              <div className="flex gap-3 w-max">
+                {filteredProjects.map((project, index) => (
+                  <div 
+                    key={project.id} 
+                    className="flex-shrink-0 w-72" 
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    <ProjectCard
+                      project={project}
+                      index={index}
+                      isFeatured={project.featured}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
           {/* CTA Section - Mobile */}
           <div className="text-center">
@@ -541,7 +588,7 @@ const StudentProjects = () => {
         </div>
 
         {/* Custom scrollbar styles */}
-        <style jsx>{`
+        <style>{`
           .scrollbar-hide::-webkit-scrollbar {
             display: none;
           }
@@ -550,12 +597,13 @@ const StudentProjects = () => {
             scrollbar-width: none;
           }
         `}</style>
-      </section>
+      </div>
+    </section>
     );
   }
 
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
+    <section id="student-projects" className="py-20 md:py-28 pb-32 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -585,7 +633,7 @@ const StudentProjects = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mt-16 mb-16 sm:mt-20 md:mt-16"
         >
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
             Student Projects Showcase

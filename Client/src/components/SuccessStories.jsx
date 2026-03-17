@@ -148,9 +148,7 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="px-6 md:px-12 text-center mb-16 md:mb-24">
-                    <span className={`text-[11px] font-black uppercase tracking-[0.3em] mb-4 block
-                        ${isDark ? 'text-orange-500' : 'text-slate-500'}`}>Proven Excellence</span>
+                <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-[10%]">
                     <ScrollDarkenHeading sizeClass="text-3xl md:text-4xl lg:text-5xl" variant={variant} uppercase={false}>
                         transformed by <span className="font-black tracking-tight"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </ScrollDarkenHeading>

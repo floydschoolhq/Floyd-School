@@ -225,7 +225,7 @@ const FeatureCard = React.memo(({ feature, index }) => {
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             >
-              {React.cloneElement(feature.icon, { size: 24, strokeWidth: 2 })}
+              <feature.icon size={24} strokeWidth={2} />
             </motion.div>
           </motion.div>
         </div>
@@ -303,7 +303,7 @@ const FeatureCard = React.memo(({ feature, index }) => {
 
 const allFeatures = [
   {
-    icon: <PlayCircle />,
+    icon: PlayCircle,
     title: 'HD Video Content',
     description: 'Crystal clear video lessons with expert instructors and adaptive streaming for all devices.',
     detail: '4K adaptive quality',
@@ -311,7 +311,7 @@ const allFeatures = [
     capabilities: ['4K Ultra HD', 'Adaptive Streaming', 'Offline Mode']
   },
   {
-    icon: <Code />,
+    icon: Code,
     title: 'Integrated Editor',
     description: 'Practice coding directly in the browser with real-time feedback and cloud sync.',
     detail: 'Supports 20+ languages',
@@ -319,7 +319,7 @@ const allFeatures = [
     capabilities: ['VSC Engine', 'Git Integration', 'IntelliSense']
   },
   {
-    icon: <Brain />,
+    icon: Brain,
     title: 'AI-Powered Quizzes',
     description: 'Adaptive assessments that adjust to your learning pace and map knowledge gaps.',
     detail: 'Personalized knowledge mapping',
@@ -327,7 +327,7 @@ const allFeatures = [
     capabilities: ['NLP Analysis', 'Dynamic Levels', 'Instant Review']
   },
   {
-    icon: <Sparkles />,
+    icon: Sparkles,
     title: 'Master 23+ AI Tools',
     description: 'Master generative AI and prompt engineering workflows for modern industrial standards.',
     detail: 'Tailored AI solutions',
@@ -335,7 +335,7 @@ const allFeatures = [
     capabilities: ['GPT-4 Access', 'Midjourney Lab', 'Prompt Library']
   },
   {
-    icon: <Users />,
+    icon: Users,
     title: 'Expert Support',
     description: 'Get help whenever you need it from our dedicated 24/7 technical staff.',
     detail: '15 min response time',
@@ -343,7 +343,7 @@ const allFeatures = [
     capabilities: ['Live Chat', 'Ticket System', 'Code Review']
   },
   {
-    icon: <MessageSquare />,
+    icon: MessageSquare,
     title: '1:1 Doubt Session',
     description: 'Get personalized one-on-one guidance from industry veterans to audit your projects.',
     detail: 'Tailored tech solutions',
@@ -354,14 +354,33 @@ const allFeatures = [
 
 const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   const isMobile = useIsMobile();
-  
+  const scrollContainerRef = React.useRef(null);
+
+  const handleScroll = (direction) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const cardWidth = 256; 
+    const gap = 12;  
+    const scrollDistance = cardWidth + gap; 
+    
+    container.scrollBy({
+      left: direction === 'left' ? -scrollDistance : scrollDistance,
+      behavior: 'smooth'
+    });
+  };
+
   if (isMobile) {
     return (
-      <section id="how-it-works" className="py-8 bg-[#050505] text-white relative overflow-hidden">
+      <section id="how-it-works" className="py-12 pb-32 bg-[#050505] text-white relative overflow-hidden">
+        {/* Ambient Background Glows - Mobile */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none transition-colors duration-700 bg-purple-500/[0.02]" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none transition-colors duration-700 bg-blue-500/[0.01]" />
+        
         <div className="max-w-95% mx-auto px-2 relative z-10">
           <div className="flex flex-col">
             {/* Header - Mobile */}
-            <div className="text-center mb-6">
+            <div className="text-center mt-16 mb-6 sm:mt-20 md:mt-16 hidden sm:block">
               <h2 className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2 font-sans">Experience the future</h2>
               <h3 className="text-lg font-black text-white leading-tight">
                 Interactive Learning & Support
@@ -369,27 +388,52 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
             </div>
 
             {/* Features Grid - Mobile Horizontal Scrolling */}
-            <div className="mb-8">
-              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
+            <div className="relative mb-8">
+              {/* Navigation Buttons - Always Visible */}
+              <button 
+                onClick={() => handleScroll('left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/30 shadow-xl transition-all"
+              >
+                <ChevronRight size={18} className="rotate-180" />
+              </button>
+              <button 
+                onClick={() => handleScroll('right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/30 shadow-xl transition-all"
+              >
+                <ChevronRight size={18} />
+              </button>
+              
+              {/* Scroll Container - Clean Implementation */}
+              <div 
+                ref={scrollContainerRef}
+                className="flex gap-3 overflow-x-auto pb-4 px-2"
+                style={{ 
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  scrollSnapType: 'x mandatory'
+                }}
+              >
+                <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                
                 {allFeatures.map((feature, index) => (
                   <div 
-                    key={index} 
-                    className="flex-shrink-0 w-64" 
-                    style={{ scrollSnapAlign: 'start' }}
+                    key={index}
+                    className="flex-shrink-0 w-64 scroll-snap-start"
                   >
                     <div className="p-2.5 rounded-lg border border-white/10 bg-gradient-to-br from-[#151515]/95 to-[#0a0a0a]/90 h-full">
                       {/* Icon */}
                       <div className="mb-1.5">
                         <div className="w-6 h-6 rounded-md flex items-center justify-center border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#151515]/80">
-                          {React.cloneElement(feature.icon, { size: 12, strokeWidth: 2 })}
+                          <feature.icon size={12} className="text-white/80" />
                         </div>
                       </div>
                       
-                      {/* Content */}
-                      <h4 className="text-xs font-bold text-white mb-1">
+                      {/* Title */}
+                      <h4 className="text-sm font-black text-white mb-1 leading-tight">
                         {feature.title}
                       </h4>
                       
+                      {/* Description */}
                       <p className="text-white/60 text-[10px] leading-relaxed mb-1.5">
                         {feature.description}
                       </p>
@@ -412,7 +456,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
         </div>
 
         {/* Custom scrollbar styles */}
-        <style jsx>{`
+        <style>{`
           .scrollbar-hide::-webkit-scrollbar {
             display: none;
           }
@@ -426,7 +470,11 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
   }
 
   return (
-    <section id="how-it-works" className="py-20 md:py-28 bg-[#050505] text-white relative overflow-hidden">
+    <section id="how-it-works" className="py-20 md:py-32 pb-40 bg-[#050505] text-white relative overflow-hidden">
+      {/* Ambient Background Glows */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700 bg-purple-500/[0.03]" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none transition-colors duration-700 bg-blue-500/[0.02]" />
+      
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div
           initial={isMobile ? { opacity: 1, height: 'auto' } : { opacity: 0, height: 0 }}
@@ -441,7 +489,7 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
             <motion.div 
               initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               animate={isFeaturesExpanded ? { opacity: 1, y: 0 } : {}}
-              className="text-center mb-16"
+              className="text-center mt-16 mb-16 sm:mt-20 md:mt-16"
             >
               <h2 className="text-sm font-bold uppercase tracking-[0.4em] text-white/50 mb-6 font-sans">Experience the future</h2>
               <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
@@ -449,14 +497,46 @@ const InteractiveFeatures = ({ isFeaturesExpanded }) => {
               </ScrollDarkenHeading>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 sm:px-0">
+            {/* Desktop Horizontal Scrolling */}
+            <div className="relative mb-16">
+              {/* Navigation Buttons */}
+              <button 
+                onClick={() => handleScroll('left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/30 shadow-xl transition-all"
+              >
+                <ChevronRight size={18} className="rotate-180" />
+              </button>
+              <button 
+                onClick={() => handleScroll('right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white/30 shadow-xl transition-all"
+              >
+                <ChevronRight size={18} />
+              </button>
+              
+              {/* Desktop Scroll Container */}
+              <div 
+                ref={scrollContainerRef}
+                className="flex gap-8 overflow-x-auto py-10 px-4"
+                style={{ 
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  scrollSnapType: 'x mandatory'
+                }}
+              >
+                <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                
                 {allFeatures.map((feature, index) => (
+                  <div 
+                    key={index}
+                    className="flex-shrink-0 w-80 scroll-snap-start"
+                  >
                     <FeatureCard 
-                        key={index} 
-                        feature={feature} 
-                        index={index} 
+                      feature={feature} 
+                      index={index} 
                     />
+                  </div>
                 ))}
+              </div>
             </div>
           </div>
         </motion.div>

@@ -67,68 +67,68 @@ const Hero = () => {
                 </div>
 
                 <div className="max-w-[90%] mx-auto px-3 relative z-10 w-full flex flex-col items-center">
-                    <div className="flex flex-col items-center justify-center text-center space-y-3 w-full">
-                        {/* Top Text - Mobile Optimized */}
-                        <h2 className="text-xs font-medium text-slate-600 leading-tight px-1">
-                            Tomorrow's careers will demand <span className="text-blue-600 font-black">NEW SKILLS.</span>
-                        </h2>
-
-                        {/* Headline Group - Mobile Optimized */}
-                        <div className="w-full flex flex-col items-center relative">
-                            <h1 className="text-[18px] font-black leading-[0.9] w-full uppercase select-none relative z-10 text-[#0F172A] mb-1">
-                                <div className="flex flex-col items-center gap-y-0.5">
-                                    <div className="flex flex-wrap justify-center items-baseline gap-x-0.5">
-                                        <span>MAKE</span>
-                                        <span>SURE</span>
-                                    </div>
-                                    <span className="flex items-baseline">
-                                        <span className="text-[#2563EB] text-[1.15em] leading-none">Y</span>
-                                        <span className="tracking-tighter">OUR</span>
-                                    </span>
-                                    <span>CHILD</span>
-                                </div>
-                                <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight mt-0.5">
-                                    IS READY
-                                </div>
-                            </h1>
+                    <div className="flex flex-col items-center justify-center text-center space-y-6 w-full">
+                        {/* Modern Mobile Hero Header */}
+                        <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                            FUTURE-READY EDUCATION
                         </div>
 
-                        {/* Paragraph Area - Mobile Optimized */}
-                        <div className="w-full px-3 py-2 bg-slate-50/80 backdrop-blur-xl rounded-[0.5rem] border border-slate-200/60 relative mt-2">
-                            {/* Simplified HUD Elements */}
-                            <div className="absolute top-1 left-2 flex gap-0.5 opacity-30">
-                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
-                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
-                                <div className="w-0.5 h-0.5 rounded-full bg-slate-400" />
-                            </div>
+                        {/* Modern Mobile Headline */}
+                        <div className="space-y-2">
+                            <h1 className="text-lg sm:text-xl font-black leading-tight text-slate-900 uppercase">
+                                MAKE SURE <span className="text-blue-600">Y</span>OUR CHILD IS
+                            </h1>
+                            <h2 className="text-3xl sm:text-4xl font-black leading-tight text-orange-500 uppercase">
+                                READY
+                            </h2>
+                        </div>
 
-                            <p className="text-slate-600 font-medium leading-[1.4] text-[10px] tracking-tight text-center relative z-10 px-1">
-                                Most schools still teach the same syllabus they did 20 years ago. 
-                                <span className="mx-0.5 text-slate-300">|</span>
-                                <span className="inline-flex items-center font-black">
-                                    <span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span>
-                                </span> fills that gap. 
-                                <span className="text-slate-500 font-semibold ml-0.5 block mt-0.5">
-                                    Students master <span className="text-slate-900 font-bold bg-slate-100 px-1 py-0.25 rounded text-[8px]">AI</span>, 
-                                    <span className="text-slate-900 font-bold">Engineering</span>, and 
-                                    <span className="text-slate-900 font-bold">Robotics</span> through live industrial sessions.
+                        {/* Modern Subheading */}
+                        <div className="bg-slate-100 rounded-2xl p-4 border border-slate-200">
+                            <div className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600">
+                                <span className="inline-flex items-center font-bold">
+                                    <span className="text-blue-600">think</span>
+                                    <span className="text-orange-500">skool</span>
                                 </span>
-                            </p>
+                                <span className="text-slate-400">•</span>
+                                <span>Build the Future</span>
+                            </div>
+                        </div>
 
-                            {/* Bottom Accent Line */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rounded-full" />
+                        {/* Modern Mobile Description */}
+                        <div className="text-center space-y-4">
+                            <p className="text-slate-600 font-medium leading-relaxed text-sm">
+                                Traditional education hasn't kept up with the future. 
+                                <span className="text-orange-500 font-bold">thinkskool</span> bridges that gap.
+                            </p>
+                            
+                            <div className="flex flex-wrap justify-center gap-2">
+                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Robotics</span>
+                                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">Engineering</span>
+                            </div>
                         </div>
 
                         {/* Social Proof Group - Mobile Optimized */}
                         <div className="space-y-3 flex flex-col items-center w-full">
                             <ScrollingAvatars isMobile={true} />
                             
-                            <button
-                                onClick={handleEnrollNow}
-                                className="px-4 py-2 bg-[#E84E1B] text-white font-black text-sm rounded-lg shadow-lg flex items-center justify-center gap-1 min-w-[120px] w-full max-w-[180px]"
-                            >
-                                Enroll now →
-                            </button>
+                            <div className="w-full space-y-4">
+                                <button
+                                    onClick={handleEnrollNow}
+                                    className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
+                                >
+                                    <span>Start Learning Today</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                
+                                <div className="text-center">
+                                    <p className="text-xs text-slate-500">
+                                        Join 1000+ students already building their future
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ const Hero = () => {
                                 <span>SURE</span>
                                 <span className="flex items-baseline">
                                     <span className="text-[#2563EB] text-[1.15em] leading-none">Y</span>
-                                    <span className="tracking-tighter">YOUR</span>
+                                    <span className="tracking-tighter">OUR</span>
                                 </span>
                                 <span>CHILD</span>
                             </div>
@@ -201,9 +201,6 @@ const Hero = () => {
                                 <span className="text-slate-900 font-bold px-1">Robotics</span> through live industrial sessions and real-world engineering protocols.
                             </span>
                         </p>
-
-                        {/* Bottom Accent Line */}
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-[3px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rounded-full" />
                     </motion.div>
 
                     {/* Social Proof Group */}
