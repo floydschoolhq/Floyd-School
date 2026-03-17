@@ -115,20 +115,20 @@ const Course = () => {
                             <span className="font-bold tracking-tight lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span> architected practical, industry-relevant curriculum tracks that transform students into modern software creators.
                         </motion.p>
 
-                        {/* Course Cards Grid - Two Column Layout */}
+                        {/* Course Cards Grid - Two Row Layout */}
                         <motion.div
-                            className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
+                            className="space-y-12"
                             variants={containerVariants}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
                         >
-                            {/* First Column - Foundation of AI Course (Live) */}
-                            <div className="flex justify-center lg:justify-end">
+                            {/* First Row - Single Course Card (Foundation of AI) */}
+                            <div className="flex justify-center">
                                 {courseData.length > 0 && courseData[0].live && (
                                     <motion.div
                                         key="ai-course"
-                                        className="group relative perspective-[1500px] w-full max-w-md"
+                                        className="group relative perspective-[1500px] w-full max-w-2xl"
                                         variants={cardVariants}
                                     >
                                         <motion.div
@@ -196,8 +196,8 @@ const Course = () => {
                                 )}
                             </div>
 
-                            {/* Second Column - Other Three Courses (Coming Soon) */}
-                            <div className="flex flex-col gap-6">
+                            {/* Second Row - Three Course Cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                                 {courseData.slice(1).map((course, index) => (
                                     <motion.div
                                         key={index}

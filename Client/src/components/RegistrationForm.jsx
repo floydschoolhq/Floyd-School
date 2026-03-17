@@ -2,6 +2,33 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, User, Mail, Phone, BookOpen, MessageSquare, Send } from 'lucide-react';
 
+// Custom scrollbar styles
+const customScrollbarStyles = `
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+        background: #374151;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #6b7280;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+    }
+`;
+
 const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -14,6 +41,17 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [errors, setErrors] = useState({});
+
+    // Inject custom scrollbar styles
+    React.useEffect(() => {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = customScrollbarStyles;
+        document.head.appendChild(styleElement);
+        
+        return () => {
+            document.head.removeChild(styleElement);
+        };
+    }, []);
 
     const validateForm = () => {
         const newErrors = {};
@@ -97,17 +135,19 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
                     transition={{ type: "spring", damping: 20 }}
-                    className="w-full max-w-md bg-white dark:bg-[#0A0A0A] rounded-3xl overflow-hidden shadow-2xl"
+                    className="w-full max-w-2xl bg-white dark:bg-[#0A0A0A] rounded-3xl overflow-hidden shadow-2xl"
+                    style={{ transform: 'scale(0.6, 0.6)', transformOrigin: 'center', maxHeight: '80vh' }}
                     onClick={e => e.stopPropagation()}
                 >
-                    {/* Header */}
-                    <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
-                        <button
-                            onClick={onClose}
-                            className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 transition-colors"
-                        >
-                            <X size={18} />
-                        </button>
+                    <div className="h-full max-h-[80vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                        {/* Header */}
+                        <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white sticky top-0 z-10">
+                            <button
+                                onClick={onClose}
+                                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 transition-colors"
+                            >
+                                <X size={18} />
+                            </button>
                         
                         <div className="flex items-center gap-3 mb-2">
                             <BookOpen size={24} />
@@ -290,6 +330,7 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
                             )}
                         </motion.button>
                     </form>
+                    </div>
                 </motion.div>
             </motion.div>
         </AnimatePresence>

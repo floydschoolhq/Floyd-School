@@ -5,6 +5,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLoca
 
 import Footer from './components/Footer';
 import MobileBottomNav from './components/MobileBottomNav';
+import NeedHelpSection from './components/NeedHelpSection';
 
 // Static Marketing Page Components (Should only be visible on the Home route)
 import Hero from './components/Hero';
@@ -28,7 +29,7 @@ import renderPage from './pages/Student/renderPage.jsx';
 import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
-import BackendStatus from './components/BackendStatus.jsx';
+import AdminMessages from './components/AdminMessages.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
@@ -58,6 +59,7 @@ const HomePage = () => {
                     <MentorGrid isStatic={true} />
                     <StudentProjects />
                     <SuccessStories variant="dark" />
+                    <NeedHelpSection variant="dark" />
                 </div>
 
             </div>
@@ -115,6 +117,7 @@ const App = () => {
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/course' element={<Course />} />
                 <Route path='/course/:courseId' element={<CourseDetails />} />
+                <Route path='/admin/messages' element={<AdminMessages variant="dark" />} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={
@@ -157,9 +160,6 @@ const App = () => {
                     <Footer />
                 </>
             )}
-            
-            {/* Backend Status Indicator */}
-            <BackendStatus />
         </div >
     );
 };

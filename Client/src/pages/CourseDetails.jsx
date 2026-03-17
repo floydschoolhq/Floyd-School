@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
     CheckCircle2, 
@@ -15,13 +15,15 @@ import {
     Rocket,
     Globe,
     Terminal,
-    ShieldCheck
+    ShieldCheck,
+    Download
 } from 'lucide-react';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
 import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
 import RegistrationForm from '../components/RegistrationForm';
+import CourseOfferings from '../components/CourseOfferings';
 
 const iconMap = {
     Cpu: Cpu,
@@ -33,6 +35,7 @@ const iconMap = {
 const CourseDetails = () => {
     const { courseId } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [course, setCourse] = useState(null);
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
@@ -42,7 +45,14 @@ const CourseDetails = () => {
             setCourse(foundCourse);
         }
         window.scrollTo(0, 0);
-    }, [courseId]);
+        
+        // Check if registration form should be opened
+        if (searchParams.get('openRegistration') === 'true') {
+            setTimeout(() => {
+                setIsRegistrationModalOpen(true);
+            }, 500); // Small delay to ensure page is loaded
+        }
+    }, [courseId, searchParams]);
 
     if (!course) return <div className="min-h-screen bg-white flex items-center justify-center font-black text-slate-400 uppercase tracking-widest">Loading Course Protocol...</div>;
 
@@ -95,6 +105,12 @@ const CourseDetails = () => {
                                         className="px-12 py-5 bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(249,115,22,0.25)] flex items-center gap-3 group"
                                     >
                                         Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                    <button 
+                                        onClick={() => window.open('/Brochure-zwCZ_L4_.pdf', '_blank')}
+                                        className="px-12 py-5 bg-gradient-to-r from-[#10B981] to-[#059669] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(16,185,129,0.25)] flex items-center gap-3 group"
+                                    >
+                                        <Download size={18} /> Download Curriculum
                                     </button>
                                     <div className="flex items-center gap-4 px-6 py-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md">
                                         <div className="flex -space-x-3">
@@ -155,6 +171,9 @@ const CourseDetails = () => {
                 <div className="bg-[#080808]">
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
+
+                {/* Course Offerings Section */}
+                <CourseOfferings variant="dark" />
 
                 <div className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 py-24">
                     <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
