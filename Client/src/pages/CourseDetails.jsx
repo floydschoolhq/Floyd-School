@@ -60,7 +60,7 @@ const CourseDetails = () => {
     const Icon = iconMap[course.icon] || Code;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+        <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none z-10">
@@ -100,7 +100,7 @@ const CourseDetails = () => {
                                 <div className="flex flex-wrap gap-5">
                                     <button 
                                         onClick={() => setIsRegistrationModalOpen(true)}
-                                        className="px-12 py-5 bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(249,115,22,0.25)] flex items-center gap-3 group"
+                                        className="px-12 py-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(59,130,246,0.25)] flex items-center gap-3 group"
                                     >
                                         Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                     </button>

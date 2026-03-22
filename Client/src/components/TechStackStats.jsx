@@ -251,7 +251,7 @@ const TechStackStats = () => {
                         </p>
                         <button 
                             onClick={handleExplorePrograms}
-                            className="bg-white text-orange-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-slate-50 transition-colors"
+                            className="bg-white text-blue-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-slate-50 transition-colors"
                         >
                             Explore Programs
                         </button>
@@ -292,7 +292,7 @@ const TechStackStats = () => {
                                             }
                                         }
                                     }}
-                                    className={`text-orange-500 inline-block ${i > 0 ? 'ml-3' : ''}`}
+                                    className={`text-blue-600 inline-block ${i > 0 ? 'ml-3' : ''}`}
                                 >
                                     {word}
                                 </motion.span>

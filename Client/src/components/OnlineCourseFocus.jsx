@@ -241,7 +241,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                         <div className="flex-1 relative z-10 flex flex-col mt-4 px-4 pb-1">
                                             <h4 className={`text-lg font-bold uppercase tracking-tight transition-colors line-clamp-1 mb-2
                                                 ${isDark
-                                                    ? `text-blue-400 ${!isComingSoon ? 'group-hover:text-orange-500' : ''}`
+                                                    ? `text-blue-400 ${!isComingSoon ? 'group-hover:text-blue-500' : ''}`
                                                     : `text-blue-600 ${!isComingSoon ? 'group-hover:text-blue-600' : ''}`}`}>
                                                 {course.title}
                                             </h4>
@@ -266,7 +266,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                                         className={`text-2xl font-bold uppercase tracking-wider ${
                                                             isDark ? 'text-slate-400' : 'text-slate-500'
                                                         }`}>
-                                                        COMING SOON
+                                                        <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                                        <Cpu size={20} className="text-blue-500" />
+                                                    </div>
                                                     </motion.span>
                                                 </div>
                                             ) : (

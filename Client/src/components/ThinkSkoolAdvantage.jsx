@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Award, Headphones, ArrowRight } from 'lucide-react';
 import fullStackImg from '../assets/images/full stack web development.png';
+import useIsMobile from '../hooks/useIsMobile';
 
 const ADVANTAGES = [
     {
@@ -174,7 +175,7 @@ const ThinkskoolAdvantage = () => {
                         <h2 className="text-2xl font-black text-slate-900 mb-3 leading-tight">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-2xl font-black text-orange-500 leading-tight">
+                        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 leading-tight">
                             We teach students to build real things.
                         </h2>
                     </motion.div>
@@ -191,8 +192,8 @@ const ThinkskoolAdvantage = () => {
                             transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
                             className="relative"
                         >
-                            <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-orange-500 to-orange-600' : 'bg-gradient-to-br from-white to-gray-50'} rounded-2xl p-1 shadow-xl`}>
-                                <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700' : 'bg-white'} rounded-2xl overflow-hidden relative`}>
+                            <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-blue-500 to-blue-600' : 'bg-gradient-to-br from-white to-gray-50'} rounded-2xl p-1 shadow-xl`}>
+                                <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700' : 'bg-white'} rounded-2xl overflow-hidden relative`}>
                                     {/* Background Pattern */}
                                     <div className="absolute inset-0 opacity-10">
                                         <div className="absolute inset-0" style={{
@@ -203,10 +204,10 @@ const ThinkskoolAdvantage = () => {
                                     <div className="relative z-10 p-6">
                                         {/* Icon and Badge */}
                                         <div className="flex items-center gap-3 mb-4">
-                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${index % 2 === 0 ? 'bg-white/20' : 'bg-orange-500/10'}`}>
-                                                <advantage.icon size={20} className={index % 2 === 0 ? "text-white" : "text-orange-600"} />
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${index % 2 === 0 ? 'bg-white/20' : 'bg-blue-500/10'}`}>
+                                                <advantage.icon size={20} className={index % 2 === 0 ? "text-white" : "text-blue-600"} />
                                             </div>
-                                            <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase ${index % 2 === 0 ? 'bg-white/20 text-white' : 'bg-orange-500/10 text-orange-600'}`}>
+                                            <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase ${index % 2 === 0 ? 'bg-white/20 text-white' : 'bg-blue-500/10 text-blue-600'}`}>
                                                 Advantage {index + 1}
                                             </div>
                                         </div>
@@ -224,8 +225,8 @@ const ThinkskoolAdvantage = () => {
                                         {/* Features */}
                                         <div className="space-y-2">
                                             {advantage.details.map((detail, idx) => (
-                                                <div key={idx} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${index % 2 === 0 ? 'bg-white/10' : 'bg-orange-500/5'}`}>
-                                                    <advantage.icon size={12} className={index % 2 === 0 ? "text-white" : "text-orange-600"} />
+                                                <div key={idx} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${index % 2 === 0 ? 'bg-white/10' : 'bg-blue-500/5'}`}>
+                                                    <advantage.icon size={12} className={index % 2 === 0 ? "text-white" : "text-blue-600"} />
                                                     <span className={`text-xs font-medium ${index % 2 === 0 ? 'text-white' : 'text-gray-800'}`}>{detail}</span>
                                                 </div>
                                             ))}
