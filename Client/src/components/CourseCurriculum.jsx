@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const CourseCurriculum = ({ variant = "light" }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
-    const [hoveredSkill, setHoveredSkill] = useState(null);
-    const [isEnrolling, setIsEnrolling] = useState(false);
+        const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
     
@@ -101,37 +100,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         { number: "3", label: "Classes / Week" }
     ];
 
-    const skillsGap = [
-        {
-            category: "WATCHING",
-            icon: "visibility",
-            from: "Watch YouTube Tutorials",
-            to: "Build Apps",
-            color: "secondary"
-        },
-        {
-            category: "LEARNING", 
-            icon: "menu_book",
-            from: "Theoretical Concepts",
-            to: "ML Models",
-            color: "primary"
-        },
-        {
-            category: "UNDERSTANDING",
-            icon: "psychology",
-            from: "Unknown AI Magic",
-            to: "AI Tools",
-            color: "secondary"
-        },
-        {
-            category: "OUTCOME",
-            icon: "rocket_launch",
-            from: "Never Shipped Code", 
-            to: "Live Demo",
-            color: "primary"
-        }
-    ];
-
+    
     const capstoneFeatures = [
         {
             icon: "face",
@@ -193,11 +162,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         // Could expand to show more details or navigate to week details
     };
 
-    const handleSkillCardClick = (skillIndex) => {
-        setHoveredSkill(skillIndex);
-        // Could show more details about the skill transformation
-    };
-
+    
     const handleMonthClick = (monthIndex) => {
         setSelectedMonth(selectedMonth === monthIndex ? null : monthIndex);
     };
@@ -305,92 +270,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
             </motion.div>
 
-            {/* Skills Gap Section */}
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.05 }}
-                className="py-24 px-6 max-w-7xl mx-auto"
-            >
-                <h2 className="text-3xl md:text-4xl font-headline font-extrabold tracking-tight mb-16 text-center text-on-surface">
-                    The Skill Transformation
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {skillsGap.map((skill, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: index * 0.03 }}
-                            className={`p-8 rounded-xl border-t-2 shadow-xl bg-surface-container-high cursor-pointer transform transition-all duration-300 ${
-                                skill.color === 'primary' ? 'border-primary' : 'border-secondary'
-                            } ${
-                                hoveredSkill === index ? 'scale-105 shadow-2xl' : 'hover:scale-105 hover:shadow-2xl'
-                            }`}
-                            whileHover={{ 
-                                y: -8,
-                                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)",
-                                transition: { type: "spring", stiffness: 300 }
-                            }}
-                            onClick={() => handleSkillCardClick(index)}
-                            onMouseEnter={() => setHoveredSkill(index)}
-                            onMouseLeave={() => setHoveredSkill(null)}
-                        >
-                            <motion.div 
-                                className="mb-6 opacity-50 text-on-surface-variant text-sm flex items-center gap-2"
-                                animate={{ 
-                                    opacity: hoveredSkill === index ? 1 : 0.5,
-                                    color: hoveredSkill === index ? skill.color === 'primary' ? "#00e5ff" : "#ffb59c" : ""
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <motion.span 
-                                    className="material-symbols-outlined text-sm"
-                                    animate={{ 
-                                        rotate: hoveredSkill === index ? 360 : 0,
-                                        scale: hoveredSkill === index ? 1.2 : 1
-                                    }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {skill.icon}
-                                </motion.span>
-                                {skill.category}
-                            </motion.div>
-                            <motion.p 
-                                className="text-on-surface-variant line-through mb-4"
-                                animate={{ 
-                                    opacity: hoveredSkill === index ? 0.3 : 1,
-                                    scale: hoveredSkill === index ? 0.95 : 1
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                {skill.from}
-                            </motion.p>
-                            <div className="w-full h-px bg-outline-variant/30 mb-4"></div>
-                            <motion.p 
-                                className="text-primary font-bold flex items-center gap-2"
-                                animate={{ 
-                                    scale: hoveredSkill === index ? 1.1 : 1,
-                                    x: hoveredSkill === index ? 5 : 0
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <motion.span 
-                                    className="material-symbols-outlined"
-                                    animate={{ 
-                                        rotate: hoveredSkill === index ? 360 : 0,
-                                        scale: hoveredSkill === index ? 1.3 : 1
-                                    }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {skill.category === 'WATCHING' ? 'rocket_launch' :
-                                     skill.category === 'LEARNING' ? 'data_object' :
-                                     skill.category === 'UNDERSTANDING' ? 'smart_toy' : 'campaign'}
-                                </motion.span>
-                                {skill.to}
-                            </motion.p>
-                        </motion.div>
-                    ))}
                 </div>
             </motion.div>
 
