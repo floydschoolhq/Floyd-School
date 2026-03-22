@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const CourseCurriculum = ({ variant = "light" }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
-        const [isEnrolling, setIsEnrolling] = useState(false);
+    const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
     
