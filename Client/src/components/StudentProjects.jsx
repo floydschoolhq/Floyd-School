@@ -515,7 +515,7 @@ const StudentProjects = () => {
                 onClick={() => setFilter(tab)}
                 className={`px-2 py-1 rounded-md font-bold text-xs transition-all duration-300 ${
                   filter === tab
-                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
                     : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                 }`}
               >
@@ -590,7 +590,7 @@ const StudentProjects = () => {
 
           {/* CTA Section - Mobile */}
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-lg shadow-md w-full max-w-[200px]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-lg shadow-md w-full max-w-[200px]">
               <Rocket size={12} />
               Start Building
             </div>
@@ -610,7 +610,6 @@ const StudentProjects = () => {
             scrollbar-width: none;
           }
         `}</style>
-      </div>
     </section>
     );
   }
@@ -676,7 +675,7 @@ const StudentProjects = () => {
               onClick={() => setFilter(tab)}
               className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
                 filter === tab
-                  ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25'
+                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
                   : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
               }`}
               whileHover={{ scale: 1.05 }}
@@ -714,7 +713,7 @@ const StudentProjects = () => {
           className="text-center"
         >
           <motion.div
-            className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-2xl shadow-2xl shadow-orange-500/25"
+            className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

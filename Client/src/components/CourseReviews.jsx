@@ -373,7 +373,7 @@ const CourseReviews = ({ courseId, variant }) => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Reviews</span>
+                        Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">Reviews</span>
                     </motion.h2>
                     <p className={`text-lg max-w-xl mx-auto font-medium transition-colors
                         ${isDark ? 'text-slate-400' : 'text-slate-50'}`}>

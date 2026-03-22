@@ -164,7 +164,7 @@ const TechStackStats = () => {
                         viewport={{ once: true }}
                         className="text-center"
                     >
-                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
                             <Terminal size={12} />
                             Technologies You Will Learn
                         </div>
@@ -241,7 +241,7 @@ const TechStackStats = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white scale-[0.9] mx-[5%]"
+                        className="text-center bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 text-white scale-[0.9] mx-[5%]"
                     >
                         <h3 className="font-bold text-lg mb-2">
                             Ready to Learn These Technologies?

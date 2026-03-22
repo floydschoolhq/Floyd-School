@@ -59,7 +59,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 {/* Section Header */}
                 <div className="text-center mb-20">
                     <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">
-                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Back.</span> Always.
+                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">Back.</span> Always.
                     </h2>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
                         Everything you need is already included.

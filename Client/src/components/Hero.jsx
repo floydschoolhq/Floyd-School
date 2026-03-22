@@ -74,7 +74,7 @@ const Hero = () => {
                 <div className="max-w-[90%] mx-auto px-3 relative z-10 w-full flex flex-col items-center">
                     <div className="flex flex-col items-center justify-center text-center space-y-6 w-full">
                         {/* Modern Mobile Hero Header */}
-                        <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                        <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
                             FUTURE-READY EDUCATION
                         </div>
 
@@ -83,7 +83,7 @@ const Hero = () => {
                             <h1 className="text-lg sm:text-xl font-black leading-tight text-slate-900 uppercase">
                                 MAKE SURE <span className="text-blue-600">Y</span>OUR CHILD IS
                             </h1>
-                            <h2 className="text-3xl sm:text-4xl font-black leading-tight text-orange-500 uppercase">
+                            <h2 className="text-3xl sm:text-4xl font-black leading-tight text-blue-600 uppercase">
                                 READY
                             </h2>
                         </div>
@@ -120,7 +120,7 @@ const Hero = () => {
                             <div className="w-full space-y-4">
                                 <button
                                     onClick={handleEnrollNow}
-                                    className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
+                                    className="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
                                 >
                                     <span>Start Learning Today</span>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
