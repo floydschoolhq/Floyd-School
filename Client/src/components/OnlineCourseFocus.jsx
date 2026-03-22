@@ -34,7 +34,7 @@ const OnlineCourseFocus = ({ variant }) => {
     };
 
     return (
-        <section id="online-focus" className={`relative pt-24 pb-32 sm:pt-40 sm:pb-48 md:pt-24 md:pb-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50}'}`}>
+        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50}'}`}>
             {/* Background mesh - matching CourseReviews */}
             <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
             <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors duration-700
@@ -44,7 +44,7 @@ const OnlineCourseFocus = ({ variant }) => {
 
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}
-                <div className="text-center mt-16 mb-16 sm:mt-20 sm:mb-20 md:mt-16 md:mb-20">
+                <div className="text-center mt-8 mb-16 sm:mt-12 sm:mb-20 md:mt-8 md:mb-20">
                     <ScrollDarkenHeading sizeClass="text-5xl md:text-8xl" variant={variant}>
                         OUR BATCHES
                     </ScrollDarkenHeading>
@@ -78,9 +78,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                 {/* Single Row Layout */}
                                 <div className="flex flex-col md:flex-row h-full min-h-[280px]">
                                     {/* Left Side - Course Image with Original Ratio */}
-                                    <div className="relative md:w-2/5 lg:w-1/2 overflow-hidden">
+                                    <div className="relative md:w-2/5 lg:w-1/2 overflow-hidden my-2">
                                         {/* Image with original aspect ratio - container fits image perfectly */}
-                                        <div className="relative w-full h-full">
+                                        <div className="relative w-full h-full my-1">
                                             {/* Adjusted gradient overlays - less intrusive on left */}
                                             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent via-transparent to-transparent z-10" />
@@ -106,12 +106,12 @@ const OnlineCourseFocus = ({ variant }) => {
 
                                     {/* Right Side - Course Details */}
                                     <div className="relative md:w-3/5 lg:w-1/2 p-6 md:p-8 lg:p-10 flex flex-col justify-center">
-                                        {/* Mac Dots Header */}
-                                        <div className="flex gap-[6px] mb-6">
+                                        {/* Mac Dots Header - REMOVED */}
+                                        {/* <div className="flex gap-[6px] mb-6">
                                             <div className="w-[8px] h-[8px] rounded-full bg-[#FF5F56] shadow-sm" />
                                             <div className="w-[8px] h-[8px] rounded-full bg-[#FFBD2E] shadow-sm" />
                                             <div className="w-[8px] h-[8px] rounded-full bg-[#27C93F] shadow-sm" />
-                                        </div>
+                                        </div> */}
 
                                         {/* Course Title */}
                                         <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight transition-all duration-300 mb-4 leading-tight
@@ -130,7 +130,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                             <div className="flex items-center gap-2">
                                                 <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-blue-400' : 'bg-blue-500'}`} />
                                                 <span className={`text-xs font-semibold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                    3-4 Months
+                                                    3 month
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-1">
@@ -205,22 +205,22 @@ const OnlineCourseFocus = ({ variant }) => {
                                             ${isDark ? 'bg-gradient-to-br from-blue-500/20 to-transparent' : 'bg-gradient-to-br from-blue-500/5 to-transparent'}`} />
                                     )}
 
-                                    {/* Mac Dots Header */}
-                                    <div className="flex gap-[4px] px-3 pt-1 pb-2 relative z-10 w-full items-center justify-start">
+                                    {/* Mac Dots Header - REMOVED */}
+                                    {/* <div className="flex gap-[4px] px-3 pt-1 pb-2 relative z-10 w-full items-center justify-start">
                                         <div className="w-[6px] h-[6px] rounded-full bg-[#FF5F56]" />
                                         <div className="w-[6px] h-[6px] rounded-full bg-[#FFBD2E]" />
                                         <div className="w-[6px] h-[6px] rounded-full bg-[#27C93F]" />
-                                    </div>
+                                    </div> */}
 
                                     {/* Course Image Container */}
-                                    <div className="w-full aspect-[16/10] relative z-10 overflow-hidden border-y border-white/5 shadow-inner">
+                                    <div className="w-full aspect-[16/8] relative z-10 overflow-hidden border-y border-white/5 shadow-inner">
                                         {/* Shimmer on hover (live only) */}
                                         {!isComingSoon && (
                                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[shimmer_3s_infinite] pointer-events-none" />
                                         )}
 
-                                        {/* Coming Soon Overlay */}
-                                        {isComingSoon && (
+                                        {/* Coming Soon Overlay - REMOVED FROM IMAGE */}
+                                        {isComingSoon && false && (
                                             <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
                                                 <span className="text-white text-lg font-bold tracking-wide drop-shadow-lg select-none">
                                                     COMING SOON
@@ -233,31 +233,56 @@ const OnlineCourseFocus = ({ variant }) => {
                                         <img
                                             src={course.image}
                                             alt={course.title}
-                                            className={`w-full h-full object-cover transition-transform duration-[1.5s] ease-out opacity-80
+                                            className={`w-full h-full object-contain transition-transform duration-[1.5s] ease-out opacity-80
                                                 ${!isComingSoon ? 'group-hover:scale-105 group-hover:opacity-100' : ''}`}
                                         />
                                     </div>
 
-                                    {/* Course Info */}
-                                    <div className="flex-1 relative z-10 flex flex-col mt-4 px-4 pb-1">
-                                        <h4 className={`text-xl font-black uppercase tracking-tight transition-colors line-clamp-1 mb-2
-                                            ${isDark
-                                                ? `text-white ${!isComingSoon ? 'group-hover:text-orange-500' : ''}`
-                                                : `text-slate-900 ${!isComingSoon ? 'group-hover:text-blue-600' : ''}`}`}>
-                                            {course.title}
-                                        </h4>
-                                        <p className={`text-sm font-medium leading-relaxed line-clamp-3
-                                            ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                            {course.description}
-                                        </p>
-                                    </div>
+                                        <div className="flex-1 relative z-10 flex flex-col mt-4 px-4 pb-1">
+                                            <h4 className={`text-lg font-bold uppercase tracking-tight transition-colors line-clamp-1 mb-2
+                                                ${isDark
+                                                    ? `text-blue-400 ${!isComingSoon ? 'group-hover:text-orange-500' : ''}`
+                                                    : `text-blue-600 ${!isComingSoon ? 'group-hover:text-blue-600' : ''}`}`}>
+                                                {course.title}
+                                            </h4>
+                                            {isComingSoon ? (
+                                                <div className="flex items-center justify-center h-16 mb-2">
+                                                    <motion.span
+                                                        animate="animate"
+                                                        variants={{
+                                                            animate: {
+                                                                filter: [
+                                                                    "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))",
+                                                                    "brightness(1.8) drop-shadow(0 0 20px rgba(249, 115, 22, 0.4))",
+                                                                    "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))"
+                                                                ],
+                                                                transition: {
+                                                                    duration: 2.5,
+                                                                    repeat: Infinity,
+                                                                    ease: "easeInOut",
+                                                                }
+                                                            }
+                                                        }}
+                                                        className={`text-2xl font-bold uppercase tracking-wider ${
+                                                            isDark ? 'text-slate-400' : 'text-slate-500'
+                                                        }`}>
+                                                        COMING SOON
+                                                    </motion.span>
+                                                </div>
+                                            ) : (
+                                                <p className={`text-sm font-medium leading-relaxed line-clamp-3
+                                                    ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                                    {course.description}
+                                                </p>
+                                            )}
+                                        </div>
 
                                     {/* Footer */}
                                     <div className={`pt-4 px-4 pb-3 border-t flex items-center justify-between font-bold text-[10px] uppercase tracking-[0.3em] transition-all relative z-10
                                         ${isDark
                                             ? 'border-white/5 text-slate-500 group-hover:text-white'
                                             : 'border-slate-50 text-slate-400 group-hover:text-slate-900'}`}>
-                                        <span>{isComingSoon ? 'Coming Soon' : 'Explore Program'}</span>
+                                        <span>{isComingSoon ? 'Early Access' : 'Explore Program'}</span>
                                         {isComingSoon ? (
                                             <motion.button
                                                 onClick={(e) => {
@@ -269,7 +294,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                                 className="px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-bold text-xs uppercase tracking-wide transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-1.5"
                                             >
                                                 <Bell size={10} className="animate-pulse" />
-                                                Early Register
+                                                I am interested
                                             </motion.button>
                                         ) : (
                                             <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />

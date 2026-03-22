@@ -175,7 +175,7 @@ const Hero = () => {
                                 <span>CHILD</span>
                             </div>
                             <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight">
-                                IS READY
+                                IS&nbsp;&nbsp;READY
                             </div>
                         </h1>
                     </div>

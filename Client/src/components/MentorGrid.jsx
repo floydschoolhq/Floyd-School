@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronRight } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
@@ -55,19 +55,25 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
     const isDark = variant === 'dark';
     return (
         <motion.div
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={!isMobile ? { y: -10, scale: 1.01 } : {}}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.6,
+                delay: isMobile ? 0 : index * 0.1,
+                ease: "easeOut"
+            }}
+            whileHover={!isMobile ? {
+                y: -8,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+            } : {}}
             whileTap={{ scale: 0.98 }}
             onClick={() => onSelect(mentor)}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative cursor-pointer group
-                ${isDark 
-                    ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]' 
+                ${isDark
+                    ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
         >
             {/* Background Decorative Mesh */}
@@ -163,66 +169,21 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
 const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, variant }) => {
     const [selectedMentor, setSelectedMentor] = useState(null);
     const [hoveredCard, setHoveredCard] = useState(null);
-    const scrollRef = useRef(null);
-    const controls = useAnimation();
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
-
-    // Start animation on mount
-    useEffect(() => {
-        if (!isMobile) {
-            controls.start({
-                x: ["0%", "-50%"],
-                transition: {
-                    duration: 35,
-                    repeat: Infinity,
-                    ease: "linear"
-                }
-            });
-        }
-    }, [isMobile, controls]);
-
-    // Handle hover pause/resume
-    useEffect(() => {
-        if (!isMobile) {
-            if (hoveredCard !== null) {
-                // Pause animation
-                controls.stop();
-            } else {
-                // Resume animation
-                controls.start({
-                    x: ["0%", "-50%"],
-                    transition: {
-                        duration: 35,
-                        repeat: Infinity,
-                        ease: "linear"
-                    }
-                });
-            }
-        }
-    }, [hoveredCard, isMobile, controls]);
+    const isMarqueePaused = !isMobile && hoveredCard !== null;
 
     const filteredLeaders = excludeName 
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
 
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            const { current } = scrollRef;
-            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
-            if (direction === 'left') {
-                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
-        }
-    };
-
     return (
         <section 
             id="mentors-grid" 
             className={`py-14 relative overflow-hidden transition-colors duration-500
-                ${isDark ? 'bg-[#050505]' : 'bg-white'}`}
+                ${isDark ? 'bg-[#050505]' : 'bg-white'}
+                ${isMobile ? 'mentors--mobile' : ''}
+                ${isMarqueePaused ? 'mentors-paused' : ''}`}
         >
             {/* Background Architecture */}
             <div className="absolute inset-0 pointer-events-none">
@@ -256,12 +217,25 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                         {/* webkit-scrollbar hiding applied via a hacky style tag */}
                         <style>{`
                             #mentors-grid .overflow-x-auto::-webkit-scrollbar { display: none; }
+
+                            @keyframes mentorsMarquee {
+                                from { transform: translateX(0%); }
+                                to { transform: translateX(-50%); }
+                            }
+
+                            /* Use CSS animation so pause/resume keeps exact progress. */
+                            #mentors-grid .mentors-marquee-track {
+                                animation: mentorsMarquee 35s linear infinite;
+                                will-change: transform;
+                            }
+                            #mentors-grid.mentors-paused .mentors-marquee-track {
+                                animation-play-state: paused;
+                            }
+                            #mentors-grid.mentors--mobile .mentors-marquee-track {
+                                animation: none;
+                            }
                         `}</style>
-                        <motion.div 
-                            animate={controls}
-                            initial={isMobile ? { x: 0 } : false}
-                            className="flex items-center gap-8 w-max"
-                        >
+                        <div className="mentors-marquee-track flex items-center gap-8 w-max">
                             {[...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders].map((mentor, index) => (
                                 <MentorCard 
                                     key={index}
@@ -274,7 +248,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                     onMouseLeave={() => !isMobile && setHoveredCard(null)}
                                 />
                             ))}
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* Industrial Progress Indicator */}

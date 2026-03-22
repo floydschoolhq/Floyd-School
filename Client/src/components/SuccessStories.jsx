@@ -136,7 +136,7 @@ const SuccessStories = ({ variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     return (
-        <section className={`py-16 md:py-32 relative overflow-hidden transition-colors duration-500
+        <section className={`pt-10 pb-16 md:pt-16 md:pb-32 relative overflow-hidden transition-colors duration-500
             ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5' : 'bg-slate-100 border-t border-slate-200'}`}>
             {/* Background mesh - matching CourseReviews */}
             <div className="absolute inset-0 pointer-events-none">
@@ -148,7 +148,7 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="px-6 md:px-12 text-left mb-16 md:mb-24 mt-[7%]">
+                <div className="px-6 md:px-12 text-left mb-16 md:mb-24 mt-0">
                     <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl" variant={variant} uppercase={false}>
                         transformed by <span className="font-black tracking-tight"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </ScrollDarkenHeading>

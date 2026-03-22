@@ -8,7 +8,7 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import a5jImg from '../../../a5j.png';
+import a5jImg from '/a5j.png';
 
 import useIsMobile from '../hooks/useIsMobile';
 

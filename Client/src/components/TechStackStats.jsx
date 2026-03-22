@@ -28,7 +28,10 @@ import {
   SiFirebase,
   SiFlutter,
   SiLinux,
-  SiOpencv
+  SiOpencv,
+  SiHtml5,
+  SiExpress,
+  SiGit
 } from 'react-icons/si';
 
 // TechIcon component for desktop
@@ -58,19 +61,21 @@ const TechIcon = ({ icon: Icon, label, color }) => {
 };
 
 const techLogos = [
+    { node: <TechIcon icon={SiTensorflow} label="Machine Learning" color="#FF6F00" />, title: "Machine Learning" },
+    { node: <TechIcon icon={SiOpenai} label="AI" color="#412991" />, title: "AI" },
+    { node: <TechIcon icon={SiUnity} label="Robotics" color="#000000" />, title: "Robotics" },
+    { node: <TechIcon icon={SiLinux} label="IoT" color="#FCC624" />, title: "IoT" },
+    { node: <TechIcon icon={SiHtml5} label="HTML" color="#E34F26" />, title: "HTML" },
+    { node: <TechIcon icon={SiJavascript} label="JavaScript" color="#F7DF1E" />, title: "JavaScript" },
     { node: <TechIcon icon={SiReact} label="React" color="#61DAFB" />, title: "React" },
-    { node: <TechIcon icon={SiNextdotjs} label="Next.js" color="#000000" />, title: "Next.js" },
-    { node: <TechIcon icon={SiTensorflow} label="TensorFlow" color="#FF6F00" />, title: "TensorFlow" },
-    { node: <TechIcon icon={SiArduino} label="Arduino" color="#00979D" />, title: "Arduino" },
-    { node: <TechIcon icon={SiPython} label="Python" color="#3776AB" />, title: "Python" },
     { node: <TechIcon icon={SiNodedotjs} label="Node.js" color="#339933" />, title: "Node.js" },
-    { node: <TechIcon icon={SiTailwindcss} label="Tailwind" color="#06B6D4" />, title: "Tailwind" },
-    { node: <TechIcon icon={SiTypescript} label="TypeScript" color="#3178C6" />, title: "TypeScript" },
+    { node: <TechIcon icon={SiExpress} label="Express" color="#000000" />, title: "Express" },
+    { node: <TechIcon icon={SiPython} label="Python" color="#3776AB" />, title: "Python" },
+    { node: <TechIcon icon={SiGit} label="Git" color="#F05032" />, title: "Git" },
     { node: <TechIcon icon={SiMongodb} label="MongoDB" color="#47A248" />, title: "MongoDB" },
     { node: <TechIcon icon={SiPostgresql} label="PostgreSQL" color="#336791" />, title: "PostgreSQL" },
-    { node: <TechIcon icon={SiFirebase} label="Firebase" color="#FFCA28" />, title: "Firebase" },
-    { node: <TechIcon icon={SiGooglecloud} label="Cloud" color="#4285F4" />, title: "Cloud" },
-    { node: <TechIcon icon={SiJavascript} label="JS" color="#F7DF1E" />, title: "JS" },
+    { node: <TechIcon icon={SiNextdotjs} label="Next.js" color="#000000" />, title: "Next.js" },
+    { node: <TechIcon icon={SiTypescript} label="TypeScript" color="#3178C6" />, title: "TypeScript" },
 ];
 
 // Modern tech categories for mobile
@@ -161,7 +166,7 @@ const TechStackStats = () => {
                     >
                         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
                             <Terminal size={12} />
-                            Technologies We Master
+                            Technologies You Will Learn
                         </div>
                         <h2 className="text-2xl font-black text-slate-900 mb-2">
                             Cutting-Edge Tech Stack
@@ -260,24 +265,49 @@ const TechStackStats = () => {
     return (
         <section className="bg-white pt-20 md:pt-32 pb-12 md:pb-20 overflow-hidden">
             {/* Tech Showcase Header - Multi-layered HUD style */}
-            <div className="w-full max-w-7xl mx-auto px-4 text-center mb-16">
+            <div className="w-full max-w-7xl mx-auto px-4 text-center mb-16 relative">
                 <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="inline-flex flex-col items-center"
+                    className="inline-flex flex-col items-center relative z-10"
                 >
-                    <h2 className="text-slate-900 font-black uppercase tracking-[0.2em] md:tracking-[0.55em] text-2xl md:text-4xl leading-none whitespace-nowrap text-center">
-                        Technologies we master
+                    <h2 className="font-bold uppercase tracking-[0.2em] md:tracking-[0.55em] text-2xl md:text-4xl leading-none whitespace-nowrap text-center">
+                        {["Technologies", "you", "will", "learn"].map((word, i) => {
+                            return (
+                                <motion.span
+                                    key={i}
+                                    animate="animate"
+                                    variants={{
+                                        animate: {
+                                            filter: [
+                                                "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))",
+                                                "brightness(1.8) drop-shadow(0 0 20px rgba(249, 115, 22, 0.4))",
+                                                "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))"
+                                            ],
+                                            transition: {
+                                                duration: 2.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: i * 0.3,
+                                            }
+                                        }
+                                    }}
+                                    className={`text-orange-500 inline-block ${i > 0 ? 'ml-3' : ''}`}
+                                >
+                                    {word}
+                                </motion.span>
+                            );
+                        })}
                     </h2>
                 </motion.div>
             </div>
 
             {/* Full Width Tech Loop */}
-            <div className="w-full max-w-7xl mx-auto relative mb-20">
-                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-white via-transparent to-white w-24 md:w-64 left-0" />
-                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-l from-white via-transparent to-white w-24 md:w-64 right-0" />
+            <div className="relative mb-20 w-full">
+                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-white via-white to-transparent w-20 md:w-32 left-0" />
+                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-l from-white via-white to-transparent w-20 md:w-32 right-0" />
                 
-                <div className="w-full overflow-hidden">
+                <div className="w-full overflow-hidden -ml-8 md:-ml-16">
                     {!isMobile && (
                         <LogoLoop
                             logos={techLogos}

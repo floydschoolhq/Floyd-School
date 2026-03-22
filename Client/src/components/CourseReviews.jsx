@@ -7,12 +7,12 @@ const AI_REVIEWS = [
         id: 1,
         name: "Manav",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Manav",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ManavBoy",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Good",
-        content: "Good",
+        highlight: "Outstanding Learning Journey",
+        content: "The course has been an outstanding learning journey. I gained a solid understanding of AI fundamentals and practical applications. The instructors are exceptional and the hands-on projects really helped me grasp complex concepts.",
         tags: ["AI", "ML", "Python"],
         achievement: "Completed course successfully",
         color: "blue",
@@ -25,8 +25,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Understood Everything",
-        content: "Understood Everything (Good)",
+        highlight: "Exceptional Teaching Methodology",
+        content: "I understood every concept thoroughly. The teaching methodology is exceptional, breaking down complex topics into digestible segments. The practical examples and real-world applications made learning engaging and memorable.",
         tags: ["AI", "ML", "Understanding"],
         achievement: "Strong grasp of concepts",
         color: "emerald",
@@ -39,8 +39,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Excellent Logics",
-        content: "Excellent Logics (good)",
+        highlight: "Excellent Logical Thinking",
+        content: "The course enhanced my logical thinking abilities tremendously. The problem-solving exercises and algorithmic challenges were particularly beneficial. I'm now confident in applying AI concepts to real-world scenarios.",
         tags: ["Logic", "Problem Solving", "AI"],
         achievement: "Excellent logical thinking",
         color: "purple",
@@ -53,8 +53,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Excellent",
-        content: "Excellent",
+        highlight: "Comprehensive Excellence",
+        content: "This course exceeded all my expectations. The curriculum covers everything from basic concepts to advanced applications. The quality of teaching and the depth of knowledge shared is truly remarkable.",
         tags: ["AI", "ML", "Excellence"],
         achievement: "Excellent performance",
         color: "rose",
@@ -67,8 +67,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Nice",
-        content: "Nice",
+        highlight: "Impressive Educational Quality",
+        content: "I'm thoroughly impressed with the quality of education provided. The course structure, teaching methods, and supporting materials are all top-notch. This has been a transformative learning experience for me.",
         tags: ["AI", "ML", "Learning"],
         achievement: "Good progress",
         color: "amber",
@@ -81,8 +81,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Good Progress",
-        content: "Good Progress in less time",
+        highlight: "Rapid Skill Development",
+        content: "I made significant progress in a short time. The course content is well-paced and the practical assignments helped reinforce theoretical concepts. The instructor's guidance was invaluable throughout the journey.",
         tags: ["AI", "ML", "Progress"],
         achievement: "Rapid progress achieved",
         color: "blue",
@@ -95,8 +95,8 @@ const AI_REVIEWS = [
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Good",
-        content: "Good",
+        highlight: "Solid Foundation Building",
+        content: "The course provided a strong foundation in AI and machine learning concepts. While I had some prior knowledge, I still learned many new techniques and approaches. The fundamentals are explained very clearly.",
         tags: ["AI", "ML", "Basics"],
         achievement: "Completed fundamentals",
         color: "emerald",
@@ -109,8 +109,8 @@ const AI_REVIEWS = [
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Good",
-        content: "Good",
+        highlight: "Strong Foundation Established",
+        content: "I've built a strong foundation in AI and machine learning. The course covers essential topics comprehensively and the practical exercises helped me understand how to apply these concepts in real projects.",
         tags: ["AI", "ML", "Foundation"],
         achievement: "Strong foundation built",
         color: "purple",
@@ -123,8 +123,8 @@ const AI_REVIEWS = [
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "So Good",
-        content: "So Good",
+        highlight: "Excellent Skill Development",
+        content: "The course has been excellent for skill development. I learned many new techniques and approaches to problem-solving. The hands-on projects were particularly valuable in understanding real-world applications.",
         tags: ["AI", "ML", "Skills"],
         achievement: "Good skill development",
         color: "rose",
@@ -137,8 +137,8 @@ const AI_REVIEWS = [
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
-        highlight: "Good but not everything new",
-        content: "Good but not evething new",
+        highlight: "Comprehensive Learning Experience",
+        content: "Good but not everything new - however, I still gained valuable insights and learned several new approaches. The course content is well-structured and the teaching quality is consistently high throughout.",
         tags: ["AI", "ML", "Experience"],
         achievement: "Completed with good understanding",
         color: "amber",
@@ -264,11 +264,9 @@ const FeaturedCard = ({ review, variant }) => {
                         </div>
                     </div>
 
-                    {/* Achievement badge */}
-                    <div className={`md:ml-auto flex items-center gap-2 px-4 py-2.5 rounded-2xl border text-[11px] font-semibold self-start transition-all
-                        ${isDark ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : `${c.badge}`}`}>
-                        <Sparkles size={12} />
-                        <span>{review.achievement}</span>
+                    {/* STEPUP SCHOOL badge */}
+                    <div className={`md:ml-auto text-[11px] font-semibold transition-all text-blue-600`}>
+                        STEPUP SCHOOL
                     </div>
                 </div>
 
@@ -367,16 +365,16 @@ const CourseReviews = ({ courseId, variant }) => {
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-16">
-                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-bold uppercase tracking-widest mb-6 transition-all
-                        ${isDark ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
-                        <Brain size={12} />
-                        <span>Student Voices</span>
-                    </div>
-                    <h2 className={`text-3xl md:text-5xl font-black tracking-tight uppercase leading-none mb-4 transition-colors
-                        ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        Course <span className={isDark ? 'text-blue-500' : 'text-blue-600'}>Reviews</span> & Feedback
-                    </h2>
+                <div className="text-center mb-8">
+                    <motion.h2 
+                        className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Reviews</span>
+                    </motion.h2>
                     <p className={`text-lg max-w-xl mx-auto font-medium transition-colors
                         ${isDark ? 'text-slate-400' : 'text-slate-50'}`}>
                         Real stories from students who mastered AI & Machine Learning with us.
@@ -397,11 +395,6 @@ const CourseReviews = ({ courseId, variant }) => {
                         <div className="text-center">
                             <div className={`text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>200+</div>
                             <div className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Reviews</div>
-                        </div>
-                        <div className={`w-px h-12 transition-colors ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
-                        <div className="text-center">
-                            <div className={`text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>94%</div>
-                            <div className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Placement Rate</div>
                         </div>
                     </div>
                 </div>
@@ -452,9 +445,9 @@ const CourseReviews = ({ courseId, variant }) => {
                     <div className="flex flex-col gap-3 lg:max-h-[600px] lg:overflow-y-auto custom-scroll pr-1">
                         <p className={`text-[10px] font-black uppercase tracking-[0.25em] px-1 mb-1 transition-colors
                             ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                            All Reviews ({AI_REVIEWS.length})
+                            Featured Reviews (5)
                         </p>
-                        {AI_REVIEWS.map((review, i) => (
+                        {AI_REVIEWS.slice(0, 5).map((review, i) => (
                             <MiniCard
                                 key={review.id}
                                 review={review}

@@ -1,8 +1,8 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
 import AI_IMG from '../../../WhatsApp Image 2026-03-17 at 3.11.57 PM.jpeg';
-import IOT_IMG from '../assets/images/robotics.png';
-import WEB_IMG from '../assets/images/full stack web development.png';
-import CYBER_IMG from '../assets/images/cybersecurity.png';
+import IOT_IMG from '../../../iot and robotics.jpeg';
+import WEB_IMG from '../../../web development.jpeg';
+import CYBER_IMG from '../../../cyber security.jpeg';
 
 export const FALLBACK_COURSES = [
     {
@@ -10,11 +10,11 @@ export const FALLBACK_COURSES = [
         title: "Foundation of AI and Machine Learning",
         image: AI_IMG,
         icon: 'Cpu',
-        description: "Master neural networks, predictive modeling, and deep learning architectures. Build production-grade AI models that solve real-world problems and push the boundaries of machine intelligence.",
-        detailedDescription: "Master the architecture of modern AI. This program takes you from foundational probability to building production-grade deep learning models using industry-standard frameworks.",
+        description: "Learn how AI actually works and build it yourself. From Python basics to real machine learning models and computer vision. No prior experience needed.",
+        detailedDescription: "Learn how AI actually works and build it yourself. From Python basics to real machine learning models and computer vision. No prior experience needed.",
         color: "#2563EB",
         rating: 4.9,
-        duration: "3-4 Months",
+        duration: "3 month",
         tags: ["AI", "Python", "ML"],
         live: true,
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
@@ -33,14 +33,14 @@ export const FALLBACK_COURSES = [
     },
     {
         _id: '2',
-        title: "Web Architecture",
+        title: "Foundation of Web Development",
         image: WEB_IMG,
         icon: 'Code',
         description: "Engineer high-performance full-stack applications with scalable cloud infrastructure. Architect resilient, distributed systems using modern patterns and enterprise-grade deployment pipelines.",
         detailedDescription: "Architect the modern web. Learn to build resilient, distributed systems using React, Node.js, and advanced cloud patterns used by top-tier tech companies.",
         color: "#2563EB",
         rating: 4.8,
-        duration: "3-4 Months",
+        duration: "3 month",
         tags: ["React", "Node", "Cloud"],
         comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "UI/UX Mastery" } },
@@ -59,14 +59,14 @@ export const FALLBACK_COURSES = [
     },
     {
         _id: '3',
-        title: "IoT & Robotics",
+        title: "Foundation of IoT and Robotics",
         image: IOT_IMG,
         icon: 'Terminal',
         description: "Bridge the gap between hardware and software with autonomous systems. Design, build, and program smart robotic networks from the circuit level to advanced high-level control algorithms.",
         detailedDescription: "Bridge the gap between code and physical reality. Build autonomous robots and smart IoT networks from the circuit level to high-level control algorithms.",
         color: "#2563EB",
         rating: 4.7,
-        duration: "3-4 Months",
+        duration: "3 month",
         tags: ["Embedded", "C++", "Sensors"],
         comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "Hardware Lab" } },
@@ -85,14 +85,14 @@ export const FALLBACK_COURSES = [
     },
     {
         _id: '4',
-        title: "Cybersecurity Ops",
+        title: "Foundation of Cyber Security",
         image: CYBER_IMG,
         icon: 'Shield',
         description: "Become the shield of the digital world through threat analysis and zero-trust protocols. Master offensive and defensive strategies to protect industrial networks and sensitive data infrastructures.",
         detailedDescription: "Become the shield of the digital world. Master offensive and defensive security strategies, industrial network protection, and advanced threat hunting.",
         color: "#2563EB",
         rating: 4.9,
-        duration: "3-4 Months",
+        duration: "3 month",
         tags: ["SecOps", "Networking", "Hacking"],
         comingSoon: true,
         deliveryDetails: { inSchool: { bootcamp: "Cyber Simulation" } },
