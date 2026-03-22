@@ -25,7 +25,6 @@ import CourseReviews from '../components/CourseReviews';
 import RegistrationForm from '../components/RegistrationForm';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
-import AICourseCohort from '../components/AICourseCohort';
 
 const iconMap = {
     Cpu: Cpu,
@@ -141,11 +140,6 @@ const CourseDetails = () => {
                         </div>
                     </div>
                 </section>
-
-                {/* AI Course Cohort Section - Only for AI & ML Course */}
-                {courseId === '1' && (
-                    <AICourseCohort />
-                )}
 
                 {/* Course Curriculum Section - Only for AI & ML Course */}
                 {courseId === '1' && (

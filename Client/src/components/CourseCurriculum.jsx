@@ -670,7 +670,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                         Next Cohort Starts
                                     </p>
                                     <p className="text-lg font-bold text-on-surface">
-                                        15th October 2024
+                                        15th April 2026
                                     </p>
                                 </div>
                                 <div className="text-right">
