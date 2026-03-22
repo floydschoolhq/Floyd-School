@@ -270,9 +270,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
             </motion.div>
 
-                </div>
-            </motion.div>
-
             {/* Curriculum Roadmap */}
             <motion.section
                 initial={{ opacity: 0 }}
