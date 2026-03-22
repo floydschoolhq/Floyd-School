@@ -24,6 +24,7 @@ import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
 import RegistrationForm from '../components/RegistrationForm';
 import CourseOfferings from '../components/CourseOfferings';
+import CourseCurriculum from '../components/CourseCurriculum';
 
 const iconMap = {
     Cpu: Cpu,
@@ -71,7 +72,7 @@ const CourseDetails = () => {
 
             <div className="relative z-20">
                 {/* Course Hero - Dark Mode Refined */}
-                <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
+                <section id="course-hero" className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-6 relative z-10">
                         <button 
                             onClick={() => navigate(-1)}
@@ -140,22 +141,29 @@ const CourseDetails = () => {
                     </div>
                 </section>
 
+                {/* Course Curriculum Section - Only for AI & ML Course */}
+                {courseId === '1' && (
+                    <section id="course-curriculum">
+                        <CourseCurriculum variant="dark" />
+                    </section>
+                )}
 
-
-                <div className="bg-[#080808]">
+                <div id="course-reviews" className="bg-[#080808]">
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
 
                 {/* Course Offerings Section */}
-                <CourseOfferings variant="dark" />
+                <section id="course-offerings">
+                    <CourseOfferings variant="dark" />
+                </section>
 
                 {/* Enhanced Mentors Section */}
-                <div className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20">
+                <section id="course-faculty" className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20">
                     <div className="max-w-7xl mx-auto px-6">
                         {/* Faculty Grid */}
                         <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
                     </div>
-                </div>
+                </section>
 
                 {/* Registration Form Modal */}
                 <RegistrationForm 

@@ -49,9 +49,9 @@ const HomePage = () => {
     const isMobile = useIsMobile();
     return (
         <MotionConfig transition={isMobile ? { duration: 0 } : undefined}>
-            <div>
+            <div className='relative'>
                 <GlobalNotificationListener />
-                <div className='relative'>
+                <div>
                     <Hero />
                     <ThinkskoolAdvantage />
                     <TechStackStats />
@@ -61,7 +61,6 @@ const HomePage = () => {
                     <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
                 </div>
-
             </div>
         </MotionConfig>
     )

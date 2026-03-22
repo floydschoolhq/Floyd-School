@@ -68,10 +68,9 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                 transition: { duration: 0.3 }
             } : {}}
             whileTap={{ scale: 0.98 }}
-            onClick={() => onSelect(mentor)}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative cursor-pointer group
+            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group
                 ${isDark
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
@@ -141,7 +140,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                 </p>
 
                 {/* Interaction Footer */}
-                <div className="flex items-center justify-between pt-2 w-full">
+                <div className="flex items-center pt-2 w-full">
                     <div className="flex gap-4">
                         {mentor.tags.slice(0, 2).map(tag => (
                             <span key={tag} className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-colors
@@ -149,16 +148,6 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                                 #{tag}
                             </span>
                         ))}
-                    </div>
-                    <div className="flex items-center gap-2 group/btn">
-                        <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-colors
-                            ${isDark ? 'text-slate-500 group-hover/btn:text-white' : 'text-slate-400 group-hover/btn:text-slate-900'}`}>
-                            Full Profile
-                        </span>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all transform group-hover/btn:translate-x-1
-                            ${isDark ? 'bg-white/5 text-slate-500 group-hover/btn:bg-orange-400 group-hover/btn:text-white' : 'bg-slate-50 text-slate-400 group-hover/btn:bg-orange-500 group-hover/btn:text-white'}`}>
-                             <ChevronRight size={14} strokeWidth={3} />
-                        </div>
                     </div>
                 </div>
             </div>

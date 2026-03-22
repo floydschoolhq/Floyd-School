@@ -5,67 +5,67 @@ import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 const REVIEWS_ROW_1 = [
     {
-        name: "Aryan Kumar",
-        role: "Full Stack Developer",
-        content: "From optometrist to IT pro, thanks to thinkskool. Their lessons help me excel in projects. This transformed my journey, giving me clarity!",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aryan"
+        name: "Priyal Panwar",
+        role: "Student, STEPUP SCHOOL",
+        content: "Good Efforts very Informative!",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priyal"
     },
     {
-        name: "Abhishek Patidar",
-        role: "SDE-1",
-        content: "Chose thinkskool for structured learning. Top-notch mentors, quick TAs, and a supportive community. Best decision ever for my career growth.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Abhishek"
+        name: "Navya",
+        role: "Student, STEPUP SCHOOL",
+        content: "Good efforts liked it!",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Navya"
     },
     {
-        name: "Durgesh Chaubey",
-        role: "SDE - 1",
-        content: "thinkskool exceeded my college experience. After the course, I transitioned from a consultant to an SDE-1. Exceptional industry-focused faculty.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Durgesh"
+        name: "Pratishtha Thakur",
+        role: "Student, STEPUP SCHOOL",
+        content: "Amazing!!",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pratishtha"
     },
     {
-        name: "Aman Gupta",
-        role: "Data Analyst",
-        content: "The curriculum is perfectly aligned with industry needs. The AI projects were the highlight for me. Highly recommended for serious learners.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aman"
+        name: "Aahana Jain",
+        role: "Student, STEPUP SCHOOL",
+        content: "The course was really nice it was quite easy to be aware of such program that easy",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aahana"
     },
     {
-        name: "Priya Sharma",
-        role: "Product Designer",
-        content: "The design systems taught here are professional grade. I landed my dream job within 2 months of finishing the masterclass.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya"
+        name: "Siya Kapoor",
+        role: "Student, STEPUP SCHOOL",
+        content: "It was so nice, we learnt a lot",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Siya"
     }
 ];
 
 const REVIEWS_ROW_2 = [
     {
-        name: "Rahul Verma",
-        role: "Backend Engineer",
-        content: "Scale and architecture are focus points here. The hands-on experience with cloud infrastructure was exactly what I was looking for.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul"
+        name: "Kanisha Kapoor",
+        role: "Student, STEPUP SCHOOL",
+        content: "It was very nice time to learn this workshop",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kanisha"
     },
     {
-        name: "Sneha Kapur",
-        role: "ML Engineer",
-        content: "The AI module is incredibly deep. From prompt engineering to fine-tuning models, it covers the entire spectrum of modern AI.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sneha"
+        name: "Ishanvi Shukla",
+        role: "Student, STEPUP SCHOOL",
+        content: "This was very good experience to have new ideas...",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ishanvi"
     },
     {
-        name: "Vikram Singh",
-        role: "Cloud Architect",
-        content: "Professional-grade mentorship. The tutors actually work in the industry, which makes a massive difference in the quality of advice.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram"
+        name: "Bhavya Singh",
+        role: "Student, STEPUP SCHOOL",
+        content: "The Presentation was very nice and goood job bhai",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bhavya"
     },
     {
-        name: "Ananya Das",
-        role: "Frontend Specialist",
-        content: "I've never seen such a focus on performance and clean code. thinkskool is for those who want to be in the top 1% of engineers.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ananya"
+        name: "Sanvi Chaudhary",
+        role: "Student, STEPUP SCHOOL",
+        content: "It was a very good experience learning about it and very good explanation.",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sanvi"
     },
     {
-        name: "Ishaan Mehta",
-        role: "Lead Developer",
-        content: "The support system is fantastic. Even after completing the course, the community and networking opportunities keep providing value.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ishaan"
+        name: "Daksh Chaudhary",
+        role: "Student, STEPUP SCHOOL",
+        content: "The course was really good and interactive",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Daksh"
     }
 ];
 

@@ -6,7 +6,7 @@ const AI_REVIEWS = [
     {
         id: 1,
         name: "Manav",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ManavBoy",
         rating: 3,
         course: "AI & Machine Learning",
@@ -20,7 +20,7 @@ const AI_REVIEWS = [
     {
         id: 2,
         name: "Samyak",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Samyak",
         rating: 3,
         course: "AI & Machine Learning",
@@ -34,7 +34,7 @@ const AI_REVIEWS = [
     {
         id: 3,
         name: "Kushagra",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kushagra",
         rating: 3,
         course: "AI & Machine Learning",
@@ -48,7 +48,7 @@ const AI_REVIEWS = [
     {
         id: 4,
         name: "Aayar",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aayar",
         rating: 3,
         course: "AI & Machine Learning",
@@ -62,7 +62,7 @@ const AI_REVIEWS = [
     {
         id: 5,
         name: "Shutanh",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Shutanh",
         rating: 3,
         course: "AI & Machine Learning",
@@ -76,7 +76,7 @@ const AI_REVIEWS = [
     {
         id: 6,
         name: "Anant",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Anant",
         rating: 3,
         course: "AI & Machine Learning",
@@ -90,7 +90,7 @@ const AI_REVIEWS = [
     {
         id: 7,
         name: "Kavyansh",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kavyansh",
         rating: 2,
         course: "AI & Machine Learning",
@@ -104,7 +104,7 @@ const AI_REVIEWS = [
     {
         id: 8,
         name: "Arnav Kumar",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ArnavKumar",
         rating: 2,
         course: "AI & Machine Learning",
@@ -118,7 +118,7 @@ const AI_REVIEWS = [
     {
         id: 9,
         name: "Laksh Chaudhary",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=LakshChaudhary",
         rating: 2.5,
         course: "AI & Machine Learning",
@@ -132,7 +132,7 @@ const AI_REVIEWS = [
     {
         id: 10,
         name: "Ranveer Sharma",
-        role: "Student",
+        role: "Student, STEPUP SCHOOL",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RanveerSharma",
         rating: 3,
         course: "AI & Machine Learning",

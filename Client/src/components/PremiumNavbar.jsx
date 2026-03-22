@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback, memo } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook, FaUserTie, FaBullseye } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from './Context/PortalProvider';
@@ -23,6 +23,23 @@ const MOBILE_NAV_ITEMS = [
     { icon: FaPhone, label: "Contact", href: "#contact" }
 ];
 
+// Course-specific navigation items
+const COURSE_NAV_ITEMS = [
+    { name: 'Overview', id: 'course-hero' },
+    { name: 'Curriculum', id: 'course-curriculum' },
+    { name: 'Reviews', id: 'course-reviews' },
+    { name: 'Offerings', id: 'course-offerings' },
+    { name: 'Faculty', id: 'course-faculty' }
+];
+
+const COURSE_MOBILE_NAV_ITEMS = [
+    { icon: FaBook, label: "Overview", href: "#course-hero" },
+    { icon: FaGraduationCap, label: "Curriculum", href: "#course-curriculum" },
+    { icon: FaUsers, label: "Reviews", href: "#course-reviews" },
+    { icon: FaBullseye, label: "Offerings", href: "#course-offerings" },
+    { icon: FaUserTie, label: "Faculty", href: "#course-faculty" }
+];
+
 const PremiumNavbar = memo(({ variant }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
@@ -37,6 +54,31 @@ const PremiumNavbar = memo(({ variant }) => {
     // Optimized theme detection - single string check
     const isCoursesPage = location.pathname.includes('course') || 
                          location.pathname === '/online-program';
+    
+    // Check if we're on a specific course details page
+    const isCourseDetailsPage = location.pathname.includes('/course/') && 
+                                location.pathname.split('/').length > 2;
+
+    // Optimized event handlers - defined before use
+    const handleContactClick = useCallback(() => {
+        setSource('navbar');
+        setIsModalOpen(true);
+    }, []);
+
+    const scrollToSection = useCallback((sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
+
+    // Memoized navigation items to prevent recreation
+    const navItems = isCourseDetailsPage ? COURSE_NAV_ITEMS : [
+        { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+        { name: 'Courses', id: 'online-focus' },
+        { name: 'Partner with us', link: '/school-partnerships' },
+        { name: 'Request Callback', action: handleContactClick },
+    ];
 
     // Pre-computed styles - cached to prevent recalculation
     const styles = {
@@ -72,27 +114,6 @@ const PremiumNavbar = memo(({ variant }) => {
 
     const { scrollY } = useScroll();
     useMotionValueEvent(scrollY, "change", handleScroll);
-
-    // Optimized event handlers
-    const handleContactClick = useCallback(() => {
-        setSource('navbar');
-        setIsModalOpen(true);
-    }, []);
-
-    const scrollToSection = useCallback((sectionId) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }, []);
-
-    // Memoized navigation items to prevent recreation
-    const navItems = [
-        { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-        { name: 'Courses', id: 'online-focus' },
-        { name: 'Partner with us', link: '/school-partnerships' },
-        { name: 'Request Callback', action: handleContactClick },
-    ];
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -231,7 +252,7 @@ const PremiumNavbar = memo(({ variant }) => {
                             {/* Navigation Items */}
                             <div className="flex-1 overflow-y-auto">
                                 <div className="p-4 space-y-2">
-                                    {MOBILE_NAV_ITEMS.map((item, index) => {
+                                    {(isCourseDetailsPage ? COURSE_MOBILE_NAV_ITEMS : MOBILE_NAV_ITEMS).map((item, index) => {
                                         const Icon = item.icon;
                                         return (
                                             <motion.button
@@ -249,22 +270,22 @@ const PremiumNavbar = memo(({ variant }) => {
                                                     }
                                                     setIsMobileMenuOpen(false);
                                                 }}
-                                            className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-blue-50 rounded-xl transition-all group"
-                                        >
-                                            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                                                <Icon className="text-blue-600" size={18} />
-                                            </div>
-                                            <div className="flex-1 text-left">
-                                                <div className="font-semibold text-slate-900">{item.label}</div>
-                                            </div>
-                                            <div className="text-slate-400">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M9 18l6-6-6-6" />
-                                                </svg>
-                                            </div>
-                                        </motion.button>
-                                    );
-                                })}
+                                                className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-blue-50 rounded-xl transition-all group"
+                                            >
+                                                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                                                    <Icon className="text-blue-600" size={18} />
+                                                </div>
+                                                <div className="flex-1 text-left">
+                                                    <div className="font-semibold text-slate-900">{item.label}</div>
+                                                </div>
+                                                <div className="text-slate-400">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                        <path d="M9 18l6-6-6-6" />
+                                                    </svg>
+                                                </div>
+                                            </motion.button>
+                                        );
+                                    })}
                                 </div>
                                 
                                 {/* CTA Section */}
