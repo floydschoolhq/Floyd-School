@@ -64,8 +64,8 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
                 willChange: 'transform, filter, opacity',
             }}
         >
-            <div className={`${isOrange ? 'bg-gradient-to-br from-orange-500 to-orange-600' : 'bg-gradient-to-br from-white to-gray-50'} rounded-3xl p-1 shadow-2xl ${isOrange ? 'shadow-orange-500/25' : 'shadow-gray-300/25'}`}>
-                <div className={`${isOrange ? 'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700' : 'bg-white'} rounded-3xl overflow-hidden relative`}>
+            <div className={`${isOrange ? 'bg-gradient-to-br from-gray-900 to-black' : 'bg-gradient-to-br from-white to-gray-50'} rounded-3xl p-1 shadow-2xl ${isOrange ? 'shadow-gray-900/25' : 'shadow-gray-300/25'}`}>
+                <div className={`${isOrange ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black' : 'bg-white'} rounded-3xl overflow-hidden relative`}>
                     {/* Background Pattern */}
                     <div className="absolute inset-0 opacity-10">
                         <div className="absolute inset-0" style={{
@@ -104,7 +104,7 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
 
                         {/* Right Image */}
                         <div className="flex-1 relative lg:min-w-[500px]">
-                            <div className={`absolute inset-0 bg-gradient-to-l from-transparent ${isOrange ? 'to-orange-600/20' : 'to-gray-200/30'} z-10`} />
+                            <div className={`absolute inset-0 bg-gradient-to-l from-transparent ${isOrange ? 'to-black/20' : 'to-gray-200/30'} z-10`} />
                             <img
                                 src={advantage.image}
                                 alt={advantage.title}
