@@ -169,7 +169,7 @@ const TechStackStats = () => {
                             Technologies You Will Learn
                         </div>
                         <h2 className="text-2xl font-black text-slate-900 mb-2">
-                            Cutting-Edge Tech Stack
+                            Cutting-Edge <span className="text-orange-500 inline-block">Technologies</span><span className="text-orange-500 inline-block ml-3">you</span><span className="text-orange-500 inline-block ml-3">will</span><span className="text-orange-500 inline-block ml-3">learn</span>
                         </h2>
                         <p className="text-slate-600 text-sm">
                             From AI to IoT, we've got you covered
