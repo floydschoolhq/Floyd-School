@@ -124,6 +124,7 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
 
 const ThinkskoolAdvantage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const isMobile = useIsMobile();
 
     // 🔥 Smooth + stable scroll detection
     useEffect(() => {
@@ -157,6 +158,87 @@ const ThinkskoolAdvantage = () => {
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Mobile-specific rendering
+    if (isMobile) {
+        return (
+            <section className="py-16 bg-slate-50 relative w-full">
+                {/* Mobile Header */}
+                <div className="px-4 mb-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center"
+                    >
+                        <h2 className="text-2xl font-black text-slate-900 mb-3 leading-tight">
+                            Schools teach concepts.
+                        </h2>
+                        <h2 className="text-2xl font-black text-orange-500 leading-tight">
+                            We teach students to build real things.
+                        </h2>
+                    </motion.div>
+                </div>
+
+                {/* Mobile Advantage Cards */}
+                <div className="px-4 space-y-6">
+                    {ADVANTAGES.map((advantage, index) => (
+                        <motion.div
+                            key={advantage.id}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
+                            className="relative"
+                        >
+                            <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-orange-500 to-orange-600' : 'bg-gradient-to-br from-white to-gray-50'} rounded-2xl p-1 shadow-xl`}>
+                                <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700' : 'bg-white'} rounded-2xl overflow-hidden relative`}>
+                                    {/* Background Pattern */}
+                                    <div className="absolute inset-0 opacity-10">
+                                        <div className="absolute inset-0" style={{
+                                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                                        }} />
+                                    </div>
+
+                                    <div className="relative z-10 p-6">
+                                        {/* Icon and Badge */}
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${index % 2 === 0 ? 'bg-white/20' : 'bg-orange-500/10'}`}>
+                                                <advantage.icon size={20} className={index % 2 === 0 ? "text-white" : "text-orange-600"} />
+                                            </div>
+                                            <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase ${index % 2 === 0 ? 'bg-white/20 text-white' : 'bg-orange-500/10 text-orange-600'}`}>
+                                                Advantage {index + 1}
+                                            </div>
+                                        </div>
+
+                                        {/* Title */}
+                                        <h3 className={`text-xl font-black mb-3 leading-tight ${index % 2 === 0 ? 'text-white' : 'text-gray-900'}`}>
+                                            {advantage.title}
+                                        </h3>
+
+                                        {/* Description */}
+                                        <p className={`text-sm leading-relaxed mb-4 ${index % 2 === 0 ? 'text-white/90' : 'text-gray-700'}`}>
+                                            {advantage.description}
+                                        </p>
+
+                                        {/* Features */}
+                                        <div className="space-y-2">
+                                            {advantage.details.map((detail, idx) => (
+                                                <div key={idx} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${index % 2 === 0 ? 'bg-white/10' : 'bg-orange-500/5'}`}>
+                                                    <advantage.icon size={12} className={index % 2 === 0 ? "text-white" : "text-orange-600"} />
+                                                    <span className={`text-xs font-medium ${index % 2 === 0 ? 'text-white' : 'text-gray-800'}`}>{detail}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">

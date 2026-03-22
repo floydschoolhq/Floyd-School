@@ -53,20 +53,107 @@ const LEADERS = [
 const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, onMouseEnter, onMouseLeave }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
+    
+    if (isMobile) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onSelect(mentor)}
+                className={`snap-center flex-shrink-0 w-[85vw] h-[380px] rounded-2xl overflow-hidden border transition-all duration-700 flex flex-col items-center p-6 gap-4 relative
+                    ${isDark
+                        ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
+                        : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
+            >
+                {/* Background Decorative Mesh */}
+                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-all duration-700
+                    ${isDark ? 'bg-orange-500/10' : 'bg-orange-100/40'}`} />
+                
+                {/* Image Section - Mobile Optimized */}
+                <div className="w-24 h-24 flex-shrink-0 relative">
+                    {/* Main Profile Housing */}
+                    <div className={`absolute inset-0 rounded-full p-[2px] border transition-all duration-700 z-10 
+                        ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-100'}`}>
+                        <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 relative">
+                             <img
+                                src={mentor.image}
+                                alt={mentor.name}
+                                className="w-full h-full object-cover object-top transition-all duration-1000"
+                                style={{ transform: `scale(${mentor.imageScale})` }}
+                            />
+                            {/* Glass Overlay on Image */}
+                            <div className={`absolute inset-0 opacity-20 transition-opacity duration-700
+                                ${isDark ? 'bg-gradient-to-tr from-orange-950/30 to-transparent' : 'bg-gradient-to-tr from-orange-900/20 via-transparent'}`} />
+                        </div>
+                    </div>
+
+                    {/* Integrated LinkedIn Tag */}
+                    <a 
+                        href={mentor.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className={`absolute bottom-0 right-0 w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-lg transition-all duration-500 z-20 border-2
+                            ${isDark ? 'bg-white/10 backdrop-blur-xl border-white/10 hover:bg-orange-500 hover:border-orange-400' : 'bg-slate-900 border-white hover:bg-orange-500'}`}
+                    >
+                        <FaLinkedinIn size={10} className="hover:scale-110 transition-transform" />
+                    </a>
+                </div>
+
+                {/* Content Core - Mobile Optimized */}
+                <div className="flex-grow flex flex-col items-center text-center relative z-10 w-full">
+                    <div className="space-y-2 mb-4 flex flex-col items-center">
+                        <h3 className={`text-lg font-black tracking-tight leading-none transition-colors w-full
+                            ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            {mentor.name}
+                        </h3>
+                        <p className={`text-[10px] font-bold uppercase tracking-wide pb-2
+                            ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                            {mentor.role}
+                        </p>
+                        <div className={`w-8 h-1 transition-all duration-500 rounded-full
+                            ${isDark ? 'bg-white/10' : 'bg-slate-100'}`} />
+                    </div>
+
+                    <p className={`text-[12px] leading-relaxed mb-4 font-medium
+                        ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                        {mentor.bio}
+                    </p>
+
+                    {/* Interaction Footer */}
+                    <div className="flex items-center gap-3 mt-auto">
+                        {mentor.tags.slice(0, 2).map(tag => (
+                            <span key={tag} className={`text-[8px] font-bold uppercase tracking-widest px-2 py-1 rounded-full
+                                ${isDark ? 'bg-white/10 text-slate-400' : 'bg-slate-100 text-slate-400'}`}>
+                                #{tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
                 duration: 0.6,
-                delay: isMobile ? 0 : index * 0.1,
+                delay: index * 0.1,
                 ease: "easeOut"
             }}
-            whileHover={!isMobile ? {
+            whileHover={{
                 y: -8,
                 scale: 1.02,
                 transition: { duration: 0.3 }
-            } : {}}
+            }}
             whileTap={{ scale: 0.98 }}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

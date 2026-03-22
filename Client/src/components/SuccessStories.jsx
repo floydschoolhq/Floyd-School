@@ -79,6 +79,7 @@ const THEME_COLORS = [
 
 const ReviewCard = ({ review, index = 0, variant }) => {
     const isDark = variant === 'dark';
+    const isMobile = useIsMobile();
     const themes = isDark ? [
         { border: "hover:border-blue-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(59,130,246,0.1)]", glow: "from-blue-500/10" },
         { border: "hover:border-amber-500/30", shadow: "hover:shadow-[0_20px_60px_rgba(245,158,11,0.1)]", glow: "from-amber-500/10" },
@@ -87,46 +88,98 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     
     const theme = themes[index % themes.length];
     
+    if (isMobile) {
+        return (
+            <div className={`flex-shrink-0 w-[320px] p-6 rounded-2xl group transition-all duration-500 relative overflow-hidden flex flex-col items-start text-left ${
+                isDark 
+                    ? 'bg-white/[0.03] border border-white/10 hover:bg-white/[0.05]' 
+                    : `bg-white border border-slate-100 ${theme.shadow}`
+            }`}>
+                {/* Mobile Optimized Background */}
+                <div className={`absolute top-0 right-0 w-[120%] h-[120%] bg-gradient-to-bl ${theme.glow} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-bl-full`} />
+                
+                {/* Mobile Quote watermark */}
+                <div className={`absolute top-4 right-4 transition-colors ${
+                    isDark ? 'text-white/[0.02] group-hover:text-white/[0.05]' : 'text-slate-50 group-hover:text-slate-100'
+                }`}>
+                    <Quote size={40} fill="currentColor" />
+                </div>
+                
+                <div className="relative z-10 flex flex-col items-start w-full font-['Outfit']">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className={`w-12 h-12 rounded-xl overflow-hidden border transition-all duration-500 ${
+                            isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
+                        }`}>
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                            <h4 className={`text-sm font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                        </div>
+                    </div>
+                    
+                    <p className={`text-[13px] leading-relaxed font-medium mb-4 ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                        "{review.content}"
+                    </p>
+
+                    <div className="mt-auto flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
+                                isDark ? 'bg-white/10 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-900'
+                            }`} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
     return (
-    <div className={`flex-shrink-0 w-full md:w-[420px] p-10 rounded-[2.5rem] group transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-start text-left
-        ${isDark 
-            ? 'bg-white/[0.03] border border-white/10 hover:bg-white/[0.05]' 
-            : `bg-white border border-slate-100 ${theme.shadow}`}`}>
-        
-        {/* Subtle Color Reflection */}
-        <div className={`absolute top-0 right-0 w-[150%] h-[150%] bg-gradient-to-bl ${theme.glow} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-bl-full`} />
-        
-        {/* Quote watermark - Subtle */}
-        <div className={`absolute top-8 right-8 transition-colors
-            ${isDark ? 'text-white/[0.02] group-hover:text-white/[0.05]' : 'text-slate-50 group-hover:text-slate-100'}`}>
-            <Quote size={60} fill="currentColor" />
-        </div>
-        
-        <div className="relative z-10 flex flex-col items-start w-full font-['Outfit']">
-            <div className="flex items-center gap-4 mb-8">
-                <div className={`w-14 h-14 rounded-2xl overflow-hidden border transition-all duration-500
-                    ${isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'}`}>
-                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                    <h4 className={`text-[17px] font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                    <p className={`text-[11px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
-                </div>
+        <div className={`flex-shrink-0 w-full md:w-[420px] p-10 rounded-[2.5rem] group transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-start text-left ${
+            isDark 
+                ? 'bg-white/[0.03] border border-white/10 hover:bg-white/[0.05]' 
+                : `bg-white border border-slate-100 ${theme.shadow}`
+        }`}>
+            {/* Subtle Color Reflection */}
+            <div className={`absolute top-0 right-0 w-[150%] h-[150%] bg-gradient-to-bl ${theme.glow} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-bl-full`} />
+            
+            {/* Quote watermark - Subtle */}
+            <div className={`absolute top-8 right-8 transition-colors ${
+                isDark ? 'text-white/[0.02] group-hover:text-white/[0.05]' : 'text-slate-50 group-hover:text-slate-100'
+            }`}>
+                <Quote size={60} fill="currentColor" />
             </div>
             
-            <p className={`text-[15px] leading-relaxed font-medium mb-8
-                ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                "{review.content}"
-            </p>
+            <div className="relative z-10 flex flex-col items-start w-full font-['Outfit']">
+                <div className="flex items-center gap-4 mb-8">
+                    <div className={`w-14 h-14 rounded-2xl overflow-hidden border transition-all duration-500 ${
+                        isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
+                    }`}>
+                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <h4 className={`text-[17px] font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                        <p className={`text-[11px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                    </div>
+                </div>
+                
+                <p className={`text-[15px] leading-relaxed font-medium mb-8 ${
+                    isDark ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                    "{review.content}"
+                </p>
 
-            <div className="mt-auto flex gap-1.5">
-                {[...Array(5)].map((_, i) => (
-                    <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors duration-300
-                        ${isDark ? 'bg-white/10 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-900'}`} />
-                ))}
+                <div className="mt-auto flex gap-1.5">
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
+                            isDark ? 'bg-white/10 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-900'
+                        }`} />
+                    ))}
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 

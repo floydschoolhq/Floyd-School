@@ -526,43 +526,43 @@ const StudentProjects = () => {
 
           {/* Projects Grid - Mobile Horizontal Scrolling */}
           <div className="mb-8 relative">
-            {/* Navigation Buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 -left-2 z-20">
+            {/* Enhanced Navigation Buttons */}
+            <div className="absolute top-1/2 -translate-y-1/2 -left-3 z-20">
               <button 
                 onClick={() => scroll('left')}
-                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                className="p-3 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={18} />
               </button>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 -right-2 z-20">
+            <div className="absolute top-1/2 -translate-y-1/2 -right-3 z-20">
               <button 
                 onClick={() => scroll('right')}
-                className="p-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
+                className="p-3 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={18} />
               </button>
             </div>
             
             <div 
               ref={scrollRef}
-              className="overflow-hidden py-10 -mx-4 px-4 overflow-x-auto snap-x snap-mandatory" 
+              className="overflow-hidden py-12 -mx-4 px-6 overflow-x-auto snap-x snap-mandatory" 
               style={{ 
                   scrollbarWidth: 'none', 
                   msOverflowStyle: 'none',
-                  scrollPaddingLeft: '1rem',
-                  scrollPaddingRight: '1rem'
+                  scrollPaddingLeft: '1.5rem',
+                  scrollPaddingRight: '1.5rem'
               }}
             >
               {/* webkit-scrollbar hiding applied via a hacky style tag */}
               <style>{`
                 .student-projects .overflow-x-auto::-webkit-scrollbar { display: none; }
               `}</style>
-              <div className="flex gap-3 w-max">
+              <div className="flex gap-4 w-max">
                 {filteredProjects.map((project, index) => (
                   <div 
                     key={project.id} 
-                    className="flex-shrink-0 w-72" 
+                    className="flex-shrink-0 w-80" 
                     style={{ scrollSnapAlign: 'start' }}
                   >
                     <ProjectCard
@@ -574,6 +574,19 @@ const StudentProjects = () => {
                 ))}
               </div>
             </div>
+
+            {/* Mobile Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {filteredProjects.map((_, index) => (
+                <div 
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === 0 ? 'bg-orange-500 w-6' : 'bg-slate-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
 
           {/* CTA Section - Mobile */}
           <div className="text-center">
