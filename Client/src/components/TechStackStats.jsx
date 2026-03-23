@@ -292,7 +292,7 @@ const TechStackStats = () => {
                                             }
                                         }
                                     }}
-                                    className={`text-blue-600 inline-block ${i > 0 ? 'ml-3' : ''}`}
+                                    className={`text-orange-500 inline-block ${i > 0 ? 'ml-3' : ''}`}
                                 >
                                     {word}
                                 </motion.span>

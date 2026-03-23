@@ -270,39 +270,36 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
             </motion.div>
 
-            {/* Curriculum Roadmap */}
-            <motion.section
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="py-24 px-6 bg-surface-container-lowest relative overflow-hidden"
-            >
-                <div className="max-w-4xl mx-auto relative">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.1 }}
-                        className="text-center mb-20"
-                    >
-                        <h2 className="text-4xl font-headline font-extrabold tracking-tight mb-4 text-on-surface">
-                            The 90-Day Roadmap
-                        </h2>
-                        <p className="text-on-surface-variant">
-                            From code basics to shipping production-ready AI models.
-                        </p>
-                    </motion.div>
+            {/* Two Column Layout */}
+            <div className="flex flex-col lg:flex-row gap-8 px-6 py-16 bg-surface-container-lowest relative min-h-screen">
+                {/* Left Column - Curriculum Roadmap */}
+                <div className="flex-1">
+                    <div className="max-w-3xl relative" style={{marginLeft: '8%', marginRight: 'auto'}}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: 0.1 }}
+                            className="text-left mb-12"
+                        >
+                            <h2 className="text-4xl font-headline font-extrabold tracking-tight mb-4 text-on-surface">
+                                The 90-Day Roadmap
+                            </h2>
+                            <p className="text-on-surface-variant">
+                                From code basics to shipping production-ready AI models.
+                            </p>
+                        </motion.div>
 
-                    {curriculumData.map((month, monthIndex) => (
+                        {curriculumData.map((month, monthIndex) => (
                         <motion.div
                             key={monthIndex}
                             initial={{ opacity: 0, x: monthIndex % 2 === 0 ? -50 : 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: monthIndex * 0.05 }}
-                            className={`mb-24 relative ${monthIndex === 2 ? 'mb-0' : ''}`}
+                            className={`mb-12 relative ${monthIndex === 2 ? 'mb-0' : ''}`}
                         >
                             {/* Month Header */}
                             <motion.div 
-                                className="flex items-center gap-6 mb-12 cursor-pointer"
+                                className="flex items-center gap-6 mb-8 cursor-pointer"
                                 onClick={() => handleMonthClick(monthIndex)}
                                 whileHover={{ x: 10 }}
                                 transition={{ type: "spring", stiffness: 300 }}
@@ -359,7 +356,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                 {month.weeks.map((week, weekIndex) => (
                                     <motion.div 
                                         key={weekIndex} 
-                                        className={`mb-12 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
+                                        className={`mb-6 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: weekIndex * 0.02 }}
@@ -404,7 +401,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
                                         {/* Week Card */}
                                         <motion.div 
-                                            className={`p-6 rounded-xl border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
+                                            className={`p-4 rounded-xl border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
                                                 week.isSpecial
                                                     ? 'p-1 bg-gradient-to-br from-primary via-primary-container to-secondary rounded-2xl'
                                                     : ''
@@ -466,8 +463,88 @@ const CourseCurriculum = ({ variant = "light" }) => {
                             </div>
                         </motion.div>
                     ))}
+                    </div>
                 </div>
-            </motion.section>
+
+                {/* Right Column - Sticky CTA */}
+                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-6 lg:self-end lg:ml-8">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className="bg-surface-container-low p-8 rounded-3xl border border-primary/20 shadow-xl"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-headline font-extrabold tracking-tight mb-6 text-on-surface text-center">
+                            Ready to build your child's AI future?
+                        </h2>
+                        <p className="text-lg text-on-surface-variant mb-8 text-center">
+                            Enroll today — limited seats per cohort to ensure personalized mentorship.
+                        </p>
+                        <div className="flex flex-col gap-6">
+                            <div className="flex justify-between items-center text-left">
+                                <div>
+                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
+                                        Next Cohort Starts
+                                    </p>
+                                    <p className="text-lg font-bold text-on-surface">
+                                        15th April 2026
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
+                                        Seats Left
+                                    </p>
+                                    <p className="text-lg font-bold text-secondary">
+                                        07 / 20
+                                    </p>
+                                </div>
+                            </div>
+                            <motion.button 
+                                onClick={handleReserveAdmission}
+                                disabled={isEnrolling}
+                                className="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-black text-xl shadow-xl shadow-[0_25px_50px_rgba(0,229,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                animate={{
+                                    boxShadow: isEnrolling ? "0 20px 40px rgba(0, 229, 255, 0.3)" : "0 25px 50px rgba(0, 229, 255, 0.4)"
+                                }}
+                                whileHover={{ 
+                                    scale: isEnrolling ? 1 : 1.05, 
+                                    boxShadow: isEnrolling ? "0 20px 40px rgba(0, 229, 255, 0.3)" : "0 35px 70px rgba(0, 229, 255, 0.6)",
+                                    brightness: isEnrolling ? 1 : 1.1
+                                }}
+                                whileTap={{ scale: isEnrolling ? 1 : 0.98 }}
+                                transition={{ 
+                                    type: "spring", 
+                                    stiffness: 400, 
+                                    damping: 17,
+                                    boxShadow: { duration: 0.3 }
+                                }}
+                            >
+                                <motion.div 
+                                    className="flex items-center justify-center gap-2"
+                                    animate={{ opacity: isEnrolling ? 0.8 : 1 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {isEnrolling ? (
+                                        <>
+                                            <motion.div 
+                                                className="w-4 h-4 border-2 border-on-primary border-t-transparent rounded-full"
+                                                animate={{ rotate: 360 }}
+                                                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                            />
+                                            Processing...
+                                        </>
+                                    ) : (
+                                        'Reserve Admission Now'
+                                    )}
+                                </motion.div>
+                            </motion.button>
+                            <p className="text-xs text-on-surface-variant text-center">
+                                Secure payment. Immediate curriculum access upon enrollment.
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
 
             {/* Capstone Section */}
             <motion.section
@@ -519,89 +596,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </motion.section>
-
-            {/* Enrollment CTA */}
-            <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="py-24 px-6 text-center relative"
-            >
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-headline font-extrabold tracking-tight mb-8 text-on-surface">
-                        Ready to build your child's AI future?
-                    </h2>
-                    <p className="text-xl text-on-surface-variant mb-12">
-                        Enroll today — limited seats per cohort to ensure personalized mentorship.
-                    </p>
-                    <div className="bg-surface-container-low p-8 rounded-3xl border border-primary/20 inline-block w-full max-w-lg">
-                        <div className="flex flex-col gap-6">
-                            <div className="flex justify-between items-center text-left">
-                                <div>
-                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
-                                        Next Cohort Starts
-                                    </p>
-                                    <p className="text-lg font-bold text-on-surface">
-                                        15th April 2026
-                                    </p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
-                                        Seats Left
-                                    </p>
-                                    <p className="text-lg font-bold text-secondary">
-                                        07 / 20
-                                    </p>
-                                </div>
-                            </div>
-                            <motion.button 
-                            onClick={handleReserveAdmission}
-                            disabled={isEnrolling}
-                            className="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-black text-xl shadow-xl shadow-[0_25px_50px_rgba(0,229,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                            animate={{
-                                boxShadow: isEnrolling 
-                                    ? "0 25px 50px rgba(0, 229, 255, 0.3)"
-                                    : "0 30px 60px rgba(0, 229, 255, 0.5)"
-                            }}
-                            whileHover={{ 
-                                scale: isEnrolling ? 1 : 1.02,
-                                boxShadow: isEnrolling ? "0 25px 50px rgba(0, 229, 255, 0.3)" : "0 40px 80px rgba(0, 229, 255, 0.7)",
-                                brightness: isEnrolling ? 1 : 1.1
-                            }}
-                            whileTap={{ scale: isEnrolling ? 1 : 0.98 }}
-                            transition={{ 
-                                type: "spring", 
-                                stiffness: 400, 
-                                damping: 17,
-                                boxShadow: { duration: 0.3 }
-                            }}
-                        >
-                            <motion.div 
-                                className="flex items-center justify-center gap-2"
-                                animate={{ opacity: isEnrolling ? 0.8 : 1 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                {isEnrolling ? (
-                                    <>
-                                        <motion.div 
-                                            className="w-5 h-5 border-2 border-on-primary border-t-transparent rounded-full"
-                                            animate={{ rotate: 360 }}
-                                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                        />
-                                        Processing...
-                                    </>
-                                ) : (
-                                    'Reserve Admission Now'
-                                )}
-                            </motion.div>
-                        </motion.button>
-                            <p className="text-xs text-on-surface-variant">
-                                Secure payment. Immediate curriculum access upon enrollment.
-                            </p>
                         </div>
                     </div>
                 </div>
