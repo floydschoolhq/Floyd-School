@@ -263,9 +263,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                                                 }
                                                             }
                                                         }}
-                                                        className={`text-2xl font-bold uppercase tracking-wider ${
-                                                            isDark ? 'text-orange-400' : 'text-orange-500'
-                                                        }`}>
+                                                        className={`text-2xl font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-white`}>
                                                         Coming Soon
                                                     </motion.span>
                                                 </div>
