@@ -264,11 +264,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                                             }
                                                         }}
                                                         className={`text-2xl font-bold uppercase tracking-wider ${
-                                                            isDark ? 'text-slate-400' : 'text-slate-500'
+                                                            isDark ? 'text-orange-400' : 'text-orange-500'
                                                         }`}>
-                                                        <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                                                        <Cpu size={20} className="text-blue-500" />
-                                                    </div>
+                                                        Coming Soon
                                                     </motion.span>
                                                 </div>
                                             ) : (
