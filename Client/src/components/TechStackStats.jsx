@@ -168,7 +168,7 @@ const TechStackStats = () => {
                             <Terminal size={12} />
                             Technologies You Will Learn
                         </div>
-                        <h2 className="text-2xl font-black text-slate-900 mb-2">
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-2">
                             Cutting-Edge <span className="text-orange-500 inline-block">Technologies</span><span className="text-orange-500 inline-block ml-3">you</span><span className="text-orange-500 inline-block ml-3">will</span><span className="text-orange-500 inline-block ml-3">learn</span>
                         </h2>
                         <p className="text-slate-600 text-sm">
@@ -263,15 +263,15 @@ const TechStackStats = () => {
 
     // Desktop section
     return (
-        <section className="bg-white pt-20 md:pt-32 pb-12 md:pb-20 overflow-hidden">
+        <section className="bg-white pt-12 md:pt-20 pb-12 md:pb-20 overflow-hidden">
             {/* Tech Showcase Header - Multi-layered HUD style */}
-            <div className="w-full max-w-7xl mx-auto px-4 text-center mb-16 relative">
+            <div className="w-full max-w-7xl mx-auto px-4 text-center mb-24 relative">
                 <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     className="inline-flex flex-col items-center relative z-10"
                 >
-                    <h2 className="font-bold uppercase tracking-[0.2em] md:tracking-[0.55em] text-2xl md:text-4xl leading-none whitespace-nowrap text-center">
+                    <h2 className="font-bold uppercase tracking-[0.3em] md:tracking-[0.7em] text-5xl md:text-7xl leading-none whitespace-nowrap text-center">
                         {["Technologies", "you", "will", "learn"].map((word, i) => {
                             return (
                                 <motion.span

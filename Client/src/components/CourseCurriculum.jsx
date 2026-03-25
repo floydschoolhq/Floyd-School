@@ -177,9 +177,10 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 className="text-center mb-6 px-4 sm:px-6 lg:px-8"
             >
                 <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-headline font-extrabold tracking-tighter mb-8 leading-tight text-on-surface break-words">
-                    Foundation of <br className="hidden sm:block"/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 block sm:inline">
-                        AI & MACHINE LEARNING
+                    Foundation of
+                    <br className="block"/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                        AI and Machine Learning
                     </span>
                 </h2>
                 <p className="max-w-2xl mx-auto text-xl text-on-surface-variant mb-12 font-light leading-relaxed">
@@ -225,14 +226,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                             )}
                         </motion.div>
                     </motion.button>
-                    <motion.span 
-                        className="text-on-surface-variant font-mono text-sm cursor-pointer hover:text-primary transition-colors duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        onClick={() => window.open('https://www.thinkskool.in', '_blank')}
-                    >
-                        www.thinkskool.in
-                    </motion.span>
-                </div>
+                    </div>
             </motion.div>
 
             {/* Stats Section */}
@@ -401,7 +395,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
                                         {/* Week Card */}
                                         <motion.div 
-                                            className={`p-4 rounded-xl border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
+                                            className={`p-2 rounded-xl border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
                                                 week.isSpecial
                                                     ? 'p-1 bg-gradient-to-br from-primary via-primary-container to-secondary rounded-2xl'
                                                     : ''
@@ -421,7 +415,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                         >
                                             <div className={`${week.isSpecial ? 'p-8 rounded-[14px]' : ''}`}>
                                                 <motion.span 
-                                                    className={`text-xs font-bold mb-2 block uppercase tracking-widest ${
+                                                    className={`text-xs font-bold mb-0.5 block uppercase tracking-widest ${
                                                         month.color === 'primary' ? 'text-primary' : 'text-secondary'
                                                     }`}
                                                     animate={{ 
@@ -433,7 +427,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                                     {week.week}
                                                 </motion.span>
                                                 <motion.h4 
-                                                    className={`text-lg font-bold mb-2 text-on-surface ${
+                                                    className={`text-lg font-bold mb-0.5 text-on-surface ${
                                                         week.isSpecial ? 'text-2xl' : ''
                                                     }`}
                                                     animate={{ 
