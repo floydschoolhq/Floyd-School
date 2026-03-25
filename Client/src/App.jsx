@@ -35,6 +35,7 @@ import SchoolPartnership from './pages/SchoolPartnership.jsx';
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
+import CompleteProfilePage from './pages/CompleteProfilePage.jsx';
 
 import Logo from './components/Logo.jsx';
 
@@ -43,6 +44,7 @@ import IndustrialNetwork from './components/IndustrialNetwork.jsx';
 
 import { MotionConfig } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile.js';
+import { Toaster } from 'react-hot-toast';
 
 // --- Home Page Component ---
 const HomePage = () => {
@@ -85,7 +87,8 @@ const App = () => {
         '/downloads',
         '/contact',
         '/online-program',
-        '/classroom'
+        '/classroom',
+        '/complete-profile'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -107,6 +110,32 @@ const App = () => {
 
     return (
         <div>
+            {/* Toast Notifications */}
+            <Toaster 
+                position="top-right"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                    },
+                    success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: '#4ade80',
+                            secondary: '#fff',
+                        },
+                    },
+                    error: {
+                        duration: 5000,
+                        iconTheme: {
+                            primary: '#ef4444',
+                            secondary: '#fff',
+                        },
+                    },
+                }}
+            />
+            
             {/* Conditional Navbar Rendering */}
             {!shouldHideLayout && <PremiumNavbar />}
             {/* Main Routes */}
@@ -130,6 +159,9 @@ const App = () => {
 
                 {/*Login*/}
                 <Route path='/student/login' element={<StudentLoginPage />} />
+
+                {/*Complete Profile*/}
+                <Route path='/complete-profile' element={<CompleteProfilePage />} />
 
                 {/*Signup forms removed*/}
 

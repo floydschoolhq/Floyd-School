@@ -9,6 +9,11 @@ const morgan = require('morgan');
 // Load env variables first
 dotenv.config();
 
+// Set MONGODB_URI from MONGO_URI for compatibility
+if (process.env.MONGO_URI && !process.env.MONGODB_URI) {
+    process.env.MONGODB_URI = process.env.MONGO_URI;
+}
+
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
