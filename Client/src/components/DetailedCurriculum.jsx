@@ -27,7 +27,11 @@ const DetailedCurriculum = () => {
                     <div className="absolute inset-0 bg-gradient-to-b from-surface-container-low to-transparent pointer-events-none"></div>
                     <div className="max-w-6xl mx-auto relative z-10 text-center">
                         <h1 className="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 text-primary drop-shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-                            Foundations of AI & MACHINE LEARNING
+                            Foundations of
+                            <br className="block"/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                                AI and Machine Learning
+                            </span>
                         </h1>
                         <p className="font-body text-xl md:text-2xl text-on-surface-variant max-w-3xl mx-auto leading-relaxed">
                             The question isn't whether AI will shape your child's future. It's whether they'll build it — or just watch.

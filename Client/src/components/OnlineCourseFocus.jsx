@@ -252,9 +252,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                                         variants={{
                                                             animate: {
                                                                 filter: [
-                                                                    "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))",
-                                                                    "brightness(1.8) drop-shadow(0 0 20px rgba(249, 115, 22, 0.4))",
-                                                                    "brightness(1) drop-shadow(0 0 0px rgba(249, 115, 22, 0))"
+                                                                    "brightness(1) drop-shadow(0 0 0px rgba(255, 255, 255, 0))",
+                                                                    "brightness(1.8) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6))",
+                                                                    "brightness(1) drop-shadow(0 0 0px rgba(255, 255, 255, 0))"
                                                                 ],
                                                                 transition: {
                                                                     duration: 2.5,

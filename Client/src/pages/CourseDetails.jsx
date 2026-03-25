@@ -148,15 +148,6 @@ const CourseDetails = () => {
                     </section>
                 )}
 
-                <div id="course-reviews" className="bg-[#080808]">
-                    <CourseReviews courseId={courseId} variant="dark" />
-                </div>
-
-                {/* Course Offerings Section */}
-                <section id="course-offerings">
-                    <CourseOfferings variant="dark" />
-                </section>
-
                 {/* Enhanced Mentors Section */}
                 <section id="course-faculty" className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20">
                     <div className="max-w-7xl mx-auto px-6">
@@ -164,6 +155,15 @@ const CourseDetails = () => {
                         <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
                     </div>
                 </section>
+
+                {/* Course Offerings Section */}
+                <section id="course-offerings">
+                    <CourseOfferings variant="dark" />
+                </section>
+
+                <div id="course-reviews" className="bg-[#080808]">
+                    <CourseReviews courseId={courseId} variant="dark" />
+                </div>
 
                 {/* Registration Form Modal */}
                 <RegistrationForm 
