@@ -263,11 +263,6 @@ const FeaturedCard = ({ review, variant }) => {
                             </div>
                         </div>
                     </div>
-
-                    {/* STEPUP SCHOOL badge */}
-                    <div className={`md:ml-auto text-[11px] font-semibold transition-all text-blue-600`}>
-                        STEPUP SCHOOL
-                    </div>
                 </div>
 
                 {/* Highlight */}
@@ -445,7 +440,7 @@ const CourseReviews = ({ courseId, variant }) => {
                     <div className="flex flex-col gap-3 lg:max-h-[600px] lg:overflow-y-auto custom-scroll pr-1">
                         <p className={`text-[10px] font-black uppercase tracking-[0.25em] px-1 mb-1 transition-colors
                             ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                            Featured Reviews (5)
+                            Featured Reviews
                         </p>
                         {AI_REVIEWS.slice(0, 5).map((review, i) => (
                             <MiniCard

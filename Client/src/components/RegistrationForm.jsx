@@ -88,6 +88,9 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
             setIsSubmitting(false);
             setIsSuccess(true);
             
+            // Trigger registration completion event
+            window.dispatchEvent(new CustomEvent('registrationComplete'));
+            
             // Reset form after 3 seconds and close modal
             setTimeout(() => {
                 setFormData({

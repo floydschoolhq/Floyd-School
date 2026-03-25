@@ -8,6 +8,8 @@ const CourseCurriculum = ({ variant = "light" }) => {
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
+    const [registeredCount, setRegisteredCount] = useState(7); // Initial registered students
+    const totalSeats = 20;
     
     const curriculumData = [
         {
@@ -140,6 +142,33 @@ const CourseCurriculum = ({ variant = "light" }) => {
             setIsSecuring(false);
         }
     };
+
+    const handleRegistrationComplete = () => {
+        // Increment registered count when someone successfully registers
+        setRegisteredCount(prev => Math.min(prev + 1, totalSeats));
+    };
+
+    // Listen for registration completion from URL params or custom event
+    React.useEffect(() => {
+        const handleRegistrationEvent = () => {
+            handleRegistrationComplete();
+        };
+
+        // Add event listener for registration completion
+        window.addEventListener('registrationComplete', handleRegistrationEvent);
+        
+        // Check if returning from registration with success
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registrationSuccess') === 'true') {
+            handleRegistrationComplete();
+            // Clean up URL
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+
+        return () => {
+            window.removeEventListener('registrationComplete', handleRegistrationEvent);
+        };
+    }, []);
 
     const handleReserveAdmission = async () => {
         setIsEnrolling(true);
@@ -489,7 +518,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                         Seats Left
                                     </p>
                                     <p className="text-lg font-bold text-secondary">
-                                        07 / 20
+                                        {String(totalSeats - registeredCount).padStart(2, '0')} / {totalSeats}
                                     </p>
                                 </div>
                             </div>
