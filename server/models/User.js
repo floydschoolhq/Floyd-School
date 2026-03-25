@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: function() {
+            return this.provider === 'local';
+        },
     },
     role: {
         type: String,
@@ -33,6 +35,19 @@ const userSchema = new mongoose.Schema({
     sessionToken: {
         type: String,
         default: null
+    },
+    googleId: {
+        type: String,
+        default: null
+    },
+    provider: {
+        type: String,
+        enum: ['local', 'google'],
+        default: 'local'
+    },
+    mobileNumber: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true,
@@ -45,7 +60,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 // Encrypt password using bcrypt
 userSchema.pre('save', async function () {
-    if (!this.isModified('password')) {
+    if (!this.isModified('password') || this.provider === 'google') {
         return;
     }
 
