@@ -96,10 +96,111 @@ const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);
     const isMobile = useIsMobile();
 
+    if (isMobile) {
+        return (
+            <section id="infrastructure" className="bg-white py-16 px-6 relative overflow-hidden transition-all duration-300">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-slate-500/5 rounded-full blur-[80px] -ml-32 -mt-32" />
+                
+                <div className="relative z-10">
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 bg-slate-100/80 text-slate-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                            Platform Ecosystem
+                        </div>
+                        <h2 className="text-3xl font-black text-slate-900 leading-[0.85] uppercase tracking-tighter">
+                            Built for <span className="text-blue-600">Scale.</span>
+                        </h2>
+                    </div>
+
+                    <div className="space-y-3">
+                        {FEATURES.map((feature, index) => (
+                            <div 
+                                key={index}
+                                onClick={() => setSelectedFeature(feature)}
+                                className="bg-slate-50/50 border border-slate-100 p-3.5 rounded-[2rem] flex items-center gap-4 active:scale-95 transition-transform"
+                            >
+                                <div className="w-14 h-14 shrink-0 rounded-[1.2rem] overflow-hidden border border-white relative shadow-sm">
+                                    <img src={feature.image} className="w-full h-full object-cover opacity-80" alt="" />
+                                    <div className="absolute inset-0 bg-slate-900/10 flex items-center justify-center text-white text-base">
+                                        {feature.icon}
+                                    </div>
+                                </div>
+                                
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[8px] font-black uppercase tracking-widest text-blue-600 mb-0.5 opacity-80">
+                                        {feature.miniTitle}
+                                    </div>
+                                    <h3 className="text-[13px] font-black uppercase tracking-tight text-slate-900 leading-none truncate">
+                                        {feature.title}
+                                    </h3>
+                                </div>
+                                
+                                <div className="w-8 h-8 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-400 shrink-0">
+                                    <FaArrowRight size={9} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <AnimatePresence>
+                    {selectedFeature && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[100] flex items-end justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+                            onClick={() => setSelectedFeature(null)}
+                        >
+                            <motion.div
+                                initial={{ y: "100%" }}
+                                animate={{ y: 0 }}
+                                exit={{ y: "100%" }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="bg-white w-full max-w-md rounded-[2.5rem] overflow-hidden p-8 pb-10"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-8" />
+                                
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="text-2xl text-blue-600 drop-shadow-sm">{selectedFeature.icon}</div>
+                                    <div>
+                                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
+                                            {selectedFeature.miniTitle}
+                                        </div>
+                                        <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 leading-none">
+                                            {selectedFeature.title}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4 mb-10">
+                                    {selectedFeature.details.map((detail, idx) => (
+                                        <div key={idx} className="flex gap-4 items-start">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1 shrink-0" />
+                                            <div>
+                                                <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-tight mb-1 leading-none">{detail.label}</h4>
+                                                <p className="text-[10px] font-medium text-slate-500 uppercase tracking-tight leading-tight opacity-80">{detail.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => setSelectedFeature(null)}
+                                    className="w-full bg-slate-900 text-white py-4 rounded-[1.5rem] font-black text-[10px] uppercase tracking-widest shadow-xl shadow-slate-900/20 active:scale-95 transition-transform"
+                                >
+                                    Dismiss
+                                </button>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </section>
+        );
+    }
+
     return (
         <section id="infrastructure" className="bg-white py-12 md:py-24 relative overflow-hidden border-t border-slate-100">
-            {/* Background elements neutralized for Apple White theme */}
-
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-12">
@@ -113,7 +214,7 @@ const StudentEcosystem = () => {
                     {FEATURES.map((feature, index) => (
                         <motion.div
                             key={index}
-                            initial={isMobile ? { opacity: 1, scale: 1, y: 0, rotate: 0 } : { opacity: 0, scale: 0.8, y: 50, rotate: index % 2 === 0 ? -2 : 2 }}
+                            initial={{ opacity: 0, scale: 0.8, y: 50, rotate: index % 2 === 0 ? -2 : 2 }}
                             whileInView={{ 
                                 opacity: 1, 
                                 scale: 1, 
@@ -125,10 +226,10 @@ const StudentEcosystem = () => {
                                     ease: [0.16, 1, 0.3, 1] 
                                 } 
                             }}
-                            whileHover={!isMobile ? { 
+                            whileHover={{ 
                                 y: -12,
                                 transition: { type: "spring", stiffness: 400, damping: 10 }
-                            } : {}}
+                            }}
                             viewport={{ once: true, margin: "-50px" }}
                             onClick={() => setSelectedFeature(feature)}
                             className="group relative bg-white p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)]"
@@ -255,5 +356,6 @@ const StudentEcosystem = () => {
         </section >
     );
 };
+
 
 export default StudentEcosystem;

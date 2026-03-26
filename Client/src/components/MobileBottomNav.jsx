@@ -42,8 +42,8 @@ const MobileBottomNav = () => {
     };
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-40 md:hidden">
-            <div className="flex items-center justify-around py-2">
+        <div className="fixed bottom-6 left-6 right-6 z-[60] md:hidden">
+            <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-between">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeSection === item.id;
@@ -52,14 +52,16 @@ const MobileBottomNav = () => {
                         <button
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
-                            className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
-                                isActive 
-                                    ? 'text-orange-600' 
-                                    : 'text-slate-400 hover:text-slate-600'
-                            }`}
+                            className="relative flex flex-col items-center gap-1 group"
                         >
-                            <Icon size={18} />
-                            <span className={`text-xs font-medium ${isActive ? 'text-orange-600' : 'text-slate-400'}`}>
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                                isActive ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500'
+                            }`}>
+                                <Icon size={18} />
+                            </div>
+                            <span className={`text-[9px] font-black uppercase tracking-widest transition-opacity duration-300 ${
+                                isActive ? 'opacity-100 text-orange-500' : 'opacity-0'
+                            }`}>
                                 {item.label}
                             </span>
                         </button>
@@ -69,5 +71,6 @@ const MobileBottomNav = () => {
         </div>
     );
 };
+
 
 export default MobileBottomNav;

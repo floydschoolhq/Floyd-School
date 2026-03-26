@@ -2,7 +2,53 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Award, Headphones } from 'lucide-react';
 
+import useIsMobile from '../hooks/useIsMobile';
+
 const IndustrialNetwork = () => {
+    const isMobile = useIsMobile();
+
+    if (isMobile) {
+        return (
+            <section id="network" className="relative bg-[#F8F8F8] py-12 px-6 overflow-hidden">
+                <div className="relative z-10">
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 bg-slate-200/50 text-slate-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                            Industry Support
+                        </div>
+                        <h2 className="text-2xl font-black text-slate-900 leading-none uppercase tracking-tighter">
+                            Global <span className="text-blue-600">Network.</span>
+                        </h2>
+                    </div>
+
+                    <div className="space-y-3">
+                        {[
+                            { label: "Professional Networks", icon: <Briefcase size={16} /> },
+                            { label: "Industry Certifications", icon: <Award size={16} /> },
+                            { label: "24/7 Expert Support", icon: <Headphones size={16} /> }
+                        ].map((item, i) => (
+                            <div 
+                                key={i}
+                                className="bg-white border border-slate-100 p-4 rounded-[1.8rem] flex items-center gap-4 active:scale-[0.98] transition-all"
+                            >
+                                <div className="w-12 h-12 shrink-0 rounded-[1.2rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-800">
+                                    {item.icon}
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-[13px] font-black uppercase tracking-tight text-slate-900 leading-none mb-1 truncate">
+                                        {item.label}
+                                    </h3>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                                        Tier-1 Partner Hub
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="network" className="relative bg-[#F1F1F1] pt-6 pb-16 overflow-hidden border-t border-slate-100">
             {/* Ambient Tints removed for Apple White theme */}
@@ -46,6 +92,7 @@ const IndustrialNetwork = () => {
         </section>
     );
 };
+
 
 export default IndustrialNetwork;
 

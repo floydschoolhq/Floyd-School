@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import useIsMobile from '../hooks/useIsMobile';
 
 const CourseOfferings = ({ variant = 'dark' }) => {
     const isDark = variant === 'dark';
+    const isMobile = useIsMobile();
     const cardsRef = useRef([]);
 
     useEffect(() => {
+        if (isMobile) return;
         const cards = cardsRef.current;
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -28,13 +30,59 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 if (card) observer.unobserve(card);
             });
         };
-    }, []);
+    }, [isMobile]);
 
     const addToRefs = (el) => {
         if (el && !cardsRef.current.includes(el)) {
             cardsRef.current.push(el);
         }
     };
+
+    if (isMobile) {
+        const mobileFeatures = [
+            { icon: "01", title: "Live Mentor Guidance", desc: "Every session has a real mentor guiding you — answering questions and reviewing code." },
+            { icon: "02", title: "Weekly Doubt Sessions", desc: "Dedicated sessions just for clearing doubts. No question goes unanswered." },
+            { icon: "03", title: "24/7 Doubt Assistant", desc: "Stuck at midnight? The assistant is right there — no waiting till next class." },
+            { icon: "04", title: "Growth Associate", desc: "A personal associate tracks your journey and ensures you never fall behind." },
+            { icon: "05", title: "Live Dashboard", desc: "A live view of progress for both students and parents to stay informed." },
+            { icon: "06", title: "Class Recordings", desc: "Every session is recorded and available for you to watch anytime." },
+        ];
+
+        return (
+            <section className={`py-16 px-6 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
+                <div className="relative z-10">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                            Included Support
+                        </div>
+                        <h2 className={`text-4xl font-black mb-4 tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            We've Got Your <span className="text-blue-500">Back.</span>
+                        </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-4">
+                        {mobileFeatures.map((f, i) => (
+                            <div key={i} className={`p-6 rounded-[2rem] border ${
+                                isDark ? 'bg-slate-900/50 border-white/5' : 'bg-white border-slate-100 shadow-sm'
+                            }`}>
+                                <div className="flex items-center gap-4 mb-3">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-xs">
+                                        {f.icon}
+                                    </div>
+                                    <h3 className={`text-[15px] font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                        {f.title}
+                                    </h3>
+                                </div>
+                                <p className={`text-[12px] leading-snug font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    {f.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className={`pt-12 pb-12 relative overflow-hidden ${
@@ -310,6 +358,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                     </div>
                 </div>
             </div>
+
 
             {/* Custom CSS */}
             <style jsx>{`

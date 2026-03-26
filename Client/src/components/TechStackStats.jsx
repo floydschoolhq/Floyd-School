@@ -155,111 +155,94 @@ const TechStackStats = () => {
 
     if (isMobile) {
         return (
-            <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50/30 pt-20 pb-16 overflow-hidden">
-                {/* Modern Mobile Header */}
-                <div className="px-4 mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center"
-                    >
-                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                            <Terminal size={12} />
-                            Technologies You Will Learn
+            <section className="bg-[#FDFCFB] pt-20 pb-16 overflow-hidden">
+                {/* Mobile Header */}
+                <div className="px-6 mb-12">
+                    <div className="text-center">
+                        <div className="inline-flex items-center gap-2 bg-orange-500/10 text-[#F97316] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-500/20">
+                            <Terminal size={14} />
+                            Skills for the Future
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-2">
-                            Cutting-Edge <span className="text-orange-500 inline-block">Technologies</span><span className="text-orange-500 inline-block ml-3">you</span><span className="text-orange-500 inline-block ml-3">will</span><span className="text-orange-500 inline-block ml-3">learn</span>
+                        <h2 className="text-3xl font-black text-slate-900 mb-4 leading-tight">
+                            Cutting-Edge <br/>
+                            <span className="text-[#F97316]">Technologies</span> You Will Learn
                         </h2>
-                        <p className="text-slate-600 text-sm">
-                            From AI to IoT, we've got you covered
+                        <p className="text-slate-500 text-sm font-medium">
+                            From AI & Robotics to Full-Stack Development
                         </p>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Tech Categories Grid */}
-                <div className="px-4 space-y-6">
+                <div className="px-5 space-y-6">
                     {TECH_CATEGORIES.map((category, categoryIndex) => {
                         const CategoryIcon = category.icon;
                         return (
-                            <motion.div
+                            <div
                                 key={category.title}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: categoryIndex * 0.1 }}
-                                className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
+                                className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100"
                             >
                                 {/* Category Header */}
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className={`w-12 h-12 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className={`w-12 h-12 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
                                         <CategoryIcon className="text-white" size={20} />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-slate-900 text-lg">{category.title}</h3>
-                                        <p className="text-slate-500 text-xs">{category.technologies.length} technologies</p>
+                                        <h3 className="font-black text-slate-900 text-base uppercase tracking-tight">{category.title}</h3>
+                                        <div className="w-12 h-1 bg-[#F97316] rounded-full mt-1 opacity-50" />
                                     </div>
                                 </div>
 
                                 {/* Technologies Grid */}
-                                <div className="grid grid-cols-3 gap-4">
-                                    {category.technologies.map((tech, techIndex) => {
-                                        const TechIcon = tech.icon;
-                                        return (
-                                            <motion.div
-                                                key={tech.name}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                whileInView={{ opacity: 1, scale: 1 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: categoryIndex * 0.1 + techIndex * 0.05 }}
-                                                className="flex flex-col items-center gap-2 p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors"
+                                <div className="grid grid-cols-3 gap-3">
+                                    {category.technologies.map((tech) => (
+                                        <div
+                                            key={tech.name}
+                                            className="flex flex-col items-center gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100/50"
+                                        >
+                                            <div 
+                                                className="w-10 h-10 rounded-xl flex items-center justify-center bg-white shadow-sm"
                                             >
-                                                <div 
-                                                    className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"
-                                                    style={{ backgroundColor: tech.color + '20' }}
-                                                >
-                                                    <tech.icon 
-                                                        size={20} 
-                                                        style={{ color: tech.color }}
-                                                    />
-                                                </div>
-                                                <span className="text-xs font-medium text-slate-700 text-center">
-                                                    {tech.name}
-                                                </span>
-                                            </motion.div>
-                                        );
-                                    })}
+                                                <tech.icon 
+                                                    size={22} 
+                                                    style={{ color: tech.color }}
+                                                />
+                                            </div>
+                                            <span className="text-[9px] font-black text-slate-600 text-center uppercase tracking-tight">
+                                                {tech.name}
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
-                            </motion.div>
+                            </div>
                         );
                     })}
                 </div>
 
                 {/* Bottom CTA */}
-                <div className="px-4 mt-[12.6%]">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 text-white scale-[0.9] mx-[5%]"
-                    >
-                        <h3 className="font-bold text-lg mb-2">
-                            Ready to Learn These Technologies?
+                <div className="px-6 mt-16">
+                    <div className="bg-[#0F172A] rounded-[2.5rem] p-8 text-center relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
+                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl" />
+                        
+                        <h3 className="font-black text-xl mb-3 text-white uppercase tracking-tight">
+                            Ready to Master <span className="text-[#F97316]">The Future?</span>
                         </h3>
-                        <p className="text-sm opacity-90 mb-4">
-                            Join our programs and master the tech stack that powers the future
+                        <p className="text-slate-400 text-sm mb-6 font-medium">
+                            Join our programs and build real-world products using these tools.
                         </p>
                         <button 
                             onClick={handleExplorePrograms}
-                            className="bg-white text-blue-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-slate-50 transition-colors"
+                            className="w-full bg-[#F97316] text-white py-4 rounded-2xl font-black text-base uppercase tracking-widest shadow-lg shadow-orange-500/20 active:scale-95 transition-transform"
                         >
                             Explore Programs
                         </button>
-                    </motion.div>
+                    </div>
                 </div>
             </section>
         );
     }
+
 
     // Desktop section
     return (

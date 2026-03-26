@@ -33,14 +33,105 @@ const OnlineCourseFocus = ({ variant }) => {
         }
     };
 
+    if (isMobile) {
+        return (
+            <section id="online-focus" className={`relative py-16 px-6 overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
+                {/* Decoration */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[80px]" />
+                
+                <div className="relative z-10">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-blue-500/5 text-blue-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                            Training Batches
+                        </div>
+                        <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Live <span className="text-blue-500">Programs.</span>
+                        </h2>
+                    </div>
+
+                    <div className="space-y-6">
+                        {FALLBACK_COURSES.map((course) => (
+                            <div
+                                key={course._id}
+                                onClick={() => !course.comingSoon && navigate(`/course/${course._id}`)}
+                                className={`rounded-[2rem] border overflow-hidden p-3 transition-all ${isDark ? 'bg-slate-900/50 border-white/5' : 'bg-slate-50 border-slate-100'}`}
+                            >
+                                <div className="flex gap-4">
+                                    {/* Small Image */}
+                                    <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden relative border border-white/5 shadow-inner">
+                                        <img src={course.image} alt="" className="w-full h-full object-cover" />
+                                        {course.comingSoon && (
+                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                                <span className="text-[8px] text-white font-black uppercase tracking-widest -rotate-12">Soon</span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="flex-1 py-1">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <span className="text-[9px] font-black tracking-widest uppercase text-slate-500">3 Month Alpha</span>
+                                            {!course.comingSoon && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                                        </div>
+                                        <h3 className={`text-[15px] font-black uppercase tracking-tight leading-tight mb-2 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                                            {course.title}
+                                        </h3>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            <div className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-tight ${isDark ? 'bg-white/5 text-slate-400' : 'bg-white text-slate-600'}`}>Engineering</div>
+                                            <div className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-tight ${isDark ? 'bg-white/5 text-slate-400' : 'bg-white text-slate-600'}`}>Placement</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-3 pt-3 border-t border-white/5 flex gap-2">
+                                    {!course.comingSoon ? (
+                                        <>
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
+                                                className="flex-[1.5] bg-blue-600 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-blue-600/10 active:scale-95 transition-transform"
+                                            >
+                                                Apply
+                                            </button>
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
+                                                className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border ${isDark ? 'border-white/5 text-white' : 'border-slate-200 text-slate-700'} active:scale-95 transition-transform`}
+                                            >
+                                                Details
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
+                                            className="w-full bg-slate-800 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                                        >
+                                            <Bell size={12} /> Get Notified
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <EarlyRegistrationForm 
+                    isOpen={!!earlyRegistrationCourse}
+                    onClose={() => setEarlyRegistrationCourse(null)}
+                    courseTitle={earlyRegistrationCourse?.title || ''}
+                    courseId={earlyRegistrationCourse?._id || ''}
+                />
+            </section>
+        );
+    }
+
+
     return (
-        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50}'}`}>
+        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50'}`}>
             {/* Background mesh - matching CourseReviews */}
             <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
             <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors duration-700
                 ${isDark ? 'bg-blue-600/5' : 'bg-blue-50'}`} />
             <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors duration-700
                 ${isDark ? 'bg-amber-600/5' : 'bg-slate-200'}`} />
+
 
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                 {/* Header Section */}

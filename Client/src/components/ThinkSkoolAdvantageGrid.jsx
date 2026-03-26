@@ -156,8 +156,81 @@ const AdvantageCard = ({ card, onOpen }) => {
     );
 };
 
+import useIsMobile from '../hooks/useIsMobile';
+
 const ThinkskoolAdvantageGrid = () => {
     const [selectedCard, setSelectedCard] = useState(null);
+    const isMobile = useIsMobile();
+
+    if (isMobile) {
+        return (
+            <section id="advantage" className="py-16 bg-white relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-slate-50 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                            Our Methodology
+                        </div>
+                        <h2 className="text-3xl font-black text-slate-950 leading-none uppercase tracking-tighter">
+                            The <span className="text-blue-600">Builder's Journey.</span>
+                        </h2>
+                    </div>
+
+                    <div className="space-y-4">
+                        {ADVANTAGES.map((card) => {
+                            const Icon = card.icon;
+                            return (
+                                <div 
+                                    key={card.id}
+                                    onClick={() => setSelectedCard(card)}
+                                    className="bg-white border border-slate-100 p-5 rounded-[2rem] flex flex-col gap-4 active:scale-95 transition-transform"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 rounded-[1.2rem] shrink-0">
+                                            <Icon size={18} />
+                                        </div>
+                                        <h3 className="text-[15px] font-black text-slate-900 leading-tight tracking-tight">
+                                            {card.title}
+                                        </h3>
+                                    </div>
+                                    <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Experience Pillar</span>
+                                        <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center text-white text-[10px]">
+                                            <ArrowRight size={10} />
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Simplified Mobile Modal */}
+                {selectedCard && (
+                    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+                        <div 
+                            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+                            onClick={() => setSelectedCard(null)}
+                        />
+                        <div className="bg-white w-full rounded-t-[3rem] p-8 pb-12 relative z-10 shadow-2xl">
+                            <div className="w-12 h-1.5 bg-slate-100 rounded-full mx-auto mb-8" />
+                            <h3 className="text-2xl font-black text-slate-900 mb-4 leading-tight tracking-tighter">
+                                {selectedCard.title}
+                            </h3>
+                            <p className="text-sm font-medium text-slate-500 leading-relaxed mb-10">
+                                {selectedCard.description}
+                            </p>
+                            <button 
+                                onClick={() => setSelectedCard(null)}
+                                className="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-black text-[10px] uppercase tracking-widest active:scale-95 transition-transform"
+                            >
+                                Dismiss
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </section>
+        );
+    }
 
     return (
         <section id="advantage" className="py-20 md:py-28 bg-white relative overflow-x-hidden">
@@ -275,5 +348,6 @@ const ThinkskoolAdvantageGrid = () => {
         </section>
     );
 };
+
 
 export default ThinkskoolAdvantageGrid;

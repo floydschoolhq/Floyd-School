@@ -247,18 +247,93 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const [hoveredCard, setHoveredCard] = useState(null);
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
-    const isMarqueePaused = !isMobile && hoveredCard !== null;
 
-    const filteredLeaders = excludeName 
-        ? LEADERS.filter(m => m.name !== excludeName)
-        : LEADERS;
+    const filteredLeaders = LEADERS.filter(m => m.name !== excludeName);
+
+    if (isMobile) {
+        return (
+            <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
+                <div className="text-center mb-12">
+                    <div className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                        Industry Experts
+                    </div>
+                    <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        Learn from <span className="text-orange-500">The Best.</span>
+                    </h2>
+                </div>
+
+                <div className="space-y-6">
+                    {filteredLeaders.map((mentor, index) => (
+                        <div 
+                            key={index}
+                            onClick={() => setSelectedMentor(mentor)}
+                            className={`p-6 rounded-[2.5rem] border flex flex-col items-center text-center gap-4 active:scale-95 transition-transform ${
+                                isDark ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-slate-100 shadow-sm'
+                            }`}
+                        >
+                            <div className="w-20 h-20 rounded-full p-1 border border-orange-500/20">
+                                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
+                                    <img 
+                                        src={mentor.image} 
+                                        alt={mentor.name} 
+                                        className="w-full h-full object-cover object-top"
+                                        style={{ transform: `scale(${mentor.imageScale})` }}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                    {mentor.name}
+                                </h3>
+                                <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-4">
+                                    {mentor.role}
+                                </p>
+                                <p className={`text-[12px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    {mentor.bio}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Simplified Mobile Modal */}
+                {selectedMentor && (
+                    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setSelectedMentor(null)} />
+                        <div className={`w-full rounded-t-[3rem] p-8 pb-12 relative z-10 ${isDark ? 'bg-[#0A0A0A]' : 'bg-white'}`}>
+                            <div className="w-12 h-1.5 bg-slate-800 rounded-full mx-auto mb-8" />
+                            <h3 className={`text-2xl font-black uppercase tracking-tighter leading-none mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                {selectedMentor.name}
+                            </h3>
+                            <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-6">
+                                {selectedMentor.role}
+                            </p>
+                            <p className={`text-sm font-medium leading-relaxed mb-10 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                {selectedMentor.bio}
+                            </p>
+                            <a 
+                                href={selectedMentor.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full bg-orange-500 text-white py-5 rounded-[2rem] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                            >
+                                <FaLinkedinIn size={12} /> LinkedIn Profile
+                            </a>
+                        </div>
+                    </div>
+                )}
+            </section>
+        );
+    }
+
+    const isMarqueePaused = !isMobile && hoveredCard !== null;
+    const mentorItems = [...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders];
 
     return (
         <section 
             id="mentors-grid" 
             className={`py-14 relative overflow-hidden transition-colors duration-500
                 ${isDark ? 'bg-[#050505]' : 'bg-white'}
-                ${isMobile ? 'mentors--mobile' : ''}
                 ${isMarqueePaused ? 'mentors-paused' : ''}`}
         >
             {/* Background Architecture */}
@@ -290,39 +365,31 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                             msOverflowStyle: 'none'
                         }}
                     >
-                        {/* webkit-scrollbar hiding applied via a hacky style tag */}
                         <style>{`
-                            #mentors-grid .overflow-x-auto::-webkit-scrollbar { display: none; }
-
                             @keyframes mentorsMarquee {
                                 from { transform: translateX(0%); }
                                 to { transform: translateX(-50%); }
                             }
-
-                            /* Use CSS animation so pause/resume keeps exact progress. */
                             #mentors-grid .mentors-marquee-track {
                                 animation: mentorsMarquee 35s linear infinite;
-                                will-change: transform;
                             }
                             #mentors-grid.mentors-paused .mentors-marquee-track {
                                 animation-play-state: paused;
                             }
-                            #mentors-grid.mentors--mobile .mentors-marquee-track {
-                                animation: none;
-                            }
                         `}</style>
-                        <div className="mentors-marquee-track flex items-center gap-8 w-max">
-                            {[...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders].map((mentor, index) => (
-                                <MentorCard 
-                                    key={index}
-                                    mentor={mentor}
-                                    index={index}
-                                    onSelect={setSelectedMentor}
-                                    variant={variant}
-                                    isHovered={hoveredCard === index}
-                                    onMouseEnter={() => !isMobile && setHoveredCard(index)}
-                                    onMouseLeave={() => !isMobile && setHoveredCard(null)}
-                                />
+                        <div className="mentors-marquee-track flex items-center gap-6 md:gap-8 w-max">
+                            {mentorItems.map((mentor, index) => (
+                                <div key={index} style={{ scrollSnapAlign: 'center' }}>
+                                    <MentorCard 
+                                        mentor={mentor}
+                                        index={index}
+                                        onSelect={setSelectedMentor}
+                                        variant={variant}
+                                        isHovered={hoveredCard === index}
+                                        onMouseEnter={() => setHoveredCard(index)}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -357,7 +424,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             exit={{ scale: 0.95, opacity: 0, y: 30 }}
-                            style={{ willChange: 'transform, opacity' }}
                             className={`${isDark ? 'bg-[#0A0A0A]' : 'bg-white'} rounded-[40px] w-full max-w-5xl overflow-hidden relative shadow-2xl border ${isDark ? 'border-white/10' : 'border-white/20'}`}
                             onClick={e => e.stopPropagation()}
                         >
@@ -381,29 +447,18 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                     </button>
 
                                     <div className="max-w-md">
-                                        <span className={`font-bold text-[10px] tracking-[0.3em] lowercase mb-4 block ${isDark ? 'text-slate-400' : 'text-slate-400'}`}><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                                         <h2 className={`text-4xl font-bold tracking-tighter leading-none mb-4 uppercase ${isDark ? 'text-white' : 'text-slate-900'}`}>{selectedMentor.name}</h2>
                                         <p className={`font-bold text-sm tracking-widest uppercase mb-8 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{selectedMentor.role}</p>
-                                        
                                         <p className={`font-medium text-lg leading-relaxed mb-10 pl-6 border-l-2 ${isDark ? 'text-slate-300 border-white/10' : 'text-slate-400 border-slate-100'}`}>
                                             {selectedMentor.bio}
                                         </p>
-
-                                        <div className="flex flex-wrap gap-4 mb-12">
-                                            {selectedMentor.tags.map(tag => (
-                                                <span key={tag} className={`text-[13px] font-bold tracking-tight uppercase ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                                                    #{tag}
-                                                </span>
-                                            ))}
-                                        </div>
-
                                         <div className="flex flex-col sm:flex-row gap-4">
                                             <a
                                                 href={selectedMentor.linkedin}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-sm tracking-widest uppercase shadow-xl transition-all
-                                                    ${isDark ? 'bg-orange-500 text-white hover:bg-white hover:text-orange-500' : 'bg-slate-900 text-white hover:bg-black'}`}
+                                                className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-sm tracking-widest uppercase shadow-xl
+                                                    ${isDark ? 'bg-orange-500 text-white' : 'bg-slate-900 text-white'}`}
                                             >
                                                 <FaLinkedinIn size={14} /> Profile
                                             </a>
@@ -425,5 +480,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         </section>
     );
 };
+
 
 export default MentorGrid;

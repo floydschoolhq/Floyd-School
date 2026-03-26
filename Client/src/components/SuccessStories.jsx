@@ -90,35 +90,25 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     
     if (isMobile) {
         return (
-            <div className={`flex-shrink-0 w-[320px] p-6 rounded-2xl group transition-all duration-500 relative overflow-hidden flex flex-col items-start text-left ${
+            <div className={`shrink-0 w-[260px] p-5 rounded-[1.8rem] transition-all relative overflow-hidden flex flex-col items-start text-left ${
                 isDark 
-                    ? 'bg-white/[0.03] border border-white/10 hover:bg-white/[0.05]' 
-                    : `bg-white border border-slate-100 ${theme.shadow}`
+                    ? 'bg-slate-900/50 border border-white/5' 
+                    : `bg-white border border-slate-100 shadow-sm shadow-slate-200/50`
             }`}>
-                {/* Mobile Optimized Background */}
-                <div className={`absolute top-0 right-0 w-[120%] h-[120%] bg-gradient-to-bl ${theme.glow} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-bl-full`} />
-                
-                {/* Mobile Quote watermark */}
-                <div className={`absolute top-4 right-4 transition-colors ${
-                    isDark ? 'text-white/[0.02] group-hover:text-white/[0.05]' : 'text-slate-50 group-hover:text-slate-100'
-                }`}>
-                    <Quote size={40} fill="currentColor" />
-                </div>
-                
-                <div className="relative z-10 flex flex-col items-start w-full font-['Outfit']">
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className={`w-12 h-12 rounded-xl overflow-hidden border transition-all duration-500 ${
+                <div className="relative z-10 flex flex-col items-start w-full">
+                    <div className="flex items-center gap-2.5 mb-3">
+                        <div className={`w-10 h-10 rounded-xl overflow-hidden border transition-all ${
                             isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
                         }`}>
                             <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                         </div>
-                        <div>
-                            <h4 className={`text-sm font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                        <div className="min-w-0">
+                            <h4 className={`text-[13px] font-black uppercase tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[8px] font-bold uppercase tracking-widest mt-1 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{review.role}</p>
                         </div>
                     </div>
                     
-                    <p className={`text-[13px] leading-relaxed font-medium mb-4 ${
+                    <p className={`text-[12px] leading-snug font-medium mb-3 line-clamp-3 ${
                         isDark ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                         "{review.content}"
@@ -126,8 +116,8 @@ const ReviewCard = ({ review, index = 0, variant }) => {
 
                     <div className="mt-auto flex gap-1">
                         {[...Array(5)].map((_, i) => (
-                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
-                                isDark ? 'bg-white/10 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-900'
+                            <div key={i} className={`w-1 h-1 rounded-full ${
+                                isDark ? 'bg-blue-500/40' : 'bg-slate-200'
                             }`} />
                         ))}
                     </div>
@@ -135,6 +125,7 @@ const ReviewCard = ({ review, index = 0, variant }) => {
             </div>
         );
     }
+
     
     return (
         <div className={`flex-shrink-0 w-full md:w-[420px] p-10 rounded-[2.5rem] group transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-start text-left ${
@@ -207,30 +198,41 @@ const SuccessStories = ({ variant }) => {
                     </ScrollDarkenHeading>
                 </div>
 
-                {/* Marquee Row 1 (Left to Right) */}
+                {/* Success Stories Content */}
                 <div className="group/marquee relative mb-8 md:mb-12 overflow-hidden">
-                    <motion.div 
-                        animate={isMobile ? { x: 0 } : { x: [0, -2100] }}
-                        transition={isMobile ? { duration: 0 } : { 
-                            duration: 40, 
-                            repeat: Infinity, 
-                            ease: "linear" 
-                        }}
-                        whileHover={{ animationPlayState: "paused" }}
-                        className="flex flex-col md:flex-row w-full md:w-max items-center gap-6"
-                    >
-                        {(isMobile ? REVIEWS_ROW_1.slice(0, 3) : [...REVIEWS_ROW_1, ...REVIEWS_ROW_1]).map((review, i) => (
-                            <ReviewCard key={i} review={review} index={i} variant={variant} />
-                        ))}
-                    </motion.div>
+                    {isMobile ? (
+                        <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 py-4">
+                            {[...REVIEWS_ROW_1, ...REVIEWS_ROW_2].map((review, i) => (
+                                <div key={i} className="snap-center">
+                                    <ReviewCard review={review} index={i} variant={variant} />
+                                </div>
+                            ))}
+                            <div className="w-1 shrink-0" />
+                        </div>
+                    ) : (
+                        <motion.div 
+                            animate={{ x: [0, -2100] }}
+                            transition={{ 
+                                duration: 40, 
+                                repeat: Infinity, 
+                                ease: "linear" 
+                            }}
+                            whileHover={{ animationPlayState: "paused" }}
+                            className="flex w-max items-center gap-6"
+                        >
+                            {[...REVIEWS_ROW_1, ...REVIEWS_ROW_1].map((review, i) => (
+                                <ReviewCard key={i} review={review} index={i} variant={variant} />
+                            ))}
+                        </motion.div>
+                    )}
                 </div>
 
-                {/* Marquee Row 2 (Right to Left) */}
+                {/* Marquee Row 2 (Right to Left) - Desktop Only */}
                 {!isMobile && (
                     <div className="group/marquee relative overflow-hidden">
                         <motion.div 
-                            animate={isMobile ? { x: 0 } : { x: [-2100, 0] }}
-                            transition={isMobile ? { duration: 0 } : { 
+                            animate={{ x: [-2100, 0] }}
+                            transition={{ 
                                 duration: 40, 
                                 repeat: Infinity, 
                                 ease: "linear" 
@@ -244,6 +246,7 @@ const SuccessStories = ({ variant }) => {
                         </motion.div>
                     </div>
                 )}
+
 
                 {/* Content ends directly here for a cleaner look */}
             </div>

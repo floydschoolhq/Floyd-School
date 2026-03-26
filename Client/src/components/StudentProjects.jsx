@@ -489,130 +489,74 @@ const StudentProjects = () => {
 
   if (isMobile) {
     return (
-      <section id="student-projects" className="py-8 pb-16 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-        {/* Simplified Background for Mobile */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-10 right-5 w-12 h-12 bg-orange-500/3 rounded-full blur-xl" />
-          <div className="absolute bottom-10 left-5 w-10 h-10 bg-blue-500/2 rounded-full blur-xl" />
+      <section id="student-projects" className="py-20 px-6 bg-[#FDFCFB]">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+            Future Engineers
+          </div>
+          <h2 className="text-3xl font-black text-slate-900 mb-3 tracking-tighter uppercase leading-none">
+            Student <span className="text-blue-600">Projects.</span>
+          </h2>
+          <p className="text-slate-500 text-sm font-medium leading-relaxed">
+            Real products built by our students while learning.
+          </p>
         </div>
 
-        <div className="max-w-95% mx-auto px-2 relative z-10">
-          {/* Header - Mobile */}
-          <div className="text-center mt-16 mb-6 sm:mt-20 md:mt-16">
-            <h2 className="text-xl font-black text-slate-900 mb-2 leading-tight">
-              Student Projects
-            </h2>
-            <p className="text-slate-600 text-sm leading-relaxed px-1">
-              Real projects built by our students.
-            </p>
-          </div>
-
-          {/* Filter Tabs - Mobile */}
-          <div className="flex justify-center gap-2 mb-4">
-            {['all', 'featured'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
-                className={`px-2 py-1 rounded-md font-bold text-xs transition-all duration-300 ${
-                  filter === tab
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
-                    : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
-                }`}
-              >
-                {tab === 'all' ? 'All' : 'Featured'}
-              </button>
-            ))}
-          </div>
-
-          {/* Projects Grid - Mobile Horizontal Scrolling */}
-          <div className="mb-8 relative">
-            {/* Enhanced Navigation Buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 -left-3 z-20">
-              <button 
-                onClick={() => scroll('left')}
-                className="p-3 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
-              >
-                <ChevronLeft size={18} />
-              </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 -right-3 z-20">
-              <button 
-                onClick={() => scroll('right')}
-                className="p-3 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full text-slate-900 hover:bg-slate-900 hover:text-white shadow-lg transition-all scale-90 hover:scale-100 active:scale-95"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-            
-            <div 
-              ref={scrollRef}
-              className="overflow-hidden py-12 -mx-4 px-6 overflow-x-auto snap-x snap-mandatory" 
-              style={{ 
-                  scrollbarWidth: 'none', 
-                  msOverflowStyle: 'none',
-                  scrollPaddingLeft: '1.5rem',
-                  scrollPaddingRight: '1.5rem'
-              }}
+        {/* Filter Tabs - Mobile */}
+        <div className="flex justify-center gap-2 mb-10 overflow-x-auto scrollbar-hide pb-2">
+          {['all', 'featured'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setFilter(tab)}
+              className={`px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 ${
+                filter === tab
+                  ? 'bg-slate-900 text-white shadow-lg'
+                  : 'bg-white text-slate-400 border border-slate-100'
+              }`}
             >
-              {/* webkit-scrollbar hiding applied via a hacky style tag */}
-              <style>{`
-                .student-projects .overflow-x-auto::-webkit-scrollbar { display: none; }
-              `}</style>
-              <div className="flex gap-4 w-max">
-                {filteredProjects.map((project, index) => (
-                  <div 
-                    key={project.id} 
-                    className="flex-shrink-0 w-80" 
-                    style={{ scrollSnapAlign: 'start' }}
-                  >
-                    <ProjectCard
-                      project={project}
-                      index={index}
-                      isFeatured={project.featured}
-                    />
-                  </div>
-                ))}
+              {tab === 'all' ? 'All Work' : 'Featured'}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-8">
+          {filteredProjects.map((project) => (
+            <div 
+              key={project.id} 
+              className="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col active:scale-95 transition-transform"
+            >
+              <div className="h-48 overflow-hidden relative">
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider text-slate-900 border border-white/20 shadow-sm">
+                    {project.category}
+                </div>
+              </div>
+              <div className="p-8">
+                <h3 className="text-xl font-black text-slate-900 mb-2 uppercase tracking-tight leading-tight">{project.title}</h3>
+                <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-6 line-clamp-2">{project.description}</p>
+                
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-3">
+                       <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
+                       <div>
+                           <p className="text-[12px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
+                           <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">{project.author.course}</p>
+                       </div>
+                    </div>
+                </div>
+                
+                <div className="flex gap-3">
+                    <a href={project.liveUrl} className="flex-1 bg-blue-600 text-white py-4 rounded-[2rem] font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20">Live Demo</a>
+                    <a href={project.githubUrl} className="flex-1 bg-slate-900 text-white py-4 rounded-[2rem] font-black text-[10px] uppercase tracking-widest text-center">Code</a>
+                </div>
               </div>
             </div>
-
-            {/* Mobile Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-6">
-              {filteredProjects.map((_, index) => (
-                <div 
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === 0 ? 'bg-orange-500 w-6' : 'bg-slate-300'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Section - Mobile */}
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-lg shadow-md w-full max-w-[200px]">
-              <Rocket size={12} />
-              Start Building
-            </div>
-            <p className="text-slate-600 text-xs mt-2 px-2">
-              Join our courses and turn ideas into reality
-            </p>
-          </div>
+          ))}
         </div>
-
-        {/* Custom scrollbar styles */}
-        <style>{`
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-        `}</style>
-    </section>
+      </section>
     );
   }
+
 
   return (
     <section id="student-projects" className="py-20 md:py-28 pb-32 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">

@@ -184,13 +184,31 @@ body {
 
 /* Global Mobile Optimizations */
 @media (max-width: 768px) {
-    section { padding: 0 1.5rem !important; text-align: center !important; }
-    h1 { font-size: 3rem !important; line-height: 1.1 !important; }
-    h2 { font-size: 2.25rem !important; line-height: 1.2 !important; }
-    h3 { font-size: 1.75rem !important; }
-    .flex, .grid { align-items: center !important; justify-content: center !important; }
-    body, html { overflow-x: hidden !important; width: 100% !important; position: relative; }
+    section { 
+        padding: 4rem 1.25rem; 
+        text-align: center;
+    }
+    
+    h1 { font-size: 2.5rem; line-height: 1.1; }
+    h2 { font-size: 2rem; line-height: 1.2; }
+    h3 { font-size: 1.5rem; }
+    
+    /* Global scroll overflow fix */
+    body, html { 
+        overflow-x: hidden; 
+        width: 100%; 
+        position: relative; 
+    }
+
+    /* Stable mode: Disable animations on mobile */
+    *, *::before, *::after {
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+    }
 }
+
 
 /* Landscape Mobile Optimizations */
 @media (max-height: 500px) and (orientation: landscape) {

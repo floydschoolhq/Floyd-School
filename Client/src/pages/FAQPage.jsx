@@ -156,8 +156,106 @@ const FAQPage = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const isMobile = window.innerWidth < 768; // Simple mobile check for FAQPage
+
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white font-['Outfit']">
+        {/* Mobile Navigation */}
+        <nav className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/5 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-slate-400">
+              <ArrowLeft size={24} />
+            </button>
+            <div className="font-black text-lg tracking-tighter">
+              <span className="text-blue-500">THINK</span>
+              <span className="text-orange-500">SKOOL</span>
+            </div>
+          </div>
+        </nav>
+
+        {/* Mobile Hero */}
+        <div className="px-6 pt-12 pb-8">
+           <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
+              <HelpCircle size={14} />
+              Support
+           </div>
+           <h1 className="text-3xl font-black uppercase tracking-tighter leading-none mb-4">
+              FAQ<span className="text-blue-500">.</span>
+           </h1>
+           <p className="text-slate-500 text-sm font-medium leading-relaxed">
+              Find answers to common questions about our programs and partnerships.
+           </p>
+        </div>
+
+        {/* Mobile Categories */}
+        <div className="px-6 mb-8 overflow-x-auto scrollbar-hide py-2">
+           <div className="flex gap-2 w-max">
+             {categories.map((cat) => {
+               const Icon = cat.icon;
+               const isActive = activeCategory === cat.id;
+               return (
+                 <button 
+                   key={cat.id} 
+                   onClick={() => setActiveCategory(cat.id)}
+                   className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all ${
+                     isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-slate-900 text-slate-500 border border-white/5'
+                   }`}
+                 >
+                   <Icon size={14} />
+                   {cat.label}
+                 </button>
+               );
+             })}
+           </div>
+        </div>
+
+        {/* Mobile FAQ List */}
+        <div className="px-6 space-y-4 pb-12">
+           {filteredFaqs.map((faq, index) => (
+             <div key={index} className="bg-slate-900/50 border border-white/5 rounded-3xl overflow-hidden">
+                <button 
+                  onClick={() => toggleFaq(index)}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                >
+                  <span className="text-sm font-black uppercase tracking-tight pr-4 leading-tight">{faq.question}</span>
+                  <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                    openIndex === index ? 'bg-blue-600' : 'bg-slate-800'
+                  }`}>
+                     {openIndex === index ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </div>
+                </button>
+                {openIndex === index && (
+                  <div className="px-6 pb-6 pt-2 text-slate-400 text-[13px] font-medium leading-relaxed border-t border-white/5">
+                    {faq.answer}
+                  </div>
+                )}
+             </div>
+           ))}
+        </div>
+
+        {/* Mobile Contact */}
+        <div className="px-6 pb-20">
+           <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 rounded-[2.5rem] p-8 border border-blue-500/20 text-center">
+              <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                 <Phone size={24} />
+              </div>
+              <h3 className="text-xl font-black uppercase tracking-tight mb-2">Still Stuck?</h3>
+              <p className="text-slate-400 text-xs font-medium mb-8 leading-relaxed">Our support team is ready to help you with any custom queries.</p>
+              <button 
+                 onClick={() => navigate('/contact')}
+                 className="w-full bg-blue-600 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-blue-600/20 active:scale-95 transition-transform"
+              >
+                 Contact Support
+              </button>
+           </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white font-['Outfit']">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -168,7 +266,7 @@ const FAQPage = () => {
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
             <span className="font-medium">Back</span>
           </button>
-          <div className="font-bold text-xl">
+          <div className="font-black text-xl tracking-tighter uppercase">
             <span className="text-blue-500">think</span>
             <span className="text-orange-500">skool</span>
           </div>
@@ -176,44 +274,44 @@ const FAQPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-16 pb-12 px-6">
+      <section className="pt-24 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-400 text-[11px] font-black uppercase tracking-[0.3em] mb-8">
               <HelpCircle size={16} />
               <span>Help Center</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-              Frequently Asked Questions
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter uppercase leading-[0.9]">
+              FREQUENTLY ASKED <span className="text-blue-500">QUESTIONS</span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Find answers to common questions about our school partnerships, programs, and how we bring technology education to your campus.
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed">
+              Everything you need to know about our school partnerships, technology tracks, and how we're reshaping education.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Category Filter */}
-      <section className="px-6 pb-8">
+      <section className="px-6 pb-16">
         <div className="max-w-4xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => {
               const Icon = category.icon;
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`flex items-center gap-3 px-8 py-4 rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all duration-300 ${
                     activeCategory === category.id
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
-                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
+                      ? 'bg-blue-600 text-white shadow-2xl shadow-blue-600/20 scale-105'
+                      : 'bg-slate-900/50 text-slate-500 hover:bg-slate-900 hover:text-white border border-white/5'
                   }`}
                 >
-                  <Icon size={16} />
+                  <Icon size={18} />
                   {category.label}
                 </button>
               );
@@ -224,7 +322,7 @@ const FAQPage = () => {
 
       {/* FAQ List */}
       <section className="px-6 pb-20">
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-6">
           <AnimatePresence mode="wait">
             {filteredFaqs.map((faq, index) => (
               <motion.div
@@ -233,21 +331,21 @@ const FAQPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-blue-500/30 transition-colors"
+                className="group bg-slate-900/40 border border-white/5 rounded-[2rem] overflow-hidden hover:border-blue-500/20 transition-all duration-500"
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-6 text-left"
+                  className="w-full flex items-center justify-between p-8 text-left"
                 >
-                  <span className="font-semibold text-white pr-4">
+                  <span className="text-lg font-black uppercase tracking-tight text-white pr-8 leading-tight group-hover:text-blue-400 transition-colors">
                     {faq.question}
                   </span>
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                     openIndex === index 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-slate-800 text-slate-400'
+                      ? 'bg-blue-600 text-white rotate-180' 
+                      : 'bg-slate-800 text-slate-500 group-hover:bg-slate-700'
                   }`}>
-                    {openIndex === index ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    <ChevronDown size={20} />
                   </div>
                 </button>
                 
@@ -257,9 +355,9 @@ const FAQPage = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
                     >
-                      <div className="px-6 pb-6 text-slate-400 leading-relaxed border-t border-slate-800/50 pt-4">
+                      <div className="px-8 pb-8 text-slate-400 font-medium leading-relaxed border-t border-white/5 pt-6 text-[15px]">
                         {faq.answer}
                       </div>
                     </motion.div>
@@ -272,39 +370,44 @@ const FAQPage = () => {
       </section>
 
       {/* Contact CTA */}
-      <section className="px-6 pb-20">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/20 rounded-2xl p-8 text-center">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Phone size={20} className="text-white" />
+      <section className="px-6 pb-32">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/5 via-slate-900/50 to-purple-600/5 border border-white/5 rounded-[3rem] p-12 text-center group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] -mr-32 -mt-32" />
+            
+            <div className="relative z-10">
+                <div className="w-16 h-16 bg-blue-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-blue-600/20 group-hover:scale-110 transition-transform duration-500">
+                  <Phone size={28} className="text-white" />
+                </div>
+                <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tighter">
+                  STILL HAVE <span className="text-blue-500">QUESTIONS?</span>
+                </h3>
+                <p className="text-slate-500 mb-10 max-w-md mx-auto font-medium">
+                  Can't find what you're looking for? Our elite support team is standing by to help you with your technological journey.
+                </p>
+                <button 
+                  onClick={() => navigate('/contact')}
+                  className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-[2rem] font-black uppercase text-[12px] tracking-[0.2em] transition-all duration-300 hover:shadow-2xl hover:shadow-blue-600/20 hover:-translate-y-1 active:scale-95"
+                >
+                  Contact Support
+                  <ArrowLeft size={18} className="rotate-180" />
+                </button>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">
-              Still have questions?
-            </h3>
-            <p className="text-slate-400 mb-6 max-w-md mx-auto">
-              Can't find what you're looking for? Our team is here to help you with any specific queries.
-            </p>
-            <button 
-              onClick={() => navigate('/contact')}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-600/25"
-            >
-              Contact Support
-              <ArrowLeft size={16} className="rotate-180" />
-            </button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 px-6">
+      <footer className="border-t border-white/5 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} thinkskool. All rights reserved.
+          <p className="text-slate-600 text-[11px] font-black uppercase tracking-widest">
+            © {new Date().getFullYear()} THINKSKOOL. ENGINEERED FOR THE FUTURE.
           </p>
         </div>
       </footer>
     </div>
   );
 };
+
 
 export default FAQPage;

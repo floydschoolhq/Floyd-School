@@ -37,6 +37,62 @@ const Footer = () => {
     },
   ];
 
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    return (
+      <footer className="bg-slate-950 px-6 pt-16 pb-32 border-t border-white/5 relative overflow-hidden">
+        {/* Subtle Background Mesh */}
+        <div className="absolute inset-0 opacity-[0.03] invert brightness-200 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        
+        <div className="relative z-10">
+          {/* Brand Header */}
+          <div className="text-center mb-12">
+            <div className="font-black text-2xl tracking-tighter uppercase mb-3">
+               <span className="text-blue-500">THINK</span>
+               <span className="text-orange-500">SKOOL</span>
+            </div>
+            <p className="text-slate-500 text-[11px] font-black uppercase tracking-tight max-w-[200px] mx-auto opacity-60 leading-tight">
+              Architecting the next generation of global engineering.
+            </p>
+          </div>
+
+          {/* Social Links - Compact */}
+          <div className="flex justify-center gap-3 mb-10 pb-10 border-b border-white/5">
+            {[FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram].map((Icon, i) => (
+                <div key={i} className="w-10 h-10 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+                   <Icon size={14} />
+                </div>
+            ))}
+          </div>
+
+          {/* Concise Info Grid */}
+          <div className="grid grid-cols-2 gap-y-10 gap-x-6 mb-16">
+            {footerLinks.map((section, i) => (
+                <div key={i} className={i === 2 ? 'col-span-2' : ''}>
+                   <h3 className="text-white text-[10px] font-black uppercase tracking-[0.2em] mb-4 opacity-50">{section.title}</h3>
+                   <ul className="space-y-3">
+                      {section.links.map((link, li) => (
+                         <li key={li}>
+                            <a href={link.href} className="text-slate-500 text-[11px] font-bold tracking-tight hover:text-orange-500 transition-colors uppercase">
+                              {link.name}
+                            </a>
+                         </li>
+                      ))}
+                   </ul>
+                </div>
+            ))}
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="pt-10 border-t border-white/5 text-center flex flex-col items-center gap-4">
+             <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.2em]">© 2026 THINKSKOOL. ENGINEERED FOR EXCELLENCE.</p>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-gradient-to-br from-black via-slate-950 to-black text-slate-400 pt-24 md:pb-12 pb-32 border-t border-white/5 relative overflow-hidden">
       {/* Background mesh - matching CourseReviews */}
@@ -99,6 +155,7 @@ const Footer = () => {
     </footer>
   );
 };
+
 
 export default Footer;
 

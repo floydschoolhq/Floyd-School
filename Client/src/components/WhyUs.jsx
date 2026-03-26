@@ -1,10 +1,59 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUserGraduate, FaBuilding, FaArrowRight, FaSchool, FaGraduationCap } from 'react-icons/fa';
-import SectionHeader from './common/SectionHeader';
+import { FaArrowRight, FaSchool, FaGraduationCap } from 'react-icons/fa';
 import { schoolBenefits, studentBenefits } from '../constants/siteData';
+import useIsMobile from '../hooks/useIsMobile';
 
 const WhyUs = () => {
+    const isMobile = useIsMobile();
+
+
+    if (isMobile) {
+        return (
+            <section className="bg-[#020617] py-16 px-6 relative overflow-hidden border-t border-white/5">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-[100px]" />
+                
+                <div className="relative z-10">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-4">
+                            <span className="text-[9px] font-black text-slate-500 tracking-widest uppercase">Industrial Core</span>
+                        </div>
+                        <h2 className="text-3xl font-black text-white leading-none uppercase tracking-tighter">
+                            Built for <span className="text-blue-500">Excellence.</span>
+                        </h2>
+                    </div>
+
+                    <div className="relative space-y-12">
+                        {/* Timeline Line */}
+                        <div className="absolute left-4 top-0 bottom-0 w-[1px] bg-white/10" />
+
+                        {/* Combined Benefits */}
+                        {[...schoolBenefits.slice(0, 2), ...studentBenefits.slice(0, 2)].map((item, idx) => (
+                            <div key={idx} className="relative pl-12">
+                                <div className="absolute left-2.5 top-0 w-3 h-3 rounded-full bg-slate-900 border border-slate-700 z-10" />
+                                <div className="bg-white/5 border border-white/10 p-5 rounded-[2rem] active:scale-95 transition-transform">
+                                    <h4 className="text-sm font-black text-white uppercase tracking-tight mb-2 leading-none">{item.title}</h4>
+                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-snug">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-16 text-center">
+                        <button
+                            onClick={() => {
+                                const el = document.getElementById('registration-form');
+                                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="w-full bg-white text-black py-5 rounded-[2rem] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                        >
+                            Get Started <FaArrowRight size={10} />
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className="bg-[#020617] py-24 relative overflow-hidden border-t border-white/5 cyber-mesh">
@@ -152,6 +201,7 @@ const WhyUs = () => {
         </section>
     );
 };
+
 
 export default WhyUs;
 

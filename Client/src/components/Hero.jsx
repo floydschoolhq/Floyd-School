@@ -64,75 +64,41 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-12 overflow-hidden bg-[#FDFCFB]">
-                {/* Simplified Background for Mobile */}
+            <section id="home" ref={containerRef} className="relative min-h-[85vh] flex flex-col items-center justify-center pt-20 pb-12 overflow-hidden bg-slate-50">
+                {/* Premium Background Effects */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] right-[-5%] w-[150px] h-[150px] bg-orange-500/[0.04] rounded-full blur-[40px]" />
-                    <div className="absolute bottom-[-10%] left-[-5%] w-[120px] h-[120px] bg-amber-200/[0.03] rounded-full blur-[30px]" />
+                    <div className="absolute top-[-10%] right-[-10%] w-[350px] h-[350px] bg-orange-500/[0.08] rounded-full blur-[100px]" />
+                    <div className="absolute bottom-[-10%] left-[-15%] w-[300px] h-[300px] bg-blue-500/[0.05] rounded-full blur-[80px]" />
                 </div>
 
-                <div className="max-w-[90%] mx-auto px-3 relative z-10 w-full flex flex-col items-center">
+                <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center">
                     <div className="flex flex-col items-center justify-center text-center space-y-6 w-full">
-                        {/* Modern Mobile Hero Header */}
-                        <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
-                            FUTURE-READY EDUCATION
+                        <div className="inline-flex items-center gap-2 bg-blue-500/5 text-blue-600 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest mb-2 border border-blue-500/10">
+                            Engineering the Future
                         </div>
+                        
+                        <p className="text-[13px] font-bold text-slate-500 tracking-tight leading-none uppercase">
+                            Tomorrow demands <span className="text-blue-600 font-black">New Skills.</span>
+                        </p>
 
-                        {/* Modern Mobile Headline */}
-                        <div className="space-y-2">
-                            <h1 className="text-lg sm:text-xl font-black leading-tight text-slate-900 uppercase">
-                                MAKE SURE <span className="text-blue-600">Y</span>OUR CHILD IS
+                        <div className="w-full">
+                            <h1 className="text-[38px] font-black leading-[0.85] text-slate-900 uppercase tracking-tighter">
+                                <span className="block mb-1">Make Sure</span>
+                                <span className="block mb-1">Your Child</span>
+                                <span className="text-orange-500 text-[48px] block mt-2">Is Ready</span>
                             </h1>
-                            <h2 className="text-3xl sm:text-4xl font-black leading-tight text-blue-600 uppercase">
-                                READY
-                            </h2>
                         </div>
 
-                        {/* Modern Subheading */}
-                        <div className="bg-slate-100 rounded-2xl p-4 border border-slate-200">
-                            <div className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600">
-                                <span className="inline-flex items-center font-bold">
-                                    <span className="text-blue-600">think</span>
-                                    <span className="text-orange-500">skool</span>
-                                </span>
-                                <span className="text-slate-400">•</span>
-                                <span>Build the Future</span>
-                            </div>
-                        </div>
-
-                        {/* Modern Mobile Description */}
-                        <div className="text-center space-y-4">
-                            <p className="text-slate-600 font-medium leading-relaxed text-sm">
-                                Traditional education hasn't kept up with the future. 
-                                <span className="text-orange-500 font-bold">thinkskool</span> bridges that gap.
-                            </p>
+                        <div className="w-full space-y-8 flex flex-col items-center pt-4">
+                            <button
+                                onClick={handleEnrollNow}
+                                className="w-full bg-slate-900 text-white font-black text-lg py-5 rounded-[2rem] shadow-2xl shadow-slate-900/20 flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                            >
+                                Enroll Now <ArrowRight size={20} className="text-orange-500" />
+                            </button>
                             
-                            <div className="flex flex-wrap justify-center gap-2">
-                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Robotics</span>
-                                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">Engineering</span>
-                            </div>
-                        </div>
-
-                        {/* Social Proof Group - Mobile Optimized */}
-                        <div className="space-y-3 flex flex-col items-center w-full">
-                            <ScrollingAvatars isMobile={true} />
-                            
-                            <div className="w-full space-y-4">
-                                <button
-                                    onClick={handleEnrollNow}
-                                    className="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
-                                >
-                                    <span>Start Learning Today</span>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                                
-                                <div className="text-center">
-                                    <p className="text-xs text-slate-500">
-                                        Join 1000+ students already building their future
-                                    </p>
-                                </div>
+                            <div className="pt-2">
+                                <ScrollingAvatars isMobile={true} />
                             </div>
                         </div>
                     </div>
@@ -140,6 +106,8 @@ const Hero = () => {
             </section>
         );
     }
+
+
 
     return (
         <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-[#FDFCFB]">
@@ -168,13 +136,13 @@ const Hero = () => {
                             <div className="flex flex-wrap justify-center items-baseline gap-x-[0.2em] mb-6">
                                 <span>MAKE</span>
                                 <span>SURE</span>
-                                <span className="flex items-baseline">
+                                <span className="inline-flex items-baseline whitespace-nowrap">
                                     <span className="text-black">Y</span>
                                     <span className="tracking-tighter">OUR</span>
                                 </span>
                                 <span>CHILD</span>
                             </div>
-                            <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight">
+                            <div className="flex flex-wrap justify-center text-[#F97316] tracking-tight whitespace-nowrap">
                                 IS&nbsp;&nbsp;READY
                             </div>
                         </h1>

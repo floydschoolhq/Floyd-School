@@ -84,190 +84,64 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className={`relative overflow-hidden transition-all duration-500 ${
-                isDark 
-                    ? 'bg-gradient-to-br from-slate-900 via-black to-slate-900 border-t border-white/5' 
-                    : 'bg-gradient-to-br from-slate-50 via-white to-slate-100 border-t border-slate-200'
+            <section className={`relative overflow-hidden ${
+                isDark ? 'bg-slate-950 px-6 py-16' : 'bg-slate-50 px-6 py-16'
             }`}>
-                {/* Background Decorative Elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className={`absolute top-8 left-8 w-32 h-32 rounded-full mix-blend-multiply filter blur-2xl opacity-20 ${
-                        isDark ? 'bg-blue-500' : 'bg-blue-400'
-                    }`} />
-                    <div className={`absolute bottom-8 right-8 w-40 h-40 rounded-full mix-blend-multiply filter blur-2xl opacity-20 ${
-                        isDark ? 'bg-purple-500' : 'bg-purple-400'
-                    }`} />
-                </div>
-
-                <div className="max-w-7xl mx-auto px-4 py-16 relative z-10">
-                    {/* Mobile Section Header */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-12"
-                    >
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-[10px] font-bold uppercase tracking-widest mb-6 transition-all ${
-                            isDark 
-                                ? 'bg-orange-500/10 border-orange-500/20 text-orange-500' 
-                                : 'bg-orange-50 border-orange-100 text-orange-600'
-                        }`}>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-[100px] -mr-32 -mt-32" />
+                
+                <div className="relative z-10">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
                             <Headphones size={12} />
-                            <span>Support Center</span>
+                            Support
                         </div>
-                        
-                        <h2 className={`text-3xl font-black tracking-tight uppercase leading-none mb-4 transition-colors ${
-                            isDark ? 'text-white' : 'text-slate-900'
-                        }`}>
-                            Need <span className={isDark ? 'text-orange-500' : 'text-orange-600'}>Help?</span>
+                        <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Need <span className="text-orange-500">Help?</span>
                         </h2>
-                        
-                        <p className={`text-base max-w-lg mx-auto font-medium transition-colors ${
-                            isDark ? 'text-slate-400' : 'text-slate-600'
-                        }`}>
-                            Our dedicated support team is here to help you succeed. Reach out anytime through your preferred channel.
+                        <p className={`text-[12px] font-medium leading-tight max-w-[240px] mx-auto ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
+                            Elite technical support for your engineering journey.
                         </p>
-                    </motion.div>
+                    </div>
 
-                    {/* Mobile Contact Methods */}
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="space-y-4 mb-8"
-                    >
-                        {contactMethods.map((method, index) => {
-                            const colors = colorMap[method.color];
-                            return (
-                                <motion.div
-                                    key={index}
-                                    variants={itemVariants}
-                                    whileHover={{ scale: 1.02 }}
-                                    className={`group relative p-6 rounded-2xl border transition-all duration-300 ${
-                                        isDark
-                                            ? 'bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border-white/5 hover:border-white/10 hover:shadow-2xl hover:shadow-white/5'
-                                            : 'bg-white/80 backdrop-blur-sm border-slate-200/50 hover:border-slate-300/50 hover:shadow-2xl hover:shadow-slate-200/20'
-                                    }`}
-                                >
-                                    {/* Icon and Content */}
-                                    <div className="flex items-center gap-4">
-                                        {/* Icon Container */}
-                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 bg-gradient-to-br ${colors.bg} border ${colors.border}`}>
-                                            <method.icon size={20} className={colors.icon} />
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="flex-1">
-                                            <h3 className={`text-lg font-bold mb-1 transition-colors ${
-                                                isDark ? 'text-white group-hover:text-blue-400' : 'text-slate-900 group-hover:text-blue-600'
-                                            }`}>
-                                                {method.title}
-                                            </h3>
-                                            
-                                            <p className={`text-sm leading-relaxed mb-3 ${
-                                                isDark ? 'text-slate-400' : 'text-slate-600'
-                                            }`}>
-                                                {method.description}
-                                            </p>
-
-                                            {/* Action Button */}
-                                            <button 
-                                                onClick={() => index === 0 && setIsMessageFormOpen(true)}
-                                                className={`w-full sm:w-auto px-4 py-2 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 flex items-center justify-center gap-2 ${
-                                                    isDark
-                                                        ? `bg-gradient-to-r ${colors.bg} ${colors.border} ${colors.text} hover:shadow-lg ${colors.hover}`
-                                                        : `bg-gradient-to-r ${colors.bg} ${colors.border} ${colors.text} hover:shadow-lg ${colors.hover}`
-                                                }`}
-                                            >
-                                                {method.action}
-                                                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                                            </button>
-                                        </div>
+                    <div className="space-y-3 mb-10">
+                        {contactMethods.map((method, index) => (
+                            <div 
+                                key={index} 
+                                className={`p-5 rounded-2xl border transition-all ${
+                                    isDark ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-200'
+                                }`}
+                                onClick={() => index === 0 && setIsMessageFormOpen(true)}
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                                        isDark ? 'bg-slate-800' : 'bg-slate-100'
+                                    }`}>
+                                        <method.icon size={20} className={isDark ? 'text-blue-500' : 'text-blue-600'} />
                                     </div>
-
-                                    {/* Hover Effect */}
-                                    <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${
-                                        isDark
-                                            ? 'bg-gradient-to-br from-blue-500/5 to-purple-500/5'
-                                            : 'bg-gradient-to-br from-blue-500/5 to-purple-500/5'
-                                    }`} />
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
-
-                    {/* Mobile Quick Response Promise */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className={`text-center p-6 rounded-2xl border transition-all ${
-                            isDark
-                                ? 'bg-gradient-to-r from-orange-900/20 to-red-900/20 border-orange-500/20'
-                                : 'bg-gradient-to-r from-orange-50 to-red-50 border-orange-200'
-                        }`}
-                    >
-                        <div className="flex items-center justify-center gap-2 mb-3">
-                            <Clock className={isDark ? 'text-orange-400' : 'text-orange-600'} size={20} />
-                            <h3 className={`text-lg font-bold ${
-                                isDark ? 'text-white' : 'text-slate-900'
-                            }`}>
-                                Quick Response Guaranteed
-                            </h3>
-                        </div>
-                        <p className={`text-base mb-4 max-w-lg mx-auto ${
-                            isDark ? 'text-slate-300' : 'text-slate-700'
-                        }`}>
-                            We typically respond within 24 hours. For urgent matters, our live chat is available Monday-Friday, 9 AM - 6 PM IST.
-                        </p>
-                        
-                        <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-                            <div className="flex items-center gap-2">
-                                <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-green-400' : 'bg-green-600'}`} />
-                                <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>
-                                    24-hour Response Time
-                                </span>
+                                    <div className="flex-1 min-w-0">
+                                        <h3 className={`text-[12px] font-black uppercase tracking-tight mb-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>{method.title}</h3>
+                                        <p className="text-slate-500 text-[10px] font-medium truncate">{method.action}</p>
+                                    </div>
+                                    <ArrowRight size={14} className="text-slate-700 shrink-0" />
+                                </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-blue-400' : 'bg-blue-600'}`} />
-                                <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>
-                                    Expert Support Team
-                                </span>
-                            </div>
-                        </div>
-                    </motion.div>
+                        ))}
+                    </div>
 
-                    {/* Mobile Bottom CTA */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="text-center mt-8"
-                    >
-                        <p className={`text-sm font-medium mb-4 ${
-                            isDark ? 'text-slate-400' : 'text-slate-600'
-                        }`}>
-                            Can't find what you're looking for?
-                        </p>
+                    <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-3xl p-6 text-white shadow-xl shadow-orange-500/10">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Clock size={16} />
+                            <h3 className="text-sm font-black uppercase tracking-tight">24h Turnaround</h3>
+                        </div>
                         <button 
                             onClick={() => navigate('/faq')}
-                            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 w-full sm:w-auto ${
-                                isDark
-                                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                                    : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                            }`}>
-                            <Send size={16} />
-                            Browse FAQ
-                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            className="w-full bg-white text-orange-600 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest"
+                        >
+                            Read FAQ
                         </button>
-                    </motion.div>
+                    </div>
                 </div>
-                
-                {/* Message Form Modal */}
+
                 <MessageForm 
                     isOpen={isMessageFormOpen} 
                     onClose={() => setIsMessageFormOpen(false)} 
@@ -276,6 +150,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             </section>
         );
     }
+
 
     return (
         <section className={`relative overflow-hidden transition-all duration-500 ${

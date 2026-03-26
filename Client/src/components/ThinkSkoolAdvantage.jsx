@@ -163,83 +163,58 @@ const ThinkskoolAdvantage = () => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className="py-16 bg-slate-50 relative w-full">
-                {/* Mobile Header */}
-                <div className="px-4 mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center"
-                    >
-                        <h2 className="text-2xl font-black text-slate-900 mb-3 leading-tight">
-                            Schools teach concepts.
-                        </h2>
-                        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 leading-tight">
-                            We teach students to build real things.
-                        </h2>
-                    </motion.div>
+            <section className="py-16 bg-white relative w-full px-6">
+                {/* Concised Mobile Header */}
+                <div className="mb-12 text-center">
+                    <div className="inline-flex items-center gap-2 bg-orange-500/5 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                        The Advantage
+                    </div>
+                    <h2 className="text-3xl font-black text-slate-900 leading-[0.9] uppercase tracking-tighter">
+                        We teach you to <span className="text-orange-500">Build.</span>
+                    </h2>
                 </div>
 
-                {/* Mobile Advantage Cards */}
-                <div className="px-4 space-y-6">
-                    {ADVANTAGES.map((advantage, index) => (
-                        <motion.div
-                            key={advantage.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
-                            className="relative"
-                        >
-                            <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-blue-500 to-blue-600' : 'bg-gradient-to-br from-white to-gray-50'} rounded-2xl p-1 shadow-xl`}>
-                                <div className={`${index % 2 === 0 ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700' : 'bg-white'} rounded-2xl overflow-hidden relative`}>
-                                    {/* Background Pattern */}
-                                    <div className="absolute inset-0 opacity-10">
-                                        <div className="absolute inset-0" style={{
-                                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                                        }} />
+                <div className="space-y-6">
+                    {ADVANTAGES.map((advantage, index) => {
+                        const isDark = index % 2 === 0;
+                        return (
+                            <div key={advantage.id} className={`${isDark ? 'bg-slate-900' : 'bg-slate-50'} rounded-[2.5rem] p-4 border border-black/5 overflow-hidden`}>
+                                <div className="flex flex-col gap-4">
+                                    {/* Small Image */}
+                                    <div className="h-40 rounded-[2rem] overflow-hidden">
+                                        <img src={advantage.image} className="w-full h-full object-cover" alt="" />
                                     </div>
-
-                                    <div className="relative z-10 p-6">
-                                        {/* Icon and Badge */}
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${index % 2 === 0 ? 'bg-white/20' : 'bg-blue-500/10'}`}>
-                                                <advantage.icon size={20} className={index % 2 === 0 ? "text-white" : "text-blue-600"} />
-                                            </div>
-                                            <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase ${index % 2 === 0 ? 'bg-white/20 text-white' : 'bg-blue-500/10 text-blue-600'}`}>
-                                                Advantage {index + 1}
-                                            </div>
+                                    
+                                    <div className="px-2 pb-2">
+                                        <div className={`text-[10px] font-black uppercase tracking-widest mb-2 ${isDark ? 'text-orange-500' : 'text-blue-600'}`}>
+                                            0{index + 1} // {advantage.title.split(' ').slice(0, 3).join(' ')}
                                         </div>
-
-                                        {/* Title */}
-                                        <h3 className={`text-xl font-black mb-3 leading-tight ${index % 2 === 0 ? 'text-white' : 'text-gray-900'}`}>
+                                        <h3 className={`text-lg font-black leading-tight uppercase tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                             {advantage.title}
                                         </h3>
-
-                                        {/* Description */}
-                                        <p className={`text-sm leading-relaxed mb-4 ${index % 2 === 0 ? 'text-white/90' : 'text-gray-700'}`}>
+                                        <p className={`text-[12px] font-medium leading-relaxed opacity-70 mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                             {advantage.description}
                                         </p>
-
-                                        {/* Features */}
-                                        <div className="space-y-2">
-                                            {advantage.details.map((detail, idx) => (
-                                                <div key={idx} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${index % 2 === 0 ? 'bg-white/10' : 'bg-blue-500/5'}`}>
-                                                    <advantage.icon size={12} className={index % 2 === 0 ? "text-white" : "text-blue-600"} />
-                                                    <span className={`text-xs font-medium ${index % 2 === 0 ? 'text-white' : 'text-gray-800'}`}>{detail}</span>
+                                        
+                                        <div className="grid grid-cols-1 gap-2">
+                                            {advantage.details.slice(0, 2).map((detail, idx) => (
+                                                <div key={idx} className={`flex items-center gap-2 p-3 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-white border border-black/5'}`}>
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                                                    <span className={`text-[10px] font-black uppercase tracking-tight ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{detail}</span>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
         );
     }
+
+
 
     return (
         <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">
