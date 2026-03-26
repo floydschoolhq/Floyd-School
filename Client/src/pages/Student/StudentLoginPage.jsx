@@ -16,37 +16,6 @@ const StudentLoginPage = () => {
     navigate('/');
   };
 
-  const handleGoogleSignIn = () => {
-    // Google OAuth 2.0 configuration
-    const GOOGLE_CLIENT_ID = '683836409943-rguv1rgoq4dhi12pm6n4da325d4r16iv.apps.googleusercontent.com';
-    const REDIRECT_URI = `${window.location.origin}/complete-profile`;
-    
-    console.log('Google OAuth initiated with redirect URI:', REDIRECT_URI);
-    
-    // Google OAuth scopes
-    const scopes = [
-      'openid',
-      'email',
-      'profile'
-    ].join(' ');
-
-    // Construct Google OAuth URL
-    const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
-    authUrl.searchParams.set('client_id', GOOGLE_CLIENT_ID);
-    authUrl.searchParams.set('redirect_uri', REDIRECT_URI);
-    authUrl.searchParams.set('response_type', 'code');
-    authUrl.searchParams.set('scope', scopes);
-    authUrl.searchParams.set('access_type', 'offline');
-    authUrl.searchParams.set('prompt', 'consent');
-    authUrl.searchParams.set('state', Math.random().toString(36).substring(7)); // Add random state for security
-
-    // Store Google sign-in initiation in session storage
-    sessionStorage.setItem('googleSignIn', 'true');
-
-    // Redirect to Google OAuth
-    window.location.href = authUrl.toString();
-  };
-
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden">
       {/* Dynamic Background Elements */}
@@ -75,13 +44,7 @@ const StudentLoginPage = () => {
               <h3 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Student <span className="text-[#2563EB]">Login</span></h3>
               <p className="text-slate-500 text-sm font-medium">Sign in to your engineering dashboard</p>
             </div>
-
-            <GoogleSignInButton 
-              text="Sign in with Google" 
-              onClick={handleGoogleSignIn}
-            />
           </div>
-        </div>
 
         {/* Floating Back Link */}
         <button
@@ -90,6 +53,7 @@ const StudentLoginPage = () => {
         >
           <LogOutIcon size={12} className="rotate-180" /> Return to Home
         </button>
+        </div>
       </motion.div>
     </div>
   );

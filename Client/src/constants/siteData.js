@@ -1,8 +1,9 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
-import AI_IMG from '../../../WhatsApp Image 2026-03-17 at 3.11.57 PM.jpeg';
-import IOT_IMG from '../../../iot and robotics.jpeg';
-import WEB_IMG from '../../../web development.jpeg';
-import CYBER_IMG from '../../../cyber security.jpeg';
+
+const AI_IMG = '/images/ai-course.jpg';
+const IOT_IMG = '/images/iot-course.jpg';
+const WEB_IMG = '/images/web-course.jpg';
+const CYBER_IMG = '/images/cyber-course.jpg';
 
 export const FALLBACK_COURSES = [
     {

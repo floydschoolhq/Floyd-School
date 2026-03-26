@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Mail, Send, Headphones, Clock, ArrowRight } from 'lucide-react';
 import MessageForm from './MessageForm';
@@ -8,6 +9,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
     const isDark = variant === 'dark';
     const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
     const isMobile = useIsMobile();
+    const navigate = useNavigate();
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -251,11 +253,13 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         }`}>
                             Can't find what you're looking for?
                         </p>
-                        <button className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 w-full sm:w-auto ${
-                            isDark
-                                ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                                : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                        }`}>
+                        <button 
+                            onClick={() => navigate('/faq')}
+                            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 w-full sm:w-auto ${
+                                isDark
+                                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
+                                    : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
+                            }`}>
                             <Send size={16} />
                             Browse FAQ
                             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -444,11 +448,13 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                     }`}>
                         Can't find what you're looking for?
                     </p>
-                    <button className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 ${
-                        isDark
-                            ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                            : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
-                    }`}>
+                    <button 
+                        onClick={() => navigate('/faq')}
+                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide transition-all duration-300 ${
+                            isDark
+                                ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
+                                : 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:shadow-lg hover:shadow-orange-500/25'
+                        }`}>
                         <Send size={16} />
                         Browse FAQ
                         <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

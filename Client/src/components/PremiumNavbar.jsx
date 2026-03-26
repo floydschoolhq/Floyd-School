@@ -72,11 +72,11 @@ const PremiumNavbar = memo(({ variant }) => {
         }
     }, []);
 
-    // Memoized navigation items to prevent recreation
+    // Pre-computed navigation items with proper routing
     const navItems = isCourseDetailsPage ? COURSE_NAV_ITEMS : [
         { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
         { name: 'Courses', id: 'online-focus' },
-        { name: 'Partner with us', link: '/school-partnerships' },
+        { name: 'Partner with Us', link: '/school-partnerships' },
         { name: 'Request Callback', action: handleContactClick },
     ];
 
@@ -191,12 +191,16 @@ const PremiumNavbar = memo(({ variant }) => {
 
                         {/* Right CTA */}
                         <div className="hidden md:flex items-center">
-                            <button
-                                onClick={() => navigate('/student/login')}
-                                className="px-10 py-2.5 bg-blue-500 text-white font-black text-[15px] rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 border border-white/10"
+                            <Link
+                                to="/student/login"
+                                className="group relative px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 border border-white/10"
                             >
-                                Sign In
-                            </button>
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Sign In
+                                    <FaUserTie className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                                </span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                            </Link>
                         </div>
 
                         {/* Mobile menu toggle */}
@@ -290,15 +294,20 @@ const PremiumNavbar = memo(({ variant }) => {
                                 
                                 {/* CTA Section */}
                                 <div className="p-4 border-t border-slate-200">
-                                    <button
+                                    <Link
+                                        to="/student/login"
                                         onClick={() => {
                                             navigate('/student/login');
                                             setIsMobileMenuOpen(false);
                                         }}
-                                        className="w-full py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 border border-white/10"
+                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl border border-white/10 group"
                                     >
-                                        Sign In
-                                    </button>
+                                        <span className="relative z-10 flex items-center justify-center gap-2">
+                                            Sign In
+                                            <FaUserTie className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                                        </span>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>

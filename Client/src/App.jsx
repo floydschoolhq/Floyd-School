@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useLayoutEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
 
 // Layout Components (Always visible or shared)
-
 import Footer from './components/Footer';
 import MobileBottomNav from './components/MobileBottomNav';
 import NeedHelpSection from './components/NeedHelpSection';
 
-// Static Marketing Page Components (Should only be visible on the Home route)
+// Static Marketing Page Components (Should only be visible on Home route)
 import Hero from './components/Hero';
 import About from './components/About';
 import Marque from './components/Marque';
@@ -31,11 +30,11 @@ import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import AdminMessages from './components/AdminMessages.jsx';
 import { PortalContext } from './components/Context/PortalProvider.jsx';
-import SchoolPartnership from './pages/SchoolPartnership.jsx';
+import SchoolPartnership from "./pages/SchoolPartnership.jsx";
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
-import CompleteProfilePage from './pages/CompleteProfilePage.jsx';
+import FAQPage from './pages/FAQPage.jsx';
 
 import Logo from './components/Logo.jsx';
 
@@ -88,7 +87,7 @@ const App = () => {
         '/contact',
         '/online-program',
         '/classroom',
-        '/complete-profile'
+        '/school-partnerships'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -160,9 +159,6 @@ const App = () => {
                 {/*Login*/}
                 <Route path='/student/login' element={<StudentLoginPage />} />
 
-                {/*Complete Profile*/}
-                <Route path='/complete-profile' element={<CompleteProfilePage />} />
-
                 {/*Signup forms removed*/}
 
                 {/* School Partnership */}
@@ -173,6 +169,9 @@ const App = () => {
 
                 {/* Bootcamp Exhibition Gallery */}
                 <Route path='/bootcamp-gallery' element={<BootcampGallery />} />
+
+                {/* FAQ Page */}
+                <Route path='/faq' element={<FAQPage />} />
 
                 {/* Classroom Access */}
                 <Route path='/classroom' element={
