@@ -56,87 +56,65 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
     
     if (isMobile) {
         return (
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                    ease: "easeOut"
-                }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onSelect(mentor)}
-                className={`snap-center flex-shrink-0 w-[85vw] h-[380px] rounded-2xl overflow-hidden border transition-all duration-700 flex flex-col items-center p-6 gap-4 relative
-                    ${isDark
-                        ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
-                        : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
-            >
-                {/* Background Decorative Mesh */}
-                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-all duration-700
-                    ${isDark ? 'bg-orange-500/10' : 'bg-orange-100/40'}`} />
-                
-                {/* Image Section - Mobile Optimized */}
-                <div className="w-24 h-24 flex-shrink-0 relative">
-                    {/* Main Profile Housing */}
-                    <div className={`absolute inset-0 rounded-full p-[2px] border transition-all duration-700 z-10 
-                        ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-100'}`}>
-                        <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 relative">
-                             <img
-                                src={mentor.image}
-                                alt={mentor.name}
-                                className="w-full h-full object-cover object-top transition-all duration-1000"
-                                style={{ transform: `scale(${mentor.imageScale})` }}
-                            />
-                            {/* Glass Overlay on Image */}
-                            <div className={`absolute inset-0 opacity-20 transition-opacity duration-700
-                                ${isDark ? 'bg-gradient-to-tr from-orange-950/30 to-transparent' : 'bg-gradient-to-tr from-orange-900/20 via-transparent'}`} />
+            <div className={`snap-center shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden ${
+                isDark 
+                    ? 'bg-[#0F172A]/40 border-white/5 shadow-2xl shadow-black/20' 
+                    : 'bg-white border-slate-200 shadow-sm shadow-slate-200/50'
+            }`}>
+                 {/* Decorative Accent */}
+                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] -mr-16 -mt-16 pointer-events-none transition-all duration-700
+                    ${isDark ? 'bg-orange-500/10' : 'bg-orange-500/5'}`} />
+
+                <div className="relative z-10 w-full flex flex-col items-center">
+                    <div className="relative mb-6">
+                        <div className={`w-28 h-28 rounded-[2.5rem] overflow-hidden border-2 p-1.5 ${
+                            isDark ? 'bg-slate-900 border-white/5' : 'bg-white border-slate-100'
+                        }`}>
+                            <div className="w-full h-full rounded-[1.8rem] overflow-hidden bg-slate-100 grayscale-[0.3] group-hover:grayscale-0 transition-all">
+                                <img
+                                    src={mentor.image}
+                                    alt={mentor.name}
+                                    className="w-full h-full object-cover object-top"
+                                    style={{ transform: `scale(${mentor.imageScale})` }}
+                                />
+                            </div>
                         </div>
+                        
+                        <a 
+                            href={mentor.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="absolute -bottom-2 -right-2 w-10 h-10 rounded-2xl bg-slate-950 text-white flex items-center justify-center border-4 border-white shadow-xl active:scale-90 transition-all"
+                        >
+                            <FaLinkedinIn size={12} />
+                        </a>
                     </div>
 
-                    {/* Integrated LinkedIn Tag */}
-                    <a 
-                        href={mentor.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className={`absolute bottom-0 right-0 w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-lg transition-all duration-500 z-20 border-2
-                            ${isDark ? 'bg-white/10 backdrop-blur-xl border-white/10 hover:bg-orange-500 hover:border-orange-400' : 'bg-slate-900 border-white hover:bg-orange-500'}`}
-                    >
-                        <FaLinkedinIn size={10} className="hover:scale-110 transition-transform" />
-                    </a>
-                </div>
-
-                {/* Content Core - Mobile Optimized */}
-                <div className="flex-grow flex flex-col items-center text-center relative z-10 w-full">
-                    <div className="space-y-2 mb-4 flex flex-col items-center">
-                        <h3 className={`text-lg font-black tracking-tight leading-none transition-colors w-full
-                            ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <div className="mb-6">
+                        <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
-                        <p className={`text-[10px] font-bold uppercase tracking-wide pb-2
-                            ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                        <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
                             {mentor.role}
                         </p>
-                        <div className={`w-8 h-1 transition-all duration-500 rounded-full
-                            ${isDark ? 'bg-white/10' : 'bg-slate-100'}`} />
                     </div>
 
-                    <p className={`text-[12px] leading-relaxed mb-4 font-medium
-                        ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <p className={`text-[13px] font-medium leading-relaxed mb-8 px-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                         {mentor.bio}
                     </p>
 
-                    {/* Interaction Footer */}
-                    <div className="flex items-center gap-3 mt-auto">
+                    <div className="flex flex-wrap justify-center gap-2">
                         {mentor.tags.slice(0, 2).map(tag => (
-                            <span key={tag} className={`text-[8px] font-bold uppercase tracking-widest px-2 py-1 rounded-full
-                                ${isDark ? 'bg-white/10 text-slate-400' : 'bg-slate-100 text-slate-400'}`}>
-                                #{tag}
+                            <span key={tag} className={`text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl ${
+                                isDark ? 'bg-white/5 text-slate-500 border border-white/5' : 'bg-slate-50 text-slate-400 border border-slate-100'
+                            }`}>
+                                {tag}
                             </span>
                         ))}
                     </div>
                 </div>
-            </motion.div>
+            </div>
         );
     }
 
@@ -254,12 +232,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         return (
             <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
                 <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                        Industry Experts
-                    </div>
-                    <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        Learn from <span className="text-orange-500">The Best.</span>
-                    </h2>
+                    <ScrollDarkenHeading variant={variant}>
+                        {title}
+                    </ScrollDarkenHeading>
                 </div>
 
                 <div className="space-y-6">

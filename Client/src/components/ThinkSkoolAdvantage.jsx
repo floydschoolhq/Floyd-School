@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Award, Headphones, ArrowRight } from 'lucide-react';
-import fullStackImg from '../assets/images/full stack web development.png';
 import useIsMobile from '../hooks/useIsMobile';
 
 const ADVANTAGES = [
@@ -127,109 +126,97 @@ const ThinkskoolAdvantage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const isMobile = useIsMobile();
 
-    // 🔥 Smooth + stable scroll detection
     useEffect(() => {
+        if (isMobile) return;
         let ticking = false;
-
         const handleScroll = () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const cards = document.querySelectorAll('.advantage-card');
                     let newActive = 0;
-
                     cards.forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
-
-                        // 👇 smooth trigger zone
                         if (rect.top <= window.innerHeight * 0.45) {
                             newActive = index;
                         }
                     });
-
                     setActiveIndex(newActive);
                     ticking = false;
                 });
-
                 ticking = true;
             }
         };
-
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
-
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [isMobile]);
 
-    // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className="py-16 bg-white relative w-full px-6">
-                {/* Concised Mobile Header */}
-                <div className="mb-12 text-center">
-                    <div className="inline-flex items-center gap-2 bg-orange-500/5 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                        The Advantage
+            <section className="py-20 bg-white relative w-full overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
+                <div className="max-w-[1440px] mx-auto px-6 relative z-10">
+                    <div className="mb-14 text-center">
+                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-[0.9] uppercase mb-2">
+                            Schools teach <span className="text-orange-500">Concepts.</span>
+                        </h2>
+                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-[0.9] uppercase">
+                            We teach you to <span className="text-blue-600">Build.</span>
+                        </h2>
                     </div>
-                    <h2 className="text-3xl font-black text-slate-900 leading-[0.9] uppercase tracking-tighter">
-                        We teach you to <span className="text-orange-500">Build.</span>
-                    </h2>
-                </div>
 
-                <div className="space-y-6">
-                    {ADVANTAGES.map((advantage, index) => {
-                        const isDark = index % 2 === 0;
-                        return (
-                            <div key={advantage.id} className={`${isDark ? 'bg-slate-900' : 'bg-slate-50'} rounded-[2.5rem] p-4 border border-black/5 overflow-hidden`}>
-                                <div className="flex flex-col gap-4">
-                                    {/* Small Image */}
-                                    <div className="h-40 rounded-[2rem] overflow-hidden">
-                                        <img src={advantage.image} className="w-full h-full object-cover" alt="" />
-                                    </div>
-                                    
-                                    <div className="px-2 pb-2">
-                                        <div className={`text-[10px] font-black uppercase tracking-widest mb-2 ${isDark ? 'text-orange-500' : 'text-blue-600'}`}>
-                                            0{index + 1} // {advantage.title.split(' ').slice(0, 3).join(' ')}
+                    <div className="space-y-10">
+                        {ADVANTAGES.map((advantage, index) => {
+                            const isDark = index % 2 !== 0;
+                            return (
+                                <div key={advantage.id} className="group">
+                                    <div className={`rounded-3xl overflow-hidden transition-all duration-500 ${isDark ? 'bg-slate-950 shadow-2xl shadow-blue-900/10' : 'bg-slate-50 border border-slate-200/50'}`}>
+                                        <div className="aspect-[16/9] w-full overflow-hidden relative">
+                                            <img src={advantage.image} className="w-full h-full object-cover opacity-80" alt="" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                                            <div className="absolute top-4 left-4 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                                                <span className="text-[9px] font-black text-white uppercase tracking-widest">0{index + 1}</span>
+                                            </div>
                                         </div>
-                                        <h3 className={`text-lg font-black leading-tight uppercase tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                            {advantage.title}
-                                        </h3>
-                                        <p className={`text-[12px] font-medium leading-relaxed opacity-70 mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                            {advantage.description}
-                                        </p>
                                         
-                                        <div className="grid grid-cols-1 gap-2">
-                                            {advantage.details.slice(0, 2).map((detail, idx) => (
-                                                <div key={idx} className={`flex items-center gap-2 p-3 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-white border border-black/5'}`}>
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-                                                    <span className={`text-[10px] font-black uppercase tracking-tight ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{detail}</span>
-                                                </div>
-                                            ))}
+                                        <div className="p-8">
+                                            <h3 className={`text-xl font-black leading-tight uppercase tracking-tight mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                                {advantage.title}
+                                            </h3>
+                                            <p className={`text-sm font-medium leading-relaxed mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                                {advantage.description}
+                                            </p>
+                                            
+                                            <div className="flex flex-wrap gap-2">
+                                                {advantage.details.slice(0, 2).map((detail, idx) => (
+                                                    <div key={idx} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl ${isDark ? 'bg-white/5 border border-white/5' : 'bg-white border border-slate-100'}`}>
+                                                        <div className="w-1 h-1 rounded-full bg-orange-500" />
+                                                        <span className={`text-[9px] font-black uppercase tracking-tight ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{detail}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
         );
     }
 
-
-
     return (
         <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">
-            {/* Heading */}
             <div className="flex flex-col items-center text-center leading-tight mb-16 md:mb-20 lg:mb-24">
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-black tracking-tight">
+                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-black tracking-tight uppercase">
                     Schools teach concepts.
                 </h2>
-
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-orange-500 mt-3 tracking-tight">
+                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-orange-500 mt-3 tracking-tight uppercase">
                     We teach students to build real things.
                 </h2>
             </div>
 
-            {/* Advantage Cards */}
             <div className="max-w-7xl mx-auto w-full relative z-10 px-4">
                 {ADVANTAGES.map((advantage, index) => (
                     <div

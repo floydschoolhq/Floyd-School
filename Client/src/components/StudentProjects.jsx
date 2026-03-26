@@ -489,69 +489,83 @@ const StudentProjects = () => {
 
   if (isMobile) {
     return (
-      <section id="student-projects" className="py-20 px-6 bg-[#FDFCFB]">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-            Future Engineers
+      <section id="student-projects" className="py-24 px-6 bg-white relative overflow-hidden">
+        {/* Background mesh */}
+        <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        
+        <div className="relative z-10">
+          <div className="mb-14 text-center">
+            <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase leading-[0.9] mb-6">
+              Production <br/> <span className="text-blue-600">Grade Builds</span>
+            </h2>
+            <p className="text-slate-500 text-sm font-medium leading-relaxed px-2">
+              Every student graduates with a high-performance, live product built from scratch.
+            </p>
           </div>
-          <h2 className="text-3xl font-black text-slate-900 mb-3 tracking-tighter uppercase leading-none">
-            Student <span className="text-blue-600">Projects.</span>
-          </h2>
-          <p className="text-slate-500 text-sm font-medium leading-relaxed">
-            Real products built by our students while learning.
-          </p>
-        </div>
 
-        {/* Filter Tabs - Mobile */}
-        <div className="flex justify-center gap-2 mb-10 overflow-x-auto scrollbar-hide pb-2">
-          {['all', 'featured'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setFilter(tab)}
-              className={`px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 ${
-                filter === tab
-                  ? 'bg-slate-900 text-white shadow-lg'
-                  : 'bg-white text-slate-400 border border-slate-100'
-              }`}
-            >
-              {tab === 'all' ? 'All Work' : 'Featured'}
-            </button>
-          ))}
-        </div>
+          {/* Filter Tabs - Mobile */}
+          <div className="flex justify-center gap-3 mb-12">
+            {['all', 'featured'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setFilter(tab)}
+                className={`px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${
+                  filter === tab
+                    ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20'
+                    : 'bg-slate-50 text-slate-400 border border-slate-200/50'
+                }`}
+              >
+                {tab === 'all' ? 'The Lab' : 'Featured'}
+              </button>
+            ))}
+          </div>
 
-        <div className="space-y-8">
-          {filteredProjects.map((project) => (
-            <div 
-              key={project.id} 
-              className="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col active:scale-95 transition-transform"
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider text-slate-900 border border-white/20 shadow-sm">
-                    {project.category}
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-xl font-black text-slate-900 mb-2 uppercase tracking-tight leading-tight">{project.title}</h3>
-                <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-6 line-clamp-2">{project.description}</p>
-                
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-3">
-                       <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
-                       <div>
-                           <p className="text-[12px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
-                           <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">{project.author.course}</p>
-                       </div>
-                    </div>
+          <div className="space-y-10">
+            {filteredProjects.map((project) => (
+              <div 
+                key={project.id} 
+                className="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
+              >
+                <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-900 border border-white/20 shadow-sm">
+                      {project.category}
+                  </div>
                 </div>
                 
-                <div className="flex gap-3">
-                    <a href={project.liveUrl} className="flex-1 bg-blue-600 text-white py-4 rounded-[2rem] font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20">Live Demo</a>
-                    <a href={project.githubUrl} className="flex-1 bg-slate-900 text-white py-4 rounded-[2rem] font-black text-[10px] uppercase tracking-widest text-center">Code</a>
+                <div className="p-8">
+                  <h3 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tight leading-tight">{project.title}</h3>
+                  <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
+                  
+                  <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-50">
+                      <div className="flex items-center gap-3">
+                         <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border border-slate-200" />
+                         <div>
+                             <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
+                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>
+                         </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-1">
+                          <Star size={12} className="text-orange-500 fill-orange-500" />
+                          <span className="text-[10px] font-black text-slate-900">{project.stats.stars}</span>
+                      </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                      <a href={project.liveUrl} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
+                      <a href={project.githubUrl} className="flex-1 bg-slate-950 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center active:scale-95 transition-all">Source</a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+             <button className="w-full bg-slate-50 border border-slate-200 text-slate-900 py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 active:scale-95 transition-all">
+                Join Research Lab <ArrowRight size={16} className="text-blue-600" />
+             </button>
+          </div>
         </div>
       </section>
     );

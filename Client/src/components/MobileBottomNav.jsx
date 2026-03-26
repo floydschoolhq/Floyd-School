@@ -6,7 +6,7 @@ const MobileBottomNav = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ['hero', 'online-focus', 'student-projects', 'mentors-grid', 'contact'];
+            const sections = ['home', 'online-focus', 'student-projects', 'mentors-grid', 'contact'];
             const scrollPosition = window.scrollY + 100;
 
             for (const section of sections) {

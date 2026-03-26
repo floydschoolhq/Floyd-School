@@ -10,9 +10,10 @@ import BrandLogo from './common/BrandLogo';
 import WaveText from './common/WaveText';
 
 const Footer = () => {
+  const isMobile = useIsMobile();
   const footerLinks = [
     {
-      title: <span className="font-bold tracking-tight lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>,
+      title: 'Company',
       links: [
         { name: 'About Us', href: '#how-it-works' },
         { name: 'Careers', href: '/careers' },
@@ -24,7 +25,7 @@ const Footer = () => {
       title: 'Products',
       links: [
         { name: 'Future Tech Bootcamp', href: '#engineering-programs' },
-        { name: <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span> certifications</span>, href: '#engineering-programs' },
+        { name: 'Certifications', href: '#engineering-programs' },
         { name: 'Code 360', href: '/student/coding-lab' },
       ],
     },
@@ -37,44 +38,43 @@ const Footer = () => {
     },
   ];
 
-  const isMobile = window.innerWidth < 768;
-
   if (isMobile) {
     return (
-      <footer className="bg-slate-950 px-6 pt-16 pb-32 border-t border-white/5 relative overflow-hidden">
+      <footer className="bg-slate-950 px-8 pt-20 pb-20 border-t border-white/5 relative overflow-hidden">
         {/* Subtle Background Mesh */}
         <div className="absolute inset-0 opacity-[0.03] invert brightness-200 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         
-        <div className="relative z-10">
+        <div className="relative z-10 flex flex-col items-center">
           {/* Brand Header */}
-          <div className="text-center mb-12">
-            <div className="font-black text-2xl tracking-tighter uppercase mb-3">
-               <span className="text-blue-500">THINK</span>
+          <div className="text-center mb-16">
+            <div className="font-black text-3xl tracking-tighter uppercase mb-4 flex items-center justify-center gap-2">
+               <span className="text-white">THINK</span>
                <span className="text-orange-500">SKOOL</span>
             </div>
-            <p className="text-slate-500 text-[11px] font-black uppercase tracking-tight max-w-[200px] mx-auto opacity-60 leading-tight">
-              Architecting the next generation of global engineering.
+            <div className="w-8 h-1 bg-blue-600 rounded-full mx-auto mb-6" />
+            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] max-w-[240px] mx-auto opacity-60 leading-relaxed">
+              Architecting the next generation <br/> of global engineering.
             </p>
           </div>
 
           {/* Social Links - Compact */}
-          <div className="flex justify-center gap-3 mb-10 pb-10 border-b border-white/5">
+          <div className="flex justify-center gap-4 mb-16">
             {[FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram].map((Icon, i) => (
-                <div key={i} className="w-10 h-10 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
-                   <Icon size={14} />
+                <div key={i} className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-slate-400 active:scale-95 active:bg-orange-500 active:text-white transition-all">
+                   <Icon size={16} />
                 </div>
             ))}
           </div>
 
           {/* Concise Info Grid */}
-          <div className="grid grid-cols-2 gap-y-10 gap-x-6 mb-16">
+          <div className="grid grid-cols-2 gap-y-12 gap-x-12 w-full mb-20 text-center">
             {footerLinks.map((section, i) => (
                 <div key={i} className={i === 2 ? 'col-span-2' : ''}>
-                   <h3 className="text-white text-[10px] font-black uppercase tracking-[0.2em] mb-4 opacity-50">{section.title}</h3>
-                   <ul className="space-y-3">
+                   <h3 className="text-white text-[10px] font-black uppercase tracking-[0.2em] mb-6 opacity-30">{section.title}</h3>
+                   <ul className="space-y-4">
                       {section.links.map((link, li) => (
                          <li key={li}>
-                            <a href={link.href} className="text-slate-500 text-[11px] font-bold tracking-tight hover:text-orange-500 transition-colors uppercase">
+                            <a href={link.href} className="text-slate-400 text-[11px] font-black tracking-widest hover:text-orange-500 transition-colors uppercase">
                               {link.name}
                             </a>
                          </li>
@@ -85,8 +85,11 @@ const Footer = () => {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-10 border-t border-white/5 text-center flex flex-col items-center gap-4">
-             <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.2em]">© 2026 THINKSKOOL. ENGINEERED FOR EXCELLENCE.</p>
+          <div className="pt-10 border-t border-white/5 w-full text-center">
+             <p className="text-slate-700 text-[8px] font-black uppercase tracking-[0.3em]">
+                © 2026 THINKSKOOL. <br className="mt-2" />
+                ENGINEERED FOR EXCELLENCE.
+             </p>
           </div>
         </div>
       </footer>

@@ -35,77 +35,90 @@ const OnlineCourseFocus = ({ variant }) => {
 
     if (isMobile) {
         return (
-            <section id="online-focus" className={`relative py-16 px-6 overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
-                {/* Decoration */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[80px]" />
+            <section id="online-focus" className={`relative py-20 px-6 overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
+                {/* Premium Background Accent */}
+                <div className={`absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] -mr-40 -mt-40 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
                 
                 <div className="relative z-10">
-                    <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-blue-500/5 text-blue-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                            Training Batches
+                    <div className="mb-14">
+                         <div className={`text-[10px] font-black uppercase tracking-[0.2em] mb-3 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
+                            Academic Units
                         </div>
-                        <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Live <span className="text-blue-500">Programs.</span>
+                        <h2 className={`text-4xl font-black tracking-tighter uppercase leading-[0.85] ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Our <br/> <span className="text-blue-600">Batches</span>
                         </h2>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-10">
                         {FALLBACK_COURSES.map((course) => (
                             <div
                                 key={course._id}
+                                className={`group relative rounded-[2.5rem] p-6 transition-all duration-500 border ${
+                                    isDark ? 'bg-slate-900/40 border-white/5 hover:border-white/10' : 'bg-white border-slate-200 shadow-sm'
+                                }`}
                                 onClick={() => !course.comingSoon && navigate(`/course/${course._id}`)}
-                                className={`rounded-[2rem] border overflow-hidden p-3 transition-all ${isDark ? 'bg-slate-900/50 border-white/5' : 'bg-slate-50 border-slate-100'}`}
                             >
-                                <div className="flex gap-4">
-                                    {/* Small Image */}
-                                    <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden relative border border-white/5 shadow-inner">
-                                        <img src={course.image} alt="" className="w-full h-full object-cover" />
-                                        {course.comingSoon && (
-                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                                <span className="text-[8px] text-white font-black uppercase tracking-widest -rotate-12">Soon</span>
+                                <div className="flex flex-col gap-6">
+                                    <div className="relative aspect-[16/10] rounded-[1.5rem] overflow-hidden border border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
+                                        <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
+                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                                        
+                                        {!course.comingSoon ? (
+                                            <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                                <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
+                                            </div>
+                                        ) : (
+                                            <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
+                                                <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
+                                                    Planned Build
+                                                </span>
                                             </div>
                                         )}
                                     </div>
 
-                                    <div className="flex-1 py-1">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[9px] font-black tracking-widest uppercase text-slate-500">3 Month Alpha</span>
-                                            {!course.comingSoon && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                                    <div className="px-2">
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                                3 Month Fast-Track
+                                            </span>
+                                            <div className="h-px flex-1 bg-slate-100/10" />
                                         </div>
-                                        <h3 className={`text-[15px] font-black uppercase tracking-tight leading-tight mb-2 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                                        
+                                        <h3 className={`text-2xl font-black uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                             {course.title}
                                         </h3>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            <div className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-tight ${isDark ? 'bg-white/5 text-slate-400' : 'bg-white text-slate-600'}`}>Engineering</div>
-                                            <div className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-tight ${isDark ? 'bg-white/5 text-slate-400' : 'bg-white text-slate-600'}`}>Placement</div>
+                                        
+                                        <p className={`text-sm font-medium leading-relaxed mb-8 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                            {course.description}
+                                        </p>
+
+                                        <div className="flex gap-3">
+                                            {!course.comingSoon ? (
+                                                <>
+                                                    <button 
+                                                        onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
+                                                        className="flex-[1.5] bg-blue-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest active:scale-95 transition-all shadow-xl shadow-blue-600/20"
+                                                    >
+                                                        Apply Now
+                                                    </button>
+                                                    <button 
+                                                        onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
+                                                        className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border border-blue-600/20 active:scale-95 transition-all ${isDark ? 'text-white' : 'text-slate-700'}`}
+                                                    >
+                                                        Details
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <button 
+                                                    onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
+                                                    className="w-full bg-slate-800 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all"
+                                                >
+                                                    <Bell size={14} /> Get Alpha Access
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div className="mt-3 pt-3 border-t border-white/5 flex gap-2">
-                                    {!course.comingSoon ? (
-                                        <>
-                                            <button 
-                                                onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
-                                                className="flex-[1.5] bg-blue-600 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-blue-600/10 active:scale-95 transition-transform"
-                                            >
-                                                Apply
-                                            </button>
-                                            <button 
-                                                onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
-                                                className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border ${isDark ? 'border-white/5 text-white' : 'border-slate-200 text-slate-700'} active:scale-95 transition-transform`}
-                                            >
-                                                Details
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <button 
-                                            onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
-                                            className="w-full bg-slate-800 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-transform"
-                                        >
-                                            <Bell size={12} /> Get Notified
-                                        </button>
-                                    )}
                                 </div>
                             </div>
                         ))}

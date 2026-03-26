@@ -29,67 +29,44 @@ const CourseCard = ({ course, onClick }) => {
     
     if (isMobile) {
         return (
-            <div className={`flex flex-col p-4 rounded-xl bg-white/[0.03] backdrop-blur-xl border ${
-                isComingSoon ? 'border-white/5 cursor-not-allowed opacity-75' : 'border-white/10 hover:border-orange-500/30 transition-all cursor-pointer'
-            } shadow-xl group relative overflow-hidden flex-shrink-0 w-56`} style={{ scrollSnapAlign: 'start' }}>
+            <div 
+                onClick={isComingSoon ? undefined : onClick}
+                className={`flex flex-col p-3 rounded-2xl bg-white/[0.02] backdrop-blur-xl border ${
+                    isComingSoon ? 'border-white/5 opacity-70' : 'border-white/10 active:scale-95 transition-all cursor-pointer'
+                } relative overflow-hidden h-full`}
+            >
                 {/* Coming Soon Overlay */}
                 {isComingSoon && (
-                    <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
-                        <span className="text-white text-sm font-bold tracking-wide drop-shadow-lg select-none">
-                            Coming Soon
+                    <div className="absolute inset-x-0 bottom-0 top-1/2 z-30 flex items-center justify-center bg-black/60 backdrop-blur-[2px]">
+                        <span className="text-white text-[8px] font-black uppercase tracking-widest px-2 py-0.5 bg-white/10 rounded-full border border-white/10">
+                            Planned
                         </span>
                     </div>
                 )}
                 
-                <div className="absolute top-0 right-0 w-16 h-16 bg-pink-500/5 blur-xl rounded-full -mr-8 -mt-8 group-hover:bg-blue-500/10 transition-colors" />
-
-                <div className="w-full aspect-[16/10] mac-browser-frame mb-4 group/imgContainer relative z-10 border-white/10">
-                    {/* Mac Dots Overlay */}
-                    <div className="mac-browser-dots">
-                        <div className="mac-browser-dot mac-dot-red" />
-                        <div className="mac-browser-dot mac-dot-yellow" />
-                        <div className="mac-browser-dot mac-dot-green" />
-                    </div>
-                    {/* Play Button Overlay - Only for non-coming-soon courses */}
-                    {!isComingSoon && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-90 group-hover:scale-100">
-                            <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-xl">
-                                <div className="w-0 h-0 border-t-[4px] border-t-transparent border-l-[7px] border-l-white border-b-[4px] border-b-transparent ml-0.5" />
-                            </div>
-                        </div>
-                    )}
+                <div className="w-full aspect-[4/3] rounded-xl overflow-hidden mb-3 relative z-10 border border-white/5 bg-slate-900">
                     <img
                         src={course.image}
                         alt={course.title}
-                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100"
+                        className={`w-full h-full object-cover ${isComingSoon ? 'grayscale opacity-40' : 'opacity-80'}`}
                     />
                 </div>
 
-                <div className="flex items-center gap-2 mb-2 relative z-10">
-                    <h3 className={`text-sm font-black uppercase tracking-tight transition-colors ${
-                        isComingSoon ? 'text-white/60' : 'text-white group-hover:text-white'
+                <div className="flex-grow">
+                    <h3 className={`text-[11px] font-black uppercase tracking-tight leading-none mb-2 ${
+                        isComingSoon ? 'text-slate-500' : 'text-white'
                     }`}>{course.title}</h3>
-                </div>
-                
-                <p className="text-slate-400 text-xs font-medium leading-relaxed mb-4 line-clamp-2 relative z-10">
-                    {course.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1 mb-4 relative z-10">
-                    {course.tags.slice(0, 2).map(tag => (
-                        <span key={tag} className="px-2 py-0.5 bg-white/5 rounded-lg text-[6px] font-black text-slate-400 uppercase tracking-widest border border-white/5">
-                            {tag}
-                        </span>
-                    ))}
+                    
+                    <p className="text-slate-500 text-[9px] font-medium leading-tight line-clamp-2">
+                        {course.description}
+                    </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-auto relative z-10">
-                    <button className={`text-[8px] font-black uppercase tracking-widest transition-colors ${
-                        isComingSoon ? 'text-white/40 cursor-not-allowed' : 'text-slate-400 group-hover:text-white cursor-pointer'
-                    }`}>
-                        {isComingSoon ? 'Coming Soon' : 'Select TRACK →'}
-                    </button>
-                    <span className="text-[7px] font-bold text-white uppercase tracking-widest">{course.duration}</span>
+                <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-3 relative z-10">
+                    <span className="text-[7px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white">
+                        {isComingSoon ? 'BETA' : 'VIEW →'}
+                    </span>
+                    <span className="text-[7px] font-bold text-slate-600 uppercase tracking-widest">{course.duration}</span>
                 </div>
             </div>
         );
@@ -313,77 +290,74 @@ const OnlineProgram = () => {
 
     if (isMobile) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+            <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
                 <PremiumNavbar variant="dark" />
                 
                 {/* Background Decorative Mesh - Mobile */}
-                <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-pink-500/5 rounded-full blur-[80px] -mr-32 -mt-32" />
-                    <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-amber-500/3 rounded-full blur-[70px] -ml-24 -mb-24" />
+                <div className="fixed inset-0 pointer-events-none opacity-20 z-0">
+                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[80px] -mr-32 -mt-32" />
+                    <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-indigo-500/5 rounded-full blur-[70px] -ml-24 -mb-24" />
                 </div>
 
                 <div className="relative z-10">
                     {/* Academic Hub Hero - Mobile */}
-                    <div id="explore-programs" className="max-w-[95%] mx-auto px-3 pt-24 pb-12">
+                    <div id="explore-programs" className="px-6 pt-24 pb-12">
                         <div className="flex flex-col items-center text-center mb-12">
-                            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-pink-500/10 border border-orange-500/20 text-white text-[8px] font-bold uppercase tracking-[0.2em] mb-4">
-                                <Globe size={8} />
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[8px] font-black uppercase tracking-[0.2em] mb-4">
+                                <Globe size={10} />
                                 <span>Global Specializations</span>
                             </div>
-                            <h2 className="text-2xl font-black text-white tracking-tighter leading-[0.9] uppercase mb-4">
-                                Academic <br/><span className="text-white">Hub</span>
+                            <h2 className="text-4xl font-black text-white tracking-tighter leading-[0.9] uppercase mb-4">
+                                Academic <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Hub</span>
                             </h2>
-                            <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs">
-                                Deep-tech specialization tracks for industrial learning.
+                            <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-[240px]">
+                                Deep-tech specialization tracks architected for high-intensity industrial learning.
                             </p>
                         </div>
 
-                        {/* Stats - Mobile */}
-                        <div className="flex justify-center gap-3 mb-8">
-                            <div className="p-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
-                                <div className="text-lg font-black text-white">12+</div>
-                                <div className="text-[6px] font-bold text-slate-500 uppercase tracking-widest">Modules</div>
-                            </div>
-                            <div className="p-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
-                                <div className="text-lg font-black text-white">100%</div>
-                                <div className="text-[6px] font-bold text-slate-500 uppercase tracking-widest">Deployment</div>
-                            </div>
+                        {/* Courses Grid - Mobile 2 Columns */}
+                        <div className="grid grid-cols-2 gap-4 mb-16">
+                            {FALLBACK_COURSES.length > 0 ? (
+                                FALLBACK_COURSES.map(course => (
+                                    <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
+                                ))
+                            ) : (
+                                <div className="col-span-2 py-16 bg-white/[0.02] border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center text-center">
+                                    <Rocket size={24} className="text-white/20 mb-3" />
+                                    <h4 className="text-sm font-black text-white uppercase tracking-tighter">Tracks In Alpha</h4>
+                                    <p className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] mt-2">Calibrating curriculum.</p>
+                                </div>
+                            )}
                         </div>
 
-                        {/* Courses Grid - Mobile Horizontal Scrolling */}
-                        <div className="mb-12">
-                            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
-                                {FALLBACK_COURSES.length > 0 ? (
-                                    FALLBACK_COURSES.map(course => (
-                                        <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
-                                    ))
-                                ) : (
-                                    <div className="flex-shrink-0 w-64 py-16 bg-black border border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center text-center">
-                                        <Rocket size={24} className="text-white/20 mb-3" />
-                                        <h4 className="text-sm font-black text-white uppercase tracking-tighter">Tracks In Alpha</h4>
-                                        <p className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-2">Calibrating curriculum.</p>
-                                    </div>
-                                )}
+                        {/* Stats - Mobile */}
+                        <div className="grid grid-cols-2 gap-4 mb-20">
+                            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-md">
+                                <div className="text-2xl font-black text-white">12+</div>
+                                <div className="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">Industrial Modules</div>
+                            </div>
+                            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-md">
+                                <div className="text-2xl font-black text-white">100%</div>
+                                <div className="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">Deployment Rate</div>
                             </div>
                         </div>
                     </div>
 
                     {/* Final CTA - Mobile */}
-                    <div className="py-24 bg-gradient-to-br from-black via-slate-950 to-black relative overflow-hidden text-center border-t border-white/5">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[80px] rounded-full pointer-events-none" />
-                        <div className="relative z-10 max-w-[95%] mx-auto px-3">
-                            <h3 className="text-xl font-black text-white mb-6">Ready to Build Your Future?</h3>
+                    <div className="py-24 px-6 bg-gradient-to-b from-transparent to-slate-950/50 text-center border-t border-white/5">
+                        <div className="max-w-[280px] mx-auto">
+                            <h3 className="text-3xl font-black text-white mb-4 leading-none tracking-tighter uppercase">ELEVATE YOUR ENGINEERING STANDARD.</h3>
+                            <p className="text-xs text-slate-500 font-medium mb-8 leading-relaxed">Secure your enrollment for the next batch today.</p>
                             <button
                                 onClick={openLeadModal}
-                                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-sm rounded-xl shadow-[0_20px_40px_rgba(249,115,22,0.25)] hover:shadow-[0_25px_50px_rgba(249,115,22,0.35)] transition-all duration-300"
+                                className="w-full py-5 bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest rounded-xl shadow-[0_20px_40px_rgba(37,99,235,0.2)] active:scale-95 transition-transform flex items-center justify-center gap-3"
                             >
-                                Start Your Journey
+                                SECURE ENROLLMENT <ArrowRight size={16} />
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* Custom scrollbar styles */}
                 <style>{`
                     .scrollbar-hide::-webkit-scrollbar {
                         display: none;

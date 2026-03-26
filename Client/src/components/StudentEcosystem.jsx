@@ -98,44 +98,45 @@ const StudentEcosystem = () => {
 
     if (isMobile) {
         return (
-            <section id="infrastructure" className="bg-white py-16 px-6 relative overflow-hidden transition-all duration-300">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-slate-500/5 rounded-full blur-[80px] -ml-32 -mt-32" />
+            <section id="infrastructure" className="bg-slate-50 py-24 px-6 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -ml-40 -mt-40" />
                 
                 <div className="relative z-10">
-                    <div className="text-center mb-10">
-                        <div className="inline-flex items-center gap-2 bg-slate-100/80 text-slate-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                            Platform Ecosystem
+                    <div className="mb-14">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-3">
+                            Platform Infrastructure
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 leading-[0.85] uppercase tracking-tighter">
-                            Built for <span className="text-blue-600">Scale.</span>
+                        <h2 className="text-4xl font-black text-slate-900 leading-[0.85] uppercase tracking-tighter mb-4">
+                            Built for <br/> <span className="text-orange-500">Innovation</span>
                         </h2>
+                        <div className="w-12 h-1 bg-blue-600 rounded-full" />
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {FEATURES.map((feature, index) => (
                             <div 
                                 key={index}
                                 onClick={() => setSelectedFeature(feature)}
-                                className="bg-slate-50/50 border border-slate-100 p-3.5 rounded-[2rem] flex items-center gap-4 active:scale-95 transition-transform"
+                                className="group bg-white border border-slate-200 p-4 rounded-[2.5rem] flex items-center gap-5 active:scale-[0.98] transition-all shadow-sm"
                             >
-                                <div className="w-14 h-14 shrink-0 rounded-[1.2rem] overflow-hidden border border-white relative shadow-sm">
-                                    <img src={feature.image} className="w-full h-full object-cover opacity-80" alt="" />
-                                    <div className="absolute inset-0 bg-slate-900/10 flex items-center justify-center text-white text-base">
+                                <div className="w-16 h-16 shrink-0 rounded-2xl overflow-hidden bg-slate-100 relative border border-slate-100 shadow-inner">
+                                    <img src={feature.image} className="w-full h-full object-cover grayscale-[0.2]" alt="" />
+                                    <div className="absolute inset-0 bg-slate-950/20 flex items-center justify-center text-white text-lg drop-shadow-md">
                                         {feature.icon}
                                     </div>
                                 </div>
                                 
                                 <div className="flex-1 min-w-0">
-                                    <div className="text-[8px] font-black uppercase tracking-widest text-blue-600 mb-0.5 opacity-80">
+                                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1 opacity-80 leading-none">
                                         {feature.miniTitle}
                                     </div>
-                                    <h3 className="text-[13px] font-black uppercase tracking-tight text-slate-900 leading-none truncate">
+                                    <h3 className="text-[15px] font-black uppercase tracking-tight text-slate-900 leading-tight">
                                         {feature.title}
                                     </h3>
                                 </div>
                                 
-                                <div className="w-8 h-8 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-400 shrink-0">
-                                    <FaArrowRight size={9} />
+                                <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 shrink-0">
+                                    <FaArrowRight size={12} />
                                 </div>
                             </div>
                         ))}

@@ -155,87 +155,60 @@ const TechStackStats = () => {
 
     if (isMobile) {
         return (
-            <section className="bg-[#FDFCFB] pt-20 pb-16 overflow-hidden">
-                {/* Mobile Header */}
-                <div className="px-6 mb-12">
-                    <div className="text-center">
-                        <div className="inline-flex items-center gap-2 bg-orange-500/10 text-[#F97316] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-500/20">
-                            <Terminal size={14} />
-                            Skills for the Future
-                        </div>
-                        <h2 className="text-3xl font-black text-slate-900 mb-4 leading-tight">
-                            Cutting-Edge <br/>
-                            <span className="text-[#F97316]">Technologies</span> You Will Learn
+            <section className="py-20 bg-slate-50 relative w-full overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
+                
+                <div className="max-w-[1440px] mx-auto px-6 relative z-10">
+                    <div className="mb-12">
+                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-none uppercase mb-2">
+                             Full-Stack <br/>
+                             <span className="text-orange-500">Tech Ecosystem</span>
                         </h2>
-                        <p className="text-slate-500 text-sm font-medium">
-                            From AI & Robotics to Full-Stack Development
-                        </p>
+                        <div className="w-16 h-1.5 bg-blue-600 rounded-full" />
                     </div>
-                </div>
 
-                {/* Tech Categories Grid */}
-                <div className="px-5 space-y-6">
-                    {TECH_CATEGORIES.map((category, categoryIndex) => {
-                        const CategoryIcon = category.icon;
-                        return (
-                            <div
-                                key={category.title}
-                                className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100"
-                            >
-                                {/* Category Header */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className={`w-12 h-12 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
-                                        <CategoryIcon className="text-white" size={20} />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-black text-slate-900 text-base uppercase tracking-tight">{category.title}</h3>
-                                        <div className="w-12 h-1 bg-[#F97316] rounded-full mt-1 opacity-50" />
-                                    </div>
-                                </div>
-
-                                {/* Technologies Grid */}
-                                <div className="grid grid-cols-3 gap-3">
-                                    {category.technologies.map((tech) => (
-                                        <div
-                                            key={tech.name}
-                                            className="flex flex-col items-center gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100/50"
-                                        >
-                                            <div 
-                                                className="w-10 h-10 rounded-xl flex items-center justify-center bg-white shadow-sm"
-                                            >
-                                                <tech.icon 
-                                                    size={22} 
-                                                    style={{ color: tech.color }}
-                                                />
-                                            </div>
-                                            <span className="text-[9px] font-black text-slate-600 text-center uppercase tracking-tight">
-                                                {tech.name}
-                                            </span>
+                    <div className="space-y-8">
+                        {TECH_CATEGORIES.map((category) => {
+                            const CategoryIcon = category.icon;
+                            return (
+                                <div key={category.title} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/50">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
+                                            <CategoryIcon className="text-white" size={18} />
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                                        <h3 className="font-black text-slate-900 text-sm uppercase tracking-tight">{category.title}</h3>
+                                    </div>
 
-                {/* Bottom CTA */}
-                <div className="px-6 mt-16">
-                    <div className="bg-[#0F172A] rounded-[2.5rem] p-8 text-center relative overflow-hidden">
+                                    <div className="grid grid-cols-4 gap-3">
+                                        {category.technologies.map((tech) => (
+                                            <div key={tech.name} className="flex flex-col items-center gap-2">
+                                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-50 border border-slate-100 shadow-sm">
+                                                    <tech.icon size={24} style={{ color: tech.color }} />
+                                                </div>
+                                                <span className="text-[7px] font-black text-slate-400 text-center uppercase tracking-widest px-1">
+                                                    {tech.name}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="mt-16 bg-slate-900 rounded-[2.5rem] p-8 text-center relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
-                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl" />
-                        
                         <h3 className="font-black text-xl mb-3 text-white uppercase tracking-tight">
-                            Ready to Master <span className="text-[#F97316]">The Future?</span>
+                            Master <span className="text-[#F97316]">The Stack</span>
                         </h3>
-                        <p className="text-slate-400 text-sm mb-6 font-medium">
-                            Join our programs and build real-world products using these tools.
+                        <p className="text-slate-400 text-xs mb-6 font-medium leading-relaxed">
+                            Professional infrastructure & real-world workflows that schools don't teach.
                         </p>
                         <button 
                             onClick={handleExplorePrograms}
-                            className="w-full bg-[#F97316] text-white py-4 rounded-2xl font-black text-base uppercase tracking-widest shadow-lg shadow-orange-500/20 active:scale-95 transition-transform"
+                            className="w-full bg-[#F97316] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-orange-500/20 active:scale-95 transition-all"
                         >
-                            Explore Programs
+                            Select Track →
                         </button>
                     </div>
                 </div>

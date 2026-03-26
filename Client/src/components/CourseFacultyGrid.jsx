@@ -189,7 +189,6 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                 <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors
                     ${isDark ? 'bg-amber-600/5' : 'bg-indigo-50'}`} />
             </div>
-
             <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
                 <div className="flex flex-col items-center justify-center mt-16 mb-12 text-center sm:mt-20 md:mt-16">
                     <div className="w-full">
@@ -201,9 +200,9 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                     </div>
                 </div>
 
-                {/* Static 3-Column Grid for Faculty */}
-                <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {/* Static grid for Faculty */}
+                <div className="max-w-6xl mx-auto px-6 relative z-10 w-full mb-20">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {filteredLeaders.slice(0, 3).map((mentor, index) => (
                             <CourseFacultyCard 
                                 key={index}
@@ -224,70 +223,64 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl"
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl"
                         onClick={() => setSelectedMentor(null)}
                     >
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                            className="flex flex-col md:flex-row h-full max-h-[90vh] w-full max-w-6xl bg-white dark:bg-[#0A0A0A] rounded-3xl overflow-hidden shadow-2xl"
+                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 400 }}
+                            className={`flex flex-col md:flex-row h-full max-h-[90vh] md:max-h-[70vh] w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl relative ${isDark ? 'bg-slate-950 border border-white/10' : 'bg-white'}`}
                             onClick={e => e.stopPropagation()}
                         >
-                            <div className="md:w-[42%] aspect-square md:h-auto max-h-[500px] relative overflow-hidden">
+                            <button
+                                onClick={() => setSelectedMentor(null)}
+                                className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            <div className="md:w-1/2 h-64 md:h-full relative overflow-hidden bg-slate-900">
                                 <img
                                     src={selectedMentor.image}
                                     alt={selectedMentor.name}
                                     className="absolute inset-0 w-full h-full object-cover"
                                 />
-                                <div className={`absolute inset-0 z-10 ${isDark ? 'bg-gradient-to-t from-black via-transparent' : 'bg-gradient-to-t from-slate-950 via-transparent'} to-transparent`} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                             </div>
 
-                            <div className={`md:w-[58%] p-12 lg:p-20 relative flex flex-col justify-center ${isDark ? 'bg-[#0A0A0A]' : 'bg-white'}`}>
-                                <button
-                                    onClick={() => setSelectedMentor(null)}
-                                    className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
-                                >
-                                    <X size={20} className={isDark ? 'text-slate-400' : 'text-slate-600'} />
-                                </button>
-
-                                <h2 className={`text-3xl md:text-4xl font-black mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                    {selectedMentor.name}
-                                </h2>
-                                <p className={`text-lg font-semibold mb-6 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
-                                    {selectedMentor.role}
-                                </p>
+                            <div className={`md:w-1/2 p-8 md:p-12 lg:p-16 overflow-y-auto ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                <div className="mb-8">
+                                    <h2 className="text-3xl md:text-4xl font-black mb-2 uppercase tracking-tight">
+                                        {selectedMentor.name}
+                                    </h2>
+                                    <p className="text-sm font-black uppercase tracking-[0.2em] text-blue-500">
+                                        {selectedMentor.role}
+                                    </p>
+                                </div>
                                 
-                                <p className={`font-medium text-lg leading-relaxed mb-10 ${isDark ? 'text-slate-300' : 'text-slate-400'}`}>
+                                <p className={`text-sm md:text-base leading-relaxed mb-8 font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                                     {selectedMentor.bio}
                                 </p>
 
-                                <div className="flex flex-wrap gap-4 mb-12">
+                                <div className="flex flex-wrap gap-4 mb-10">
                                     {selectedMentor.tags.map(tag => (
-                                        <span key={tag} className={`text-[13px] font-bold tracking-tight uppercase ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                                        <span key={tag} className="text-[10px] font-black uppercase tracking-widest text-slate-500">
                                             #{tag}
                                         </span>
                                     ))}
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="flex flex-col gap-3">
                                     <a
                                         href={selectedMentor.linkedin}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-sm tracking-widest uppercase shadow-xl transition-all
-                                            ${isDark ? 'bg-blue-500 text-white hover:bg-white hover:text-blue-500' : 'bg-slate-900 text-white hover:bg-black'}`}
+                                        className="w-full flex items-center justify-center gap-3 py-4 bg-blue-600 text-white rounded-xl font-black text-xs uppercase tracking-widest active:scale-95 transition-transform"
                                     >
-                                        <FaLinkedinIn size={14} /> Profile
+                                        <FaLinkedinIn size={14} /> View Profile
                                     </a>
-                                    <button
-                                        onClick={() => setSelectedMentor(null)}
-                                        className={`flex-1 flex items-center justify-center py-5 rounded-2xl font-bold text-sm tracking-widest uppercase transition-all
-                                            ${isDark ? 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-                                    >
-                                        Back
-                                    </button>
                                 </div>
                             </div>
                         </motion.div>

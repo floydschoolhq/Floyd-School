@@ -40,23 +40,20 @@ const CourseOfferings = ({ variant = 'dark' }) => {
 
     if (isMobile) {
         const mobileFeatures = [
-            { icon: "01", title: "Live Mentor Guidance", desc: "Every session has a real mentor guiding you — answering questions and reviewing code." },
-            { icon: "02", title: "Weekly Doubt Sessions", desc: "Dedicated sessions just for clearing doubts. No question goes unanswered." },
+            { icon: "01", title: "Live Mentor Guidance", desc: "Every session has a real mentor guiding you — answering questions, reviewing code, and making sure no one falls behind." },
+            { icon: "02", title: "Weekly Doubt Sessions", desc: "Every week there is a dedicated session just for clearing doubts. Bring anything you are stuck on and leave with clarity. Our mentors ensure no question goes unanswered." },
             { icon: "03", title: "24/7 Doubt Assistant", desc: "Stuck at midnight? The assistant is right there — no waiting till next class." },
-            { icon: "04", title: "Growth Associate", desc: "A personal associate tracks your journey and ensures you never fall behind." },
-            { icon: "05", title: "Live Dashboard", desc: "A live view of progress for both students and parents to stay informed." },
-            { icon: "06", title: "Class Recordings", desc: "Every session is recorded and available for you to watch anytime." },
+            { icon: "04", title: "Growth Associate", desc: "Someone who tracks your journey, checks in regularly and ensures you never fall behind." },
+            { icon: "05", title: "Live Dashboard", desc: "A live view of exactly where you are — for both students and parents to stay informed." },
+            { icon: "06", title: "Class Recordings", desc: "Missed a class or want to revisit a concept? Every session is recorded and available for you to watch anytime." },
         ];
 
         return (
             <section className={`py-16 px-6 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
                 <div className="relative z-10">
                     <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                            Included Support
-                        </div>
                         <h2 className={`text-4xl font-black mb-4 tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            We've Got Your <span className="text-blue-500">Back.</span>
+                            We've Got Your <span className="text-blue-500">Back.</span> Always.
                         </h2>
                     </div>
 

@@ -64,42 +64,43 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" ref={containerRef} className="relative min-h-[85vh] flex flex-col items-center justify-center pt-20 pb-12 overflow-hidden bg-slate-50">
-                {/* Premium Background Effects */}
+            <section id="home" ref={containerRef} className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden bg-white">
+                {/* Visual Accents */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] right-[-10%] w-[350px] h-[350px] bg-orange-500/[0.08] rounded-full blur-[100px]" />
-                    <div className="absolute bottom-[-10%] left-[-15%] w-[300px] h-[300px] bg-blue-500/[0.05] rounded-full blur-[80px]" />
+                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/[0.03] rounded-full blur-[100px] -mr-48 -mt-48" />
+                    <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/[0.03] rounded-full blur-[80px] -ml-32 -mb-32" />
                 </div>
 
                 <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center">
-                    <div className="flex flex-col items-center justify-center text-center space-y-6 w-full">
-                        <div className="inline-flex items-center gap-2 bg-blue-500/5 text-blue-600 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest mb-2 border border-blue-500/10">
-                            Engineering the Future
+                    <div className="w-full space-y-2 mb-8">
+                         <div className="flex items-center gap-2">
+                            <div className="h-px w-8 bg-blue-600" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">The New Standard</span>
                         </div>
+                        <h2 className="text-[14px] font-bold text-slate-400 tracking-tight leading-none uppercase">
+                            Schools teach concepts. <span className="text-slate-900">We teach you to build.</span>
+                        </h2>
+                    </div>
+
+                    <div className="w-full mb-12">
+                        <h1 className="text-[16vw] font-black leading-[0.8] text-slate-950 uppercase tracking-tighter">
+                            <span className="block mb-2">Make</span>
+                            <span className="block mb-2 text-orange-500">Sure</span>
+                            <span className="block mb-2">Your Child</span>
+                            <span className="block text-blue-600">Is Ready</span>
+                        </h1>
+                    </div>
+
+                    <div className="w-full space-y-12 flex flex-col items-center">
+                        <button
+                            onClick={handleEnrollNow}
+                            className="w-full bg-slate-950 text-white font-black text-lg py-5 rounded-2xl shadow-2xl shadow-slate-900/20 flex items-center justify-center gap-4 active:scale-95 transition-all"
+                        >
+                            Get Started <ArrowRight size={20} className="text-orange-500" />
+                        </button>
                         
-                        <p className="text-[13px] font-bold text-slate-500 tracking-tight leading-none uppercase">
-                            Tomorrow demands <span className="text-blue-600 font-black">New Skills.</span>
-                        </p>
-
-                        <div className="w-full">
-                            <h1 className="text-[38px] font-black leading-[0.85] text-slate-900 uppercase tracking-tighter">
-                                <span className="block mb-1">Make Sure</span>
-                                <span className="block mb-1">Your Child</span>
-                                <span className="text-orange-500 text-[48px] block mt-2">Is Ready</span>
-                            </h1>
-                        </div>
-
-                        <div className="w-full space-y-8 flex flex-col items-center pt-4">
-                            <button
-                                onClick={handleEnrollNow}
-                                className="w-full bg-slate-900 text-white font-black text-lg py-5 rounded-[2rem] shadow-2xl shadow-slate-900/20 flex items-center justify-center gap-3 active:scale-95 transition-transform"
-                            >
-                                Enroll Now <ArrowRight size={20} className="text-orange-500" />
-                            </button>
-                            
-                            <div className="pt-2">
-                                <ScrollingAvatars isMobile={true} />
-                            </div>
+                        <div className="opacity-80 scale-90">
+                            <ScrollingAvatars isMobile={true} />
                         </div>
                     </div>
                 </div>

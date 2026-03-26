@@ -346,9 +346,10 @@ const CourseReviews = ({ courseId, variant }) => {
     const handleNext = () => setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
 
     const active = AI_REVIEWS[activeIndex];
+    const isMobile = window.innerWidth < 768;
 
     return (
-        <section className={`py-24 md:py-32 relative overflow-hidden transition-all duration-500
+        <section className={`py-16 md:py-32 relative overflow-hidden transition-all duration-500
             ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5' : 'bg-white border-t border-slate-100'}`}>
             {/* Background mesh */}
             <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`}
@@ -360,9 +361,9 @@ const CourseReviews = ({ courseId, variant }) => {
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-12">
                     <motion.h2 
-                        className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter"
+                        className="text-3xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -370,89 +371,131 @@ const CourseReviews = ({ courseId, variant }) => {
                     >
                         Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">Reviews</span>
                     </motion.h2>
-                    <p className={`text-lg max-w-xl mx-auto font-medium transition-colors
-                        ${isDark ? 'text-slate-400' : 'text-slate-50'}`}>
+                    <p className={`text-sm md:text-lg max-w-xl mx-auto font-medium transition-colors
+                        ${isDark ? 'text-slate-500' : 'text-slate-50'}`}>
                         Real stories from students who mastered AI & Machine Learning with us.
                     </p>
 
                     {/* Aggregate stats */}
-                    <div className="flex items-center justify-center gap-8 mt-8">
+                    <div className="flex items-center justify-center gap-6 md:gap-8 mt-8">
                         <div className="text-center">
-                            <div className={`text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>4.9</div>
+                            <div className={`text-2xl md:text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>4.9</div>
                             <div className="flex justify-center mt-1">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
+                                {[...Array(3)].map((_, i) => (
+                                    <Star key={i} size={10} className="text-amber-400 fill-amber-400" />
                                 ))}
                             </div>
-                            <div className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Avg Rating</div>
+                            <div className={`text-[8px] md:text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Avg Rating</div>
                         </div>
-                        <div className={`w-px h-12 transition-colors ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
+                        <div className={`w-px h-10 md:h-12 transition-colors ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
                         <div className="text-center">
-                            <div className={`text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>200+</div>
-                            <div className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Reviews</div>
+                            <div className={`text-2xl md:text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>200+</div>
+                            <div className={`text-[8px] md:text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Reviews</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Main layout: Featured card + sidebar */}
-                <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
-                    {/* Featured review */}
-                    <div>
-                        <AnimatePresence mode="wait">
-                            <FeaturedCard key={active.id} review={active} variant={variant} />
-                        </AnimatePresence>
- 
-                        {/* Navigation controls */}
-                        <div className="flex items-center justify-between mt-6">
-                            <div className="flex gap-2">
-                                {AI_REVIEWS.map((_, i) => (
+                {isMobile ? (
+                    <div className="flex flex-col gap-10">
+                        <div>
+                            <AnimatePresence mode="wait">
+                                <FeaturedCard key={active.id} review={active} variant={variant} />
+                            </AnimatePresence>
+                            
+                            <div className="flex items-center justify-between mt-6">
+                                <div className="flex gap-1.5">
+                                    {AI_REVIEWS.slice(0, 5).map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setActiveIndex(i)}
+                                            className={`transition-all duration-300 rounded-full h-1.5 ${
+                                                i === activeIndex
+                                                    ? "w-6 bg-blue-500"
+                                                    : "w-1.5 bg-white/10"
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={handlePrev} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400"><ChevronLeft size={18} /></button>
+                                    <button onClick={handleNext} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400"><ChevronRight size={18} /></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-600 px-1 mb-2">More Testimonials</p>
+                            {AI_REVIEWS.slice(0, 4).map((review, i) => (
+                                <MiniCard
+                                    key={review.id}
+                                    review={review}
+                                    isActive={i === activeIndex}
+                                    onClick={() => setActiveIndex(i)}
+                                    variant={variant}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
+                        {/* Featured review */}
+                        <div>
+                            <AnimatePresence mode="wait">
+                                <FeaturedCard key={active.id} review={active} variant={variant} />
+                            </AnimatePresence>
+    
+                            {/* Navigation controls */}
+                            <div className="flex items-center justify-between mt-6">
+                                <div className="flex gap-2">
+                                    {AI_REVIEWS.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setActiveIndex(i)}
+                                            className={`transition-all duration-300 rounded-full ${
+                                                i === activeIndex
+                                                    ? isDark ? "w-6 h-2 bg-orange-500" : "w-6 h-2 bg-blue-600"
+                                                    : isDark ? "w-2 h-2 bg-white/10 hover:bg-white/20" : "w-2 h-2 bg-slate-200 hover:bg-slate-400"
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="flex gap-3">
                                     <button
-                                        key={i}
-                                        onClick={() => setActiveIndex(i)}
-                                        className={`transition-all duration-300 rounded-full ${
-                                            i === activeIndex
-                                                ? isDark ? "w-6 h-2 bg-orange-500" : "w-6 h-2 bg-blue-600"
-                                                : isDark ? "w-2 h-2 bg-white/10 hover:bg-white/20" : "w-2 h-2 bg-slate-200 hover:bg-slate-400"
-                                        }`}
-                                    />
-                                ))}
-                            </div>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={handlePrev}
-                                    className={`w-10 h-10 rounded-2xl border transition-all group flex items-center justify-center
-                                        ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
-                                >
-                                    <ChevronLeft size={18} className={`transition-colors ${isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-slate-900'}`} />
-                                </button>
-                                <button
-                                    onClick={handleNext}
-                                    className={`w-10 h-10 rounded-2xl border transition-all group flex items-center justify-center
-                                        ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
-                                >
-                                    <ChevronRight size={18} className={`transition-colors ${isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-slate-900'}`} />
-                                </button>
+                                        onClick={handlePrev}
+                                        className={`w-10 h-10 rounded-2xl border transition-all group flex items-center justify-center
+                                            ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                    >
+                                        <ChevronLeft size={18} className={`transition-colors ${isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-slate-900'}`} />
+                                    </button>
+                                    <button
+                                        onClick={handleNext}
+                                        className={`w-10 h-10 rounded-2xl border transition-all group flex items-center justify-center
+                                            ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                    >
+                                        <ChevronRight size={18} className={`transition-colors ${isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-slate-900'}`} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Sidebar – all reviewers list */}
-                    <div className="flex flex-col gap-3 lg:max-h-[600px] lg:overflow-y-auto custom-scroll pr-1">
-                        <p className={`text-[10px] font-black uppercase tracking-[0.25em] px-1 mb-1 transition-colors
-                            ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
-                            Featured Reviews
-                        </p>
-                        {AI_REVIEWS.slice(0, 5).map((review, i) => (
-                            <MiniCard
-                                key={review.id}
-                                review={review}
-                                isActive={i === activeIndex}
-                                onClick={() => setActiveIndex(i)}
-                                variant={variant}
-                            />
-                        ))}
+                        {/* Sidebar – all reviewers list */}
+                        <div className="flex flex-col gap-3 lg:max-h-[600px] lg:overflow-y-auto custom-scroll pr-1">
+                            <p className={`text-[10px] font-black uppercase tracking-[0.25em] px-1 mb-1 transition-colors
+                                ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
+                                Featured Reviews
+                            </p>
+                            {AI_REVIEWS.slice(0, 5).map((review, i) => (
+                                <MiniCard
+                                    key={review.id}
+                                    review={review}
+                                    isActive={i === activeIndex}
+                                    onClick={() => setActiveIndex(i)}
+                                    variant={variant}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <style>{`

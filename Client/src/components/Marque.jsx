@@ -39,12 +39,9 @@ const Marque = () => {
     return (
       <div className="w-full bg-white py-12 px-6 border-b border-slate-50 relative z-10 overflow-hidden">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-slate-50 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-2">
-            Professional Stacks
-          </div>
-          <h2 className="text-xl font-black text-slate-800 uppercase tracking-tighter">
-            Technologies <span className="text-blue-600">We Teach.</span>
-          </h2>
+          <p className="text-[#2563EB] font-bold uppercase tracking-[0.4em] text-[10px] opacity-60">
+            Technologies We Master
+          </p>
         </div>
 
         <div className="grid grid-cols-4 gap-y-10 gap-x-4 opacity-40">

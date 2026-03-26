@@ -84,61 +84,63 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className={`relative overflow-hidden ${
-                isDark ? 'bg-slate-950 px-6 py-16' : 'bg-slate-50 px-6 py-16'
+            <section className={`relative overflow-hidden py-24 px-6 ${
+                isDark ? 'bg-slate-950' : 'bg-slate-50'
             }`}>
-                <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-[100px] -mr-32 -mt-32" />
+                <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -mr-40 -mt-40" />
                 
                 <div className="relative z-10">
-                    <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                            <Headphones size={12} />
-                            Support
+                    <div className="mb-14">
+                        <div className={`text-[10px] font-black uppercase tracking-[0.2em] mb-3 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
+                            Support Pipeline
                         </div>
-                        <h2 className={`text-3xl font-black uppercase tracking-tighter leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Need <span className="text-orange-500">Help?</span>
+                        <h2 className={`text-4xl font-black uppercase tracking-tighter leading-[0.85] mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Expert <br/> <span className="text-orange-500">Guidance</span>
                         </h2>
-                        <p className={`text-[12px] font-medium leading-tight max-w-[240px] mx-auto ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
-                            Elite technical support for your engineering journey.
-                        </p>
+                        <div className="w-12 h-1 bg-blue-600 rounded-full" />
                     </div>
 
-                    <div className="space-y-3 mb-10">
+                    <div className="space-y-4 mb-10">
                         {contactMethods.map((method, index) => (
                             <div 
                                 key={index} 
-                                className={`p-5 rounded-2xl border transition-all ${
+                                className={`p-6 rounded-[2rem] border transition-all duration-300 active:scale-[0.98] ${
                                     isDark ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-200'
-                                }`}
-                                onClick={() => index === 0 && setIsMessageFormOpen(true)}
+                                } shadow-sm`}
+                                onClick={() => index === 0 ? setIsMessageFormOpen(true) : window.location.href = index === 1 ? `tel:${method.action}` : `mailto:${method.action}`}
                             >
-                                <div className="flex items-center gap-4">
-                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                                        isDark ? 'bg-slate-800' : 'bg-slate-100'
+                                <div className="flex items-center gap-5">
+                                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                                        isDark ? 'bg-slate-800' : 'bg-slate-50 border border-slate-100'
                                     }`}>
-                                        <method.icon size={20} className={isDark ? 'text-blue-500' : 'text-blue-600'} />
+                                        <method.icon size={24} className={isDark ? 'text-blue-500' : 'text-blue-600'} />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <h3 className={`text-[12px] font-black uppercase tracking-tight mb-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>{method.title}</h3>
-                                        <p className="text-slate-500 text-[10px] font-medium truncate">{method.action}</p>
+                                        <h3 className={`text-[14px] font-black uppercase tracking-tight mb-1 ${isDark ? 'text-white' : 'text-slate-950'}`}>{method.title}</h3>
+                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest opacity-60 leading-none">{method.action}</p>
                                     </div>
-                                    <ArrowRight size={14} className="text-slate-700 shrink-0" />
+                                    <ArrowRight size={18} className="text-slate-300 shrink-0" />
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-3xl p-6 text-white shadow-xl shadow-orange-500/10">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Clock size={16} />
-                            <h3 className="text-sm font-black uppercase tracking-tight">24h Turnaround</h3>
+                    <div className={`${isDark ? 'bg-slate-900' : 'bg-white'} border ${isDark ? 'border-white/5' : 'border-slate-200'} rounded-[2.5rem] p-8 text-center relative overflow-hidden shadow-xl shadow-black/5`}>
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center">
+                                <Clock size={24} className="text-orange-500" />
+                            </div>
+                            <div>
+                                <h3 className={`text-lg font-black uppercase tracking-tight mb-2 ${isDark ? 'text-white' : 'text-slate-950'}`}>24h Support</h3>
+                                <p className="text-slate-500 text-xs font-medium leading-relaxed mb-8 px-4">Our engineering mentors are available around the clock to assist you.</p>
+                            </div>
+                            <button 
+                                onClick={() => navigate('/faq')}
+                                className="w-full bg-slate-950 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-black/20 active:scale-95 transition-all"
+                            >
+                                Browse FAQ →
+                            </button>
                         </div>
-                        <button 
-                            onClick={() => navigate('/faq')}
-                            className="w-full bg-white text-orange-600 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest"
-                        >
-                            Read FAQ
-                        </button>
                     </div>
                 </div>
 

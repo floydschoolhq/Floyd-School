@@ -90,36 +90,39 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     
     if (isMobile) {
         return (
-            <div className={`shrink-0 w-[260px] p-5 rounded-[1.8rem] transition-all relative overflow-hidden flex flex-col items-start text-left ${
+            <div className={`shrink-0 w-[280px] p-6 rounded-[2rem] transition-all relative overflow-hidden flex flex-col border ${
                 isDark 
-                    ? 'bg-slate-900/50 border border-white/5' 
-                    : `bg-white border border-slate-100 shadow-sm shadow-slate-200/50`
+                    ? 'bg-slate-900/60 border-white/5 shadow-xl shadow-black/20' 
+                    : 'bg-white border-slate-200 shadow-sm'
             }`}>
-                <div className="relative z-10 flex flex-col items-start w-full">
-                    <div className="flex items-center gap-2.5 mb-3">
-                        <div className={`w-10 h-10 rounded-xl overflow-hidden border transition-all ${
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl overflow-hidden border ${
                             isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
                         }`}>
                             <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="min-w-0">
-                            <h4 className={`text-[13px] font-black uppercase tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[8px] font-bold uppercase tracking-widest mt-1 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{review.role}</p>
+                            <h4 className={`text-[12px] font-black uppercase tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-950'}`}>{review.name}</h4>
+                            <p className={`text-[8px] font-bold uppercase tracking-[0.15em] mt-0.5 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{review.role}</p>
                         </div>
                     </div>
                     
-                    <p className={`text-[12px] leading-snug font-medium mb-3 line-clamp-3 ${
+                    <p className={`text-[13px] leading-relaxed font-medium mb-6 italic ${
                         isDark ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                         "{review.content}"
                     </p>
 
-                    <div className="mt-auto flex gap-1">
-                        {[...Array(5)].map((_, i) => (
-                            <div key={i} className={`w-1 h-1 rounded-full ${
-                                isDark ? 'bg-blue-500/40' : 'bg-slate-200'
-                            }`} />
-                        ))}
+                    <div className="mt-auto pt-4 border-t border-slate-100/10 flex items-center justify-between">
+                        <div className="flex gap-1">
+                            {[...Array(5)].map((_, i) => (
+                                <div key={i} className={`w-1.5 h-1.5 rounded-full ${
+                                    isDark ? (i < 4 ? 'bg-orange-500/60' : 'bg-slate-800') : (i < 4 ? 'bg-orange-500' : 'bg-slate-100')
+                                }`} />
+                            ))}
+                        </div>
+                        <Sparkles size={12} className={isDark ? "text-orange-500/40" : "text-orange-500/20"} />
                     </div>
                 </div>
             </div>

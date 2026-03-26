@@ -196,6 +196,118 @@ const CourseCurriculum = ({ variant = "light" }) => {
         setSelectedMonth(selectedMonth === monthIndex ? null : monthIndex);
     };
 
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+        return (
+            <div className="py-20 px-6">
+                {/* Header */}
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl font-extrabold tracking-tighter mb-6 leading-tight text-on-surface">
+                        Foundation of
+                        <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                            AI and Machine Learning
+                        </span>
+                    </h2>
+                    <p className="text-sm text-on-surface-variant mb-10 font-medium leading-relaxed">
+                        "The question isn't whether AI will shape your child's future. It's whether they'll build it — or just watch."
+                    </p>
+                    <button 
+                        onClick={handleSecureSpot}
+                        disabled={isSecuring}
+                        className="w-full bg-blue-600 text-white py-4 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-500/20 active:scale-95 transition-transform"
+                    >
+                        {isSecuring ? 'Processing...' : 'Secure Your Spot'}
+                    </button>
+                </div>
+
+                {/* RoadMap - Simplified for Mobile */}
+                <div className="mb-20">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                            <span className="material-symbols-outlined">map</span>
+                        </div>
+                        <h3 className="text-2xl font-black uppercase tracking-tight">The 90-Day Roadmap</h3>
+                    </div>
+
+                    <div className="space-y-10 border-l border-white/10 ml-4 pl-8 relative">
+                        {curriculumData.map((month, mIdx) => (
+                            <div key={mIdx} className="relative">
+                                {/* Month Pointer */}
+                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-slate-950 border-2 border-blue-500 z-10" />
+                                
+                                <div className="mb-6">
+                                    <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase {month.month}</span>
+                                    <h4 className="text-xl font-black uppercase tracking-tight text-white">{month.title}</h4>
+                                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{month.subtitle}</p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    {month.weeks.map((week, wIdx) => (
+                                        <div key={wIdx} className={`p-5 rounded-2xl border ${week.isSpecial ? 'bg-blue-600 border-blue-500 text-white' : 'bg-white/5 border-white/5'}`}>
+                                            <span className={`text-[9px] font-black uppercase tracking-widest mb-1 block ${week.isSpecial ? 'text-white/70' : 'text-blue-500'}`}>{week.week}</span>
+                                            <h5 className="text-sm font-black uppercase tracking-tight mb-2">{week.title}</h5>
+                                            <p className={`text-[11px] font-medium leading-relaxed ${week.isSpecial ? 'text-white/80' : 'text-slate-400'}`}>{week.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Admission Card */}
+                <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] text-center mb-20 relative overflow-hidden">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+                    <h3 className="text-2xl font-black uppercase tracking-tighter mb-4 relative z-10">Ready to build your child's AI future?</h3>
+                    <p className="text-slate-400 text-xs font-medium mb-8 leading-relaxed px-4">Limited seats per cohort to ensure personalized mentorship.</p>
+                    
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                        <div className="p-4 rounded-2xl bg-white/5">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Starts</span>
+                            <span className="text-xs font-black uppercase">15th April</span>
+                        </div>
+                        <div className="p-4 rounded-2xl bg-white/5">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Seats Left</span>
+                            <span className="text-xs font-black uppercase text-orange-500">{totalSeats - registeredCount} / {totalSeats}</span>
+                        </div>
+                    </div>
+
+                    <button 
+                        onClick={handleReserveAdmission}
+                        disabled={isEnrolling}
+                        className="w-full bg-white text-black py-4 rounded-xl font-black text-sm uppercase tracking-widest active:scale-95 transition-transform"
+                    >
+                        {isEnrolling ? 'Processing...' : 'Reserve Admission Now'}
+                    </button>
+                    <p className="mt-4 text-[9px] font-bold uppercase tracking-widest text-slate-500">Secure payment. Immediate Access.</p>
+                </div>
+
+                {/* Capstone */}
+                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-8 text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-16 -mt-16" />
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-4 opacity-70">Major Milestone</h3>
+                    <h2 className="text-3xl font-black uppercase tracking-tighter leading-none mb-4">The Capstone Project</h2>
+                    <h4 className="text-lg font-bold mb-6 italic opacity-90">Face Recognition Attendance System</h4>
+                    <p className="text-xs font-medium leading-relaxed mb-8 opacity-80">
+                        Students don't just "learn" about AI; they deploy a professional-grade biometric system using Python, OpenCV, and Flask.
+                    </p>
+                    <div className="space-y-4">
+                        {capstoneFeatures.map((f, i) => (
+                            <div key={i} className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-sm">{f.icon}</span>
+                                </div>
+                                <span className="text-[11px] font-black uppercase tracking-tight">{f.title}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div>
             {/* Header */}
