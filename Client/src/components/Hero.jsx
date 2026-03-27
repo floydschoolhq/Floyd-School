@@ -64,7 +64,7 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" className="relative min-h-[70vh] flex flex-col items-center justify-center pt-28 pb-12 overflow-hidden bg-white">
+            <section id="home" className="relative min-h-[70vh] flex flex-col items-center justify-center pt-48 pb-12 overflow-hidden bg-white">
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -mr-32 -mt-32" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -ml-32 -mb-32" />

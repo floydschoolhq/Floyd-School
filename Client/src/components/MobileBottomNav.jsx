@@ -42,8 +42,8 @@ const MobileBottomNav = () => {
     };
 
     return (
-        <div className="fixed bottom-6 left-6 right-6 z-[60] md:hidden">
-            <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-between">
+        <div className="fixed bottom-4 left-6 right-6 z-[60] md:hidden">
+            <div className="bg-slate-950/90 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-between">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeSection === item.id;
@@ -52,18 +52,13 @@ const MobileBottomNav = () => {
                         <button
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
-                            className="relative flex flex-col items-center gap-1 group"
+                            className="relative flex flex-col items-center group py-1"
                         >
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                                isActive ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500'
+                            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${
+                                isActive ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-white'
                             }`}>
-                                <Icon size={18} />
+                                <Icon size={16} />
                             </div>
-                            <span className={`text-[9px] font-black uppercase tracking-widest transition-opacity duration-300 ${
-                                isActive ? 'opacity-100 text-orange-500' : 'opacity-0'
-                            }`}>
-                                {item.label}
-                            </span>
                         </button>
                     );
                 })}
