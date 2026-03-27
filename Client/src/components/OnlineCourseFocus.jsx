@@ -40,16 +40,10 @@ const OnlineCourseFocus = ({ variant }) => {
                 <div className={`absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] -mr-40 -mt-40 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
                 
                 <div className="relative z-10 text-center">
-                    <div className="flex items-end justify-between mb-14">
-                        <div className="flex-1">
-                            <h2 className={`text-xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                OUR BATCHES
-                            </h2>
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
+                    <div className="mb-14 text-center">
+                        <h2 className={`text-xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            OUR BATCHES
+                        </h2>
                     </div>
 
                     <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
@@ -127,6 +121,13 @@ const OnlineCourseFocus = ({ variant }) => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                    
+                    <div className="flex justify-center mt-12">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to browse batches</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        </div>
                     </div>
                 </div>
 

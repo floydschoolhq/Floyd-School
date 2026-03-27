@@ -90,19 +90,13 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                 <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -mr-40 -mt-40" />
                 
                 <div className="relative z-10 text-center">
-                    <div className="flex items-end justify-between mb-12">
-                        <div className="flex-1 text-left">
-                            <h2 className={`text-xl font-extrabold uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                Need Help?
-                            </h2>
-                            <p className={`text-[11px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'} max-w-[80%]`}>
-                                Professional guidance and support paths for all our stakeholders.
-                            </p>
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
+                    <div className="mb-14 px-4 text-center">
+                        <h2 className={`text-xl font-extrabold uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Need Help?
+                        </h2>
+                        <p className={`text-[11px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                            Professional guidance and support paths for all our stakeholders.
+                        </p>
                     </div>
 
                     <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide mb-10">
@@ -128,6 +122,13 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+
+                    <div className="flex justify-center mt-2 mb-8">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60 text-center">
+                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe for more options</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        </div>
                     </div>
 
                     <div className={`${isDark ? 'bg-slate-900' : 'bg-white'} border ${isDark ? 'border-white/5' : 'border-slate-200'} rounded-[2.5rem] p-8 text-center relative overflow-hidden shadow-xl shadow-black/5`}>

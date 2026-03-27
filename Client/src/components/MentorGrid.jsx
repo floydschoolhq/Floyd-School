@@ -231,16 +231,10 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     if (isMobile) {
         return (
             <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
-                <div className="flex items-end justify-between mb-12">
-                    <div className="flex-1">
-                        <h2 className={`text-lg font-extrabold uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            {title}
-                        </h2>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                        <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
-                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                    </div>
+                <div className="text-center mb-12">
+                     <h2 className={`text-lg font-extrabold uppercase tracking-tight text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        {title}
+                    </h2>
                 </div>
 
                 <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
@@ -272,6 +266,13 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                             </div>
                         </div>
                     ))}
+                </div>
+
+                <div className="flex justify-center mt-6">
+                    <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                        <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to meet mentors</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                    </div>
                 </div>
 
                 {/* Simplified Mobile Modal */}

@@ -195,7 +195,7 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="flex items-end justify-between px-6 md:px-12 mb-16 md:mb-24 mt-0">
+                <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-0">
                     <div className="flex-1">
                         {isMobile ? (
                             <h2 className={`text-xl font-extrabold tracking-tight uppercase leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -207,24 +207,26 @@ const SuccessStories = ({ variant }) => {
                             </ScrollDarkenHeading>
                         )}
                     </div>
-                    {isMobile && (
-                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
-                    )}
                 </div>
 
                 {/* Success Stories Content */}
                 <div className="group/marquee relative mb-8 md:mb-12 overflow-hidden">
                     {isMobile ? (
-                        <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 py-4">
-                            {[...REVIEWS_ROW_1, ...REVIEWS_ROW_2].map((review, i) => (
-                                <div key={i} className="snap-center">
-                                    <ReviewCard review={review} index={i} variant={variant} />
+                        <div className="flex flex-col gap-6">
+                            <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 py-4">
+                                {[...REVIEWS_ROW_1, ...REVIEWS_ROW_2].map((review, i) => (
+                                    <div key={i} className="snap-center">
+                                        <ReviewCard review={review} index={i} variant={variant} />
+                                    </div>
+                                ))}
+                                <div className="w-1 shrink-0" />
+                            </div>
+                            <div className="flex justify-center -mt-2 mb-2">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60 text-center">
+                                    <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to read stories</span>
+                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
                                 </div>
-                            ))}
-                            <div className="w-1 shrink-0" />
+                            </div>
                         </div>
                     ) : (
                         <motion.div 
