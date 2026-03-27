@@ -70,8 +70,8 @@ const Hero = () => {
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -ml-32 -mb-32" />
                 </div>
 
-                <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center text-center">
-                    <div className="mb-6">
+                <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center mt-24 text-center">
+                    <div className="mb-8">
                         <h2 className="text-[12px] md:text-sm font-medium text-slate-600 tracking-tight">
                             Tomorrow's careers will demand <span className="text-blue-600 font-black">NEW SKILLS.</span>
                         </h2>

@@ -166,29 +166,31 @@ const TechStackStats = () => {
                         </h2>
                     </div>
 
-                    <div className="space-y-8">
+                    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-10 px-10 scrollbar-hide">
                         {TECH_CATEGORIES.map((category) => {
                             const CategoryIcon = category.icon;
                             return (
-                                <div key={category.title} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/50">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
-                                            <CategoryIcon className="text-white" size={18} />
-                                        </div>
-                                        <h3 className="font-black text-slate-900 text-sm uppercase tracking-tight">{category.title}</h3>
-                                    </div>
-
-                                    <div className="grid grid-cols-4 gap-3">
-                                        {category.technologies.map((tech) => (
-                                            <div key={tech.name} className="flex flex-col items-center gap-2">
-                                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-50 border border-slate-100 shadow-sm">
-                                                    <tech.icon size={24} style={{ color: tech.color }} />
-                                                </div>
-                                                <span className="text-[7px] font-black text-slate-400 text-center uppercase tracking-widest px-1">
-                                                    {tech.name}
-                                                </span>
+                                <div key={category.title} className="snap-center shrink-0 w-[80vw]">
+                                    <div className="bg-white rounded-3xl p-6 h-full shadow-sm border border-slate-200/50">
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
+                                                <CategoryIcon className="text-white" size={18} />
                                             </div>
-                                        ))}
+                                            <h3 className="font-black text-slate-900 text-sm uppercase tracking-tight">{category.title}</h3>
+                                        </div>
+
+                                        <div className="grid grid-cols-4 gap-3">
+                                            {category.technologies.map((tech) => (
+                                                <div key={tech.name} className="flex flex-col items-center gap-2">
+                                                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-50 border border-slate-100 shadow-sm">
+                                                        <tech.icon size={24} style={{ color: tech.color }} />
+                                                    </div>
+                                                    <span className="text-[7px] font-black text-slate-400 text-center uppercase tracking-widest px-1">
+                                                        {tech.name}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             );

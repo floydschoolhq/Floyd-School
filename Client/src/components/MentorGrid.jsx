@@ -237,17 +237,17 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     </h2>
                 </div>
 
-                <div className="space-y-6">
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
                     {filteredLeaders.map((mentor, index) => (
                         <div 
                             key={index}
                             onClick={() => setSelectedMentor(mentor)}
-                            className={`p-6 rounded-[2.5rem] border flex flex-col items-center text-center gap-4 active:scale-95 transition-transform ${
+                            className={`snap-center shrink-0 w-[65vw] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 active:scale-95 transition-transform ${
                                 isDark ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-slate-100 shadow-sm'
                             }`}
                         >
-                            <div className="w-20 h-20 rounded-full p-1 border border-orange-500/20">
-                                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
+                            <div className="w-24 h-24 rounded-full p-1 border border-orange-500/20 shadow-xl shadow-orange-500/10">
+                                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/5">
                                     <img 
                                         src={mentor.image} 
                                         alt={mentor.name} 
@@ -257,14 +257,11 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                 </div>
                             </div>
                             <div>
-                                <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                     {mentor.name}
                                 </h3>
-                                <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-4">
+                                <p className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full ${isDark ? 'bg-blue-600/10 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
                                     {mentor.role}
-                                </p>
-                                <p className={`text-[12px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                    {mentor.bio}
                                 </p>
                             </div>
                         </div>

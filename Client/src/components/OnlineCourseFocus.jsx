@@ -46,74 +46,76 @@ const OnlineCourseFocus = ({ variant }) => {
                         </h2>
                     </div>
 
-                    <div className="space-y-10">
+                    <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
                         {FALLBACK_COURSES.map((course) => (
                             <div
                                 key={course._id}
-                                className={`group relative rounded-[2.5rem] p-6 transition-all duration-500 border ${
-                                    isDark ? 'bg-slate-900/40 border-white/5 hover:border-white/10' : 'bg-white border-slate-200 shadow-sm'
-                                }`}
+                                className="snap-center shrink-0 w-[85vw]"
                                 onClick={() => !course.comingSoon && navigate(`/course/${course._id}`)}
                             >
-                                <div className="flex flex-col gap-6">
-                                    <div className="relative aspect-[16/10] rounded-[1.5rem] overflow-hidden border border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
-                                        <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
-                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
-                                        
-                                        {!course.comingSoon ? (
-                                            <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                                                <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
-                                            </div>
-                                        ) : (
-                                            <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
-                                                <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
-                                                    Planned Build
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="px-2">
-                                        <div className="flex items-center gap-3 mb-3">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                                3 Month Fast-Track
-                                            </span>
-                                            <div className="h-px flex-1 bg-slate-100/10" />
-                                        </div>
-                                        
-                                        <h3 className={`text-2xl font-black uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                            {course.title}
-                                        </h3>
-                                        
-                                        <p className={`text-sm font-medium leading-relaxed mb-8 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                            {course.description}
-                                        </p>
-
-                                        <div className="flex gap-3">
+                                <div className={`group relative rounded-[2.5rem] p-6 h-full transition-all duration-500 border ${
+                                    isDark ? 'bg-slate-900/40 border-white/5 hover:border-white/10' : 'bg-white border-slate-200 shadow-sm'
+                                }`}>
+                                    <div className="flex flex-col gap-6">
+                                        <div className="relative aspect-[16/10] rounded-[1.5rem] overflow-hidden border border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
+                                            <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
+                                            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                                            
                                             {!course.comingSoon ? (
-                                                <>
-                                                    <button 
-                                                        onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
-                                                        className="flex-[1.5] bg-blue-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest active:scale-95 transition-all shadow-xl shadow-blue-600/20"
-                                                    >
-                                                        Apply Now
-                                                    </button>
-                                                    <button 
-                                                        onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
-                                                        className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border border-blue-600/20 active:scale-95 transition-all ${isDark ? 'text-white' : 'text-slate-700'}`}
-                                                    >
-                                                        Details
-                                                    </button>
-                                                </>
+                                                <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                                    <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
+                                                </div>
                                             ) : (
-                                                <button 
-                                                    onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
-                                                    className="w-full bg-slate-800 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all"
-                                                >
-                                                    <Bell size={14} /> Get Alpha Access
-                                                </button>
+                                                <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
+                                                    <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
+                                                        Planned Build
+                                                    </span>
+                                                </div>
                                             )}
+                                        </div>
+    
+                                        <div className="px-2">
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                                    3 Month Fast-Track
+                                                </span>
+                                                <div className="h-px flex-1 bg-slate-100/10" />
+                                            </div>
+                                            
+                                            <h3 className={`text-2xl font-black uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                                {course.title}
+                                            </h3>
+                                            
+                                            <p className={`text-sm font-medium leading-relaxed mb-8 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                                {course.description}
+                                            </p>
+    
+                                            <div className="flex gap-3">
+                                                {!course.comingSoon ? (
+                                                    <>
+                                                        <button 
+                                                            onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
+                                                            className="flex-[1.5] bg-blue-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest active:scale-95 transition-all shadow-xl shadow-blue-600/20"
+                                                        >
+                                                            Apply Now
+                                                        </button>
+                                                        <button 
+                                                            onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
+                                                            className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border border-blue-600/20 active:scale-95 transition-all ${isDark ? 'text-white' : 'text-slate-700'}`}
+                                                        >
+                                                            Details
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <button 
+                                                        onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
+                                                        className="w-full bg-slate-800 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all"
+                                                    >
+                                                        <Bell size={14} /> Get Alpha Access
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

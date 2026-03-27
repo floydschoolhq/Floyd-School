@@ -108,31 +108,30 @@ const StudentEcosystem = () => {
                         </h2>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
                         {FEATURES.map((feature, index) => (
                             <div 
                                 key={index}
                                 onClick={() => setSelectedFeature(feature)}
-                                className="group bg-white border border-slate-200 p-4 rounded-[2.5rem] flex items-center gap-5 active:scale-[0.98] transition-all shadow-sm"
+                                className="snap-center shrink-0 w-[70vw] group bg-white border border-slate-200 p-6 rounded-[2.5rem] flex flex-col items-center text-center gap-6 active:scale-[0.98] transition-all shadow-sm"
                             >
-                                <div className="w-16 h-16 shrink-0 rounded-2xl overflow-hidden bg-slate-100 relative border border-slate-100 shadow-inner">
+                                <div className="w-24 h-24 shrink-0 rounded-[2rem] overflow-hidden bg-slate-100 relative border border-slate-100 shadow-inner">
                                     <img src={feature.image} className="w-full h-full object-cover grayscale-[0.2]" alt="" />
-                                    <div className="absolute inset-0 bg-slate-950/20 flex items-center justify-center text-white text-lg drop-shadow-md">
+                                    <div className="absolute inset-0 bg-slate-950/20 flex items-center justify-center text-white text-3xl drop-shadow-md transition-transform group-hover:scale-110">
                                         {feature.icon}
                                     </div>
                                 </div>
                                 
                                 <div className="flex-1 min-w-0">
-                                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1 opacity-80 leading-none">
+                                    <div className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-600 mb-2 opacity-80 leading-none">
                                         {feature.miniTitle}
                                     </div>
-                                    <h3 className="text-[15px] font-black uppercase tracking-tight text-slate-900 leading-tight">
+                                    <h3 className="text-[16px] font-black uppercase tracking-tight text-slate-900 leading-tight mb-4">
                                         {feature.title}
                                     </h3>
-                                </div>
-                                
-                                <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 shrink-0">
-                                    <FaArrowRight size={12} />
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-[9px] font-black uppercase tracking-widest text-slate-500">
+                                        View Details <FaArrowRight size={10} className="text-orange-500" />
+                                    </div>
                                 </div>
                             </div>
                         ))}

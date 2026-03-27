@@ -165,12 +165,12 @@ const ThinkskoolAdvantage = () => {
                         </h2>
                     </div>
 
-                    <div className="space-y-10">
+                    <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-10 px-10 scrollbar-hide">
                         {ADVANTAGES.map((advantage, index) => {
                             const isDark = index % 2 !== 0;
                             return (
-                                <div key={advantage.id} className="group">
-                                    <div className={`rounded-3xl overflow-hidden transition-all duration-500 ${isDark ? 'bg-slate-950 shadow-2xl shadow-blue-900/10' : 'bg-slate-50 border border-slate-200/50'}`}>
+                                <div key={advantage.id} className="snap-center shrink-0 w-[85vw]">
+                                    <div className={`rounded-3xl overflow-hidden h-full transition-all duration-500 ${isDark ? 'bg-slate-950 shadow-2xl shadow-blue-900/10' : 'bg-slate-50 border border-slate-200/50'}`}>
                                         <div className="aspect-[16/9] w-full overflow-hidden relative">
                                             <img src={advantage.image} className="w-full h-full object-cover opacity-80" alt="" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
@@ -186,15 +186,15 @@ const ThinkskoolAdvantage = () => {
                                              <p className={`text-[12px] font-medium leading-relaxed mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                                                  {advantage.description}
                                              </p>
-                                            
-                                            <div className="flex flex-wrap gap-2">
-                                                {advantage.details.slice(0, 2).map((detail, idx) => (
-                                                    <div key={idx} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl ${isDark ? 'bg-white/5 border border-white/5' : 'bg-white border border-slate-100'}`}>
-                                                        <div className="w-1 h-1 rounded-full bg-orange-500" />
-                                                        <span className={`text-[9px] font-black uppercase tracking-tight ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{detail}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                             
+                                             <div className="flex flex-wrap gap-2">
+                                                 {advantage.details.slice(0, 2).map((detail, idx) => (
+                                                     <div key={idx} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl ${isDark ? 'bg-white/5 border border-white/5' : 'bg-white border border-slate-100'}`}>
+                                                         <div className="w-1 h-1 rounded-full bg-orange-500" />
+                                                         <span className={`text-[9px] font-black uppercase tracking-tight ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{detail}</span>
+                                                     </div>
+                                                 ))}
+                                             </div>
                                         </div>
                                     </div>
                                 </div>

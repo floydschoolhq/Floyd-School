@@ -528,11 +528,11 @@ const StudentProjects = () => {
             ))}
           </div>
 
-          <div className="space-y-10">
+          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
             {filteredProjects.map((project) => (
               <div 
                 key={project.id} 
-                className="group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
+                className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
               >
                 <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100">
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />

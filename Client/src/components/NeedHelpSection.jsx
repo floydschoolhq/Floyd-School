@@ -99,26 +99,26 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         </p>
                     </div>
 
-                    <div className="space-y-4 mb-10">
+                    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide mb-10">
                         {contactMethods.map((method, index) => (
                             <div 
                                 key={index} 
-                                className={`p-6 rounded-[2rem] border transition-all duration-300 active:scale-[0.98] ${
-                                    isDark ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-200'
-                                } shadow-sm`}
+                                className={`snap-center shrink-0 w-[70vw] p-8 rounded-[2rem] border transition-all duration-300 active:scale-[0.98] ${
+                                    isDark ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-200 shadow-sm'
+                                } flex flex-col items-center text-center gap-6`}
                                 onClick={() => index === 0 ? setIsMessageFormOpen(true) : window.location.href = index === 1 ? `tel:${method.action}` : `mailto:${method.action}`}
                             >
-                                <div className="flex items-center gap-5">
-                                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
-                                        isDark ? 'bg-slate-800' : 'bg-slate-50 border border-slate-100'
-                                    }`}>
-                                        <method.icon size={24} className={isDark ? 'text-blue-500' : 'text-blue-600'} />
+                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${
+                                    isDark ? 'bg-slate-800' : 'bg-slate-50 border border-slate-100'
+                                }`}>
+                                    <method.icon size={28} className={isDark ? 'text-blue-500' : 'text-blue-600'} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className={`text-[16px] font-black uppercase tracking-tight mb-2 ${isDark ? 'text-white' : 'text-slate-950'}`}>{method.title}</h3>
+                                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest opacity-60 leading-none mb-6">{method.action}</p>
+                                    <div className="inline-flex items-center gap-2 text-blue-600 text-[10px] font-black uppercase tracking-widest">
+                                        Open Channel <ArrowRight size={14} />
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className={`text-[14px] font-black uppercase tracking-tight mb-1 ${isDark ? 'text-white' : 'text-slate-950'}`}>{method.title}</h3>
-                                        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest opacity-60 leading-none">{method.action}</p>
-                                    </div>
-                                    <ArrowRight size={18} className="text-slate-300 shrink-0" />
                                 </div>
                             </div>
                         ))}
