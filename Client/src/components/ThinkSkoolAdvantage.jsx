@@ -12,21 +12,21 @@ const ADVANTAGES = [
         id: 1,
         title: "You learn by doing, not by watching",
         description: "Every session involves writing real code, building real things and solving real problems. There are no passive lessons here.",
-        image: "/images/ecosystem/cloud_ide.jpg",
+        image: "/images/ecosystem/1.jpeg",
         icon: Clock
     },
     {
         id: 2,
         title: "You learn the skills schools completely skip",
         description: "AI, machine learning, cybersecurity, robotics, IoT. Technologies reshaping every industry that most students will never touch in school.",
-        image: "/images/ecosystem/security.jpg",
+        image: "/images/ecosystem/2.jpeg",
         icon: Award
     },
     {
         id: 3,
         title: "Designed specifically for students aged 12 to 18",
         description: "Fast enough to keep things exciting. Never so fast anyone gets left behind. Built for exactly how students at this age learn best.",
-        image: "/images/ecosystem/mentorship.jpg",
+        image: "/images/ecosystem/3.jpeg",
         icon: Headphones
     },
     {

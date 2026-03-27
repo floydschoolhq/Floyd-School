@@ -40,9 +40,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    firebaseUid: {
+        type: String,
+        default: null
+    },
     provider: {
         type: String,
-        enum: ['local', 'google'],
+        enum: ['local', 'google', 'firebase'],
         default: 'local'
     },
     mobileNumber: {
@@ -60,7 +64,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 // Encrypt password using bcrypt
 userSchema.pre('save', async function () {
-    if (!this.isModified('password') || this.provider === 'google') {
+    if (!this.isModified('password') || this.provider === 'google' || this.provider === 'firebase') {
         return;
     }
 

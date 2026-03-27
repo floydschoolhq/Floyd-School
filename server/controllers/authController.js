@@ -327,4 +327,84 @@ const debugGoogleConfig = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, getMe, googleAuthCallback, completeGoogleProfile, debugGoogleConfig };
+// @desc    Firebase Auth callback
+// @route   POST /api/auth/firebase/callback
+// @access  Public
+const firebaseAuthCallback = async (req, res) => {
+    const { uid, email, name, photoURL } = req.body;
+
+    if (!uid || !email) {
+        return res.status(400).json({ message: 'Firebase UID and email are required' });
+    }
+
+    try {
+        // Check if user exists with this Firebase UID
+        let user = await User.findOne({ firebaseUid: uid });
+
+        if (user) {
+            // User exists, generate token
+            console.log(`[Firebase Auth] Existing user found: ${user.email}`);
+            const sessionToken = crypto.randomBytes(16).toString('hex');
+            user.sessionToken = sessionToken;
+            user.lastLogin = Date.now();
+            await user.save();
+
+            console.log(`[Firebase Auth] Login successful for: ${user.email}`);
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                permissions: user.permissions,
+                mobileNumber: user.mobileNumber,
+                token: generateToken(user._id, sessionToken),
+                needsProfileCompletion: !user.mobileNumber
+            });
+        } else {
+            // Check if user exists with this email
+            user = await User.findOne({ email });
+
+            if (user) {
+                console.warn(`[Firebase Auth] Email conflict: ${email} already exists with local auth`);
+                return res.status(400).json({
+                    message: 'An account with this email already exists. Please use the regular login method.'
+                });
+            }
+
+            // Create new user with Firebase data
+            console.log(`[Firebase Auth] Creating new user for: ${email}`);
+            user = await User.create({
+                firebaseUid: uid,
+                email,
+                name: name || email.split('@')[0],
+                photoURL,
+                provider: 'firebase',
+                role: 'student',
+            });
+
+            const sessionToken = crypto.randomBytes(16).toString('hex');
+            user.sessionToken = sessionToken;
+            await user.save();
+
+            console.log(`[Firebase Auth] New user created successfully: ${user.email} (ID: ${user._id})`);
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                permissions: user.permissions,
+                mobileNumber: user.mobileNumber,
+                token: generateToken(user._id, sessionToken),
+                needsProfileCompletion: true
+            });
+        }
+    } catch (error) {
+        console.error('[Firebase Auth] Authentication error:', error);
+        res.status(500).json({
+            message: 'Internal server error during authentication',
+            error: error.message
+        });
+    }
+};
+
+module.exports = { registerUser, loginUser, getMe, googleAuthCallback, completeGoogleProfile, debugGoogleConfig, firebaseAuthCallback };

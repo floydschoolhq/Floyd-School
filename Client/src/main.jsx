@@ -6,7 +6,7 @@ import { PortalProvider } from './components/Context/PortalProvider.jsx'
 import { SocketProvider } from './components/Context/SocketContext.jsx'
 import { ThemeProvider } from './components/Context/ThemeProvider.jsx'
 import { ToastProvider } from './components/Context/ToastProvider.jsx'
-import { GoogleOAuthProvider } from '@react-oauth/google'
+import { FirebaseAuthProvider } from './components/Context/FirebaseAuthContext.jsx'
 
 // Clear out stale service workers from previous projects on this port
 if ('serviceWorker' in navigator) {
@@ -18,8 +18,8 @@ if ('serviceWorker' in navigator) {
 }
 
 createRoot(document.getElementById('root')).render(
-  <GoogleOAuthProvider clientId="578600834082-27dv31dl3vb77icopt0ilkfpe45dvj2r.apps.googleusercontent.com">
-    <BrowserRouter future={{ v7_startTransition: true }}>
+  <BrowserRouter future={{ v7_startTransition: true }}>
+    <FirebaseAuthProvider>
       <ThemeProvider>
         <ToastProvider>
           <PortalProvider>
@@ -29,6 +29,6 @@ createRoot(document.getElementById('root')).render(
           </PortalProvider>
         </ToastProvider>
       </ThemeProvider>
-    </BrowserRouter>
-  </GoogleOAuthProvider>
+    </FirebaseAuthProvider>
+  </BrowserRouter>
 )
