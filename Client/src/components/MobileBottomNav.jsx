@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaHome, FaGraduationCap, FaBook, FaUsers, FaPhone } from 'react-icons/fa';
 
 const MobileBottomNav = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [activeSection, setActiveSection] = useState('hero');
 
     useEffect(() => {
+        if (location.pathname === '/school-partnerships') {
+            setActiveSection('partners');
+            return;
+        }
+
         const handleScroll = () => {
             const sections = ['home', 'online-focus', 'student-projects', 'mentors-grid', 'contact'];
             const scrollPosition = window.scrollY + 100;
@@ -24,20 +32,28 @@ const MobileBottomNav = () => {
         window.addEventListener('scroll', handleScroll);
         handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [location.pathname]);
 
     const navItems = [
         { id: 'home', icon: FaHome, label: 'Home' },
         { id: 'online-focus', icon: FaGraduationCap, label: 'Courses' },
+        { id: 'partners', icon: FaUsers, label: 'Partners', path: '/school-partnerships' },
         { id: 'student-projects', icon: FaBook, label: 'Projects' },
-        { id: 'mentors-grid', icon: FaUsers, label: 'Mentors' },
         { id: 'contact', icon: FaPhone, label: 'Contact' }
     ];
 
-    const scrollToSection = (sectionId) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+    const handleNavAction = (item) => {
+        if (item.path) {
+            navigate(item.path);
+        } else {
+            if (location.pathname !== '/') {
+                navigate('/' + '#' + item.id);
+            } else {
+                const element = document.getElementById(item.id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         }
     };
 
@@ -51,7 +67,7 @@ const MobileBottomNav = () => {
                     return (
                         <button
                             key={item.id}
-                            onClick={() => scrollToSection(item.id)}
+                            onClick={() => handleNavAction(item)}
                             className="relative flex flex-col items-center group py-1"
                         >
                             <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${

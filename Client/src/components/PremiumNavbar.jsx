@@ -18,6 +18,7 @@ const FALLBACK_COURSES = [
 const MOBILE_NAV_ITEMS = [
     { icon: FaHome, label: "Home", href: "#hero" },
     { icon: FaGraduationCap, label: "Courses", href: "#online-focus" },
+    { icon: FaUsers, label: "Partner with Us", href: "/school-partnerships" },
     { icon: FaBook, label: "Projects", href: "#student-projects" },
     { icon: FaUsers, label: "Mentors", href: "#mentors-grid" },
     { icon: FaPhone, label: "Contact", href: "#contact" }
