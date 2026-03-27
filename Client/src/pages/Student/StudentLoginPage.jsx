@@ -6,15 +6,56 @@ import api from '../../api/axios';
 import { PortalContext } from '../../components/Context/PortalProvider';
 import BrandLogo from '../../components/common/BrandLogo';
 import GoogleSignInButton from '../../components/GoogleSignInButton';
+import { useGoogleLogin } from '@react-oauth/google';
+import toast from 'react-hot-toast';
 
 const StudentLoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { updateUser } = useContext(PortalContext);
 
   const handleExit = () => {
     navigate('/');
   };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      try {
+        setIsSubmitting(true);
+        setError(null);
+        
+        // For popup mode, we need to handle the token directly
+        const res = await api.post('/auth/google/callback', {
+            code: codeResponse.code,
+            redirectUri: 'http://localhost:3000'
+        });
+        
+        const userData = res.data;
+        updateUser(userData);
+        toast.success(`Welcome back, ${userData.name}!`);
+        
+        if (userData.needsProfileCompletion) {
+           navigate('/complete-profile');
+        } else {
+           navigate('/dashboard');
+        }
+      } catch (err) {
+        console.error('Google auth error', err);
+        const errorMessage = err.response?.data?.message || err.message || 'Authentication failed. Please try again.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    onError: (err) => {
+      console.error('Google Login Error', err);
+      setError('Google popup closed or failed.');
+    },
+    flow: 'auth-code',
+    ux_mode: 'popup',
+  });
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden">
@@ -43,6 +84,20 @@ const StudentLoginPage = () => {
             <div className="text-left">
               <h3 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Student <span className="text-[#2563EB]">Login</span></h3>
               <p className="text-slate-500 text-sm font-medium">Sign in to your engineering dashboard</p>
+            </div>
+            
+            {error && (
+              <div className="p-3 bg-red-50 text-red-600 rounded-xl text-sm font-medium border border-red-100 flex items-center gap-2">
+                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                 {error}
+              </div>
+            )}
+
+            <div className="pt-4">
+              <GoogleSignInButton 
+                onClick={() => loginWithGoogle()} 
+                text={isSubmitting ? "Signing in..." : "Sign in with Google"} 
+              />
             </div>
           </div>
 

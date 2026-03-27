@@ -78,7 +78,7 @@ const Hero = () => {
                     </div>
 
                     <div className="mb-10">
-                        <h1 className="text-[10vw] font-black leading-[0.9] text-[#0F172A] uppercase tracking-tighter">
+                        <h1 className="text-[13vw] font-black leading-[0.85] text-[#0F172A] uppercase tracking-tighter">
                             MAKE SURE <br/> 
                             YOUR CHILD <br/> 
                             <span className="text-[#F97316]">IS READY</span>

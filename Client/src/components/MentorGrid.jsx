@@ -231,8 +231,8 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     if (isMobile) {
         return (
             <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
-                <div className="text-center mb-12">
-                     <h2 className={`text-lg font-extrabold uppercase tracking-tight text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                <div className="text-center mb-14 px-4">
+                     <h2 className={`text-3xl font-extrabold uppercase tracking-tighter leading-[1.1] text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {title}
                     </h2>
                 </div>
@@ -373,18 +373,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                         </div>
                     </div>
 
-                    {/* Industrial Progress Indicator */}
-                    <div className="mt-8 flex items-center gap-6 max-w-sm mx-auto">
-                        <div className={`h-[2px] flex-1 rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-slate-100'}`}>
-                            <motion.div 
-                                className={`h-full ${isDark ? 'bg-orange-500' : 'bg-orange-500'}`}
-                                initial={{ width: "30%" }}
-                                whileInView={{ width: "100%" }}
-                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                            />
-                        </div>
-                        <span className={`text-[9px] font-black uppercase tracking-[0.3em] ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>Carousel Active</span>
-                    </div>
+
                 </div>
             </div>
 

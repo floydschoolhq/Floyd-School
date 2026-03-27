@@ -102,8 +102,8 @@ const StudentEcosystem = () => {
                 <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -ml-40 -mt-40" />
                 
                 <div className="relative z-10 text-center">
-                    <div className="mb-12">
-                        <h2 className="text-xl font-extrabold text-[#0F172A] tracking-tighter uppercase leading-none">
+                    <div className="mb-14 px-4">
+                        <h2 className="text-3xl font-extrabold text-[#0F172A] tracking-tighter uppercase leading-[1.1]">
                             THE thinkskool ADVANTAGE
                         </h2>
                     </div>

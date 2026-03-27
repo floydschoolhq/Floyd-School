@@ -41,7 +41,7 @@ const OnlineCourseFocus = ({ variant }) => {
                 
                 <div className="relative z-10 text-center">
                     <div className="mb-14 text-center">
-                        <h2 className={`text-xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        <h2 className={`text-4xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
                             OUR BATCHES
                         </h2>
                     </div>

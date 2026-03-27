@@ -159,8 +159,8 @@ const TechStackStats = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
                 
                 <div className="max-w-[1440px] mx-auto px-10 relative z-10 text-center">
-                    <div className="mb-14">
-                        <h2 className="text-xl font-extrabold text-slate-950 uppercase tracking-tighter leading-none">
+                    <div className="mb-14 px-4">
+                        <h2 className="text-3xl font-extrabold text-slate-950 uppercase tracking-tighter leading-[1.1]">
                             Technologies you will learn
                         </h2>
                     </div>

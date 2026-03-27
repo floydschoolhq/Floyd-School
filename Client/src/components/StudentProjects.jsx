@@ -497,16 +497,16 @@ const StudentProjects = () => {
 
   if (isMobile) {
     return (
-      <section id="student-projects" className="py-24 px-6 bg-white relative overflow-hidden">
+      <section id="student-projects" className="pb-24 px-6 bg-white relative overflow-hidden">
         {/* Background mesh */}
         <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         
         <div className="relative z-10">
           <div className="mb-14 px-4 text-center">
-            <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight mb-4 text-center">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tighter uppercase leading-[1.1] mb-4 text-center">
               These are real projects students actually build.
             </h2>
-            <p className="text-slate-600 text-[11px] font-medium leading-relaxed text-center">
+            <p className="text-slate-600 text-[13px] font-medium leading-relaxed text-center px-2">
               By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
             </p>
           </div>
@@ -588,7 +588,7 @@ const StudentProjects = () => {
 
 
   return (
-    <section id="student-projects" className="py-20 md:py-28 pb-32 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
+    <section id="student-projects" className="pb-20 md:pb-28 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -618,7 +618,7 @@ const StudentProjects = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-16 mb-16 sm:mt-20 md:mt-16"
+          className="text-center mb-16"
         >
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
             These are real projects students actually build.

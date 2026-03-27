@@ -198,7 +198,7 @@ const SuccessStories = ({ variant }) => {
                 <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-0">
                     <div className="flex-1">
                         {isMobile ? (
-                            <h2 className={`text-xl font-extrabold tracking-tight uppercase leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            <h2 className={`text-3xl font-extrabold tracking-tighter uppercase leading-[1.1] ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                 transformed by <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                             </h2>
                         ) : (

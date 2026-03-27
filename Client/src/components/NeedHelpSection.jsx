@@ -91,10 +91,10 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                 
                 <div className="relative z-10 text-center">
                     <div className="mb-14 px-4 text-center">
-                        <h2 className={`text-xl font-extrabold uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        <h2 className={`text-3xl font-extrabold uppercase tracking-tight leading-[1.1] mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                             Need Help?
                         </h2>
-                        <p className={`text-[11px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                        <p className={`text-[13px] font-medium leading-relaxed px-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                             Professional guidance and support paths for all our stakeholders.
                         </p>
                     </div>
