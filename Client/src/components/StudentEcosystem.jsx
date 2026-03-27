@@ -102,10 +102,16 @@ const StudentEcosystem = () => {
                 <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -ml-40 -mt-40" />
                 
                 <div className="relative z-10 text-center">
-                    <div className="mb-14">
-                        <h2 className="text-xl font-extrabold text-slate-900 tracking-tight uppercase leading-tight">
-                            THE <span className="lowercase"><span className="text-blue-600">think</span><span className="text-orange-500">skool</span></span> ADVANTAGE
-                        </h2>
+                    <div className="flex items-end justify-between mb-12">
+                        <div className="flex-1">
+                            <h2 className="text-xl font-extrabold text-[#0F172A] tracking-tighter uppercase leading-none">
+                                THE thinkskool ADVANTAGE
+                            </h2>
+                        </div>
+                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        </div>
                     </div>
 
                     <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">

@@ -502,13 +502,19 @@ const StudentProjects = () => {
         <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         
         <div className="relative z-10">
-          <div className="mb-14 px-4">
-            <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight mb-4">
-              These are real projects students actually build.
-            </h2>
-            <p className="text-slate-600 text-[11px] font-medium leading-relaxed">
-              By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
-            </p>
+          <div className="flex items-end justify-between mb-14 px-4">
+            <div className="flex-1">
+              <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight mb-4">
+                These are real projects students actually build.
+              </h2>
+              <p className="text-slate-600 text-[11px] font-medium leading-relaxed">
+                By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+            </div>
           </div>
 
           {/* Filter Tabs - Mobile */}

@@ -195,15 +195,23 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="px-6 md:px-12 text-left mb-16 md:mb-24 mt-0">
-                    {isMobile ? (
-                        <h2 className={`text-xl font-extrabold tracking-tight uppercase leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            transformed by <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
-                        </h2>
-                    ) : (
-                        <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl" variant={variant} uppercase={false}>
-                            transformed by <span className="font-black tracking-tight"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
-                        </ScrollDarkenHeading>
+                <div className="flex items-end justify-between px-6 md:px-12 mb-16 md:mb-24 mt-0">
+                    <div className="flex-1">
+                        {isMobile ? (
+                            <h2 className={`text-xl font-extrabold tracking-tight uppercase leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                transformed by <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
+                            </h2>
+                        ) : (
+                            <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl" variant={variant} uppercase={false}>
+                                transformed by <span className="font-black tracking-tight"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
+                            </ScrollDarkenHeading>
+                        )}
+                    </div>
+                    {isMobile && (
+                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        </div>
                     )}
                 </div>
 

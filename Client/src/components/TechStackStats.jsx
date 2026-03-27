@@ -159,11 +159,16 @@ const TechStackStats = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
                 
                 <div className="max-w-[1440px] mx-auto px-10 relative z-10 text-center">
-                    <div className="mb-14">
-                        <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight">
-                             Technologies <br/>
-                             <span className="text-[#F97316]">you will learn</span>
-                        </h2>
+                    <div className="flex items-end justify-between mb-14">
+                        <div className="flex-1">
+                            <h2 className="text-xl font-extrabold text-slate-950 uppercase tracking-tighter leading-none">
+                                Technologies you will learn
+                            </h2>
+                        </div>
+                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
+                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        </div>
                     </div>
 
                     <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-10 px-10 scrollbar-hide">
