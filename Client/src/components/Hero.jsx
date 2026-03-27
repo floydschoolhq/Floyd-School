@@ -64,41 +64,34 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" ref={containerRef} className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden bg-white">
-                {/* Visual Accents */}
+            <section id="home" className="relative min-h-[70vh] flex flex-col items-center justify-center pt-28 pb-12 overflow-hidden bg-white">
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/[0.03] rounded-full blur-[100px] -mr-48 -mt-48" />
-                    <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/[0.03] rounded-full blur-[80px] -ml-32 -mb-32" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -mr-32 -mt-32" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -ml-32 -mb-32" />
                 </div>
 
-                <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center">
-                    <div className="w-full space-y-2 mb-8">
-                         <div className="flex items-center gap-2">
-                            <div className="h-px w-8 bg-blue-600" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">The New Standard</span>
-                        </div>
-                        <h2 className="text-[14px] font-bold text-slate-400 tracking-tight leading-none uppercase">
-                            Schools teach concepts. <span className="text-slate-900">We teach you to build.</span>
+                <div className="max-w-full mx-auto px-8 relative z-10 w-full flex flex-col items-center text-center">
+                    <div className="mb-6">
+                        <h2 className="text-[12px] md:text-sm font-medium text-slate-600 tracking-tight">
+                            Tomorrow's careers will demand <span className="text-blue-600 font-black">NEW SKILLS.</span>
                         </h2>
                     </div>
 
-                    <div className="w-full mb-12">
-                        <h1 className="text-[16vw] font-black leading-[0.8] text-slate-950 uppercase tracking-tighter">
-                            <span className="block mb-2">Make</span>
-                            <span className="block mb-2 text-orange-500">Sure</span>
-                            <span className="block mb-2">Your Child</span>
-                            <span className="block text-blue-600">Is Ready</span>
+                    <div className="mb-10">
+                        <h1 className="text-[10vw] font-black leading-[0.9] text-[#0F172A] uppercase tracking-tighter">
+                            MAKE SURE <br/> 
+                            YOUR CHILD <br/> 
+                            <span className="text-[#F97316]">IS READY</span>
                         </h1>
                     </div>
 
-                    <div className="w-full space-y-12 flex flex-col items-center">
+                    <div className="w-full flex flex-col items-center gap-6">
                         <button
                             onClick={handleEnrollNow}
-                            className="w-full bg-slate-950 text-white font-black text-lg py-5 rounded-2xl shadow-2xl shadow-slate-900/20 flex items-center justify-center gap-4 active:scale-95 transition-all"
+                            className="px-10 py-4 bg-[#E84E1B] text-white font-black text-sm rounded-xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"
                         >
-                            Get Started <ArrowRight size={20} className="text-orange-500" />
+                            Enroll now →
                         </button>
-                        
                         <div className="opacity-80 scale-90">
                             <ScrollingAvatars isMobile={true} />
                         </div>

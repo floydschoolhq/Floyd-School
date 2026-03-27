@@ -502,12 +502,12 @@ const StudentProjects = () => {
         <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         
         <div className="relative z-10">
-          <div className="mb-14 text-center">
-            <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase leading-[0.9] mb-6">
-              Production <br/> <span className="text-blue-600">Grade Builds</span>
+          <div className="mb-14 px-4">
+            <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight mb-4">
+              These are real projects students actually build.
             </h2>
-            <p className="text-slate-500 text-sm font-medium leading-relaxed px-2">
-              Every student graduates with a high-performance, live product built from scratch.
+            <p className="text-slate-600 text-[11px] font-medium leading-relaxed">
+              By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
             </p>
           </div>
 
@@ -517,13 +517,13 @@ const StudentProjects = () => {
               <button
                 key={tab}
                 onClick={() => setFilter(tab)}
-                className={`px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${
+                className={`px-6 py-2.5 rounded-xl font-bold text-[9px] uppercase tracking-widest transition-all ${
                   filter === tab
                     ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20'
-                    : 'bg-slate-50 text-slate-400 border border-slate-200/50'
+                    : 'bg-white text-slate-400 border border-slate-200/50'
                 }`}
               >
-                {tab === 'all' ? 'The Lab' : 'Featured'}
+                {tab === 'all' ? 'All Projects' : 'Featured Only'}
               </button>
             ))}
           </div>

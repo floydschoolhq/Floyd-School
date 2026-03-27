@@ -39,13 +39,10 @@ const OnlineCourseFocus = ({ variant }) => {
                 {/* Premium Background Accent */}
                 <div className={`absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] -mr-40 -mt-40 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
                 
-                <div className="relative z-10">
+                <div className="relative z-10 text-center">
                     <div className="mb-14">
-                         <div className={`text-[10px] font-black uppercase tracking-[0.2em] mb-3 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
-                            Academic Units
-                        </div>
-                        <h2 className={`text-4xl font-black tracking-tighter uppercase leading-[0.85] ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Our <br/> <span className="text-blue-600">Batches</span>
+                        <h2 className={`text-xl font-extrabold tracking-tight uppercase leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            OUR BATCHES
                         </h2>
                     </div>
 

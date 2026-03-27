@@ -155,13 +155,13 @@ const ThinkskoolAdvantage = () => {
         return (
             <section className="py-20 bg-white relative w-full overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
-                <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-                    <div className="mb-14 text-center">
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-[0.9] uppercase mb-2">
-                            Schools teach <span className="text-orange-500">Concepts.</span>
+                <div className="max-w-[1440px] mx-auto px-10 relative z-10">
+                    <div className="mb-14">
+                        <h2 className="text-xl font-extrabold text-slate-900 tracking-tight uppercase leading-tight mb-1">
+                            Schools teach concepts.
                         </h2>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-[0.9] uppercase">
-                            We teach you to <span className="text-blue-600">Build.</span>
+                        <h2 className="text-xl font-extrabold text-orange-500 tracking-tight uppercase leading-tight">
+                            We teach students to build real things.
                         </h2>
                     </div>
 
@@ -180,12 +180,12 @@ const ThinkskoolAdvantage = () => {
                                         </div>
                                         
                                         <div className="p-8">
-                                            <h3 className={`text-xl font-black leading-tight uppercase tracking-tight mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                                {advantage.title}
-                                            </h3>
-                                            <p className={`text-sm font-medium leading-relaxed mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                {advantage.description}
-                                            </p>
+                                             <h3 className={`text-lg font-black leading-tight uppercase tracking-tight mb-4 ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                                                 {advantage.title}
+                                             </h3>
+                                             <p className={`text-[12px] font-medium leading-relaxed mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                                 {advantage.description}
+                                             </p>
                                             
                                             <div className="flex flex-wrap gap-2">
                                                 {advantage.details.slice(0, 2).map((detail, idx) => (

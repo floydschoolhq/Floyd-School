@@ -101,15 +101,11 @@ const StudentEcosystem = () => {
             <section id="infrastructure" className="bg-slate-50 py-24 px-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -ml-40 -mt-40" />
                 
-                <div className="relative z-10">
+                <div className="relative z-10 text-center">
                     <div className="mb-14">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-3">
-                            Platform Infrastructure
-                        </div>
-                        <h2 className="text-4xl font-black text-slate-900 leading-[0.85] uppercase tracking-tighter mb-4">
-                            Built for <br/> <span className="text-orange-500">Innovation</span>
+                        <h2 className="text-xl font-extrabold text-slate-900 tracking-tight uppercase leading-tight">
+                            THE <span className="lowercase"><span className="text-blue-600">think</span><span className="text-orange-500">skool</span></span> ADVANTAGE
                         </h2>
-                        <div className="w-12 h-1 bg-blue-600 rounded-full" />
                     </div>
 
                     <div className="space-y-4">

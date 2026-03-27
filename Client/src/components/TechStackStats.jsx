@@ -158,13 +158,12 @@ const TechStackStats = () => {
             <section className="py-20 bg-slate-50 relative w-full overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
                 
-                <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-                    <div className="mb-12">
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-none uppercase mb-2">
-                             Full-Stack <br/>
-                             <span className="text-orange-500">Tech Ecosystem</span>
+                <div className="max-w-[1440px] mx-auto px-10 relative z-10 text-center">
+                    <div className="mb-14">
+                        <h2 className="text-lg font-extrabold text-slate-900 tracking-tight uppercase leading-tight">
+                             Technologies <br/>
+                             <span className="text-[#F97316]">you will learn</span>
                         </h2>
-                        <div className="w-16 h-1.5 bg-blue-600 rounded-full" />
                     </div>
 
                     <div className="space-y-8">

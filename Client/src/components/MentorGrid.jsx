@@ -232,9 +232,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         return (
             <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
                 <div className="text-center mb-12">
-                    <ScrollDarkenHeading variant={variant}>
+                     <h2 className={`text-lg font-extrabold uppercase tracking-tight text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {title}
-                    </ScrollDarkenHeading>
+                    </h2>
                 </div>
 
                 <div className="space-y-6">

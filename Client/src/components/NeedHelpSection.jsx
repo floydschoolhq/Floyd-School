@@ -89,15 +89,14 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             }`}>
                 <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -mr-40 -mt-40" />
                 
-                <div className="relative z-10">
-                    <div className="mb-14">
-                        <div className={`text-[10px] font-black uppercase tracking-[0.2em] mb-3 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
-                            Support Pipeline
-                        </div>
-                        <h2 className={`text-4xl font-black uppercase tracking-tighter leading-[0.85] mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Expert <br/> <span className="text-orange-500">Guidance</span>
+                <div className="relative z-10 text-center">
+                    <div className="mb-14 px-4">
+                        <h2 className={`text-xl font-extrabold uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Need <span className="text-orange-500">Help?</span>
                         </h2>
-                        <div className="w-12 h-1 bg-blue-600 rounded-full" />
+                        <p className={`text-[11px] font-medium leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                            Our dedicated support team is here to help you succeed. Reach out anytime through your preferred channel.
+                        </p>
                     </div>
 
                     <div className="space-y-4 mb-10">

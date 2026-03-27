@@ -47,14 +47,13 @@ const Footer = () => {
         
         <div className="relative z-10 flex flex-col items-center">
           {/* Brand Header */}
-          <div className="text-center mb-16">
-            <div className="font-black text-3xl tracking-tighter uppercase mb-4 flex items-center justify-center gap-2">
+          <div className="text-center mb-16 px-4">
+            <div className="font-extrabold text-xl tracking-tight uppercase mb-4 flex items-center justify-center gap-2">
                <span className="text-white">THINK</span>
                <span className="text-orange-500">SKOOL</span>
             </div>
-            <div className="w-8 h-1 bg-blue-600 rounded-full mx-auto mb-6" />
-            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] max-w-[240px] mx-auto opacity-60 leading-relaxed">
-              Architecting the next generation <br/> of global engineering.
+            <p className="text-slate-500 text-[11px] font-medium max-w-[280px] mx-auto leading-relaxed">
+              Architecting the next generation of global engineering excellence through industrial immersion.
             </p>
           </div>
 
