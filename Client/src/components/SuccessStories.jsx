@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Quote, Sparkles } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
+import useIsMobile from '../hooks/useIsMobile';
+
 
 const REVIEWS_ROW_1 = [
     {
@@ -176,8 +178,6 @@ const ReviewCard = ({ review, index = 0, variant }) => {
         </div>
     );
 };
-
-import useIsMobile from '../hooks/useIsMobile';
 
 const SuccessStories = ({ variant }) => {
     const isMobile = useIsMobile();

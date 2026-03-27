@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import { FaCode, FaRobot, FaChartLine, FaUserTie, FaCloud, FaCheckCircle, FaTimes, FaArrowRight, FaBrain, FaTerminal, FaShieldAlt } from 'react-icons/fa';
+import useIsMobile from '../hooks/useIsMobile';
+
 
 const FEATURES = [
     {
@@ -89,8 +91,6 @@ const FEATURES = [
         ]
     }
 ];
-
-import useIsMobile from '../hooks/useIsMobile';
 
 const StudentEcosystem = () => {
     const [selectedFeature, setSelectedFeature] = useState(null);

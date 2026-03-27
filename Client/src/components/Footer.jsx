@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import BrandLogo from './common/BrandLogo';
 import WaveText from './common/WaveText';
+import useIsMobile from '../hooks/useIsMobile';
 
 const Footer = () => {
   const isMobile = useIsMobile();
