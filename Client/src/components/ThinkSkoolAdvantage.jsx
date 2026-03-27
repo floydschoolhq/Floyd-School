@@ -170,7 +170,7 @@ const ThinkskoolAdvantage = () => {
                             const isDark = index % 2 !== 0;
                             return (
                                 <div key={advantage.id} className="snap-center shrink-0 w-[85vw]">
-                                    <div className={`rounded-3xl overflow-hidden h-full transition-all duration-500 ${isDark ? 'bg-slate-950 shadow-2xl shadow-blue-900/10' : 'bg-slate-50 border border-slate-200/50'}`}>
+                                    <div className={`rounded-3xl overflow-hidden h-full transition-all duration-500 ${isDark ? 'bg-slate-950 shadow-2xl shadow-blue-900/10' : 'bg-slate-50 border border-slate-100/50'}`}>
                                         <div className="aspect-[16/9] w-full overflow-hidden relative">
                                             <img src={advantage.image} className="w-full h-full object-cover opacity-80" alt="" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />

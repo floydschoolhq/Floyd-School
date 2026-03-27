@@ -532,9 +532,9 @@ const StudentProjects = () => {
             {filteredProjects.map((project) => (
               <div 
                 key={project.id} 
-                className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
+                className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
               >
-                <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100">
+                <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-900 border border-white/20 shadow-sm">
                       {project.category}
@@ -545,9 +545,9 @@ const StudentProjects = () => {
                   <h3 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tight leading-tight">{project.title}</h3>
                   <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
                   
-                  <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-50">
+                  <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
                       <div className="flex items-center gap-3">
-                         <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border border-slate-200" />
+                         <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border border-slate-100" />
                          <div>
                              <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
                              <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>

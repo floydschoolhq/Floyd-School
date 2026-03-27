@@ -236,3 +236,10 @@ body {
 .mac-dot-red { @apply bg-[#FF5F56]; }
 .mac-dot-yellow { @apply bg-[#FFBD2E]; }
 .mac-dot-green { @apply bg-[#27C93F]; }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
