@@ -198,7 +198,6 @@ const PremiumNavbar = memo(({ variant }) => {
                             >
                                 <span className="relative z-10 flex items-center gap-2">
                                     Sign In
-                                    <FaUserTie className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                                 </span>
                                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                             </Link>
@@ -301,13 +300,11 @@ const PremiumNavbar = memo(({ variant }) => {
                                             navigate('/student/login');
                                             setIsMobileMenuOpen(false);
                                         }}
-                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl border border-white/10 group"
+                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl border border-white/10"
                                     >
-                                        <span className="relative z-10 flex items-center justify-center gap-2">
+                                        <span className="flex items-center justify-center">
                                             Sign In
-                                            <FaUserTie className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                                         </span>
-                                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                                     </Link>
                                 </div>
                             </div>
