@@ -1,19 +1,12 @@
 // Firebase configuration
-// Replace these with your actual Firebase project credentials from Firebase Console
-
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "YOUR_FIREBASE_API_KEY",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "YOUR_FIREBASE_AUTH_DOMAIN", 
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "YOUR_FIREBASE_PROJECT_ID",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "YOUR_FIREBASE_STORAGE_BUCKET",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "YOUR_FIREBASE_APP_ID"
+  apiKey: "AIzaSyDJlwHA33nGxReYPRvW-67J06UC0owURgI",
+  authDomain: "thinkskool-452f9.firebaseapp.com",
+  projectId: "thinkskool-452f9",
+  storageBucket: "thinkskool-452f9.firebasestorage.app",
+  messagingSenderId: "508621036728",
+  appId: "1:508621036728:web:649af56b35e2ab3341684d",
+  measurementId: "G-84YEXT5STN"
 };
-
-// To get these values:
-// 1. Go to Firebase Console → Project Settings → General
-// 2. Scroll to "Your apps" section
-// 3. Click on your Web App or create one
-// 4. Copy the firebaseConfig object
 
 export default firebaseConfig;
