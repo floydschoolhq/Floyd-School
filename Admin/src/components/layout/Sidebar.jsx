@@ -12,7 +12,8 @@ import {
     BookOpen,
     Target,
     TrendingUp,
-    Monitor
+    Monitor,
+    GraduationCap
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
@@ -24,6 +25,7 @@ const Sidebar = () => {
         { icon: <Activity size={20} />, label: 'Analytics', path: '/' },
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
         { icon: <ShieldCheck size={20} />, label: 'Access Requests', path: '/requests' },
+        { icon: <GraduationCap size={20} />, label: 'Student Registrations', path: '/student-registrations' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },

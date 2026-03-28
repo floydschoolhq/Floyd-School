@@ -19,6 +19,7 @@ import SuccessEngine from './pages/SuccessEngine';
 import SecurityLogs from './pages/SecurityLogs';
 import AccessRequests from './pages/AccessRequests';
 import LiveMonitoring from './pages/LiveMonitoring';
+import StudentRegistrations from './pages/StudentRegistrations';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                 <Route path="analytics" element={<PlatformAnalytics />} />
                 <Route path="users" element={<UserGovernance />} />
                 <Route path="requests" element={<AccessRequests />} />
+                <Route path="student-registrations" element={<StudentRegistrations />} />
                 <Route path="courses" element={<CourseGovernance />} />
                 <Route path="leads" element={<LeadIntelligence />} />
                 <Route path="broadcast" element={<GlobalNotifications />} />

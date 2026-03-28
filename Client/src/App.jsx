@@ -162,9 +162,6 @@ const App = () => {
 
                 {/*Signup forms removed*/}
 
-                {/* Admin Routes */}
-                <Route path='/admin/students' element={<AdminStudentsPage />} />
-
                 {/* School Partnership */}
                 <Route path='/school-partnerships' element={<SchoolPartnership />} />
 
