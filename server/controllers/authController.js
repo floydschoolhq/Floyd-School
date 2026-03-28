@@ -331,7 +331,7 @@ const debugGoogleConfig = async (req, res) => {
 // @route   POST /api/auth/firebase/callback
 // @access  Public
 const firebaseAuthCallback = async (req, res) => {
-    const { uid, email, name, photoURL } = req.body;
+    const { uid, email, name, photoURL, mobileNumber } = req.body;
 
     if (!uid || !email) {
         return res.status(400).json({ message: 'Firebase UID and email are required' });
@@ -342,7 +342,12 @@ const firebaseAuthCallback = async (req, res) => {
         let user = await User.findOne({ firebaseUid: uid });
 
         if (user) {
-            // User exists, generate token
+            // User exists - update mobile number if provided
+            if (mobileNumber && !user.mobileNumber) {
+                user.mobileNumber = mobileNumber;
+                await user.save();
+            }
+            
             console.log(`[Firebase Auth] Existing user found: ${user.email}`);
             const sessionToken = crypto.randomBytes(16).toString('hex');
             user.sessionToken = sessionToken;
@@ -371,13 +376,14 @@ const firebaseAuthCallback = async (req, res) => {
                 });
             }
 
-            // Create new user with Firebase data
+            // Create new user with Firebase data and mobile number
             console.log(`[Firebase Auth] Creating new user for: ${email}`);
             user = await User.create({
                 firebaseUid: uid,
                 email,
                 name: name || email.split('@')[0],
                 photoURL,
+                mobileNumber: mobileNumber || null,
                 provider: 'firebase',
                 role: 'student',
             });
@@ -395,7 +401,7 @@ const firebaseAuthCallback = async (req, res) => {
                 permissions: user.permissions,
                 mobileNumber: user.mobileNumber,
                 token: generateToken(user._id, sessionToken),
-                needsProfileCompletion: true
+                needsProfileCompletion: !user.mobileNumber
             });
         }
     } catch (error) {
