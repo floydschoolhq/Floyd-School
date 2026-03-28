@@ -214,27 +214,28 @@ const StudentLoginPage = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="absolute inset-0 bg-white rounded-[2.5rem] flex flex-col items-center justify-center p-8 z-20"
+                className="absolute inset-4 bg-white rounded-[2rem] flex flex-col items-center justify-center p-6 z-20 shadow-2xl border border-slate-100"
               >
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring" }}
+                  className="mb-4"
                 >
-                  <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
+                  <CheckCircle className="w-14 h-14 text-green-500" />
                 </motion.div>
                 
-                <h3 className="text-2xl font-bold text-slate-900 mb-2 text-center">
+                <h3 className="text-xl font-bold text-slate-900 mb-3 text-center">
                   Thank You!
                 </h3>
                 
-                <p className="text-slate-500 text-center mb-6 text-sm">
-                  Your information is taken. We will contact you soon.
+                <p className="text-slate-500 text-center mb-6 text-sm px-2 leading-relaxed">
+                  Your information is taken.<br />We will contact you soon.
                 </p>
                 
                 <button
                   onClick={handleSuccessClose}
-                  className="bg-[#2563EB] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#1d4ed8] transition-colors text-sm"
+                  className="bg-[#2563EB] text-white px-10 py-3 rounded-xl font-semibold hover:bg-[#1d4ed8] transition-colors text-sm"
                 >
                   OK
                 </button>
