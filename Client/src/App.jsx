@@ -35,6 +35,7 @@ import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 import FAQPage from './pages/FAQPage.jsx';
+import AdminStudentsPage from './pages/Admin/AdminStudentsPage.jsx';
 
 import Logo from './components/Logo.jsx';
 
@@ -160,6 +161,9 @@ const App = () => {
                 <Route path='/student/login' element={<StudentLoginPage />} />
 
                 {/*Signup forms removed*/}
+
+                {/* Admin Routes */}
+                <Route path='/admin/students' element={<AdminStudentsPage />} />
 
                 {/* School Partnership */}
                 <Route path='/school-partnerships' element={<SchoolPartnership />} />

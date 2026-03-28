@@ -413,4 +413,23 @@ const firebaseAuthCallback = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, getMe, googleAuthCallback, completeGoogleProfile, debugGoogleConfig, firebaseAuthCallback };
+// @desc    Get all students
+// @route   GET /api/auth/students
+// @access  Private (any authenticated user can view)
+const getAllStudents = async (req, res) => {
+    try {
+        const students = await User.find({ role: 'student' })
+            .select('-password -sessionToken')
+            .sort({ createdAt: -1 });
+
+        res.json(students);
+    } catch (error) {
+        console.error('[AuthController:getAllStudents] ERROR:', error);
+        res.status(500).json({ 
+            message: 'Failed to fetch students',
+            error: error.message
+        });
+    }
+};
+
+module.exports = { registerUser, loginUser, getMe, googleAuthCallback, completeGoogleProfile, debugGoogleConfig, firebaseAuthCallback, getAllStudents };
