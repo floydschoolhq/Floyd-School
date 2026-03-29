@@ -94,7 +94,7 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         style={{ 
                             transform: `scale(${mentor.imageScale})`,
-                            transformOrigin: 'center 30%'
+                            transformOrigin: mentor.name === 'Abhay Singh Chauhan' ? 'center 30%' : 'center'
                         }}
                     />
                     
