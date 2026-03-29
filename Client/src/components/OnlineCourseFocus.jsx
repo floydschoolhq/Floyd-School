@@ -35,7 +35,7 @@ const OnlineCourseFocus = ({ variant }) => {
 
     if (isMobile) {
         return (
-            <section id="online-focus" className={`relative py-20 px-6 overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
+            <section id="online-focus" className={`relative py-20 px-6 overflow-hidden ${isDark ? 'bg-[#0A0F1D]' : 'bg-slate-50'}`}>
                 {/* Premium Background Accent */}
                 <div className={`absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] -mr-40 -mt-40 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
                 
@@ -53,29 +53,28 @@ const OnlineCourseFocus = ({ variant }) => {
                                 className="snap-center shrink-0 w-[85vw]"
                                 onClick={() => !course.comingSoon && navigate(`/course/${course._id}`)}
                             >
-                                <div className={`group relative rounded-[2.5rem] p-6 h-full transition-all duration-500 border ${
-                                    isDark ? 'bg-slate-900/40 border-white/5 hover:border-white/10' : 'bg-white border-slate-200 shadow-sm'
+                                <div className={`group relative rounded-[2.5rem] h-full transition-all duration-500 border overflow-hidden flex flex-col ${
+                                    isDark ? 'bg-gradient-to-b from-[#111111] to-[#050505] border-white/10 hover:border-white/20' : 'bg-white border-slate-200 shadow-sm'
                                 }`}>
-                                    <div className="flex flex-col gap-6">
-                                        <div className="relative aspect-[16/10] rounded-[1.5rem] overflow-hidden border border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
-                                            <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
-                                            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
-                                            
-                                            {!course.comingSoon ? (
-                                                <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                                                    <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
-                                                </div>
-                                            ) : (
-                                                <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
-                                                    <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
-                                                        Planned Build
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
+                                    <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
+                                        <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
+                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                                        
+                                        {!course.comingSoon ? (
+                                            <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                                <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
+                                            </div>
+                                        ) : (
+                                            <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
+                                                <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
+                                                    Planned Build
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
     
-                                        <div className="px-2">
+                                    <div className="p-6 flex-1 flex flex-col">
                                             <div className="flex items-center gap-3 mb-3">
                                                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
                                                     3 Month Fast-Track
@@ -117,7 +116,6 @@ const OnlineCourseFocus = ({ variant }) => {
                                                 )}
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -143,7 +141,7 @@ const OnlineCourseFocus = ({ variant }) => {
 
 
     return (
-        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black' : 'bg-slate-50'}`}>
+        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-[#0B1120] via-[#0A0F1D] to-[#060913]' : 'bg-slate-50'}`}>
             {/* Background mesh - matching CourseReviews */}
             <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
             <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors duration-700
@@ -177,7 +175,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                 }}
                                 className={`relative rounded-2xl border shadow-2xl group overflow-hidden transition-all duration-500 cursor-pointer w-full
                                     ${isDark
-                                        ? 'bg-gradient-to-br from-[#151515] to-[#0a0a0a] border-white/10 hover:border-blue-500/30'
+                                        ? 'bg-gradient-to-br from-[#111111] to-[#050505] border-white/10 hover:border-blue-500/30 shadow-black/50'
                                         : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300 shadow-slate-200/50'}`}
                                 onClick={() => navigate(`/course/${FALLBACK_COURSES[0]._id}`)}
                             >
@@ -187,30 +185,21 @@ const OnlineCourseFocus = ({ variant }) => {
 
                                 {/* Single Row Layout */}
                                 <div className="flex flex-col md:flex-row h-full min-h-[280px]">
-                                    {/* Left Side - Course Image with Original Ratio */}
-                                    <div className="relative md:w-2/5 lg:w-1/2 overflow-hidden my-2">
-                                        {/* Image with original aspect ratio - container fits image perfectly */}
-                                        <div className="relative w-full h-full my-1">
+                                    {/* Left Side - Course Image */}
+                                    <div className="relative md:w-2/5 lg:w-1/2 overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-[#050505]">
+                                        <div className="relative w-full h-full">
                                             {/* Adjusted gradient overlays - less intrusive on left */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent via-transparent to-transparent z-10" />
+                                            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10 pointer-events-none" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent via-transparent to-transparent z-10 pointer-events-none" />
                                             
                                             {/* Shimmer effect on hover */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[2000ms] ease-out" />
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[2000ms] ease-out z-20 pointer-events-none" />
                                             
                                             <img
                                                 src={FALLBACK_COURSES[0].image}
                                                 alt={FALLBACK_COURSES[0].title}
-                                                className="w-full h-full object-contain transition-all duration-700 ease-out group-hover:scale-105"
-                                                style={{ aspectRatio: 'auto' }}
+                                                className="w-full h-full object-cover object-[15%_center] transition-all duration-700 ease-out group-hover:scale-105 relative z-10"
                                             />
-                                            
-                                            {/* Live Badge - positioned to avoid image details */}
-                                            <div className="absolute top-4 right-4 z-20">
-                                                <span className="px-3 py-1.5 rounded-full bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-500/30">
-                                                    LIVE NOW
-                                                </span>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -302,10 +291,10 @@ const OnlineCourseFocus = ({ variant }) => {
                                         y: -8,
                                         transition: { type: 'spring', stiffness: 300, damping: 20 }
                                     }}
-                                    className={`relative pt-2 pb-0 rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
+                                    className={`relative rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
                                         ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
                                         ${isDark
-                                            ? 'bg-[#151515] backdrop-blur-xl border-white/10 hover:border-blue-500/30'
+                                            ? 'bg-gradient-to-b from-[#111111] to-[#050505] backdrop-blur-xl border-white/10 hover:border-blue-500/30 shadow-black/50'
                                             : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}`}
                                     onClick={() => !isComingSoon && navigate(`/course/${course._id}`)}
                                 >
@@ -315,21 +304,14 @@ const OnlineCourseFocus = ({ variant }) => {
                                             ${isDark ? 'bg-gradient-to-br from-blue-500/20 to-transparent' : 'bg-gradient-to-br from-blue-500/5 to-transparent'}`} />
                                     )}
 
-                                    {/* Mac Dots Header - REMOVED */}
-                                    {/* <div className="flex gap-[4px] px-3 pt-1 pb-2 relative z-10 w-full items-center justify-start">
-                                        <div className="w-[6px] h-[6px] rounded-full bg-[#FF5F56]" />
-                                        <div className="w-[6px] h-[6px] rounded-full bg-[#FFBD2E]" />
-                                        <div className="w-[6px] h-[6px] rounded-full bg-[#27C93F]" />
-                                    </div> */}
-
                                     {/* Course Image Container */}
-                                    <div className="w-full aspect-[16/8] relative z-10 overflow-hidden border-y border-white/5 shadow-inner">
+                                    <div className="w-full aspect-[16/9] relative z-10 overflow-hidden border-b border-white/5 bg-slate-900 shadow-inner">
                                         {/* Shimmer on hover (live only) */}
                                         {!isComingSoon && (
                                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[shimmer_3s_infinite] pointer-events-none" />
                                         )}
 
-                                        {/* Coming Soon Overlay - REMOVED FROM IMAGE */}
+                                        {/* Coming Soon Overlay */}
                                         {isComingSoon && false && (
                                             <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
                                                 <span className="text-white text-lg font-bold tracking-wide drop-shadow-lg select-none">
@@ -343,7 +325,7 @@ const OnlineCourseFocus = ({ variant }) => {
                                         <img
                                             src={course.image}
                                             alt={course.title}
-                                            className={`w-full h-full object-contain transition-transform duration-[1.5s] ease-out opacity-80
+                                            className={`w-full h-full object-cover transition-transform duration-[1.5s] ease-out opacity-80
                                                 ${!isComingSoon ? 'group-hover:scale-105 group-hover:opacity-100' : ''}`}
                                         />
                                     </div>

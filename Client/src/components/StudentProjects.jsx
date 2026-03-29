@@ -36,30 +36,29 @@ import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 const PROJECTS_DATA = [
   {
     id: 1,
-    title: "AI Chat Assistant",
-    category: "Artificial Intelligence",
-    description: "Advanced conversational AI with natural language processing capabilities",
-    image: "/projects/ai-chat.png",
-    tech: ["React", "Node.js", "OpenAI API", "WebSocket"],
-    stats: { stars: 234, forks: 45, views: "1.2k" },
+    title: "Snake Game",
+    category: "Game Development",
+    description: "A classic Snake game built with modern web technologies — smooth controls, score tracking, and addictive gameplay.",
+    image: "/projects/snake_game.png",
+    tech: ["JavaScript", "HTML5", "CSS3"],
+    stats: { stars: 142, forks: 28, views: "950" },
     featured: false,
-    color: "purple",
+    color: "green",
     author: {
       name: "Priya Sharma",
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya",
-      course: "AI & ML Mastery"
+      course: "Web Dev Bootcamp"
     },
-    liveUrl: "https://example.com/ai-chat",
-    githubUrl: "https://github.com/example/ai-chat"
+    liveUrl: "https://snakegame1-nine.vercel.app/"
   },
   {
     id: 2,
-    title: "E-Commerce Platform",
+    title: "AI Expense Coach",
     category: "Full Stack Development",
-    description: "Complete online shopping platform with payment integration and admin dashboard",
+    description: "An AI-powered personal finance coach that helps users track expenses, set budgets, and get smart spending insights.",
     image: "/projects/E_commerce.png",
-    tech: ["Next.js", "MongoDB", "Stripe", "Tailwind"],
-    stats: { stars: 189, forks: 32, views: "980" },
+    tech: ["React", "Node.js", "AI API", "Firebase"],
+    stats: { stars: 189, forks: 32, views: "1.1k" },
     featured: true,
     color: "blue",
     author: {
@@ -67,44 +66,41 @@ const PROJECTS_DATA = [
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul",
       course: "Full Stack Web Dev"
     },
-    liveUrl: "https://example.com/ecommerce",
-    githubUrl: "https://github.com/example/ecommerce"
+    liveUrl: "https://ai-expense-coach--shansharma.replit.app/"
   },
   {
     id: 5,
-    title: "Cybersecurity Tool",
-    category: "Cybersecurity",
-    description: "Network security scanner with vulnerability assessment and reporting",
-    image: "/projects/cybersecurity_tool.jpg",
-    tech: ["Python", "Scapy", "Nmap", "React"],
-    stats: { stars: 412, forks: 89, views: "3.4k" },
+    title: "Todo App",
+    category: "Productivity",
+    description: "A clean and intuitive todo application to manage daily tasks with priority levels, deadlines, and progress tracking.",
+    image: "/projects/task_management.jpg",
+    tech: ["React", "CSS3", "LocalStorage"],
+    stats: { stars: 98, forks: 21, views: "620" },
     featured: false,
-    color: "red",
+    color: "purple",
     author: {
       name: "Sneha Patel",
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sneha",
-      course: "Cybersecurity Ops"
+      course: "Web Dev Bootcamp"
     },
-    liveUrl: "https://example.com/cyber-tool",
-    githubUrl: "https://github.com/example/cyber-tool"
+    liveUrl: "https://todo-app-delta-one-65.vercel.app/"
   },
   {
     id: 3,
-    title: "IoT Smart Home",
-    category: "IoT & Robotics",
-    description: "Home automation system with real-time monitoring and mobile app control",
+    title: "School Website",
+    category: "Web Development",
+    description: "A fully responsive school website featuring course listings, faculty profiles, admissions info, and a modern design.",
     image: "/projects/IoT-For-Home-Automation.jpg",
-    tech: ["Arduino", "Raspberry Pi", "Python", "MQTT"],
-    stats: { stars: 156, forks: 28, views: "756" },
+    tech: ["HTML5", "CSS3", "JavaScript"],
+    stats: { stars: 176, forks: 34, views: "1.4k" },
     featured: true,
     color: "orange",
     author: {
       name: "Kavya Reddy",
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kavya",
-      course: "IoT & Robotics"
+      course: "Web Dev Bootcamp"
     },
-    liveUrl: "https://example.com/smart-home",
-    githubUrl: "https://github.com/example/smart-home"
+    liveUrl: "https://thinkskool-bootcamp-webdev-project.vercel.app/"
   },
   {
     id: 4,
@@ -115,14 +111,13 @@ const PROJECTS_DATA = [
     tech: ["React Native", "Firebase", "Redux", "Animations"],
     stats: { stars: 298, forks: 67, views: "2.1k" },
     featured: true,
-    color: "green",
+    color: "cyan",
     author: {
       name: "Arjun Nair",
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun",
       course: "Mobile App Development"
     },
-    liveUrl: "https://example.com/task-app",
-    githubUrl: "https://github.com/example/task-app"
+    liveUrl: "#"
   }
 ];
 
@@ -446,24 +441,14 @@ const ProjectCard = ({ project, index, isFeatured }) => {
               <motion.a
                 href={project.liveUrl}
                 target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center gap-1 shadow-lg transition-transform duration-200 ease-out"
+                className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg transition-transform duration-200 ease-out"
               >
                 <ExternalLink size={12} />
                 Live
-              </motion.a>
-              <motion.a
-                href={project.githubUrl}
-                target="_blank"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                className="px-3 py-2 bg-slate-800 text-white text-xs font-bold rounded-lg flex items-center gap-1 shadow-lg transition-transform duration-200 ease-out"
-              >
-                <Github size={12} />
-                Code
               </motion.a>
             </motion.div>
           )}
@@ -561,9 +546,8 @@ const StudentProjects = () => {
                    </div>
                    
                    <div className="flex gap-3">
-                       <a href={project.liveUrl} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
-                       <a href={project.githubUrl} className="flex-1 bg-slate-950 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center active:scale-95 transition-all">Source</a>
-                   </div>
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
+                    </div>
                  </div>
                </div>
              ))}
@@ -685,15 +669,18 @@ const StudentProjects = () => {
           transition={{ delay: 0.6 }}
           className="text-center"
         >
-          <motion.div
-            className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25"
+          <motion.button
+            onClick={() => {
+              const el = document.getElementById('online-focus');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Rocket size={20} />
             Start Building Your Own Project
             <ArrowRight size={20} />
-          </motion.div>
+          </motion.button>
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
