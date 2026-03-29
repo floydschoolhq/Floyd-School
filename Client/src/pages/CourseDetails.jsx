@@ -22,6 +22,7 @@ import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
 import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
+import CourseFAQ from '../components/CourseFAQ';
 import RegistrationForm from '../components/RegistrationForm';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
@@ -66,10 +67,8 @@ const CourseDetails = () => {
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none z-10">
-                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-blue-500/10 rounded-full blur-[160px] -mr-96 -mt-96" />
-                <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[140px] -ml-48 -mb-48" />
-                {/* Grid Overlay */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -mr-48 -mt-48" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[80px] -ml-24 -mb-24" />
             </div>
 
             <div className="relative z-20">
@@ -89,8 +88,11 @@ const CourseDetails = () => {
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-500 py-1 px-2 bg-blue-500/10 rounded-md">{course.duration} program</span>
                                     </div>
-                                    <h1 className="text-4xl font-black text-white mb-6 tracking-tighter leading-[0.9] uppercase">
-                                        {course.title}
+                                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
+                                        Foundation of<br className="block"/>
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                                            AI and Machine Learning
+                                        </span>
                                     </h1>
                                     <p className="text-sm text-slate-400 font-medium leading-relaxed mb-8">
                                         {course.detailedDescription}
@@ -139,8 +141,11 @@ const CourseDetails = () => {
                                     transition={{ duration: 0.8 }}
                                 >
                                     <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-white inline-block mb-6">{course.duration} program</span>
-                                    <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-[0.95] uppercase">
-                                        {course.title}
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
+                                        Foundation of<br className="block"/>
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                                            AI and Machine Learning
+                                        </span>
                                     </h1>
                                     <p className="text-base md:text-lg text-slate-400 font-medium leading-relaxed mb-10 max-w-2xl">
                                         {course.detailedDescription}
@@ -214,6 +219,9 @@ const CourseDetails = () => {
                 <div id="course-reviews" className="bg-[#080808]">
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
+
+                {/* FAQ Section */}
+                <CourseFAQ />
 
                 {/* Registration Form Modal */}
                 <RegistrationForm 

@@ -88,12 +88,18 @@ const App = () => {
         '/contact',
         '/online-program',
         '/classroom',
-        '/school-partnerships'
+        '/school-partnerships',
+        '/course',
+        '/faq',
+        '/bootcamp-gallery'
     ];
 
     // 3. Check if the current path is in the hidden list
     // This returns true if the current path matches any path in the hideLayoutOnPaths array
     const shouldHideLayout = hideLayoutOnPaths.includes(location.pathname);
+    
+    // Footer only shows on home page
+    const showFooter = location.pathname === '/';
 
     // 4. Disable browser's automatic scroll restoration
     useEffect(() => {
@@ -184,8 +190,8 @@ const App = () => {
                 } />
             </Routes>
 
-            {/* Conditional Footer Rendering */}
-            {!shouldHideLayout && (
+            {/* Conditional Footer Rendering - Only on Home Page */}
+            {showFooter && (
                 <>
                     <MobileBottomNav />
                     <Footer />

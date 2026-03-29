@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useCallback, memo } from 'react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import React, { useState, useEffect, useContext, useCallback, memo, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook, FaUserTie, FaBullseye } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LeadFormModal from './LeadFormModal';
@@ -85,36 +85,43 @@ const PremiumNavbar = memo(({ variant }) => {
     const styles = {
         navbar: isCoursesPage 
             ? isScrolled 
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/60 backdrop-blur-3xl border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.3)] px-6 py-0 h-14'
-                : 'w-full rounded-none bg-gradient-to-r from-slate-900/60 to-slate-800/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-white/20'
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-slate-900/80 to-slate-800/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-white/20'
             : isScrolled
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/60 backdrop-blur-3xl border border-pink-200/60 shadow-[0_8px_40px_rgba(0,0,0,0.15)] px-6 py-0 h-14'
-                : 'w-full rounded-none bg-gradient-to-r from-pink-50/60 to-pink-100/50 backdrop-blur-3xl px-6 py-0 h-[68px] border-b border-pink-200/60',
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/80 backdrop-blur-md border border-pink-200/60 px-6 py-0 h-14'
+                : 'w-full rounded-none bg-gradient-to-r from-pink-50/80 to-pink-100/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-pink-200/60',
         navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black',
         underline: isCoursesPage ? 'bg-white' : 'bg-black',
         mobileMenu: isCoursesPage ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-black/70 hover:text-black hover:bg-black/5'
     };
 
-    // Optimized scroll handler with throttling and direction detection
-    const [lastScrollY, setLastScrollY] = useState(0);
+    // Optimized scroll handler with throttling
+    const lastScrollRef = useRef(0);
+    const ticking = useRef(false);
     
-    const handleScroll = useCallback((latest) => {
-        setIsScrolled(latest > 20);
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!ticking.current) {
+                window.requestAnimationFrame(() => {
+                    const latest = window.scrollY;
+                    setIsScrolled(latest > 20);
+                    
+                    if (latest > lastScrollRef.current && latest > 100) {
+                        setIsVisible(false);
+                    } else {
+                        setIsVisible(true);
+                    }
+                    
+                    lastScrollRef.current = latest;
+                    ticking.current = false;
+                });
+                ticking.current = true;
+            }
+        };
         
-        // Show/hide based on scroll direction
-        if (latest > lastScrollY && latest > 100) {
-            // Scrolling down - hide navbar
-            setIsVisible(false);
-        } else {
-            // Scrolling up - show navbar
-            setIsVisible(true);
-        }
-        
-        setLastScrollY(latest);
-    }, [lastScrollY]);
-
-    const { scrollY } = useScroll();
-    useMotionValueEvent(scrollY, "change", handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         const fetchCourses = async () => {

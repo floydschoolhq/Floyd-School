@@ -55,7 +55,7 @@ const CourseCard = ({ course, onClick }) => {
                 <div className="flex-grow">
                     <h3 className={`text-[11px] font-black uppercase tracking-tight leading-none mb-2 ${
                         isComingSoon ? 'text-slate-500' : 'text-white'
-                    }`}>{course.title}</h3>
+                    }`}>{isComingSoon ? 'Coming Soon' : course.title}</h3>
                     
                     <p className="text-slate-500 text-[9px] font-medium leading-tight line-clamp-2">
                         {course.description}
@@ -112,7 +112,7 @@ const CourseCard = ({ course, onClick }) => {
             </div>
 
             <div className="flex items-center gap-3 mb-3 relative z-10">
-                <h3 className={`text-xl font-black uppercase tracking-tight transition-colors ${isComingSoon ? 'text-white/60' : 'text-white group-hover:text-white'}`}>{course.title}</h3>
+                <h3 className={`text-xl font-black uppercase tracking-tight transition-colors ${isComingSoon ? 'text-white/60' : 'text-white group-hover:text-white'}`}>{isComingSoon ? 'Coming Soon' : course.title}</h3>
             </div>
             
             <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6 line-clamp-2 relative z-10">
@@ -295,8 +295,8 @@ const OnlineProgram = () => {
                 
                 {/* Background Decorative Mesh - Mobile */}
                 <div className="fixed inset-0 pointer-events-none opacity-20 z-0">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[80px] -mr-32 -mt-32" />
-                    <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-indigo-500/5 rounded-full blur-[70px] -ml-24 -mb-24" />
+                    <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-blue-500/10 rounded-full blur-[50px] -mr-16 -mt-16" />
+                    <div className="absolute bottom-0 left-0 w-[150px] h-[150px] bg-indigo-500/5 rounded-full blur-[40px] -ml-12 -mb-12" />
                 </div>
 
                 <div className="relative z-10">
@@ -377,10 +377,8 @@ const OnlineProgram = () => {
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none opacity-30 z-0">
-                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-pink-500/5 rounded-full blur-[160px] -mr-96 -mt-96" />
-                <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-amber-500/3 rounded-full blur-[140px] -ml-48 -mb-48" />
-                {/* Grid Overlay */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100" />
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-pink-500/5 rounded-full blur-[100px] -mr-48 -mt-48" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/3 rounded-full blur-[80px] -ml-24 -mb-24" />
             </div>
 
             <div className="relative z-10">
@@ -448,7 +446,7 @@ const OnlineProgram = () => {
 
                 {/* Final CTA - Dark Industrial */}
                 <div className="py-48 bg-gradient-to-br from-black via-slate-950 to-black relative overflow-hidden text-center border-t border-white/5">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[120px] rounded-full pointer-events-none" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-orange-600/5 blur-[60px] rounded-full pointer-events-none" />
                     <div className="max-w-5xl mx-auto px-6 relative z-10">
                         <h2 className="text-5xl md:text-8xl font-black text-white mb-14 tracking-tighter uppercase leading-[0.85]">
                             ELEVATE YOUR <br/><span className="text-white">ENGINEERING</span> <br/>STANDARD.

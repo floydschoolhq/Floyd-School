@@ -49,28 +49,30 @@ const CourseOfferings = ({ variant = 'dark' }) => {
         ];
 
         return (
-            <section className={`py-16 px-6 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
+            <section className="py-16 px-6 relative overflow-hidden bg-black">
+                <div className="absolute inset-0 -z-10">
+                    <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-cyan-500/5 via-cyan-500/10 to-transparent" />
+                    <div className="absolute bottom-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-blue-500/5" />
+                </div>
                 <div className="relative z-10">
                     <div className="text-center mb-12">
-                        <h2 className={`text-4xl font-black mb-4 tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            We've Got Your <span className="text-blue-500">Back.</span> Always.
+                        <h2 className="text-4xl font-black mb-4 tracking-tighter text-white">
+                            We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Back.</span> Always.
                         </h2>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4">
                         {mobileFeatures.map((f, i) => (
-                            <div key={i} className={`p-6 rounded-[2rem] border ${
-                                isDark ? 'bg-slate-900/50 border-white/5' : 'bg-white border-slate-100 shadow-sm'
-                            }`}>
+                            <div key={i} className="p-6 rounded-[2rem] border bg-slate-900/50 border-white/5">
                                 <div className="flex items-center gap-4 mb-3">
                                     <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-xs">
                                         {f.icon}
                                     </div>
-                                    <h3 className={`text-[15px] font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                    <h3 className="text-[15px] font-black uppercase tracking-tight text-white">
                                         {f.title}
                                     </h3>
                                 </div>
-                                <p className={`text-[12px] leading-snug font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                <p className="text-[12px] leading-snug font-medium text-slate-400">
                                     {f.desc}
                                 </p>
                             </div>
@@ -82,29 +84,20 @@ const CourseOfferings = ({ variant = 'dark' }) => {
     }
 
     return (
-        <section className={`pt-12 pb-12 relative overflow-hidden ${
-            isDark 
-                ? 'bg-gradient-to-br from-black via-slate-950 to-black' 
-                : 'bg-gradient-to-br from-slate-50 via-white to-slate-100'
-        }`}>
-            {/* Background Decorative Elements */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className={`absolute top-20 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl opacity-20 ${
-                    isDark ? 'bg-blue-500' : 'bg-blue-400'
-                }`} />
-                <div className={`absolute top-40 right-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 ${
-                    isDark ? 'bg-purple-500' : 'bg-purple-400'
-                }`} />
-                <div className={`absolute bottom-20 left-1/2 w-80 h-80 rounded-full mix-blend-multiply filter blur-3xl opacity-20 ${
-                    isDark ? 'bg-indigo-500' : 'bg-indigo-400'
-                }`} />
+        <section className="pt-12 pb-12 relative overflow-hidden bg-black">
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/8 to-transparent" />
+                <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/8 to-transparent" />
+                <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.015] to-transparent" />
+                <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.015] to-transparent" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-cyan-500/3 via-transparent to-blue-500/3 blur-[120px]" />
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
                 <div className="text-center mb-20">
                     <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">
-                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">Back.</span> Always.
+                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Back.</span> Always.
                     </h2>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
                         Everything you need is already included.

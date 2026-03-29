@@ -216,7 +216,6 @@ const StarRating = ({ rating, colorClass }) => (
 );
 
 const FeaturedCard = ({ review, variant }) => {
-    const isDark = variant === 'dark';
     const c = colorMap[review.color];
     return (
         <motion.div
@@ -225,65 +224,38 @@ const FeaturedCard = ({ review, variant }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.97 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-2xl transition-all duration-500
-                ${isDark 
-                    ? 'bg-white/[0.03] border border-white/10' 
-                    : 'bg-white border border-slate-100 shadow-slate-200/50'}`}
+            className="relative rounded-3xl p-8 md:p-10 overflow-hidden border border-white/[0.06] bg-white/[0.02]"
         >
-            {/* Radial glow bg */}
-            <div className={`absolute -top-24 -right-24 w-[350px] h-[350px] rounded-full bg-gradient-to-br ${c.glow} via-transparent to-transparent blur-3xl pointer-events-none`} />
-
-            {/* Giant watermark quote */}
-            <div className={`absolute -bottom-6 -right-4 pointer-events-none transition-colors duration-500
-                ${isDark ? 'text-white/[0.02]' : 'text-slate-50'}`}>
-                <Quote size={160} fill="currentColor" />
-            </div>
-
-            <div className="relative z-10 flex flex-col gap-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
-                    <div className="flex items-center gap-5">
-                        <div className="relative">
-                            <div className={`absolute inset-0 rounded-2xl blur-md ${c.glow} bg-gradient-to-br`} />
-                            <img
-                                src={review.avatar}
-                                alt={review.name}
-                                className="relative w-16 h-16 rounded-2xl border-2 border-white shadow-lg object-cover"
-                            />
-                            <div className={`absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-full ${c.dot} border-2 border-white flex items-center justify-center`}>
-                                <Zap size={9} className="text-white fill-current" />
-                            </div>
-                        </div>
-                        <div>
-                            <h4 className={`text-lg font-bold tracking-tight transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[11px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-blue-500' : c.highlight}`}>{review.role}</p>
-                            <div className="flex items-center gap-3 mt-2">
-                                <StarRating rating={review.rating} colorClass={isDark ? 'text-blue-500' : c.star} />
-                                <span className={`text-[10px] font-semibold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.batch}</span>
-                            </div>
-                        </div>
+            <div className="relative z-10 flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                    <img
+                        src={review.avatar}
+                        alt={review.name}
+                        className="w-14 h-14 rounded-xl border border-white/10 object-cover"
+                    />
+                    <div>
+                        <h4 className="text-base font-bold text-white/90">{review.name}</h4>
+                        <p className="text-[10px] font-semibold uppercase tracking-widest mt-0.5 text-cyan-500/70">{review.role}</p>
+                    </div>
+                    <div className="ml-auto flex items-center gap-3">
+                        <StarRating rating={review.rating} colorClass="text-cyan-500" />
+                        <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">{review.batch}</span>
                     </div>
                 </div>
 
-                {/* Highlight */}
                 <div>
-                    <h3 className={`text-xl md:text-2xl font-black tracking-tighter uppercase mb-4 transition-colors
-                        ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
                         "{review.highlight}"
                     </h3>
                 </div>
- 
-                {/* Body */}
-                <p className={`text-[15px] leading-relaxed font-normal transition-colors
-                    ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+
+                <p className="text-sm leading-relaxed text-slate-400">
                     {review.content}
                 </p>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                     {review.tags.map(tag => (
-                        <span key={tag} className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full transition-all
-                            ${isDark ? 'bg-white/5 text-slate-400 border border-white/5' : c.tag}`}>
+                        <span key={tag} className="text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 text-slate-400 border border-white/5">
                             {tag}
                         </span>
                     ))}
@@ -294,40 +266,32 @@ const FeaturedCard = ({ review, variant }) => {
 };
 
 const MiniCard = ({ review, isActive, onClick, variant }) => {
-    const isDark = variant === 'dark';
     const c = colorMap[review.color];
     return (
         <motion.button
             onClick={onClick}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className={`w-full text-left p-4 rounded-xl border transition-all duration-300
                 ${isActive
-                    ? isDark ? 'border-orange-500/50 bg-white/5 shadow-xl shadow-black/40' : 'border-slate-300 bg-white shadow-lg shadow-slate-200/60'
-                    : isDark ? 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05]' : "border-slate-100 bg-slate-50/50 hover:bg-white hover:border-slate-200"
+                    ? 'border-cyan-500/30 bg-cyan-500/5'
+                    : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                 }`}
         >
-            {isActive && (
-                <motion.div
-                    layoutId="activeIndicator"
-                    className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${isDark ? 'bg-orange-500' : c.dot}`}
-                />
-            )}
-            <div className="flex items-center gap-3 pl-2">
+            <div className="flex items-center gap-3">
                 <img
                     src={review.avatar}
                     alt={review.name}
-                    className={`w-9 h-9 rounded-xl object-cover border transition-all
-                        ${isDark ? 'border-white/10' : 'border-slate-100'}`}
+                    className="w-9 h-9 rounded-lg object-cover border border-white/10"
                 />
                 <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
-                    <p className={`text-[10px] font-medium uppercase tracking-widest truncate mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                    <p className="text-sm font-semibold text-white/80 truncate">{review.name}</p>
+                    <p className="text-[10px] font-medium uppercase tracking-widest truncate mt-0.5 text-slate-500">{review.role}</p>
                 </div>
-                <StarRating rating={review.rating} colorClass={isDark ? 'text-blue-500' : c.star} />
+                <StarRating rating={review.rating} colorClass="text-cyan-500" />
             </div>
             {isActive && (
-                <p className="text-[12px] text-slate-500 mt-3 pl-2 line-clamp-2 leading-relaxed">
+                <p className="text-[12px] text-slate-400 mt-3 line-clamp-2 leading-relaxed">
                     {review.highlight}
                 </p>
             )}
@@ -349,48 +313,45 @@ const CourseReviews = ({ courseId, variant }) => {
     const isMobile = window.innerWidth < 768;
 
     return (
-        <section className={`py-16 md:py-32 relative overflow-hidden transition-all duration-500
-            ${isDark ? 'bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5' : 'bg-white border-t border-slate-100'}`}>
-            {/* Background mesh */}
-            <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`}
-                style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-            <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors
-                ${isDark ? 'bg-blue-600/5' : 'bg-blue-50'}`} />
-            <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors
-                ${isDark ? 'bg-amber-600/5' : 'bg-indigo-50'}`} />
+        <section className="py-24 px-6 relative overflow-hidden bg-black">
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
+                <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />
+                <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
+                <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
+            </div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                     <motion.h2 
-                        className="text-3xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase"
+                        className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tight leading-[1.1]"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">Reviews</span>
+                        Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
                     </motion.h2>
-                    <p className={`text-sm md:text-lg max-w-xl mx-auto font-medium transition-colors
-                        ${isDark ? 'text-slate-500' : 'text-slate-50'}`}>
+                    <p className="text-lg text-slate-500 font-light tracking-wide max-w-xl mx-auto">
                         Real stories from students who mastered AI & Machine Learning with us.
                     </p>
 
                     {/* Aggregate stats */}
-                    <div className="flex items-center justify-center gap-6 md:gap-8 mt-8">
+                    <div className="flex items-center justify-center gap-8 mt-10">
                         <div className="text-center">
-                            <div className={`text-2xl md:text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>4.9</div>
+                            <div className="text-3xl font-black text-white">4.9</div>
                             <div className="flex justify-center mt-1">
                                 {[...Array(3)].map((_, i) => (
-                                    <Star key={i} size={10} className="text-amber-400 fill-amber-400" />
+                                    <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
                                 ))}
                             </div>
-                            <div className={`text-[8px] md:text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Avg Rating</div>
+                            <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Avg Rating</div>
                         </div>
-                        <div className={`w-px h-10 md:h-12 transition-colors ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
+                        <div className="w-px h-12 bg-white/10" />
                         <div className="text-center">
-                            <div className={`text-2xl md:text-3xl font-black transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>200+</div>
-                            <div className={`text-[8px] md:text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Reviews</div>
+                            <div className="text-3xl font-black text-white">200+</div>
+                            <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Reviews</div>
                         </div>
                     </div>
                 </div>

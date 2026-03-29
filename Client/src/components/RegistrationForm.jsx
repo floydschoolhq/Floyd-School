@@ -1,33 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, User, Mail, Phone, BookOpen, MessageSquare, Send } from 'lucide-react';
-
-// Custom scrollbar styles
-const customScrollbarStyles = `
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-track {
-        background: #374151;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #6b7280;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #9ca3af;
-    }
-`;
+import { X } from 'lucide-react';
 
 const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
     const [formData, setFormData] = useState({
@@ -41,17 +14,6 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [errors, setErrors] = useState({});
-
-    // Inject custom scrollbar styles
-    React.useEffect(() => {
-        const styleElement = document.createElement('style');
-        styleElement.textContent = customScrollbarStyles;
-        document.head.appendChild(styleElement);
-        
-        return () => {
-            document.head.removeChild(styleElement);
-        };
-    }, []);
 
     const validateForm = () => {
         const newErrors = {};
@@ -83,15 +45,12 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
         
         setIsSubmitting(true);
         
-        // Simulate API call
         setTimeout(() => {
             setIsSubmitting(false);
             setIsSuccess(true);
             
-            // Trigger registration completion event
             window.dispatchEvent(new CustomEvent('registrationComplete'));
             
-            // Reset form after 3 seconds and close modal
             setTimeout(() => {
                 setFormData({
                     fullName: '',
@@ -113,7 +72,6 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
             [name]: value
         }));
         
-        // Clear error when user starts typing
         if (errors[name]) {
             setErrors(prev => ({
                 ...prev,
@@ -130,209 +88,123 @@ const RegistrationForm = ({ isOpen, onClose, courseTitle = "" }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
                 onClick={onClose}
             >
                 <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
+                    initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    transition={{ type: "spring", damping: 20 }}
-                    className="w-full max-w-2xl bg-white dark:bg-[#0A0A0A] rounded-3xl overflow-hidden shadow-2xl"
-                    style={{ transform: 'scale(0.6, 0.6)', transformOrigin: 'center', maxHeight: '80vh' }}
+                    exit={{ scale: 0.95, opacity: 0 }}
+                    className="w-full max-w-md bg-white rounded-xl overflow-hidden"
                     onClick={e => e.stopPropagation()}
                 >
-                    <div className="h-full max-h-[80vh] overflow-y-auto overflow-x-hidden custom-scrollbar">
-                        {/* Header */}
-                        <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white sticky top-0 z-10">
+                    <div className="p-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 className="text-xl font-semibold text-slate-900">Course Registration</h2>
+                                <p className="text-sm text-slate-500 mt-1">{courseTitle}</p>
+                            </div>
                             <button
                                 onClick={onClose}
-                                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 transition-colors"
+                                className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600"
                             >
                                 <X size={18} />
                             </button>
-                        
-                        <div className="flex items-center gap-3 mb-2">
-                            <BookOpen size={24} />
-                            <h2 className="text-2xl font-black">Course Registration</h2>
                         </div>
-                        <p className="text-blue-100 text-sm">
-                            Start your journey with ThinkSkool
-                        </p>
-                    </div>
 
-                    {/* Success Message */}
-                    <AnimatePresence>
-                        {isSuccess && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                className="absolute inset-0 z-20 flex items-center justify-center bg-white dark:bg-[#0A0A0A] p-8"
-                            >
-                                <div className="text-center">
-                                    <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ delay: 0.2, type: "spring" }}
-                                        className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4"
-                                    >
-                                        <CheckCircle size={40} className="text-white" />
-                                    </motion.div>
-                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
-                                        Enrollment Successful!
-                                    </h3>
-                                    <p className="text-slate-600 dark:text-slate-400">
-                                        Thank you for registering! We will call you back soon to provide more clarity about your enrollment.
-                                    </p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                        <AnimatePresence>
+                            {isSuccess && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="py-8 text-center"
+                                >
+                                    <p className="text-lg font-medium text-slate-900 mb-2">Registration Successful!</p>
+                                    <p className="text-sm text-slate-500">We will call you back soon.</p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                    {/* Form */}
-                    <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                        {/* Note */}
-                        <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6">
-                            <div className="flex items-start gap-3">
-                                <MessageSquare size={18} className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                        {!isSuccess && (
+                            <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
-                                        Important Note
-                                    </p>
-                                    <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
-                                        We will callback to give you more clarity about your enrollment and answer any questions you may have.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Full Name */}
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                <User size={16} />
-                                Full Name *
-                            </label>
-                            <input
-                                type="text"
-                                name="fullName"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white transition-colors
-                                    ${errors.fullName 
-                                        ? 'border-red-300 dark:border-red-600 focus:ring-red-500' 
-                                        : 'border-slate-200 dark:border-slate-700 focus:ring-blue-500'
-                                    } focus:outline-none focus:ring-2 focus:border-transparent`}
-                                placeholder="Enter your full name"
-                            />
-                            {errors.fullName && (
-                                <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
-                            )}
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                <Mail size={16} />
-                                Email Address *
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white transition-colors
-                                    ${errors.email 
-                                        ? 'border-red-300 dark:border-red-600 focus:ring-red-500' 
-                                        : 'border-slate-200 dark:border-slate-700 focus:ring-blue-500'
-                                    } focus:outline-none focus:ring-2 focus:border-transparent`}
-                                placeholder="your.email@example.com"
-                            />
-                            {errors.email && (
-                                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                            )}
-                        </div>
-
-                        {/* Phone */}
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                <Phone size={16} />
-                                Phone Number *
-                            </label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white transition-colors
-                                    ${errors.phone 
-                                        ? 'border-red-300 dark:border-red-600 focus:ring-red-500' 
-                                        : 'border-slate-200 dark:border-slate-700 focus:ring-blue-500'
-                                    } focus:outline-none focus:ring-2 focus:border-transparent`}
-                                placeholder="Enter your 10-digit phone number"
-                            />
-                            {errors.phone && (
-                                <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-                            )}
-                        </div>
-
-                        {/* Course (Pre-filled) */}
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                <BookOpen size={16} />
-                                Course
-                            </label>
-                            <input
-                                type="text"
-                                name="course"
-                                value={formData.course}
-                                readOnly
-                                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed"
-                                placeholder="Course name"
-                            />
-                        </div>
-
-                        {/* Message */}
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                <MessageSquare size={16} />
-                                Message (Optional)
-                            </label>
-                            <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                rows="3"
-                                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                placeholder="Any specific questions or requirements..."
-                            />
-                        </div>
-
-                        {/* Submit Button */}
-                        <motion.button
-                            type="submit"
-                            disabled={isSubmitting}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <motion.div
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                        className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={formData.fullName}
+                                        onChange={handleChange}
+                                        className={`w-full px-3 py-2 border rounded-lg text-sm ${
+                                            errors.fullName ? 'border-red-500' : 'border-slate-300'
+                                        }`}
+                                        placeholder="Enter your name"
                                     />
-                                    Processing...
-                                </>
-                            ) : (
-                                <>
-                                    <Send size={18} />
-                                    Submit Registration
-                                </>
-                            )}
-                        </motion.button>
-                    </form>
+                                    {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className={`w-full px-3 py-2 border rounded-lg text-sm ${
+                                            errors.email ? 'border-red-500' : 'border-slate-300'
+                                        }`}
+                                        placeholder="your@email.com"
+                                    />
+                                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className={`w-full px-3 py-2 border rounded-lg text-sm ${
+                                            errors.phone ? 'border-red-500' : 'border-slate-300'
+                                        }`}
+                                        placeholder="1234567890"
+                                    />
+                                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Course</label>
+                                    <input
+                                        type="text"
+                                        name="course"
+                                        value={formData.course}
+                                        readOnly
+                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-slate-50 text-slate-500"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Message (Optional)</label>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        rows="3"
+                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm resize-none"
+                                        placeholder="Any questions?"
+                                    />
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="w-full bg-slate-900 text-white py-2.5 rounded-lg font-medium text-sm hover:bg-slate-800 disabled:opacity-50"
+                                >
+                                    {isSubmitting ? 'Submitting...' : 'Register'}
+                                </button>
+                            </form>
+                        )}
                     </div>
                 </motion.div>
             </motion.div>

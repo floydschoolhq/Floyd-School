@@ -115,9 +115,9 @@ const Hero = () => {
         <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-[#FDFCFB]">
             {/* Background Accents - Premium Orange-White Glow */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-orange-500/[0.06] rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-amber-200/[0.05] rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-100/[0.1] rounded-full blur-[140px]" />
+                <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-orange-500/[0.06] rounded-full blur-[80px]" />
+                <div className="absolute bottom-[-10%] left-[-5%] w-[300px] h-[300px] bg-amber-200/[0.05] rounded-full blur-[60px]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-100/[0.1] rounded-full blur-[100px]" />
             </div>
 
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 w-full flex flex-col items-center mt-4">

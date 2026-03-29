@@ -1,37 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
 import {
   Code2,
   ExternalLink,
-  Github,
   Star,
-  Users,
-  Calendar,
-  Zap,
-  Trophy,
-  Rocket,
   Eye,
-  Heart,
-  Share2,
   ArrowRight,
   Layers,
   Cpu,
   Smartphone,
   Globe,
-  ChevronLeft,
-  ChevronRight,
   Database
 } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
-// The original file already had this import, but the instruction implies adding it again in a specific spot.
-// To avoid duplication and maintain correctness, I'm assuming the intent was to ensure it's present and
-// if it was missing, to add it in the specified location. Since it's already present, and the instruction
-// shows it being added *before* ScrollDarkenHeading, I'm moving the existing import to that position.
-// If the intent was to have two identical imports, that would be redundant but syntactically valid.
-// Given the prompt to make it syntactically correct and faithful, moving the existing one to the
-// specified new location seems the most reasonable interpretation.
-// import useIsMobile from '../hooks/useIsMobile'; // This line was originally here, now moved up.
 
 const PROJECTS_DATA = [
   {
@@ -121,7 +102,7 @@ const PROJECTS_DATA = [
   }
 ];
 
-const TechIcon = ({ tech, index }) => {
+const TechIcon = ({ tech }) => {
   const getIcon = (tech) => {
     const iconMap = {
       'React': <Code2 size={14} />,
@@ -130,7 +111,7 @@ const TechIcon = ({ tech, index }) => {
       'WebSocket': <Globe size={14} />,
       'Next.js': <Layers size={14} />,
       'MongoDB': <Database size={14} />,
-      'Stripe': <Zap size={14} />,
+      'Stripe': <Cpu size={14} />,
       'Tailwind': <Layers size={14} />,
       'Arduino': <Cpu size={14} />,
       'Raspberry Pi': <Cpu size={14} />,
@@ -139,7 +120,7 @@ const TechIcon = ({ tech, index }) => {
       'React Native': <Smartphone size={14} />,
       'Firebase': <Database size={14} />,
       'Redux': <Layers size={14} />,
-      'Animations': <Zap size={14} />,
+      'Animations': <Cpu size={14} />,
       'Scapy': <Database size={14} />,
       'Nmap': <Globe size={14} />,
       'Plotly': <Database size={14} />,
@@ -150,30 +131,16 @@ const TechIcon = ({ tech, index }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="px-2 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium flex items-center gap-1"
-    >
+    <div className="px-2 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium flex items-center gap-1">
       {getIcon(tech)}
       <span>{tech}</span>
-    </motion.div>
+    </div>
   );
 };
 
 const ProjectCard = ({ project, index, isFeatured }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
   const isMobile = useIsMobile();
-
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end end"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   const colorGradients = {
     purple: 'from-purple-500/20 to-purple-600/20 border-purple-500/30',
@@ -193,46 +160,36 @@ const ProjectCard = ({ project, index, isFeatured }) => {
             : 'border-slate-200/60 shadow-sm'
         }`}
       >
-        {/* Main Card - Mobile Static */}
         <div className="relative h-24 overflow-hidden bg-slate-100">
           <img
             src={project.image}
             alt={project.title}
             className="w-full h-full object-cover"
           />
-          
-          {/* Overlay Gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-          
-          {/* Category Badge */}
           <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
             {project.category}
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-2.5">
-          {/* Title */}
           <h3 className="text-xs font-bold text-slate-900 mb-1.5 line-clamp-2">
             {project.title}
           </h3>
 
-          {/* Description */}
           <p className="text-slate-600 text-[10px] leading-relaxed mb-2 line-clamp-2">
             {project.description}
           </p>
 
-          {/* Tech Stack */}
           <div className="flex flex-wrap gap-0.5 mb-2">
             {project.tech.slice(0, 2).map((tech, i) => (
-              <TechIcon key={i} tech={tech} index={i} />
+              <TechIcon key={i} tech={tech} />
             ))}
             {project.tech.length > 2 && (
               <span className="text-[6px] text-slate-500">+{project.tech.length - 2}</span>
             )}
           </div>
 
-          {/* Author Info */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <img
@@ -246,7 +203,6 @@ const ProjectCard = ({ project, index, isFeatured }) => {
               </div>
             </div>
 
-            {/* Stats */}
             <div className="flex items-center gap-1.5 text-slate-500">
               <div className="flex items-center gap-0.5">
                 <Star size={8} className="text-yellow-500 fill-yellow-500" />
@@ -264,26 +220,15 @@ const ProjectCard = ({ project, index, isFeatured }) => {
   }
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      style={{ scale, y: isMobile ? 0 : y }}
-      whileHover={{ 
-        y: -8,
-        scale: 1.02,
-        transition: { duration: 0.2, ease: "easeOut" }
-      }}
+    <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative group cursor-pointer ${
+      className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 ${
         isFeatured 
           ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
           : 'lg:col-span-1 md:row-span-1'
       }`}
     >
-      {/* Glow Effect on Hover - CSS Transition for Performance */}
       <div
         className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out rounded-2xl"
         style={{
@@ -291,117 +236,60 @@ const ProjectCard = ({ project, index, isFeatured }) => {
         }}
       />
 
-      {/* 3D Floating Elements - Optimized */}
-      <AnimatePresence mode="wait">
-        {isHovered && !isMobile && (
-          <>
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center"
-              style={{ zIndex: 20 }}
-            >
-              <Star size={16} className="text-yellow-500 fill-yellow-500" />
-            </motion.div>
-            {project.featured && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="absolute top-4 right-4 text-xs font-bold text-white bg-black/80 px-2 py-1 rounded"
-                style={{ zIndex: 20 }}
-              >
-                FEATURED
-              </motion.div>
-            )}
-          </>
-        )}
-      </AnimatePresence>
+      {isHovered && (
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center z-20">
+          <Star size={16} className="text-yellow-500 fill-yellow-500" />
+        </div>
+      )}
+      {project.featured && isHovered && (
+        <div className="absolute top-4 right-4 text-xs font-bold text-white bg-black/80 px-2 py-1 rounded z-20">
+          FEATURED
+        </div>
+      )}
 
-      {/* Main Card */}
       <div className={`relative bg-white rounded-2xl border overflow-hidden transition-all duration-300 ease-out ${
         isFeatured 
           ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-2xl` 
           : 'border-slate-200/60 shadow-lg group-hover:shadow-xl'
       }`}>
         
-        {/* Project Image */}
         <div className="relative h-48 md:h-56 overflow-hidden bg-slate-100">
-          <motion.div
-            className="w-full h-full bg-cover bg-center"
+          <div
+            className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
             style={{ backgroundImage: `url(${project.image})` }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
           />
           
-          {/* Overlay Gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
           
-          {/* Category Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800"
-          >
+          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800">
             {project.category}
-          </motion.div>
+          </div>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          {/* Title */}
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="text-xl font-bold text-slate-900 mb-3 line-clamp-2"
-          >
+          <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2">
             {project.title}
-          </motion.h3>
+          </h3>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3"
-          >
+          <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
             {project.description}
-          </motion.p>
+          </p>
 
-          {/* Tech Stack */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="flex flex-wrap gap-2 mb-4"
-          >
+          <div className="flex flex-wrap gap-2 mb-4">
             {project.tech.slice(0, 3).map((tech, i) => (
-              <TechIcon key={i} tech={tech} index={i} />
+              <TechIcon key={i} tech={tech} />
             ))}
             {project.tech.length > 3 && (
               <span className="text-xs text-slate-500">+{project.tech.length - 3} more</span>
             )}
-          </motion.div>
+          </div>
 
-          {/* Author Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="flex items-center justify-between"
-          >
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <motion.img
+              <img
                 src={project.author.avatar}
                 alt={project.author.name}
-                className="w-8 h-8 rounded-full border-2 border-white shadow-sm transition-transform duration-200 ease-out"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-105 transition-transform"
               />
               <div>
                 <p className="text-sm font-semibold text-slate-800">{project.author.name}</p>
@@ -409,52 +297,34 @@ const ProjectCard = ({ project, index, isFeatured }) => {
               </div>
             </div>
 
-            {/* Stats */}
             <div className="flex items-center gap-4 text-slate-500">
-              <motion.div
-                className="flex items-center gap-1 transition-transform duration-200 ease-out"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-              >
+              <div className="flex items-center gap-1 hover:scale-105 transition-transform">
                 <Star size={14} className="text-yellow-500 fill-yellow-500" />
                 <span className="text-xs font-medium">{project.stats.stars}</span>
-              </motion.div>
+              </div>
               <div className="flex items-center gap-1">
                 <Eye size={14} />
                 <span className="text-xs font-medium">{project.stats.views}</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Action Buttons */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 15 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute bottom-4 left-4 right-4 flex gap-2"
-              style={{ zIndex: 30 }}
+        {isHovered && (
+          <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-30">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
             >
-              <motion.a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg transition-transform duration-200 ease-out"
-              >
-                <ExternalLink size={12} />
-                Live
-              </motion.a>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <ExternalLink size={12} />
+              Live
+            </a>
+          </div>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -471,19 +341,18 @@ const StudentProjects = () => {
   const scroll = (direction) => {
     if (scrollRef.current) {
         const { current } = scrollRef;
-        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
+        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640;
         if (direction === 'left') {
             current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         } else {
             current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
     }
-};
+  };
 
   if (isMobile) {
     return (
       <section id="student-projects" className="pb-24 px-6 bg-white relative overflow-hidden">
-        {/* Background mesh */}
         <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         
         <div className="relative z-10">
@@ -496,7 +365,6 @@ const StudentProjects = () => {
             </p>
           </div>
 
-          {/* Filter Tabs - Mobile */}
           <div className="flex justify-center gap-3 mb-12">
             {['all', 'featured'].map((tab) => (
               <button
@@ -517,7 +385,7 @@ const StudentProjects = () => {
              {filteredProjects.map((project) => (
                <div 
                  key={project.id} 
-                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col active:scale-[0.98] transition-all duration-300"
+                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300"
                >
                  <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
                    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
@@ -556,7 +424,7 @@ const StudentProjects = () => {
           <div className="flex justify-center mt-6">
               <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
                   <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to view more</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
               </div>
           </div>
 
@@ -570,64 +438,26 @@ const StudentProjects = () => {
     );
   }
 
-
   return (
     <section id="student-projects" className="pb-20 md:pb-28 bg-gradient-to-br from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 50%, rgba(251, 146, 60, 0.05) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(251, 146, 60, 0.05) 0%, transparent 50%)"
-            ],
-            transition: { duration: 10, repeat: Infinity, ease: "easeInOut" }
-          }}
-          className="absolute inset-0"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-20 right-20 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl"
-        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle at 20%_50%,rgba(251,146,60,0.05)_0%,transparent_50%),radial-gradient(circle at 80%_50%,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
+        <div className="absolute top-20 right-20 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
             These are real projects students actually build.
           </ScrollDarkenHeading>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-slate-600 text-lg mt-6 max-w-3xl mx-auto leading-relaxed"
-          >
+          <p className="text-slate-600 text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
             By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        {/* Filter Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="flex justify-center gap-4 mb-12"
-        >
+        <div className="flex justify-center gap-4 mb-12">
           {['all', 'featured'].map((tab) => (
-            <motion.button
+            <button
               key={tab}
               onClick={() => setFilter(tab)}
               className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
@@ -635,22 +465,13 @@ const StudentProjects = () => {
                   ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
                   : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {tab === 'all' ? 'All Projects' : 'Featured Only'}
-            </motion.button>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Projects Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16 auto-rows-auto"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16 auto-rows-auto">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
@@ -659,38 +480,23 @@ const StudentProjects = () => {
               isFeatured={project.featured}
             />
           ))}
-        </motion.div>
+        </div>
 
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center"
-        >
-          <motion.button
+        <div className="text-center">
+          <button
             onClick={() => {
               const el = document.getElementById('online-focus');
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
           >
             Start Building Your Own Project
             <ArrowRight size={20} />
-          </motion.button>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="text-slate-600 mt-4"
-          >
+          </button>
+          <p className="text-slate-600 mt-4">
             Join our courses and turn your ideas into reality
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
       </div>
     </section>
   );
