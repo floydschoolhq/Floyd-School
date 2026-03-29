@@ -58,7 +58,7 @@ const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) =>
                             onClick={(e) => { e.stopPropagation(); onEarlyAccess(course); }}
                             className="text-xs font-bold text-purple-400 hover:text-purple-300 hover:translate-x-1 transition-all"
                         >
-                            Get Early Access →
+                            Early Register →
                         </button>
                     )}
                 </div>
