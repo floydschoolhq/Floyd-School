@@ -7,7 +7,6 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import a5jImg from '/a5j.png';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -33,7 +32,7 @@ const LEADERS = [
     {
         name: "Abhay Singh Chauhan",
         role: "Help Associate",
-        image: a5jImg,
+        image: abhayImg,
         imageScale: 1.5,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
