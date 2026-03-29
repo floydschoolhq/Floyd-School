@@ -1,131 +1,356 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Cpu, Code, Terminal, ShieldCheck, Rocket, ChevronLeft, ChevronRight, Bell, Download } from 'lucide-react';
+import { ArrowRight, Radio, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import useIsMobile from '../hooks/useIsMobile';
 import EarlyRegistrationForm from './EarlyRegistrationForm';
 
-const iconMap = {
-    Cpu: Cpu,
-    Code: Code,
-    Terminal: Terminal,
-    Shield: ShieldCheck
+const cardVariants = {
+    offscreen: { y: 80, opacity: 0, scale: 0.95 },
+    onscreen: {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { type: 'spring', bounce: 0.3, duration: 0.7 }
+    }
+};
+
+const staggerContainer = {
+    onscreen: {
+        transition: { staggerChildren: 0.1 }
+    }
+};
+
+const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) => {
+    const isComingSoon = !!course.comingSoon;
+    
+    return (
+        <motion.div
+            variants={cardVariants}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true, margin: '-50px' }}
+            whileHover={{ y: -12, scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className={`group relative rounded-2xl overflow-hidden cursor-pointer flex flex-col
+                ${isComingSoon ? 'opacity-90' : ''}
+                ${isDark 
+                    ? 'bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0f0f0f] border border-white/10 hover:border-blue-500/50' 
+                    : 'bg-white shadow-sm hover:shadow-xl border border-slate-200'}`}
+            onClick={() => !isComingSoon && onDetails(course._id)}
+        >
+            <div className="relative w-full aspect-[16/9] overflow-hidden">
+                <motion.img 
+                    src={course.image} 
+                    alt={course.title} 
+                    className={`absolute inset-0 w-full h-full object-cover
+                        ${!isComingSoon ? 'group-hover:scale-110' : 'grayscale-[30%]'}`}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                />
+                
+                <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                    initial={{ opacity: 0.6 }}
+                    whileHover={{ opacity: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                />
+                
+                {!isComingSoon && (
+                    <motion.div 
+                        className="absolute bottom-3 right-3"
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <div className="px-2.5 py-1 bg-black/60 backdrop-blur-md rounded-lg">
+                            <span className="text-[10px] font-semibold text-white">{course.duration}</span>
+                        </div>
+                    </motion.div>
+                )}
+            </div>
+
+            <div className="flex-1 p-5 flex flex-col">
+                <motion.h3 
+                    className={`text-2xl lg:text-3xl font-bold tracking-tight leading-tight mb-4 text-center
+                        ${isDark ? 'text-white' : 'text-slate-900'}`}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    {course.title}
+                </motion.h3>
+
+                <div className="mt-auto flex items-center justify-between">
+                    <motion.span 
+                        className={`text-xs font-semibold px-2 py-1 rounded-md ${isComingSoon ? (isDark ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600') : ''}`}
+                        whileHover={isComingSoon ? { scale: 1.1, backgroundColor: isDark ? 'rgba(168, 85, 247,0.3)' : '#f3e8ff' } : {}}
+                        transition={{ duration: 0.2 }}
+                    >
+                        {isComingSoon ? 'Coming Soon' : 'Certified Program'}
+                    </motion.span>
+                    
+                    {!isComingSoon ? (
+                        <motion.button
+                            whileHover={{ scale: 1.1, x: 4 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={(e) => { e.stopPropagation(); onRegister(course._id); }}
+                            className={`text-sm font-bold transition-colors
+                                ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}
+                        >
+                            Apply Now →
+                        </motion.button>
+                    ) : (
+                        <motion.button
+                            whileHover={{ scale: 1.1, x: 4 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={(e) => { e.stopPropagation(); onEarlyAccess(course); }}
+                            className="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors"
+                        >
+                            Get Early Access →
+                        </motion.button>
+                    )}
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+const FeaturedCourseCard = ({ course, isDark, onRegister, onDetails }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            className={`relative rounded-2xl overflow-hidden cursor-pointer
+                ${isDark 
+                    ? 'bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border border-white/10 hover:border-blue-500/50' 
+                    : 'bg-white shadow-lg hover:shadow-2xl border border-slate-200'}`}
+            onClick={() => onDetails(course._id)}
+        >
+            <motion.div 
+                className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                style={{ transformOrigin: 'left' }}
+            />
+            
+            <div className="relative flex flex-col lg:flex-row">
+                <motion.div 
+                    className="relative w-full lg:w-[46%] lg:min-h-[340px] overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.4 }}
+                >
+                    <motion.img 
+                        src={course.image} 
+                        alt={course.title} 
+                        className="absolute inset-0 w-full h-full object-cover object-left-top"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                    />
+                    <motion.div 
+                        className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"
+                        whileHover={{ opacity: 0.6 }}
+                    />
+                    <motion.div 
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                        whileHover={{ opacity: 0.8 }}
+                    />
+                </motion.div>
+
+                <div className="flex-1 p-6 lg:p-8 flex flex-col items-center text-center justify-center">
+                    <motion.h3 
+                        className="text-3xl lg:text-[2.5rem] xl:text-[3rem] font-black tracking-tight leading-snug mb-6 pb-1
+                            bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {course.title}
+                    </motion.h3>
+
+                    <motion.div 
+                        className="flex flex-wrap items-center justify-center gap-4 mb-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        <motion.span 
+                            className={`font-bold flex items-center gap-1 ${isDark ? 'text-white' : 'text-slate-900'}`}
+                            whileHover={{ scale: 1.1 }}
+                        >
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" /> {course.rating} Rating
+                        </motion.span>
+                        <motion.span 
+                            className={`flex items-center gap-1 font-semibold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}
+                            whileHover={{ scale: 1.1 }}
+                        >
+                            <Radio className="w-4 h-4" /> Live Sessions
+                        </motion.span>
+                        <motion.span 
+                            className={`${isDark ? 'text-slate-400' : 'text-slate-500'}`}
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            {course.duration}
+                        </motion.span>
+                        <motion.span 
+                            className={`${isDark ? 'text-slate-400' : 'text-slate-500'}`}
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            {course.curriculum?.length} Modules
+                        </motion.span>
+                    </motion.div>
+
+                    <motion.div 
+                        className="flex items-center justify-center gap-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        <motion.button
+                            whileHover={{ scale: 1.08, y: -2, boxShadow: '0 10px 40px rgba(59, 130, 246, 0.4)' }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={(e) => { e.stopPropagation(); onRegister(course._id); }}
+                            className={`px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all shadow-lg
+                                ${isDark 
+                                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-blue-600/30' 
+                                    : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-blue-500/30'}`}
+                        >
+                            Apply Now
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ x: 8, scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={(e) => { e.stopPropagation(); onDetails(course._id); }}
+                            className={`px-6 py-4 rounded-xl font-medium text-sm transition-all flex items-center gap-2
+                                ${isDark 
+                                    ? 'text-slate-300 hover:text-white hover:bg-white/5' 
+                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                        >
+                            View Curriculum <ArrowRight className="w-4 h-4" />
+                        </motion.button>
+                    </motion.div>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 const OnlineCourseFocus = ({ variant }) => {
     const navigate = useNavigate();
     const isDark = variant === 'dark';
     const isMobile = useIsMobile();
-    const scrollRef = React.useRef(null);
     const [earlyRegistrationCourse, setEarlyRegistrationCourse] = React.useState(null);
+    const [activeTab, setActiveTab] = React.useState('all');
 
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            const { current } = scrollRef;
-            const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640; // Card width + gap
-            if (direction === 'left') {
-                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
-        }
+    const handleRegister = (courseId) => {
+        navigate(`/course/${courseId}?openRegistration=true`);
     };
+
+    const handleDetails = (courseId) => {
+        navigate(`/course/${courseId}`);
+    };
+
+    const handleEarlyAccess = (course) => {
+        setEarlyRegistrationCourse(course);
+    };
+
+    const featuredCourse = FALLBACK_COURSES.find(c => !c.comingSoon);
+    const otherCourses = FALLBACK_COURSES.filter(c => c.comingSoon);
+
+    const tabs = [
+        { id: 'all', label: 'All Programs' },
+        { id: 'live', label: 'Currently Enrolling' },
+        { id: 'upcoming', label: 'Coming Soon' }
+    ];
+
+    const filteredCourses = FALLBACK_COURSES.filter(course => {
+        if (activeTab === 'all') return true;
+        if (activeTab === 'live') return !course.comingSoon;
+        if (activeTab === 'upcoming') return course.comingSoon;
+        return true;
+    });
 
     if (isMobile) {
         return (
-            <section id="online-focus" className={`relative py-20 px-6 overflow-hidden ${isDark ? 'bg-[#0A0F1D]' : 'bg-slate-50'}`}>
-                {/* Premium Background Accent */}
-                <div className={`absolute top-0 right-0 w-80 h-80 rounded-full blur-[100px] -mr-40 -mt-40 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
+            <motion.section 
+                id="online-focus" 
+                className={`relative py-20 px-5 overflow-hidden ${isDark ? 'bg-[#050508]' : 'bg-slate-50'}`}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
+                <div className={`absolute inset-0 pointer-events-none ${isDark ? 'invert brightness-200' : ''}`} 
+                    style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.3 }} />
+                <div className={`absolute top-0 right-0 w-72 h-72 rounded-full blur-[120px] -mr-32 -mt-32 ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'}`} />
                 
-                <div className="relative z-10 text-center">
-                    <div className="mb-14 text-center">
-                        <h2 className={`text-4xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            OUR BATCHES
+                <div className="relative z-10">
+                    <motion.div 
+                        className="text-center mb-10"
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className={`text-6xl font-black uppercase tracking-tighter leading-none mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            Our Batches
                         </h2>
-                    </div>
+                        <motion.div 
+                            className={`w-16 h-1 mx-auto mt-4 rounded-full ${isDark ? 'bg-blue-500' : 'bg-blue-600'}`}
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            transition={{ delay: 0.3, duration: 0.4 }}
+                        />
+                    </motion.div>
 
-                    <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
-                        {FALLBACK_COURSES.map((course) => (
-                            <div
-                                key={course._id}
-                                className="snap-center shrink-0 w-[85vw]"
-                                onClick={() => !course.comingSoon && navigate(`/course/${course._id}`)}
+                    <motion.div 
+                        className="flex gap-2 mb-8 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                    >
+                        {tabs.map((tab, index) => (
+                            <motion.button
+                                key={tab.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                whileTap={{ scale: 0.95 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.05 * index }}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all
+                                    ${activeTab === tab.id
+                                        ? isDark 
+                                            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25' 
+                                            : 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
+                                        : isDark 
+                                            ? 'bg-white/5 text-slate-400' 
+                                            : 'bg-slate-100 text-slate-500'}`}
                             >
-                                <div className={`group relative rounded-[2.5rem] h-full transition-all duration-500 border overflow-hidden flex flex-col ${
-                                    isDark ? 'bg-gradient-to-b from-[#111111] to-[#050505] border-white/10 hover:border-white/20' : 'bg-white border-slate-200 shadow-sm'
-                                }`}>
-                                    <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5 bg-slate-900 group-active:scale-[0.98] transition-transform">
-                                        <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-90" />
-                                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
-                                        
-                                        {!course.comingSoon ? (
-                                            <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 bg-emerald-500/90 backdrop-blur-md rounded-full shadow-lg">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                                                <span className="text-[8px] font-black text-white uppercase tracking-widest">LIVE</span>
-                                            </div>
-                                        ) : (
-                                            <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex items-center justify-center">
-                                                <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
-                                                    Planned Build
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-    
-                                    <div className="p-6 flex-1 flex flex-col">
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                                    3 Month Fast-Track
-                                                </span>
-                                                <div className="h-px flex-1 bg-slate-100/10" />
-                                            </div>
-                                            
-                                            <h3 className={`text-2xl font-black uppercase tracking-tight leading-none mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                                {course.title}
-                                            </h3>
-                                            
-                                            <p className={`text-sm font-medium leading-relaxed mb-8 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                {course.description}
-                                            </p>
-    
-                                            <div className="flex gap-3">
-                                                {!course.comingSoon ? (
-                                                    <>
-                                                        <button 
-                                                            onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}?openRegistration=true`); }}
-                                                            className="flex-[1.5] bg-blue-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest active:scale-95 transition-all shadow-xl shadow-blue-600/20"
-                                                        >
-                                                            Apply Now
-                                                        </button>
-                                                        <button 
-                                                            onClick={(e) => { e.stopPropagation(); navigate(`/course/${course._id}`); }}
-                                                            className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border border-blue-600/20 active:scale-95 transition-all ${isDark ? 'text-white' : 'text-slate-700'}`}
-                                                        >
-                                                            Details
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <button 
-                                                        onClick={(e) => { e.stopPropagation(); setEarlyRegistrationCourse(course); }}
-                                                        className="w-full bg-slate-800 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-all"
-                                                    >
-                                                        <Bell size={14} /> Get Alpha Access
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
+                                {tab.label}
+                            </motion.button>
                         ))}
-                    </div>
-                    
-                    <div className="flex justify-center mt-12">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to browse batches</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
+                    </motion.div>
+
+                    <div className="space-y-5">
+                        {filteredCourses.map((course, index) => (
+                            <motion.div
+                                key={course._id}
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 * index, type: 'spring', stiffness: 200 }}
+                            >
+                                <CourseCard
+                                    course={course}
+                                    isDark={isDark}
+                                    onRegister={handleRegister}
+                                    onDetails={handleDetails}
+                                    onEarlyAccess={handleEarlyAccess}
+                                />
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
 
@@ -135,269 +360,117 @@ const OnlineCourseFocus = ({ variant }) => {
                     courseTitle={earlyRegistrationCourse?.title || ''}
                     courseId={earlyRegistrationCourse?._id || ''}
                 />
-            </section>
+            </motion.section>
         );
     }
 
-
     return (
-        <section id="online-focus" className={`relative pt-12 pb-16 sm:pt-16 sm:pb-24 md:pt-12 md:pb-16 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-br from-[#0B1120] via-[#0A0F1D] to-[#060913]' : 'bg-slate-50'}`}>
-            {/* Background mesh - matching CourseReviews */}
-            <div className={`absolute inset-0 pointer-events-none opacity-30 ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-            <div className={`absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 transition-colors duration-700
-                ${isDark ? 'bg-blue-600/5' : 'bg-blue-50'}`} />
-            <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 transition-colors duration-700
-                ${isDark ? 'bg-amber-600/5' : 'bg-slate-200'}`} />
-
-
-            <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-                {/* Header Section */}
-                <div className="text-center mt-8 mb-16 sm:mt-12 sm:mb-20 md:mt-8 md:mb-20">
-                    <ScrollDarkenHeading sizeClass="text-5xl md:text-8xl" variant={variant}>
-                        OUR BATCHES
-                    </ScrollDarkenHeading>
-                </div>
-
-                {/* Course Cards - Two Row Layout */}
-                <div className="space-y-12">
-                    {/* First Row - Single Course Card (Foundation of AI) */}
-                    <div className="flex justify-center max-w-6xl mx-auto">
-                        {FALLBACK_COURSES.length > 0 && !FALLBACK_COURSES[0].comingSoon && (
-                            <motion.div
-                                key={FALLBACK_COURSES[0]._id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5 }}
-                                whileHover={{
-                                    y: -8,
-                                    transition: { type: 'spring', stiffness: 300, damping: 20 }
-                                }}
-                                className={`relative rounded-2xl border shadow-2xl group overflow-hidden transition-all duration-500 cursor-pointer w-full
-                                    ${isDark
-                                        ? 'bg-gradient-to-br from-[#111111] to-[#050505] border-white/10 hover:border-blue-500/30 shadow-black/50'
-                                        : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300 shadow-slate-200/50'}`}
-                                onClick={() => navigate(`/course/${FALLBACK_COURSES[0]._id}`)}
-                            >
-                                {/* Premium Glowing Outline */}
-                                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl
-                                    ${isDark ? 'bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20' : 'bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10'}`} />
-
-                                {/* Single Row Layout */}
-                                <div className="flex flex-col md:flex-row h-full min-h-[280px]">
-                                    {/* Left Side - Course Image */}
-                                    <div className="relative md:w-2/5 lg:w-1/2 overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-[#050505]">
-                                        <div className="relative w-full h-full">
-                                            {/* Adjusted gradient overlays - less intrusive on left */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10 pointer-events-none" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent via-transparent to-transparent z-10 pointer-events-none" />
-                                            
-                                            {/* Shimmer effect on hover */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[2000ms] ease-out z-20 pointer-events-none" />
-                                            
-                                            <img
-                                                src={FALLBACK_COURSES[0].image}
-                                                alt={FALLBACK_COURSES[0].title}
-                                                className="w-full h-full object-cover object-[15%_center] transition-all duration-700 ease-out group-hover:scale-105 relative z-10"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Right Side - Course Details */}
-                                    <div className="relative md:w-3/5 lg:w-1/2 p-6 md:p-8 lg:p-10 flex flex-col justify-center">
-                                        {/* Mac Dots Header - REMOVED */}
-                                        {/* <div className="flex gap-[6px] mb-6">
-                                            <div className="w-[8px] h-[8px] rounded-full bg-[#FF5F56] shadow-sm" />
-                                            <div className="w-[8px] h-[8px] rounded-full bg-[#FFBD2E] shadow-sm" />
-                                            <div className="w-[8px] h-[8px] rounded-full bg-[#27C93F] shadow-sm" />
-                                        </div> */}
-
-                                        {/* Course Title */}
-                                        <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight transition-all duration-300 mb-4 leading-tight
-                                            ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
-                                            {FALLBACK_COURSES[0].title}
-                                        </h3>
-
-                                        {/* Course Description */}
-                                        <p className={`text-sm md:text-base leading-relaxed mb-6 line-clamp-3 font-medium
-                                            ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                                            {FALLBACK_COURSES[0].description}
-                                        </p>
-
-                                        {/* Course Stats */}
-                                        <div className="flex items-center gap-6 mb-8">
-                                            <div className="flex items-center gap-2">
-                                                <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-blue-400' : 'bg-blue-500'}`} />
-                                                <span className={`text-xs font-semibold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                    3 month
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center gap-1">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <div key={i} className={`w-3 h-3 ${i < 4 ? (isDark ? 'bg-yellow-400' : 'bg-yellow-500') : (isDark ? 'bg-slate-600' : 'bg-slate-300')}`} style={{ clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' }} />
-                                                ))}
-                                                <span className={`text-xs font-semibold ml-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                    4.9
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {/* Action Buttons */}
-                                        <div className="flex flex-col sm:flex-row gap-3">
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    // Navigate to course page with registration form open
-                                                    navigate(`/course/${FALLBACK_COURSES[0]._id}?openRegistration=true`);
-                                                }}
-                                                className={`px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-                                                    ${isDark 
-                                                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-blue-600/25' 
-                                                        : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-blue-500/25'}`}
-                                            >
-                                                Apply Now
-                                            </button>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    navigate(`/course/${FALLBACK_COURSES[0]._id}`);
-                                                }}
-                                                className={`px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 border-2 hover:shadow-lg transform hover:-translate-y-0.5
-                                                    ${isDark 
-                                                        ? 'border-white/20 text-white hover:bg-white/10 hover:border-white/30' 
-                                                        : 'border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400'}`}
-                                            >
-                                                Learn More
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
-                    </div>
-
-                    {/* Second Row - Three Course Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {FALLBACK_COURSES.slice(1).map((course) => {
-                            const isComingSoon = !!course.comingSoon;
-                            return (
-                                <motion.div
-                                    key={course._id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.1 }}
-                                    whileHover={isComingSoon ? {} : {
-                                        y: -8,
-                                        transition: { type: 'spring', stiffness: 300, damping: 20 }
-                                    }}
-                                    className={`relative rounded-xl border shadow-2xl group flex flex-col gap-0 overflow-hidden transition-all duration-500
-                                        ${isComingSoon ? 'cursor-default opacity-80' : 'cursor-pointer'}
-                                        ${isDark
-                                            ? 'bg-gradient-to-b from-[#111111] to-[#050505] backdrop-blur-xl border-white/10 hover:border-blue-500/30 shadow-black/50'
-                                            : 'bg-white border-slate-100 hover:border-blue-200 shadow-slate-200/50'}`}
-                                    onClick={() => !isComingSoon && navigate(`/course/${course._id}`)}
-                                >
-                                    {/* Premium Glowing Outline - Visible only on hover for live courses */}
-                                    {!isComingSoon && (
-                                        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                                            ${isDark ? 'bg-gradient-to-br from-blue-500/20 to-transparent' : 'bg-gradient-to-br from-blue-500/5 to-transparent'}`} />
-                                    )}
-
-                                    {/* Course Image Container */}
-                                    <div className="w-full aspect-[16/9] relative z-10 overflow-hidden border-b border-white/5 bg-slate-900 shadow-inner">
-                                        {/* Shimmer on hover (live only) */}
-                                        {!isComingSoon && (
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[shimmer_3s_infinite] pointer-events-none" />
-                                        )}
-
-                                        {/* Coming Soon Overlay */}
-                                        {isComingSoon && false && (
-                                            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/40">
-                                                <span className="text-white text-lg font-bold tracking-wide drop-shadow-lg select-none">
-                                                    COMING SOON
-                                                </span>
-                                            </div>
-                                        )}
-
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                        <img
-                                            src={course.image}
-                                            alt={course.title}
-                                            className={`w-full h-full object-cover transition-transform duration-[1.5s] ease-out opacity-80
-                                                ${!isComingSoon ? 'group-hover:scale-105 group-hover:opacity-100' : ''}`}
-                                        />
-                                    </div>
-
-                                        <div className="flex-1 relative z-10 flex flex-col mt-4 px-4 pb-1">
-                                            <h4 className={`text-lg font-bold uppercase tracking-tight transition-colors line-clamp-1 mb-2
-                                                ${isDark
-                                                    ? `text-blue-400 ${!isComingSoon ? 'group-hover:text-blue-500' : ''}`
-                                                    : `text-blue-600 ${!isComingSoon ? 'group-hover:text-blue-600' : ''}`}`}>
-                                                {course.title}
-                                            </h4>
-                                            {isComingSoon ? (
-                                                <div className="flex items-center justify-center h-16 mb-2">
-                                                    <motion.span
-                                                        animate="animate"
-                                                        variants={{
-                                                            animate: {
-                                                                filter: [
-                                                                    "brightness(1) drop-shadow(0 0 0px rgba(255, 255, 255, 0))",
-                                                                    "brightness(1.8) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6))",
-                                                                    "brightness(1) drop-shadow(0 0 0px rgba(255, 255, 255, 0))"
-                                                                ],
-                                                                transition: {
-                                                                    duration: 2.5,
-                                                                    repeat: Infinity,
-                                                                    ease: "easeInOut",
-                                                                }
-                                                            }
-                                                        }}
-                                                        className={`text-2xl font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-white`}>
-                                                        Coming Soon
-                                                    </motion.span>
-                                                </div>
-                                            ) : (
-                                                <p className={`text-sm font-medium leading-relaxed line-clamp-3
-                                                    ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                                    {course.description}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                    {/* Footer */}
-                                    <div className={`pt-4 px-4 pb-3 border-t flex items-center justify-between font-bold text-[10px] uppercase tracking-[0.3em] transition-all relative z-10
-                                        ${isDark
-                                            ? 'border-white/5 text-slate-500 group-hover:text-white'
-                                            : 'border-slate-50 text-slate-400 group-hover:text-slate-900'}`}>
-                                        <span>{isComingSoon ? 'Early Access' : 'Explore Program'}</span>
-                                        {isComingSoon ? (
-                                            <motion.button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setEarlyRegistrationCourse(course);
-                                                }}
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                className="px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-bold text-xs uppercase tracking-wide transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-1.5"
-                                            >
-                                                <Bell size={10} className="animate-pulse" />
-                                                I am interested
-                                            </motion.button>
-                                        ) : (
-                                            <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                                        )}
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+        <section id="online-focus" className={`relative py-20 lg:py-28 overflow-hidden transition-colors duration-500 
+            ${isDark ? 'bg-[#050508]' : 'bg-slate-50'}`}>
             
-            {/* Early Registration Form Modal */}
+            <div className={`absolute inset-0 pointer-events-none ${isDark ? 'invert brightness-200' : ''}`} 
+                style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px', opacity: 0.4 }} />
+            <div className={`absolute top-0 left-0 w-[700px] h-[700px] rounded-full blur-[160px] -ml-[350px] -mt-[350px] ${isDark ? 'bg-blue-600/8' : 'bg-blue-100/30'}`} />
+            <div className={`absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[140px] -mr-[300px] -mb-[300px] ${isDark ? 'bg-purple-600/5' : 'bg-slate-200/30'}`} />
+
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                <motion.div 
+                    className="text-center mb-14"
+                    initial={{ opacity: 0, y: -30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                >
+                    <motion.h2
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className={`text-5xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter mb-2
+                            ${isDark ? 'text-white' : 'text-slate-900'}`}
+                    >
+                        Our Batches
+                    </motion.h2>
+                    
+                    <motion.div 
+                        className={`w-24 h-1 mx-auto mt-4 rounded-full ${isDark ? 'bg-blue-500' : 'bg-blue-600'}`}
+                        initial={{ scaleX: 0, width: 0 }}
+                        whileInView={{ scaleX: 1, width: '6rem' }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                    />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="flex justify-center gap-3 mb-12"
+                >
+                    {tabs.map((tab, index) => (
+                        <motion.button
+                            key={tab.id}
+                            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 * index, type: 'spring', stiffness: 300 }}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300
+                                ${activeTab === tab.id
+                                    ? isDark 
+                                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-600/25' 
+                                        : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
+                                    : isDark 
+                                        ? 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10' 
+                                        : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200'}`}
+                        >
+                            {tab.label}
+                        </motion.button>
+                    ))}
+                </motion.div>
+
+                {featuredCourse && (activeTab === 'all' || activeTab === 'live') && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
+                        className="mb-12"
+                    >
+                        <FeaturedCourseCard
+                            course={featuredCourse}
+                            isDark={isDark}
+                            onRegister={handleRegister}
+                            onDetails={handleDetails}
+                        />
+                    </motion.div>
+                )}
+
+                {(activeTab === 'all' ? otherCourses : filteredCourses.filter(c => c.comingSoon)).length > 0 && (
+                    <motion.div
+                        variants={staggerContainer}
+                        initial="offscreen"
+                        whileInView="onscreen"
+                        viewport={{ once: true, margin: '-50px' }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        {(activeTab === 'all' ? otherCourses : filteredCourses.filter(c => c.comingSoon)).map((course, index) => (
+                            <CourseCard
+                                key={course._id}
+                                course={course}
+                                isDark={isDark}
+                                onRegister={handleRegister}
+                                onDetails={handleDetails}
+                                onEarlyAccess={handleEarlyAccess}
+                            />
+                        ))}
+                    </motion.div>
+                )}
+
+            </div>
+
             <EarlyRegistrationForm 
                 isOpen={!!earlyRegistrationCourse}
                 onClose={() => setEarlyRegistrationCourse(null)}
