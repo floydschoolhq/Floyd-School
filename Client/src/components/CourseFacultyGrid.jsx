@@ -33,7 +33,7 @@ const LEADERS = [
         name: "Abhay Singh Chauhan",
         role: "Help Associate",
         image: abhayImg,
-        imageScale: 1.5,
+        imageScale: 1.4,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
@@ -94,7 +94,7 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         style={{ 
                             transform: `scale(${mentor.imageScale})`,
-                            transformOrigin: mentor.name === 'Abhay Singh Chauhan' ? 'center 45%' : 'center'
+                            transformOrigin: mentor.name === 'Abhay Singh Chauhan' ? 'center 15%' : 'center'
                         }}
                     />
                     
