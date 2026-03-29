@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaLinkedinIn } from 'react-icons/fa';
-import { X } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
@@ -49,15 +48,14 @@ const LEADERS = [
     }
 ];
 
-const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
+const MentorCard = React.memo(({ mentor, index, variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     
     if (isMobile) {
         return (
             <div 
-                onClick={() => onSelect(mentor)}
-                className={`snap-center shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-pointer
+                className={`snap-center shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
                     ${isDark 
                         ? 'bg-[#0F172A]/40 border-white/5 shadow-2xl shadow-black/20' 
                         : 'bg-white border-slate-200 shadow-sm shadow-slate-200/50'}`}
@@ -119,8 +117,7 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
 
     return (
         <div
-            onClick={() => onSelect(mentor)}
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-pointer
+            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
                 ${isDark
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40'
                     : 'bg-white border-slate-100 hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30'}`}
@@ -188,7 +185,6 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant }) => {
 });
 
 const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, variant }) => {
-    const [selectedMentor, setSelectedMentor] = useState(null);
     const [hoveredCard, setHoveredCard] = useState(null);
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
@@ -208,8 +204,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     {filteredLeaders.map((mentor, index) => (
                         <div 
                             key={index}
-                            onClick={() => setSelectedMentor(mentor)}
-                            className={`snap-center shrink-0 w-[65vw] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 hover:scale-[0.98] transition-transform cursor-pointer ${
+                            className={`snap-center shrink-0 w-[65vw] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 hover:scale-[0.98] transition-transform cursor-default ${
                                 isDark ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-slate-100 shadow-sm'
                             }`}
                         >
@@ -241,32 +236,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                         <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                     </div>
                 </div>
-
-                {selectedMentor && (
-                    <div className="fixed inset-0 z-[100] flex items-end justify-center">
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setSelectedMentor(null)} />
-                        <div className={`w-full rounded-t-[3rem] p-8 pb-12 relative z-10 ${isDark ? 'bg-[#0A0A0A]' : 'bg-white'}`}>
-                            <div className="w-12 h-1.5 bg-slate-800 rounded-full mx-auto mb-8" />
-                            <h3 className={`text-2xl font-black uppercase tracking-tighter leading-none mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                {selectedMentor.name}
-                            </h3>
-                            <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-6">
-                                {selectedMentor.role}
-                            </p>
-                            <p className={`text-sm font-medium leading-relaxed mb-10 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                {selectedMentor.bio}
-                            </p>
-                            <a 
-                                href={selectedMentor.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full bg-orange-500 text-white py-5 rounded-[2rem] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 hover:scale-[0.98] transition-transform"
-                            >
-                                <FaLinkedinIn size={12} /> LinkedIn Profile
-                            </a>
-                        </div>
-                    </div>
-                )}
             </section>
         );
     }
@@ -331,7 +300,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                     <MentorCard 
                                         mentor={mentor}
                                         index={index}
-                                        onSelect={setSelectedMentor}
                                         variant={variant}
                                     />
                                 </div>
@@ -340,62 +308,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     </div>
                 </div>
             </div>
-
-            {selectedMentor && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl" onClick={() => setSelectedMentor(null)}>
-                    <div 
-                        className={`${isDark ? 'bg-[#0A0A0A]' : 'bg-white'} rounded-[40px] w-full max-w-5xl overflow-hidden relative shadow-2xl border ${isDark ? 'border-white/10' : 'border-white/20'}`}
-                        onClick={e => e.stopPropagation()}
-                    >
-                        <div className="flex flex-col md:flex-row h-full">
-                            <div className="md:w-[42%] aspect-square md:h-auto max-h-[500px] relative overflow-hidden">
-                                <img
-                                    src={selectedMentor.image}
-                                    alt={selectedMentor.name}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
-                                <div className={`absolute inset-0 z-10 ${isDark ? 'bg-gradient-to-t from-black via-transparent' : 'bg-gradient-to-t from-slate-950 via-transparent'} to-transparent`} />
-                            </div>
-
-                            <div className={`md:w-[58%] p-12 lg:p-20 relative flex flex-col justify-center ${isDark ? 'bg-[#0A0A0A]' : 'bg-white'}`}>
-                                <button
-                                    onClick={() => setSelectedMentor(null)}
-                                    className={`absolute top-10 right-10 w-12 h-12 rounded-full flex items-center justify-center transition-all border hover:rotate-90
-                                        ${isDark ? 'bg-white/5 border-white/10 text-slate-400 hover:text-white' : 'bg-slate-50 border-slate-100 text-slate-400 hover:text-slate-900'}`}
-                                >
-                                    <X size={20} />
-                                </button>
-
-                                <div className="max-w-md">
-                                    <h2 className={`text-4xl font-bold tracking-tighter leading-none mb-4 uppercase ${isDark ? 'text-white' : 'text-slate-900'}`}>{selectedMentor.name}</h2>
-                                    <p className={`font-bold text-sm tracking-widest uppercase mb-8 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{selectedMentor.role}</p>
-                                    <p className={`font-medium text-lg leading-relaxed mb-10 pl-6 border-l-2 ${isDark ? 'text-slate-300 border-white/10' : 'text-slate-400 border-slate-100'}`}>
-                                        {selectedMentor.bio}
-                                    </p>
-                                    <div className="flex flex-col sm:flex-row gap-4">
-                                        <a
-                                            href={selectedMentor.linkedin}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-sm tracking-widest uppercase
-                                                ${isDark ? 'bg-orange-500 text-white' : 'bg-slate-900 text-white'}`}
-                                        >
-                                            <FaLinkedinIn size={14} /> Profile
-                                        </a>
-                                        <button
-                                            onClick={() => setSelectedMentor(null)}
-                                            className={`flex-1 flex items-center justify-center py-5 rounded-2xl font-bold text-sm tracking-widest uppercase transition-all
-                                                ${isDark ? 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-                                        >
-                                            Back
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </section>
     );
 };
