@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
-import { X } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
@@ -35,7 +34,7 @@ const LEADERS = [
         name: "Abhay Singh Chauhan",
         role: "Help Associate",
         image: a5jImg,
-        imageScale: 2.4,
+        imageScale: 1.5,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
@@ -51,7 +50,7 @@ const LEADERS = [
     }
 ];
 
-const CourseFacultyCard = React.memo(({ mentor, index, onSelect, variant }) => {
+const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     return (
@@ -61,10 +60,8 @@ const CourseFacultyCard = React.memo(({ mentor, index, onSelect, variant }) => {
             viewport={{ once: true, margin: "-50px" }}
             transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={!isMobile ? { y: -10, scale: 1.01 } : {}}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onSelect(mentor)}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
-            className={`snap-center flex-shrink-0 w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center p-6 md:p-8 gap-6 relative cursor-pointer group
+            className={`snap-center flex-shrink-0 w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center p-6 md:p-8 gap-6 relative cursor-default group
                 ${isDark 
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-white/[0.04] hover:border-blue-500/20' 
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100'}`}
@@ -167,7 +164,6 @@ const CourseFacultyCard = React.memo(({ mentor, index, onSelect, variant }) => {
 CourseFacultyCard.displayName = 'CourseFacultyCard';
 
 const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeName = null, variant = 'light' }) => {
-    const [selectedMentor, setSelectedMentor] = useState(null);
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
 
@@ -208,85 +204,12 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                                 key={index}
                                 mentor={mentor}
                                 index={index}
-                                onSelect={setSelectedMentor}
                                 variant={variant}
                             />
                         ))}
                     </div>
                 </div>
             </div>
-
-            {/* Profile Modal */}
-            <AnimatePresence>
-                {selectedMentor && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl"
-                        onClick={() => setSelectedMentor(null)}
-                    >
-                        <motion.div
-                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 400 }}
-                            className={`flex flex-col md:flex-row h-full max-h-[90vh] md:max-h-[70vh] w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl relative ${isDark ? 'bg-slate-950 border border-white/10' : 'bg-white'}`}
-                            onClick={e => e.stopPropagation()}
-                        >
-                            <button
-                                onClick={() => setSelectedMentor(null)}
-                                className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white"
-                            >
-                                <X size={20} />
-                            </button>
-
-                            <div className="md:w-1/2 h-64 md:h-full relative overflow-hidden bg-slate-900">
-                                <img
-                                    src={selectedMentor.image}
-                                    alt={selectedMentor.name}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            </div>
-
-                            <div className={`md:w-1/2 p-8 md:p-12 lg:p-16 overflow-y-auto ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                <div className="mb-8">
-                                    <h2 className="text-3xl md:text-4xl font-black mb-2 uppercase tracking-tight">
-                                        {selectedMentor.name}
-                                    </h2>
-                                    <p className="text-sm font-black uppercase tracking-[0.2em] text-blue-500">
-                                        {selectedMentor.role}
-                                    </p>
-                                </div>
-                                
-                                <p className={`text-sm md:text-base leading-relaxed mb-8 font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                    {selectedMentor.bio}
-                                </p>
-
-                                <div className="flex flex-wrap gap-4 mb-10">
-                                    {selectedMentor.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="flex flex-col gap-3">
-                                    <a
-                                        href={selectedMentor.linkedin}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-full flex items-center justify-center gap-3 py-4 bg-blue-600 text-white rounded-xl font-black text-xs uppercase tracking-widest active:scale-95 transition-transform"
-                                    >
-                                        <FaLinkedinIn size={14} /> View Profile
-                                    </a>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </section>
     );
 };
