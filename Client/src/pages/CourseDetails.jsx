@@ -106,7 +106,7 @@ const CourseDetails = () => {
                                             Apply Now <ArrowRight size={16} />
                                         </button>
                                         <button 
-                                            onClick={() => window.open('/Brochure-zwCZ_L4_.pdf', '_blank')}
+                                            onClick={() => window.open('/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
                                             className="w-full py-4 bg-white/5 border border-white/10 text-white rounded-xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
                                         >
                                             <Download size={16} /> Download Curriculum
@@ -159,7 +159,7 @@ const CourseDetails = () => {
                                             Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                         </button>
                                         <button 
-                                            onClick={() => window.open('/Brochure-zwCZ_L4_.pdf', '_blank')}
+                                            onClick={() => window.open('/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
                                             className="px-12 py-5 bg-gradient-to-r from-[#10B981] to-[#059669] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(16,185,129,0.25)] flex items-center gap-3 group"
                                         >
                                             <Download size={18} /> Download Curriculum
