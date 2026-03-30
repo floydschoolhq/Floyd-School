@@ -32,7 +32,7 @@ const LEADERS = [
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
         image: abhayImg,
-        imageScale: 1.9,
+        imageScale: 1.5,
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
