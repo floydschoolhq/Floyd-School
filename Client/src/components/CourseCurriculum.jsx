@@ -97,26 +97,22 @@ const CourseCurriculum = ({ variant = "light" }) => {
         { number: "12", label: "Weeks Total" },
         { number: "36", label: "Live Classes" },
         { number: "8+", label: "Mini Projects" },
-        { number: "1", label: "Capstone" },
+        { number: "1", label: "Project" },
         { number: "3", label: "Classes / Week" }
     ];
 
     const capstoneFeatures = [
         {
-            icon: "face",
-            title: "Face Recognition Engine (OpenCV/Dlib)"
+            icon: "psychology",
+            title: "Face Recognition Engine"
         },
         {
-            icon: "database",
-            title: "Live Attendance Logger (CSV/JSON)"
+            icon: "terminal",
+            title: "Live Attendance Logger"
         },
         {
             icon: "dashboard",
-            title: "Flask Web Dashboard for Admins"
-        },
-        {
-            icon: "verified",
-            title: "Official ThinkSkool Certificate"
+            title: "Flask Web Dashboard"
         }
     ];
 
@@ -248,15 +244,38 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] p-6 text-white">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-3 opacity-70">Major Milestone</h3>
-                    <h2 className="text-2xl font-black uppercase tracking-tighter leading-none mb-2">The Capstone Project</h2>
-                    <h4 className="text-base font-bold mb-4 italic opacity-90">Face Recognition Attendance System</h4>
-                    <div className="space-y-2">
-                        {capstoneFeatures.map((f, i) => (
-                            <div key={i} className="flex items-center gap-2">
-                                <span className="material-symbols-outlined text-sm">{f.icon}</span>
-                                <span className="text-[11px] font-black uppercase tracking-tight">{f.title}</span>
+                    <h2 className="text-xl font-black uppercase tracking-tighter leading-none mb-3">Face Recognition Attendance System</h2>
+                    <p className="text-xs opacity-80 mb-4 leading-relaxed">
+                        Build a live system that opens the webcam, recognises student faces in real time, logs attendance automatically with timestamps and displays everything on a web dashboard.
+                    </p>
+                    <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                            <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5 text-sm">
+                                👤
                             </div>
-                        ))}
+                            <div>
+                                <span className="text-[11px] font-black uppercase tracking-tight block">Face Recognition Engine</span>
+                                <span className="text-[10px] opacity-70 block">Detects and identifies faces live using OpenCV and Dlib.</span>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5 text-sm">
+                                📋
+                            </div>
+                            <div>
+                                <span className="text-[11px] font-black uppercase tracking-tight block">Live Attendance Logger</span>
+                                <span className="text-[10px] opacity-70 block">Automatically records name and timestamp the moment a face is recognised.</span>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-0.5 text-sm">
+                                🖥️
+                            </div>
+                            <div>
+                                <span className="text-[11px] font-black uppercase tracking-tight block">Flask Web Dashboard</span>
+                                <span className="text-[10px] opacity-70 block">View and manage all attendance records from a clean browser interface.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -452,34 +471,53 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     <div className="grid lg:grid-cols-2 gap-8 items-center">
                         <div>
                             <h2 className="text-2xl md:text-3xl font-headline font-extrabold tracking-tight mb-3 text-on-surface">
-                                The Capstone Project
-                            </h2>
-                            <h3 className="text-lg text-primary font-bold mb-4">
                                 Face Recognition Attendance System
-                            </h3>
+                            </h2>
                             <p className="text-on-surface-variant text-sm mb-6 leading-relaxed">
-                                Students deploy a professional-grade biometric attendance system using Python, OpenCV, and Flask.
+                                Build a live system that opens the webcam, recognises student faces in real time, logs attendance automatically with timestamps and displays everything on a web dashboard. Every part of it written and built by you.
                             </p>
-                            <ul className="space-y-2">
-                                {capstoneFeatures.map((feature, index) => (
-                                    <li key={index} className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary">
-                                            <span className="material-symbols-outlined text-sm">{feature.icon}</span>
-                                        </div>
-                                        <span className="text-sm font-medium text-on-surface">
-                                            {feature.title}
-                                        </span>
-                                    </li>
-                                ))}
+                            <ul className="space-y-3">
+                                <li className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
+                                        👤
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-bold text-on-surface block">Face Recognition Engine</span>
+                                        <span className="text-xs text-on-surface-variant">Detects and identifies faces live using OpenCV and Dlib.</span>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
+                                        📋
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-bold text-on-surface block">Live Attendance Logger</span>
+                                        <span className="text-xs text-on-surface-variant">Automatically records name and timestamp the moment a face is recognised.</span>
+                                    </div>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
+                                        🖥️
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-bold text-on-surface block">Flask Web Dashboard</span>
+                                        <span className="text-xs text-on-surface-variant">View and manage all attendance records from a clean browser interface.</span>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div className="relative">
                             <div className="aspect-video bg-surface-container-highest rounded-xl border-2 border-outline-variant/30 overflow-hidden shadow-xl">
-                                <img 
-                                    alt="Tech Dashboard" 
-                                    className="w-full h-full object-cover" 
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMb1_gWzFgYnSBsqM8-KU63NNkKdll6Xffug1WowY4rKPHygilc6i_thd25TZ6PKfFokB35YjQjmDubw9H3Zusi7iDtLJKuqldOy9dFb6ul70GywZhF5K2g7j71jhsCj_C53trp51cl7XhNpPZppmzmZFteHNuZUh_ukavvucNECI30Lb6zajDSGSGyFzXet6C_mNC3gOP-MNrAXk4HSzExZ3LCuGsS5HtK3Nx066WxMgGKSQmhSlo8594a5Jwfq41UjqdyVZLMtFj"
-                                />
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    style={{ pointerEvents: 'none' }}
+                                    src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
+                                    title="YouTube video player" 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                ></iframe>
                             </div>
                         </div>
                     </div>

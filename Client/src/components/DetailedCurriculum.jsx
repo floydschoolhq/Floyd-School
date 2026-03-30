@@ -337,30 +337,29 @@ const DetailedCurriculum = () => {
                 <section className="px-8 py-24 bg-surface-container-lowest">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="font-headline text-4xl font-extrabold mb-4">Capstone: Face Recognition Attendance System</h2>
-                            <p className="text-on-surface-variant">A comprehensive real-world application built from the ground up.</p>
+                            <p className="text-on-surface-variant">Build a live system that opens the webcam, recognises student faces in real time, logs attendance automatically with timestamps and displays everything on a web dashboard. Every part of it written and built by you.</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div className="bg-surface p-6 rounded-xl border border-outline-variant/10 text-center hover:bg-surface-bright transition-colors">
                                 <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <span className="material-symbols-outlined text-primary text-3xl">psychology</span>
                                 </div>
-                                <h4 className="font-bold mb-2">The Engine</h4>
-                                <p className="text-sm text-on-surface-variant">Advanced face-encoding algorithms with real-time recognition capabilities.</p>
+                                <h4 className="font-bold mb-2">Face Recognition Attendance System</h4>
+                                <p className="text-sm text-on-surface-variant">Detects and identifies faces live using OpenCV and Dlib.</p>
                             </div>
                             <div className="bg-surface p-6 rounded-xl border border-outline-variant/10 text-center hover:bg-surface-bright transition-colors">
                                 <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <span className="material-symbols-outlined text-secondary text-3xl">terminal</span>
                                 </div>
-                                <h4 className="font-bold mb-2">The Logger</h4>
-                                <p className="text-sm text-on-surface-variant">CSV-based tracking system for entry/exit logs with timestamp precision.</p>
+                                <h4 className="font-bold mb-2">Live Attendance Logger</h4>
+                                <p className="text-sm text-on-surface-variant">Automatically records name and timestamp the moment a face is recognised.</p>
                             </div>
                             <div className="bg-surface p-6 rounded-xl border border-outline-variant/10 text-center hover:bg-surface-bright transition-colors">
                                 <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <span className="material-symbols-outlined text-primary text-3xl">dashboard</span>
                                 </div>
-                                <h4 className="font-bold mb-2">The Dashboard</h4>
-                                <p className="text-sm text-on-surface-variant">A Flask-powered web interface to monitor and manage records.</p>
+                                <h4 className="font-bold mb-2">Flask Web Dashboard</h4>
+                                <p className="text-sm text-on-surface-variant">View and manage all attendance records from a clean browser interface.</p>
                             </div>
                             <div className="bg-surface p-6 rounded-xl border border-outline-variant/10 text-center hover:bg-surface-bright transition-colors">
                                 <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6">

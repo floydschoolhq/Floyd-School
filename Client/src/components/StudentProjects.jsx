@@ -98,7 +98,7 @@ const PROJECTS_DATA = [
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun",
       course: "Mobile App Development"
     },
-    liveUrl: "#"
+    liveUrl: "https://netfixclone-nu.vercel.app/"
   }
 ];
 
