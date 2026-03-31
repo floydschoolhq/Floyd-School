@@ -190,7 +190,8 @@ server.listen(PORT, () => {
 
     // Safety check for critical environment variables
     if (!process.env.JWT_SECRET) {
-        console.warn('WARNING: JWT_SECRET is not defined in environment variables. Authentication will fail.');
+        console.error('CRITICAL ERROR: JWT_SECRET is not defined in environment variables. Server cannot start.');
+        process.exit(1);
     }
 });
 

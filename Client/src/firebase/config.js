@@ -1,12 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDJlwHA33nGxReYPRvW-67J06UC0owURgI",
-  authDomain: "thinkskool-452f9.firebaseapp.com",
-  projectId: "thinkskool-452f9",
-  storageBucket: "thinkskool-452f9.firebasestorage.app",
-  messagingSenderId: "508621036728",
-  appId: "1:508621036728:web:649af56b35e2ab3341684d",
-  measurementId: "G-84YEXT5STN"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 export default firebaseConfig;

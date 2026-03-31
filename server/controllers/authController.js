@@ -6,12 +6,11 @@ const axios = require('axios');
 
 // Generate JWT
 const generateToken = (id, sessionToken) => {
-    // Fallback to avoid hard crash if config is missing, but log a warning
-    const secret = process.env.JWT_SECRET || 'fallback_secret_for_emergency_recovery_only';
     if (!process.env.JWT_SECRET) {
-        console.warn('CRITICAL WARNING: JWT_SECRET is missing. Using insecure fallback secret.');
+        console.error('CRITICAL ERROR: JWT_SECRET is not defined in environment variables.');
+        throw new Error('JWT_SECRET environment variable is required but not set');
     }
-    return jwt.sign({ id, sessionToken }, secret, {
+    return jwt.sign({ id, sessionToken }, process.env.JWT_SECRET, {
         expiresIn: '30d',
     });
 };

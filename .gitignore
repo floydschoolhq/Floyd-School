@@ -1,5 +1,7 @@
 node_modules/
 .env
+.env.local
+.env.*.local
 dist/
 build/
 .DS_Store
@@ -9,3 +11,12 @@ build/
 server/node_modules/
 Client/node_modules/
 Admin/node_modules/
+Mentor/node_modules/
+GrowthAssociate/node_modules/
+server/.env
+server/.env.backup
+server/.env.example
+Client/.env
+Admin/.env
+Mentor/.env
+GrowthAssociate/.env
