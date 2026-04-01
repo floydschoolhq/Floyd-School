@@ -38,7 +38,9 @@ const allowedOrigins = [
     'http://localhost:5176', // GrowthAssociate
     'http://localhost:5177',
     'http://localhost:3000',
-    'https://thinkskool-mxyc.vercel.app' // Direct Vercel Origin
+    'https://thinkskool-mxyc.vercel.app', // Direct Vercel Origin
+    'https://www.thinkskool.in', // Custom domain
+    'https://thinkskool.in' // Custom domain without www
 ];
 
 const corsOptions = {
