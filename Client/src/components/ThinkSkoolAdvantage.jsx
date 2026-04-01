@@ -84,9 +84,7 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
                                 style={{ minHeight: '450px' }}
                             />
                             
-                            {/* Enhanced 3D Frame Effect */}
-                            <div className={`absolute inset-4 border-2 rounded-2xl pointer-events-none ${isDarkBg ? 'border-white/30' : 'border-white/20'} transition-all duration-300 hover:border-opacity-50`} />
-                            <div className={`absolute bottom-4 left-4 right-4 h-1 rounded-full pointer-events-none ${isDarkBg ? 'bg-white/20' : 'bg-white/10'} animate-pulse`} />
+
                             
                             {/* Floating 3D Decorative Elements */}
                             <div className={`absolute top-8 right-8 w-20 h-20 ${index === 1 ? 'bg-blue-400/30' : index === 2 ? 'bg-pink-400/30' : index === 3 ? 'bg-purple-400/30' : 'bg-orange-400/30'} rounded-full blur-xl animate-bounce`} />
