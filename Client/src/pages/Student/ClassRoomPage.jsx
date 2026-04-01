@@ -125,10 +125,6 @@ const ClassroomPage = () => {
       console.error('Failed to fetch scheduled lives:', error);
     }
   };
-    } catch (error) {
-      console.error('Failed to fetch active live class:', error);
-    }
-  };
 
   const fetchMyCurrentDoubt = async (classId) => {
     try {
