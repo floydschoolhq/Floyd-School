@@ -25,6 +25,7 @@ const codeExecutionRoutes = require('./routes/codeExecutionRoutes');
 const leadRoutes = require('./routes/leadRoutes');
 const liveClassRoutes = require('./routes/liveClassRoutes');
 const doubtRoutes = require('./routes/doubtRoutes');
+const scheduledLiveRoutes = require('./routes/scheduledLiveRoutes');
 
 connectDB();
 
@@ -121,6 +122,7 @@ app.use('/api/why-us', require('./routes/whyUsRoutes'));
 app.use('/api/live-classes', liveClassRoutes);
 app.use('/api/live-chat', require('./routes/liveChatRoutes'));
 app.use('/api/doubts', doubtRoutes);
+app.use('/api/scheduled-live', scheduledLiveRoutes);
 app.use('/api/public', require('./routes/publicRoutes'));
 
 // Socket.io connection with authentication
@@ -190,7 +192,9 @@ server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`);
 
-    // Safety check for critical environment variables
+    const { checkAndUpdateStatus } = require('./controllers/scheduledLiveController');
+    setInterval(checkAndUpdateStatus, 60000);
+
     if (!process.env.JWT_SECRET) {
         console.error('CRITICAL ERROR: JWT_SECRET is not defined in environment variables. Server cannot start.');
         process.exit(1);

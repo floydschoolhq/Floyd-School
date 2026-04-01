@@ -25,7 +25,8 @@ const settingsSchema = new mongoose.Schema({
         assignments: { type: Boolean, default: false },
         liveClasses: { type: Boolean, default: false },
         masterclasses: { type: Boolean, default: false },
-        chat: { type: Boolean, default: false }
+        chat: { type: Boolean, default: false },
+        scheduledLive: { type: Boolean, default: false }
     },
     globalConfig: {
         supportEmail: { type: String, default: 'support@thinkskool.in' },

@@ -24,6 +24,7 @@ const ClassroomPage = () => {
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
+  const [scheduledLives, setScheduledLives] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myDoubt, setMyDoubt] = useState(null);
   const [isSignaling, setIsSignaling] = useState(false);
@@ -47,6 +48,7 @@ const ClassroomPage = () => {
   useEffect(() => {
     fetchClassroomData();
     fetchActiveLiveClass();
+    fetchScheduledLives();
 
     socket.on('liveClass:started', (liveClass) => {
       setActiveLiveClass(liveClass);
@@ -57,6 +59,19 @@ const ClassroomPage = () => {
       setActiveLiveClass(prev => (prev?._id === classId ? null : prev));
       setGlobalActiveLiveClass(null);
       setMyDoubt(null);
+    });
+
+    socket.on('scheduledLive:started', (scheduledLive) => {
+      setScheduledLives(prev => prev.map(live => 
+        live._id === scheduledLive._id ? { ...live, status: 'live' } : live
+      ));
+      setGlobalActiveLiveClass(scheduledLive);
+    });
+
+    socket.on('scheduledLive:ended', (liveId) => {
+      setScheduledLives(prev => prev.map(live => 
+        live._id === liveId ? { ...live, status: 'ended' } : live
+      ));
     });
 
     socket.on('doubt:resolved', (resolvedDoubt) => {
@@ -97,6 +112,19 @@ const ClassroomPage = () => {
         fetchMyCurrentDoubt(res.data._id);
         socket.emit('liveClass:join', res.data._id);
       }
+    } catch (error) {
+      console.error('Failed to fetch active live class:', error);
+    }
+  };
+
+  const fetchScheduledLives = async () => {
+    try {
+      const res = await api.get('/scheduled-live/upcoming');
+      setScheduledLives(res.data);
+    } catch (error) {
+      console.error('Failed to fetch scheduled lives:', error);
+    }
+  };
     } catch (error) {
       console.error('Failed to fetch active live class:', error);
     }
@@ -200,77 +228,104 @@ const ClassroomPage = () => {
       </motion.div>
 
       {/* Live Class Banner */}
-      {activeLiveClass && (
+      {(activeLiveClass || scheduledLives.some(l => l.status === 'live' || l.status === 'scheduled')) && (
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className="mb-10 bg-gradient-to-r from-[#2563EB] to-[#2563EB] rounded-2xl p-0.5 shadow-xl shadow-[#2563EB]/10"
         >
           <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full animate-ping absolute top-0 -right-1"></div>
-                  <div className="w-12 h-12 bg-blue-50/50 rounded-full flex items-center justify-center border border-blue-100">
-                    <PlayCircle className="text-blue-500 w-6 h-6" />
+            {activeLiveClass && (
+              <>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                      <div className="w-12 h-12 bg-blue-50/50 rounded-full flex items-center justify-center border border-blue-100">
+                        <PlayCircle className="text-blue-500 w-6 h-6" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-slate-900 text-xl font-black tracking-tight">Live Class in Session</h3>
+                      <p className="text-base font-medium text-slate-500">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                      <p className="text-[13px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <h3 className="text-slate-900 text-xl font-black tracking-tight">Live Class in Session</h3>
-                  <p className="text-base font-medium text-slate-500">{activeLiveClass.title}: {activeLiveClass.topic}</p>
-                  <p className="text-[13px] text-slate-400 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
-                </div>
-              </div>
 
-              <div className="flex items-center gap-3">
-                {myDoubt ? (
-                  <div className={`px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border-2 ${myDoubt.isResolved
-                    ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
-                    : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
-                    }`}>
-                    {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
-                    <span className="text-[13px] uppercase tracking-widest">
-                      {myDoubt.isResolved ? 'Signal Resolved' : 'Mentor Signaled'}
-                    </span>
-                    {myDoubt.isResolved && (
+                  <div className="flex items-center gap-3">
+                    {myDoubt ? (
+                      <div className={`px-4 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border-2 ${myDoubt.isResolved
+                        ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                        : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
+                        }`}>
+                        {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+                        <span className="text-[13px] uppercase tracking-widest">
+                          {myDoubt.isResolved ? 'Signal Resolved' : 'Mentor Signaled'}
+                        </span>
+                        {myDoubt.isResolved && (
+                          <button
+                            onClick={handleTerminateDoubt}
+                            className="ml-2 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-1.5 rounded-lg transition-colors border border-blue-200"
+                            title="Close this doubt to ask a new one"
+                          >
+                            <Trash2 size={12} strokeWidth={3} />
+                          </button>
+                        )}
+                      </div>
+                    ) : (
                       <button
-                        onClick={handleTerminateDoubt}
-                        className="ml-2 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-1.5 rounded-lg transition-colors border border-blue-200"
-                        title="Close this doubt to ask a new one"
+                        onClick={handleRaiseHand}
+                        disabled={isSignaling}
+                        className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest cursor-pointer disabled:opacity-50"
                       >
-                        <Trash2 size={12} strokeWidth={3} />
+                        {isSignaling ? 'Sending Signal...' : 'Raise Hand'}
                       </button>
                     )}
+                    <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
+                    <div className="text-right hidden md:block mr-4">
+                      <p className="text-[13px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
+                      <p className="text-slate-900 font-black">
+                        {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setGlobalActiveLiveClass(activeLiveClass);
+                        setView('LiveSession');
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase text-base tracking-widest cursor-pointer"
+                    >
+                      Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[13px] ml-2 font-black">LIVE</span>
+                    </button>
                   </div>
-                ) : (
-                  <button
-                    onClick={handleRaiseHand}
-                    disabled={isSignaling}
-                    className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest cursor-pointer disabled:opacity-50"
-                  >
-                    {isSignaling ? 'Sending Signal...' : 'Raise Hand'}
-                  </button>
-                )}
-                <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
-                <div className="text-right hidden md:block mr-4">
-                  <p className="text-[13px] text-slate-400 uppercase font-black tracking-widest">Started at</p>
-                  <p className="text-slate-900 font-black">
-                    {new Date(activeLiveClass.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
                 </div>
-                <button
-                  onClick={() => {
-                    setGlobalActiveLiveClass(activeLiveClass);
-                    setView('LiveSession');
-                  }}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase text-base tracking-widest cursor-pointer"
-                >
-                  Join Meeting <span className="bg-white/20 px-2 py-0.5 rounded text-[13px] ml-2 font-black">LIVE</span>
-                </button>
-              </div>
-            </div>
+              </>
+            )}
 
-            {/* Live Class Stream + Chat Removed from Dashboard to prevent auto-viewing */}
+            {/* Scheduled Lives */}
+            {scheduledLives.filter(l => l.status === 'scheduled').length > 0 && (
+              <div className="border-t border-slate-100 pt-6 mt-4">
+                <h4 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Upcoming Video Sessions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {scheduledLives.filter(l => l.status === 'scheduled').map(live => (
+                    <div key={live._id} className="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-sky-300 transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <PlayCircle className="text-sky-500 w-5 h-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <h5 className="font-black text-slate-900 text-sm truncate">{live.title}</h5>
+                          <p className="text-xs text-slate-500 font-medium mt-1">
+                            {new Date(live.scheduledStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">by {live.mentorName}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       )}
