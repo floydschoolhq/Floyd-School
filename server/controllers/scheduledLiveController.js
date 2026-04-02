@@ -36,6 +36,37 @@ exports.uploadVideo = async (req, res) => {
     }
 };
 
+exports.createScheduledLiveFromEmbed = async (req, res) => {
+    try {
+        const { title, description, apiVideoId, embedUrl, scheduledStart } = req.body;
+
+        if (!title || !apiVideoId || !embedUrl || !scheduledStart) {
+            return res.status(400).json({ message: 'Title, video ID, embed URL, and scheduled start time are required' });
+        }
+
+        const scheduledLive = await ScheduledLive.create({
+            title,
+            description: description || '',
+            mentor: req.user._id,
+            mentorName: req.user.name,
+            apiVideoId,
+            embedUrl,
+            videoUrl: embedUrl,
+            status: 'scheduled',
+            scheduledStart: new Date(scheduledStart)
+        });
+
+        res.status(201).json({
+            success: true,
+            message: 'Live session scheduled successfully',
+            data: scheduledLive
+        });
+    } catch (error) {
+        console.error('[CreateScheduledLiveFromEmbed] Error:', error);
+        res.status(500).json({ message: error.message || 'Failed to create scheduled live' });
+    }
+};
+
 exports.createScheduledLive = async (req, res) => {
     try {
         const { title, description, apiVideoId, scheduledStart, scheduledEnd, maxParticipants } = req.body;

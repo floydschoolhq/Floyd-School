@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const {
     uploadVideo,
+    createScheduledLiveFromEmbed,
     createScheduledLive,
     getAllScheduledLives,
     getUpcomingScheduledLives,
@@ -52,6 +53,8 @@ router.use(protect);
 router.use(checkMaintenance('scheduledLive'));
 
 router.post('/upload', protect, authorize('mentor', 'admin'), upload.single('video'), uploadVideo);
+
+router.post('/from-embed', protect, authorize('mentor', 'admin'), createScheduledLiveFromEmbed);
 
 router.post('/', protect, authorize('mentor', 'admin'), createScheduledLive);
 

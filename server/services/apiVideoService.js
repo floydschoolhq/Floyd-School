@@ -56,24 +56,43 @@ class ApiVideoService {
 
         try {
             const token = await this.getAccessToken();
-            console.log(`[ApiVideo] Uploading video: ${title} from ${filePath}`);
+            console.log(`[ApiVideo] Step 1: Creating video container for: ${title}`);
+            
+            // Step 1: Create video container
+            const createResponse = await axios.post(`${this.baseUrl}/videos`, {
+                title: title,
+                tags: ['thinkskool', 'live-session'],
+                public: false,
+                mp4Support: true
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const videoId = createResponse.data.videoId;
+            console.log(`[ApiVideo] Video container created. ID: ${videoId}`);
+
+            // Step 2: Upload the file to the video container
+            console.log(`[ApiVideo] Step 2: Uploading file to ${videoId}/source`);
             
             const FormData = require('form-data');
             const fs = require('fs');
             
             const form = new FormData();
             form.append('file', fs.createReadStream(filePath));
-            form.append('title', title);
-            form.append('tags', 'thinkskool,live-session');
 
-            const response = await axios.post(`${this.baseUrl}/videos`, form, {
+            const uploadResponse = await axios.post(`${this.baseUrl}/videos/${videoId}/source`, form, {
                 headers: {
                     ...form.getHeaders(),
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                maxContentLength: Infinity,
+                maxBodyLength: Infinity
             });
 
-            const video = response.data;
+            const video = uploadResponse.data;
             console.log(`[ApiVideo] Video uploaded successfully. ID: ${video.videoId}`);
             
             await this.waitForVideoProcessing(video.videoId);
@@ -103,6 +122,7 @@ class ApiVideoService {
                 if (response.data.status === 'ready') {
                     return true;
                 }
+                console.log(`[ApiVideo] Video status: ${response.data.status}, waiting...`);
                 await new Promise(resolve => setTimeout(resolve, 2000));
             } catch (error) {
                 console.error('[ApiVideo] Error checking video status:', error.message);
@@ -126,7 +146,7 @@ class ApiVideoService {
             const response = await axios.post(`${this.baseUrl}/videos`, {
                 title: title,
                 tags: ['thinkskool', 'live-session'],
-                import_url: url
+                source: url
             }, {
                 headers: { 
                     'Content-Type': 'application/json',

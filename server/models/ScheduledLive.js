@@ -32,6 +32,9 @@ const scheduledLiveSchema = new mongoose.Schema({
     thumbnailUrl: {
         type: String
     },
+    embedUrl: {
+        type: String
+    },
     scheduledStart: {
         type: Date,
         required: true
