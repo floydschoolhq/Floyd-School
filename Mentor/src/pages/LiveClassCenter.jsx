@@ -10,12 +10,18 @@ import {
     Link as LinkIcon,
     ExternalLink,
     Square,
-    MessageCircle
+    MessageCircle,
+    Calendar,
+    Trash2,
+    Clock,
+    Youtube,
+    BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 import { useSocket } from '../context/SocketContext';
 import { useToast } from '../context/ToastContext';
+import LiveChatSidebar from '../components/LiveChatSidebar';
 const LiveClassCenter = () => {
     const socket = useSocket();
     const toast = useToast();
@@ -39,6 +45,20 @@ const LiveClassCenter = () => {
     const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
     const [courses, setCourses] = useState([]);
     const [searchingRecordings, setSearchingRecordings] = useState(false);
+
+    // Scheduled sessions state
+    const [scheduledSessions, setScheduledSessions] = useState([]);
+    const [loadingSessions, setLoadingSessions] = useState(true);
+    const [showScheduleForm, setShowScheduleForm] = useState(false);
+    const [scheduleTitle, setScheduleTitle] = useState('');
+    const [scheduleDescription, setScheduleDescription] = useState('');
+    const [scheduleVideoUrl, setScheduleVideoUrl] = useState('');
+    const [scheduleDate, setScheduleDate] = useState('');
+    const [scheduleTime, setScheduleTime] = useState('');
+    const [scheduling, setScheduling] = useState(false);
+
+    // View mode: 'broadcast' or 'schedule'
+    const [viewMode, setViewMode] = useState('broadcast');
 
     // YouTube Helper
     const getYouTubeId = (url) => {
@@ -203,6 +223,130 @@ const LiveClassCenter = () => {
 
     const unresolvedDoubts = doubts.filter(d => !d.isResolved);
 
+    // Scheduled sessions functions
+    useEffect(() => {
+        fetchScheduledSessions();
+    }, []);
+
+    const fetchScheduledSessions = async () => {
+        try {
+            const res = await api.get('/scheduled-live');
+            setScheduledSessions(res.data);
+        } catch (err) {
+            console.error('Failed to fetch scheduled sessions:', err);
+        } finally {
+            setLoadingSessions(false);
+        }
+    };
+
+    const extractYouTubeId = (url) => {
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+            /^([a-zA-Z0-9_-]{11})$/
+        ];
+        for (const pattern of patterns) {
+            const match = url.match(pattern);
+            if (match) return match[1];
+        }
+        return null;
+    };
+
+    const handleScheduleSubmit = async (e) => {
+        e.preventDefault();
+        if (!scheduleVideoUrl || !scheduleTitle || !scheduleDate || !scheduleTime) {
+            toast.error('Please fill in all required fields');
+            return;
+        }
+
+        const videoId = extractYouTubeId(scheduleVideoUrl);
+        if (!videoId) {
+            toast.error('Invalid YouTube URL. Example: https://www.youtube.com/watch?v=VIDEO_ID');
+            return;
+        }
+
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+        setScheduling(true);
+        try {
+            const scheduledStart = new Date(`${scheduleDate}T${scheduleTime}`);
+            await api.post('/scheduled-live', {
+                title: scheduleTitle,
+                description: scheduleDescription,
+                videoUrl: embedUrl,
+                scheduledStart: scheduledStart.toISOString()
+            });
+            
+            toast.success('Live session scheduled successfully');
+            setScheduleTitle('');
+            setScheduleDescription('');
+            setScheduleVideoUrl('');
+            setScheduleDate('');
+            setScheduleTime('');
+            setShowScheduleForm(false);
+            fetchScheduledSessions();
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to schedule');
+        } finally {
+            setScheduling(false);
+        }
+    };
+
+    const handleDeleteSession = async (sessionId) => {
+        if (!window.confirm('Are you sure you want to delete this scheduled session?')) return;
+        try {
+            await api.delete(`/scheduled-live/${sessionId}`);
+            toast.success('Session deleted');
+            fetchScheduledSessions();
+        } catch (err) {
+            toast.error('Failed to delete session');
+        }
+    };
+
+    const handleStartSession = async (sessionId) => {
+        try {
+            await api.put(`/scheduled-live/${sessionId}/start`);
+            toast.success('Live session started');
+            fetchScheduledSessions();
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to start live');
+        }
+    };
+
+    const handleEndSession = async (sessionId) => {
+        try {
+            await api.put(`/scheduled-live/${sessionId}/end`);
+            toast.success('Live session ended');
+            fetchScheduledSessions();
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to end live');
+        }
+    };
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '-';
+        return new Date(dateString).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
+    const getStatusBadge = (status) => {
+        const statusStyles = {
+            scheduled: 'bg-amber-100 text-amber-700 border-amber-200',
+            live: 'bg-green-100 text-green-700 border-green-200',
+            ended: 'bg-gray-100 text-gray-700 border-gray-200',
+            cancelled: 'bg-red-100 text-red-700 border-red-200'
+        };
+        return (
+            <span className={`px-2 py-1 rounded-full text-[8px] font-bold uppercase border ${statusStyles[status] || statusStyles.scheduled}`}>
+                {status}
+            </span>
+        );
+    };
+
     return (
         <div className="max-w-6xl mx-auto space-y-10">
             <header className="flex items-center justify-between">
@@ -211,7 +355,7 @@ const LiveClassCenter = () => {
                         Live Session <span className="text-sky-500">Command Center</span>
                     </h2>
                     <p className="text-slate-500 font-bold mt-1 uppercase tracking-widest text-xs">
-                        Broadcast knowledge in real-time to your students.
+                        Broadcast knowledge in real-time or schedule YouTube sessions.
                     </p>
                 </div>
                 {activeClass && (
@@ -228,11 +372,41 @@ const LiveClassCenter = () => {
                 )}
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                {/* Control Panel */}
-                <div className="lg:col-span-7">
-                    <AnimatePresence mode="wait">
-                        {!activeClass ? (
+            {/* View Mode Tabs */}
+            <div className="flex bg-slate-900 p-2 gap-2 rounded-2xl w-fit">
+                <button
+                    onClick={() => setViewMode('broadcast')}
+                    className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${viewMode === 'broadcast'
+                        ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                >
+                    <Video size={14} />
+                    Live Broadcast
+                </button>
+                <button
+                    onClick={() => setViewMode('schedule')}
+                    className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${viewMode === 'schedule'
+                        ? 'bg-red-600 text-white shadow-lg shadow-red-600/20'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                >
+                    <Calendar size={14} />
+                    Scheduled Sessions
+                    {scheduledSessions.filter(s => s.status === 'scheduled').length > 0 && (
+                        <span className="bg-amber-500 text-[8px] px-1.5 py-0.5 rounded-full">
+                            {scheduledSessions.filter(s => s.status === 'scheduled').length}
+                        </span>
+                    )}
+                </button>
+            </div>
+
+            {viewMode === 'broadcast' ? (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    {/* Control Panel */}
+                    <div className="lg:col-span-7">
+                        <AnimatePresence>
+                            {!activeClass ? (
                             <motion.div
                                 key="start-form"
                                 initial={{ opacity: 0, y: 20 }}
@@ -492,8 +666,7 @@ const LiveClassCenter = () => {
                                     </div>
                                 </div>
                             </motion.div>
-                        )
-                        }
+                        )}
                     </AnimatePresence>
                 </div>
 
@@ -598,6 +771,199 @@ const LiveClassCenter = () => {
                     </div>
                 </div>
             </div>
+            ) : (
+                <div className="space-y-8">
+                    {/* Schedule Form */}
+                    <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/20">
+                                <Youtube size={28} />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-black text-slate-900 uppercase">Schedule YouTube Session</h3>
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Paste YouTube URL and set schedule</p>
+                            </div>
+                        </div>
+
+                        <form onSubmit={handleScheduleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">YouTube URL *</label>
+                                <input
+                                    type="url"
+                                    value={scheduleVideoUrl}
+                                    onChange={(e) => setScheduleVideoUrl(e.target.value)}
+                                    placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+                                    required
+                                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
+                                />
+                                <p className="text-xs text-slate-400 font-medium ml-1">Supports: youtube.com/watch, youtu.be, youtube.com/embed</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Session Title *</label>
+                                    <input
+                                        type="text"
+                                        value={scheduleTitle}
+                                        onChange={(e) => setScheduleTitle(e.target.value)}
+                                        placeholder="Enter session title"
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Description</label>
+                                    <input
+                                        type="text"
+                                        value={scheduleDescription}
+                                        onChange={(e) => setScheduleDescription(e.target.value)}
+                                        placeholder="Brief description (optional)"
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Date *</label>
+                                    <input
+                                        type="date"
+                                        value={scheduleDate}
+                                        onChange={(e) => setScheduleDate(e.target.value)}
+                                        min={new Date().toISOString().split('T')[0]}
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Time *</label>
+                                    <input
+                                        type="time"
+                                        value={scheduleTime}
+                                        onChange={(e) => setScheduleTime(e.target.value)}
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={scheduling}
+                                className="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl hover:bg-red-600 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                            >
+                                {scheduling ? (
+                                    <>
+                                        <Loader2 size={20} className="animate-spin" />
+                                        Scheduling...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Calendar size={20} />
+                                        Schedule Live Session
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Scheduled Sessions List */}
+                    <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-xl overflow-hidden">
+                        <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                            <h3 className="text-lg font-black text-slate-900 uppercase">Your Sessions</h3>
+                            <span className="text-xs font-bold text-slate-400">
+                                {scheduledSessions.length} total
+                            </span>
+                        </div>
+
+                        {loadingSessions ? (
+                            <div className="p-12 text-center">
+                                <Loader2 className="w-8 h-8 animate-spin text-sky-500 mx-auto" />
+                            </div>
+                        ) : scheduledSessions.length === 0 ? (
+                            <div className="p-12 text-center opacity-50">
+                                <Video className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                <p className="font-bold text-slate-400 uppercase">No sessions scheduled yet</p>
+                            </div>
+                        ) : (
+                            <div className="divide-y divide-slate-100">
+                                {scheduledSessions.map((session) => (
+                                    <motion.div
+                                        key={session._id}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        className="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-slate-50 transition-colors"
+                                    >
+                                        <div className="w-full md:w-48 h-28 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                                            {session.thumbnailUrl ? (
+                                                <img src={session.thumbnailUrl} alt={session.title} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <Video className="w-10 h-10 text-slate-300" />
+                                            )}
+                                        </div>
+
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <h4 className="font-black text-slate-900 truncate">{session.title}</h4>
+                                                {getStatusBadge(session.status)}
+                                            </div>
+                                            {session.description && (
+                                                <p className="text-sm text-slate-500 mb-2 truncate">{session.description}</p>
+                                            )}
+                                            <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-400">
+                                                <span className="flex items-center gap-1">
+                                                    <Calendar size={14} />
+                                                    {formatDate(session.scheduledStart)}
+                                                </span>
+                                                {session.mentor?.name && (
+                                                    <span>by {session.mentor.name}</span>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-3 flex-shrink-0">
+                                            {session.status === 'scheduled' && (
+                                                <button
+                                                    onClick={() => handleStartSession(session._id)}
+                                                    className="px-4 py-2 bg-green-500 text-white rounded-xl font-bold text-xs uppercase hover:bg-green-600 transition-colors flex items-center gap-2"
+                                                >
+                                                    <Play size={14} />
+                                                    Go Live
+                                                </button>
+                                            )}
+                                            {session.status === 'live' && (
+                                                <button
+                                                    onClick={() => handleEndSession(session._id)}
+                                                    className="px-4 py-2 bg-red-500 text-white rounded-xl font-bold text-xs uppercase hover:bg-red-600 transition-colors flex items-center gap-2"
+                                                >
+                                                    <Square size={14} className="fill-current" />
+                                                    End Live
+                                                </button>
+                                            )}
+                                            {session.videoUrl && (
+                                                <a
+                                                    href={session.videoUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+                                                >
+                                                    <ExternalLink size={18} className="text-slate-400" />
+                                                </a>
+                                            )}
+                                            <button
+                                                onClick={() => handleDeleteSession(session._id)}
+                                                className="p-2 border border-red-200 text-red-400 rounded-xl hover:bg-red-50 transition-colors"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
             {/* Recording Selection Modal */}
             <AnimatePresence>
                 {isRecordingModalOpen && (

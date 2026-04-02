@@ -5,17 +5,11 @@ import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
+import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 
 import { PortalContext } from '../../components/Context/PortalProvider';
 import { useSocket } from '../../components/Context/SocketContext';
 import { useContext } from 'react';
-
-const getYouTubeId = (url) => {
-  if (!url) return null;
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
-};
 
 const ClassroomPage = () => {
   const socket = useSocket();
@@ -240,13 +234,9 @@ const ClassroomPage = () => {
             </button>
           </div>
           <div className="aspect-video bg-black">
-            <iframe
-              src={`${activeScheduledVideo.videoUrl}?autoplay=1&rel=0`}
-              title={activeScheduledVideo.title}
-              className="w-full h-full"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+            <CustomVideoPlayer
+              videoUrl={activeScheduledVideo.videoUrl}
+              autoPlay={true}
             />
           </div>
         </motion.div>

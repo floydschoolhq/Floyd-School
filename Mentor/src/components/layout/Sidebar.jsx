@@ -10,8 +10,7 @@ import {
     LifeBuoy,
     Settings,
     LogOut,
-    Presentation,
-    HardDrive
+    Presentation
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';

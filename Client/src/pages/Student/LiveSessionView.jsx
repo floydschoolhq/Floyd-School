@@ -2,15 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink, Maximize, Minimize } from 'lucide-react';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
+import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import api from '../../api/axios';
 import { useSocket } from '../../components/Context/SocketContext';
-
-const getYouTubeId = (url) => {
-    if (!url) return null;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-};
 
 const LiveSessionView = ({ liveClass, onBack }) => {
     const socket = useSocket();
@@ -237,27 +231,31 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                 <div className="flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
                     <div className="flex-1 relative overflow-hidden">
                         {(embedUrl || liveClass.platform === 'jitsi') ? (
-                            <div className="absolute inset-0 overflow-hidden bg-black pointer-events-none">
-                                <iframe
-                                    className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-0 pointer-events-none select-none"
-                                    src={embedUrl}
-                                    allow="camera; microphone; fullscreen; display-capture; autoplay"
-                                    title="Live Stream"
-                                ></iframe>
-
-                                {/* Secure Intercept Overlay - Absolute Black-Hole but Clean */}
-                                <div className="absolute inset-0 z-50 bg-transparent cursor-default pointer-events-auto" onContextMenu={(e) => e.preventDefault()}>
-                                    {/* Fullscreen Trigger */}
-                                    <button
-                                        onClick={toggleFullscreen}
-                                        className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl group/fs-btn"
-                                    >
-                                        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-                                    </button>
-
-                                    {/* Interaction Block & Subtler Branding */}
-                                    <div className="absolute inset-0 border-[20px] border-slate-900/10 pointer-events-none"></div>
-                                </div>
+                            <div className="absolute inset-0 overflow-hidden bg-black">
+                                {liveClass.platform === 'jitsi' ? (
+                                    <>
+                                        <iframe
+                                            className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-0 pointer-events-none select-none"
+                                            src={embedUrl}
+                                            allow="camera; microphone; fullscreen; display-capture; autoplay"
+                                            title="Live Stream"
+                                        ></iframe>
+                                        <div className="absolute inset-0 z-50 bg-transparent cursor-default pointer-events-auto" onContextMenu={(e) => e.preventDefault()}>
+                                            <button
+                                                onClick={toggleFullscreen}
+                                                className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl"
+                                            >
+                                                {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+                                            </button>
+                                            <div className="absolute inset-0 border-[20px] border-slate-900/10 pointer-events-none"></div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <CustomVideoPlayer
+                                        videoUrl={embedUrl}
+                                        autoPlay={true}
+                                    />
+                                )}
                             </div>
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/80">
