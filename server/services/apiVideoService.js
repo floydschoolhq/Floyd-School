@@ -3,6 +3,7 @@ const axios = require('axios');
 class ApiVideoService {
     constructor() {
         this.apiKey = null;
+        this.baseUrl = null;
         this.accessToken = null;
         this.tokenExpiry = null;
         this.isInitialized = false;
@@ -17,8 +18,10 @@ class ApiVideoService {
             return;
         }
 
+        this.baseUrl = process.env.API_VIDEO_BASE_URL || 'https://sandbox.api.video';
+        
         this.isInitialized = true;
-        console.log('[ApiVideo] Client initialized with API key');
+        console.log(`[ApiVideo] Client initialized with base URL: ${this.baseUrl}`);
     }
 
     async getAccessToken() {
@@ -27,7 +30,7 @@ class ApiVideoService {
         }
 
         try {
-            const response = await axios.post('https://api.video/auth/api-key', {
+            const response = await axios.post(`${this.baseUrl}/auth/api-key`, {
                 apiKey: this.apiKey
             }, {
                 headers: { 'Content-Type': 'application/json' }
@@ -63,7 +66,7 @@ class ApiVideoService {
             form.append('title', title);
             form.append('tags', 'thinkskool,live-session');
 
-            const response = await axios.post('https://api.video/videos', form, {
+            const response = await axios.post(`${this.baseUrl}/videos`, form, {
                 headers: {
                     ...form.getHeaders(),
                     'Authorization': `Bearer ${token}`
@@ -94,7 +97,7 @@ class ApiVideoService {
         
         for (let i = 0; i < maxAttempts; i++) {
             try {
-                const response = await axios.get(`https://api.video/videos/${videoId}`, {
+                const response = await axios.get(`${this.baseUrl}/videos/${videoId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.data.status === 'ready') {
@@ -120,7 +123,7 @@ class ApiVideoService {
             const token = await this.getAccessToken();
             console.log(`[ApiVideo] Uploading video from URL: ${title}`);
             
-            const response = await axios.post('https://api.video/videos', {
+            const response = await axios.post(`${this.baseUrl}/videos`, {
                 title: title,
                 tags: ['thinkskool', 'live-session'],
                 import_url: url
@@ -136,7 +139,7 @@ class ApiVideoService {
             
             await this.waitForVideoProcessing(video.videoId);
             
-            const readyResponse = await axios.get(`https://api.video/videos/${video.videoId}`, {
+            const readyResponse = await axios.get(`${this.baseUrl}/videos/${video.videoId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -163,7 +166,7 @@ class ApiVideoService {
 
         try {
             const token = await this.getAccessToken();
-            const response = await axios.get(`https://api.video/videos/${videoId}`, {
+            const response = await axios.get(`${this.baseUrl}/videos/${videoId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const video = response.data;
@@ -192,7 +195,7 @@ class ApiVideoService {
 
         try {
             const token = await this.getAccessToken();
-            await axios.delete(`https://api.video/videos/${videoId}`, {
+            await axios.delete(`${this.baseUrl}/videos/${videoId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             console.log(`[ApiVideo] Video deleted: ${videoId}`);
@@ -212,7 +215,7 @@ class ApiVideoService {
 
         try {
             const token = await this.getAccessToken();
-            const response = await axios.get('https://api.video/videos', {
+            const response = await axios.get(`${this.baseUrl}/videos`, {
                 headers: { 'Authorization': `Bearer ${token}` },
                 params: { limit: 100, sortBy: 'createdAt', order: 'desc' }
             });
