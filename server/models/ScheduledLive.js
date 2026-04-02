@@ -19,20 +19,11 @@ const scheduledLiveSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    apiVideoId: {
+    videoUrl: {
         type: String,
         required: true
     },
-    videoUrl: {
-        type: String
-    },
-    hlsUrl: {
-        type: String
-    },
     thumbnailUrl: {
-        type: String
-    },
-    embedUrl: {
         type: String
     },
     scheduledStart: {
@@ -52,10 +43,6 @@ const scheduledLiveSchema = new mongoose.Schema({
         type: String,
         enum: ['scheduled', 'live', 'ended', 'cancelled'],
         default: 'scheduled'
-    },
-    duration: {
-        type: Number,
-        default: 0
     },
     maxParticipants: {
         type: Number,

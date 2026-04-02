@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2 } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
@@ -29,6 +29,7 @@ const ClassroomPage = () => {
   const [myDoubt, setMyDoubt] = useState(null);
   const [isSignaling, setIsSignaling] = useState(false);
   const [requestingAccess, setRequestingAccess] = useState(false);
+  const [activeScheduledVideo, setActiveScheduledVideo] = useState(null);
 
   const handleRequestAccess = async () => {
     setRequestingAccess(true);
@@ -79,7 +80,6 @@ const ClassroomPage = () => {
     });
 
     socket.on('doubt:new', (newDoubt) => {
-      // Just to be safe, if student raises doubt on another device
       if (newDoubt.student === socket.userId) {
         setMyDoubt(newDoubt);
       }
@@ -107,7 +107,7 @@ const ClassroomPage = () => {
     try {
       const res = await api.get('/live-classes/active');
       setActiveLiveClass(res.data);
-      setGlobalActiveLiveClass(res.data); // Sync with context for Sidebar/LiveSessionView
+      setGlobalActiveLiveClass(res.data);
       if (res.data) {
         fetchMyCurrentDoubt(res.data._id);
         socket.emit('liveClass:join', res.data._id);
@@ -154,13 +154,11 @@ const ClassroomPage = () => {
   const handleTerminateDoubt = async () => {
     if (!myDoubt) return;
     try {
-      // Optimistic UI update
       const doubtId = myDoubt._id;
       setMyDoubt(null);
       await api.delete(`/doubts/${doubtId}`);
     } catch (error) {
       console.error('Failed to terminate doubt:', error);
-      // Revert if failed (optional, but good practice if we stored previous state)
     }
   };
 
@@ -189,7 +187,6 @@ const ClassroomPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 p-6 relative">
-      {/* Access Lock Overlay */}
       {!user?.permissions?.canAccessCourses && (
         <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
           <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
@@ -211,7 +208,7 @@ const ClassroomPage = () => {
           </button>
         </div>
       )}
-      {/* Header */}
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -222,6 +219,38 @@ const ClassroomPage = () => {
         </h1>
         <p className="text-base font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
       </motion.div>
+
+      {/* Active Scheduled Video Player */}
+      {activeScheduledVideo && (
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="mb-8 bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-200"
+        >
+          <div className="flex items-center justify-between p-4 border-b border-slate-100">
+            <div>
+              <h3 className="text-lg font-black text-slate-900">{activeScheduledVideo.title}</h3>
+              <p className="text-xs text-slate-500 font-medium">by {activeScheduledVideo.mentorName || activeScheduledVideo.mentor?.name}</p>
+            </div>
+            <button
+              onClick={() => setActiveScheduledVideo(null)}
+              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              <X size={20} className="text-slate-400" />
+            </button>
+          </div>
+          <div className="aspect-video bg-black">
+            <iframe
+              src={`${activeScheduledVideo.videoUrl}?autoplay=1&rel=0`}
+              title={activeScheduledVideo.title}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </motion.div>
+      )}
 
       {/* Live Class Banner */}
       {(activeLiveClass || scheduledLives.some(l => l.status === 'live' || l.status === 'scheduled')) && (
@@ -304,17 +333,21 @@ const ClassroomPage = () => {
                 <h4 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Upcoming Video Sessions</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {scheduledLives.filter(l => l.status === 'scheduled').map(live => (
-                    <div key={live._id} className="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-sky-300 transition-colors">
+                    <div 
+                      key={live._id} 
+                      className="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-red-300 transition-colors cursor-pointer"
+                      onClick={() => setActiveScheduledVideo(live)}
+                    >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <PlayCircle className="text-sky-500 w-5 h-5" />
+                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <PlayCircle className="text-red-500 w-5 h-5" />
                         </div>
                         <div className="min-w-0">
                           <h5 className="font-black text-slate-900 text-sm truncate">{live.title}</h5>
                           <p className="text-xs text-slate-500 font-medium mt-1">
                             {new Date(live.scheduledStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                           </p>
-                          <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">by {live.mentorName}</p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">by {live.mentorName || live.mentor?.name}</p>
                         </div>
                       </div>
                     </div>
@@ -450,4 +483,3 @@ const ClassroomPage = () => {
 };
 
 export default ClassroomPage;
-

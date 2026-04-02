@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, Calendar, Clock, Play, Trash2, Loader2, X, Video, AlertCircle, Check, ExternalLink, Link } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, Play, Trash2, Loader2, X, Video, ExternalLink, Link, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import api from '../api/axios';
 import { useToast } from '../context/ToastContext';
 
@@ -11,7 +11,7 @@ const VideoUploadPage = () => {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     
-    const [embedUrl, setEmbedUrl] = useState('');
+    const [videoUrl, setVideoUrl] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [scheduledDate, setScheduledDate] = useState('');
@@ -32,38 +32,46 @@ const VideoUploadPage = () => {
         }
     };
 
-    const extractVideoId = (url) => {
-        const vodMatch = url.match(/\/vod\/(vi\w+)/);
-        const embedMatch = url.match(/embed\.api\.video\/vod\/(vi\w+)/);
-        return vodMatch?.[1] || embedMatch?.[1] || null;
+    const extractYouTubeId = (url) => {
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+            /^([a-zA-Z0-9_-]{11})$/
+        ];
+        
+        for (const pattern of patterns) {
+            const match = url.match(pattern);
+            if (match) return match[1];
+        }
+        return null;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!embedUrl || !title || !scheduledDate || !scheduledTime) {
+        if (!videoUrl || !title || !scheduledDate || !scheduledTime) {
             toast.error('Please fill in all required fields');
             return;
         }
 
-        const videoId = extractVideoId(embedUrl);
+        const videoId = extractYouTubeId(videoUrl);
         if (!videoId) {
-            toast.error('Invalid api.video embed URL. Expected format: https://embed.api.video/vod/viXXXXX');
+            toast.error('Invalid YouTube URL. Example: https://www.youtube.com/watch?v=VIDEO_ID');
             return;
         }
+
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
         setSubmitting(true);
         try {
             const scheduledStart = new Date(`${scheduledDate}T${scheduledTime}`);
-            await api.post('/scheduled-live/from-embed', {
+            await api.post('/scheduled-live', {
                 title,
                 description,
-                apiVideoId: videoId,
-                embedUrl,
+                videoUrl: embedUrl,
                 scheduledStart: scheduledStart.toISOString()
             });
             
             toast.success('Live session scheduled successfully');
-            setEmbedUrl('');
+            setVideoUrl('');
             setTitle('');
             setDescription('');
             setScheduledDate('');
@@ -149,61 +157,61 @@ const VideoUploadPage = () => {
                         Schedule <span className="text-sky-500">Live Session</span>
                     </h2>
                     <p className="text-slate-500 font-bold mt-1 uppercase tracking-widest text-xs">
-                        Upload your video to api.video, paste the embed URL, and schedule your live session
+                        Add a YouTube video link and schedule your live session
                     </p>
                 </div>
             </header>
 
             {/* Instructions */}
-            <div className="bg-gradient-to-r from-sky-50 to-indigo-50 p-8 rounded-[2.5rem] border border-sky-100">
+            <div className="bg-gradient-to-r from-red-50 to-orange-50 p-8 rounded-[2.5rem] border border-red-100">
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-sky-500 rounded-xl flex items-center justify-center text-white flex-shrink-0">
-                        <ExternalLink size={24} />
+                    <div className="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white flex-shrink-0">
+                        <Youtube size={24} />
                     </div>
                     <div>
                         <h3 className="text-lg font-black text-slate-900 uppercase mb-3">How it works</h3>
                         <ol className="space-y-2 text-sm text-slate-600 font-medium">
                             <li className="flex items-start gap-2">
-                                <span className="w-6 h-6 bg-sky-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-                                <span>Go to <a href="https://dashboard.api.video" target="_blank" rel="noopener noreferrer" className="text-sky-600 underline font-bold">api.video dashboard</a> and upload your video</span>
+                                <span className="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                                <span>Upload your video to <a href="https://youtube.com/upload" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-bold">YouTube</a></span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="w-6 h-6 bg-sky-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-                                <span>Copy the embed URL (format: <code className="bg-white px-2 py-1 rounded-lg text-xs">https://embed.api.video/vod/viXXXXX</code>)</span>
+                                <span className="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                                <span>Copy the video URL (e.g., <code className="bg-white px-2 py-1 rounded-lg text-xs">https://www.youtube.com/watch?v=VIDEO_ID</code>)</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="w-6 h-6 bg-sky-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-                                <span>Paste the embed URL below, fill in details, and schedule your session</span>
+                                <span className="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                                <span>Paste the URL below, fill in details, and schedule your session</span>
                             </li>
                         </ol>
                     </div>
                 </div>
             </div>
 
-            {/* Embed URL Form */}
+            {/* YouTube URL Form */}
             <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl">
                 <div className="flex items-center gap-4 mb-8">
-                    <div className="w-14 h-14 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
+                    <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/20">
                         <Link size={28} />
                     </div>
                     <div>
                         <h3 className="text-xl font-black text-slate-900 uppercase">Schedule Live Session</h3>
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Paste your api.video embed URL and set schedule</p>
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Paste your YouTube URL and set schedule</p>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Embed URL *</label>
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">YouTube URL *</label>
                         <input
                             type="url"
-                            value={embedUrl}
-                            onChange={(e) => setEmbedUrl(e.target.value)}
-                            placeholder="https://embed.api.video/vod/viXXXXX"
+                            value={videoUrl}
+                            onChange={(e) => setVideoUrl(e.target.value)}
+                            placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
                             required
-                            className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all"
+                            className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
                         />
-                        <p className="text-xs text-slate-400 font-medium ml-1">Get this from your api.video dashboard after uploading a video</p>
+                        <p className="text-xs text-slate-400 font-medium ml-1">Supports: youtube.com/watch, youtu.be, youtube.com/embed</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -215,7 +223,7 @@ const VideoUploadPage = () => {
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Enter session title"
                                 required
-                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
                             />
                         </div>
                         <div className="space-y-2">
@@ -225,7 +233,7 @@ const VideoUploadPage = () => {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Brief description (optional)"
-                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
                             />
                         </div>
                     </div>
@@ -239,7 +247,7 @@ const VideoUploadPage = () => {
                                 onChange={(e) => setScheduledDate(e.target.value)}
                                 min={new Date().toISOString().split('T')[0]}
                                 required
-                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
                             />
                         </div>
                         <div className="space-y-2">
@@ -249,7 +257,7 @@ const VideoUploadPage = () => {
                                 value={scheduledTime}
                                 onChange={(e) => setScheduledTime(e.target.value)}
                                 required
-                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all"
+                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all"
                             />
                         </div>
                     </div>
@@ -257,7 +265,7 @@ const VideoUploadPage = () => {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl hover:bg-sky-500 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                        className="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl hover:bg-red-600 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                         {submitting ? (
                             <>
@@ -340,9 +348,9 @@ const VideoUploadPage = () => {
                                             End Live
                                         </button>
                                     )}
-                                    {video.embedUrl && (
+                                    {video.videoUrl && (
                                         <a
-                                            href={video.embedUrl}
+                                            href={video.videoUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="p-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"

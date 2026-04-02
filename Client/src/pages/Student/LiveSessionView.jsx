@@ -142,13 +142,12 @@ const LiveSessionView = ({ liveClass, onBack }) => {
     };
 
     const getEmbedUrl = () => {
-        const { platform, meetingLink, startedAt, videoUrl, hlsUrl, apiVideoId } = liveClass;
+        const { platform, meetingLink, startedAt, videoUrl } = liveClass;
 
-        if (apiVideoId && videoUrl) {
+        if (videoUrl) {
             return videoUrl;
         }
 
-        // Calculate offset in seconds for YouTube-based platforms
         const startSeconds = Math.max(0, Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000));
 
         if (platform === 'youtube') {

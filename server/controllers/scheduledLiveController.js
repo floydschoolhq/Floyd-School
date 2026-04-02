@@ -1,96 +1,25 @@
 const ScheduledLive = require('../models/ScheduledLive');
-const apiVideoService = require('../services/apiVideoService');
 const Notification = require('../models/Notification');
 const User = require('../models/User');
 
-exports.uploadVideo = async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ message: 'No video file uploaded' });
-        }
-
-        const title = req.body.title || `Video-${Date.now()}`;
-        
-        const result = await apiVideoService.uploadVideo(req.file.path, title);
-
-        const scheduledLive = await ScheduledLive.create({
-            title,
-            description: req.body.description || '',
-            mentor: req.user._id,
-            mentorName: req.user.name,
-            apiVideoId: result.videoId,
-            videoUrl: result.playable,
-            hlsUrl: result.hls,
-            thumbnailUrl: result.thumbnail,
-            status: 'scheduled'
-        });
-
-        res.status(201).json({
-            success: true,
-            message: 'Video uploaded successfully',
-            data: scheduledLive
-        });
-    } catch (error) {
-        console.error('[UploadVideo] Error:', error);
-        res.status(500).json({ message: error.message || 'Failed to upload video' });
-    }
-};
-
-exports.createScheduledLiveFromEmbed = async (req, res) => {
-    try {
-        const { title, description, apiVideoId, embedUrl, scheduledStart } = req.body;
-
-        if (!title || !apiVideoId || !embedUrl || !scheduledStart) {
-            return res.status(400).json({ message: 'Title, video ID, embed URL, and scheduled start time are required' });
-        }
-
-        const scheduledLive = await ScheduledLive.create({
-            title,
-            description: description || '',
-            mentor: req.user._id,
-            mentorName: req.user.name,
-            apiVideoId,
-            embedUrl,
-            videoUrl: embedUrl,
-            status: 'scheduled',
-            scheduledStart: new Date(scheduledStart)
-        });
-
-        res.status(201).json({
-            success: true,
-            message: 'Live session scheduled successfully',
-            data: scheduledLive
-        });
-    } catch (error) {
-        console.error('[CreateScheduledLiveFromEmbed] Error:', error);
-        res.status(500).json({ message: error.message || 'Failed to create scheduled live' });
-    }
-};
-
 exports.createScheduledLive = async (req, res) => {
     try {
-        const { title, description, apiVideoId, scheduledStart, scheduledEnd, maxParticipants } = req.body;
+        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants } = req.body;
 
-        if (!title || !apiVideoId || !scheduledStart) {
-            return res.status(400).json({ message: 'Title, video ID, and scheduled start time are required' });
+        if (!title || !videoUrl || !scheduledStart) {
+            return res.status(400).json({ message: 'Title, video URL, and scheduled start time are required' });
         }
-
-        const videoInfo = await apiVideoService.getVideo(apiVideoId);
 
         const scheduledLive = await ScheduledLive.create({
             title,
             description: description || '',
             mentor: req.user._id,
             mentorName: req.user.name,
-            apiVideoId,
-            videoUrl: videoInfo.playable,
-            hlsUrl: videoInfo.hls,
-            thumbnailUrl: videoInfo.thumbnail,
+            videoUrl,
+            status: 'scheduled',
             scheduledStart: new Date(scheduledStart),
             scheduledEnd: scheduledEnd ? new Date(scheduledEnd) : null,
-            duration: videoInfo.duration || 0,
-            maxParticipants: maxParticipants || 500,
-            status: 'scheduled'
+            maxParticipants: maxParticipants || 500
         });
 
         res.status(201).json({
@@ -205,8 +134,6 @@ exports.deleteScheduledLive = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized to delete this scheduled live' });
         }
 
-        await apiVideoService.deleteVideo(scheduledLive.apiVideoId);
-        
         await ScheduledLive.findByIdAndDelete(req.params.id);
 
         res.json({ success: true, message: 'Scheduled live deleted successfully' });
