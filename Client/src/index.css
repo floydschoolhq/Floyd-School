@@ -44,7 +44,7 @@
 }
 
 .animate-marquee-vertical {
-  animation: marquee-vertical 25s linear infinite;
+  animation: marquee-vertical 20s linear infinite;
 }
 
 /* Pause animation on hover */

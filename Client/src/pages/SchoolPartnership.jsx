@@ -380,8 +380,8 @@ const SchoolPartnership = () => {
 
           {/* Mobile: Vertical Marquee */}
           <div className="md:hidden">
-            <div className="relative overflow-hidden py-8">
-              <div className="animate-marquee-vertical flex flex-col gap-8">
+            <div className="relative overflow-hidden h-96 bg-slate-900/20 rounded-2xl border border-white/5">
+              <div className="animate-marquee-vertical flex flex-col gap-8 absolute">
                 {/* Duplicate items for seamless scrolling */}
                 {[
                   { 
@@ -436,7 +436,7 @@ const SchoolPartnership = () => {
                 ].map((item, index) => (
                   <div 
                     key={`${item.title}-${index}`}
-                    className="group flex flex-col items-start border-l border-white/5 pl-8 hover:border-blue-500/50 hover:bg-blue-500/[0.02] py-3 -ml-2 transition-all duration-500 rounded-r-2xl flex-shrink-0"
+                    className="group flex flex-col items-start border-l border-white/5 pl-8 hover:border-blue-500/50 hover:bg-blue-500/[0.02] py-3 -ml-2 transition-all duration-500 rounded-r-2xl flex-shrink-0 w-full max-w-xs bg-slate-800/30"
                   >
                     <h3 className="text-lg font-bold text-blue-50/90 mb-2 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-500 tracking-tight uppercase leading-none">
                       {item.title}
