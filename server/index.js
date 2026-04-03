@@ -7,7 +7,9 @@ const path = require('path');
 const morgan = require('morgan');
 
 // Load env variables first
+process.chdir(__dirname); // Change to script directory
 dotenv.config();
+console.log('Environment loaded. RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID);
 
 // Set MONGODB_URI from MONGO_URI for compatibility
 if (process.env.MONGO_URI && !process.env.MONGODB_URI) {
@@ -26,6 +28,7 @@ const leadRoutes = require('./routes/leadRoutes');
 const liveClassRoutes = require('./routes/liveClassRoutes');
 const doubtRoutes = require('./routes/doubtRoutes');
 const scheduledLiveRoutes = require('./routes/scheduledLiveRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 connectDB();
 
@@ -117,6 +120,7 @@ app.use('/api/assignments', assignmentRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/code', codeExecutionRoutes);
 app.use('/api/leads', leadRoutes);
+app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
@@ -131,6 +135,14 @@ app.use('/api/live-chat', require('./routes/liveChatRoutes'));
 app.use('/api/doubts', doubtRoutes);
 app.use('/api/scheduled-live', scheduledLiveRoutes);
 app.use('/api/public', require('./routes/publicRoutes'));
+
+// Catch-all for /review requests
+app.get('/review', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'Reviews endpoint - static data is used on frontend'
+    });
+});
 
 // Socket.io connection with authentication
 io.on('connection', (socket) => {

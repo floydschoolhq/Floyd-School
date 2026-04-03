@@ -23,7 +23,7 @@ import PremiumNavbar from '../components/PremiumNavbar';
 import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
 import CourseFAQ from '../components/CourseFAQ';
-import RegistrationForm from '../components/RegistrationForm';
+import PaymentModal from '../components/PaymentModal';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
 
@@ -223,11 +223,13 @@ const CourseDetails = () => {
                 {/* FAQ Section */}
                 <CourseFAQ />
 
-                {/* Registration Form Modal */}
-                <RegistrationForm 
+                {/* Payment Modal */}
+                <PaymentModal 
                     isOpen={isRegistrationModalOpen} 
                     onClose={() => setIsRegistrationModalOpen(false)} 
+                    courseId={course?._id}
                     courseTitle={course?.title || ''}
+                    coursePrice={course?.price || 0}
                 />
                 
             </div>

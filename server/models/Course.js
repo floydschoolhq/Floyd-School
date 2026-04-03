@@ -79,6 +79,15 @@ const courseSchema = new mongoose.Schema({
         type: String,
         enum: ['draft', 'published', 'rejected'],
         default: 'draft'
+    },
+    price: {
+        type: Number,
+        default: 10,
+        min: 0
+    },
+    currency: {
+        type: String,
+        default: 'INR'
     }
 }, {
     timestamps: true
