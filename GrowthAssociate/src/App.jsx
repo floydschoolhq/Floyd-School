@@ -17,31 +17,29 @@ import LiveMonitoring from './pages/LiveMonitoring';
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <ToastProvider>
-          <SocketProvider>
-            <GlobalNotificationListener />
-            <Routes>
-              <Route path="/login" element={<Login />} />
+      <ToastProvider>
+        <SocketProvider>
+          <GlobalNotificationListener />
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-              <Route path="/" element={
-                <ProtectedRoute>
-                  <MainLayout />
-                </ProtectedRoute>
-              }>
-                <Route index element={<Dashboard />} />
-                <Route path="support" element={<SupportHub />} />
-                <Route path="discussions" element={<DiscussionModeration />} />
-                <Route path="students" element={<StudentList />} />
-                <Route path="escalations" element={<Escalations />} />
-                <Route path="monitoring" element={<LiveMonitoring />} />
-              </Route>
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Dashboard />} />
+              <Route path="support" element={<SupportHub />} />
+              <Route path="discussions" element={<DiscussionModeration />} />
+              <Route path="students" element={<StudentList />} />
+              <Route path="escalations" element={<Escalations />} />
+              <Route path="monitoring" element={<LiveMonitoring />} />
+            </Route>
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </SocketProvider>
-        </ToastProvider>
-      </AuthProvider>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </SocketProvider>
+      </ToastProvider>
     </Router>
   );
 }

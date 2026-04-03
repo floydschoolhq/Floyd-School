@@ -24,37 +24,35 @@ import StudentRegistrations from './pages/StudentRegistrations';
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <ToastProvider>
-          <SocketProvider>
-            <GlobalNotificationListener />
-            <Routes>
-              <Route path="/login" element={<Login />} />
+      <ToastProvider>
+        <SocketProvider>
+          <GlobalNotificationListener />
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-              <Route path="/" element={
-                <ProtectedRoute>
-                  <MainLayout />
-                </ProtectedRoute>
-              }>
-                <Route index element={<PlatformAnalytics />} /> {/* Keep index for default, or change to analytics */}
-                <Route path="analytics" element={<PlatformAnalytics />} />
-                <Route path="users" element={<UserGovernance />} />
-                <Route path="requests" element={<AccessRequests />} />
-                <Route path="student-registrations" element={<StudentRegistrations />} />
-                <Route path="courses" element={<CourseGovernance />} />
-                <Route path="leads" element={<LeadIntelligence />} />
-                <Route path="broadcast" element={<GlobalNotifications />} />
-                <Route path="success-engine" element={<SuccessEngine />} />
-                <Route path="settings" element={<SystemSettings />} />
-                <Route path="monitoring" element={<LiveMonitoring />} />
-                <Route path="logs" element={<SecurityLogs />} />
-              </Route>
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<PlatformAnalytics />} /> {/* Keep index for default, or change to analytics */}
+              <Route path="analytics" element={<PlatformAnalytics />} />
+              <Route path="users" element={<UserGovernance />} />
+              <Route path="requests" element={<AccessRequests />} />
+              <Route path="student-registrations" element={<StudentRegistrations />} />
+              <Route path="courses" element={<CourseGovernance />} />
+              <Route path="leads" element={<LeadIntelligence />} />
+              <Route path="broadcast" element={<GlobalNotifications />} />
+              <Route path="success-engine" element={<SuccessEngine />} />
+              <Route path="settings" element={<SystemSettings />} />
+              <Route path="monitoring" element={<LiveMonitoring />} />
+              <Route path="logs" element={<SecurityLogs />} />
+            </Route>
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </SocketProvider>
-        </ToastProvider>
-      </AuthProvider>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </SocketProvider>
+      </ToastProvider>
     </Router>
   );
 }
