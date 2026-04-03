@@ -79,6 +79,13 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 
+// Set security headers to allow Firebase popups and cross-origin resources
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    next();
+});
+
 // Database connection health check middleware
 app.use((req, res, next) => {
     const isConnected = mongoose.connection.readyState === 1;
