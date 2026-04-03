@@ -11,11 +11,11 @@ const {
     getMentorRoster,
     createAnnouncement
 } = require('../controllers/courseController');
-const { protect, authorize, checkPermission } = require('../middleware/authMiddleware');
+const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 
-// Public/Protected routes
-router.get('/', getCourses);
+// Public/Protected routes - accepts both regular JWT and classroom JWT
+router.get('/', classroomProtect, getCourses);
 router.get('/:id', protect, checkPermission('canAccessCourses'), getCourseById);
 
 // Mentor/Admin only routes

@@ -23,6 +23,7 @@ import Hackathon from './components/Hackathon.jsx';
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import ClassroomPage from './pages/Student/ClassRoomPage.jsx';
+import ClassroomAuthPage from './pages/Student/ClassroomAuthPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import renderPage from './pages/Student/renderPage.jsx';
 import Contact from './components/Contact.jsx';
@@ -165,6 +166,9 @@ const App = () => {
 
                 {/*Login*/}
                 <Route path='/student/login' element={<StudentLoginPage />} />
+
+                {/* Classroom Login (Separate Auth) */}
+                <Route path='/classes' element={<ClassroomAuthPage />} />
 
                 {/*Signup forms removed*/}
 

@@ -10,10 +10,11 @@ const {
     startLiveNow,
     endLive
 } = require('../controllers/scheduledLiveController');
-const { protect, authorize, checkPermission } = require('../middleware/authMiddleware');
+const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 
-router.use(protect);
+// Apply classroomProtect for classroom users
+router.use(classroomProtect);
 router.use(checkMaintenance('scheduledLive'));
 
 router.post('/', protect, authorize('mentor', 'admin'), createScheduledLive);

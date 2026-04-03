@@ -28,6 +28,9 @@ const StudentDashboard = () => {
   const { streak } = useStreak();
   const { celebrateSide } = useConfetti();
 
+  const isClassroomUser = user?.isClassroomAccess === true;
+  const canAccessCourses = isClassroomUser || user?.permissions?.canAccessCourses;
+
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
@@ -299,7 +302,7 @@ const StudentDashboard = () => {
         >
           <div className="flex items-center gap-4 mb-8">
             <h3 className="text-3xl font-black text-text-main tracking-tighter transition-colors duration-500">Learning Expeditions</h3>
-            {!user.permissions?.canAccessCourses && (
+            {!canAccessCourses && (
               <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500">
                 <Lock size={12} className="text-accent-primary" /> Locked Segment
               </span>
@@ -309,7 +312,7 @@ const StudentDashboard = () => {
 
           <div className="relative">
             {/* Lock Overlay */}
-            {!user.permissions?.canAccessCourses && (
+            {!canAccessCourses && (
               <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[3.5rem] flex flex-col items-center justify-center text-center p-12 border border-surface-el transition-all duration-500">
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
@@ -336,7 +339,7 @@ const StudentDashboard = () => {
               </div>
             )}
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!user.permissions?.canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
               {dashboardData?.courses && dashboardData.courses.length > 0 ? (
                 dashboardData.courses.map((course, idx) => (
                   <GradientCard

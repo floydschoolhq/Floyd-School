@@ -4,7 +4,17 @@ import api from "../../api/axios";
 export const PortalContext = createContext();
 
 export const PortalProvider = ({ children }) => {
-  // Initialize user from localStorage
+  // Check for classroom user in sessionStorage first (priority)
+  const getClassroomUser = () => {
+    try {
+      const classroomUser = sessionStorage.getItem('classroomUser');
+      return classroomUser ? JSON.parse(classroomUser) : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  // Initialize user from localStorage (fallback)
   const getStoredUser = () => {
     try {
       const userInfo = localStorage.getItem('userInfo');
@@ -15,7 +25,16 @@ export const PortalProvider = ({ children }) => {
     }
   };
 
-  const [user, setUser] = useState(getStoredUser());
+  // Priority: sessionStorage > localStorage
+  const getInitialUser = () => {
+    const classroomUser = getClassroomUser();
+    if (classroomUser) {
+      return classroomUser;
+    }
+    return getStoredUser();
+  };
+
+  const [user, setUser] = useState(getInitialUser);
   const [system] = useState('student');
   const [currentView, setCurrentView] = useState('Dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,18 +46,32 @@ export const PortalProvider = ({ children }) => {
     localStorage.setItem('userInfo', JSON.stringify(userData));
   };
 
+  // Function to update classroom user specifically
+  const updateClassroomUser = (userData) => {
+    setUser(userData);
+    sessionStorage.setItem('classroomUser', JSON.stringify(userData));
+    localStorage.setItem('userInfo', JSON.stringify(userData));
+  };
+
   // Function to logout
   const logout = () => {
     setUser(null);
     localStorage.removeItem('userInfo');
     localStorage.removeItem('token');
+    sessionStorage.removeItem('classroomUser');
+    sessionStorage.removeItem('classroomToken');
   };
 
   // Update user when localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
-      const updatedUser = getStoredUser();
-      setUser(updatedUser);
+      const classroomUser = sessionStorage.getItem('classroomUser');
+      if (classroomUser) {
+        setUser(JSON.parse(classroomUser));
+      } else {
+        const updatedUser = getStoredUser();
+        setUser(updatedUser);
+      }
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -46,13 +79,19 @@ export const PortalProvider = ({ children }) => {
   }, []);
 
   // Fetch latest user data on mount (Refresh Profile)
+  // Skip for classroom users - they use sessionStorage auth
   useEffect(() => {
+    // Skip if classroom user
+    if (user?.isClassroomAccess === true) {
+      return;
+    }
+
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
           const res = await api.get('/auth/me');
-          updateUser(res.data.user || res.data); // Handle potential response variations
+          updateUser(res.data.user || res.data);
         } catch (error) {
           console.error("Failed to refresh profile:", error);
           if (error.response?.status === 401) {
@@ -67,7 +106,7 @@ export const PortalProvider = ({ children }) => {
 
   const setView = (view) => {
     setCurrentView(view);
-    setIsSidebarOpen(false); // Close sidebar on mobile after navigation
+    setIsSidebarOpen(false);
   };
 
   const contextValue = {
@@ -78,6 +117,7 @@ export const PortalProvider = ({ children }) => {
     setView,
     setIsSidebarOpen,
     updateUser,
+    updateClassroomUser,
     logout,
     activeLiveClass,
     setActiveLiveClass
@@ -89,4 +129,3 @@ export const PortalProvider = ({ children }) => {
     </PortalContext.Provider>
   );
 };
-

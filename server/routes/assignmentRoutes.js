@@ -11,11 +11,12 @@ const {
     getAssignmentsByCourse
 } = require('../controllers/assignmentController');
 const upload = require('../middleware/uploadMiddleware');
-const { protect, adminOnly, authorize, checkPermission } = require('../middleware/authMiddleware');
+const { protect, adminOnly, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 
-router.use(protect);
+// Use classroomProtect for assignments - accepts both regular and classroom JWT
+router.use(classroomProtect);
 router.use(checkMaintenance('assignments'));
 
 // Get assignments (all roles)

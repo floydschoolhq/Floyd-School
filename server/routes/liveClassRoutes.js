@@ -7,12 +7,12 @@ const {
     getAllActiveLiveClasses,
     getEndedLiveClasses
 } = require('../controllers/liveClassController');
-const { protect, adminOnly, authorize, checkPermission } = require('../middleware/authMiddleware');
+const { protect, adminOnly, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 
-// Apply global middleware for this router
-router.use(protect);
+// Apply classroomProtect for classroom users
+router.use(classroomProtect);
 router.use(checkMaintenance('liveClasses'));
 
 // Student & Mentor can see active classes (Allow all authorized platform roles)

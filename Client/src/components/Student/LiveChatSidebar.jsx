@@ -15,6 +15,9 @@ const LiveChatSidebar = ({ classId }) => {
     const [requestingAccess, setRequestingAccess] = useState(false);
     const scrollRef = useRef(null);
 
+    const isClassroomUser = user?.isClassroomAccess === true;
+    const canAccessCommunity = isClassroomUser || user?.permissions?.canAccessCommunity;
+
     const handleRequestAccess = async () => {
         setRequestingAccess(true);
         try {
@@ -161,7 +164,7 @@ const LiveChatSidebar = ({ classId }) => {
                 </div>
             </form>
             {/* Community Access Lock */}
-            {!user?.permissions?.canAccessCommunity && (
+            {!canAccessCommunity && (
                 <div className="absolute inset-0 z-50 bg-slate-900/98 backdrop-blur-md flex flex-col items-center justify-center text-center p-6">
                     <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
                         <MessageCircle className="w-8 h-8 text-white" />

@@ -17,6 +17,12 @@ const ClassroomPage = () => {
   const isMobile = useIsMobile(768);
 
   const { user, setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
+  
+  // Check if user is classroom user (from sessionStorage auth)
+  const isClassroomUser = user?.isClassroomAccess === true;
+  
+  // For classroom users, skip API calls but allow full access
+  const canAccessContent = isClassroomUser || user?.permissions?.canAccessCourses;
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
@@ -43,7 +49,17 @@ const ClassroomPage = () => {
   };
 
   useEffect(() => {
-    fetchClassroomData();
+    // For classroom users, skip API calls and socket events
+    if (isClassroomUser) {
+      setLoading(false);
+      return;
+    }
+
+    // Only connect socket if available
+    if (!socket) {
+      return;
+    }
+
     fetchActiveLiveClass();
     fetchScheduledLives();
 
@@ -88,10 +104,12 @@ const ClassroomPage = () => {
     });
 
     return () => {
-      socket.off('liveClass:started');
-      socket.off('liveClass:ended');
+      if (socket) {
+        socket.off('liveClass:started');
+        socket.off('liveClass:ended');
+      }
     };
-  }, []);
+  }, [socket, isClassroomUser]);
 
   useEffect(() => {
     const preventContext = (e) => e.preventDefault();
@@ -100,6 +118,9 @@ const ClassroomPage = () => {
   }, []);
 
   const fetchActiveLiveClass = async () => {
+    // Skip for classroom users
+    if (isClassroomUser) return;
+    
     try {
       const res = await api.get('/live-classes/active');
       setActiveLiveClass(res.data);
@@ -114,6 +135,9 @@ const ClassroomPage = () => {
   };
 
   const fetchScheduledLives = async () => {
+    // Skip for classroom users
+    if (isClassroomUser) return;
+    
     try {
       const res = await api.get('/scheduled-live/upcoming');
       setScheduledLives(res.data);
@@ -183,7 +207,7 @@ const ClassroomPage = () => {
 
   return (
     <div className={`${isMobile ? 'min-h-screen bg-slate-50' : 'min-h-screen bg-slate-50 p-6'} relative`}>
-      {!user?.permissions?.canAccessCourses && (
+      {!canAccessContent && (
         <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
           <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
             <BookOpen className="w-8 h-8 text-white" />

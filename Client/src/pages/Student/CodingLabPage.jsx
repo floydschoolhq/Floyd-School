@@ -14,6 +14,9 @@ const CodingLabPage = () => {
   const { user } = useContext(PortalContext);
   const { isConnected } = useSocket(user?._id);
 
+  const isClassroomUser = user?.isClassroomAccess === true;
+  const canAccessLabs = isClassroomUser || user?.permissions?.canAccessLabs;
+
   const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
   const [code, setCode] = useState(getTemplate(LANGUAGES[0].id));
   const [output, setOutput] = useState([]);
@@ -128,7 +131,7 @@ const CodingLabPage = () => {
   return (
     <div className="h-screen bg-slate-950 flex flex-col relative">
       {/* Access Lock Overlay */}
-      {!user?.permissions?.canAccessLabs && (
+      {!canAccessLabs && (
         <div className="absolute inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8">
           <div className="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
             <Lock className="w-10 h-10 text-white" />
