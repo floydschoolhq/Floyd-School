@@ -380,7 +380,7 @@ const SchoolPartnership = () => {
 
           {/* Mobile: Vertical Marquee - Updated */}
           <div className="md:hidden">
-            <div className="relative overflow-hidden h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border-4 border-blue-500">
+            <div className="relative overflow-hidden h-96 bg-gradient-to-br from-orange-500/30 to-blue-600/30 rounded-2xl border-4 border-yellow-400 shadow-2xl shadow-yellow-400/20">
               <div className="animate-marquee-vertical flex flex-col gap-6 absolute">
                 {/* Duplicate items for seamless scrolling */}
                 {[
@@ -436,7 +436,7 @@ const SchoolPartnership = () => {
                 ].map((item, index) => (
                   <div 
                     key={`${item.title}-${index}`}
-                    className="flex flex-col items-start border-l-4 border-yellow-400 pl-6 py-4 bg-slate-800/50 rounded-r-xl flex-shrink-0 w-full max-w-sm mx-auto"
+                    className="flex flex-col items-start border-l-4 border-yellow-400 pl-6 py-4 bg-slate-900/70 rounded-r-xl flex-shrink-0 w-full max-w-sm mx-auto shadow-lg"
                   >
                     <h3 className="text-lg font-bold text-yellow-400 mb-2 uppercase tracking-tight">
                       {item.title}
