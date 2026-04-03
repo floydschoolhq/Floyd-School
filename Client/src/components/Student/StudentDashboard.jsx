@@ -29,7 +29,8 @@ const StudentDashboard = () => {
   const { celebrateSide } = useConfetti();
 
   const isClassroomUser = user?.isClassroomAccess === true;
-  const canAccessCourses = isClassroomUser || user?.permissions?.canAccessCourses;
+  // Classroom users still need admin approval for courses
+  const canAccessCourses = user?.permissions?.canAccessCourses;
 
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);

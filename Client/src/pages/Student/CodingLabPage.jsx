@@ -15,7 +15,8 @@ const CodingLabPage = () => {
   const { isConnected } = useSocket(user?._id);
 
   const isClassroomUser = user?.isClassroomAccess === true;
-  const canAccessLabs = isClassroomUser || user?.permissions?.canAccessLabs;
+  // Classroom users still need admin approval for labs
+  const canAccessLabs = user?.permissions?.canAccessLabs;
 
   const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
   const [code, setCode] = useState(getTemplate(LANGUAGES[0].id));

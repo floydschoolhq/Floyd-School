@@ -16,7 +16,8 @@ const LiveChatSidebar = ({ classId }) => {
     const scrollRef = useRef(null);
 
     const isClassroomUser = user?.isClassroomAccess === true;
-    const canAccessCommunity = isClassroomUser || user?.permissions?.canAccessCommunity;
+    // Classroom users still need admin approval for community
+    const canAccessCommunity = user?.permissions?.canAccessCommunity;
 
     const handleRequestAccess = async () => {
         setRequestingAccess(true);

@@ -21,8 +21,8 @@ const ClassroomPage = () => {
   // Check if user is classroom user (from sessionStorage auth)
   const isClassroomUser = user?.isClassroomAccess === true;
   
-  // For classroom users, skip API calls but allow full access
-  const canAccessContent = isClassroomUser || user?.permissions?.canAccessCourses;
+  // Classroom users still need admin approval for content
+  const canAccessContent = user?.permissions?.canAccessCourses;
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
