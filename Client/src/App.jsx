@@ -80,7 +80,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
 const App = () => {
 
-    const usePortal = () => useContext(PortalContext);
+    const portal = usePortal();
     // 1. Get the current path
     const location = useLocation();
 
@@ -173,7 +173,7 @@ const App = () => {
                 <Route path='/student' element={
                     <ProtectedRoute>
                         <MainLayout>
-                            {renderPage(usePortal().currentView, usePortal())}
+                            {renderPage(portal.currentView, portal)}
                         </MainLayout>
                     </ProtectedRoute>
                 } />
