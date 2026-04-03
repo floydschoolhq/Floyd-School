@@ -378,7 +378,7 @@ const SchoolPartnership = () => {
             ))}
           </div>
 
-          {/* Mobile: Vertical Marquee */}
+          {/* Mobile: Vertical Marquee - Updated */}
           <div className="md:hidden">
             <div className="relative overflow-hidden h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border-4 border-blue-500">
               <div className="animate-marquee-vertical flex flex-col gap-6 absolute">
