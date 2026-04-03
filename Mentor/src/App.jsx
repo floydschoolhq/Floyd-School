@@ -30,33 +30,31 @@ const Placeholder = ({ title }) => (
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <ToastProvider>
-          <SocketProvider>
-            <GlobalNotificationListener />
-            <Routes>
-              <Route path="/login" element={<Login />} />
+      <ToastProvider>
+        <SocketProvider>
+          <GlobalNotificationListener />
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-              <Route path="/" element={
-                <ProtectedRoute>
-                  <MainLayout />
-                </ProtectedRoute>
-              }>
-                <Route index element={<Dashboard />} />
-                <Route path="courses" element={<CourseManagement />} />
-                <Route path="assignments" element={<AssignmentGrading />} />
-                <Route path="live" element={<LiveClassCenter />} />
-                <Route path="leads" element={<StudentLeads />} />
-                <Route path="roster" element={<StudentRoster />} />
-                <Route path="support" element={<SupportTickets />} />
-                <Route path="masterclasses" element={<MasterclassManagement />} />
-              </Route>
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Dashboard />} />
+              <Route path="courses" element={<CourseManagement />} />
+              <Route path="assignments" element={<AssignmentGrading />} />
+              <Route path="live" element={<LiveClassCenter />} />
+              <Route path="leads" element={<StudentLeads />} />
+              <Route path="roster" element={<StudentRoster />} />
+              <Route path="support" element={<SupportTickets />} />
+              <Route path="masterclasses" element={<MasterclassManagement />} />
+            </Route>
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </SocketProvider>
-        </ToastProvider>
-      </AuthProvider>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </SocketProvider>
+      </ToastProvider>
     </Router>
   );
 }
