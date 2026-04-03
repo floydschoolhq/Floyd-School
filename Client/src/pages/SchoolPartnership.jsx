@@ -152,82 +152,6 @@ const SchoolPartnership = () => {
         </div>
       </header>
 
-      {/* ── Mobile Marquee Test Section ── */}
-      <section className="md:hidden bg-slate-900 py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-4">
-            <h2 className="text-lg font-bold text-blue-400 mb-2">Mobile Marquee Test</h2>
-          </div>
-          <div className="relative overflow-hidden h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border-4 border-blue-500">
-            <div className="animate-marquee-vertical flex flex-col gap-6 absolute">
-              {[
-                { 
-                  title: "🚀 REAL WORLD PROJECTS", 
-                  desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
-                },
-                { 
-                  title: "🏆 THINKSKOOL CERTIFICATION", 
-                  desc: "A credential that carries weight in the industry!"
-                },
-                { 
-                  title: "👨‍💻 TECHNICAL MENTORSHIP", 
-                  desc: "Direct access to practitioners and live feedback!"
-                },
-                { 
-                  title: "📊 PERFORMANCE TRACKING", 
-                  desc: "Granular data on student progress and milestones!"
-                },
-                { 
-                  title: "🎯 NATIONAL HACKATHONS", 
-                  desc: "Compete at national level with industry leaders!"
-                },
-                { 
-                  title: "📚 KNOWLEDGE REPOSITORIES", 
-                  desc: "Long-term learning retention with comprehensive archives!"
-                },
-                // Duplicate for seamless loop
-                { 
-                  title: "🚀 REAL WORLD PROJECTS", 
-                  desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
-                },
-                { 
-                  title: "🏆 THINKSKOOL CERTIFICATION", 
-                  desc: "A credential that carries weight in the industry!"
-                },
-                { 
-                  title: "👨‍💻 TECHNICAL MENTORSHIP", 
-                  desc: "Direct access to practitioners and live feedback!"
-                },
-                { 
-                  title: "📊 PERFORMANCE TRACKING", 
-                  desc: "Granular data on student progress and milestones!"
-                },
-                { 
-                  title: "🎯 NATIONAL HACKATHONS", 
-                  desc: "Compete at national level with industry leaders!"
-                },
-                { 
-                  title: "📚 KNOWLEDGE REPOSITORIES", 
-                  desc: "Long-term learning retention with comprehensive archives!"
-                },
-              ].map((item, index) => (
-                <div 
-                  key={`${item.title}-${index}`}
-                  className="flex flex-col items-start border-l-4 border-yellow-400 pl-6 py-4 bg-slate-800/50 rounded-r-xl flex-shrink-0 w-full max-w-sm mx-auto"
-                >
-                  <h3 className="text-lg font-bold text-yellow-400 mb-2 uppercase tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-slate-200 text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Trust Bar ── */}
       <section className="bg-slate-950 py-12 px-8 relative overflow-hidden">
         {/* Animated background gradient */}
@@ -456,73 +380,70 @@ const SchoolPartnership = () => {
 
           {/* Mobile: Vertical Marquee */}
           <div className="md:hidden">
-            <div className="relative overflow-hidden h-96 bg-slate-900/20 rounded-2xl border border-white/5">
-              <div className="animate-marquee-vertical flex flex-col gap-8 absolute">
+            <div className="relative overflow-hidden h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border-4 border-blue-500">
+              <div className="animate-marquee-vertical flex flex-col gap-6 absolute">
                 {/* Duplicate items for seamless scrolling */}
                 {[
                   { 
-                    title: "REAL WORLD PROJECTS", 
-                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications, AI models, and integrated hardware systems that address industry challenges."
+                    title: "🚀 REAL WORLD PROJECTS", 
+                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
                   },
                   { 
-                    title: "THINKSKOOL CERTIFICATION", 
-                    desc: "A credential that carries weight. Our certification process involves rigorous project validation and peer-reviewed technical assessment."
+                    title: "🏆 THINKSKOOL CERTIFICATION", 
+                    desc: "A credential that carries weight in the industry!"
                   },
                   { 
-                    title: "TECHNICAL MENTORSHIP", 
-                    desc: "Direct access to practitioners. Every student receives personalized technical feedback and architectural guidance during live development sessions."
+                    title: "👨‍💻 TECHNICAL MENTORSHIP", 
+                    desc: "Direct access to practitioners and live feedback!"
                   },
                   { 
-                    title: "PERFORMANCE TRACKING", 
-                    desc: "Granular data on student progress. Individual dashboards provide transparency into skill acquisition, project milestones, and developmental areas."
+                    title: "📊 PERFORMANCE TRACKING", 
+                    desc: "Granular data on student progress and milestones!"
                   },
                   { 
-                    title: "NATIONAL HACKATHONS", 
-                    desc: "A stage for innovation. Students compete at the national level, presenting their solutions to a jury of senior engineers and product leaders."
+                    title: "🎯 NATIONAL HACKATHONS", 
+                    desc: "Compete at national level with industry leaders!"
                   },
                   { 
-                    title: "KNOWLEDGE REPOSITORIES", 
-                    desc: "Long-term learning retention. Comprehensive archives of every live session are maintained for permanent student access and ongoing reference."
+                    title: "📚 KNOWLEDGE REPOSITORIES", 
+                    desc: "Long-term learning retention with comprehensive archives!"
                   },
                   // Duplicate for seamless loop
                   { 
-                    title: "REAL WORLD PROJECTS", 
-                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications, AI models, and integrated hardware systems that address industry challenges."
+                    title: "🚀 REAL WORLD PROJECTS", 
+                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
                   },
                   { 
-                    title: "THINKSKOOL CERTIFICATION", 
-                    desc: "A credential that carries weight. Our certification process involves rigorous project validation and peer-reviewed technical assessment."
+                    title: "🏆 THINKSKOOL CERTIFICATION", 
+                    desc: "A credential that carries weight in the industry!"
                   },
                   { 
-                    title: "TECHNICAL MENTORSHIP", 
-                    desc: "Direct access to practitioners. Every student receives personalized technical feedback and architectural guidance during live development sessions."
+                    title: "👨‍💻 TECHNICAL MENTORSHIP", 
+                    desc: "Direct access to practitioners and live feedback!"
                   },
                   { 
-                    title: "PERFORMANCE TRACKING", 
-                    desc: "Granular data on student progress. Individual dashboards provide transparency into skill acquisition, project milestones, and developmental areas."
+                    title: "📊 PERFORMANCE TRACKING", 
+                    desc: "Granular data on student progress and milestones!"
                   },
                   { 
-                    title: "NATIONAL HACKATHONS", 
-                    desc: "A stage for innovation. Students compete at the national level, presenting their solutions to a jury of senior engineers and product leaders."
+                    title: "🎯 NATIONAL HACKATHONS", 
+                    desc: "Compete at national level with industry leaders!"
                   },
                   { 
-                    title: "KNOWLEDGE REPOSITORIES", 
-                    desc: "Long-term learning retention. Comprehensive archives of every live session are maintained for permanent student access and ongoing reference."
+                    title: "📚 KNOWLEDGE REPOSITORIES", 
+                    desc: "Long-term learning retention with comprehensive archives!"
                   },
                 ].map((item, index) => (
                   <div 
                     key={`${item.title}-${index}`}
-                    className="group flex flex-col items-start border-l border-white/5 pl-8 hover:border-blue-500/50 hover:bg-blue-500/[0.02] py-3 -ml-2 transition-all duration-500 rounded-r-2xl flex-shrink-0 w-full max-w-xs bg-slate-800/30"
+                    className="flex flex-col items-start border-l-4 border-yellow-400 pl-6 py-4 bg-slate-800/50 rounded-r-xl flex-shrink-0 w-full max-w-sm mx-auto"
                   >
-                    <h3 className="text-lg font-bold text-blue-50/90 mb-2 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-500 tracking-tight uppercase leading-none">
+                    <h3 className="text-lg font-bold text-yellow-400 mb-2 uppercase tracking-tight">
                       {item.title}
                     </h3>
-                    
-                    <p className="text-slate-400 text-sm leading-relaxed max-w-xs group-hover:text-slate-200 transition-colors font-medium">
+                    <p className="text-slate-200 text-sm leading-relaxed">
                       {item.desc}
                     </p>
-                    
-                    <div className="mt-4 h-[1px] w-0 bg-gradient-to-r from-blue-600 to-blue-400 group-hover:w-full transition-all duration-1000 ease-out" />
                   </div>
                 ))}
               </div>
