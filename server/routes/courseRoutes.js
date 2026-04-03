@@ -16,7 +16,7 @@ const { validate, schemas } = require('../middleware/validationMiddleware');
 
 // Public/Protected routes - accepts both regular JWT and classroom JWT
 router.get('/', classroomProtect, getCourses);
-router.get('/:id', protect, checkPermission('canAccessCourses'), getCourseById);
+router.get('/:id', classroomProtect, checkPermission('canAccessCourses'), getCourseById);
 
 // Mentor/Admin only routes
 router.post('/', protect, authorize('mentor', 'admin'), validate(schemas.course), createCourse);
@@ -32,6 +32,6 @@ router.post('/:id/announce', protect, authorize('mentor', 'admin'), validate(sch
 
 
 // Student enrollment
-router.post('/:id/enroll', protect, authorize('student'), checkPermission('canAccessCourses'), enrollStudent);
+router.post('/:id/enroll', classroomProtect, authorize('student'), checkPermission('canAccessCourses'), enrollStudent);
 
 module.exports = router;

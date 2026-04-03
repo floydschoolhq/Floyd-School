@@ -20,10 +20,8 @@ const protect = async (req, res, next) => {
                 return res.status(401).json({ message: 'Not authorized, user not found' });
             }
 
-            // Single Device Login Check
-            // If the user's current session token in DB does not match the token's session token,
-            // it means they logged in somewhere else.
-            if (user.sessionToken && decoded.sessionToken && user.sessionToken !== decoded.sessionToken) {
+            // Single Device Login Check - Skip for non-local providers (Google/Firebase)
+            if (user.provider === 'local' && user.sessionToken && decoded.sessionToken && user.sessionToken !== decoded.sessionToken) {
                 return res.status(401).json({ message: 'Session expired. You logged in from another device.' });
             }
 
@@ -143,12 +141,9 @@ const classroomProtect = async (req, res, next) => {
                 return res.status(401).json({ message: 'User not found' });
             }
 
-            // Check session token for regular users
-            // Skip for classroom users who might not have sessionToken in DB
-            if (user.sessionToken && decoded.sessionToken && user.sessionToken !== decoded.sessionToken) {
-                return res.status(401).json({ message: 'Session expired. You logged in from another device.' });
-            }
-
+            // Skip session token check for classroom users
+            // This allows persistent logins across different tabs or if sessionToken is not updated
+            
             req.user = user;
 
             return next();

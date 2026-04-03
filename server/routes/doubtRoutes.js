@@ -7,12 +7,12 @@ const {
     getMyDoubt,
     deleteDoubt
 } = require('../controllers/doubtController');
-const { protect, authorize, checkPermission } = require('../middleware/authMiddleware');
+const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 
-router.post('/', protect, checkPermission('canAccessCommunity'), createDoubt);
-router.get('/:classId', protect, checkPermission('canAccessCommunity'), getDoubtsByClass);
-router.get('/:classId/my', protect, checkPermission('canAccessCommunity'), getMyDoubt);
+router.post('/', classroomProtect, checkPermission('canAccessCommunity'), createDoubt);
+router.get('/:classId', classroomProtect, checkPermission('canAccessCommunity'), getDoubtsByClass);
+router.get('/:classId/my', classroomProtect, checkPermission('canAccessCommunity'), getMyDoubt);
 router.put('/:id/resolve', protect, authorize('mentor', 'admin'), resolveDoubt);
-router.delete('/:id', protect, checkPermission('canAccessCommunity'), deleteDoubt);
+router.delete('/:id', classroomProtect, checkPermission('canAccessCommunity'), deleteDoubt);
 
 module.exports = router;

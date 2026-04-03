@@ -15,7 +15,7 @@ const api = axios.create({
 // Add a request interceptor to include the token in headers
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -55,9 +55,12 @@ api.interceptors.response.use(
             // Clear credentials on authentication failure (Session Expired/Invalid)
             localStorage.removeItem('token');
             localStorage.removeItem('userInfo');
+            sessionStorage.removeItem('classroomToken');
+            sessionStorage.removeItem('classroomUser');
             
-            // Force redirect to login page if we are in the student portal
-            if (window.location.pathname.startsWith('/student')) {
+            // Force redirect to login page if we are in protected areas
+            const area = window.location.pathname;
+            if (area.startsWith('/student') || area.startsWith('/classroom')) {
                 window.location.href = '/student/login';
             }
         }

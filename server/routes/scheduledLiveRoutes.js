@@ -19,11 +19,11 @@ router.use(checkMaintenance('scheduledLive'));
 
 router.post('/', protect, authorize('mentor', 'admin'), createScheduledLive);
 
-router.get('/', protect, getAllScheduledLives);
+router.get('/', getAllScheduledLives);
 
-router.get('/upcoming', protect, checkPermission('canAccessClassroom'), getUpcomingScheduledLives);
+router.get('/upcoming', checkPermission('canAccessClassroom'), getUpcomingScheduledLives);
 
-router.get('/:id', protect, checkPermission('canAccessClassroom'), getScheduledLiveById);
+router.get('/:id', checkPermission('canAccessClassroom'), getScheduledLiveById);
 
 router.put('/:id', protect, authorize('mentor', 'admin'), updateScheduledLive);
 

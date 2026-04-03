@@ -49,14 +49,9 @@ const ClassroomPage = () => {
   };
 
   useEffect(() => {
-    // For classroom users, skip API calls and socket events
-    if (isClassroomUser) {
-      setLoading(false);
-      return;
-    }
-
     // Only connect socket if available
     if (!socket) {
+      setLoading(false); // In case socket is missing but we're here
       return;
     }
 
@@ -109,7 +104,11 @@ const ClassroomPage = () => {
         socket.off('liveClass:ended');
       }
     };
-  }, [socket, isClassroomUser]);
+  }, [socket]); // Removed isClassroomUser dependency to let it run for all students
+
+  useEffect(() => {
+    fetchClassroomData();
+  }, [user]);
 
   useEffect(() => {
     const preventContext = (e) => e.preventDefault();
@@ -118,14 +117,11 @@ const ClassroomPage = () => {
   }, []);
 
   const fetchActiveLiveClass = async () => {
-    // Skip for classroom users
-    if (isClassroomUser) return;
-    
     try {
       const res = await api.get('/live-classes/active');
       setActiveLiveClass(res.data);
       setGlobalActiveLiveClass(res.data);
-      if (res.data) {
+      if (res.data && socket) {
         fetchMyCurrentDoubt(res.data._id);
         socket.emit('liveClass:join', res.data._id);
       }
@@ -135,9 +131,6 @@ const ClassroomPage = () => {
   };
 
   const fetchScheduledLives = async () => {
-    // Skip for classroom users
-    if (isClassroomUser) return;
-    
     try {
       const res = await api.get('/scheduled-live/upcoming');
       setScheduledLives(res.data);
