@@ -152,6 +152,82 @@ const SchoolPartnership = () => {
         </div>
       </header>
 
+      {/* ── Mobile Marquee Test Section ── */}
+      <section className="md:hidden bg-slate-900 py-8 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-4">
+            <h2 className="text-lg font-bold text-blue-400 mb-2">Mobile Marquee Test</h2>
+          </div>
+          <div className="relative overflow-hidden h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-2xl border-4 border-blue-500">
+            <div className="animate-marquee-vertical flex flex-col gap-6 absolute">
+              {[
+                { 
+                  title: "🚀 REAL WORLD PROJECTS", 
+                  desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
+                },
+                { 
+                  title: "🏆 THINKSKOOL CERTIFICATION", 
+                  desc: "A credential that carries weight in the industry!"
+                },
+                { 
+                  title: "👨‍💻 TECHNICAL MENTORSHIP", 
+                  desc: "Direct access to practitioners and live feedback!"
+                },
+                { 
+                  title: "📊 PERFORMANCE TRACKING", 
+                  desc: "Granular data on student progress and milestones!"
+                },
+                { 
+                  title: "🎯 NATIONAL HACKATHONS", 
+                  desc: "Compete at national level with industry leaders!"
+                },
+                { 
+                  title: "📚 KNOWLEDGE REPOSITORIES", 
+                  desc: "Long-term learning retention with comprehensive archives!"
+                },
+                // Duplicate for seamless loop
+                { 
+                  title: "🚀 REAL WORLD PROJECTS", 
+                  desc: "Moving beyond theoretical tutorials. Students engineer functional applications!"
+                },
+                { 
+                  title: "🏆 THINKSKOOL CERTIFICATION", 
+                  desc: "A credential that carries weight in the industry!"
+                },
+                { 
+                  title: "👨‍💻 TECHNICAL MENTORSHIP", 
+                  desc: "Direct access to practitioners and live feedback!"
+                },
+                { 
+                  title: "📊 PERFORMANCE TRACKING", 
+                  desc: "Granular data on student progress and milestones!"
+                },
+                { 
+                  title: "🎯 NATIONAL HACKATHONS", 
+                  desc: "Compete at national level with industry leaders!"
+                },
+                { 
+                  title: "📚 KNOWLEDGE REPOSITORIES", 
+                  desc: "Long-term learning retention with comprehensive archives!"
+                },
+              ].map((item, index) => (
+                <div 
+                  key={`${item.title}-${index}`}
+                  className="flex flex-col items-start border-l-4 border-yellow-400 pl-6 py-4 bg-slate-800/50 rounded-r-xl flex-shrink-0 w-full max-w-sm mx-auto"
+                >
+                  <h3 className="text-lg font-bold text-yellow-400 mb-2 uppercase tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-200 text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Trust Bar ── */}
       <section className="bg-slate-950 py-12 px-8 relative overflow-hidden">
         {/* Animated background gradient */}
