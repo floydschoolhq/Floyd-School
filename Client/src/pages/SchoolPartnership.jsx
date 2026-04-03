@@ -333,7 +333,8 @@ const SchoolPartnership = () => {
 
         {/* Enhanced Minimalist Feature List - Animated Features */}
         <div className="max-w-[1600px] mx-auto px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-16">
+          {/* Desktop: Grid Layout */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-16">
             {[
               { 
                 title: "REAL WORLD PROJECTS", 
@@ -375,6 +376,81 @@ const SchoolPartnership = () => {
                 <div className="mt-10 h-[2px] w-0 bg-gradient-to-r from-blue-600 to-blue-400 group-hover:w-full transition-all duration-1000 ease-out" />
               </div>
             ))}
+          </div>
+
+          {/* Mobile: Vertical Marquee */}
+          <div className="md:hidden">
+            <div className="relative overflow-hidden py-8">
+              <div className="animate-marquee-vertical flex flex-col gap-8">
+                {/* Duplicate items for seamless scrolling */}
+                {[
+                  { 
+                    title: "REAL WORLD PROJECTS", 
+                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications, AI models, and integrated hardware systems that address industry challenges."
+                  },
+                  { 
+                    title: "THINKSKOOL CERTIFICATION", 
+                    desc: "A credential that carries weight. Our certification process involves rigorous project validation and peer-reviewed technical assessment."
+                  },
+                  { 
+                    title: "TECHNICAL MENTORSHIP", 
+                    desc: "Direct access to practitioners. Every student receives personalized technical feedback and architectural guidance during live development sessions."
+                  },
+                  { 
+                    title: "PERFORMANCE TRACKING", 
+                    desc: "Granular data on student progress. Individual dashboards provide transparency into skill acquisition, project milestones, and developmental areas."
+                  },
+                  { 
+                    title: "NATIONAL HACKATHONS", 
+                    desc: "A stage for innovation. Students compete at the national level, presenting their solutions to a jury of senior engineers and product leaders."
+                  },
+                  { 
+                    title: "KNOWLEDGE REPOSITORIES", 
+                    desc: "Long-term learning retention. Comprehensive archives of every live session are maintained for permanent student access and ongoing reference."
+                  },
+                  // Duplicate for seamless loop
+                  { 
+                    title: "REAL WORLD PROJECTS", 
+                    desc: "Moving beyond theoretical tutorials. Students engineer functional applications, AI models, and integrated hardware systems that address industry challenges."
+                  },
+                  { 
+                    title: "THINKSKOOL CERTIFICATION", 
+                    desc: "A credential that carries weight. Our certification process involves rigorous project validation and peer-reviewed technical assessment."
+                  },
+                  { 
+                    title: "TECHNICAL MENTORSHIP", 
+                    desc: "Direct access to practitioners. Every student receives personalized technical feedback and architectural guidance during live development sessions."
+                  },
+                  { 
+                    title: "PERFORMANCE TRACKING", 
+                    desc: "Granular data on student progress. Individual dashboards provide transparency into skill acquisition, project milestones, and developmental areas."
+                  },
+                  { 
+                    title: "NATIONAL HACKATHONS", 
+                    desc: "A stage for innovation. Students compete at the national level, presenting their solutions to a jury of senior engineers and product leaders."
+                  },
+                  { 
+                    title: "KNOWLEDGE REPOSITORIES", 
+                    desc: "Long-term learning retention. Comprehensive archives of every live session are maintained for permanent student access and ongoing reference."
+                  },
+                ].map((item, index) => (
+                  <div 
+                    key={`${item.title}-${index}`}
+                    className="group flex flex-col items-start border-l border-white/5 pl-8 hover:border-blue-500/50 hover:bg-blue-500/[0.02] py-3 -ml-2 transition-all duration-500 rounded-r-2xl flex-shrink-0"
+                  >
+                    <h3 className="text-lg font-bold text-blue-50/90 mb-2 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-500 tracking-tight uppercase leading-none">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-slate-400 text-sm leading-relaxed max-w-xs group-hover:text-slate-200 transition-colors font-medium">
+                      {item.desc}
+                    </p>
+                    
+                    <div className="mt-4 h-[1px] w-0 bg-gradient-to-r from-blue-600 to-blue-400 group-hover:w-full transition-all duration-1000 ease-out" />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
