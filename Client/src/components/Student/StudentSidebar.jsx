@@ -1,6 +1,6 @@
 import { BarChart, BookOpen, ClipboardCheck, Code, LayoutDashboard, Video, X, LifeBuoy, PlayCircle, ChevronRight } from "lucide-react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { PortalContext } from "../Context/PortalProvider";
 import { NavLink } from "./SharedComponentStudent";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,16 +9,17 @@ import { motion, AnimatePresence } from "framer-motion";
 const StudentSidebar = () => {
   const usePortal = () => useContext(PortalContext);
   const { user, system, currentView, setView, isSidebarOpen, setIsSidebarOpen } = usePortal();
+  const location = useLocation();
 
   const links = [
-    { icon: LayoutDashboard, title: 'Dashboard', view: 'Dashboard' },
-    { icon: BookOpen, title: 'Classroom', view: 'Classroom' },
-    { icon: Code, title: 'Cloud Lab', view: 'CodingLab' },
-    { icon: Video, title: 'Recordings', view: 'Recordings' },
-    { icon: PlayCircle, title: 'Live Session', view: 'LiveSession' },
-    { icon: BarChart, title: 'Progress', view: 'ProgressTracking' },
-    { icon: ClipboardCheck, title: 'Reports', view: 'PerformanceReport' },
-    { icon: LifeBuoy, title: 'Support', view: 'Support' }
+    { icon: LayoutDashboard, title: 'Dashboard', view: 'Dashboard', path: '/student/dashboard' },
+    { icon: BookOpen, title: 'Classroom', view: 'Classroom', path: '/student/classroom' },
+    { icon: Code, title: 'Cloud Lab', view: 'CodingLab', path: '/student/coding-lab' },
+    { icon: Video, title: 'Recordings', view: 'Recordings', path: '/student/recordings' },
+    { icon: PlayCircle, title: 'Live Session', view: 'LiveSession', path: '/student/live-session' },
+    { icon: BarChart, title: 'Progress', view: 'ProgressTracking', path: '/student/progress' },
+    { icon: ClipboardCheck, title: 'Reports', view: 'PerformanceReport', path: '/student/reports' },
+    { icon: LifeBuoy, title: 'Support', view: 'Support', path: '/student/support' }
   ];
 
   return (
@@ -69,31 +70,35 @@ const StudentSidebar = () => {
             {/* Navigation Links */}
             <nav className="space-y-1">
               {links.map((link, idx) => {
-                const isActive = currentView === link.view;
+                const isActive = location.pathname === link.path;
                 return (
-                  <motion.button
+                  <motion.div
                     key={link.view}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 * idx + 0.15 }}
-                    onClick={() => { setView(link.view); setIsSidebarOpen(false); }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group relative overflow-hidden ${isActive
-                        ? 'bg-accent-primary text-white shadow-lg shadow-accent-primary/20'
-                        : 'text-text-muted hover:text-text-main hover:bg-surface-soft'
-                      }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute inset-0 bg-accent-primary rounded-2xl -z-10"
-                      />
-                    )}
-                    <link.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-text-muted group-hover:text-text-main'} transition-colors`} />
-                    <span className={`text-[13px] font-black uppercase tracking-wider ${isActive ? 'text-white' : ''} transition-colors`}>
-                      {link.title}
-                    </span>
-                    {isActive && <ChevronRight className="w-3.5 h-3.5 text-white/80 ml-auto" />}
-                  </motion.button>
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsSidebarOpen(false)}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group relative overflow-hidden ${isActive
+                          ? 'bg-accent-primary text-white shadow-lg shadow-accent-primary/20'
+                          : 'text-text-muted hover:text-text-main hover:bg-surface-soft'
+                        }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="absolute inset-0 bg-accent-primary rounded-2xl -z-10"
+                        />
+                      )}
+                      <link.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-text-muted group-hover:text-text-main'} transition-colors`} />
+                      <span className={`text-[13px] font-black uppercase tracking-wider ${isActive ? 'text-white' : ''} transition-colors`}>
+                        {link.title}
+                      </span>
+                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-white/80 ml-auto" />}
+                    </Link>
+                  </motion.div>
                 );
               })}
             </nav>

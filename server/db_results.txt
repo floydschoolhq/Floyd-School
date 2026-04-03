@@ -1,0 +1,17 @@
+{
+  "counts": [
+    {
+      "_id": {
+        "status": "published",
+        "isActive": true
+      },
+      "count": 4
+    }
+  ],
+  "titles": [
+    "AI & Machine Learning",
+    "Development (Web/App)",
+    "Cyber Security",
+    "IoT & Robotics"
+  ]
+}

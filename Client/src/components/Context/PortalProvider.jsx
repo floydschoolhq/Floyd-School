@@ -44,6 +44,10 @@ export const PortalProvider = ({ children }) => {
   const updateUser = (userData) => {
     setUser(userData);
     localStorage.setItem('userInfo', JSON.stringify(userData));
+    // Also sync with classroom session if active
+    if (sessionStorage.getItem('classroomUser')) {
+      sessionStorage.setItem('classroomUser', JSON.stringify(userData));
+    }
   };
 
   // Function to update classroom user specifically
@@ -79,13 +83,7 @@ export const PortalProvider = ({ children }) => {
   }, []);
 
   // Fetch latest user data on mount (Refresh Profile)
-  // Skip for classroom users - they use sessionStorage auth
   useEffect(() => {
-    // Skip if classroom user
-    if (user?.isClassroomAccess === true) {
-      return;
-    }
-
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
       if (token) {

@@ -149,16 +149,20 @@ exports.reviewAccessRequest = async (req, res) => {
         // If approved, update user permissions
         if (status === 'approved') {
             const student = await User.findById(request.student._id);
-            student.permissions[request.requestedPermission] = true;
-            await student.save();
+            if (student) {
+                if (!student.permissions) student.permissions = {};
+                student.permissions[request.requestedPermission] = true;
+                student.markModified('permissions');
+                await student.save();
 
-            // Notify student
-            await Notification.create({
-                recipient: student._id,
-                title: 'Access Granted',
-                message: `Your request for ${request.requestedPermission.replace('canAccess', '')} access has been approved`,
-                type: 'success'
-            });
+                // Notify student
+                await Notification.create({
+                    recipient: student._id,
+                    title: 'Access Granted',
+                    message: `Your request for ${request.requestedPermission.replace('canAccess', '')} access has been approved`,
+                    type: 'success'
+                });
+            }
         } else {
             // Notify student of rejection
             await Notification.create({

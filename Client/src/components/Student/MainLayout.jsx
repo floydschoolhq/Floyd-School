@@ -6,13 +6,14 @@ import StudentSidebar from "./StudentSidebar";
 import ChatSupport from "./ChatSupport";
 import CommandPalette from "../dashboard/CommandPalette";
 import { Menu, User, Home, Command } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
   const { isSidebarOpen, setIsSidebarOpen, setView, currentView, user } = useContext(PortalContext);
   const { theme, setTheme } = useTheme();
   const toast = useToast();
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const location = useLocation();
 
   // Command Palette Keyboard Listener (⌘K / Ctrl+K)
   useEffect(() => {
@@ -57,7 +58,7 @@ const MainLayout = ({ children }) => {
               <Menu className="w-6 h-6" />
             </button>
             <h1 className="text-xl font-black text-text-main tracking-tight transition-colors duration-500">
-              {currentView.replace(/([A-Z])/g, ' $1').trim()}
+              {location.pathname.split('/').pop()?.replace(/([A-Z])/g, ' $1').trim() || 'Dashboard'}
             </h1>
           </div>
 

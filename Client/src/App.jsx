@@ -26,6 +26,13 @@ import ClassroomPage from './pages/Student/ClassRoomPage.jsx';
 import ClassroomAuthPage from './pages/Student/ClassroomAuthPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import renderPage from './pages/Student/renderPage.jsx';
+import StudentDashboard from './components/Student/StudentDashboard';
+import CodingLabPage from './pages/Student/CodingLabPage';
+import PerformanceReportPage from './pages/Student/PerformanceReportPage';
+import ProgressTrackingPage from './pages/Student/ProgressTrackingPage';
+import RecordingsPage from './pages/Student/RecordingPage';
+import SupportPage from './pages/Student/SupportPage';
+import LiveSessionView from './pages/Student/LiveSessionView';
 import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
@@ -159,6 +166,62 @@ const App = () => {
                     <ProtectedRoute>
                         <MainLayout>
                             {renderPage(usePortal().currentView, usePortal())}
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/dashboard' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <StudentDashboard />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/classroom' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <ClassroomPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/live-session' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <LiveSessionView />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/coding-lab' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <CodingLabPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/recordings' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <RecordingsPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/progress' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <ProgressTrackingPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/reports' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <PerformanceReportPage />
+                        </MainLayout>
+                    </ProtectedRoute>
+                } />
+                <Route path='/student/support' element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <SupportPage />
                         </MainLayout>
                     </ProtectedRoute>
                 } />
