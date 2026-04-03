@@ -33,23 +33,8 @@
   animation: marquee 30s linear infinite;
 }
 
-/* Vertical Marquee Animation */
-@keyframes marquee-vertical {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
-}
-
-.animate-marquee-vertical {
-  animation: marquee-vertical 10s linear infinite;
-}
-
 /* Pause animation on hover */
-.animate-marquee:hover,
-.animate-marquee-vertical:hover {
+.animate-marquee:hover {
   animation-play-state: paused;
 }
 
