@@ -1,31 +1,27 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-import { useAuth } from './AuthContext';
 
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
-    const { user } = useAuth();
     const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
+    // Initialize socket connection
     useEffect(() => {
-        if (user) {
-            const newSocket = io(baseURL, {
-                withCredentials: true,
-                transports: ['websocket', 'polling']
-            });
+        const newSocket = io(baseURL, {
+            withCredentials: true,
+            transports: ['websocket', 'polling']
+        });
 
-            newSocket.on('connect', () => {
-                console.log('Socket synchronized with server node');
-                newSocket.emit('authenticate', user._id);
-            });
+        newSocket.on('connect', () => {
+            console.log('Socket synchronized with server node');
+        });
 
-            setSocket(newSocket);
+        setSocket(newSocket);
 
-            return () => newSocket.close();
-        }
-    }, [user, baseURL]);
+        return () => newSocket.close();
+    }, [baseURL]);
 
     return (
         <SocketContext.Provider value={socket}>

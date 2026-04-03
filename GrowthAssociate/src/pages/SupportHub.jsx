@@ -14,15 +14,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
-import { io } from 'socket.io-client';
-
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-    withCredentials: true,
-    transports: ['websocket']
-});
+import { useSocket } from '../context/SocketContext';
 
 const SupportHub = () => {
     const { user } = useAuth();
+    const socket = useSocket();
     const [tickets, setTickets] = useState([]);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [message, setMessage] = useState('');
@@ -42,31 +38,35 @@ const SupportHub = () => {
     useEffect(() => {
         fetchTickets();
 
-        socket.on('support:ticket_new', (newTicket) => {
-            setTickets(prev => [newTicket, ...prev]);
-        });
-
-        socket.on('support:message_received', (data) => {
-            setTickets(prev => prev.map(t => {
-                if (t._id === data.ticketId) {
-                    return { ...t, messages: [...t.messages, data.message] };
-                }
-                return t;
-            }));
-
-            setSelectedTicket(prev => {
-                if (prev?._id === data.ticketId) {
-                    return { ...prev, messages: [...prev.messages, data.message] };
-                }
-                return prev;
+        if (socket) {
+            socket.on('support:ticket_new', (newTicket) => {
+                setTickets(prev => [newTicket, ...prev]);
             });
-        });
+
+            socket.on('support:message_received', (data) => {
+                setTickets(prev => prev.map(t => {
+                    if (t._id === data.ticketId) {
+                        return { ...t, messages: [...t.messages, data.message] };
+                    }
+                    return t;
+                }));
+
+                setSelectedTicket(prev => {
+                    if (prev?._id === data.ticketId) {
+                        return { ...prev, messages: [...prev.messages, data.message] };
+                    }
+                    return prev;
+                });
+            });
+        }
 
         return () => {
-            socket.off('support:ticket_new');
-            socket.off('support:message_received');
+            if (socket) {
+                socket.off('support:ticket_new');
+                socket.off('support:message_received');
+            }
         };
-    }, []);
+    }, [socket]);
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
