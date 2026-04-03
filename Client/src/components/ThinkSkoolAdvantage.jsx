@@ -236,79 +236,105 @@ const ThinkskoolAdvantage = () => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className="py-16 bg-slate-50 relative w-full">
+            <section className="py-20 bg-[#F8FAFC] relative w-full overflow-hidden">
+                {/* Background Decor */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 -mr-32 -mt-32" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-[100px] opacity-50 -ml-32 -mb-32" />
+
                 {/* Mobile Header */}
-                <div className="px-4 mb-12">
+                <div className="px-6 mb-12 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-center"
+                        className="text-left"
                     >
-                        <h2 className="text-2xl font-black text-slate-900 mb-3 leading-tight">
+                        <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 leading-tight">
-                            We teach students to build real things.
+                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-tight">
+                            We teach you to build.
                         </h2>
                     </motion.div>
                 </div>
 
-                {/* Mobile Advantage Cards */}
-                <div className="px-4 space-y-6">
-                    {ADVANTAGES.map((advantage, index) => {
-                        const cardColors = [
-                            { bg: 'from-orange-400 via-orange-500 to-red-500', text: 'text-white', innerBg: 'from-orange-500 via-orange-600 to-red-600' },
-                            { bg: 'from-white to-gray-50', text: 'text-gray-900', innerBg: 'from-white to-gray-50' },
-                            { bg: 'from-gray-900 via-black to-gray-800', text: 'text-white', innerBg: 'from-gray-900 via-black to-gray-800' },
-                            { bg: 'from-white to-gray-50', text: 'text-gray-900', innerBg: 'from-white to-gray-50' }
-                        ];
-                        const currentColor = cardColors[index % 4];
-                        const isDarkBg = index === 0 || index === 2; // Only orange and black cards are dark
-
-                        return (
-                            <motion.div
-                                key={advantage.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
-                                className="relative"
-                            >
-                                <div className={`bg-gradient-to-br ${currentColor.bg} rounded-2xl p-1 shadow-xl hover:shadow-2xl transition-shadow duration-300`}>
-                                    <div className={`bg-gradient-to-br ${currentColor.innerBg} rounded-2xl overflow-hidden relative`}>
-                                        {/* Animated Background Pattern */}
-                                        <div className="absolute inset-0 opacity-10">
-                                            <div className="absolute inset-0 animate-pulse" style={{
+                {/* Mobile Advantage Cards - Horizontal Scroll */}
+                <div className="relative z-10">
+                    <div className="flex overflow-x-auto space-x-5 px-6 pb-12 snap-x snap-mandatory no-scrollbar">
+                        {ADVANTAGES.map((advantage, index) => {
+                            const cardColors = [
+                                { bg: 'from-orange-400 to-red-500', innerBg: 'from-orange-500 to-red-600', text: 'text-white', isDark: true },
+                                { bg: 'from-white to-gray-50', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false },
+                                { bg: 'from-gray-900 to-black', innerBg: 'from-gray-900 to-black', text: 'text-white', isDark: true },
+                                { bg: 'from-white to-gray-100', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false }
+                            ];
+                            const cur = cardColors[index % 4];
+                            
+                            return (
+                                <motion.div
+                                    key={advantage.id}
+                                    className="flex-shrink-0 w-[85vw] snap-center first:ml-0"
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true, margin: "-20px" }}
+                                    transition={{ duration: 0.5, ease: "easeOut" }}
+                                >
+                                    <div className={`bg-gradient-to-br ${cur.bg} rounded-[2rem] p-[1px] shadow-2xl h-full transform transition-transform`}>
+                                        <div className={`bg-gradient-to-br ${cur.innerBg} rounded-[2rem] overflow-hidden h-full flex flex-col relative`}>
+                                            {/* Pattern overlay */}
+                                            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
                                                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                                             }} />
-                                        </div>
 
-                                        <div className="relative z-10 p-6">
-                                            {/* Title */}
-                                            <h3 className={`text-xl font-black mb-3 leading-tight ${isDarkBg ? 'text-white' : 'text-gray-900'}`}>
-                                                {advantage.title}
-                                            </h3>
-
-                                            {/* Description */}
-                                            <p className={`text-sm leading-relaxed mb-4 ${isDarkBg ? 'text-white/90' : 'text-gray-700'}`}>
-                                                {advantage.description}
-                                            </p>
-
-                                            {/* CTA Button */}
-                                            <button className={`px-6 py-2 ${isDarkBg ? 'bg-white/20 hover:bg-white/30 text-white border-white/30' : 'bg-gray-800 hover:bg-gray-900 text-white border-gray-900'} border font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-fit`}>
-                                                Learn More →
-                                            </button>
+                                            {/* Image Section */}
+                                            <div className="h-56 relative overflow-hidden">
+                                                <img 
+                                                    src={advantage.image} 
+                                                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" 
+                                                    alt={advantage.title} 
+                                                />
+                                                <div className={`absolute inset-0 bg-gradient-to-t ${cur.isDark ? 'from-black/60 to-transparent' : 'from-black/40 to-transparent'}`} />
+                                                <div className="absolute bottom-5 left-6 right-6">
+                                                     <h3 className="text-white text-2xl font-black leading-tight drop-shadow-md">
+                                                        {advantage.title}
+                                                     </h3>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Content Section */}
+                                            <div className="p-7 flex-grow flex flex-col justify-between">
+                                                <p className={`text-base leading-relaxed mb-8 ${cur.isDark ? 'text-white/80' : 'text-gray-600 font-medium'}`}>
+                                                    {advantage.description}
+                                                </p>
+                                                
+                                                <button className={`group flex items-center justify-between w-full p-4 rounded-2xl font-bold transition-all duration-300 shadow-lg ${cur.isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`}>
+                                                    <span>Explore more</span>
+                                                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                    
+                    {/* Progress Dots / Swipe Indicator */}
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="flex gap-2">
+                            {ADVANTAGES.map((_, i) => (
+                                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-8 bg-blue-600' : 'w-2 bg-slate-300'}`} />
+                            ))}
+                        </div>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] animate-pulse">
+                            Swipe to explore
+                        </span>
+                    </div>
                 </div>
             </section>
         );
     }
+
 
     return (
         <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">
