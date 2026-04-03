@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
@@ -10,9 +10,11 @@ import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import { PortalContext } from '../../components/Context/PortalProvider';
 import { useSocket } from '../../components/Context/SocketContext';
 import { useContext } from 'react';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const ClassroomPage = () => {
   const socket = useSocket();
+  const isMobile = useIsMobile(768);
 
   const { user, setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);
   const [courses, setCourses] = useState([]);
@@ -180,13 +182,13 @@ const ClassroomPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 relative">
+    <div className={`${isMobile ? 'min-h-screen bg-slate-50' : 'min-h-screen bg-slate-50 p-6'} relative`}>
       {!user?.permissions?.canAccessCourses && (
         <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
           <div className="w-20 h-20 bg-blue-600 rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
             <BookOpen className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-black text-slate-900 mb-2 tracking-tighter`}>
             Access <span className="text-blue-600">Pending</span>
           </h2>
           <p className="text-slate-500 max-w-md font-medium mb-8 text-sm leading-relaxed">
@@ -206,44 +208,109 @@ const ClassroomPage = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className={`${isMobile ? 'px-4 py-6' : 'mb-8'}`}
       >
-        <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">
+        <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-black text-slate-900 mb-2 tracking-tight`}>
           My Classroom <span className="text-[#2563EB]">Resources</span>
         </h1>
-        <p className="text-base font-medium text-slate-500">Access your lessons, assignments, and recordings through our elite framework.</p>
+        <p className={`${isMobile ? 'text-sm' : 'text-base'} font-medium text-slate-500`}>
+          {isMobile 
+            ? 'Access lessons, recordings & assignments on the go.'
+            : 'Access your lessons, assignments, and recordings through our elite framework.'
+          }
+        </p>
       </motion.div>
 
-      {/* Active Scheduled Video Player */}
-      {activeScheduledVideo && (
+      {/* Mobile-Optimized Live Class Banner */}
+      {isMobile && (activeLiveClass || scheduledLives.some(l => l.status === 'live' || l.status === 'scheduled')) && (
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="mb-8 bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-200"
+          className="mb-6 mx-4"
         >
-          <div className="flex items-center justify-between p-4 border-b border-slate-100">
-            <div>
-              <h3 className="text-lg font-black text-slate-900">{activeScheduledVideo.title}</h3>
-              <p className="text-xs text-slate-500 font-medium">by {activeScheduledVideo.mentorName || activeScheduledVideo.mentor?.name}</p>
+          <div className="bg-gradient-to-r from-[#2563EB] to-[#2563EB] rounded-2xl p-0.5 shadow-xl shadow-[#2563EB]/10">
+            <div className="bg-white rounded-2xl p-4">
+              {activeLiveClass && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                      <div className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center">
+                        <Video className="text-red-500 w-5 h-5" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-slate-900 font-bold text-sm">LIVE NOW</h3>
+                      <p className="text-slate-900 font-bold text-base">{activeLiveClass.title}</p>
+                      <p className="text-slate-500 text-xs">{activeLiveClass.mentorName}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    {myDoubt ? (
+                      <div className={`flex-1 px-3 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-xs ${myDoubt.isResolved
+                        ? 'bg-emerald-50 text-emerald-600'
+                        : 'bg-amber-50 text-amber-600 animate-pulse'
+                        }`}>
+                        {myDoubt.isResolved ? <CheckCircle className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                        <span className="uppercase tracking-wider">
+                          {myDoubt.isResolved ? 'Resolved' : 'Mentor Notified'}
+                        </span>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleRaiseHand}
+                        disabled={isSignaling}
+                        className="flex-1 bg-slate-900 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider disabled:opacity-50"
+                      >
+                        {isSignaling ? 'Signaling...' : 'Raise Hand'}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setGlobalActiveLiveClass(activeLiveClass);
+                        setView('LiveSession');
+                      }}
+                      className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider"
+                    >
+                      Join Live
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Scheduled Lives for Mobile */}
+              {scheduledLives.filter(l => l.status === 'scheduled').length > 0 && (
+                <div className={`${activeLiveClass ? 'border-t border-slate-100 pt-4 mt-4' : ''}`}>
+                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Upcoming Sessions</h4>
+                  <div className="space-y-2">
+                    {scheduledLives.filter(l => l.status === 'scheduled').slice(0, 2).map(live => (
+                      <div 
+                        key={live._id} 
+                        className="bg-slate-50 rounded-lg p-3 flex items-center gap-3"
+                        onClick={() => setActiveScheduledVideo(live)}
+                      >
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Calendar className="text-blue-500 w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h5 className="font-bold text-slate-900 text-sm truncate">{live.title}</h5>
+                          <p className="text-xs text-slate-500">
+                            {new Date(live.scheduledStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            <button
-              onClick={() => setActiveScheduledVideo(null)}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <X size={20} className="text-slate-400" />
-            </button>
-          </div>
-          <div className="aspect-video bg-black">
-            <CustomVideoPlayer
-              videoUrl={activeScheduledVideo.videoUrl}
-              autoPlay={true}
-            />
           </div>
         </motion.div>
       )}
 
-      {/* Live Class Banner */}
-      {(activeLiveClass || scheduledLives.some(l => l.status === 'live' || l.status === 'scheduled')) && (
+      {/* Desktop Live Class Banner (Original) */}
+      {!isMobile && (activeLiveClass || scheduledLives.some(l => l.status === 'live' || l.status === 'scheduled')) && (
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -349,125 +416,297 @@ const ClassroomPage = () => {
         </motion.div>
       )}
 
-      {/* Current Lessons */}
-      <div className="mb-8">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
-          <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
-            <BookOpen className="w-5 h-5" />
-          </div>
-          Current Lessons
-        </h2>
-        <div className="grid grid-cols-1 gap-4">
-          {courses.map((course, index) => (
-            <motion.div
-              key={course._id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+      {/* Active Scheduled Video Player - Mobile Optimized */}
+      {activeScheduledVideo && (
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className={`${isMobile ? 'mb-6 mx-4' : 'mb-8'} bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-200`}
+        >
+          <div className="flex items-center justify-between p-4 border-b border-slate-100">
+            <div>
+              <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-black text-slate-900`}>{activeScheduledVideo.title}</h3>
+              <p className="text-xs text-slate-500 font-medium">by {activeScheduledVideo.mentorName || activeScheduledVideo.mentor?.name}</p>
+            </div>
+            <button
+              onClick={() => setActiveScheduledVideo(null)}
+              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
             >
-              <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
+              <X size={20} className="text-slate-400" />
+            </button>
+          </div>
+          <div className={`${isMobile ? 'aspect-[9/16]' : 'aspect-video'} bg-black`}>
+            <CustomVideoPlayer
+              videoUrl={activeScheduledVideo.videoUrl}
+              autoPlay={true}
+            />
+          </div>
+        </motion.div>
+      )}
+
+      {/* Mobile-Optimized Current Lessons */}
+      {isMobile ? (
+        <div className="mb-6 mx-4">
+          <h2 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-3">
+            <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            My Courses
+          </h2>
+          <div className="space-y-3">
+            {courses.slice(0, 3).map((course, index) => (
+              <motion.div
+                key={course._id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm"
+              >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-3 h-3 rounded-full ${course.modules?.some(m => !m.completed)
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full ${course.modules?.some(m => !m.completed)
                       ? 'bg-yellow-500 animate-pulse'
                       : 'bg-green-500'
                       }`} />
                     <div>
-                      <h3 className="font-bold text-slate-800 text-lg tracking-tight">{course.title}</h3>
-                      <p className="text-base font-medium text-slate-500">{course.instructor?.name}</p>
+                      <h3 className="font-bold text-slate-900 text-sm">{course.title}</h3>
+                      <p className="text-xs text-slate-500">{course.instructor?.name}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="text-[13px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
-                      <div className="text-lg font-black text-[#2563EB]">
-                        {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
-                      </div>
+                  <div className="text-right">
+                    <div className="text-xs font-black text-slate-400 uppercase">Progress</div>
+                    <div className="text-sm font-black text-blue-600">
+                      {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                     </div>
-                    <button
-                      onClick={() => window.location.href = '/student/recordings'}
-                      className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-base font-bold transition-colors"
-                    >
-                      Study Node
-                    </button>
                   </div>
                 </div>
-              </GradientCard>
-            </motion.div>
-          ))}
-          {courses.length === 0 && (
-            <div className="text-center py-12 text-slate-400">
-              <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-30" />
-              <p className="font-medium italic text-base">No curriculum units assigned yet.</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Assignments */}
-      <div className="mb-8">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
-          <div className="p-2 bg-purple-50 rounded-lg text-purple-500">
-            <FileText className="w-5 h-5" />
+              </motion.div>
+            ))}
+            {courses.length === 0 && (
+              <div className="text-center py-8 text-slate-400">
+                <BookOpen className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p className="font-medium text-sm">No courses assigned yet.</p>
+              </div>
+            )}
           </div>
-          Technical Assignments
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {assignments.map((assignment, index) => (
-            <motion.div
-              key={assignment._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
+        </div>
+      ) : (
+        /* Desktop Current Lessons */
+        <div className="mb-8">
+          <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+            <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            Current Lessons
+          </h2>
+          <div className="grid grid-cols-1 gap-4">
+            {courses.map((course, index) => (
+              <motion.div
+                key={course._id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-3 h-3 rounded-full ${course.modules?.some(m => !m.completed)
+                        ? 'bg-yellow-500 animate-pulse'
+                        : 'bg-green-500'
+                        }`} />
+                      <div>
+                        <h3 className="font-bold text-slate-800 text-lg tracking-tight">{course.title}</h3>
+                        <p className="text-base font-medium text-slate-500">{course.instructor?.name}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-[13px] font-black tracking-widest text-slate-400 uppercase">Progress</div>
+                        <div className="text-lg font-black text-[#2563EB]">
+                          {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => window.location.href = '/student/recordings'}
+                        className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-base font-bold transition-colors"
+                      >
+                        Study Node
+                      </button>
+                    </div>
+                  </div>
+                </GradientCard>
+              </motion.div>
+            ))}
+            {courses.length === 0 && (
+              <div className="text-center py-12 text-slate-400">
+                <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                <p className="font-medium italic text-base">No curriculum units assigned yet.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile-Optimized Assignments */}
+      {isMobile ? (
+        <div className="mb-6 mx-4">
+          <h2 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-3">
+            <div className="p-2 bg-purple-50 rounded-lg text-purple-500">
+              <FileText className="w-4 h-4" />
+            </div>
+            Assignments
+          </h2>
+          <div className="space-y-3">
+            {assignments.slice(0, 2).map((assignment, index) => (
+              <motion.div
+                key={assignment._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm"
+              >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
-                    <p className="text-base font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
-                    <div className="flex items-center gap-2 text-[13px] font-black text-slate-400 uppercase tracking-widest">
+                    <h3 className="font-bold text-slate-900 text-sm mb-1">{assignment.title}</h3>
+                    <p className="text-xs text-slate-500 mb-2">{assignment.course?.title}</p>
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
                       <Clock className="w-3 h-3" />
                       Due: {new Date(assignment.dueDate).toLocaleDateString()}
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded text-[13px] font-black uppercase tracking-tighter ${assignment.status === 'published'
+                  <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${assignment.status === 'published'
                     ? 'bg-orange-50 text-orange-600 border border-orange-100'
                     : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                     }`}>
                     {assignment.status}
                   </span>
                 </div>
-              </GradientCard>
-            </motion.div>
-          ))}
-          {assignments.length === 0 && (
-            <div className="col-span-full text-center py-12 text-slate-400">
-              <FileText className="w-16 h-16 mx-auto mb-4 opacity-30" />
-              <p className="font-medium italic text-base">No active assignments found.</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Class Recordings */}
-      <div className="mb-10">
-        <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
-          <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
-            <PlayCircle className="w-5 h-5" />
+              </motion.div>
+            ))}
+            {assignments.length === 0 && (
+              <div className="text-center py-8 text-slate-400">
+                <FileText className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p className="font-medium text-sm">No active assignments.</p>
+              </div>
+            )}
           </div>
-          Integration Sessions
-        </h2>
-        <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
-          <div className="text-center py-8">
-            <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#2563EB] opacity-50" />
-            <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
-            <p className="text-base font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
-            <button className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10">
-              Browse Archive
+        </div>
+      ) : (
+        /* Desktop Assignments */
+        <div className="mb-8">
+          <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+            <div className="p-2 bg-purple-50 rounded-lg text-purple-500">
+              <FileText className="w-5 h-5" />
+            </div>
+            Technical Assignments
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {assignments.map((assignment, index) => (
+              <motion.div
+                key={assignment._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-slate-800 mb-1 tracking-tight">{assignment.title}</h3>
+                      <p className="text-base font-medium text-slate-500 mb-4">{assignment.course?.title}</p>
+                      <div className="flex items-center gap-2 text-[13px] font-black text-slate-400 uppercase tracking-widest">
+                        <Clock className="w-3 h-3" />
+                        Due: {new Date(assignment.dueDate).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <span className={`px-2 py-1 rounded text-[13px] font-black uppercase tracking-tighter ${assignment.status === 'published'
+                      ? 'bg-orange-50 text-orange-600 border border-orange-100'
+                      : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                      }`}>
+                      {assignment.status}
+                    </span>
+                  </div>
+                </GradientCard>
+              </motion.div>
+            ))}
+            {assignments.length === 0 && (
+              <div className="col-span-full text-center py-12 text-slate-400">
+                <FileText className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                <p className="font-medium italic text-base">No active assignments found.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile-Optimized Class Recordings */}
+      {isMobile ? (
+        <div className="mb-6 mx-4">
+          <h2 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-3">
+            <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
+              <Video className="w-4 h-4" />
+            </div>
+            Recordings
+          </h2>
+          <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+            <div className="text-center py-6">
+              <Video className="w-10 h-10 mx-auto mb-3 text-blue-600 opacity-50" />
+              <p className="text-slate-900 font-bold text-sm mb-1">Video Archive</p>
+              <p className="text-xs text-slate-500 mb-4">Watch previous sessions anytime.</p>
+              <button 
+                onClick={() => window.location.href = '/student/recordings'}
+                className="w-full px-4 py-2 bg-slate-900 text-white rounded-lg font-bold text-sm transition-all"
+              >
+                Browse All Videos
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Desktop Class Recordings */
+        <div className="mb-10">
+          <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+            <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
+              <PlayCircle className="w-5 h-5" />
+            </div>
+            Integration Sessions
+          </h2>
+          <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
+            <div className="text-center py-8">
+              <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#2563EB] opacity-50" />
+              <p className="text-slate-900 font-black text-lg mb-1 tracking-tight">Archive Repository</p>
+              <p className="text-base font-medium text-slate-500 mb-6">Review previous technical deep dives and workshops.</p>
+              <button 
+                onClick={() => window.location.href = '/student/recordings'}
+                className="px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10"
+              >
+                Browse Archive
+              </button>
+            </div>
+          </GradientCard>
+        </div>
+      )}
+
+      {/* Mobile-Only: Quick Actions Footer */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 z-50">
+          <div className="flex gap-2">
+            <button
+              onClick={() => window.location.href = '/student/recordings'}
+              className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+            >
+              <Video className="w-3 h-3" />
+              All Videos
+            </button>
+            <button
+              onClick={() => window.location.href = '/student/dashboard'}
+              className="flex-1 bg-slate-900 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+            >
+              <BookOpen className="w-3 h-3" />
+              Dashboard
             </button>
           </div>
-        </GradientCard>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
