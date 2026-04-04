@@ -237,7 +237,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     useAnimationFrame((t, delta) => {
         if (isDragging || isStatic || hoveredCard !== null) return;
         
-        const moveBy = isMobile ? -0.3 : -0.45; 
+        const moveBy = isMobile ? -0.45 : -1.1; 
         let currentX = x.get() + moveBy;
         
         if (containerRef.current) {
