@@ -46,6 +46,24 @@ const LEADERS = [
         bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
         linkedin: "#",
         tags: ["UI/UX", "Design", "Product"]
+    },
+    {
+        name: "Sashwat Vashisth",
+        role: "Mentor AI/ML",
+        image: null,
+        imageScale: 1.0,
+        bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
+        linkedin: "#",
+        tags: ["AI/ML", "Algorithm", "Data Science"]
+    },
+    {
+        name: "Shan Sharma",
+        role: "System Development",
+        image: null,
+        imageScale: 1.0,
+        bio: "Specializing in low-level system design and high-performance development architectures.",
+        linkedin: "#",
+        tags: ["System Dev", "Low-level", "Architecture"]
     }
 ];
 
@@ -199,9 +217,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
     // Auto-scroll logic using useAnimationFrame
     useAnimationFrame((t, delta) => {
-        if (!isMobile || isDragging) return;
+        if (!isMobile || isDragging || isStatic) return;
         
-        const moveBy = -0.55; 
+        const moveBy = -0.3; // Slower mobile scroll
         let currentX = x.get() + moveBy;
         
         if (containerRef.current) {
@@ -335,10 +353,10 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                 from { transform: translateX(0%); }
                                 to { transform: translateX(-50%); }
                             }
-                            #mentors-grid .mentors-marquee-track {
-                                animation: mentorsMarquee 35s linear infinite;
+                            #mentors .mentors-marquee-track {
+                                animation: ${isStatic ? 'none' : 'mentorsMarquee 70s linear infinite'};
                             }
-                            #mentors-grid.mentors-paused .mentors-marquee-track {
+                            #mentors.mentors-paused .mentors-marquee-track {
                                 animation-play-state: paused;
                             }
                         `}</style>

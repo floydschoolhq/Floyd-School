@@ -66,7 +66,7 @@ const HomePage = () => {
                     <ThinkskoolAdvantage />
                     <TechStackStats />
                     <OnlineCourseFocus variant="dark" />
-                    <MentorGrid isStatic={true} />
+                    <MentorGrid />
                     <StudentProjects />
                     <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
