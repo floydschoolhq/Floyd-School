@@ -37,7 +37,7 @@ import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import AdminMessages from './components/AdminMessages.jsx';
-import { PortalContext } from './components/Context/PortalProvider.jsx';
+import { PortalContext, usePortal } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from "./pages/SchoolPartnership.jsx";
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
