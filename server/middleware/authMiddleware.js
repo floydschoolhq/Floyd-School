@@ -124,36 +124,31 @@ const checkPermission = (permissionName) => {
 
 // Classroom-specific auth middleware - accepts JWT tokens from Firebase auth
 const classroomProtect = async (req, res, next) => {
-    let token;
+    const authHeader = req.headers.authorization;
 
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith('Bearer')
-    ) {
-        try {
-            token = req.headers.authorization.split(' ')[1];
-
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-            const user = await User.findById(decoded.id).select('-password');
-
-            if (!user) {
-                return res.status(401).json({ message: 'User not found' });
-            }
-
-            // Skip session token check for classroom users
-            // This allows persistent logins across different tabs or if sessionToken is not updated
-            
-            req.user = user;
-
-            return next();
-        } catch (error) {
-            console.error('Classroom token verification error:', error);
-            return res.status(401).json({ message: 'Invalid token' });
-        }
+    if (!authHeader || !authHeader.startsWith('Bearer')) {
+        // Allow unauthenticated access for routes that treat the public view as unauthenticated
+        req.user = null;
+        return next();
     }
 
-    return res.status(401).json({ message: 'No token provided' });
+    let token;
+    try {
+        token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findById(decoded.id).select('-password');
+
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        req.user = user;
+        return next();
+    } catch (error) {
+        console.error('Classroom token verification error:', error);
+        return res.status(401).json({ message: 'Invalid token' });
+    }
 };
 
 module.exports = { protect, adminOnly, authorize, checkModuleLock, checkPermission, classroomProtect };

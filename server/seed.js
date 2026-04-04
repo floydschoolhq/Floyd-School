@@ -19,6 +19,8 @@ const seedCourses = [
         color: "text-purple-500",
         rating: "4.9",
         duration: "12 Weeks",
+        price: 10,
+        currency: "INR",
         tags: ["Python", "TensorFlow", "Generative AI"],
         difficulty: "Advanced",
         deliveryDetails: {
@@ -42,6 +44,8 @@ const seedCourses = [
         color: "text-blue-500",
         rating: "4.8",
         duration: "16 Weeks",
+        price: 10,
+        currency: "INR",
         tags: ["Hacking", "NetSec", "Linux"],
         difficulty: "Advanced",
         deliveryDetails: {
@@ -65,6 +69,8 @@ const seedCourses = [
         color: "text-emerald-500",
         rating: "4.7",
         duration: "12 Weeks",
+        price: 10,
+        currency: "INR",
         tags: ["Arduino", "Raspberry Pi", "Sensors"],
         difficulty: "Intermediate",
         deliveryDetails: {
@@ -88,6 +94,8 @@ const seedCourses = [
         color: "text-slate-600",
         rating: "4.9",
         duration: "20 Weeks",
+        price: 10,
+        currency: "INR",
         tags: ["React/Next.js", "App Dev", "Cloud"],
         difficulty: "Intermediate",
         deliveryDetails: {

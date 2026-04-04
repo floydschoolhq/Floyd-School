@@ -351,7 +351,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
 
 
             {/* Custom CSS */}
-            <style jsx>{`
+            <style>{`
                 .card {
                     background: #0e1525;
                     border: 1px solid rgba(255,255,255,0.07);
