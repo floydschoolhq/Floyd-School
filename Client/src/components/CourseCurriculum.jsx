@@ -441,6 +441,21 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                     </p>
                                 </div>
                             </div>
+
+                            {/* Price Display */}
+                            <div className="flex items-center justify-between bg-primary/10 border border-primary/30 rounded-2xl px-5 py-4">
+                                <div>
+                                    <p className="text-xs text-secondary font-bold uppercase tracking-widest mb-1">Course Fee</p>
+                                    <div className="flex items-end gap-2">
+                                        <span className="text-sm text-on-surface-variant line-through font-medium">₹2,999</span>
+                                        <span className="text-2xl font-headline font-black text-primary">₹1,999</span>
+                                    </div>
+                                </div>
+                                <div className="bg-primary/20 border border-primary/40 text-primary text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
+                                    33% OFF
+                                </div>
+                            </div>
+
                             <button 
                                 onClick={handleReserveAdmission}
                                 disabled={isEnrolling}
