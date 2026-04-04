@@ -64,6 +64,24 @@ const LEADERS = [
         bio: "Specializing in low-level system design and high-performance development architectures.",
         linkedin: "#",
         tags: ["System Dev", "Low-level", "Architecture"]
+    },
+    {
+        name: "Neetesh Kumar",
+        role: "UI and UX Management",
+        image: null,
+        imageScale: 1.0,
+        bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
+        linkedin: "#",
+        tags: ["UI/UX", "Management", "Leadership"]
+    },
+    {
+        name: "Pooja Kumari",
+        role: "UI and UX Management",
+        image: null,
+        imageScale: 1.0,
+        bio: "Expert in user-centric design strategies and management for professional-grade platforms.",
+        linkedin: "#",
+        tags: ["UI/UX", "Management", "Design strategy"]
     }
 ];
 
