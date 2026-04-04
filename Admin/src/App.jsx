@@ -19,6 +19,7 @@ import SecurityLogs from './pages/SecurityLogs';
 import AccessRequests from './pages/AccessRequests';
 import LiveMonitoring from './pages/LiveMonitoring';
 import StudentRegistrations from './pages/StudentRegistrations';
+import RecordingsManagement from './pages/RecordingsManagement';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="success-engine" element={<SuccessEngine />} />
               <Route path="settings" element={<SystemSettings />} />
               <Route path="monitoring" element={<LiveMonitoring />} />
+              <Route path="recordings" element={<RecordingsManagement />} />
               <Route path="logs" element={<SecurityLogs />} />
             </Route>
 

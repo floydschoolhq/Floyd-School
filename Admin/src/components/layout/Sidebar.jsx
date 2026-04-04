@@ -13,7 +13,8 @@ import {
     Target,
     TrendingUp,
     Monitor,
-    GraduationCap
+    GraduationCap,
+    Video
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
@@ -30,6 +31,7 @@ const Sidebar = () => {
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
+        { icon: <Video size={20} />, label: 'Recordings', path: '/recordings' },
         { icon: <Bell size={20} />, label: 'Broadcast', path: '/broadcast' },
         { icon: <Settings size={20} />, label: 'System Settings', path: '/settings' },
     ];
