@@ -235,9 +235,9 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
     // Auto-scroll logic using useAnimationFrame
     useAnimationFrame((t, delta) => {
-        if (!isMobile || isDragging || isStatic) return;
+        if (isDragging || isStatic || hoveredCard !== null) return;
         
-        const moveBy = -0.3; // Slower mobile scroll
+        const moveBy = isMobile ? -0.3 : -0.45; 
         let currentX = x.get() + moveBy;
         
         if (containerRef.current) {
@@ -360,31 +360,41 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
                 <div className="relative group/marquee">
                     <div 
-                        className="overflow-hidden py-10 -mx-4 px-4"
+                        className="overflow-hidden py-10 -mx-4 px-4 cursor-grab active:cursor-grabbing"
                         style={{ 
                             scrollbarWidth: 'none', 
                             msOverflowStyle: 'none'
                         }}
                     >
-                        <style>{`
-                            @keyframes mentorsMarquee {
-                                from { transform: translateX(0%); }
-                                to { transform: translateX(-50%); }
-                            }
-                            #mentors .mentors-marquee-track {
-                                animation: ${isStatic ? 'none' : 'mentorsMarquee 70s linear infinite'};
-                            }
-                            #mentors.mentors-paused .mentors-marquee-track {
-                                animation-play-state: paused;
-                            }
-                        `}</style>
-                        <div className="mentors-marquee-track flex items-center gap-6 md:gap-8 w-max">
+                        <motion.div 
+                            ref={containerRef}
+                            className="flex items-center gap-6 md:gap-8 w-max"
+                            style={{ x }}
+                            drag="x"
+                            dragConstraints={{ 
+                                left: containerRef.current ? -(containerRef.current.scrollWidth / 2) : -1000, 
+                                right: 0 
+                            }}
+                            onDragStart={() => setIsDragging(true)}
+                            onDragEnd={() => {
+                                setIsDragging(false);
+                                // Reset for seamless loop if needed
+                                const currentX = x.get();
+                                if (containerRef.current) {
+                                    const halfWidth = containerRef.current.scrollWidth / 2;
+                                    if (currentX <= -halfWidth) {
+                                        x.set(currentX + halfWidth);
+                                    } else if (currentX > 0) {
+                                        x.set(currentX - halfWidth);
+                                    }
+                                }
+                            }}
+                        >
                             {mentorItems.map((mentor, index) => (
                                 <div 
                                     key={index} 
-                                    style={{ scrollSnapAlign: 'center' }}
-                                    onMouseEnter={() => setHoveredCard(index)}
-                                    onMouseLeave={() => setHoveredCard(null)}
+                                    onMouseEnter={() => !isMobile && setHoveredCard(index)}
+                                    onMouseLeave={() => !isMobile && setHoveredCard(null)}
                                 >
                                     <MentorCard 
                                         mentor={mentor}
@@ -393,7 +403,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                     />
                                 </div>
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
