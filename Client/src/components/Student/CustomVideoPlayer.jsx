@@ -285,7 +285,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
                                             className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
                                         >
                                             <div className="p-2">
-                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-2">Quality</p>
+                                                <p className="text-[10px] font-semibold text-slate-400 font-medium px-3 py-2">Quality</p>
                                                 {getAvailableQualities().map((level) => (
                                                     <button
                                                         key={level}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Monitor, Users, Shield, Zap, Search,
     Play, Eye, EyeOff, Radio, Signal,
-    ChevronRight, ExternalLink, RefreshCw
+    ChevronRight, ExternalLink, RefreshCw, Trash2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
@@ -22,6 +22,8 @@ const LiveMonitoring = () => {
     const [loading, setLoading] = useState(true);
     const [selectedClass, setSelectedClass] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [archives, setArchives] = useState([]);
+    const [viewMode, setViewMode] = useState('active'); // 'active' or 'archive'
 
     useEffect(() => {
         fetchActiveClasses();
@@ -33,6 +35,8 @@ const LiveMonitoring = () => {
         try {
             const res = await api.get('/live-classes/active-all');
             setActiveClasses(Array.isArray(res.data) ? res.data : (res.data ? [res.data] : []));
+            const archRes = await api.get('/live-classes/archive');
+            setArchives(Array.isArray(archRes.data) ? archRes.data : []);
         } catch (error) {
             console.error('Failed to fetch active classes:', error);
         } finally {
@@ -81,6 +85,10 @@ const LiveMonitoring = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    <div className="flex bg-slate-900 rounded-2xl p-1">
+                        <button onClick={() => setViewMode('active')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${viewMode === 'active' ? 'bg-sky-500 text-white' : 'text-slate-500 hover:text-white'}`}>Active Nodes</button>
+                        <button onClick={() => setViewMode('archive')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${viewMode === 'archive' ? 'bg-purple-500 text-white' : 'text-slate-500 hover:text-white'}`}>Recordings/Archives</button>
+                    </div>
                     <div className="relative">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                         <input
@@ -101,7 +109,40 @@ const LiveMonitoring = () => {
             </header>
 
             <AnimatePresence mode="wait">
-                {selectedClass ? (
+                {viewMode === 'archive' ? (
+                    <motion.div key="archive-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8">
+                        <h3 className="text-xl font-black text-white uppercase mb-6">Archive Node Management</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {archives.length > 0 ? (
+                                archives.filter(arch => arch.title.toLowerCase().includes(searchTerm.toLowerCase())).map(arch => (
+                                    <div key={arch._id} className="bg-slate-950 p-6 rounded-[2rem] border border-slate-800 flex flex-col gap-4">
+                                        <div>
+                                            <p className="text-[10px] font-black text-purple-500 uppercase tracking-widest">{arch.mentorName || 'Unknown Mentor'}</p>
+                                            <h4 className="text-lg font-black text-white uppercase tracking-tight">{arch.title}</h4>
+                                        </div>
+                                        <div className="flex mt-auto justify-between items-center">
+                                            <a href={arch.meetingLink} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-sky-500 uppercase">View Resource</a>
+                                            <button onClick={async () => {
+                                                if(window.confirm('Delete this recording globally?')) {
+                                                    try {
+                                                        await api.delete(`/live-classes/` + arch._id);
+                                                        fetchActiveClasses();
+                                                    } catch (e) {
+                                                        console.error(e);
+                                                    }
+                                                }
+                                            }} className="text-rose-500 bg-rose-500/10 p-2 rounded-xl hover:bg-rose-500/20">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-slate-500 col-span-3 text-center">No archives found.</p>
+                            )}
+                        </div>
+                    </motion.div>
+                ) : selectedClass ? (
                     <motion.div
                         key="observation-mode"
                         initial={{ opacity: 0, scale: 0.95 }}

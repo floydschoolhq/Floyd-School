@@ -41,13 +41,13 @@
 /* ─── Default: Modern (Light / Warm Orange Tint) ─────────── */
 :root,
 [data-theme='modern'] {
-  --surface-base: #FFF0E0;
-  --surface-soft: #FFE4C4;
-  --surface-el:   #FFD4A0;
-  --text-main: #1A0800;
-  --text-muted: #7C5E4E;
+  --surface-base: #FFFFFF;
+  --surface-soft: #F9FAFB;
+  --surface-el:   #F3F4F6;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
   --accent-primary: #2563EB;
-  --accent-secondary: #F97316;
+  --accent-secondary: #4F46E5;
 }
 
 /* ─── Studio (Dark) ─────────────────────────────────────────── */
@@ -132,8 +132,8 @@ h6 {
 }
 
 body {
-  background-color: #FFF0E0;
-  color: #1A0800;
+  background-color: var(--surface-base);
+  color: var(--text-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

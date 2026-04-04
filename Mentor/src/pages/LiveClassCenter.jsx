@@ -57,8 +57,12 @@ const LiveClassCenter = () => {
     const [scheduleTime, setScheduleTime] = useState('');
     const [scheduling, setScheduling] = useState(false);
 
-    // View mode: 'broadcast' or 'schedule'
+    // View mode: 'broadcast', 'schedule', or 'archive'
     const [viewMode, setViewMode] = useState('broadcast');
+
+    // Archive state
+    const [archives, setArchives] = useState([]);
+    const [loadingArchives, setLoadingArchives] = useState(false);
 
     // YouTube Helper
     const getYouTubeId = (url) => {
@@ -232,10 +236,14 @@ const LiveClassCenter = () => {
         try {
             const res = await api.get('/scheduled-live');
             setScheduledSessions(res.data);
+            
+            const archRes = await api.get('/live-classes/archive');
+            setArchives(archRes.data);
         } catch (err) {
             console.error('Failed to fetch scheduled sessions:', err);
         } finally {
             setLoadingSessions(false);
+            setLoadingArchives(false);
         }
     };
 
@@ -398,6 +406,16 @@ const LiveClassCenter = () => {
                             {scheduledSessions.filter(s => s.status === 'scheduled').length}
                         </span>
                     )}
+                </button>
+                <button
+                    onClick={() => setViewMode('archive')}
+                    className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${viewMode === 'archive'
+                        ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                >
+                    <BookOpen size={14} />
+                    View Archives
                 </button>
             </div>
 
@@ -771,6 +789,88 @@ const LiveClassCenter = () => {
                     </div>
                 </div>
             </div>
+            ) : viewMode === 'archive' ? (
+                <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-xl overflow-hidden">
+                    <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                        <h3 className="text-lg font-black text-slate-900 uppercase">Live Class Archives (Recordings)</h3>
+                        <span className="text-xs font-bold text-slate-400">
+                            {archives.length} recordings
+                        </span>
+                    </div>
+
+                    {loadingArchives ? (
+                        <div className="p-12 text-center">
+                            <Loader2 className="w-8 h-8 animate-spin text-purple-500 mx-auto" />
+                        </div>
+                    ) : archives.length === 0 ? (
+                        <div className="p-12 text-center opacity-50">
+                            <BookOpen className="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                            <p className="font-bold text-slate-400 uppercase">No recordings available</p>
+                        </div>
+                    ) : (
+                        <div className="divide-y divide-slate-100">
+                            {archives.map((session) => (
+                                <motion.div
+                                    key={session._id}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-slate-50 transition-colors"
+                                >
+                                    <div className="w-full md:w-48 h-28 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 relative">
+                                        <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                            <p className="text-[10px] font-black text-white/80 uppercase tracking-widest truncate">{session.topic}</p>
+                                        </div>
+                                        <Video className="w-10 h-10 text-slate-300 z-10" />
+                                    </div>
+
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <h4 className="font-black text-slate-900 truncate">{session.title}</h4>
+                                            {getStatusBadge(session.status)}
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-400">
+                                            <span className="flex items-center gap-1">
+                                                <Clock size={14} />
+                                                Ended {formatDate(session.endedAt)}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-3 flex-shrink-0">
+                                        {session.meetingLink && (
+                                            <a
+                                                href={session.meetingLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-4 py-2 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase hover:bg-sky-500 transition-colors flex items-center gap-2"
+                                            >
+                                                <ExternalLink size={14} />
+                                                View Recording
+                                            </a>
+                                        )}
+                                        <button
+                                            onClick={async () => {
+                                                if(window.confirm('Delete this recording permanently?')) {
+                                                    try {
+                                                        await api.delete(`/live-classes/${session._id}`);
+                                                        toast.success('Recording deleted');
+                                                        fetchScheduledSessions();
+                                                    } catch (e) {
+                                                        toast.error('Failed to delete recording');
+                                                    }
+                                                }
+                                            }}
+                                            className="p-2 border border-red-200 text-red-500 rounded-xl hover:bg-red-50 transition-colors"
+                                            title="Delete Recording"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             ) : (
                 <div className="space-y-8">
                     {/* Schedule Form */}

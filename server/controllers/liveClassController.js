@@ -163,3 +163,27 @@ exports.getAllActiveLiveClasses = async (req, res) => {
     }
 };
 
+// @desc    Delete a live class
+// @route   DELETE /api/live-classes/:id
+// @access  Private (Mentor/Admin)
+exports.deleteLiveClass = async (req, res) => {
+    try {
+        const liveClass = await LiveClass.findById(req.params.id);
+
+        if (!liveClass) {
+            return res.status(404).json({ message: 'Live class not found' });
+        }
+
+        // Check ownership (mentor can only delete their own, admin can delete any)
+        if (liveClass.mentor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(401).json({ message: 'Not authorized to delete this class' });
+        }
+
+        await liveClass.deleteOne();
+        res.json({ message: 'Live class deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+

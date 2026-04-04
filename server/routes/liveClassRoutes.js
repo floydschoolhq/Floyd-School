@@ -5,9 +5,10 @@ const {
     endLiveClass,
     getActiveLiveClass,
     getAllActiveLiveClasses,
-    getEndedLiveClasses
+    getEndedLiveClasses,
+    deleteLiveClass
 } = require('../controllers/liveClassController');
-const { protect, adminOnly, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
+const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const checkMaintenance = require('../middleware/maintenanceMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
 
@@ -26,5 +27,8 @@ router.get('/archive', authorize('student', 'mentor', 'admin', 'associate'), get
 // Only Mentors can start/end classes
 router.post('/start', protect, authorize('mentor', 'admin'), validate(schemas.liveClass), startLiveClass);
 router.put('/:id/end', protect, authorize('mentor', 'admin'), endLiveClass);
+
+// Delete archived live classes (Recordings)
+router.delete('/:id', protect, authorize('mentor', 'admin'), deleteLiveClass);
 
 module.exports = router;

@@ -24,6 +24,7 @@ const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
   const { user, updateUser, setView } = usePortal();
   const { theme, setTheme } = useTheme();
+  const isModern = theme === 'modern';
   const toast = useToast();
   const { streak } = useStreak();
   const { celebrateSide } = useConfetti();
@@ -90,11 +91,11 @@ const StudentDashboard = () => {
   // Safety check: If user is not loaded, redirect or show error
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="flex items-center justify-center min-h-screen bg-surface-base transition-colors duration-500">
         <div className="text-center">
-          <h2 className="text-2xl font-black text-slate-900 mb-4">Authentication Required</h2>
-          <p className="text-slate-500 mb-6">Please log in to access your dashboard.</p>
-          <a href="/student/login" className="px-6 py-3 bg-[#2563EB] text-white rounded-xl font-bold">
+          <h2 className="text-2xl font-black text-text-main mb-4 tracking-tight">Authentication Required</h2>
+          <p className="text-text-muted mb-6">Please log in to access your dashboard.</p>
+          <a href="/student/login" className="px-6 py-3 bg-accent-primary text-white rounded-xl font-bold shadow-lg hover:bg-accent-secondary transition-all">
             Go to Login
           </a>
         </div>
@@ -105,8 +106,12 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-surface-base p-8 relative overflow-hidden transition-colors duration-500">
       {/* Background Accents */}
-      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {!isModern && (
+        <>
+          <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+        </>
+      )}
 
       {/* Header */}
       <div className="relative z-20 flex items-end justify-between mb-12">
@@ -116,9 +121,9 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl font-black text-text-main tracking-tighter -mt-1"
+            className={isModern ? "text-3xl font-bold text-text-main mt-1" : "text-5xl font-black text-text-main tracking-tighter -mt-1"}
           >
-            Learning <span className="text-accent-primary">Control Center</span>
+            {isModern ? "Dashboard" : <>Learning <span className="text-accent-primary">Control Center</span></>}
           </motion.h1>
         </div>
         <div className="flex items-center gap-4">
@@ -203,12 +208,15 @@ const StudentDashboard = () => {
             className="flex-1"
           >
             <GradientCard className="h-full" gradient="from-accent-primary to-accent-secondary">
-              <h3 className="text-xl font-black text-text-main mb-6 tracking-tight transition-colors duration-500">Mastery Analysis</h3>
-              <div className="flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm transition-colors duration-500">
+              <h3 className={isModern ? "text-lg font-semibold text-text-main mb-6" : "text-xl font-black text-text-main mb-6 tracking-tight transition-colors duration-500"}>
+                {isModern ? "Overall Progress" : "Mastery Analysis"}
+              </h3>
+              <div className={isModern ? "flex justify-center p-6 bg-surface-soft rounded-xl border border-surface-el transition-colors duration-500" : "flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm transition-colors duration-500"}>
                 <ProgressChart
                   progress={dashboardData?.overallProgress || 0}
                   subtitle={`${dashboardData?.completedModules || 0} / ${dashboardData?.totalModules || 0} Units`}
                   color="var(--accent-primary)"
+                  isModern={isModern}
                 />
               </div>
             </GradientCard>
@@ -224,10 +232,10 @@ const StudentDashboard = () => {
           >
             <GradientCard className="h-full overflow-hidden" gradient="from-accent-secondary to-accent-primary">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2.5 bg-surface-soft border border-surface-el rounded-xl">
-                  <Sparkles className="w-5 h-5 text-accent-primary" />
+                <div className={isModern ? "p-2 bg-surface-soft rounded-lg text-text-muted" : "p-2.5 bg-surface-soft border border-surface-el rounded-xl"}>
+                  <Sparkles className={isModern ? "w-4 h-4" : "w-5 h-5 text-accent-primary"} />
                 </div>
-                <h3 className="text-xl font-black text-text-main tracking-tight transition-colors duration-500">Achievement</h3>
+                <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-xl font-black text-text-main tracking-tight transition-colors duration-500"}>Achievement</h3>
               </div>
               <Suspense fallback={
                 <div className="h-56 flex items-center justify-center">
@@ -252,9 +260,11 @@ const StudentDashboard = () => {
           className="lg:col-span-8"
         >
           <GradientCard className="h-full" gradient="from-text-main to-text-muted">
-            <div className="flex items-center justify-between mb-10">
-              <h3 className="text-2xl font-black text-text-main tracking-tight transition-colors duration-500">Mission Objectives</h3>
-              <div className="p-4 bg-surface-soft border border-surface-el rounded-2xl transition-colors duration-500">
+            <div className={isModern ? "flex items-center justify-between mb-6" : "flex items-center justify-between mb-10"}>
+              <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-2xl font-black text-text-main tracking-tight transition-colors duration-500"}>
+                 {isModern ? "Recent Assignments" : "Mission Objectives"}
+              </h3>
+              <div className={isModern ? "hidden" : "p-4 bg-surface-soft border border-surface-el rounded-2xl transition-colors duration-500"}>
                 <Calendar className="w-6 h-6 text-text-main" />
               </div>
             </div>
@@ -266,19 +276,19 @@ const StudentDashboard = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + (idx * 0.1) }}
-                    className="p-6 bg-surface-base border border-surface-el rounded-[2rem] hover:border-accent-primary/50 transition-all duration-300 shadow-sm flex flex-col justify-between"
+                    className={isModern ? "p-4 sm:p-5 bg-surface-base border border-surface-el shadow-sm rounded-xl hover:border-accent-primary/20 transition-all duration-300 flex flex-col justify-between" : "p-6 bg-surface-base border border-surface-el rounded-[2rem] hover:border-accent-primary/50 transition-all duration-300 shadow-sm flex flex-col justify-between"}
                   >
                     <div>
-                      <h4 className="text-lg font-black text-text-main mb-1 tracking-tight line-clamp-1">{assignment.title}</h4>
-                      <p className="text-[11px] font-black text-text-muted uppercase tracking-widest mb-4">{assignment.course?.title}</p>
+                      <h4 className={isModern ? "text-base font-semibold text-text-main mb-1 line-clamp-1" : "text-lg font-black text-text-main mb-1 tracking-tight line-clamp-1"}>{assignment.title}</h4>
+                      <p className={isModern ? "text-xs text-text-muted mb-4" : "text-[11px] font-black text-text-muted uppercase tracking-widest mb-4"}>{assignment.course?.title}</p>
                     </div>
                     <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center gap-2 text-[12px] font-black text-text-muted uppercase tracking-widest">
-                        <Clock className="w-3.5 h-3.5 text-accent-primary" />
+                      <div className={isModern ? "flex items-center gap-2 text-xs text-text-muted" : "flex items-center gap-2 text-[12px] font-black text-text-muted uppercase tracking-widest"}>
+                        <Clock className={isModern ? "w-3 h-3 text-text-muted" : "w-3.5 h-3.5 text-accent-primary"} />
                         {new Date(assignment.dueDate).toLocaleDateString()}
                       </div>
-                      <button className="px-5 py-2.5 bg-text-main text-surface-base text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-accent-primary transition-all shadow-lg active:scale-95">
-                        Initiate
+                      <button className={isModern ? "px-4 py-2 bg-text-main text-surface-base text-xs font-semibold rounded-lg hover:bg-text-muted transition-colors" : "px-5 py-2.5 bg-text-main text-surface-base text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-accent-primary transition-all shadow-lg active:scale-95"}>
+                        {isModern ? "View" : "Initiate"}
                       </button>
                     </div>
                   </motion.div>
@@ -302,7 +312,9 @@ const StudentDashboard = () => {
           className="lg:col-span-12 mt-6"
         >
           <div className="flex items-center gap-4 mb-8">
-            <h3 className="text-3xl font-black text-text-main tracking-tighter transition-colors duration-500">Learning Expeditions</h3>
+            <h3 className={isModern ? "text-2xl font-bold text-text-main" : "text-3xl font-black text-text-main tracking-tighter transition-colors duration-500"}>
+              {isModern ? "Enrolled Courses" : "Learning Expeditions"}
+            </h3>
             {!canAccessCourses && (
               <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500">
                 <Lock size={12} className="text-accent-primary" /> Locked Segment
@@ -350,24 +362,24 @@ const StudentDashboard = () => {
                   >
                     <div className="flex items-start justify-between mb-8">
                       <div className="flex-1 pr-6">
-                        <h4 className="text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] transition-colors duration-500">{course.title}</h4>
+                        <h4 className={isModern ? "text-xl font-semibold text-text-main mb-3" : "text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] transition-colors duration-500"}>{course.title}</h4>
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 rounded-full bg-surface-soft border border-surface-el flex items-center justify-center overflow-hidden">
                             <Users className="w-4 h-4 text-accent-primary" />
                           </div>
-                          <p className="text-[12px] font-black text-accent-primary uppercase tracking-widest">
+                          <p className={isModern ? "text-sm text-text-muted transition-colors duration-500" : "text-[12px] font-black text-accent-primary uppercase tracking-widest"}>
                             {course.instructor?.name}
                           </p>
                         </div>
                       </div>
-                      <span className="px-4 py-2 bg-text-main text-surface-base rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg">
+                      <span className={isModern ? "px-3 py-1 bg-surface-soft border border-surface-el text-text-muted rounded-md text-xs font-medium" : "px-4 py-2 bg-text-main text-surface-base rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg"}>
                         {course.category}
                       </span>
                     </div>
                     <p className="text-base font-medium text-text-muted mb-10 line-clamp-2 leading-relaxed transition-colors duration-500">{course.description}</p>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em]">
-                        <span className="text-text-muted">Mastery Index</span>
+                      <div className={isModern ? "flex items-center justify-between text-xs font-semibold text-text-muted" : "flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em]"}>
+                        <span className="text-text-muted">{isModern ? "Progress" : "Mastery Index"}</span>
                         <span className="text-text-main">
                           {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                         </span>
@@ -384,11 +396,11 @@ const StudentDashboard = () => {
                   </GradientCard>
                 ))
               ) : (
-                <div className="col-span-full text-center py-24 bg-surface-soft rounded-[3.5rem] border border-dashed border-surface-el transition-colors duration-500">
-                  <BookOpen className="w-24 h-24 mx-auto mb-8 text-surface-el" />
-                  <p className="text-lg font-black uppercase tracking-[0.4em] text-text-muted mb-10">Historical Context Missing: No Courses</p>
-                  <button className="px-12 py-6 bg-text-main hover:bg-accent-primary text-surface-base text-[14px] font-black uppercase tracking-[0.4em] rounded-2xl transition-all shadow-2xl scale-100 hover:scale-105">
-                    Refresh Feed
+                <div className={isModern ? "col-span-full text-center py-16 bg-surface-base rounded-xl border border-surface-el transition-colors" : "col-span-full text-center py-24 bg-surface-soft rounded-[3.5rem] border border-dashed border-surface-el transition-colors duration-500"}>
+                  <BookOpen className={isModern ? "w-12 h-12 mx-auto mb-4 text-text-muted/50" : "w-24 h-24 mx-auto mb-8 text-surface-el"} />
+                  <p className={isModern ? "text-base font-semibold text-text-muted mb-6" : "text-lg font-black uppercase tracking-[0.4em] text-text-muted mb-10"}>{isModern ? "You are not enrolled in any courses yet." : "Historical Context Missing: No Courses"}</p>
+                  <button className={isModern ? "px-6 py-2.5 bg-accent-primary hover:bg-accent-secondary text-white rounded-lg transition-colors font-medium text-sm" : "px-12 py-6 bg-text-main hover:bg-accent-primary text-surface-base text-[14px] font-black uppercase tracking-[0.4em] rounded-2xl transition-all shadow-2xl scale-100 hover:scale-105"}>
+                    {isModern ? "Explore Courses" : "Refresh Feed"}
                   </button>
                 </div>
               )}

@@ -1,31 +1,39 @@
 import React from 'react';
 import { motion, animate } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { useTheme } from '../Context/ThemeProvider';
 
 export const GradientCard = ({
     children,
     className,
     gradient = "from-accent-primary via-accent-secondary to-accent-primary",
 }) => {
+    const { theme } = useTheme();
+    const isModern = theme === 'modern';
+
     return (
         <motion.div
             className={cn(
-                "relative p-8 rounded-[2.5rem] bg-surface-base border border-surface-el shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden group transition-all duration-500",
+                "relative p-8 bg-surface-base border border-surface-el overflow-hidden group transition-all duration-500",
+                isModern ? "rounded-xl shadow-sm" : "rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
                 className
             )}
-            whileHover={{
-                y: -10,
-                shadow: "0 30px 60px -12px rgba(0,0,0,0.1), 0 18px 36px -18px rgba(0,0,0,0.05)",
-                transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] }
-            }}
+            whileHover={
+                isModern 
+                ? { y: -2, boxShadow: "0 10px 15px -3px rgba(0,0,0,0.05)", transition: { duration: 0.2 } }
+                : { y: -10, boxShadow: "0 30px 60px -12px rgba(0,0,0,0.1), 0 18px 36px -18px rgba(0,0,0,0.05)", transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] } }
+            }
         >
-            {/* Glossy Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            {/* Glossy Overlay - Hidden in Modern for minimalism */}
+            {!isModern && (
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            )}
 
-            {/* Dynamic Accented Boundary */}
+            {/* Simple Accent Line */}
             <div className={cn(
-                "absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:w-2",
-                gradient
+                isModern 
+                ? "absolute top-0 left-0 w-1 h-full opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent-primary" 
+                : "absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:w-2 " + gradient
             )} />
 
             {/* Content */}
@@ -37,6 +45,8 @@ export const GradientCard = ({
 };
 
 export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
+    const { theme } = useTheme();
+    const isModern = theme === 'modern';
     const [displayValue, setDisplayValue] = React.useState(0);
     const numericValue = typeof value === 'string' ? parseFloat(value.replace(/[^\d.-]/g, '')) : value;
     const suffix = typeof value === 'string' ? value.replace(/[\d.-]/g, '') : '';
@@ -54,7 +64,10 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
         <GradientCard gradient={gradient} className="flex items-center justify-between p-7">
             <div className="flex-1">
                 <p className="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted mb-2">{title}</p>
-                <h3 className="text-4xl font-black text-text-main tracking-tighter transition-colors duration-500">
+                <h3 className={cn(
+                    "font-black text-text-main transition-colors duration-500",
+                    isModern ? "text-3xl font-semibold tracking-normal" : "text-4xl tracking-tighter"
+                )}>
                     {displayValue}{suffix}
                 </h3>
                 {change && (

@@ -29,14 +29,14 @@ const DynamicGreeting = ({ name }) => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-3 mb-2"
         >
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/50 backdrop-blur-md border border-white shadow-sm transition-transform hover:scale-110">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-surface-soft backdrop-blur-md border border-surface-el shadow-sm transition-transform hover:scale-110">
                 {icon}
             </div>
             <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 leading-none mb-1">
+                <p className="text-[11px] font-black uppercase tracking-[0.3em] text-text-muted leading-none mb-1">
                     {greeting}
                 </p>
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
+                <h2 className="text-2xl font-black text-text-main tracking-tight leading-none">
                     {name}
                 </h2>
             </div>
