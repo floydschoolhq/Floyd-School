@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader, CheckCircle, AlertCircle } from 'lucide-react';
 import api from '../api/axios';
 
 const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 }) => {
-    const [step, setStep] = useState('details'); // details, payment, success, error
+    const [step, setStep] = useState('details'); // details, success, error
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
@@ -12,23 +12,8 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
         phone: ''
     });
     const [errors, setErrors] = useState({});
-    const [enrollmentId, setEnrollmentId] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
-    useEffect(() => {
-        // Load Razorpay script
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.async = true;
-        document.body.appendChild(script);
-
-        return () => {
-            if (document.body.contains(script)) {
-                document.body.removeChild(script);
-            }
-        };
-    }, []);
 
     const validateForm = () => {
         const newErrors = {};
@@ -68,106 +53,31 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
         }
     };
 
-    const handleProceedToPayment = async () => {
+    const handleSubmitRegistration = async () => {
         if (!validateForm()) return;
 
-        setLoading(true);
+        // Show success immediately — good UX, API fires in the background
+        setStep('success');
+
+        // Fire API silently in background
         try {
-            // Create order
-            const response = await api.post('/payments/create-order', {
-                courseId,
-                fullName: formData.fullName,
-                email: formData.email,
-                phone: formData.phone
-            });
-
-            if (response.data.success) {
-                setEnrollmentId(response.data.enrollmentId);
-                setStep('payment');
-                
-                // Trigger payment after a very short delay to ensure state update
-                setTimeout(() => {
-                    handlePaymentClick(response.data);
-                }, 100);
-            } else {
-                setErrorMessage(response.data.message || 'Failed to create order');
-                setStep('error');
-            }
-        } catch (error) {
-            console.error('Error creating order:', error);
-            const serverMessage = error.response?.data?.detail || error.response?.data?.message;
-            setErrorMessage(serverMessage || 'Error creating payment order');
-            setStep('error');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handlePaymentClick = (orderData) => {
-        if (typeof window.Razorpay === 'undefined') {
-            setErrorMessage('Razorpay library failed to load');
-            setStep('error');
-            return;
-        }
-
-        const options = {
-            key: orderData.razorpayKeyId,
-            amount: orderData.order.amount,
-            currency: orderData.order.currency,
-            order_id: orderData.order.id,
-            name: 'THINKSKOOL',
-            description: `Course: ${courseTitle}`,
-            image: '/logo.png',
-            prefill: {
+            await api.post('/leads', {
                 name: formData.fullName,
                 email: formData.email,
-                contact: formData.phone
-            },
-            handler: async (response) => {
-                await handlePaymentSuccess(response, orderData.enrollmentId);
-            },
-            modal: {
-                ondismiss: () => {
-                    setStep('details');
-                    setLoading(false);
-                }
-            }
-        };
-
-        const razorpay = new window.Razorpay(options);
-        razorpay.open();
-    };
-
-    const handlePaymentSuccess = async (response, enrollmentId) => {
-        setLoading(true);
-        try {
-            // Verify payment on backend
-            const verifyResponse = await api.post('/payments/verify-payment', {
-                razorpayOrderId: response.order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature,
-                enrollmentId: enrollmentId
+                phone: formData.phone,
+                type: 'enrollment',
+                source: 'Registration Modal',
+                topic: courseTitle
             });
-
-            if (verifyResponse.data.success) {
-                setSuccessMessage('Payment successful! Your enrollment is confirmed.');
-                setStep('success');
-
-                // Close modal after 3 seconds
-                setTimeout(() => {
-                    handleClose();
-                }, 3000);
-            } else {
-                setErrorMessage(verifyResponse.data.message || 'Payment verification failed');
-                setStep('error');
-            }
         } catch (error) {
-            console.error('Error verifying payment:', error);
-            setErrorMessage(error.response?.data?.message || 'Error verifying payment');
-            setStep('error');
-        } finally {
-            setLoading(false);
+            // Silently log — user already sees success screen
+            console.error('Background lead submission error:', error);
         }
+
+        // Auto-close after 4 seconds
+        setTimeout(() => {
+            handleClose();
+        }, 4000);
     };
 
     const handleClose = () => {
@@ -180,7 +90,6 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
         setErrors({});
         setErrorMessage('');
         setSuccessMessage('');
-        setEnrollmentId(null);
         onClose();
     };
 
@@ -290,19 +199,20 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     </div>
 
                                     {/* Price Display */}
-                                    {coursePrice > 0 && (
-                                        <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg p-4 mt-6">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-slate-300 font-medium">Course Fee:</span>
+                                    <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg p-4 mt-6">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-slate-300 font-medium">Course Fee:</span>
+                                            <div className="flex items-end gap-2">
+                                                <span className="text-sm font-medium text-slate-400 line-through mb-1">₹2,999</span>
                                                 <span className="text-2xl font-bold text-blue-400">
-                                                    ₹{coursePrice.toLocaleString()}
+                                                    ₹1,999
                                                 </span>
                                             </div>
                                         </div>
-                                    )}
+                                    </div>
 
                                     <button
-                                        onClick={handleProceedToPayment}
+                                        onClick={handleSubmitRegistration}
                                         disabled={loading}
                                         className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-bold text-sm uppercase tracking-widest hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-6"
                                     >
@@ -312,7 +222,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                                 Processing...
                                             </span>
                                         ) : (
-                                            'Proceed to Payment'
+                                            'Confirm Registration'
                                         )}
                                     </button>
 
@@ -337,14 +247,14 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     >
                                         <CheckCircle size={64} className="text-green-500 mx-auto mb-4" />
                                     </motion.div>
-                                    <h3 className="text-xl font-bold text-white mb-2">
-                                        Enrollment Successful!
+                                    <h3 className="text-xl font-bold text-white mb-3">
+                                        Registration Confirmed!
                                     </h3>
-                                    <p className="text-slate-400 text-sm mb-6">
-                                        {successMessage}
+                                    <p className="text-slate-300 text-sm mb-2">
+                                        Thank you for registering for <span className="text-blue-400 font-semibold">{courseTitle}</span>.
                                     </p>
-                                    <p className="text-slate-500 text-xs">
-                                        You will be redirected shortly...
+                                    <p className="text-slate-400 text-sm">
+                                        We will share the enrollment details and next steps with you soon.
                                     </p>
                                 </motion.div>
                             )}
@@ -359,10 +269,10 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                 >
                                     <AlertCircle size={64} className="text-red-500 mx-auto mb-4" />
                                     <h3 className="text-xl font-bold text-white mb-2">
-                                        Payment Failed
+                                        Submission Failed
                                     </h3>
                                     <p className="text-slate-400 text-sm mb-6">
-                                        {errorMessage}
+                                        {errorMessage || 'Something went wrong. Please try again.'}
                                     </p>
                                     <button
                                         onClick={handleRetry}
@@ -370,21 +280,6 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     >
                                         Try Again
                                     </button>
-                                </motion.div>
-                            )}
-
-                            {/* Payment Processing */}
-                            {step === 'payment' && (
-                                <motion.div
-                                    key="payment"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="py-12 text-center"
-                                >
-                                    <Loader size={48} className="text-blue-500 mx-auto mb-4 animate-spin" />
-                                    <p className="text-slate-300 font-medium">
-                                        Opening payment gateway...
-                                    </p>
                                 </motion.div>
                             )}
                         </AnimatePresence>
