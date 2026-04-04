@@ -94,9 +94,9 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         {/* 2 & 3. Call & Email: Side-by-Side (Native Protocol Links) */}
                         <div className="grid grid-cols-2 gap-4 w-full">
                             {/* Call Tile */}
-                            <motion.a
+                            <motion.div
                                 whileTap={{ scale: 0.98 }}
-                                href="tel:+918527740849"
+                                onClick={() => window.location.href = "tel:+918527740849"}
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full select-none cursor-pointer ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
@@ -108,12 +108,12 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                     <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Call Us</h3>
                                     <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">9AM - 8PM</p>
                                 </div>
-                            </motion.a>
+                            </motion.div>
 
                             {/* Email Tile */}
-                            <motion.a
+                            <motion.div
                                 whileTap={{ scale: 0.98 }}
-                                href="mailto:thinkskool.office@gmail.com"
+                                onClick={() => window.location.href = "mailto:thinkskool.office@gmail.com"}
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full select-none cursor-pointer ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
@@ -125,7 +125,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                     <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Email Us</h3>
                                     <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Official</p>
                                 </div>
-                            </motion.a>
+                            </motion.div>
                         </div>
 
                         {/* 4. Browse FAQ: Full Width (Simple Button) */}
@@ -179,18 +179,25 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
                     {contactMethods.map((method, index) => {
                         const colors = colorMap[method.color] || { bg: 'bg-orange-500/10', text: 'text-orange-500' };
-                        const Component = method.href ? motion.a : motion.div;
-                        const extraProps = method.href ? { href: method.href } : { onClick: () => method.path ? navigate(method.path) : setIsMessageFormOpen(true) };
+                        const handleAction = () => {
+                            if (method.href) {
+                                window.location.href = method.href;
+                            } else if (method.path) {
+                                navigate(method.path);
+                            } else {
+                                setIsMessageFormOpen(true);
+                            }
+                        };
 
                         return (
-                                <Component
+                                <motion.div
                                     key={method.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     whileTap={{ scale: 0.98 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
-                                    {...extraProps}
+                                    onClick={handleAction}
                                     className={`p-10 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 transition-all hover:scale-[1.02] cursor-pointer group select-none ${
                                         isDark ? 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20 shadow-2xl' : 'bg-slate-50 border-slate-100 hover:bg-white hover:shadow-xl'
                                     }`}
@@ -205,12 +212,12 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                         <p className={`text-sm opacity-60 leading-relaxed px-4 font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                             {method.description}
                                         </p>
-                                        <div className={`mt-4 px-10 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] transition-all
+                                        <div className={`mt-4 px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all w-full truncate
                                             ${isDark ? 'bg-white text-slate-950 group-hover:bg-orange-500 group-hover:text-white' : 'bg-slate-950 text-white group-hover:bg-orange-500'}`}>
                                             {method.action}
                                         </div>
                                     </div>
-                                </Component>
+                                </motion.div>
                         );
                     })}
                 </div>
