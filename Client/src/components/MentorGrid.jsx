@@ -66,7 +66,7 @@ const LEADERS = [
         tags: ["System Dev", "Low-level", "Architecture"]
     },
     {
-        name: "Neetesh Kumar",
+        name: "Nitesh Kumar",
         role: "UI and UX Management",
         image: null,
         imageScale: 1.0,
