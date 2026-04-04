@@ -166,11 +166,23 @@ const MobileIcon = ({ tech, position }) => {
 
 const MobileTechGlobe = () => {
   const allTechs = useMemo(() => {
-    return TECH_CATEGORIES.flatMap(cat => cat.technologies);
+    // Curated essential technologies for mobile globe to reduce density
+    return [
+      { icon: SiReact, name: "React", color: "#61DAFB" },
+      { icon: SiNextdotjs, name: "Next.js", color: "#000000" },
+      { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+      { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
+      { icon: SiPython, name: "Python", color: "#3776AB" },
+      { icon: SiOpenai, name: "OpenAI", color: "#412991" },
+      { icon: SiTensorflow, name: "TensorFlow", color: "#FF6F00" },
+      { icon: SiFlutter, name: "Flutter", color: "#02569B" },
+      { icon: SiArduino, name: "Arduino", color: "#00979D" },
+      { icon: SiGooglecloud, name: "Google Cloud", color: "#4285F4" }
+    ];
   }, []);
 
   const count = allTechs.length;
-  const radius = 4.8; // Moderate size between previous versions
+  const radius = 5.5; // Slightly larger radius for fewer icons to look more spacious
   
   const positions = useMemo(() => {
     const points = [];
