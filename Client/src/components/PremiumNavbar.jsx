@@ -18,7 +18,7 @@ const FALLBACK_COURSES = [
 const MOBILE_NAV_ITEMS = [
     { icon: FaHome, label: "Home", href: "#hero" },
     { icon: FaGraduationCap, label: "Courses", href: "#online-focus" },
-    { icon: FaUsers, label: "Partner with Us", href: "/school-partnerships" },
+
     { icon: FaBook, label: "Projects", href: "#student-projects" },
     { icon: FaUsers, label: "Mentors", href: "#mentors-grid" },
     { icon: FaPhone, label: "Contact", href: "#contact" }
@@ -77,8 +77,10 @@ const PremiumNavbar = memo(({ variant }) => {
     const navItems = isCourseDetailsPage ? COURSE_NAV_ITEMS : [
         { name: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
         { name: 'Courses', id: 'online-focus' },
+
         { name: 'Partner with Us', link: '/school-partnerships' },
         { name: 'Request Callback', action: handleContactClick },
+
     ];
 
     // Pre-computed styles - cached to prevent recalculation
@@ -135,7 +137,17 @@ const PremiumNavbar = memo(({ variant }) => {
             }
         };
         fetchCourses();
-    }, []);
+
+        // Handle cross-page scrolling from state
+        if (location.state?.scrollTo) {
+            const sectionId = location.state.scrollTo;
+            setTimeout(() => {
+                scrollToSection(sectionId);
+                // Clear state to prevent re-scroll
+                window.history.replaceState({}, document.title);
+            }, 500);
+        }
+    }, [location, scrollToSection]);
 
     return (
         <>
@@ -272,14 +284,21 @@ const PremiumNavbar = memo(({ variant }) => {
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: index * 0.05 }}
                                                 onClick={() => {
-                                                    if (item.href) {
-                                                        // Smooth scroll to section
-                                                        const element = document.querySelector(item.href);
-                                                        if (element) {
-                                                            element.scrollIntoView({ behavior: 'smooth' });
+                                                    setIsMobileMenuOpen(false);
+                                                    if (!item.href) return;
+
+                                                    if (item.href.startsWith('/')) {
+                                                        navigate(item.href);
+                                                    } else if (item.href.startsWith('#')) {
+                                                        const id = item.href.substring(1);
+                                                        if (isCourseDetailsPage) {
+                                                            scrollToSection(id);
+                                                        } else if (location.pathname !== '/') {
+                                                            navigate('/', { state: { scrollTo: id } });
+                                                        } else {
+                                                            scrollToSection(id);
                                                         }
                                                     }
-                                                    setIsMobileMenuOpen(false);
                                                 }}
                                                 className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-blue-50 rounded-xl transition-all group"
                                             >

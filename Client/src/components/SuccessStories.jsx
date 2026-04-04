@@ -92,48 +92,54 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     
     if (isMobile) {
         return (
-            <div className={`shrink-0 w-[280px] p-6 rounded-[2rem] transition-all relative overflow-hidden flex flex-col border ${
+            <motion.div 
+                whileTap={{ scale: 0.98 }}
+                className={`shrink-0 w-[300px] p-8 rounded-[2.5rem] transition-all relative overflow-hidden flex flex-col border backdrop-blur-xl ${
                 isDark 
-                    ? 'bg-slate-900/60 border-white/5 shadow-xl shadow-black/20' 
-                    : 'bg-white border-slate-200 shadow-sm'
+                    ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
+                    : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
             }`}>
-                <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex items-center gap-3 mb-5">
-                        <div className={`w-10 h-10 rounded-xl overflow-hidden border ${
-                            isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
+                {/* Refined subtle glow */}
+                <div className={`absolute -top-12 -right-12 w-32 h-32 bg-gradient-to-br ${theme.glow} via-transparent to-transparent opacity-20 pointer-events-none rounded-full blur-2xl`} />
+                
+                <div className="relative z-10 flex flex-col items-center text-center h-full">
+                    <div className="flex flex-col items-center gap-4 mb-6">
+                        <div className={`w-14 h-14 rounded-2xl overflow-hidden border p-0.5 shadow-sm ${
+                            isDark ? 'border-white/10 bg-slate-800' : 'border-slate-100 bg-white'
                         }`}>
-                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover rounded-xl" />
                         </div>
                         <div className="min-w-0">
-                            <h4 className={`text-[12px] font-black uppercase tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-950'}`}>{review.name}</h4>
-                            <p className={`text-[8px] font-bold uppercase tracking-[0.15em] mt-0.5 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{review.role}</p>
+                            <h4 className={`text-[15px] font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{review.role}</p>
                         </div>
                     </div>
                     
-                    <p className={`text-[13px] leading-relaxed font-medium mb-6 italic ${
-                        isDark ? 'text-slate-300' : 'text-slate-600'
+                    <p className={`text-[15px] leading-[1.6] font-medium mb-8 italic tracking-tight ${
+                        isDark ? 'text-slate-200' : 'text-slate-700'
                     }`}>
                         "{review.content}"
                     </p>
-
-                    <div className="mt-auto pt-4 border-t border-slate-100/10 flex items-center justify-between">
-                        <div className="flex gap-1">
+                    
+                    <div className="mt-auto pt-6 border-t border-slate-100/10 flex items-center justify-between">
+                        <div className="flex gap-2">
                             {[...Array(5)].map((_, i) => (
-                                <div key={i} className={`w-1.5 h-1.5 rounded-full ${
-                                    isDark ? (i < 4 ? 'bg-orange-500/60' : 'bg-slate-800') : (i < 4 ? 'bg-orange-500' : 'bg-slate-100')
+                                <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+                                    isDark 
+                                        ? (i < 4 ? 'bg-blue-500/60 shadow-[0_0_8px_rgba(59,130,246,0.3)]' : 'bg-slate-800') 
+                                        : (i < 4 ? 'bg-blue-600/80' : 'bg-slate-100')
                                 }`} />
                             ))}
                         </div>
-                        <Sparkles size={12} className={isDark ? "text-orange-500/40" : "text-orange-500/20"} />
                     </div>
                 </div>
-            </div>
+            </motion.div>
         );
     }
 
     
     return (
-        <div className={`flex-shrink-0 w-full md:w-[420px] p-10 rounded-[2.5rem] group transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-start text-left ${
+        <div className={`flex-shrink-0 w-full md:w-[420px] p-10 rounded-[2.5rem] group transition-all duration-500 md:mx-4 relative overflow-hidden flex flex-col items-center text-center ${
             isDark 
                 ? 'bg-white/[0.03] border border-white/10 hover:bg-white/[0.05]' 
                 : `bg-white border border-slate-100 ${theme.shadow}`
@@ -148,16 +154,16 @@ const ReviewCard = ({ review, index = 0, variant }) => {
                 <Quote size={60} fill="currentColor" />
             </div>
             
-            <div className="relative z-10 flex flex-col items-start w-full font-['Outfit']">
-                <div className="flex items-center gap-4 mb-8">
-                    <div className={`w-14 h-14 rounded-2xl overflow-hidden border transition-all duration-500 ${
-                        isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 bg-slate-50'
-                    }`}>
-                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <h4 className={`text-[17px] font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                        <p className={`text-[11px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+            <div className="relative z-10 flex flex-col items-center">
+                <div className="flex flex-col items-center gap-5 mb-8">
+                    <img
+                        src={review.avatar}
+                        alt={review.name}
+                        className="w-16 h-16 rounded-2xl border-2 border-white/10 shadow-lg object-cover"
+                    />
+                    <div className="text-center">
+                        <h4 className={`text-xl font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                        <p className={`text-[11px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-cyan-500' : 'text-cyan-600'}`}>{review.role}</p>
                     </div>
                 </div>
                 
@@ -194,8 +200,10 @@ const SuccessStories = ({ variant }) => {
                     ${isDark ? 'bg-amber-600/5' : 'bg-slate-200/50'}`} />
             </div>
 
-            <div className="max-w-[1440px] mx-auto relative z-10 px-4">
-                <div className="px-6 md:px-12 text-center mb-16 md:mb-24 mt-0">
+            <div className={`max-w-[1440px] mx-auto relative z-10 ${isMobile ? '' : 'px-4'}`}>
+
+                <div className={`text-center mb-16 md:mb-24 mt-0 ${isMobile ? 'px-6' : 'px-12'}`}>
+
                     <div className="flex-1">
                         {isMobile ? (
                             <h2 className={`text-3xl font-extrabold tracking-tighter uppercase leading-[1.1] ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -209,24 +217,44 @@ const SuccessStories = ({ variant }) => {
                     </div>
                 </div>
 
-                {/* Success Stories Content */}
+                {/* Success Stories Content - Truly Edge-to-Edge on Mobile */}
                 <div className="group/marquee relative mb-8 md:mb-12 overflow-hidden">
                     {isMobile ? (
-                        <div className="flex flex-col gap-6">
-                            <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 py-4">
-                                {[...REVIEWS_ROW_1, ...REVIEWS_ROW_2].map((review, i) => (
-                                    <div key={i} className="snap-center">
-                                        <ReviewCard review={review} index={i} variant={variant} />
-                                    </div>
-                                ))}
-                                <div className="w-1 shrink-0" />
+                        <div className="flex flex-col gap-8">
+                            {/* Mobile Marquee Row 1 */}
+                            <div className="relative w-full h-[320px]">
+                                <motion.div 
+                                    animate={{ x: [0, -1500] }}
+                                    transition={{ 
+                                        duration: 35, 
+                                        repeat: Infinity, 
+                                        ease: "linear" 
+                                    }}
+                                    className="flex w-max items-center gap-6"
+                                >
+                                    {[...REVIEWS_ROW_1, ...REVIEWS_ROW_1].map((review, i) => (
+                                        <ReviewCard key={`m1-${i}`} review={review} index={i} variant={variant} />
+                                    ))}
+                                </motion.div>
                             </div>
-                            <div className="flex justify-center -mt-2 mb-2">
-                                <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60 text-center">
-                                    <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to read stories</span>
-                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                                </div>
+
+                            {/* Mobile Marquee Row 2 */}
+                            <div className="relative w-full h-[320px]">
+                                <motion.div 
+                                    animate={{ x: [-1500, 0] }}
+                                    transition={{ 
+                                        duration: 30, 
+                                        repeat: Infinity, 
+                                        ease: "linear" 
+                                    }}
+                                    className="flex w-max items-center gap-6"
+                                >
+                                    {[...REVIEWS_ROW_2, ...REVIEWS_ROW_2].map((review, i) => (
+                                        <ReviewCard key={`m2-${i}`} review={review} index={i + 1} variant={variant} />
+                                    ))}
+                                </motion.div>
                             </div>
+                            
                         </div>
                     ) : (
                         <motion.div 

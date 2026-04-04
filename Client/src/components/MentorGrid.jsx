@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useAnimation, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
@@ -150,9 +151,9 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                 </a>
             </div>
 
-            <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left min-w-0 relative z-10 w-full">
-                <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center md:items-start">
-                    <h3 className={`text-xl md:text-3xl font-bold tracking-tight uppercase leading-none transition-colors w-full pl-1
+            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+                <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
+                    <h3 className={`text-xl md:text-3xl font-black uppercase tracking-tight leading-none transition-colors w-full
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
                         {mentor.name}
                     </h3>
@@ -169,8 +170,8 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                     {mentor.bio}
                 </p>
 
-                <div className="flex items-center pt-2 w-full">
-                    <div className="flex gap-4">
+                <div className="flex items-center justify-center pt-2 w-full">
+                    <div className="flex justify-center gap-4">
                         {mentor.tags.slice(0, 2).map(tag => (
                             <span key={tag} className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-colors
                                 ${isDark ? 'text-slate-500 group-hover:text-orange-400' : 'text-slate-400 group-hover:text-orange-600'}`}>
@@ -191,50 +192,107 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
     const filteredLeaders = LEADERS.filter(m => m.name !== excludeName);
 
+    // Hooks must be at the top level
+    const x = useMotionValue(0);
+    const [isDragging, setIsDragging] = useState(false);
+    const containerRef = useRef(null);
+
+    // Auto-scroll logic using useAnimationFrame
+    useAnimationFrame((t, delta) => {
+        if (!isMobile || isDragging) return;
+        
+        const moveBy = -0.55; 
+        let currentX = x.get() + moveBy;
+        
+        if (containerRef.current) {
+            const halfWidth = containerRef.current.scrollWidth / 2;
+            if (currentX <= -halfWidth) {
+                currentX = 0;
+            }
+            x.set(currentX);
+        }
+    });
+
     if (isMobile) {
+        // Double the items for seamless looping
+        const mobileMentorItems = [...filteredLeaders, ...filteredLeaders];
+        
         return (
-            <section id="mentors-grid" className={`py-16 px-6 ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
-                <div className="text-center mb-14 px-4">
+            <section id="mentors-grid" className={`py-16 overflow-hidden ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
+                <div id="mentors-grid-mobile" className="absolute inset-0" />
+                <div className="text-center mb-10 px-10">
                     <h2 className={`text-3xl font-extrabold uppercase tracking-tighter leading-[1.1] text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {title}
                     </h2>
                 </div>
+                
+                <div className="relative w-full">
 
-                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
-                    {filteredLeaders.map((mentor, index) => (
-                        <div 
-                            key={index}
-                            className={`snap-center shrink-0 w-[65vw] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 hover:scale-[0.98] transition-transform cursor-default ${
-                                isDark ? 'bg-white/[0.02] border-white/5' : 'bg-slate-50 border-slate-100 shadow-sm'
-                            }`}
-                        >
-                            <div className="w-24 h-24 rounded-full p-1 border border-orange-500/20 shadow-xl shadow-orange-500/10">
-                                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/5">
-                                    <img 
-                                        src={mentor.image} 
-                                        alt={mentor.name} 
-                                        className="w-full h-full object-cover object-top"
-                                        style={{ transform: `scale(${mentor.imageScale})` }}
-                                    />
+                    <motion.div 
+                        ref={containerRef}
+                        className="flex gap-4 w-max cursor-grab active:cursor-grabbing"
+                        style={{ x }}
+                        drag="x"
+                        dragConstraints={{ 
+                            left: containerRef.current ? -(containerRef.current.scrollWidth / 2) : -1000, 
+                            right: 0 
+                        }}
+                        onDragStart={() => setIsDragging(true)}
+                        onDragEnd={() => {
+                            setIsDragging(false);
+                            // When drag ends, if we are beyond half width, reset to within range for seamless loop
+                            const currentX = x.get();
+                            if (containerRef.current) {
+                                const halfWidth = containerRef.current.scrollWidth / 2;
+                                if (currentX <= -halfWidth) {
+                                    x.set(currentX + halfWidth);
+                                } else if (currentX > 0) {
+                                    x.set(currentX - halfWidth);
+                                }
+                            }
+                        }}
+                    >
+                        {mobileMentorItems.map((mentor, index) => (
+                            <motion.div 
+                                key={index}
+                                whileTap={{ scale: 0.98 }}
+                                className={`shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 cursor-default transition-all duration-500 backdrop-blur-xl ${
+                                    isDark 
+                                        ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
+                                        : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
+                                }`}
+                            >
+                                <div className="w-24 h-24 rounded-full p-1 border border-orange-500/20 shadow-xl shadow-orange-500/10">
+                                    <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/5">
+                                        <img 
+                                            src={mentor.image} 
+                                            alt={mentor.name} 
+                                            className="w-full h-full object-cover object-top"
+                                            style={{ transform: `scale(${mentor.imageScale})` }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                    {mentor.name}
-                                </h3>
-                                <p className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full ${isDark ? 'bg-blue-600/10 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
-                                    {mentor.role}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                                <div>
+                                    <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                        {mentor.name}
+                                    </h3>
+                                    <p className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full ${
+                                        isDark 
+                                            ? 'bg-blue-600/10 text-blue-400' 
+                                            : 'bg-blue-50 text-blue-600'
+                                    }`}>
+                                        {mentor.role}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 </div>
 
-                <div className="flex justify-center mt-6">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                        <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to meet mentors</span>
-                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-                    </div>
+                <div className="flex justify-center mt-8">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
+                        EXPLORE
+                    </span>
                 </div>
             </section>
         );
@@ -244,12 +302,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const mentorItems = [...filteredLeaders, ...filteredLeaders, ...filteredLeaders, ...filteredLeaders];
 
     return (
-        <section 
-            id="mentors-grid" 
-            className={`py-14 relative overflow-hidden transition-colors duration-500
-                ${isDark ? 'bg-[#050505]' : 'bg-white'}
-                ${isMarqueePaused ? 'mentors-paused' : ''}`}
-        >
+        <section id="mentors" className={`relative py-24 overflow-hidden transition-all duration-500 pb-32 ${isDark ? 'bg-[#050508]' : 'bg-white'} ${isMarqueePaused ? 'mentors-paused' : ''}`}>
             <div className="absolute inset-0 pointer-events-none">
                 <div className={`absolute inset-0 opacity-[0.015] ${isDark ? 'invert brightness-200' : ''}`} style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
                 <div className={`absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[100px] -mr-96 -mt-96 transition-colors duration-700

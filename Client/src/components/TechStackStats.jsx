@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Code2, Cpu, Database, Cloud, Smartphone } from 'lucide-react';
+import { Code2, Cpu, Database, Cloud, Smartphone } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
-import { useNavigate } from 'react-router-dom';
 import { LogoLoop } from './common/LogoLoop';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Float, Html, PerspectiveCamera } from '@react-three/drei';
+import { Suspense, useRef, useMemo } from 'react';
 import { 
   SiReact, 
   SiNextdotjs, 
@@ -14,7 +16,6 @@ import {
   SiUnity, 
   SiUnrealengine,
   SiGooglecloud,
-  SiFramer,
   SiJavascript,
   SiTensorflow,
   SiPytorch,
@@ -138,85 +139,108 @@ const TECH_CATEGORIES = [
   }
 ];
 
+// Mobile 3D Icon Component
+const MobileIcon = ({ tech, position }) => {
+  return (
+    <group position={position}>
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+        <Html
+          center
+          distanceFactor={10}
+          zIndexRange={[0, 10]}
+          className="pointer-events-none select-none"
+        >
+          <div 
+            className="w-18 h-18 bg-white/95 backdrop-blur-md rounded-[1.8rem] border border-slate-200/50 flex items-center justify-center shadow-lg transition-transform active:scale-110"
+            style={{ 
+              boxShadow: `0 10px 40px ${tech.color}15`,
+            }}
+          >
+            <tech.icon size={38} style={{ color: tech.color }} />
+          </div>
+        </Html>
+      </Float>
+    </group>
+  );
+};
+
+const MobileTechGlobe = () => {
+  const allTechs = useMemo(() => {
+    return TECH_CATEGORIES.flatMap(cat => cat.technologies);
+  }, []);
+
+  const count = allTechs.length;
+  const radius = 4.8; // Moderate size between previous versions
+  
+  const positions = useMemo(() => {
+    const points = [];
+    const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
+    for (let i = 0; i < count; i++) {
+      const y = 1 - (i / (count - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const theta = phi * i;
+      const x = Math.cos(theta) * r;
+      const z = Math.sin(theta) * r;
+      points.push([x * radius, y * radius, z * radius]);
+    }
+    return points;
+  }, [count]);
+
+  const groupRef = useRef();
+  
+  return (
+    <group ref={groupRef}>
+      {allTechs.map((tech, i) => (
+        <MobileIcon key={`${tech.name}-${i}`} tech={tech} position={positions[i]} />
+      ))}
+    </group>
+  );
+};
+
 const TechStackStats = () => {
     const isMobile = useIsMobile();
-    const navigate = useNavigate();
-
-    const handleExplorePrograms = () => {
-        // Scroll to the courses section
-        const coursesSection = document.getElementById('online-focus');
-        if (coursesSection) {
-            coursesSection.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            // Fallback to navigate if section doesn't exist
-            navigate('/online-program#explore-programs');
-        }
-    };
 
     if (isMobile) {
         return (
-            <section className="py-20 bg-slate-50 relative w-full overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -mr-32 -mt-32 rounded-full" />
-                
-                <div className="max-w-[1440px] mx-auto px-10 relative z-10 text-center">
-                    <div className="mb-14 px-4">
-                        <h2 className="text-3xl font-extrabold text-slate-950 uppercase tracking-tighter leading-[1.1]">
-                            Technologies you will learn
-                        </h2>
-                    </div>
+            <section className="pt-20 pb-12 bg-white relative z-10 w-full flex flex-col items-center overflow-hidden">
+                {/* Background Text Accent */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] select-none flex items-center justify-center">
+                  <h2 className="text-[25vw] font-bold leading-none uppercase -rotate-12 transform -translate-y-20">
+                    TECH<br/>STACK
+                  </h2>
+                </div>
 
-                    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-10 px-10 scrollbar-hide">
-                        {TECH_CATEGORIES.map((category) => {
-                            const CategoryIcon = category.icon;
-                            return (
-                                <div key={category.title} className="snap-center shrink-0 w-[80vw]">
-                                    <div className="bg-white rounded-3xl p-6 h-full shadow-sm border border-slate-200/50">
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/10`}>
-                                                <CategoryIcon className="text-white" size={18} />
-                                            </div>
-                                            <h3 className="font-black text-slate-900 text-sm uppercase tracking-tight">{category.title}</h3>
-                                        </div>
+                <div className="relative z-30 w-full px-6 text-center space-y-2">
+                    {/* Badge removed */}
+                    <h2 className="text-3xl font-bold text-slate-900 uppercase tracking-widest leading-tight">
+                        Technologies <br />
+                        <span className="text-orange-500">You Will Learn</span>
+                    </h2>
+                    {/* Swipe instruction removed */}
+                </div>
 
-                                        <div className="grid grid-cols-4 gap-3">
-                                            {category.technologies.map((tech) => (
-                                                <div key={tech.name} className="flex flex-col items-center gap-2">
-                                                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-slate-50 border border-slate-100 shadow-sm">
-                                                        <tech.icon size={24} style={{ color: tech.color }} />
-                                                    </div>
-                                                    <span className="text-[7px] font-black text-slate-400 text-center uppercase tracking-widest px-1">
-                                                        {tech.name}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <div className="flex justify-center mt-6">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60 text-center">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to view more technologies</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
-                    </div>
-
-                    <div className="mt-16 bg-slate-900 rounded-[2.5rem] p-8 text-center relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
-                        <h3 className="font-black text-xl mb-3 text-white uppercase tracking-tight">
-                            Master <span className="text-[#F97316]">The Stack</span>
-                        </h3>
-                        <p className="text-slate-400 text-xs mb-6 font-medium leading-relaxed">
-                            Professional infrastructure & real-world workflows that schools don't teach.
-                        </p>
-                        <button 
-                            onClick={handleExplorePrograms}
-                            className="w-full bg-[#F97316] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-orange-500/20 active:scale-95 transition-all"
-                        >
-                            Select Track →
-                        </button>
+                <div className="relative w-full aspect-square flex items-center justify-center mt-10">
+                    <div className="absolute inset-x-0 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none h-24 top-0" />
+                    <div className="absolute inset-x-0 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none h-24 bottom-0" />
+                    
+                    <div className="w-full h-full max-h-[100vw]">
+                      <Suspense fallback={null}>
+                        <Canvas dpr={[1, 2]}>
+                            <PerspectiveCamera makeDefault position={[0, 0, 16]} />
+                            <ambientLight intensity={2} />
+                            <pointLight position={[10, 10, 10]} intensity={1.5} />
+                            <MobileTechGlobe />
+                            <OrbitControls 
+                              enableZoom={false} 
+                              autoRotate={true}
+                              autoRotateSpeed={4}
+                              enablePan={false}
+                              rotateSpeed={0.6}
+                              enableDamping={true}
+                              dampingFactor={0.05}
+                            />
+                        </Canvas>
+                      </Suspense>
                     </div>
                 </div>
             </section>
@@ -265,10 +289,8 @@ const TechStackStats = () => {
                 </motion.div>
             </div>
 
-            {/* Full Width Tech Loop */}
             <div className="relative mb-20 w-full">
-                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-white via-white to-transparent w-20 md:w-32 left-0" />
-                <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-l from-white via-white to-transparent w-20 md:w-32 right-0" />
+
                 
                 <div className="w-full overflow-hidden -ml-8 md:-ml-16">
                     {!isMobile && (

@@ -92,21 +92,21 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
                         </div>
 
                         {/* Content Section */}
-                        <div className={`flex-1 p-8 lg:p-12 flex flex-col justify-between ${isImageLeft ? 'order-2' : 'order-1'}`}>
-                            <div className="flex-1 flex flex-col justify-center">
+                        <div className={`flex-1 p-8 lg:p-14 flex flex-col items-center text-center justify-center ${isImageLeft ? 'order-2' : 'order-1'}`}>
+                            <div className="flex flex-col items-center">
                                 {/* Title */}
-                                <h1 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight ${isDarkBg ? 'text-white' : 'text-gray-900'} transform transition-all duration-500 hover:translate-x-2`}>
+                                <h1 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-6 leading-tight ${isDarkBg ? 'text-white' : 'text-gray-900'} transition-all duration-500`}>
                                     {advantage.title}
                                 </h1>
 
                                 {/* Description */}
-                                <p className={`text-lg mb-8 leading-relaxed ${isDarkBg ? 'text-white/90' : 'text-gray-700'} transform transition-all duration-500 hover:translate-x-2`}>
+                                <p className={`text-lg mb-10 leading-relaxed max-w-xl ${isDarkBg ? 'text-white/90' : 'text-gray-700'} transition-all duration-500`}>
                                     {advantage.description}
                                 </p>
 
                                 {/* CTA Button */}
-                                <button className={`px-8 py-3 ${isDarkBg ? 'bg-white/20 hover:bg-white/30 text-white border-white/30' : 'bg-gray-800 hover:bg-gray-900 text-white border-gray-900'} border font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:translate-x-2 shadow-lg hover:shadow-xl w-fit`}>
-                                    Learn More →
+                                <button className={`px-10 py-4 ${isDarkBg ? 'bg-white text-black hover:bg-orange-500 hover:text-white' : 'bg-gray-800 hover:bg-gray-900 text-white border-gray-900'} border font-black text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl`}>
+                                    Learn More
                                 </button>
                             </div>
                         </div>
@@ -119,8 +119,10 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
 
 const ThinkskoolAdvantage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
     const isMobile = useIsMobile();
     const cardRefs = useRef([]);
+    const mobileScrollRef = useRef(null);
 
     // GSAP Scroll Animations + Original scroll detection
     useEffect(() => {
@@ -233,6 +235,43 @@ const ThinkskoolAdvantage = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isMobile]);
 
+    // Mobile Auto-scroll Effect
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const autoScrollTimer = setInterval(() => {
+            if (mobileScrollRef.current) {
+                const container = mobileScrollRef.current;
+                const nextIndex = (mobileActiveIndex + 1) % ADVANTAGES.length;
+                
+                // On mobile, the first card has no left margin, others have space-x-5 (20px)
+                const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.85);
+                const gap = 20;
+                
+                container.scrollTo({
+                    left: nextIndex * (cardWidth + gap),
+                    behavior: 'smooth'
+                });
+            }
+        }, 3000);
+
+        return () => clearInterval(autoScrollTimer);
+    }, [isMobile, mobileActiveIndex]);
+
+    const handleMobileScroll = () => {
+        if (mobileScrollRef.current) {
+            const container = mobileScrollRef.current;
+            const scrollLeft = container.scrollLeft;
+            const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.85);
+            const gap = 20;
+            const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+            
+            if (newIndex !== mobileActiveIndex && newIndex >= 0 && newIndex < ADVANTAGES.length) {
+                setMobileActiveIndex(newIndex);
+            }
+        }
+    };
+
     // Mobile-specific rendering
     if (isMobile) {
         return (
@@ -260,7 +299,11 @@ const ThinkskoolAdvantage = () => {
 
                 {/* Mobile Advantage Cards - Horizontal Scroll */}
                 <div className="relative z-10">
-                    <div className="flex overflow-x-auto space-x-5 px-6 pb-12 snap-x snap-mandatory no-scrollbar">
+                    <div 
+                        ref={mobileScrollRef}
+                        onScroll={handleMobileScroll}
+                        className="flex overflow-x-auto space-x-5 px-6 pb-12 snap-x snap-mandatory no-scrollbar"
+                    >
                         {ADVANTAGES.map((advantage, index) => {
                             const cardColors = [
                                 { bg: 'from-orange-400 to-red-500', innerBg: 'from-orange-500 to-red-600', text: 'text-white', isDark: true },
@@ -323,11 +366,11 @@ const ThinkskoolAdvantage = () => {
                     <div className="flex flex-col items-center gap-3">
                         <div className="flex gap-2">
                             {ADVANTAGES.map((_, i) => (
-                                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-8 bg-blue-600' : 'w-2 bg-slate-300'}`} />
+                                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === mobileActiveIndex ? 'w-8 bg-blue-600' : 'w-2 bg-slate-300'}`} />
                             ))}
                         </div>
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] animate-pulse">
-                            Swipe to explore
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
+                            EXPLORE
                         </span>
                     </div>
                 </div>

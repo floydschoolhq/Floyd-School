@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Code2,
   ExternalLink,
@@ -172,49 +172,46 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
         </div>
 
-        <div className="p-2.5">
-          <h3 className="text-xs font-bold text-slate-900 mb-1.5 line-clamp-2">
+        <div className="p-4 flex flex-col items-center text-center">
+          <h3 className="text-sm font-bold text-slate-900 mb-1.5">
             {project.title}
           </h3>
 
-          <p className="text-slate-600 text-[10px] leading-relaxed mb-2 line-clamp-2">
+          <p className="text-slate-600 text-[10px] leading-relaxed mb-3">
             {project.description}
           </p>
 
-          <div className="flex flex-wrap gap-0.5 mb-2">
+          <div className="flex flex-wrap justify-center gap-1 mb-3">
             {project.tech.slice(0, 2).map((tech, i) => (
               <TechIcon key={i} tech={tech} />
             ))}
             {project.tech.length > 2 && (
-              <span className="text-[6px] text-slate-500">+{project.tech.length - 2}</span>
+              <span className="text-[7px] text-slate-500 font-bold">+{project.tech.length - 2}</span>
             )}
           </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
               <img
                 src={project.author.avatar}
                 alt={project.author.name}
-                className="w-4 h-4 rounded-full border border-white shadow-sm"
+                className="w-6 h-6 rounded-full border border-white shadow-sm"
               />
-              <div>
-                <p className="text-[9px] font-semibold text-slate-800">{project.author.name}</p>
-                <p className="text-[6px] text-slate-500">{project.author.course}</p>
-              </div>
+              <p className="text-[8px] font-bold text-slate-800">{project.author.name}</p>
             </div>
 
-            <div className="flex items-center gap-1.5 text-slate-500">
-              <div className="flex items-center gap-0.5">
-                <Star size={8} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-[6px] font-medium">{project.stats.stars}</span>
+            <div className="flex items-center gap-4 text-slate-500">
+              <div className="flex items-center gap-1">
+                <Star size={10} className="text-yellow-500 fill-yellow-500" />
+                <span className="text-[8px] font-bold">{project.stats.stars}</span>
               </div>
-              <div className="flex items-center gap-0.5">
-                <Eye size={8} />
-                <span className="text-[6px] font-medium">{project.stats.views}</span>
+              <div className="flex items-center gap-1">
+                <Eye size={10} />
+                <span className="text-[8px] font-bold">{project.stats.views}</span>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     );
   }
@@ -266,34 +263,34 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
         </div>
 
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2">
+        <div className="p-8 flex flex-col items-center text-center">
+          <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">
             {project.title}
           </h3>
 
-          <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="text-slate-600 text-base leading-relaxed mb-6 max-w-sm">
             {project.description}
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
             {project.tech.slice(0, 3).map((tech, i) => (
               <TechIcon key={i} tech={tech} />
             ))}
             {project.tech.length > 3 && (
-              <span className="text-xs text-slate-500">+{project.tech.length - 3} more</span>
+              <span className="text-xs text-slate-500 font-bold">+{project.tech.length - 3} more</span>
             )}
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-4 w-full">
+            <div className="flex flex-col items-center gap-3">
               <img
                 src={project.author.avatar}
                 alt={project.author.name}
-                className="w-8 h-8 rounded-full border-2 border-white shadow-sm hover:scale-105 transition-transform"
+                className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform"
               />
-              <div>
-                <p className="text-sm font-semibold text-slate-800">{project.author.name}</p>
-                <p className="text-xs text-slate-500">{project.author.course}</p>
+              <div className="text-center">
+                <p className="text-base font-bold text-slate-900">{project.author.name}</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.author.course}</p>
               </div>
             </div>
 
@@ -330,13 +327,45 @@ const ProjectCard = ({ project, index, isFeatured }) => {
 
 const StudentProjects = () => {
   const [filter, setFilter] = useState('all');
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
   const isMobile = useIsMobile();
+  const mobileScrollRef = useRef(null);
   const scrollRef = useRef(null);
 
   const featuredProjects = PROJECTS_DATA.filter(p => p.featured);
   const allProjects = PROJECTS_DATA;
 
   const filteredProjects = filter === 'featured' ? featuredProjects : allProjects;
+
+  // Auto-scroll logic for mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const interval = setInterval(() => {
+      if (!mobileScrollRef.current) return;
+
+      const nextIndex = (mobileActiveIndex + 1) % filteredProjects.length;
+      const scrollAmount = mobileScrollRef.current.offsetWidth * 0.85 + 24; // Card width (85vw) + gap (6)
+      
+      mobileScrollRef.current.scrollTo({
+        left: nextIndex * scrollAmount,
+        behavior: 'smooth'
+      });
+      setMobileActiveIndex(nextIndex);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isMobile, mobileActiveIndex, filteredProjects.length]);
+
+  const handleMobileScroll = (e) => {
+    if (!isMobile) return;
+    const scrollLeft = e.target.scrollLeft;
+    const cardWidth = e.target.offsetWidth * 0.85 + 24;
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    if (newIndex !== mobileActiveIndex) {
+      setMobileActiveIndex(newIndex);
+    }
+  };
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -360,9 +389,6 @@ const StudentProjects = () => {
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tighter uppercase leading-[1.1] mb-4 text-center">
               These are real projects students actually build.
             </h2>
-            <p className="text-slate-600 text-[13px] font-medium leading-relaxed text-center px-2">
-              By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
-            </p>
           </div>
 
           <div className="flex justify-center gap-3 mb-12">
@@ -381,7 +407,11 @@ const StudentProjects = () => {
             ))}
           </div>
 
-          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
+          <div 
+            ref={mobileScrollRef}
+            onScroll={handleMobileScroll}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide"
+          >
              {filteredProjects.map((project) => (
                <div 
                  key={project.id} 
@@ -421,17 +451,22 @@ const StudentProjects = () => {
              ))}
           </div>
 
-          <div className="flex justify-center mt-6">
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60">
-                  <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to view more</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-              </div>
+          {/* Progress Dots */}
+          <div className="flex justify-center gap-2 mt-2 mb-8">
+            {filteredProjects.map((_, idx) => (
+              <div 
+                key={idx}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  mobileActiveIndex === idx ? 'w-8 bg-blue-600' : 'w-1.5 bg-slate-200'
+                }`}
+              />
+            ))}
           </div>
 
-          <div className="mt-16 text-center">
-             <button className="w-full bg-slate-50 border border-slate-200 text-slate-900 py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 active:scale-95 transition-all">
-                Join Research Lab <ArrowRight size={16} className="text-blue-600" />
-             </button>
+          <div className="flex justify-center mt-6">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
+                  EXPLORE
+              </span>
           </div>
         </div>
       </section>
@@ -450,9 +485,6 @@ const StudentProjects = () => {
           <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
             These are real projects students actually build.
           </ScrollDarkenHeading>
-          <p className="text-slate-600 text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
-            By the end of a ThinkSkool program every student has something working, something they built themselves and something they can show the world.
-          </p>
         </div>
 
         <div className="flex justify-center gap-4 mb-12">

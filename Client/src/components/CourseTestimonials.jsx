@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, Sparkles, Brain, Cpu, Zap } from 'lucide-react';
+import useIsMobile from '../hooks/useIsMobile';
 
 const AI_REVIEWS = [
     {
@@ -288,6 +289,53 @@ const StarRating = ({ rating, colorClass }) => (
 const FeaturedCard = ({ review, variant }) => {
     const isDark = variant === 'dark';
     const c = colorMap[review.color];
+    const isMobile = useIsMobile();
+    
+    if (isMobile) {
+        return (
+            <motion.div 
+                whileTap={{ scale: 0.98 }}
+                className={`relative rounded-[2.5rem] p-8 overflow-hidden border backdrop-blur-xl ${
+                isDark 
+                    ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
+                    : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
+            }`}>
+                <div className="relative z-10 flex flex-col gap-6">
+                    <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-2xl overflow-hidden border p-0.5 shadow-sm ${
+                            isDark ? 'border-white/10 bg-slate-800' : 'border-slate-100 bg-white'
+                        }`}>
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover rounded-xl" />
+                        </div>
+                        <div className="min-w-0">
+                            <h4 className={`text-[14px] font-bold tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{review.role}</p>
+                        </div>
+                    </div>
+                    
+                    <h3 className={`text-[17px] font-black tracking-tight leading-[1.4] transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                         "{review.highlight}"
+                    </h3>
+
+                    <p className={`text-[14px] leading-[1.6] font-medium transition-colors ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                        {review.content}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {review.tags.slice(0, 3).map(tag => (
+                            <span key={tag} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full transition-all
+                                ${isDark ? 'bg-white/5 text-slate-400 border border-white/5' : 'bg-slate-50 text-slate-500 border border-slate-100'}`}>
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+    
     return (
         <motion.div
             key={review.id}
@@ -303,42 +351,31 @@ const FeaturedCard = ({ review, variant }) => {
             {/* Radial glow bg */}
             <div className={`absolute -top-24 -right-24 w-[350px] h-[350px] rounded-full bg-gradient-to-br ${c.glow} via-transparent to-transparent blur-3xl pointer-events-none`} />
 
-            {/* Giant watermark quote */}
-            <div className={`absolute -bottom-6 -right-4 pointer-events-none transition-colors duration-500
-                ${isDark ? 'text-white/[0.02]' : 'text-slate-50'}`}>
-                <Quote size={160} fill="currentColor" />
-            </div>
 
-            <div className="relative z-10 flex flex-col gap-8">
+
+            <div className="relative z-10 flex flex-col items-center text-center gap-8">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
-                    <div className="flex items-center gap-5">
+                <div className="flex flex-col items-center gap-6 w-full">
+                    <div className="flex flex-col items-center gap-5">
                         <div className="relative">
                             <div className={`absolute inset-0 rounded-2xl blur-md ${c.glow} bg-gradient-to-br`} />
                             <img
                                 src={review.avatar}
                                 alt={review.name}
-                                className="relative w-16 h-16 rounded-2xl border-2 border-white shadow-lg object-cover"
+                                className="relative w-20 h-20 rounded-2xl border-2 border-white shadow-lg object-cover"
                             />
-                            <div className={`absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-full ${c.dot} border-2 border-white flex items-center justify-center`}>
-                                <Zap size={9} className="text-white fill-current" />
+                            <div className={`absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-full ${c.dot} border-2 border-white flex items-center justify-center`}>
+                                <Zap size={10} className="text-white fill-current" />
                             </div>
                         </div>
-                        <div>
-                            <h4 className={`text-lg font-bold tracking-tight transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[11px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-blue-500' : c.highlight}`}>{review.role}</p>
-                            <div className="flex items-center gap-3 mt-2">
+                        <div className="text-center">
+                            <h4 className={`text-xl font-bold tracking-tight transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[12px] font-semibold uppercase tracking-widest mt-0.5 ${isDark ? 'text-blue-500' : c.highlight}`}>{review.role}</p>
+                            <div className="flex items-center justify-center gap-3 mt-2">
                                 <StarRating rating={review.rating} colorClass={isDark ? 'text-blue-500' : c.star} />
                                 <span className={`text-[10px] font-semibold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.batch}</span>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Achievement badge */}
-                    <div className={`md:ml-auto flex items-center gap-2 px-4 py-2.5 rounded-2xl border text-[11px] font-semibold self-start transition-all
-                        ${isDark ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : `${c.badge}`}`}>
-                        <Sparkles size={12} />
-                        <span>{review.achievement}</span>
                     </div>
                 </div>
 
@@ -357,7 +394,7 @@ const FeaturedCard = ({ review, variant }) => {
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap justify-center gap-2">
                     {review.tags.map(tag => (
                         <span key={tag} className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full transition-all
                             ${isDark ? 'bg-white/5 text-slate-400 border border-white/5' : c.tag}`}>
@@ -373,6 +410,34 @@ const FeaturedCard = ({ review, variant }) => {
 const MiniCard = ({ review, isActive, onClick, variant }) => {
     const isDark = variant === 'dark';
     const c = colorMap[review.color];
+    const isMobile = useIsMobile();
+
+    if (isMobile) {
+        return (
+            <motion.button
+                onClick={onClick}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 backdrop-blur-lg ${
+                    isActive
+                        ? isDark ? 'border-blue-500/40 bg-blue-500/10 shadow-xl shadow-black/20' : 'border-blue-200 bg-white shadow-lg shadow-slate-100'
+                        : isDark ? 'border-white/5 bg-white/[0.02]' : 'border-slate-100 bg-slate-50/50'
+                }`}
+            >
+                <div className="flex flex-col items-center gap-4">
+                    <img
+                        src={review.avatar}
+                        alt={review.name}
+                        className={`w-12 h-12 rounded-xl object-cover border ${isDark ? 'border-white/10' : 'border-slate-100'}`}
+                    />
+                    <div className="flex-1 min-w-0 text-center">
+                        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
+                        <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                    </div>
+                </div>
+            </motion.button>
+        );
+    }
+
     return (
         <motion.button
             onClick={onClick}

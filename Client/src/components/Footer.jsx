@@ -46,42 +46,24 @@ const Footer = () => {
         <div className="absolute inset-0 opacity-[0.03] invert brightness-200 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         
         <div className="relative z-10 flex flex-col items-center">
-          {/* Brand Header */}
-          <div className="text-center mb-16 px-4">
-            <div className="font-extrabold text-xl tracking-tight uppercase mb-4 flex items-center justify-center gap-2">
-               <span className="text-white">THINK</span>
-               <span className="text-orange-500">SKOOL</span>
-            </div>
-            <p className="text-slate-500 text-[11px] font-medium max-w-[280px] mx-auto leading-relaxed">
-              Architecting the next generation of global engineering excellence through industrial immersion.
-            </p>
-          </div>
-
-          {/* Social Links - Compact */}
-          <div className="flex justify-center gap-4 mb-16">
-            {[FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram].map((Icon, i) => (
-                <div key={i} className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-slate-400 active:scale-95 active:bg-orange-500 active:text-white transition-all">
-                   <Icon size={16} />
-                </div>
-            ))}
-          </div>
-
-          {/* Concise Info Grid */}
-          <div className="grid grid-cols-2 gap-y-12 gap-x-12 w-full mb-20 text-center">
-            {footerLinks.map((section, i) => (
-                <div key={i} className={i === 2 ? 'col-span-2' : ''}>
-                   <h3 className="text-white text-[10px] font-black uppercase tracking-[0.2em] mb-6 opacity-30">{section.title}</h3>
-                   <ul className="space-y-4">
-                      {section.links.map((link, li) => (
-                         <li key={li}>
-                            <a href={link.href} className="text-slate-400 text-[11px] font-black tracking-widest hover:text-orange-500 transition-colors uppercase">
-                              {link.name}
-                            </a>
-                         </li>
-                      ))}
-                   </ul>
-                </div>
-            ))}
+          {/* Simplified Mobile Links */}
+          <div className="w-full mb-16">
+            <ul className="flex flex-col items-center gap-6">
+              {[
+                { name: 'About Us', href: '#how-it-works' },
+                { name: 'Privacy Policy', href: '/privacy' },
+                { name: 'Terms & Conditions', href: '/terms' },
+              ].map((link, i) => (
+                <li key={i}>
+                  <a 
+                    href={link.href} 
+                    className="text-slate-400 text-[12px] font-black tracking-[0.2em] hover:text-orange-500 transition-colors uppercase"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Bottom Bar */}

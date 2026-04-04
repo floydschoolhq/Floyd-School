@@ -138,10 +138,11 @@ const StudentEcosystem = () => {
                     </div>
 
                     <div className="flex justify-center mt-6">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-100 rounded-full opacity-60 text-center">
-                            <span className="text-[7px] font-black text-slate-500 uppercase tracking-[0.2em] whitespace-nowrap">Swipe to explore features</span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                        </div>
+                        <div className="flex justify-center mt-6">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
+                            EXPLORE
+                        </span>
+                    </div>
                     </div>
                 </div>
 

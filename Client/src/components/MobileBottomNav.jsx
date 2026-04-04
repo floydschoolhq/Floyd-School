@@ -37,7 +37,7 @@ const MobileBottomNav = () => {
     const navItems = [
         { id: 'home', icon: FaHome, label: 'Home' },
         { id: 'online-focus', icon: FaGraduationCap, label: 'Courses' },
-        { id: 'partners', icon: FaUsers, label: 'Partners', path: '/school-partnerships' },
+
         { id: 'student-projects', icon: FaBook, label: 'Projects' },
         { id: 'contact', icon: FaPhone, label: 'Contact' }
     ];

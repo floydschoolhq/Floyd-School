@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, Sparkles, Brain, Cpu, Zap } from 'lucide-react';
+import useIsMobile from '../hooks/useIsMobile';
 
 const AI_REVIEWS = [
     {
@@ -216,7 +217,55 @@ const StarRating = ({ rating, colorClass }) => (
 );
 
 const FeaturedCard = ({ review, variant }) => {
+    const isDark = variant === 'dark';
     const c = colorMap[review.color];
+    const isMobile = useIsMobile();
+    
+    if (isMobile) {
+        return (
+            <motion.div 
+                whileTap={{ scale: 0.98 }}
+                className={`relative rounded-[2.5rem] p-8 overflow-hidden border backdrop-blur-xl ${
+                isDark 
+                    ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
+                    : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
+            }`}>
+                <div className="relative z-10 flex flex-col items-center text-center gap-6">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className={`w-14 h-14 rounded-2xl overflow-hidden border p-0.5 shadow-sm ${
+                            isDark ? 'border-white/10 bg-slate-800' : 'border-slate-100 bg-white'
+                        }`}>
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover rounded-xl" />
+                        </div>
+                        <div className="min-w-0">
+                            <h4 className={`text-[15px] font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{review.role}</p>
+                        </div>
+                    </div>
+                    
+                    <h3 className={`text-[17px] font-black tracking-tight leading-[1.4] transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                         "{review.highlight}"
+                    </h3>
+
+                    <p className={`text-[14px] leading-[1.6] font-medium transition-colors ${
+                        isDark ? 'text-slate-300' : 'text-slate-600'
+                    }`}>
+                        {review.content}
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-2 mt-2">
+                        {review.tags.slice(0, 3).map(tag => (
+                            <span key={tag} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full transition-all
+                                ${isDark ? 'bg-white/5 text-slate-400 border border-white/5' : 'bg-slate-50 text-slate-500 border border-slate-100'}`}>
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+
     return (
         <motion.div
             key={review.id}
@@ -266,7 +315,36 @@ const FeaturedCard = ({ review, variant }) => {
 };
 
 const MiniCard = ({ review, isActive, onClick, variant }) => {
+    const isDark = variant === 'dark';
     const c = colorMap[review.color];
+    const isMobile = useIsMobile();
+
+    if (isMobile) {
+        return (
+            <motion.button
+                onClick={onClick}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 backdrop-blur-lg ${
+                    isActive
+                        ? isDark ? 'border-blue-500/40 bg-blue-500/10 shadow-xl shadow-black/20' : 'border-blue-200 bg-white shadow-lg shadow-slate-100'
+                        : isDark ? 'border-white/5 bg-white/[0.02]' : 'border-slate-100 bg-slate-50/50'
+                }`}
+            >
+                <div className="flex flex-col items-center gap-4">
+                    <img
+                        src={review.avatar}
+                        alt={review.name}
+                        className={`w-12 h-12 rounded-xl object-cover border ${isDark ? 'border-white/10' : 'border-slate-100'}`}
+                    />
+                    <div className="flex-1 min-w-0 text-center">
+                        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
+                        <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
+                    </div>
+                </div>
+            </motion.button>
+        );
+    }
+
     return (
         <motion.button
             onClick={onClick}

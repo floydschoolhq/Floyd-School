@@ -64,7 +64,8 @@ const Hero = () => {
 
     if (isMobile) {
         return (
-            <section id="home" className="relative min-h-[70vh] flex flex-col items-center justify-center pt-48 pb-12 overflow-hidden bg-white">
+            <section id="hero" className="relative min-h-[70vh] flex flex-col items-center justify-center pt-48 pb-12 overflow-hidden bg-white">
+                <div id="home" className="absolute inset-0" />
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -mr-32 -mt-32" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-50 rounded-full blur-[80px] -ml-32 -mb-32" />
@@ -112,7 +113,8 @@ const Hero = () => {
 
 
     return (
-        <section id="home" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-[#FDFCFB]">
+        <section id="hero" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 overflow-hidden bg-[#FDFCFB]">
+            <div id="home" className="absolute inset-0" />
             {/* Background Accents - Premium Orange-White Glow */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-orange-500/[0.06] rounded-full blur-[80px]" />

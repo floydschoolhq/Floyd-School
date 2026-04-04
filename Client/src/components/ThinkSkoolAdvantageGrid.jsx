@@ -117,11 +117,11 @@ const AdvantageCard = ({ card, onOpen }) => {
             </div>
 
             {/* Content Section */}
-            <div className="p-8 flex flex-col flex-1 font-sans">
-                <h3 className="text-xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-blue-600 transition-colors duration-300 tracking-tight">
+            <div className="p-8 flex flex-col items-center text-center flex-1 font-sans">
+                <h3 className="text-xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-blue-600 transition-colors duration-300 tracking-tight uppercase">
                     {card.title}
                 </h3>
-                <p className="text-slate-500 text-[14px] font-medium leading-relaxed mb-6 line-clamp-5">
+                <p className="text-slate-500 text-[14px] font-medium leading-relaxed mb-6">
                     {card.id === 1 && (
                         <>Anyone can follow a tutorial. At thinkskool, you learn to break problems down, experiment, and build real projects. You’ll apply your skills in our upcoming <span className="text-orange-600 font-bold">hackathon!</span> The ability to think, build, and solve stays with you forever. </>
                     )}
@@ -143,12 +143,12 @@ const AdvantageCard = ({ card, onOpen }) => {
                 </p>
                 
                 {/* Footer Link */}
-                <div className="pt-5 border-t border-slate-50 flex items-center justify-between mt-auto">
+                <div className="pt-5 border-t border-slate-50 flex flex-col items-center gap-4 mt-auto w-full">
                     <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                         Program Details
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-slate-950 group-hover:text-white transition-all duration-500 group-hover:scale-110 shadow-sm">
-                        <ArrowRight size={14} />
+                    <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-slate-950 group-hover:text-white transition-all duration-500 group-hover:scale-110 shadow-sm">
+                        <ArrowRight size={16} />
                     </div>
                 </div>
             </div>
@@ -184,18 +184,18 @@ const ThinkskoolAdvantageGrid = () => {
                                     onClick={() => setSelectedCard(card)}
                                     className="bg-white border border-slate-100 p-5 rounded-[2rem] flex flex-col gap-4 active:scale-95 transition-transform"
                                 >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 rounded-[1.2rem] shrink-0">
-                                            <Icon size={18} />
+                                    <div className="flex flex-col items-center gap-4">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 rounded-[1.2rem] shrink-0">
+                                            <Icon size={20} />
                                         </div>
-                                        <h3 className="text-[15px] font-black text-slate-900 leading-tight tracking-tight">
+                                        <h3 className="text-[16px] font-black text-slate-900 leading-tight tracking-tight uppercase">
                                             {card.title}
                                         </h3>
                                     </div>
-                                    <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                                    <div className="flex flex-col items-center gap-3 pt-4 border-t border-slate-50">
                                         <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Experience Pillar</span>
-                                        <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center text-white text-[10px]">
-                                            <ArrowRight size={10} />
+                                        <div className="w-8 h-8 rounded-full bg-slate-950 flex items-center justify-center text-white">
+                                            <ArrowRight size={12} />
                                         </div>
                                     </div>
                                 </div>
@@ -211,12 +211,12 @@ const ThinkskoolAdvantageGrid = () => {
                             className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
                             onClick={() => setSelectedCard(null)}
                         />
-                        <div className="bg-white w-full rounded-t-[3rem] p-8 pb-12 relative z-10 shadow-2xl">
+                        <div className="bg-white w-full rounded-t-[3rem] p-10 pb-12 relative z-10 shadow-2xl flex flex-col items-center text-center">
                             <div className="w-12 h-1.5 bg-slate-100 rounded-full mx-auto mb-8" />
-                            <h3 className="text-2xl font-black text-slate-900 mb-4 leading-tight tracking-tighter">
+                            <h3 className="text-2xl font-black text-slate-900 mb-4 leading-tight tracking-tighter uppercase">
                                 {selectedCard.title}
                             </h3>
-                            <p className="text-sm font-medium text-slate-500 leading-relaxed mb-10">
+                            <p className="text-sm font-medium text-slate-500 leading-relaxed mb-10 max-w-sm">
                                 {selectedCard.description}
                             </p>
                             <button 
@@ -304,8 +304,8 @@ const ThinkskoolAdvantageGrid = () => {
                                 <X size={18} />
                             </button>
 
-                            <div className="p-8 md:p-12">
-                                <div className="w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-slate-100 shadow-sm bg-slate-50">
+                            <div className="p-8 md:p-14 flex flex-col items-center text-center">
+                                <div className="w-full aspect-video rounded-2xl overflow-hidden mb-10 border border-slate-100 shadow-sm bg-slate-50">
                                     <img 
                                         src={selectedCard.image} 
                                         alt={selectedCard.title} 
@@ -317,25 +317,27 @@ const ThinkskoolAdvantageGrid = () => {
                                     Program Pillar
                                 </span>
                                 
-                                <h3 className="text-3xl font-bold text-slate-900 mb-6 leading-tight tracking-tight">{selectedCard.title}</h3>
-                                <p className="text-lg text-slate-500 font-medium mb-10 leading-relaxed">{selectedCard.description}</p>
+                                <h3 className="text-3xl font-black text-slate-900 mb-6 leading-tight tracking-tight uppercase">{selectedCard.title}</h3>
+                                <p className="text-lg text-slate-500 font-medium mb-10 leading-relaxed max-w-xl">{selectedCard.description}</p>
                                 
-                                <div className="space-y-4 pt-8 border-t border-slate-50">
-                                    <p className="text-[11px] font-bold text-slate-900 uppercase tracking-widest mb-6 border-b border-orange-500/20 pb-2 inline-block">Mastery Objectives</p>
-                                    {selectedCard.details.map((detail, i) => (
-                                        <div key={i} className="flex items-center gap-4 text-slate-600 font-bold text-[11px] tracking-tight group/item">
-                                            <div className="w-5 h-5 rounded-full bg-slate-50 flex items-center justify-center text-slate-900 border border-slate-100">
-                                                <CheckCircle2 size={12} />
+                                <div className="space-y-4 pt-10 border-t border-slate-50 w-full flex flex-col items-center">
+                                    <p className="text-[11px] font-black text-slate-950 uppercase tracking-widest mb-8 border-b-2 border-orange-500 pb-2 inline-block">Mastery Objectives</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                        {selectedCard.details.map((detail, i) => (
+                                            <div key={i} className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-600 font-bold text-[11px] tracking-tight transition-all hover:bg-white hover:shadow-sm group/item">
+                                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 border border-slate-100 group-hover/item:bg-orange-500 group-hover/item:text-white transition-colors">
+                                                    <CheckCircle2 size={14} />
+                                                </div>
+                                                {detail}
                                             </div>
-                                            {detail}
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
 
-                                <div className="mt-12 flex justify-end">
+                                <div className="mt-12 flex justify-center w-full">
                                     <button 
                                         onClick={() => setSelectedCard(null)}
-                                        className="bg-slate-950 text-white px-8 py-4 text-[12px] font-bold rounded-full hover:bg-black transition-colors"
+                                        className="bg-slate-950 text-white px-10 py-5 text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-orange-500 transition-all shadow-xl"
                                     >
                                         Close Details
                                     </button>

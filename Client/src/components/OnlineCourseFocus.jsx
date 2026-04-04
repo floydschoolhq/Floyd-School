@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Radio, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FALLBACK_COURSES } from '../constants/siteData';
@@ -142,8 +142,10 @@ const OnlineCourseFocus = ({ variant }) => {
     const navigate = useNavigate();
     const isDark = variant === 'dark';
     const isMobile = useIsMobile();
-    const [earlyRegistrationCourse, setEarlyRegistrationCourse] = React.useState(null);
-    const [activeTab, setActiveTab] = React.useState('all');
+    const [earlyRegistrationCourse, setEarlyRegistrationCourse] = useState(null);
+    const [activeTab, setActiveTab] = useState('live');
+    const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+    const mobileScrollRef = useRef(null);
 
     const handleRegister = (courseId) => {
         navigate(`/course/${courseId}?openRegistration=true`);
@@ -161,17 +163,45 @@ const OnlineCourseFocus = ({ variant }) => {
     const otherCourses = FALLBACK_COURSES.filter(c => c.comingSoon);
 
     const tabs = [
-        { id: 'all', label: 'All Programs' },
-        { id: 'live', label: 'Currently Enrolling' },
+        { id: 'live', label: 'Live' },
         { id: 'upcoming', label: 'Coming Soon' }
     ];
 
     const filteredCourses = FALLBACK_COURSES.filter(course => {
-        if (activeTab === 'all') return true;
         if (activeTab === 'live') return !course.comingSoon;
         if (activeTab === 'upcoming') return course.comingSoon;
         return true;
     });
+
+    // Auto-scroll logic for mobile
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const interval = setInterval(() => {
+            if (!mobileScrollRef.current) return;
+
+            const nextIndex = (mobileActiveIndex + 1) % filteredCourses.length;
+            const scrollAmount = mobileScrollRef.current.offsetWidth * 0.85 + 24; // Card width (85vw) + gap (6)
+            
+            mobileScrollRef.current.scrollTo({
+                left: nextIndex * scrollAmount,
+                behavior: 'smooth'
+            });
+            setMobileActiveIndex(nextIndex);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [isMobile, mobileActiveIndex, filteredCourses.length]);
+
+    const handleMobileScroll = (e) => {
+        if (!isMobile) return;
+        const scrollLeft = e.target.scrollLeft;
+        const cardWidth = e.target.offsetWidth * 0.85 + 24;
+        const newIndex = Math.round(scrollLeft / cardWidth);
+        if (newIndex !== mobileActiveIndex) {
+            setMobileActiveIndex(newIndex);
+        }
+    };
 
     if (isMobile) {
         return (
@@ -210,15 +240,34 @@ const OnlineCourseFocus = ({ variant }) => {
                         ))}
                     </div>
 
-                    <div className="space-y-5">
+                    <div 
+                        ref={mobileScrollRef}
+                        onScroll={handleMobileScroll}
+                        className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-5 px-5 scrollbar-hide"
+                    >
                         {filteredCourses.map((course) => (
-                            <CourseCard
-                                key={course._id}
-                                course={course}
-                                isDark={isDark}
-                                onRegister={handleRegister}
-                                onDetails={handleDetails}
-                                onEarlyAccess={handleEarlyAccess}
+                            <div key={course._id} className="snap-center shrink-0 w-[85vw]">
+                                <CourseCard
+                                    course={course}
+                                    isDark={isDark}
+                                    onRegister={handleRegister}
+                                    onDetails={handleDetails}
+                                    onEarlyAccess={handleEarlyAccess}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Progress Dots */}
+                    <div className="flex justify-center gap-2 mt-4">
+                        {filteredCourses.map((_, idx) => (
+                            <div 
+                                key={idx}
+                                className={`h-1.5 rounded-full transition-all duration-500 ${
+                                    mobileActiveIndex === idx 
+                                        ? isDark ? 'w-8 bg-blue-500' : 'w-8 bg-blue-600'
+                                        : isDark ? 'w-1.5 bg-white/10' : 'w-1.5 bg-slate-200'
+                                }`}
                             />
                         ))}
                     </div>
@@ -272,7 +321,7 @@ const OnlineCourseFocus = ({ variant }) => {
                     ))}
                 </div>
 
-                {featuredCourse && (activeTab === 'all' || activeTab === 'live') && (
+                {(activeTab === 'live' && featuredCourse) && (
                     <div className="mb-12">
                         <FeaturedCourseCard
                             course={featuredCourse}
@@ -283,9 +332,9 @@ const OnlineCourseFocus = ({ variant }) => {
                     </div>
                 )}
 
-                {(activeTab === 'all' ? otherCourses : filteredCourses.filter(c => c.comingSoon)).length > 0 && (
+                {filteredCourses.filter(c => c.comingSoon || activeTab === 'upcoming').length > 0 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {(activeTab === 'all' ? otherCourses : filteredCourses.filter(c => c.comingSoon)).map((course) => (
+                        {filteredCourses.filter(c => (activeTab === 'upcoming' ? c.comingSoon : !c.featured)).map((course) => (
                             <CourseCard
                                 key={course._id}
                                 course={course}
