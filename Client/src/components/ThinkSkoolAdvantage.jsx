@@ -104,10 +104,7 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
                                     {advantage.description}
                                 </p>
 
-                                {/* CTA Button */}
-                                <button className={`px-10 py-4 ${isDarkBg ? 'bg-white text-black hover:bg-orange-500 hover:text-white' : 'bg-gray-800 hover:bg-gray-900 text-white border-gray-900'} border font-black text-xs uppercase tracking-[0.2em] rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl`}>
-                                    Learn More
-                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -346,14 +343,9 @@ const ThinkskoolAdvantage = () => {
                                             
                                             {/* Content Section */}
                                             <div className="p-7 flex-grow flex flex-col justify-between">
-                                                <p className={`text-base leading-relaxed mb-8 ${cur.isDark ? 'text-white/80' : 'text-gray-600 font-medium'}`}>
+                                                <p className={`text-base leading-relaxed ${cur.isDark ? 'text-white/80' : 'text-gray-600 font-medium'}`}>
                                                     {advantage.description}
                                                 </p>
-                                                
-                                                <button className={`group flex items-center justify-between w-full p-4 rounded-2xl font-bold transition-all duration-300 shadow-lg ${cur.isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`}>
-                                                    <span>Explore more</span>
-                                                    <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
