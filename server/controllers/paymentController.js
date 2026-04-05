@@ -42,29 +42,8 @@ const createOrder = async (req, res) => {
             });
         }
 
-        // Get course details - handle both ObjectId and string IDs
-        let course;
-        
-        // If courseId is a simple string like "1", "2", etc., map to actual course
-        const courseMapping = {
-            '1': 'AI & Machine Learning',
-            '2': 'Development (Web/App)', 
-            '3': 'IoT & Robotics',
-            '4': 'Cyber Security'
-        };
-        
-        if (courseMapping[courseId]) {
-            // Find course by title for fallback data
-            course = await Course.findOne({ title: courseMapping[courseId] });
-        } else {
-            // Try to find by ObjectId first
-            try {
-                course = await Course.findById(courseId);
-            } catch (error) {
-                // If ObjectId conversion fails, try finding by title
-                course = await Course.findOne({ title: courseId });
-            }
-        }
+        // Get course details
+        const course = await Course.findById(courseId);
         if (!course) {
             return res.status(404).json({
                 success: false,
@@ -85,7 +64,7 @@ const createOrder = async (req, res) => {
         // Check if email already enrolled in this course
         const existingEnrollment = await Enrollment.findOne({
             'userDetails.email': email,
-            course: course._id,
+            course: courseId,
             paymentStatus: 'completed'
         });
 
@@ -113,7 +92,7 @@ const createOrder = async (req, res) => {
 
         // Create enrollment record in pending state (without user ID initially)
         const enrollment = await Enrollment.create({
-            course: course._id, // Use actual course ObjectId
+            course: courseId,
             paymentStatus: 'pending',
             razorpayOrderId: order.id,
             amount: coursePrice,
