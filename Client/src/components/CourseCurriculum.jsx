@@ -305,7 +305,23 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] p-6 text-white">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 opacity-70">Major Milestone</h3>
-                    <h2 className="text-xl font-black uppercase tracking-tighter leading-tight mb-6">Face Recognition Attendance System</h2>
+                    <h2 className="text-xl font-black uppercase tracking-tighter leading-tight mb-5">Face Recognition Attendance System</h2>
+                    
+                    <div className="relative mb-6">
+                        <div className="aspect-video bg-black/20 rounded-xl overflow-hidden shadow-2xl border border-white/10">
+                            <iframe 
+                                width="100%" 
+                                height="100%" 
+                                style={{ pointerEvents: 'none' }}
+                                src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
+                                title="YouTube video player" 
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
+
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">👤</div>
