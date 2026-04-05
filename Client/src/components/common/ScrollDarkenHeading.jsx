@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ScrollDarkenHeading = ({ children, className = "", sizeClass = "text-5xl md:text-8xl", variant = "light", uppercase = true }) => {
+const ScrollDarkenHeading = ({ children, className = "", sizeClass = "text-3xl md:text-8xl", variant = "light", uppercase = true }) => {
     const isDark = variant === "dark";
 
     return (

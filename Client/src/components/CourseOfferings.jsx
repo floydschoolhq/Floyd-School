@@ -69,8 +69,8 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent pointer-events-none"></div>
                 
                 <div className="relative z-10 px-6">
-                    <div className="text-center mb-10">
-                        <h2 className="text-4xl font-black mb-4 tracking-tighter text-white drop-shadow-md leading-tight">
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl font-black mb-4 tracking-tighter text-white drop-shadow-md leading-tight">
                             We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Back.</span> Always.
                         </h2>
                     </div>
@@ -84,7 +84,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: -20, scale: 0.95 }}
                             transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="w-full p-8 rounded-[2.5rem] border bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl border-white/20 flex flex-col relative overflow-hidden shadow-2xl shadow-blue-500/10"
+                            className="w-full p-6 rounded-[2rem] border bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl border-white/20 flex flex-col relative overflow-hidden shadow-2xl shadow-blue-500/10"
                         >
                             {/* Animated background glow */}
                             <motion.div 
@@ -96,15 +96,15 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                                 className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none"
                             ></motion.div>
                             
-                            <div className="flex items-center gap-4 mb-6 relative z-10">
-                                <div className="w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-black text-lg shadow-xl">
+                            <div className="flex items-center gap-4 mb-4 relative z-10">
+                                <div className="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-black text-sm shadow-xl">
                                     {mobileFeatures[activeIndex].icon}
                                 </div>
-                                <h3 className="text-xl font-black uppercase tracking-tight text-white leading-none">
+                                <h3 className="text-lg font-black uppercase tracking-tight text-white leading-none">
                                     {mobileFeatures[activeIndex].title}
                                 </h3>
                             </div>
-                            <p className="text-[15px] leading-relaxed font-semibold text-slate-300 relative z-10">
+                            <p className="text-sm leading-relaxed font-semibold text-slate-300 relative z-10">
                                 {mobileFeatures[activeIndex].desc}
                             </p>
                         </motion.div>
