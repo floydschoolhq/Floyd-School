@@ -85,20 +85,20 @@ const PROJECTS_DATA = [
   },
   {
     id: 4,
-    title: "Task Management App",
-    category: "Mobile Development",
-    description: "Collaborative task management app with real-time updates and team features",
-    image: "/projects/task_management.jpg",
-    tech: ["React Native", "Firebase", "Redux", "Animations"],
-    stats: { stars: 298, forks: 67, views: "2.1k" },
+    title: "Netflix Clone",
+    category: "Full Stack Development",
+    description: "A fully functional Netflix clone with movie browsing, trailer playback, user authentication, and personalized recommendations.",
+    image: "/projects/ai-chat.png",
+    tech: ["React", "Node.js", "MongoDB", "TMDB API", "Stripe"],
+    stats: { stars: 342, forks: 89, views: "3.2k" },
     featured: true,
-    color: "cyan",
+    color: "red",
     author: {
-      name: "Arjun Nair",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun",
-      course: "Mobile App Development"
+      name: "Vikram Singh",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram",
+      course: "Full Stack Web Dev"
     },
-    liveUrl: "https://netfixclone-nu.vercel.app/"
+    liveUrl: "https://netfixcopy9.vercel.app/"
   }
 ];
 
@@ -112,6 +112,7 @@ const TechIcon = ({ tech }) => {
       'Next.js': <Layers size={14} />,
       'MongoDB': <Database size={14} />,
       'Stripe': <Cpu size={14} />,
+      'TMDB API': <Cpu size={14} />,
       'Tailwind': <Layers size={14} />,
       'Arduino': <Cpu size={14} />,
       'Raspberry Pi': <Cpu size={14} />,
