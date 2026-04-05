@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
@@ -169,6 +169,19 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
     const filteredLeaders = excludeName 
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
+    
+    // Default to a 3-item slice array to maintain original UI logic structure
+    const displayLeaders = filteredLeaders.slice(0, 3);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    // Swap animation index loop
+    useEffect(() => {
+        if (!isMobile) return;
+        const intervalId = setInterval(() => {
+            setActiveIndex((prev) => (prev + 1) % displayLeaders.length);
+        }, 2000);
+        return () => clearInterval(intervalId);
+    }, [isMobile, displayLeaders.length]);
 
     return (
         <section 
@@ -195,18 +208,48 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                     </div>
                 </div>
 
-                {/* Static grid for Faculty */}
                 <div className="max-w-6xl mx-auto px-6 relative z-10 w-full mb-20">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {filteredLeaders.slice(0, 3).map((mentor, index) => (
-                            <CourseFacultyCard 
-                                key={index}
-                                mentor={mentor}
-                                index={index}
-                                variant={variant}
-                            />
-                        ))}
-                    </div>
+                    {isMobile ? (
+                        <div className="relative w-full px-2 overflow-hidden">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeIndex}
+                                    initial={{ opacity: 0, x: 30 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -30 }}
+                                    transition={{ duration: 0.3, ease: "easeOut" }}
+                                    className="w-full"
+                                >
+                                    <CourseFacultyCard 
+                                        mentor={displayLeaders[activeIndex]}
+                                        index={activeIndex}
+                                        variant={variant}
+                                    />
+                                </motion.div>
+                            </AnimatePresence>
+                            
+                            {/* Pagination dots indicator */}
+                            <div className="flex justify-center gap-2 mt-8">
+                                {displayLeaders.map((_, idx) => (
+                                    <div 
+                                        key={idx} 
+                                        className={`h-2 rounded-full transition-all duration-500 ${activeIndex === idx ? 'bg-blue-500 w-6' : 'bg-slate-700/50 w-2'}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {displayLeaders.map((mentor, index) => (
+                                <CourseFacultyCard 
+                                    key={index}
+                                    mentor={mentor}
+                                    index={index}
+                                    variant={variant}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </section>

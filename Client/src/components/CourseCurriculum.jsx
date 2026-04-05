@@ -8,8 +8,8 @@ const CourseCurriculum = ({ variant = "light" }) => {
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
-    const [registeredCount, setRegisteredCount] = useState(7);
-    const totalSeats = 20;
+    const [registeredCount, setRegisteredCount] = useState(20);
+    const totalSeats = 50;
     
     const curriculumData = [
         {
@@ -310,12 +310,12 @@ const CourseCurriculum = ({ variant = "light" }) => {
                             Ready to build your child's AI future?
                         </h3>
                         <p className="text-white/70 text-xs font-semibold mb-6 leading-relaxed">
-                            Strictly limited seats per cohort to ensure 1-on-1 personalized mentorship.
+                            Strictly limited seats per batch to ensure 1-on-1 personalized mentorship.
                         </p>
                         
-                        <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="grid grid-cols-2 gap-3 mb-4">
                             <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm">
-                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Upcoming Cohort</span>
+                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Upcoming Batch</span>
                                 <span className="text-sm font-black uppercase text-white">15th April</span>
                             </div>
                             <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm relative overflow-hidden">
@@ -328,6 +328,19 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                     {totalSeats - registeredCount} / {totalSeats}
                                 </span>
                             </div>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-blue-500/10 border border-blue-500/20 backdrop-blur-sm mb-6 flex flex-col items-center justify-center relative overflow-hidden">
+                            <div className="absolute inset-0 bg-blue-500/5 animate-pulse"></div>
+                            <span className="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-1 relative z-10">Course Fee</span>
+                            <div className="flex items-center justify-center gap-3 mb-1.5 relative z-10">
+                                <span className="text-lg font-bold text-slate-400 line-through decoration-slate-500/50">₹2,999</span>
+                                <span className="text-3xl font-black text-white tracking-tighter drop-shadow-md">₹1,999</span>
+                            </div>
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-full relative z-10">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+                                33% OFF
+                            </span>
                         </div>
 
                         <button 
