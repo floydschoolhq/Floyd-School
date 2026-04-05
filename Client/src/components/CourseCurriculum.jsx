@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const CourseCurriculum = ({ variant = "light" }) => {
     const navigate = useNavigate();
@@ -192,120 +193,156 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     <div className="flex items-center gap-3 mb-6">
                         <h3 className="text-xl font-black uppercase tracking-tight text-white">The 90-Day Roadmap</h3>
                     </div>
-                    <div className="space-y-4 border-l border-white/10 ml-4 pl-5 relative">
-                        <div className="relative">
-                            <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
-                            <div className="mb-2">
-                                <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-0.5">Phase 01</span>
-                                <h4 className="text-base font-black uppercase tracking-tight text-white">Python Fundamentals</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 1-4: The Foundation of everything</p>
+                    <div className="space-y-6 border-l-2 border-slate-800 ml-4 pl-6 relative">
+                        <motion.div 
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                            className="relative"
+                        >
+                            <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
+                            <div className="mb-3">
+                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 01</span>
+                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">Python Fundamentals</h4>
+                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 1-4</p>
                             </div>
-                            <div className="space-y-2">
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 01</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Python from Scratch</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Environment setup, variables, and the logic of computation.</p>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 01</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Python from Scratch</h5>
                                 </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 02</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Loops &amp; Functions</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Mastering control flow and modular code architecture.</p>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 02</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Loops &amp; Functions</h5>
                                 </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 03</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Files &amp; Libraries</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Working with external data and the powerful Python ecosystem.</p>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 03</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Files &amp; Libraries</h5>
                                 </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 04</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Python Like a Pro</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Advanced patterns, debugging, and building clean projects.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="relative">
-                            <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
-                            <div className="mb-2">
-                                <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-0.5">Phase 02</span>
-                                <h4 className="text-base font-black uppercase tracking-tight text-white">APIs, AI &amp; ML</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 5-8: Real-world intelligence</p>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 05</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">ChatGPT &amp; OpenAI API</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Integrating LLMs into your own custom applications.</p>
-                                </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 06</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">APIs &amp; Live Data</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Fetching and processing real-time web information.</p>
-                                </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 07</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Intro to Machine Learning</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">How machines learn: Regression, patterns, and data math.</p>
-                                </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 08</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Classification</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Teaching computers to categorize and decide.</p>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 04</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Python Like a Pro</h5>
                                 </div>
                             </div>
-                        </div>
-                        <div className="relative">
-                            <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
-                            <div className="mb-2">
-                                <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-0.5">Phase 03</span>
-                                <h4 className="text-base font-black uppercase tracking-tight text-white">Vision, Web &amp; Demo</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 9-12: The final masterpiece</p>
+                        </motion.div>
+
+                        <motion.div 
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+                            className="relative"
+                        >
+                            <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
+                            <div className="mb-3">
+                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 02</span>
+                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">APIs, AI &amp; ML</h4>
+                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 5-8</p>
                             </div>
-                            <div className="space-y-2">
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 09</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">OpenCV &amp; Computer Vision</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Giving eyes to your code using visual recognition libraries.</p>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 05</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">ChatGPT &amp; OpenAI API</h5>
                                 </div>
-                                <div className="p-3 rounded-lg border bg-white/5 border-white/5">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-blue-500">Week 10</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Flask Web Framework</h5>
-                                    <p className="text-[11px] font-medium text-slate-400">Turning scripts into web apps that anyone can use.</p>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 06</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">APIs &amp; Live Data</h5>
                                 </div>
-                                <div className="p-3 rounded-lg border bg-blue-600 border-blue-500 text-white">
-                                    <span className="text-[9px] font-black uppercase tracking-widest mb-0.5 block text-white/70">Final Milestone</span>
-                                    <h5 className="text-sm font-black uppercase tracking-tight mb-0.5">Capstone &amp; Demo Day</h5>
-                                    <p className="text-[11px] font-medium text-white/80">Intensive building followed by a live global presentation of your Face Recognition system.</p>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 07</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Intro to Machine Learning</h5>
+                                </div>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 08</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Classification</h5>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
+
+                        <motion.div 
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+                            className="relative"
+                        >
+                            <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
+                            <div className="mb-3">
+                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 03</span>
+                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">Vision, Web &amp; Demo</h4>
+                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 9-12</p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 09</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">OpenCV &amp; Vision</h5>
+                                </div>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 10</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Flask Web Framework</h5>
+                                </div>
+                                <motion.div 
+                                    whileHover={{ scale: 1.02 }}
+                                    className="p-3 rounded-xl border bg-blue-600 border-blue-500 text-white col-span-2 shadow-lg shadow-blue-600/20"
+                                >
+                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-white/80">Final Milestone</span>
+                                    <h5 className="text-xs font-black uppercase tracking-tight mb-1">Capstone &amp; Demo Day</h5>
+                                </motion.div>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 p-6 rounded-[2rem] text-center mb-10">
-                    <h3 className="text-xl font-black uppercase tracking-tighter mb-3">Ready to build your child's AI future?</h3>
-                    <p className="text-slate-400 text-xs font-medium mb-5 leading-relaxed">Limited seats per cohort to ensure personalized mentorship.</p>
-                    <div className="grid grid-cols-2 gap-3 mb-5">
-                        <div className="p-3 rounded-xl bg-white/5">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Starts</span>
-                            <span className="text-xs font-black uppercase">15th April</span>
+                <motion.div 
+                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="relative bg-gradient-to-b from-white/10 to-white/5 border border-white/20 p-6 rounded-[2rem] text-center mb-10 overflow-hidden shadow-2xl"
+                >
+                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50"></div>
+                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl"></div>
+                    
+                    <div className="relative z-10">
+                        <h3 className="text-2xl font-black uppercase tracking-tighter mb-3 leading-none text-white drop-shadow-md">
+                            Ready to build your child's AI future?
+                        </h3>
+                        <p className="text-white/70 text-xs font-semibold mb-6 leading-relaxed">
+                            Strictly limited seats per cohort to ensure 1-on-1 personalized mentorship.
+                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                            <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm">
+                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Upcoming Cohort</span>
+                                <span className="text-sm font-black uppercase text-white">15th April</span>
+                            </div>
+                            <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm relative overflow-hidden">
+                                <div className="absolute inset-0 bg-orange-500/10 animate-pulse"></div>
+                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1 relative z-10 flex items-center justify-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                                    Seats Left
+                                </span>
+                                <span className="text-sm font-black uppercase text-orange-400 relative z-10 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]">
+                                    {totalSeats - registeredCount} / {totalSeats}
+                                </span>
+                            </div>
                         </div>
-                        <div className="p-3 rounded-xl bg-white/5">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Seats Left</span>
-                            <span className="text-xs font-black uppercase text-orange-500">{totalSeats - registeredCount} / {totalSeats}</span>
-                        </div>
+
+                        <button 
+                            onClick={handleReserveAdmission}
+                            disabled={isEnrolling}
+                            className="w-full bg-white text-black py-4 rounded-xl font-black text-sm uppercase tracking-[0.15em] hover:scale-[0.98] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-70 flex items-center justify-center gap-2"
+                        >
+                            {isEnrolling ? 'Processing...' : 'Reserve Admission Now'}
+                            {!isEnrolling && <span className="text-lg leading-none">&rarr;</span>}
+                        </button>
                     </div>
-                    <button 
-                        onClick={handleReserveAdmission}
-                        disabled={isEnrolling}
-                        className="w-full bg-white text-black py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-[0.98] active:scale-[0.98] transition-transform"
-                    >
-                        {isEnrolling ? 'Processing...' : 'Reserve Admission Now'}
-                    </button>
-                </div>
+                </motion.div>
 
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] p-6 text-white">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 opacity-70">Major Milestone</h3>
-                    <h2 className="text-xl font-black uppercase tracking-tighter leading-tight mb-5">Face Recognition Attendance System</h2>
+                    <h2 className="text-xl font-bold uppercase tracking-tighter leading-tight mb-5">Face Recognition Attendance System</h2>
                     
                     <div className="relative mb-6">
                         <div className="aspect-video bg-black/20 rounded-xl overflow-hidden shadow-2xl border border-white/10">
@@ -325,15 +362,15 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">👤</div>
-                            <span className="text-xs font-black uppercase tracking-widest text-white/90">Face Recognition Engine</span>
+                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Face Recognition Engine</span>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">📋</div>
-                            <span className="text-xs font-black uppercase tracking-widest text-white/90">Live Attendance Logger</span>
+                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Live Attendance Logger</span>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">🖥️</div>
-                            <span className="text-xs font-black uppercase tracking-widest text-white/90">Flask Web Dashboard</span>
+                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Flask Web Dashboard</span>
                         </div>
                     </div>
                 </div>
