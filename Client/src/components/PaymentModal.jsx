@@ -53,31 +53,158 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
         }
     };
 
-    const handleSubmitRegistration = async () => {
+    const handleProceedToPayment = async () => {
         if (!validateForm()) return;
 
-        // Show success immediately — good UX, API fires in the background
-        setStep('success');
+        setLoading(true);
+        setErrorMessage('');
 
-        // Fire API silently in background
         try {
-            await api.post('/leads', {
-                name: formData.fullName,
+            // Create Razorpay order
+            const response = await api.post('/payments/create-order', {
+                courseId,
+                fullName: formData.fullName,
                 email: formData.email,
-                phone: formData.phone,
-                type: 'enrollment',
-                source: 'Registration Modal',
-                topic: courseTitle
+                phone: formData.phone
             });
-        } catch (error) {
-            // Silently log — user already sees success screen
-            console.error('Background lead submission error:', error);
-        }
 
-        // Auto-close after 4 seconds
-        setTimeout(() => {
-            handleClose();
-        }, 4000);
+            const { order, razorpayKeyId } = response.data;
+
+            // Initialize Razorpay
+            const options = {
+                key: razorpayKeyId,
+                amount: order.amount,
+                currency: order.currency,
+                name: 'ThinkSkool',
+                description: courseTitle,
+                order_id: order.id,
+                handler: async (response) => {
+                    // Payment successful - verify with backend
+                    console.log('[Frontend Debug] Razorpay response:', response);
+                    console.log('[Frontend Debug] Response keys:', Object.keys(response));
+                    console.log('[Frontend Debug] Response properties:');
+                    Object.keys(response).forEach(key => {
+                        console.log(`  ${key}:`, response[key]);
+                    });
+                    
+                    // Handle different Razorpay response formats
+                    const paymentData = {
+                        razorpay_order_id: response.razorpay_order_id || response.order_id,
+                        razorpay_payment_id: response.razorpay_payment_id || response.payment_id,
+                        razorpay_signature: response.razorpay_signature || response.signature
+                    };
+                    
+                    console.log('[Frontend Debug] Extracted payment data:', paymentData);
+                    
+                    // If still empty, try all possible combinations
+                    if (!paymentData.razorpay_order_id || !paymentData.razorpay_payment_id || !paymentData.razorpay_signature) {
+                        console.log('[Frontend Debug] Trying to find properties manually...');
+                        const keys = Object.keys(response);
+                        console.log('[Frontend Debug] Available keys:', keys);
+                        
+                        // Try to find order ID
+                        const orderId = response[keys.find(k => k.toLowerCase().includes('order'))] || 
+                                       response[keys.find(k => k.toLowerCase().includes('id'))];
+                        
+                        // Try to find payment ID  
+                        const paymentId = response[keys.find(k => k.toLowerCase().includes('payment'))] ||
+                                        response[keys.find(k => k.toLowerCase().includes('razorpay_payment'))];
+                        
+                        // Try to find signature
+                        const signature = response[keys.find(k => k.toLowerCase().includes('signature'))] ||
+                                        response[keys.find(k => k.toLowerCase().includes('razorpay_signature'))];
+                        
+                        console.log('[Frontend Debug] Manual extraction:', { orderId, paymentId, signature });
+                        
+                        paymentData.razorpay_order_id = paymentData.razorpay_order_id || orderId;
+                        paymentData.razorpay_payment_id = paymentData.razorpay_payment_id || paymentId;
+                        paymentData.razorpay_signature = paymentData.razorpay_signature || signature;
+                    }
+                    
+                    console.log('[Frontend Debug] Final payment data:', paymentData);
+                    
+                    try {
+                        const verifyResponse = await api.post('/payments/verify', paymentData);
+                        
+                        console.log('[Frontend Debug] Verify response:', verifyResponse.data);
+
+                        if (verifyResponse.data.success) {
+                            setStep('success');
+                            setSuccessMessage('Payment completed successfully! You are now enrolled in the course.');
+                            
+                            // Auto-close after 4 seconds
+                            setTimeout(() => {
+                                handleClose();
+                            }, 4000);
+                        } else {
+                            // Payment verification failed - initiate refund
+                            setStep('error');
+                            setErrorMessage('Payment verification failed. Initiating refund...');
+                            
+                            // Try to initiate refund
+                            try {
+                                await api.post('/payments/refund', {
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    amount: order.amount,
+                                    reason: 'Payment verification failed'
+                                });
+                                setErrorMessage('Payment verification failed. Refund initiated. You should receive your money back within 5-7 working days.');
+                            } catch (refundError) {
+                                setErrorMessage('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Payment verification error:', error);
+                        setStep('error');
+                        
+                        // Check if it's a network error or server error
+                        if (error.code === 'NETWORK_ERROR' || error.response?.status >= 500) {
+                            setErrorMessage('Network error. Please check your connection and try again. Your payment is safe and will be refunded if needed.');
+                        } else {
+                            setErrorMessage('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
+                        }
+                    }
+                },
+                modal: {
+                    ondismiss: async () => {
+                        setLoading(false);
+                        // If payment was cancelled, update enrollment status
+                        try {
+                            await api.post('/payments/cancel', {
+                                razorpay_order_id: order.id
+                            });
+                        } catch (error) {
+                            console.error('Payment cancellation error:', error);
+                        }
+                    },
+                    handle_failure: async (response) => {
+                        setStep('error');
+                        setErrorMessage('Payment failed. Refund will be processed automatically.');
+                        setLoading(false);
+                        
+                        // Log the failure for debugging
+                        console.error('Payment failed:', response);
+                    }
+                },
+                prefill: {
+                    name: formData.fullName,
+                    email: formData.email,
+                    contact: formData.phone
+                },
+                theme: {
+                    color: '#3B82F6'
+                }
+            };
+
+            const razorpay = new window.Razorpay(options);
+            razorpay.open();
+
+        } catch (error) {
+            console.error('Payment creation error:', error);
+            setErrorMessage(error.response?.data?.message || 'Failed to create payment order. Please try again.');
+            setStep('error');
+            setLoading(false);
+        }
     };
 
     const handleClose = () => {
@@ -205,14 +332,14 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                             <div className="flex items-end gap-2">
                                                 <span className="text-sm font-medium text-slate-400 line-through mb-1">₹2,999</span>
                                                 <span className="text-2xl font-bold text-blue-400">
-                                                    ₹1,999
+                                                    ₹{coursePrice}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <button
-                                        onClick={handleSubmitRegistration}
+                                        onClick={handleProceedToPayment}
                                         disabled={loading}
                                         className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-bold text-sm uppercase tracking-widest hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-6"
                                     >
@@ -222,7 +349,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                                 Processing...
                                             </span>
                                         ) : (
-                                            'Confirm Registration'
+                                            'Proceed to Payment'
                                         )}
                                     </button>
 

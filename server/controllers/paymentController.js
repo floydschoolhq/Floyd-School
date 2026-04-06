@@ -42,8 +42,30 @@ const createOrder = async (req, res) => {
             });
         }
 
-        // Get course details
-        const course = await Course.findById(courseId);
+        // Get course details - handle both ObjectId and string IDs
+        let course;
+        
+        // If courseId is a simple string like "1", "2", etc., map to actual course
+        const courseMapping = {
+            '1': 'AI & Machine Learning',
+            '2': 'Development (Web/App)', 
+            '3': 'IoT & Robotics',
+            '4': 'Cyber Security'
+        };
+        
+        if (courseMapping[courseId]) {
+            // Find course by title for fallback data
+            course = await Course.findOne({ title: courseMapping[courseId] });
+        } else {
+            // Try to find by ObjectId first
+            try {
+                course = await Course.findById(courseId);
+            } catch (error) {
+                // If ObjectId conversion fails, try finding by title
+                course = await Course.findOne({ title: courseId });
+            }
+        }
+        
         if (!course) {
             return res.status(404).json({
                 success: false,
@@ -64,7 +86,7 @@ const createOrder = async (req, res) => {
         // Check if email already enrolled in this course
         const existingEnrollment = await Enrollment.findOne({
             'userDetails.email': email,
-            course: courseId,
+            course: course._id,
             paymentStatus: 'completed'
         });
 
@@ -92,7 +114,7 @@ const createOrder = async (req, res) => {
 
         // Create enrollment record in pending state (without user ID initially)
         const enrollment = await Enrollment.create({
-            course: courseId,
+            course: course._id,
             paymentStatus: 'pending',
             razorpayOrderId: order.id,
             amount: coursePrice,
@@ -129,19 +151,26 @@ const createOrder = async (req, res) => {
 };
 
 // @desc    Verify Razorpay payment
-// @route   POST /api/payments/verify-payment
+// @route   POST /api/payments/verify
 // @access  Public
 const verifyPayment = async (req, res) => {
     try {
-        const {
+        console.log('[Payment Debug] Verification request received:', req.body);
+        
+        // Handle different Razorpay response formats
+        const razorpayOrderId = req.body.razorpay_order_id || req.body.order_id;
+        const razorpayPaymentId = req.body.razorpay_payment_id || req.body.payment_id;
+        const razorpaySignature = req.body.razorpay_signature || req.body.signature;
+
+        console.log('[Payment Debug] Extracted values:', {
             razorpayOrderId,
             razorpayPaymentId,
-            razorpaySignature,
-            enrollmentId
-        } = req.body;
+            razorpaySignature: razorpaySignature ? 'present' : 'missing'
+        });
 
         // Validate inputs
-        if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature || !enrollmentId) {
+        if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
+            console.log('[Payment Debug] Missing required fields');
             return res.status(400).json({
                 success: false,
                 message: 'Missing payment verification details'
@@ -155,16 +184,37 @@ const verifyPayment = async (req, res) => {
             .update(body.toString())
             .digest('hex');
 
+        console.log('[Payment Debug] Signature verification:', {
+            body,
+            expectedSignature,
+            receivedSignature: razorpaySignature,
+            match: expectedSignature === razorpaySignature
+        });
+
         if (expectedSignature !== razorpaySignature) {
+            console.log('[Payment Debug] Signature mismatch');
             return res.status(400).json({
                 success: false,
                 message: 'Invalid payment signature'
             });
         }
 
+        // Find enrollment by razorpay order ID
+        console.log('[Payment Debug] Looking for enrollment with order ID:', razorpayOrderId);
+        const enrollment = await Enrollment.findOne({ razorpayOrderId });
+        console.log('[Payment Debug] Found enrollment:', enrollment ? 'yes' : 'no');
+        
+        if (!enrollment) {
+            console.log('[Payment Debug] Enrollment not found');
+            return res.status(404).json({
+                success: false,
+                message: 'Enrollment not found for this order'
+            });
+        }
+
         // Update enrollment record
-        const enrollment = await Enrollment.findByIdAndUpdate(
-            enrollmentId,
+        const updatedEnrollment = await Enrollment.findByIdAndUpdate(
+            enrollment._id,
             {
                 paymentStatus: 'completed',
                 razorpayPaymentId,
@@ -174,42 +224,16 @@ const verifyPayment = async (req, res) => {
             { new: true }
         ).populate('course', 'title');
 
-        if (!enrollment) {
-            return res.status(404).json({
-                success: false,
-                message: 'Enrollment not found'
-            });
-        }
-
-        // If user is authenticated, link enrollment to their account
-        if (req.user && req.user.id) {
-            // Update enrollment with student ID
-            enrollment.student = req.user.id;
-            await enrollment.save();
-
-            // Add student to course's enrolledStudents
-            const course = await Course.findById(enrollment.course._id);
-            if (course && !course.enrolledStudents.includes(req.user.id)) {
-                course.enrolledStudents.push(req.user.id);
-                await course.save();
-            }
-
-            // Update user profile to include course enrollment
-            await User.findByIdAndUpdate(
-                req.user.id,
-                { $addToSet: { enrolledCourses: enrollment.course._id } },
-                { new: true }
-            );
-        }
+        console.log('[Payment Debug] Enrollment updated successfully');
 
         res.status(200).json({
             success: true,
             message: 'Payment verified successfully',
             enrollment: {
-                _id: enrollment._id,
-                courseName: enrollment.course.title,
-                paymentStatus: enrollment.paymentStatus,
-                enrollmentDate: enrollment.enrollmentDate
+                _id: updatedEnrollment._id,
+                courseName: updatedEnrollment.course.title,
+                paymentStatus: updatedEnrollment.paymentStatus,
+                enrollmentDate: updatedEnrollment.enrollmentDate
             }
         });
 
@@ -218,6 +242,92 @@ const verifyPayment = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error verifying payment',
+            error: error.message
+        });
+    }
+};
+
+// @desc    Initiate refund for failed payment
+// @route   POST /api/payments/refund
+// @access  Public
+const initiateRefund = async (req, res) => {
+    try {
+        const { razorpay_payment_id, amount, reason } = req.body;
+
+        if (!razorpay_payment_id || !amount) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing refund details'
+            });
+        }
+
+        // Create refund
+        const refund = await razorpay.payments.refund(razorpay_payment_id, {
+            amount: amount,
+            notes: {
+                reason: reason || 'Payment verification failed',
+                timestamp: new Date().toISOString()
+            }
+        });
+
+        // Update enrollment status to refunded
+        await Enrollment.findOneAndUpdate(
+            { razorpayPaymentId: razorpay_payment_id },
+            { 
+                paymentStatus: 'refunded',
+                status: 'cancelled'
+            }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Refund initiated successfully',
+            refundId: refund.id
+        });
+
+    } catch (error) {
+        console.error('[Payment Error] Refund:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error initiating refund',
+            error: error.message
+        });
+    }
+};
+
+// @desc    Handle payment cancellation
+// @route   POST /api/payments/cancel
+// @access  Public
+const handlePaymentCancellation = async (req, res) => {
+    try {
+        const { razorpay_order_id } = req.body;
+
+        if (!razorpay_order_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing order ID'
+            });
+        }
+
+        // Update enrollment status to cancelled
+        await Enrollment.findOneAndUpdate(
+            { razorpayOrderId: razorpay_order_id },
+            { 
+                paymentStatus: 'cancelled',
+                status: 'cancelled'
+            }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Payment cancelled successfully'
+        });
+
+    } catch (error) {
+        console.error('[Payment Error] Cancellation:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error cancelling payment',
             error: error.message
         });
     }
@@ -297,6 +407,8 @@ const getEnrollment = async (req, res) => {
 module.exports = {
     createOrder,
     verifyPayment,
+    initiateRefund,
+    handlePaymentCancellation,
     getPaymentStatus,
     getEnrollment
 };
