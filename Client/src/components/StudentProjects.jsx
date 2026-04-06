@@ -88,7 +88,7 @@ const PROJECTS_DATA = [
     title: "Netflix Clone",
     category: "Full Stack Development",
     description: "A fully functional Netflix clone with movie browsing, trailer playback, user authentication, and personalized recommendations.",
-    image: "/projects/ai-chat.png",
+    image: "/projects/netflix_clone.png",
     tech: ["React", "Node.js", "MongoDB", "TMDB API", "Stripe"],
     stats: { stars: 342, forks: 89, views: "3.2k" },
     featured: true,

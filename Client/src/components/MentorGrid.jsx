@@ -48,7 +48,7 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Sashwat Vashisth",
+        name: "Shashwat Vashisth",
         role: "Mentor AI/ML",
         image: null,
         imageScale: 1.0,

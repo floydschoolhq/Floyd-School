@@ -82,7 +82,7 @@ const courseSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        default: 10,
+        default: 1,
         min: 0
     },
     currency: {
