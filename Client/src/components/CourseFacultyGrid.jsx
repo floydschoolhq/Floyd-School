@@ -70,7 +70,7 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
             
             {/* Image Section: High-End Industrial Housing */}
-            <div className="w-24 h-24 md:w-36 md:h-36 flex-shrink-0 relative">
+            <div className="w-24 h-24 md:w-36 md:h-36 flex-shrink-0 relative pt-4 md:pt-6">
                 {/* Rotating Border Aura */}
                 <motion.div 
                     animate={isMobile ? {} : { rotate: 360 }}
