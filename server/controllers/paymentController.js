@@ -140,10 +140,13 @@ const createOrder = async (req, res) => {
 
     } catch (error) {
         const razorpayError = error.error || {};
-        console.error('[Payment Error] Create Order:', error);
+        console.error('[Payment Error] Create Order - Full Error:', error);
+        console.error('[Payment Error] Razorpay Error Details:', razorpayError);
+        console.error('[Payment Error] Error Message:', error.message);
+        console.error('[Payment Error] Error Stack:', error.stack);
         res.status(500).json({
             success: false,
-            message: 'Error creating payment order',
+            message: 'Error creating payment order: ' + (razorpayError.description || error.message || 'Unknown error'),
             detail: razorpayError.description || razorpayError.reason || error.message,
             raw: razorpayError
         });

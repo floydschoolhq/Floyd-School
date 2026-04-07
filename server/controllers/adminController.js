@@ -8,6 +8,7 @@ const Notification = require('../models/Notification');
 const Settings = require('../models/Settings');
 const Comment = require('../models/Comment');
 const LiveChat = require('../models/LiveChat');
+const Enrollment = require('../models/Enrollment');
 
 /**
  * @desc    Get platform-wide statistics for Admin
@@ -607,6 +608,69 @@ exports.getGrowthIntelligence = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Growth Intelligence Signal Corrupted',
+            error: error.message
+        });
+    }
+};
+
+/**
+ * @desc    Get all payment/enrollment records for admin tracking
+ * @route   GET /api/admin/payments
+ * @access  Private/Admin
+ */
+exports.getPaymentRecords = async (req, res) => {
+    try {
+        const { status, courseId, search } = req.query;
+        
+        let query = {};
+        
+        // Filter by payment status
+        if (status && status !== 'all') {
+            query.paymentStatus = status;
+        }
+        
+        // Filter by course
+        if (courseId) {
+            query.course = courseId;
+        }
+        
+        // Search by name or email
+        if (search) {
+            query.$or = [
+                { 'userDetails.fullName': { $regex: search, $options: 'i' } },
+                { 'userDetails.email': { $regex: search, $options: 'i' } },
+                { razorpayOrderId: { $regex: search, $options: 'i' } },
+                { razorpayPaymentId: { $regex: search, $options: 'i' } }
+            ];
+        }
+        
+        const enrollments = await Enrollment.find(query)
+            .populate('course', 'title price')
+            .populate('student', 'name email')
+            .sort({ createdAt: -1 });
+        
+        // Calculate stats
+        const stats = {
+            total: enrollments.length,
+            completed: enrollments.filter(e => e.paymentStatus === 'completed').length,
+            pending: enrollments.filter(e => e.paymentStatus === 'pending').length,
+            failed: enrollments.filter(e => e.paymentStatus === 'failed').length,
+            refunded: enrollments.filter(e => e.paymentStatus === 'refunded').length,
+            totalRevenue: enrollments
+                .filter(e => e.paymentStatus === 'completed')
+                .reduce((sum, e) => sum + (e.amount || 0), 0)
+        };
+        
+        res.status(200).json({
+            success: true,
+            stats,
+            enrollments
+        });
+    } catch (error) {
+        console.error('[AdminController:getPaymentRecords] ERROR:', error.stack);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching payment records',
             error: error.message
         });
     }

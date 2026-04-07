@@ -7,6 +7,9 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
+import niteshImg from '../assets/tutors/nitesh.jpg';
+import poojaImg from '../assets/tutors/pooja.jpg';
+import shashwatImg from '../assets/tutors/shashwat.jpg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -48,10 +51,11 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Shashwat Vashisth",
+        name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
-        image: null,
+        image: shashwatImg,
         imageScale: 1.0,
+        imagePosition: "object-center",
         bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm", "Data Science"]
@@ -68,8 +72,9 @@ const LEADERS = [
     {
         name: "Nitesh Kumar",
         role: "UI and UX Management",
-        image: null,
+        image: niteshImg,
         imageScale: 1.0,
+        imagePosition: "object-[center_20%]",
         bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
         linkedin: "#",
         tags: ["UI/UX", "Management", "Leadership"]
@@ -77,7 +82,7 @@ const LEADERS = [
     {
         name: "Pooja Kumari",
         role: "UI and UX Management",
-        image: null,
+        image: poojaImg,
         imageScale: 1.0,
         bio: "Expert in user-centric design strategies and management for professional-grade platforms.",
         linkedin: "#",
@@ -108,7 +113,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                                 <img
                                     src={mentor.image}
                                     alt={mentor.name}
-                                    className="w-full h-full object-cover object-top"
+                                    className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'}`}
                                     style={{ transform: `scale(${mentor.imageScale})` }}
                                 />
                             </div>
@@ -169,7 +174,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         <img
                             src={mentor.image}
                             alt={mentor.name}
-                            className="w-full h-full object-cover object-top transition-all duration-1000 group-hover:scale-105"
+                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'} transition-all duration-1000 group-hover:scale-105`}
                             style={{ transform: `scale(${mentor.imageScale})` }}
                         />
                     </div>
@@ -303,7 +308,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                         <img 
                                             src={mentor.image} 
                                             alt={mentor.name} 
-                                            className="w-full h-full object-cover object-top"
+                                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'}`}
                                             style={{ transform: `scale(${mentor.imageScale})` }}
                                         />
                                     </div>
