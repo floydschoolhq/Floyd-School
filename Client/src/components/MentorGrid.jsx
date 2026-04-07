@@ -51,11 +51,11 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Shashwat Vashisth",
+        name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
         image: shashwatImg,
         imageScale: 1.0,
-        imagePosition: "object-bottom",
+        imagePosition: "object-center",
         bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm", "Data Science"]
