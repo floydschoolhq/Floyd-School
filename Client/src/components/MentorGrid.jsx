@@ -74,6 +74,7 @@ const LEADERS = [
         role: "UI and UX Management",
         image: niteshImg,
         imageScale: 1.0,
+        imagePosition: "object-[center_20%]",
         bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
         linkedin: "#",
         tags: ["UI/UX", "Management", "Leadership"]
