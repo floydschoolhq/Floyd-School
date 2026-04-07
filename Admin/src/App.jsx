@@ -20,6 +20,7 @@ import AccessRequests from './pages/AccessRequests';
 import LiveMonitoring from './pages/LiveMonitoring';
 import StudentRegistrations from './pages/StudentRegistrations';
 import RecordingsManagement from './pages/RecordingsManagement';
+import PaymentTracking from './pages/PaymentTracking';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
               <Route path="settings" element={<SystemSettings />} />
               <Route path="monitoring" element={<LiveMonitoring />} />
               <Route path="recordings" element={<RecordingsManagement />} />
+              <Route path="payments" element={<PaymentTracking />} />
               <Route path="logs" element={<SecurityLogs />} />
             </Route>
 
