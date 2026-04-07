@@ -7,6 +7,8 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
+import niteshImg from '../assets/tutors/nitesh.jpg';
+import poojaImg from '../assets/tutors/pooja.jpg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -68,7 +70,7 @@ const LEADERS = [
     {
         name: "Nitesh Kumar",
         role: "UI and UX Management",
-        image: null,
+        image: niteshImg,
         imageScale: 1.0,
         bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
         linkedin: "#",
@@ -77,7 +79,7 @@ const LEADERS = [
     {
         name: "Pooja Kumari",
         role: "UI and UX Management",
-        image: null,
+        image: poojaImg,
         imageScale: 1.0,
         bio: "Expert in user-centric design strategies and management for professional-grade platforms.",
         linkedin: "#",
