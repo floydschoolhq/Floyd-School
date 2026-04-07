@@ -24,8 +24,8 @@ const LEADERS = [
         name: "Anamika Vashisth",
         role: "Growth Associate",
         image: ananimikaImg,
-        imageScale: 1.15,
-        imagePosition: "object-[center_30%]",
+        imageScale: 1,
+        imagePosition: "object-[center_15%]",
         bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
         linkedin: "#",
         tags: ["UI/UX", "Design", "Product"]
@@ -35,7 +35,7 @@ const LEADERS = [
         role: "Help Associate",
         image: abhayImg,
         imageScale: 1.4,
-        imagePosition: "object-[center_30%]",
+        imagePosition: "object-[center_10%]",
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
@@ -44,7 +44,7 @@ const LEADERS = [
         name: "Raghav",
         role: "Mentor",
         image: raghavImg,
-        imageScale: 1.9,
+        imageScale: 2.5,
         bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["Lead Mentor", "Architect", "Eng"]
