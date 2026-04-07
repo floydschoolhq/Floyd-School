@@ -25,6 +25,7 @@ const LEADERS = [
         role: "Growth Associate",
         image: ananimikaImg,
         imageScale: 1.15,
+        imagePosition: "object-[center_30%]",
         bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
         linkedin: "#",
         tags: ["UI/UX", "Design", "Product"]
@@ -34,6 +35,7 @@ const LEADERS = [
         role: "Help Associate",
         image: abhayImg,
         imageScale: 1.4,
+        imagePosition: "object-[center_30%]",
         bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Dev", "Manager", "Full Stack"]
@@ -91,10 +93,9 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                     <img 
                         src={mentor.image} 
                         alt={mentor.name}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${mentor.imagePosition || 'object-center'}`}
                         style={{ 
-                            transform: `scale(${mentor.imageScale})`,
-                            transformOrigin: mentor.name === 'Abhay Singh Chauhan' ? 'center 15%' : 'center'
+                            transform: `scale(${mentor.imageScale})`
                         }}
                     />
                     
