@@ -454,6 +454,7 @@ exports.processSystemCommand = async (req, res) => {
             case 'clear':
                 output = ['__CLEAR__']; // Special token for frontend to clear terminal
                 break;
+            case 'maintenance-on':
                 const settings = await Settings.getInstance();
                 settings.maintenanceMode.isActive = true;
                 await settings.save();
