@@ -9,7 +9,7 @@ let isBackendAvailable = true;
 const api = axios.create({
     baseURL: `${baseURL}/api`,
     withCredentials: true,
-    timeout: 5000 // 5 second timeout for faster fallback
+    timeout: 15000 // 15 second timeout (increased for payment operations)
 });
 
 // Add a request interceptor to include the token in headers
@@ -19,6 +19,12 @@ api.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // Use longer timeout for payment-related requests
+        if (config.url && (config.url.includes('/payments') || config.url.includes('/payment'))) {
+            config.timeout = 30000; // 30 seconds for payment calls
+        }
+
         return config;
     },
     (error) => {
@@ -64,6 +70,12 @@ api.interceptors.response.use(
                 window.location.href = '/student/login';
             }
         }
+
+        // Handle rate limiting (429)
+        if (error.response?.status === 429) {
+            console.warn('Rate limited. Please wait before retrying.');
+        }
+
         return Promise.reject(error);
     }
 );

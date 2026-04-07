@@ -167,7 +167,7 @@ const App = () => {
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/course' element={<Course />} />
                 <Route path='/course/:courseId' element={<CourseDetails />} />
-                <Route path='/admin/messages' element={<AdminMessages variant="dark" />} />
+                <Route path='/admin/messages' element={<ProtectedRoute><AdminMessages variant="dark" /></ProtectedRoute>} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={

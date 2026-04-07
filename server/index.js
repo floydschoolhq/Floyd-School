@@ -5,11 +5,19 @@ const http = require('http');
 const mongoose = require('mongoose');
 const path = require('path');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 // Load env variables first
 process.chdir(__dirname); // Change to script directory
 dotenv.config();
 console.log('Environment loaded. RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID);
+
+// CRITICAL: Check JWT_SECRET before accepting any requests
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your_jwt_secret_here_change_this_in_production') {
+    console.error('CRITICAL ERROR: JWT_SECRET is not defined or is using default value. Server cannot start safely.');
+    process.exit(1);
+}
 
 // Set MONGODB_URI from MONGO_URI for compatibility
 if (process.env.MONGO_URI && !process.env.MONGODB_URI) {
@@ -49,15 +57,15 @@ const allowedOrigins = [
 
 const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests with no origin
+        // Allow requests with no origin (mobile apps, Postman, etc.)
         if (!origin) return callback(null, true);
 
         // Strip trailing slash for comparison
         const cleanOrigin = origin.replace(/\/$/, "");
         const cleanAllowed = allowedOrigins.map(o => o.replace(/\/$/, ""));
 
-        // Check if origin is in allowed list or is a Vercel/Render deployment
-        if (cleanAllowed.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app') || cleanOrigin.endsWith('.onrender.com')) {
+        // SECURITY FIX: Only allow exact match origins (removed .vercel.app/.onrender.com wildcards)
+        if (cleanAllowed.includes(cleanOrigin)) {
             callback(null, true);
         } else {
             console.error('[CORS ERROR] Blocked Origin:', origin);
@@ -77,16 +85,63 @@ const io = new Server(server, {
 // Make io accessible in routes
 app.set('io', io);
 
-// CORS configuration for Express
-app.use(cors(corsOptions));
-app.use(morgan('dev'));
-app.use(express.json());
+// ===== SECURITY MIDDLEWARE =====
 
-// Set security headers to allow Firebase popups and cross-origin resources
-app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    next();
+// Helmet: Sets various HTTP headers for security (XSS, clickjacking, MIME sniffing, etc.)
+app.use(helmet({
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+
+// CORS
+app.use(cors(corsOptions));
+
+// Morgan: Only use verbose logging in development
+if (process.env.NODE_ENV !== 'production') {
+    app.use(morgan('dev'));
+} else {
+    app.use(morgan('combined'));
+}
+
+// Body parser with size limit to prevent large payload attacks
+app.use(express.json({ limit: '10kb' }));
+
+// ===== RATE LIMITERS =====
+
+// General API rate limit: 100 requests per 15 minutes per IP
+const generalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: { success: false, message: 'Too many requests, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Auth rate limit: 10 attempts per 15 minutes per IP (prevent brute force)
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: { success: false, message: 'Too many login attempts, please try again after 15 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Payment rate limit: 5 orders per 15 minutes per IP (prevent spam)
+const paymentLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: { success: false, message: 'Too many payment requests, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Lead/contact rate limit: 5 submissions per 15 minutes per IP
+const formLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: { success: false, message: 'Too many submissions, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false
 });
 
 // Database connection health check middleware
@@ -112,28 +167,36 @@ app.use((req, res, next) => {
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/assignments', assignmentRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/code', codeExecutionRoutes);
-app.use('/api/leads', leadRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/notifications', require('./routes/notificationRoutes'));
-app.use('/api/students', require('./routes/studentRoutes'));
-app.use('/api/mentors', require('./routes/mentorRoutes'));
-app.use('/api/masterclasses', require('./routes/masterclassRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
-app.use('/api/growth', require('./routes/growthRoutes'));
-app.use('/api/support', require('./routes/supportRoutes'));
-app.use('/api/comments', require('./routes/commentRoutes'));
-app.use('/api/why-us', require('./routes/whyUsRoutes'));
-app.use('/api/live-classes', liveClassRoutes);
-app.use('/api/live-chat', require('./routes/liveChatRoutes'));
-app.use('/api/doubts', doubtRoutes);
-app.use('/api/scheduled-live', scheduledLiveRoutes);
+// ===== ROUTES WITH RATE LIMITERS =====
+
+// Auth routes with brute-force protection
+app.use('/api/auth', authLimiter, authRoutes);
+
+// Payment routes with payment-specific rate limiting
+app.use('/api/payments', paymentLimiter, paymentRoutes);
+
+// Contact/lead routes with form spam protection
+app.use('/api/contact', formLimiter, contactRoutes);
+app.use('/api/leads', formLimiter, leadRoutes);
+
+// General API routes with standard rate limiting
+app.use('/api/courses', generalLimiter, courseRoutes);
+app.use('/api/assignments', generalLimiter, assignmentRoutes);
+app.use('/api/dashboard', generalLimiter, dashboardRoutes);
+app.use('/api/code', generalLimiter, codeExecutionRoutes);
+app.use('/api/notifications', generalLimiter, require('./routes/notificationRoutes'));
+app.use('/api/students', generalLimiter, require('./routes/studentRoutes'));
+app.use('/api/mentors', generalLimiter, require('./routes/mentorRoutes'));
+app.use('/api/masterclasses', generalLimiter, require('./routes/masterclassRoutes'));
+app.use('/api/admin', generalLimiter, require('./routes/adminRoutes'));
+app.use('/api/growth', generalLimiter, require('./routes/growthRoutes'));
+app.use('/api/support', generalLimiter, require('./routes/supportRoutes'));
+app.use('/api/comments', generalLimiter, require('./routes/commentRoutes'));
+app.use('/api/why-us', generalLimiter, require('./routes/whyUsRoutes'));
+app.use('/api/live-classes', generalLimiter, liveClassRoutes);
+app.use('/api/live-chat', generalLimiter, require('./routes/liveChatRoutes'));
+app.use('/api/doubts', generalLimiter, doubtRoutes);
+app.use('/api/scheduled-live', generalLimiter, scheduledLiveRoutes);
 app.use('/api/public', require('./routes/publicRoutes'));
 
 // Catch-all for /review requests
@@ -193,6 +256,14 @@ io.on('connection', (socket) => {
     });
 });
 
+// 404 handler for unknown API routes (Express 5 syntax)
+app.use('/api/{*path}', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `API endpoint not found: ${req.method} ${req.originalUrl}`
+    });
+});
+
 // Global Error Handler
 app.use((err, req, res, next) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
@@ -201,7 +272,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json({
         success: false,
         message: err.message || 'Internal Server Error',
-        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+        stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
     });
 });
 
@@ -212,11 +283,15 @@ server.listen(PORT, () => {
     console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`);
 
     const { checkAndUpdateStatus } = require('./controllers/scheduledLiveController');
-    setInterval(checkAndUpdateStatus, 60000);
+    const statusInterval = setInterval(() => {
+        checkAndUpdateStatus().catch(err => {
+            console.error('[Scheduler] checkAndUpdateStatus error:', err.message);
+        });
+    }, 60000);
 
-    if (!process.env.JWT_SECRET) {
-        console.error('CRITICAL ERROR: JWT_SECRET is not defined in environment variables. Server cannot start.');
-        process.exit(1);
-    }
+    // Clean up on shutdown
+    process.on('SIGTERM', () => {
+        clearInterval(statusInterval);
+        server.close();
+    });
 });
-

@@ -97,10 +97,17 @@ const Footer = () => {
             </p>
 
             <div className="flex space-x-4">
-              {[FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram].map((Icon, index) => (
+              {[
+                { icon: FaFacebookF, href: 'https://www.facebook.com/thinkskool.in' },
+                { icon: FaTwitter, href: 'https://www.twitter.com/thinkskool' },
+                { icon: FaLinkedinIn, href: 'https://www.linkedin.com/company/thinkskool/' },
+                { icon: FaInstagram, href: 'https://www.instagram.com/thinkskool.in?igsh=MWlhOWlpc2ZuOGd6&utm_source=qr' }
+              ].map(({ icon: Icon, href }, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 bg-white/[0.03] backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center text-slate-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-700 shadow-2xl group"
                 >
                   <Icon size={18} className="group-hover:scale-110 transition-transform" />

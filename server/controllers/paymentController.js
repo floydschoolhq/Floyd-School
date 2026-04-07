@@ -27,7 +27,7 @@ const createOrder = async (req, res) => {
     if (!hasRazorpayCredentials || !razorpay) {
         return res.status(500).json({
             success: false,
-            message: 'Payment gateway is not configured. Please provide Razorpay credentials.'
+            message: 'Payment gateway is not configured. Please contact support.'
         });
     }
 
@@ -42,6 +42,19 @@ const createOrder = async (req, res) => {
             });
         }
 
+        // Input sanitization
+        const sanitizedEmail = email.trim().toLowerCase();
+        const sanitizedPhone = phone.trim().replace(/\D/g, '');
+        const sanitizedName = fullName.trim();
+
+        if (!/\S+@\S+\.\S+/.test(sanitizedEmail)) {
+            return res.status(400).json({ success: false, message: 'Invalid email format' });
+        }
+
+        if (sanitizedPhone.length !== 10) {
+            return res.status(400).json({ success: false, message: 'Phone must be 10 digits' });
+        }
+
         // Get course details - handle both ObjectId and string IDs
         let course;
         
@@ -54,14 +67,11 @@ const createOrder = async (req, res) => {
         };
         
         if (courseMapping[courseId]) {
-            // Find course by title for fallback data
             course = await Course.findOne({ title: courseMapping[courseId] });
         } else {
-            // Try to find by ObjectId first
             try {
                 course = await Course.findById(courseId);
             } catch (error) {
-                // If ObjectId conversion fails, try finding by title
                 course = await Course.findOne({ title: courseId });
             }
         }
@@ -83,9 +93,24 @@ const createOrder = async (req, res) => {
             });
         }
 
+        // IDEMPOTENCY: Check if there's already a pending order for this email+course in last 10 minutes
+        const recentPending = await Enrollment.findOne({
+            'userDetails.email': sanitizedEmail,
+            course: course._id,
+            paymentStatus: 'pending',
+            createdAt: { $gte: new Date(Date.now() - 10 * 60 * 1000) }
+        });
+
+        if (recentPending) {
+            return res.status(429).json({
+                success: false,
+                message: 'A payment order was recently created. Please complete or wait before trying again.'
+            });
+        }
+
         // Check if email already enrolled in this course
         const existingEnrollment = await Enrollment.findOne({
-            'userDetails.email': email,
+            'userDetails.email': sanitizedEmail,
             course: course._id,
             paymentStatus: 'completed'
         });
@@ -105,14 +130,14 @@ const createOrder = async (req, res) => {
             notes: {
                 courseId: courseId.toString(),
                 courseName: course.title,
-                studentName: fullName,
-                studentEmail: email
+                studentName: sanitizedName,
+                studentEmail: sanitizedEmail
             }
         };
 
         const order = await razorpay.orders.create(orderOptions);
 
-        // Create enrollment record in pending state (without user ID initially)
+        // Create enrollment record in pending state
         const enrollment = await Enrollment.create({
             course: course._id,
             paymentStatus: 'pending',
@@ -120,9 +145,9 @@ const createOrder = async (req, res) => {
             amount: coursePrice,
             currency: course.currency || 'INR',
             userDetails: {
-                fullName,
-                email,
-                phone
+                fullName: sanitizedName,
+                email: sanitizedEmail,
+                phone: sanitizedPhone
             }
         });
 
@@ -139,16 +164,10 @@ const createOrder = async (req, res) => {
         });
 
     } catch (error) {
-        const razorpayError = error.error || {};
-        console.error('[Payment Error] Create Order - Full Error:', error);
-        console.error('[Payment Error] Razorpay Error Details:', razorpayError);
-        console.error('[Payment Error] Error Message:', error.message);
-        console.error('[Payment Error] Error Stack:', error.stack);
+        console.error('[Payment Error] Create Order:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error creating payment order: ' + (razorpayError.description || error.message || 'Unknown error'),
-            detail: razorpayError.description || razorpayError.reason || error.message,
-            raw: razorpayError
+            message: 'Error creating payment order. Please try again.'
         });
     }
 };
@@ -158,44 +177,35 @@ const createOrder = async (req, res) => {
 // @access  Public
 const verifyPayment = async (req, res) => {
     try {
-        console.log('[Payment Debug] Verification request received:', req.body);
-        
         // Handle different Razorpay response formats
         const razorpayOrderId = req.body.razorpay_order_id || req.body.order_id;
         const razorpayPaymentId = req.body.razorpay_payment_id || req.body.payment_id;
         const razorpaySignature = req.body.razorpay_signature || req.body.signature;
 
-        console.log('[Payment Debug] Extracted values:', {
-            razorpayOrderId,
-            razorpayPaymentId,
-            razorpaySignature: razorpaySignature ? 'present' : 'missing'
-        });
-
         // Validate inputs
         if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
-            console.log('[Payment Debug] Missing required fields');
             return res.status(400).json({
                 success: false,
                 message: 'Missing payment verification details'
             });
         }
 
-        // Verify signature
+        // Verify signature using HMAC
         const body = razorpayOrderId + '|' + razorpayPaymentId;
         const expectedSignature = crypto
             .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             .update(body.toString())
             .digest('hex');
 
-        console.log('[Payment Debug] Signature verification:', {
-            body,
-            expectedSignature,
-            receivedSignature: razorpaySignature,
-            match: expectedSignature === razorpaySignature
-        });
+        // SECURITY: Use timing-safe comparison to prevent timing attacks
+        const isSignatureValid = expectedSignature.length === razorpaySignature.length &&
+            crypto.timingSafeEqual(
+                Buffer.from(expectedSignature, 'hex'),
+                Buffer.from(razorpaySignature, 'hex')
+            );
 
-        if (expectedSignature !== razorpaySignature) {
-            console.log('[Payment Debug] Signature mismatch');
+        if (!isSignatureValid) {
+            console.warn('[Payment Security] Invalid signature for order:', razorpayOrderId);
             return res.status(400).json({
                 success: false,
                 message: 'Invalid payment signature'
@@ -203,16 +213,48 @@ const verifyPayment = async (req, res) => {
         }
 
         // Find enrollment by razorpay order ID
-        console.log('[Payment Debug] Looking for enrollment with order ID:', razorpayOrderId);
         const enrollment = await Enrollment.findOne({ razorpayOrderId });
-        console.log('[Payment Debug] Found enrollment:', enrollment ? 'yes' : 'no');
         
         if (!enrollment) {
-            console.log('[Payment Debug] Enrollment not found');
             return res.status(404).json({
                 success: false,
                 message: 'Enrollment not found for this order'
             });
+        }
+
+        // Prevent double verification
+        if (enrollment.paymentStatus === 'completed') {
+            return res.status(200).json({
+                success: true,
+                message: 'Payment already verified',
+                enrollment: {
+                    _id: enrollment._id,
+                    paymentStatus: enrollment.paymentStatus
+                }
+            });
+        }
+
+        // SECURITY: Verify payment amount matches the course price via Razorpay API
+        if (razorpay) {
+            try {
+                const payment = await razorpay.payments.fetch(razorpayPaymentId);
+                const expectedAmountPaise = Math.round(enrollment.amount * 100);
+
+                if (payment.amount !== expectedAmountPaise) {
+                    console.error('[Payment Security] Amount mismatch!', {
+                        expected: expectedAmountPaise,
+                        received: payment.amount,
+                        orderId: razorpayOrderId
+                    });
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Payment amount mismatch. Please contact support.'
+                    });
+                }
+            } catch (fetchError) {
+                console.error('[Payment Warning] Could not verify payment amount:', fetchError.message);
+                // Continue with enrollment if fetch fails - signature is already verified
+            }
         }
 
         // Update enrollment record
@@ -227,8 +269,6 @@ const verifyPayment = async (req, res) => {
             { new: true }
         ).populate('course', 'title');
 
-        console.log('[Payment Debug] Enrollment updated successfully');
-
         res.status(200).json({
             success: true,
             message: 'Payment verified successfully',
@@ -241,18 +281,17 @@ const verifyPayment = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('[Payment Error] Verify Payment:', error);
+        console.error('[Payment Error] Verify Payment:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error verifying payment',
-            error: error.message
+            message: 'Error verifying payment'
         });
     }
 };
 
 // @desc    Initiate refund for failed payment
 // @route   POST /api/payments/refund
-// @access  Public
+// @access  Private/Admin (protected by route middleware)
 const initiateRefund = async (req, res) => {
     try {
         const { razorpay_payment_id, amount, reason } = req.body;
@@ -269,6 +308,7 @@ const initiateRefund = async (req, res) => {
             amount: amount,
             notes: {
                 reason: reason || 'Payment verification failed',
+                refundedBy: req.user?.email || 'system',
                 timestamp: new Date().toISOString()
             }
         });
@@ -282,6 +322,8 @@ const initiateRefund = async (req, res) => {
             }
         );
 
+        console.log(`[Payment] Refund initiated by ${req.user?.email} for payment ${razorpay_payment_id}`);
+
         res.status(200).json({
             success: true,
             message: 'Refund initiated successfully',
@@ -289,18 +331,17 @@ const initiateRefund = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('[Payment Error] Refund:', error);
+        console.error('[Payment Error] Refund:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error initiating refund',
-            error: error.message
+            message: 'Error initiating refund'
         });
     }
 };
 
 // @desc    Handle payment cancellation
 // @route   POST /api/payments/cancel
-// @access  Public
+// @access  Private (protected by route middleware)
 const handlePaymentCancellation = async (req, res) => {
     try {
         const { razorpay_order_id } = req.body;
@@ -327,12 +368,84 @@ const handlePaymentCancellation = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('[Payment Error] Cancellation:', error);
+        console.error('[Payment Error] Cancellation:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error cancelling payment',
-            error: error.message
+            message: 'Error cancelling payment'
         });
+    }
+};
+
+// @desc    Handle Razorpay webhooks for payment verification
+// @route   POST /api/payments/webhook
+// @access  Public (but secured with webhook signature)
+const handleRazorpayWebhook = async (req, res) => {
+    try {
+        const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+        
+        // Verify webhook signature
+        const razorpaySignature = req.headers['x-razorpay-signature'];
+        const webhookBody = JSON.stringify(req.body);
+        
+        if (!razorpaySignature) {
+            console.log('[Webhook] Missing signature');
+            return res.status(400).json({ success: false, message: 'Missing webhook signature' });
+        }
+        
+        const expectedSignature = crypto
+            .createHmac('sha256', webhookSecret || process.env.RAZORPAY_KEY_SECRET)
+            .update(webhookBody)
+            .digest('hex');
+            
+        if (expectedSignature !== razorpaySignature) {
+            console.log('[Webhook] Invalid signature');
+            return res.status(400).json({ success: false, message: 'Invalid webhook signature' });
+        }
+        
+        console.log('[Webhook] Received webhook:', req.body);
+        
+        const { event, payload } = req.body;
+        
+        if (event === 'payment.captured') {
+            // Payment successfully captured
+            const { payment } = payload;
+            const { order_id, payment_id, amount, currency } = payment.entity;
+            
+            // Find and update enrollment
+            const enrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
+            if (enrollment) {
+                await Enrollment.findByIdAndUpdate(enrollment._id, {
+                    paymentStatus: 'completed',
+                    razorpayPaymentId: payment_id,
+                    status: 'active',
+                    completedAt: new Date()
+                });
+                
+                console.log('[Webhook] Payment completed via webhook:', order_id);
+            }
+            
+        } else if (event === 'payment.failed') {
+            // Payment failed
+            const { payment } = payload;
+            const { order_id } = payment.entity;
+            
+            // Update enrollment status
+            const enrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
+            if (enrollment) {
+                await Enrollment.findByIdAndUpdate(enrollment._id, {
+                    paymentStatus: 'failed',
+                    status: 'cancelled'
+                });
+                
+                console.log('[Webhook] Payment failed via webhook:', order_id);
+            }
+        }
+        
+        res.status(200).json({ success: true, message: 'Webhook processed' });
+        
+    } catch (error) {
+        console.error('[Webhook Error]:', error);
+        res.status(500).json({ success: false, message: 'Webhook processing failed' });
     }
 };
 
@@ -355,7 +468,7 @@ const getPaymentStatus = async (req, res) => {
         }
 
         // Verify ownership
-        if (enrollment.student.toString() !== userId) {
+        if (enrollment.student && enrollment.student.toString() !== userId) {
             return res.status(403).json({
                 success: false,
                 message: 'Unauthorized access'
@@ -364,15 +477,19 @@ const getPaymentStatus = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            enrollment
+            enrollment: {
+                _id: enrollment._id,
+                paymentStatus: enrollment.paymentStatus,
+                amount: enrollment.amount,
+                courseName: enrollment.course?.title
+            }
         });
 
     } catch (error) {
-        console.error('[Payment Error] Get Status:', error);
+        console.error('[Payment Error] Get Status:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error fetching payment status',
-            error: error.message
+            message: 'Error fetching payment status'
         });
     }
 };
@@ -398,11 +515,10 @@ const getEnrollment = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('[Payment Error] Get Enrollment:', error);
+        console.error('[Payment Error] Get Enrollment:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Error fetching enrollment',
-            error: error.message
+            message: 'Error fetching enrollment'
         });
     }
 };
@@ -412,6 +528,7 @@ module.exports = {
     verifyPayment,
     initiateRefund,
     handlePaymentCancellation,
+    handleRazorpayWebhook,
     getPaymentStatus,
     getEnrollment
 };
