@@ -52,6 +52,7 @@ const allowedOrigins = [
     'http://localhost:3000',
     'https://thinkskool-mxyc.vercel.app', // Direct Vercel Origin
     'https://thinkskool-wb9u.vercel.app', // Mentor Panel Vercel Origin
+    'https://thinkskool-9kaq.vercel.app', // Growth Associate Panel Vercel Origin
     'https://www.thinkskool.in', // Custom domain
     'https://thinkskool.in' // Custom domain without www
 ];
