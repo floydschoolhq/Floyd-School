@@ -9,6 +9,7 @@ import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import poojaImg from '../assets/tutors/pooja.jpg';
+import shashwatImg from '../assets/tutors/shashwat.jpg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -52,7 +53,7 @@ const LEADERS = [
     {
         name: "Shashwat Vashisth",
         role: "Mentor AI/ML",
-        image: null,
+        image: shashwatImg,
         imageScale: 1.0,
         bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
         linkedin: "#",
