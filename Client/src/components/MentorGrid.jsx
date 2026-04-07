@@ -55,6 +55,7 @@ const LEADERS = [
         role: "Mentor AI/ML",
         image: shashwatImg,
         imageScale: 1.0,
+        imagePosition: "object-bottom",
         bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm", "Data Science"]
@@ -111,7 +112,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                                 <img
                                     src={mentor.image}
                                     alt={mentor.name}
-                                    className="w-full h-full object-cover object-top"
+                                    className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'}`}
                                     style={{ transform: `scale(${mentor.imageScale})` }}
                                 />
                             </div>
@@ -172,7 +173,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         <img
                             src={mentor.image}
                             alt={mentor.name}
-                            className="w-full h-full object-cover object-top transition-all duration-1000 group-hover:scale-105"
+                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'} transition-all duration-1000 group-hover:scale-105`}
                             style={{ transform: `scale(${mentor.imageScale})` }}
                         />
                     </div>
@@ -306,7 +307,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                         <img 
                                             src={mentor.image} 
                                             alt={mentor.name} 
-                                            className="w-full h-full object-cover object-top"
+                                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'}`}
                                             style={{ transform: `scale(${mentor.imageScale})` }}
                                         />
                                     </div>
