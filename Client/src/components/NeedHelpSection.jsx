@@ -53,17 +53,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             color: 'green',
             highlight: '9AM - 8PM'
         },
-        {
-            id: 'email',
-            icon: Mail,
-            title: 'Email Us',
-            description: 'Get detailed responses via email',
-            action: 'thinkskool.office@gmail.com',
-            href: 'mailto:thinkskool.office@gmail.com',
-            color: 'purple',
-            highlight: 'Official'
-        },
-        {
+                {
             id: 'faq',
             icon: Clock,
             title: 'Browse FAQ',
@@ -237,6 +227,41 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         );
                     })}
                 </div>
+
+                {/* Custom Email Button - Desktop Only */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                    className="mt-12 flex justify-center"
+                >
+                    <a
+                        href="mailto:thinkskool.office@gmail.com"
+                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95 no-underline"
+                    >
+                        {/* Background glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300 -z-10" />
+                        
+                        {/* Icon */}
+                        <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                            <Mail size={16} className="text-white" />
+                        </div>
+                        
+                        {/* Text */}
+                        <span className="relative z-10">Email Us</span>
+                        
+                        {/* Arrow */}
+                        <div className="w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                <path d="m9 18 6-6-6-6"/>
+                            </svg>
+                        </div>
+                        
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </a>
+                </motion.div>
             </div>
 
             <MessageForm 
