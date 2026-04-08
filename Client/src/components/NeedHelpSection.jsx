@@ -94,10 +94,9 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         {/* 2 & 3. Call & Email: Side-by-Side (Native Protocol Links) */}
                         <div className="grid grid-cols-2 gap-4 w-full">
                             {/* Call Tile */}
-                            <a
-                                href="tel:+918527740849"
-                                target="_self"
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer no-underline touch-manipulation ${
+                            <button
+                                onClick={() => window.location.assign('tel:+918527740849')}
+                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
                             >
@@ -108,13 +107,12 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                     <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Call Us</h3>
                                     <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">9AM - 8PM</p>
                                 </div>
-                            </a>
+                            </button>
 
                             {/* Email Tile */}
-                            <a
-                                href="mailto:thinkskool.office@gmail.com"
-                                target="_self"
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer no-underline touch-manipulation ${
+                            <button
+                                onClick={() => window.location.assign('mailto:thinkskool.office@gmail.com')}
+                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
                             >
@@ -125,7 +123,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                                     <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Email Us</h3>
                                     <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Official</p>
                                 </div>
-                            </a>
+                            </button>
                         </div>
 
                         {/* 4. Browse FAQ: Full Width (Simple Button) */}
