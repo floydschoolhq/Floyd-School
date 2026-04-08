@@ -113,43 +113,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             </div>
                         </motion.button>
 
-                        {/* 2 & 3. Call & Email: Side-by-Side (Native Protocol Links) */}
-                        <div className="grid grid-cols-2 gap-4 w-full">
-                            {/* Call Tile */}
-                            <button
-                                onClick={() => copyToClipboard('+91 85277 40849', 'Phone number')}
-                                onTouchEnd={() => copyToClipboard('+91 85277 40849', 'Phone number')}
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer select-none ${
-                                    isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
-                                }`}
-                            >
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDark ? 'bg-green-500/10 text-green-500' : 'bg-green-50 text-green-600'}`}>
-                                    <Phone size={20} />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Call Us</h3>
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">9AM - 8PM</p>
-                                </div>
-                            </button>
-
-                            {/* Email Tile */}
-                            <button
-                                onClick={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
-                                onTouchEnd={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer select-none ${
-                                    isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
-                                }`}
-                            >
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDark ? 'bg-purple-500/10 text-purple-500' : 'bg-purple-50 text-purple-600'}`}>
-                                    <Mail size={20} />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Email Us</h3>
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Official</p>
-                                </div>
-                            </button>
-                        </div>
-
+                        
                         {/* 4. Browse FAQ: Full Width (Simple Button) */}
                         <motion.button
                             type="button"
