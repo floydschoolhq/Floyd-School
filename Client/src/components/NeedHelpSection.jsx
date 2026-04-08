@@ -118,7 +118,8 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             {/* Call Tile */}
                             <button
                                 onClick={() => copyToClipboard('+91 85277 40849', 'Phone number')}
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
+                                onTouchEnd={() => copyToClipboard('+91 85277 40849', 'Phone number')}
+                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer select-none ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
                             >
@@ -134,7 +135,8 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             {/* Email Tile */}
                             <button
                                 onClick={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
-                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
+                                onTouchEnd={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
+                                className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer select-none ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
                             >
