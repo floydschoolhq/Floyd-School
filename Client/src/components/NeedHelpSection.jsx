@@ -113,7 +113,37 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             </div>
                         </motion.button>
 
-                        
+                        {/* 2 & 3. Call & Email: Redesigned Mobile Buttons */}
+                        <div className="grid grid-cols-2 gap-3 w-full">
+                            {/* Call Button */}
+                            <a
+                                href="tel:+918527740849"
+                                className="p-4 rounded-[1.5rem] bg-gradient-to-br from-green-500 to-green-600 border border-green-400/20 shadow-lg shadow-green-500/20 active:scale-95 transition-all duration-200 flex flex-col items-center text-center gap-2 text-white no-underline"
+                            >
+                                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                                    <Phone size={16} className="text-white" />
+                                </div>
+                                <div className="space-y-1">
+                                    <h3 className="text-[11px] uppercase tracking-tight font-black text-white">Call</h3>
+                                    <p className="text-[7px] font-medium text-green-100">+91 85277 40849</p>
+                                </div>
+                            </a>
+
+                            {/* Email Button */}
+                            <a
+                                href="mailto:thinkskool.office@gmail.com"
+                                className="p-4 rounded-[1.5rem] bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-400/20 shadow-lg shadow-blue-500/20 active:scale-95 transition-all duration-200 flex flex-col items-center text-center gap-2 text-white no-underline"
+                            >
+                                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                                    <Mail size={16} className="text-white" />
+                                </div>
+                                <div className="space-y-1">
+                                    <h3 className="text-[11px] uppercase tracking-tight font-black text-white">Email</h3>
+                                    <p className="text-[7px] font-medium text-blue-100">Contact Us</p>
+                                </div>
+                            </a>
+                        </div>
+
                         {/* 4. Browse FAQ: Full Width (Simple Button) */}
                         <motion.button
                             type="button"
