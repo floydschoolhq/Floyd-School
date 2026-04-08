@@ -61,13 +61,13 @@ const REVIEWS_ROW_2 = [
         name: "Sanvi Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "It was a very good experience learning about it and very good explanation.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sanvi"
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lily"
     },
     {
         name: "Daksh Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "The course was really good and interactive",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Daksh"
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Boy"
     }
 ];
 
