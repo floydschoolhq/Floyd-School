@@ -96,10 +96,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             {/* Call Tile */}
                             <a
                                 href="tel:+918527740849"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    window.location.href = 'tel:+918527740849';
-                                }}
+                                target="_self"
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer no-underline touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
@@ -116,10 +113,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             {/* Email Tile */}
                             <a
                                 href="mailto:thinkskool.office@gmail.com"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    window.location.href = 'mailto:thinkskool.office@gmail.com';
-                                }}
+                                target="_self"
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer no-underline touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
