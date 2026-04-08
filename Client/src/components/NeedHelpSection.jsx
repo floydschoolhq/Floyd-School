@@ -49,7 +49,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             title: 'Call Us',
             description: 'Speak directly with our course advisors',
             action: '+91 85277 40849',
-            href: 'tel:+918527740849',
+            copyText: '+91 85277 40849',
             color: 'green',
             highlight: '9AM - 8PM'
         },
@@ -186,8 +186,8 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                     {contactMethods.map((method, index) => {
                         const colors = colorMap[method.color] || { bg: 'bg-orange-500/10', text: 'text-orange-500' };
                         const handleAction = () => {
-                            if (method.href) {
-                                window.location.href = method.href;
+                            if (method.copyText) {
+                                copyToClipboard(method.copyText, method.title === 'Call Us' ? 'Phone number' : 'Email address');
                             } else if (method.path) {
                                 navigate(method.path);
                             } else {
@@ -236,9 +236,9 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                     transition={{ delay: 0.4 }}
                     className="mt-12 flex justify-center"
                 >
-                    <a
-                        href="mailto:thinkskool.office@gmail.com"
-                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95 no-underline"
+                    <button
+                        onClick={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
+                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 text-white font-bold text-sm uppercase tracking-wider rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
                     >
                         {/* Background glow effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300 -z-10" />
@@ -260,7 +260,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         
                         {/* Hover overlay */}
                         <div className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </a>
+                    </button>
                 </motion.div>
             </div>
 
