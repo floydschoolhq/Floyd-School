@@ -18,6 +18,12 @@
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
+/* Touch manipulation for mobile */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Marquee Animation */
 @keyframes marquee {
   0% {
