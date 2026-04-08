@@ -8,8 +8,30 @@ import useIsMobile from '../hooks/useIsMobile';
 const NeedHelpSection = ({ variant = 'dark' }) => {
     const isDark = variant === 'dark';
     const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
     const isMobile = useIsMobile();
     const navigate = useNavigate();
+
+    const copyToClipboard = async (text, type) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setToastMessage(`${type} copied to clipboard!`);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000);
+        } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            setToastMessage(`${type} copied to clipboard!`);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000);
+        }
+    };
 
     const contactMethods = [
         {
@@ -95,7 +117,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         <div className="grid grid-cols-2 gap-4 w-full">
                             {/* Call Tile */}
                             <button
-                                onClick={() => window.location.assign('tel:+918527740849')}
+                                onClick={() => copyToClipboard('+91 85277 40849', 'Phone number')}
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
@@ -111,7 +133,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
 
                             {/* Email Tile */}
                             <button
-                                onClick={() => window.location.assign('mailto:thinkskool.office@gmail.com')}
+                                onClick={() => copyToClipboard('thinkskool.office@gmail.com', 'Email address')}
                                 className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full cursor-pointer touch-manipulation ${
                                     isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
                                 }`}
@@ -226,6 +248,22 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                 onClose={() => setIsMessageFormOpen(false)} 
                 variant={variant}
             />
+            
+            {/* Toast Notification */}
+            {showToast && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full font-medium text-sm z-50 ${
+                        isDark 
+                            ? 'bg-white text-slate-900 shadow-xl' 
+                            : 'bg-slate-900 text-white shadow-xl'
+                    }`}
+                >
+                    {toastMessage}
+                </motion.div>
+            )}
         </section>
     );
 };
