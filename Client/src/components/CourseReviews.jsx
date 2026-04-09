@@ -269,10 +269,14 @@ const FeaturedCard = ({ review, variant }) => {
     return (
         <motion.div
             key={review.id}
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.97 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, x: 100, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -100, scale: 0.95 }}
+            transition={{ 
+                duration: 0.8, 
+                ease: [0.25, 0.46, 0.45, 0.94],
+                opacity: { duration: 0.4 }
+            }}
             className="relative rounded-3xl p-8 md:p-10 overflow-hidden border border-white/[0.06] bg-white/[0.02]"
         >
             <div className="relative z-10 flex flex-col gap-6">
@@ -380,6 +384,7 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
 const CourseReviews = ({ courseId, variant }) => {
     const isDark = variant === 'dark';
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
 
     // Only show this section for the AI course (id = '1')
     if (courseId !== '1') return null;
@@ -389,6 +394,17 @@ const CourseReviews = ({ courseId, variant }) => {
 
     const active = AI_REVIEWS[activeIndex];
     const isMobile = window.innerWidth < 768;
+
+    // Auto-advance cards every 2 seconds, pause on hover
+    React.useEffect(() => {
+        if (isPaused) return;
+        
+        const interval = setInterval(() => {
+            setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [isPaused]);
 
     return (
         <section className="py-24 px-6 relative overflow-hidden bg-black">
@@ -444,14 +460,23 @@ const CourseReviews = ({ courseId, variant }) => {
                             <div className="flex items-center justify-between mt-6">
                                 <div className="flex gap-1.5">
                                     {AI_REVIEWS.slice(0, 5).map((_, i) => (
-                                        <button
+                                        <motion.button
                                             key={i}
                                             onClick={() => setActiveIndex(i)}
-                                            className={`transition-all duration-300 rounded-full h-1.5 ${
+                                            className={`rounded-full h-1.5 ${
                                                 i === activeIndex
-                                                    ? "w-6 bg-blue-500"
+                                                    ? "w-6 bg-gradient-to-r from-cyan-400 to-blue-400"
                                                     : "w-1.5 bg-white/10"
                                             }`}
+                                            animate={{
+                                                scale: i === activeIndex ? [1, 1.2, 1] : 1,
+                                                opacity: i === activeIndex ? 1 : 0.3
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: i === activeIndex ? Infinity : 0,
+                                                repeatDelay: 0.5
+                                            }}
                                         />
                                     ))}
                                 </div>
@@ -466,7 +491,10 @@ const CourseReviews = ({ courseId, variant }) => {
                 ) : (
                     <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
                         {/* Featured review */}
-                        <div>
+                        <div 
+                            onMouseEnter={() => setIsPaused(true)}
+                            onMouseLeave={() => setIsPaused(false)}
+                        >
                             <AnimatePresence mode="wait">
                                 <FeaturedCard key={active.id} review={active} variant={variant} />
                             </AnimatePresence>
@@ -475,14 +503,23 @@ const CourseReviews = ({ courseId, variant }) => {
                             <div className="flex items-center justify-between mt-6">
                                 <div className="flex gap-2">
                                     {AI_REVIEWS.map((_, i) => (
-                                        <button
+                                        <motion.button
                                             key={i}
                                             onClick={() => setActiveIndex(i)}
-                                            className={`transition-all duration-300 rounded-full ${
+                                            className={`rounded-full ${
                                                 i === activeIndex
-                                                    ? isDark ? "w-6 h-2 bg-orange-500" : "w-6 h-2 bg-blue-600"
-                                                    : isDark ? "w-2 h-2 bg-white/10 hover:bg-white/20" : "w-2 h-2 bg-slate-200 hover:bg-slate-400"
+                                                    ? "w-6 h-2 bg-gradient-to-r from-cyan-400 to-blue-400"
+                                                    : "w-2 h-2 bg-white/10 hover:bg-white/20"
                                             }`}
+                                            animate={{
+                                                scale: i === activeIndex ? [1, 1.2, 1] : 1,
+                                                opacity: i === activeIndex ? 1 : 0.3
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: i === activeIndex ? Infinity : 0,
+                                                repeatDelay: 0.5
+                                            }}
                                         />
                                     ))}
                                 </div>
