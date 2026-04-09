@@ -269,15 +269,18 @@ const FeaturedCard = ({ review, variant }) => {
     return (
         <motion.div
             key={review.id}
-            initial={{ opacity: 0, x: 50, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -50, scale: 0.98 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
             transition={{ 
-                duration: 0.6, 
-                ease: [0.4, 0, 0.2, 1],
-                opacity: { duration: 0.3 }
+                duration: 0.4, 
+                ease: [0.4, 0, 0.2, 1]
             }}
             className="relative rounded-3xl p-8 md:p-10 overflow-hidden border border-white/[0.06] bg-white/[0.02]"
+            style={{ 
+                willChange: 'transform, opacity',
+                transform: 'translateZ(0)'
+            }}
         >
             <div className="relative z-10 flex flex-col gap-6">
                 <div className="flex items-center gap-4">
@@ -395,16 +398,30 @@ const CourseReviews = ({ courseId, variant }) => {
     const active = AI_REVIEWS[activeIndex];
     const isMobile = window.innerWidth < 768;
 
-    // Auto-advance cards every 2 seconds, pause on hover
+    // Optimized auto-advance with requestAnimationFrame
     React.useEffect(() => {
         if (isPaused) return;
         
-        const interval = setInterval(() => {
-            setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [isPaused]);
+        let animationFrame;
+        let lastTime = 0;
+        const interval = 2000; // 2 seconds
+        
+        const animate = (currentTime) => {
+            if (currentTime - lastTime >= interval) {
+                setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
+                lastTime = currentTime;
+            }
+            animationFrame = requestAnimationFrame(animate);
+        };
+        
+        animationFrame = requestAnimationFrame(animate);
+        
+        return () => {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        };
+    }, [isPaused, AI_REVIEWS.length]);
 
     return (
         <section className="py-24 px-6 relative overflow-hidden bg-black">

@@ -217,36 +217,32 @@ const SuccessStories = ({ variant }) => {
         return () => clearInterval(interval);
     }, [maxSlots, isMobile]);
 
-    // Auto-swipe logic for Mobile (Infinite Loop)
+    // Optimized auto-swipe with CSS animation
     useEffect(() => {
         if (!isMobile || isDragging || isPaused) return;
 
         const interval = setInterval(() => {
-            setCurrentIndex((prev) => prev + 1);
-        }, 2000); // 2s delay as requested
+            setCurrentIndex((prev) => (prev + 1) % ALL_REVIEWS.length);
+        }, 3000); // Increased to 3s for better performance
 
         return () => clearInterval(interval);
-    }, [isMobile, isDragging, isPaused]);
+    }, [isMobile, isDragging, isPaused, ALL_REVIEWS.length]);
 
-    // Animate and Loop logic
+    // Optimized animation with will-change
     useEffect(() => {
         if (!isMobile || isDragging) return;
         
         const vw = window.innerWidth;
         const cardFullWidth = (vw * CARD_WIDTH_RATIO) + GAP;
-        const totalItems = ALL_REVIEWS.length;
         
-        // Final position
-        x.set(-currentIndex * cardFullWidth);
-
-        // Seamless reset
-        if (currentIndex >= totalItems) {
-            const timer = setTimeout(() => {
-                setCurrentIndex(0);
-            }, 600); 
-            return () => clearTimeout(timer);
-        }
-    }, [currentIndex, isMobile, isDragging, x, ALL_REVIEWS.length]);
+        // Use requestAnimationFrame for smoother animation
+        const animate = () => {
+            x.set(-currentIndex * cardFullWidth);
+        };
+        
+        const rafId = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(rafId);
+    }, [currentIndex, isMobile, isDragging, x]);
 
     const handleDragStart = () => {
         setIsDragging(true);
@@ -368,12 +364,6 @@ const SuccessStories = ({ variant }) => {
                                             initial={{ opacity: 0, scale: 0.9, y: 30, filter: 'blur(10px)' }}
                                             animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
                                             exit={{ opacity: 0, scale: 0.9, y: -30, filter: 'blur(15px)', transition: { duration: 0.3 } }}
-                                            transition={{ 
-                                                type: "spring",
-                                                stiffness: 150,
-                                                damping: 20
-                                            }}
-                                            className="w-full flex justify-center"
                                         >
                                             <ReviewCard review={slot.review} index={i} variant={variant} />
                                         </motion.div>
@@ -385,7 +375,7 @@ const SuccessStories = ({ variant }) => {
                 )}
             </div>
         </section>
-    );
+);
 };
 
 export default SuccessStories;
