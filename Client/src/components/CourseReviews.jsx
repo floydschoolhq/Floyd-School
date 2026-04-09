@@ -269,13 +269,13 @@ const FeaturedCard = ({ review, variant }) => {
     return (
         <motion.div
             key={review.id}
-            initial={{ opacity: 0, x: 100, scale: 0.95 }}
+            initial={{ opacity: 0, x: 50, scale: 0.98 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -100, scale: 0.95 }}
+            exit={{ opacity: 0, x: -50, scale: 0.98 }}
             transition={{ 
-                duration: 0.8, 
-                ease: [0.25, 0.46, 0.45, 0.94],
-                opacity: { duration: 0.4 }
+                duration: 0.6, 
+                ease: [0.4, 0, 0.2, 1],
+                opacity: { duration: 0.3 }
             }}
             className="relative rounded-3xl p-8 md:p-10 overflow-hidden border border-white/[0.06] bg-white/[0.02]"
         >
@@ -453,7 +453,7 @@ const CourseReviews = ({ courseId, variant }) => {
                 {isMobile ? (
                     <div className="flex flex-col gap-10">
                         <div>
-                            <AnimatePresence mode="wait">
+                            <AnimatePresence mode="sync">
                                 <FeaturedCard key={active.id} review={active} variant={variant} />
                             </AnimatePresence>
                             
@@ -495,7 +495,7 @@ const CourseReviews = ({ courseId, variant }) => {
                             onMouseEnter={() => setIsPaused(true)}
                             onMouseLeave={() => setIsPaused(false)}
                         >
-                            <AnimatePresence mode="wait">
+                            <AnimatePresence mode="sync">
                                 <FeaturedCard key={active.id} review={active} variant={variant} />
                             </AnimatePresence>
     
