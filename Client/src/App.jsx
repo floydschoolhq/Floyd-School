@@ -3,7 +3,6 @@ import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLoca
 
 // Layout Components (Always visible or shared)
 import Footer from './components/Footer';
-import MobileBottomNav from './components/MobileBottomNav';
 import NeedHelpSection from './components/NeedHelpSection';
 
 // Static Marketing Page Components (Should only be visible on Home route)
@@ -268,7 +267,6 @@ const App = () => {
             {/* Conditional Footer Rendering - Only on Home Page */}
             {showFooter && (
                 <>
-                    <MobileBottomNav />
                     <Footer />
                 </>
             )}

@@ -151,12 +151,12 @@ const MobileIcon = ({ tech, position }) => {
           className="pointer-events-none select-none"
         >
           <div 
-            className="w-18 h-18 bg-white/95 backdrop-blur-md rounded-[1.8rem] border border-slate-200/50 flex items-center justify-center shadow-lg transition-transform active:scale-110"
+            className="w-12 h-12 bg-white/95 backdrop-blur-md rounded-[1.2rem] border border-slate-200/50 flex items-center justify-center shadow-lg transition-transform active:scale-110"
             style={{ 
-              boxShadow: `0 10px 40px ${tech.color}15`,
+              boxShadow: `0 8px 30px ${tech.color}10`,
             }}
           >
-            <tech.icon size={38} style={{ color: tech.color }} />
+            <tech.icon size={26} style={{ color: tech.color }} />
           </div>
         </Html>
       </Float>
@@ -171,13 +171,23 @@ const MobileTechGlobe = () => {
       { icon: SiReact, name: "React", color: "#61DAFB" },
       { icon: SiNextdotjs, name: "Next.js", color: "#000000" },
       { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+      { icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
       { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
       { icon: SiPython, name: "Python", color: "#3776AB" },
       { icon: SiOpenai, name: "OpenAI", color: "#412991" },
       { icon: SiTensorflow, name: "TensorFlow", color: "#FF6F00" },
+      { icon: SiPytorch, name: "PyTorch", color: "#EE4C2C" },
       { icon: SiFlutter, name: "Flutter", color: "#02569B" },
       { icon: SiArduino, name: "Arduino", color: "#00979D" },
-      { icon: SiGooglecloud, name: "Google Cloud", color: "#4285F4" }
+      { icon: SiRaspberrypi, name: "Raspberry Pi", color: "#C51A4A" },
+      { icon: SiGooglecloud, name: "Google Cloud", color: "#4285F4" },
+      { icon: SiPostgresql, name: "PostgreSQL", color: "#336791" },
+      { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+      { icon: SiUnity, name: "Unity", color: "#000000" },
+      { icon: SiUnrealengine, name: "Unreal", color: "#313131" },
+      { icon: SiLinux, name: "Linux", color: "#FCC624" },
+      { icon: SiFirebase, name: "Firebase", color: "#FFCA28" },
+      { icon: SiOpencv, name: "OpenCV", color: "#5C3EE8" }
     ];
   }, []);
 
@@ -231,28 +241,38 @@ const TechStackStats = () => {
                     {/* Swipe instruction removed */}
                 </div>
 
-                <div className="relative w-full aspect-square flex items-center justify-center mt-10">
-                    <div className="absolute inset-x-0 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none h-24 top-0" />
-                    <div className="absolute inset-x-0 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none h-24 bottom-0" />
-                    
-                    <div className="w-full h-full max-h-[100vw]">
-                      <Suspense fallback={null}>
-                        <Canvas dpr={[1, 2]}>
-                            <PerspectiveCamera makeDefault position={[0, 0, 16]} />
-                            <ambientLight intensity={2} />
-                            <pointLight position={[10, 10, 10]} intensity={1.5} />
-                            <MobileTechGlobe />
-                            <OrbitControls 
-                              enableZoom={false} 
-                              autoRotate={true}
-                              autoRotateSpeed={4}
-                              enablePan={false}
-                              rotateSpeed={0.6}
-                              enableDamping={true}
-                              dampingFactor={0.05}
-                            />
-                        </Canvas>
-                      </Suspense>
+                <div className="relative w-full mt-10 px-4 md:px-0">
+                    <div className="relative w-[85%] aspect-square flex items-center justify-center mx-auto rounded-[2rem] overflow-hidden">
+                        {/* Side Scroll Zones Indication */}
+                        <div className="absolute inset-y-0 -left-1 w-4 z-20 pointer-events-none flex items-center justify-center">
+                            <div className="h-16 w-1 bg-slate-200/50 rounded-full blur-[2px]" />
+                        </div>
+                        <div className="absolute inset-y-0 -right-1 w-4 z-20 pointer-events-none flex items-center justify-center">
+                            <div className="h-16 w-1 bg-slate-200/50 rounded-full blur-[2px]" />
+                        </div>
+
+                        <div className="absolute inset-x-0 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none h-16 top-0" />
+                        <div className="absolute inset-x-0 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none h-16 bottom-0" />
+                        
+                        <div className="w-full h-full">
+                          <Suspense fallback={null}>
+                            <Canvas dpr={[1, 2]} style={{ touchAction: 'pan-y' }}>
+                                <PerspectiveCamera makeDefault position={[0, 0, 16]} />
+                                <ambientLight intensity={2} />
+                                <pointLight position={[10, 10, 10]} intensity={1.5} />
+                                <MobileTechGlobe />
+                                <OrbitControls 
+                                  enableZoom={false} 
+                                  autoRotate={false}
+                                  enablePan={false}
+                                  rotateSpeed={0.8}
+                                  enableDamping={true}
+                                  dampingFactor={0.05}
+                                  enableRotate={true}
+                                />
+                            </Canvas>
+                          </Suspense>
+                        </div>
                     </div>
                 </div>
             </section>

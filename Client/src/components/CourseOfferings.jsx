@@ -43,13 +43,28 @@ const CourseOfferings = ({ variant = 'dark' }) => {
         };
     }, [isMobile]);
 
+    const lastInteractionRef = useRef(Date.now());
+
     useEffect(() => {
         if (!isMobile) return;
         const intervalId = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % mobileFeatures.length);
+            const timeSinceLastInteraction = Date.now() - lastInteractionRef.current;
+            if (timeSinceLastInteraction > 3000) {
+                setActiveIndex((prev) => (prev + 1) % mobileFeatures.length);
+            }
         }, 3000);
         return () => clearInterval(intervalId);
     }, [isMobile, mobileFeatures.length]);
+
+    const handleDragEnd = (_, info) => {
+        lastInteractionRef.current = Date.now();
+        const threshold = 50;
+        if (info.offset.x < -threshold) {
+            setActiveIndex((prev) => (prev + 1) % mobileFeatures.length);
+        } else if (info.offset.x > threshold) {
+            setActiveIndex((prev) => (prev - 1 + mobileFeatures.length) % mobileFeatures.length);
+        }
+    };
 
     const addToRefs = (el) => {
         if (el && !cardsRef.current.includes(el)) {
@@ -58,9 +73,8 @@ const CourseOfferings = ({ variant = 'dark' }) => {
     };
 
     if (isMobile) {
-
         return (
-            <section className="py-16 relative overflow-hidden bg-transparent">
+            <section className="py-8 px-5 relative overflow-hidden bg-transparent text-center">
                 <style>{`
                     .hide-scrollbar::-webkit-scrollbar { display: none; }
                     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -68,23 +82,28 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent pointer-events-none"></div>
                 
-                <div className="relative z-10 px-6">
-                    <div className="text-center mb-6">
-                        <h2 className="text-xl font-black mb-4 tracking-tighter text-white drop-shadow-md leading-tight">
+                <div className="relative z-10 px-0">
+                    <div className="text-center mb-8 px-0">
+                        <h2 className="text-2xl font-black mb-4 tracking-tighter text-white drop-shadow-md leading-tight">
                             We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Back.</span> Always.
                         </h2>
                     </div>
                 </div>
 
-                <div className="px-6 relative min-h-[181px]">
+                <div className="px-0 relative min-h-[350px]">
                     <AnimatePresence mode="wait">
                         <motion.div 
                             key={activeIndex}
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.2}
+                            onDragEnd={handleDragEnd}
+                            onDragStart={() => lastInteractionRef.current = Date.now()}
                             initial={{ opacity: 0, x: 20, scale: 0.95 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: -20, scale: 0.95 }}
                             transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="w-full aspect-[1.5/1] p-10 rounded-[2.5rem] border bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl border-white/20 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-2xl shadow-blue-500/10"
+                            className="w-full min-h-[350px] p-2 rounded-[2.5rem] border bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl border-white/20 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-2xl shadow-blue-500/10 touch-pan-y"
                         >
                             {/* Animated background glow */}
                             <motion.div 
@@ -93,18 +112,18 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                                     opacity: [0.1, 0.2, 0.1]
                                 }}
                                 transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute top-0 right-0 w-40 h-40 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none"
+                                className="absolute top-0 right-0 w-60 h-60 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none"
                             ></motion.div>
                             
-                            <div className="flex flex-col items-center gap-4 mb-4 relative z-10">
-                                <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-black text-xs shadow-xl">
+                            <div className="flex flex-col items-center gap-6 mb-8 relative z-10">
+                                <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-black text-xl shadow-xl">
                                     {mobileFeatures[activeIndex].icon}
                                 </div>
-                                <h3 className="text-sm font-black uppercase tracking-tight text-white leading-none">
+                                <h3 className="text-xl font-black uppercase tracking-tight text-white leading-tight">
                                     {mobileFeatures[activeIndex].title}
                                 </h3>
                             </div>
-                            <p className="text-[11px] leading-relaxed font-semibold text-slate-400 relative z-10 px-4">
+                            <p className="text-[13px] leading-relaxed font-semibold text-slate-300 relative z-10">
                                 {mobileFeatures[activeIndex].desc}
                             </p>
                         </motion.div>

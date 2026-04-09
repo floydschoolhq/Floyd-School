@@ -95,72 +95,51 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-4 w-full">
-                        {/* 1. Message Us: Full Width (Button) */}
-                        <motion.button
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => setIsMessageFormOpen(true)}
-                            className={`p-8 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full select-none cursor-pointer relative z-40 ${
-                                isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
-                            }`}
-                        >
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isDark ? 'bg-blue-500/10 text-blue-500' : 'bg-blue-50 text-blue-600'}`}>
-                                <Send size={24} />
-                            </div>
-                            <div className="space-y-1">
-                                <h3 className={`text-[15px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Message Us</h3>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-orange-500 animate-pulse">Live Support</p>
-                            </div>
-                        </motion.button>
+                    <div className="grid grid-cols-2 gap-3 w-full">
+                        {contactMethods.map((method) => {
+                            const handleAction = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                                if (method.id === 'message') {
+                                    setIsMessageFormOpen(true);
+                                } else if (method.path) {
+                                    navigate(method.path);
+                                } else if (method.id === 'call') {
+                                    const cleanNum = method.copyText.replace(/[^0-9+]/g, '');
+                                    window.location.href = `tel:${cleanNum}`;
+                                } else if (method.id === 'email') {
+                                    window.location.href = `mailto:${method.copyText}`;
+                                }
+                            };
 
-                        {/* 2 & 3. Call & Email: Redesigned Mobile Buttons */}
-                        <div className="grid grid-cols-2 gap-3 w-full">
-                            {/* Call Button */}
-                            <a
-                                href="tel:+918527740849"
-                                className="p-4 rounded-[1.5rem] bg-gradient-to-br from-green-500 to-green-600 border border-green-400/20 shadow-lg shadow-green-500/20 active:scale-95 transition-all duration-200 flex flex-col items-center text-center gap-2 text-white no-underline"
-                            >
-                                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                                    <Phone size={16} className="text-white" />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className="text-[11px] uppercase tracking-tight font-black text-white">Call</h3>
-                                    <p className="text-[7px] font-medium text-green-100">+91 85277 40849</p>
-                                </div>
-                            </a>
-
-                            {/* Email Button */}
-                            <a
-                                href="mailto:thinkskool.office@gmail.com"
-                                className="p-4 rounded-[1.5rem] bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-400/20 shadow-lg shadow-blue-500/20 active:scale-95 transition-all duration-200 flex flex-col items-center text-center gap-2 text-white no-underline"
-                            >
-                                <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                                    <Mail size={16} className="text-white" />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className="text-[11px] uppercase tracking-tight font-black text-white">Email</h3>
-                                    <p className="text-[7px] font-medium text-blue-100">Contact Us</p>
-                                </div>
-                            </a>
-                        </div>
-
-                        {/* 4. Browse FAQ: Full Width (Simple Button) */}
-                        <motion.button
-                            type="button"
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => navigate('/faq')}
-                            className={`p-6 rounded-[2rem] border flex flex-col items-center text-center gap-4 transition-all w-full select-none cursor-pointer relative z-40 ${
-                                isDark ? 'bg-white/[0.03] border-white/10 shadow-2xl active:bg-white/[0.05]' : 'bg-slate-50 border-slate-100 shadow-lg active:bg-slate-100'
-                            }`}
-                        >
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDark ? 'bg-orange-500/10 text-orange-500' : 'bg-orange-50 text-orange-600'}`}>
-                                <Clock size={20} />
-                            </div>
-                            <div className="space-y-1">
-                                <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>Browse FAQ</h3>
-                                <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Self Help</p>
-                            </div>
-                        </motion.button>
+                            return (
+                                <motion.button
+                                    key={method.id}
+                                    whileTap={{ scale: 0.97 }}
+                                    onClick={handleAction}
+                                    className={`p-5 rounded-2xl border flex flex-col items-center text-center gap-3 transition-all select-none cursor-pointer ${
+                                        isDark 
+                                            ? 'bg-white/[0.03] border-white/10 active:bg-white/[0.08]' 
+                                            : 'bg-white border-slate-200 shadow-sm active:bg-slate-50'
+                                    }`}
+                                >
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                                        isDark ? 'bg-white/5 text-blue-400' : 'bg-blue-50 text-blue-600'
+                                    }`}>
+                                        <method.icon size={20} />
+                                    </div>
+                                    <div className="space-y-0.5">
+                                        <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                            {method.title.split(' ')[0]}
+                                        </h3>
+                                        <p className={`text-[8px] font-bold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                                            {method.highlight}
+                                        </p>
+                                    </div>
+                                </motion.button>
+                            );
+                        })}
                     </div>
                 </div>
 

@@ -106,10 +106,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
 
                 <div className="relative z-10 w-full flex flex-col items-center">
                     <div className="relative mb-6">
-                        <div className={`w-28 h-28 rounded-[2.5rem] overflow-hidden border-2 p-1.5 ${
-                            isDark ? 'bg-slate-900 border-white/5' : 'bg-white border-slate-100'
-                        }`}>
-                            <div className="w-full h-full rounded-[1.8rem] overflow-hidden bg-slate-100">
+                        <div className="w-24 h-24 rounded-full overflow-hidden">
                                 <img
                                     src={mentor.image}
                                     alt={mentor.name}
@@ -117,7 +114,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                                     style={{ transform: `scale(${mentor.imageScale})` }}
                                 />
                             </div>
-                        </div>
                         
                         <a 
                             href={mentor.linkedin}
@@ -238,11 +234,17 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef(null);
 
-    // Auto-scroll logic using useAnimationFrame
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const pauseTimeoutRef = useRef(null);
+
+    const CARD_WIDTH = 280 + 16; // w-[280px] + gap-4
+
+    // Auto-scroll logic for Desktop (Marquee)
     useAnimationFrame((t, delta) => {
-        if (isDragging || isStatic || hoveredCard !== null) return;
+        if (isMobile || isDragging || isStatic || hoveredCard !== null) return;
         
-        const moveBy = isMobile ? -0.45 : -1.1; 
+        const moveBy = -1.1; 
         let currentX = x.get() + moveBy;
         
         if (containerRef.current) {
@@ -253,6 +255,63 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
             x.set(currentX);
         }
     });
+
+    // Auto-swipe logic for Mobile (Infinite Loop)
+    useEffect(() => {
+        if (!isMobile || isDragging || isStatic || isPaused) return;
+
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => prev + 1);
+        }, 1500);
+
+        return () => clearInterval(interval);
+    }, [isMobile, isDragging, isStatic, isPaused]);
+
+    // Animate to current index on mobile with Seamless Loop handling
+    useEffect(() => {
+        if (!isMobile || isDragging) return;
+        
+        const cardWidth = CARD_WIDTH;
+        const totalItems = filteredLeaders.length;
+        
+        // If we reached the end of the first set, we animate to the first item of the second set
+        // Then, we'll reset to 0 after the animation
+        x.set(-currentIndex * cardWidth);
+
+        // Seamless reset logic: if we are at the "extra" copy of the first item
+        if (currentIndex >= totalItems) {
+            const timer = setTimeout(() => {
+                // Disable transition for a split second to jump back
+                setCurrentIndex(0);
+                x.jump(0); 
+            }, 600); // Slight delay to allow the 1.5s interval to feel natural
+        }
+    }, [currentIndex, isMobile, isDragging, x, filteredLeaders.length]);
+
+    const handleDragStart = () => {
+        setIsDragging(true);
+        setIsPaused(true);
+        if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+
+    const handleDragEnd = () => {
+        setIsDragging(false);
+        
+        // Sync currentIndex with manual scroll position
+        const finalX = x.get();
+        const nearestIndex = Math.round(Math.abs(finalX) / CARD_WIDTH);
+        const totalItems = filteredLeaders.length;
+        
+        // Clamp and wrap for manual interaction
+        const wrappedIndex = nearestIndex % totalItems;
+        setCurrentIndex(wrappedIndex);
+        x.set(-wrappedIndex * CARD_WIDTH);
+
+        // Resume after 3 seconds
+        pauseTimeoutRef.current = setTimeout(() => {
+            setIsPaused(false);
+        }, 3000);
+    };
 
     if (isMobile) {
         // Double the items for seamless looping
@@ -271,40 +330,29 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
                     <motion.div 
                         ref={containerRef}
-                        className="flex gap-4 w-max cursor-grab active:cursor-grabbing"
-                        style={{ x }}
+                        className="flex gap-4 px-4 cursor-grab active:cursor-grabbing"
+                        animate={{ x: x.get() }}
+                        transition={{ type: "spring", stiffness: 100, damping: 20 }}
                         drag="x"
                         dragConstraints={{ 
-                            left: containerRef.current ? -(containerRef.current.scrollWidth / 2) : -1000, 
+                            left: -(filteredLeaders.length - 1) * (280 + 16), 
                             right: 0 
                         }}
-                        onDragStart={() => setIsDragging(true)}
-                        onDragEnd={() => {
-                            setIsDragging(false);
-                            // When drag ends, if we are beyond half width, reset to within range for seamless loop
-                            const currentX = x.get();
-                            if (containerRef.current) {
-                                const halfWidth = containerRef.current.scrollWidth / 2;
-                                if (currentX <= -halfWidth) {
-                                    x.set(currentX + halfWidth);
-                                } else if (currentX > 0) {
-                                    x.set(currentX - halfWidth);
-                                }
-                            }
-                        }}
+                        onDragStart={handleDragStart}
+                        onDragEnd={handleDragEnd}
                     >
-                        {mobileMentorItems.map((mentor, index) => (
-                            <motion.div 
+                        {/* Double items for seamless loops */}
+                        {[...filteredLeaders, ...filteredLeaders.slice(0, 2)].map((mentor, index) => (
+                            <div 
                                 key={index}
-                                whileTap={{ scale: 0.98 }}
                                 className={`shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 cursor-default transition-all duration-500 backdrop-blur-xl ${
                                     isDark 
                                         ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
                                         : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
                                 }`}
                             >
-                                <div className="w-24 h-24 rounded-full p-1 border border-orange-500/20 shadow-xl shadow-orange-500/10">
-                                    <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-white/5">
+                                <div className="w-24 h-24 rounded-full overflow-hidden">
+                                    <div className="w-full h-full rounded-full overflow-hidden">
                                         <img 
                                             src={mentor.image} 
                                             alt={mentor.name} 
@@ -325,7 +373,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                         {mentor.role}
                                     </p>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </motion.div>
                 </div>

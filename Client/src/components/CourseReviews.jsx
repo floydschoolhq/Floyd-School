@@ -462,18 +462,6 @@ const CourseReviews = ({ courseId, variant }) => {
                             </div>
                         </div>
 
-                        <div className="space-y-3">
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-600 px-1 mb-2">More Testimonials</p>
-                            {AI_REVIEWS.slice(0, 4).map((review, i) => (
-                                <MiniCard
-                                    key={review.id}
-                                    review={review}
-                                    isActive={i === activeIndex}
-                                    onClick={() => setActiveIndex(i)}
-                                    variant={variant}
-                                />
-                            ))}
-                        </div>
                     </div>
                 ) : (
                     <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">

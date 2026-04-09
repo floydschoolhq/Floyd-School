@@ -333,19 +333,14 @@ const ThinkskoolAdvantage = () => {
                                                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" 
                                                     alt={advantage.title} 
                                                 />
-                                                <div className={`absolute inset-0 bg-gradient-to-t ${cur.isDark ? 'from-black/60 to-transparent' : 'from-black/40 to-transparent'}`} />
-                                                <div className="absolute bottom-5 left-6 right-6">
-                                                     <h3 className="text-white text-2xl font-black leading-tight drop-shadow-md">
-                                                        {advantage.title}
-                                                     </h3>
-                                                </div>
+                                                <div className={`absolute inset-0 bg-gradient-to-t ${cur.isDark ? 'from-black/40 to-transparent' : 'from-black/20 to-transparent'}`} />
                                             </div>
                                             
                                             {/* Content Section */}
-                                            <div className="p-7 flex-grow flex flex-col justify-between">
-                                                <p className={`text-base leading-relaxed ${cur.isDark ? 'text-white/80' : 'text-gray-600 font-medium'}`}>
-                                                    {advantage.description}
-                                                </p>
+                                            <div className="p-7 flex-grow flex flex-col items-center justify-center text-center">
+                                                <h3 className={`text-xl font-bold leading-snug ${cur.isDark ? 'text-white' : 'text-gray-900'}`}>
+                                                    {advantage.title}
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>

@@ -5,7 +5,7 @@ import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
-import abhayImg from '../assets/tutors/abhay.jpg';
+import niteshImg from '../assets/tutors/nitesh.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 
 import useIsMobile from '../hooks/useIsMobile';
@@ -31,14 +31,14 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Abhay Singh Chauhan",
-        role: "Help Associate",
-        image: abhayImg,
-        imageScale: 1.4,
-        imagePosition: "object-[center_10%]",
-        bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
-        linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
-        tags: ["Web Dev", "Manager", "Full Stack"]
+        name: "Nitesh Kumar",
+        role: "UI and UX Management",
+        image: niteshImg,
+        imageScale: 1.0,
+        imagePosition: "object-[center_20%]",
+        bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
+        linkedin: "#",
+        tags: ["UI/UX", "Management", "Leadership"]
     },
     {
         name: "Raghav",
@@ -62,7 +62,7 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={!isMobile ? { y: -10, scale: 1.01 } : {}}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
-            className={`snap-center flex-shrink-0 ${isMobile ? 'w-[120%] -ml-[10%] aspect-[3/5]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-12 relative cursor-default group
+            className={`snap-center flex-shrink-0 ${isMobile ? 'w-full aspect-[0.8/1]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-12 relative cursor-default group
                 ${isDark 
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-white/[0.04] hover:border-blue-500/20' 
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100'}`}
@@ -72,18 +72,9 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
             
             {/* Image Section: High-End Industrial Housing */}
-            <div className="w-24 h-24 md:w-36 md:h-36 flex-shrink-0 relative pt-4 md:pt-6">
-                {/* Rotating Border Aura */}
-                <motion.div 
-                    animate={isMobile ? {} : { rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-                    style={{ translateZ: 0 }}
-                    className={`absolute inset-[-18px] rounded-full border border-dashed opacity-0 group-hover:opacity-40 transition-opacity duration-1000 pointer-events-none
-                        ${isDark ? 'border-blue-500' : 'border-blue-500'}`}
-                />
-                
+            <div className="w-32 h-32 md:w-36 md:h-36 flex-shrink-0 relative pt-4 md:pt-6">
                 {/* Main Profile Housing */}
-                <div className={`w-full h-full ${isMobile ? 'rounded-full' : 'rounded-2xl'} overflow-hidden relative border-2 transition-all duration-700
+                <div className={`w-full h-full rounded-full overflow-hidden relative border-2 transition-all duration-700
                     ${isDark ? 'border-white/10 group-hover:border-blue-500/30' : 'border-slate-200 group-hover:border-blue-200'}`}>
                     {/* Dynamic Background */}
                     <div className={`absolute inset-0 transition-colors duration-700
@@ -104,15 +95,15 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         ${isDark ? 'bg-gradient-to-t from-blue-500/10 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
                 </div>
             </div>
-
+ 
             {/* Content Core: Pure Data Hierarchy */}
             <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 flex flex-col items-center">
-                    <h3 className={`text-lg md:text-3xl font-black tracking-tight uppercase leading-none transition-colors w-full break-words
+                    <h3 className={`text-2xl md:text-3xl font-black tracking-tight uppercase leading-none transition-colors w-full break-words
                         ${isDark ? 'text-white group-hover:text-blue-500' : 'text-slate-900 group-hover:text-blue-600'}`}>
                         {mentor.name}
                     </h3>
-                    <p className={`font-black text-[10px] md:text-[13px] tracking-[0.2em] uppercase pb-4 opacity-80
+                    <p className={`font-black text-sm md:text-[13px] tracking-[0.2em] uppercase pb-4 opacity-80
                         ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
                         {mentor.role}
                     </p>
@@ -196,10 +187,10 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
     return (
         <section 
             id="course-faculty-grid" 
-            className="py-14 relative overflow-hidden transition-colors duration-500 bg-transparent"
+            className={`${isMobile ? 'p-0' : 'py-14'} relative overflow-hidden transition-colors duration-500 bg-transparent`}
         >
-            <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
-                <div className="flex flex-col items-center justify-center mt-10 mb-10 text-center sm:mt-20 md:mt-16">
+            <div className={`max-w-[1440px] mx-auto ${isMobile ? 'px-0' : 'px-6 md:px-12'} relative z-10`}>
+                <div className={`flex flex-col items-center justify-center ${isMobile ? 'm-0' : 'mt-10 mb-10 text-center sm:mt-20 md:mt-16'}`}>
                     <div className="w-full">
                         <div className="flex justify-center">
                             <ScrollDarkenHeading variant={variant}>
@@ -209,9 +200,9 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                     </div>
                 </div>
 
-                <div className="max-w-6xl mx-auto md:px-6 relative z-10 w-full mb-20">
+                <div className={`max-w-6xl mx-auto ${isMobile ? 'px-0' : 'md:px-6'} relative z-10 w-full ${isMobile ? 'mb-0' : 'mb-20'}`}>
                     {isMobile ? (
-                        <div className="relative w-full px-2 overflow-hidden">
+                        <div className="relative w-full px-0 overflow-hidden">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={activeIndex}

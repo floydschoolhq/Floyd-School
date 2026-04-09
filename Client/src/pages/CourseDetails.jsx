@@ -130,7 +130,7 @@ const CourseDetails = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">50+ Enrolled Last Week</span>
+                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
                                 </div>
                             </div>
                         ) : (
@@ -172,7 +172,7 @@ const CourseDetails = () => {
                                                     </div>
                                                 ))}
                                             </div>
-                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">50+ Enrolled Last Week</span>
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -204,8 +204,8 @@ const CourseDetails = () => {
                 )}
 
                 {/* Enhanced Mentors Section */}
-                <section id="course-faculty" className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20">
-                    <div className="max-w-7xl mx-auto px-6">
+                <section id="course-faculty" className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 md:pt-12 md:pb-20 p-0">
+                    <div className="max-w-7xl mx-auto px-0 md:px-6">
                         {/* Faculty Grid */}
                         <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
                     </div>

@@ -241,14 +241,14 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.95, opacity: 0 }}
-                    className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden shadow-2xl border border-slate-700"
+                    className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 max-h-[98vh] overflow-y-auto hide-scrollbar"
                     onClick={e => e.stopPropagation()}
                 >
-                    <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
+                    <div className="p-5 md:p-8">
+                        <div className="flex items-center justify-between mb-4 md:mb-6">
                             <div>
-                                <h2 className="text-2xl font-bold text-white">Course Enrollment</h2>
-                                <p className="text-sm text-slate-400 mt-1">{courseTitle}</p>
+                                <h2 className="text-xl md:text-2xl font-bold text-white">Course Enrollment</h2>
+                                <p className="text-xs md:text-sm text-slate-400 mt-1">{courseTitle}</p>
                             </div>
                             <button
                                 onClick={handleClose}
@@ -266,10 +266,10 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
-                                    className="space-y-5"
+                                    className="space-y-3.5 md:space-y-5"
                                 >
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-300 mb-2">
+                                        <label className="block text-[11px] md:text-sm font-semibold text-slate-300 mb-1.5 md:mb-2">
                                             Full Name
                                         </label>
                                         <input
@@ -278,7 +278,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                             value={formData.fullName}
                                             onChange={handleChange}
                                             placeholder="Enter your name"
-                                            className={`w-full px-4 py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                                            className={`w-full px-4 py-2.5 md:py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
                                                 errors.fullName ? 'border-red-500' : 'border-slate-600'
                                             }`}
                                         />
@@ -288,7 +288,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-300 mb-2">
+                                        <label className="block text-[11px] md:text-sm font-semibold text-slate-300 mb-1.5 md:mb-2">
                                             Email
                                         </label>
                                         <input
@@ -297,7 +297,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                             value={formData.email}
                                             onChange={handleChange}
                                             placeholder="your@email.com"
-                                            className={`w-full px-4 py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                                            className={`w-full px-4 py-2.5 md:py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
                                                 errors.email ? 'border-red-500' : 'border-slate-600'
                                             }`}
                                         />
@@ -307,7 +307,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-300 mb-2">
+                                        <label className="block text-[11px] md:text-sm font-semibold text-slate-300 mb-1.5 md:mb-2">
                                             Phone Number
                                         </label>
                                         <input
@@ -316,7 +316,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                             value={formData.phone}
                                             onChange={handleChange}
                                             placeholder="10-digit phone number"
-                                            className={`w-full px-4 py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                                            className={`w-full px-4 py-2.5 md:py-3 bg-slate-800/50 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
                                                 errors.phone ? 'border-red-500' : 'border-slate-600'
                                             }`}
                                         />
@@ -326,13 +326,13 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     </div>
 
                                     {/* Price Display */}
-                                    <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg p-4 mt-6">
+                                    <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg p-3.5 md:p-4 mt-4 md:mt-6">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-slate-300 font-medium">Course Fee:</span>
+                                            <span className="text-sm md:text-base text-slate-300 font-medium">Course Fee:</span>
                                             <div className="flex items-end gap-2">
-                                                <span className="text-sm font-medium text-slate-400 line-through mb-1">₹2,999</span>
-                                                <span className="text-2xl font-bold text-blue-400">
-                                                    ₹{coursePrice}
+                                                <span className="text-xs md:text-sm font-medium text-slate-400 line-through mb-1">₹2,999</span>
+                                                <span className="text-xl md:text-2xl font-bold text-blue-400">
+                                                    ₹{coursePrice.toLocaleString('en-IN')}
                                                 </span>
                                             </div>
                                         </div>
@@ -341,7 +341,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                     <button
                                         onClick={handleProceedToPayment}
                                         disabled={loading}
-                                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-bold text-sm uppercase tracking-widest hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-6"
+                                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 md:py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-4 md:mt-6"
                                     >
                                         {loading ? (
                                             <span className="flex items-center justify-center gap-2">
@@ -353,7 +353,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                         )}
                                     </button>
 
-                                    <p className="text-center text-xs text-slate-500 mt-4">
+                                    <p className="text-center text-[10px] md:text-xs text-slate-500 mt-2 md:mt-4">
                                         Your information is secure and encrypted
                                     </p>
                                 </motion.div>

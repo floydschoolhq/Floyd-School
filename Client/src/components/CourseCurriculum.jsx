@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 const CourseCurriculum = ({ variant = "light" }) => {
     const navigate = useNavigate();
@@ -175,9 +176,9 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
     if (isMobile) {
         return (
-            <div className="py-16 px-6">
+            <div className="py-16 px-0">
                 <div className="text-center mb-10">
-                    <p className="text-sm text-on-surface-variant mb-8 font-medium leading-relaxed">
+                    <p className="text-[13px] text-on-surface-variant mb-8 font-medium leading-relaxed px-2">
                         "The question isn't whether AI will shape your child's future. It's whether they'll build it — or just watch."
                     </p>
                     <button 
@@ -190,7 +191,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
                 
                 <div className="mb-12">
-                    <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-3 mb-6 px-2">
                         <h3 className="text-xl font-black uppercase tracking-tight text-white">The 90-Day Roadmap</h3>
                     </div>
                     <div className="space-y-6 border-l-2 border-slate-800 ml-4 pl-6 relative">
@@ -294,99 +295,128 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     </div>
                 </div>
 
+                {/* Card 1: Urgency & Program Details */}
                 <motion.div 
                     initial={{ opacity: 0, y: 30, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="relative bg-gradient-to-b from-white/10 to-white/5 border border-white/20 p-6 rounded-[2rem] text-center mb-10 overflow-hidden shadow-2xl"
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="relative bg-[#0F172A]/40 backdrop-blur-3xl border border-white/10 p-5 rounded-[2rem] text-center mb-6 overflow-hidden shadow-2xl"
                 >
-                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50"></div>
-                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl"></div>
-                    <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     
                     <div className="relative z-10">
-                        <h3 className="text-2xl font-black uppercase tracking-tighter mb-3 leading-none text-white drop-shadow-md">
-                            Ready to build your child's AI future?
+                        <h3 className="text-xl font-black uppercase tracking-tighter mb-4 leading-tight text-white">
+                            Ready to build your child's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">AI future?</span>
                         </h3>
-                        <p className="text-white/70 text-xs font-semibold mb-6 leading-relaxed">
-                            Strictly limited seats per batch to ensure 1-on-1 personalized mentorship.
+                        <p className="text-slate-400 text-[11px] font-semibold mb-6 leading-relaxed">
+                            Strictly limited seats per batch to ensure personalized 1-on-1 mentorship sessions.
                         </p>
                         
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                            <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm">
-                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Upcoming Batch</span>
-                                <span className="text-sm font-black uppercase text-white">15th April</span>
+                        <div className="grid grid-cols-2 gap-2 w-full">
+                            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
+                                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block mb-1">Upcoming Batch</span>
+                                <span className="text-[11px] font-black uppercase text-white">15th April</span>
                             </div>
-                            <div className="p-4 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-sm relative overflow-hidden">
-                                <div className="absolute inset-0 bg-orange-500/10 animate-pulse"></div>
-                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1 relative z-10 flex items-center justify-center gap-1.5">
+                            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
+                                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
                                     <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
                                     Seats Left
                                 </span>
-                                <span className="text-sm font-black uppercase text-orange-400 relative z-10 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]">
+                                <span className="text-[11px] font-black uppercase text-orange-400">
                                     {totalSeats - registeredCount} / {totalSeats}
                                 </span>
                             </div>
                         </div>
+                    </div>
+                </motion.div>
 
-                        <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-blue-500/10 border border-blue-500/20 backdrop-blur-sm mb-6 flex flex-col items-center justify-center relative overflow-hidden">
-                            <div className="absolute inset-0 bg-blue-500/5 animate-pulse"></div>
-                            <span className="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-1 relative z-10">Course Fee</span>
-                            <div className="flex items-center justify-center gap-3 mb-1.5 relative z-10">
-                                <span className="text-lg font-bold text-slate-400 line-through decoration-slate-500/50">₹2,999</span>
-                                <span className="text-3xl font-black text-white tracking-tighter drop-shadow-md">₹1,999</span>
+                {/* Card 2: Investment & Action */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="relative bg-[#0F172A]/40 backdrop-blur-3xl border border-white/10 p-5 rounded-[2rem] text-center mb-12 overflow-hidden shadow-2xl"
+                >
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none"></div>
+                    
+                    <div className="relative z-10">
+                        <div className="w-full p-5 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 flex flex-col items-center justify-center mb-6">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
+                            <div className="flex items-center justify-center gap-3">
+                                <span className="text-sm font-bold text-slate-600 line-through">₹2,999</span>
+                                <span className="text-3xl font-black text-white tracking-tighter">₹1,999</span>
                             </div>
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-full relative z-10">
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
-                                33% OFF
-                            </span>
+                            <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
+                                <span className="text-blue-400 text-[9px] font-black uppercase tracking-widest">33% Launch Offer</span>
+                            </div>
                         </div>
 
                         <button 
                             onClick={handleReserveAdmission}
                             disabled={isEnrolling}
-                            className="w-full bg-white text-black py-4 rounded-xl font-black text-sm uppercase tracking-[0.15em] hover:scale-[0.98] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-70 flex items-center justify-center gap-2"
+                            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-5 rounded-xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-blue-500/20 active:scale-[0.97] transition-all disabled:opacity-70 group"
                         >
-                            {isEnrolling ? 'Processing...' : 'Reserve Admission Now'}
-                            {!isEnrolling && <span className="text-lg leading-none">&rarr;</span>}
+                            <span className="flex items-center justify-center gap-2">
+                                {isEnrolling ? 'Processing...' : (
+                                    <>
+                                        Reserve Admission <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                                    </>
+                                )}
+                            </span>
                         </button>
                     </div>
                 </motion.div>
 
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] p-6 text-white">
-                    <h2 className="text-xl font-bold uppercase tracking-tighter leading-tight mb-5">Face Recognition Attendance System</h2>
-                    
-                    <div className="relative mb-6">
-                        <div className="aspect-video bg-black/20 rounded-xl overflow-hidden shadow-2xl border border-white/10">
-                            <iframe 
-                                width="100%" 
-                                height="100%" 
-                                style={{ pointerEvents: 'none' }}
-                                src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
-                                title="YouTube video player" 
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                            ></iframe>
-                        </div>
+                {/* Video Demo Unit (Standalone) */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-4"
+                >
+                    <div className="aspect-video bg-[#0A0A0A] rounded-[1.5rem] overflow-hidden shadow-2xl border border-white/10 relative group">
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            style={{ pointerEvents: 'none' }}
+                            src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
+                            title="YouTube video player" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen
+                        ></iframe>
+                        <div className="absolute inset-0 bg-blue-500/5 mix-blend-overlay pointer-events-none"></div>
                     </div>
+                </motion.div>
 
+                {/* Features Info Card */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[1.5rem] p-5 text-white shadow-xl"
+                >
+                    <h2 className="text-lg font-black uppercase tracking-tighter leading-tight mb-5">
+                        Capstone: Face Recognition System
+                    </h2>
+                    
                     <div className="space-y-4">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">👤</div>
-                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Face Recognition Engine</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">👤</div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Face Recognition Engine</span>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">📋</div>
-                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Live Attendance Logger</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">📋</div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Live Attendance Logger</span>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-base shadow-inner">🖥️</div>
-                            <span className="text-xs font-semibold uppercase tracking-widest text-white/90">Flask Web Dashboard</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">🖥️</div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Flask Web Dashboard</span>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         );
     }
