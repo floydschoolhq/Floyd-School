@@ -143,21 +143,23 @@ const TECH_CATEGORIES = [
 const MobileIcon = ({ tech, position }) => {
   return (
     <group position={position}>
-      <Html
-        center
-        distanceFactor={10}
-        zIndexRange={[0, 10]}
-        className="pointer-events-none select-none"
-      >
-        <div 
-          className="w-12 h-12 bg-white/95 backdrop-blur-md rounded-[1.2rem] border border-slate-200/50 flex items-center justify-center shadow-lg"
-          style={{ 
-            boxShadow: `0 8px 30px ${tech.color}10`,
-          }}
+      <Float speed={4} rotationIntensity={1.5} floatIntensity={2}>
+        <Html
+          center
+          distanceFactor={10}
+          zIndexRange={[0, 10]}
+          className="pointer-events-none select-none"
         >
-          <tech.icon size={26} style={{ color: tech.color }} />
-        </div>
-      </Html>
+          <div 
+            className="w-12 h-12 bg-white/95 backdrop-blur-md rounded-[1.2rem] border border-slate-200/50 flex items-center justify-center shadow-lg transition-transform active:scale-110"
+            style={{ 
+              boxShadow: `0 8px 30px ${tech.color}10`,
+            }}
+          >
+            <tech.icon size={26} style={{ color: tech.color }} />
+          </div>
+        </Html>
+      </Float>
     </group>
   );
 };
@@ -261,17 +263,12 @@ const TechStackStats = () => {
                                 <MobileTechGlobe />
                                 <OrbitControls 
                                   enableZoom={false} 
-                                  autoRotate={false}
-                                  autoRotateSpeed={0}
+                                  autoRotate={true}
                                   enablePan={false}
-                                  rotateSpeed={0.5}
-                                  enableDamping={false}
-                                  dampingFactor={1}
+                                  rotateSpeed={2.5}
+                                  enableDamping={true}
+                                  dampingFactor={0.02}
                                   enableRotate={true}
-                                  minPolarAngle={Math.PI * 0.4}
-                                  maxPolarAngle={Math.PI * 0.6}
-                                  minAzimuthAngle={-Math.PI * 0.3}
-                                  maxAzimuthAngle={Math.PI * 0.3}
                                 />
                             </Canvas>
                           </Suspense>
