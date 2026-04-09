@@ -225,13 +225,7 @@ const TechStackStats = () => {
     if (isMobile) {
         return (
             <section className="pt-20 pb-12 bg-white relative z-10 w-full flex flex-col items-center overflow-hidden">
-                {/* Background Text Accent */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] select-none flex items-center justify-center">
-                  <h2 className="text-[25vw] font-bold leading-none uppercase -rotate-12 transform -translate-y-20">
-                    TECH<br/>STACK
-                  </h2>
-                </div>
-
+                
                 <div className="relative z-30 w-full px-6 text-center space-y-2">
                     {/* Badge removed */}
                     <h2 className="text-3xl font-bold text-slate-900 uppercase tracking-widest leading-tight">
