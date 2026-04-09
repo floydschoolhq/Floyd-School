@@ -269,18 +269,11 @@ const FeaturedCard = ({ review, variant }) => {
     return (
         <motion.div
             key={review.id}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ 
-                duration: 0.4, 
-                ease: [0.4, 0, 0.2, 1]
-            }}
+            initial={{ opacity: 0, y: 20, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.97 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="relative rounded-3xl p-8 md:p-10 overflow-hidden border border-white/[0.06] bg-white/[0.02]"
-            style={{ 
-                willChange: 'transform, opacity',
-                transform: 'translateZ(0)'
-            }}
         >
             <div className="relative z-10 flex flex-col gap-6">
                 <div className="flex items-center gap-4">
@@ -398,9 +391,9 @@ const CourseReviews = ({ courseId, variant }) => {
     const active = AI_REVIEWS[activeIndex];
     const isMobile = window.innerWidth < 768;
 
-    // Optimized auto-advance with requestAnimationFrame
+    // Auto-advance only for mobile, desktop stays static
     React.useEffect(() => {
-        if (isPaused) return;
+        if (!isMobile || isPaused) return;
         
         let animationFrame;
         let lastTime = 0;
@@ -421,7 +414,7 @@ const CourseReviews = ({ courseId, variant }) => {
                 cancelAnimationFrame(animationFrame);
             }
         };
-    }, [isPaused, AI_REVIEWS.length]);
+    }, [isMobile, isPaused, AI_REVIEWS.length]);
 
     return (
         <section className="py-24 px-6 relative overflow-hidden bg-black">
@@ -512,7 +505,7 @@ const CourseReviews = ({ courseId, variant }) => {
                             onMouseEnter={() => setIsPaused(true)}
                             onMouseLeave={() => setIsPaused(false)}
                         >
-                            <AnimatePresence mode="sync">
+                            <AnimatePresence mode="wait">
                                 <FeaturedCard key={active.id} review={active} variant={variant} />
                             </AnimatePresence>
     
@@ -520,23 +513,14 @@ const CourseReviews = ({ courseId, variant }) => {
                             <div className="flex items-center justify-between mt-6">
                                 <div className="flex gap-2">
                                     {AI_REVIEWS.map((_, i) => (
-                                        <motion.button
+                                        <button
                                             key={i}
                                             onClick={() => setActiveIndex(i)}
-                                            className={`rounded-full ${
+                                            className={`transition-all duration-300 rounded-full ${
                                                 i === activeIndex
-                                                    ? "w-6 h-2 bg-gradient-to-r from-cyan-400 to-blue-400"
+                                                    ? "w-6 h-2 bg-blue-600"
                                                     : "w-2 h-2 bg-white/10 hover:bg-white/20"
                                             }`}
-                                            animate={{
-                                                scale: i === activeIndex ? [1, 1.2, 1] : 1,
-                                                opacity: i === activeIndex ? 1 : 0.3
-                                            }}
-                                            transition={{
-                                                duration: 2,
-                                                repeat: i === activeIndex ? Infinity : 0,
-                                                repeatDelay: 0.5
-                                            }}
                                         />
                                     ))}
                                 </div>

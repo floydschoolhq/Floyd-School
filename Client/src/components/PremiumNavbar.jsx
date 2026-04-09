@@ -248,7 +248,7 @@ const PremiumNavbar = memo(({ variant }) => {
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         
-                        {/* Modern Mobile Menu Panel */}
+                        {/* Enhanced Mobile Menu Panel */}
                         <motion.div
                             className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl
                                 ${isCoursesPage ? 'bg-slate-900' : 'bg-white'}`}
@@ -257,24 +257,44 @@ const PremiumNavbar = memo(({ variant }) => {
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                         >
-                            {/* Menu Header */}
-                            <div className={`p-6 text-white
-                                ${isCoursesPage ? 'bg-gradient-to-r from-[#1a1a1a] to-[#0a0a0a]' : 'bg-gradient-to-r from-blue-900 via-black to-blue-800'}`}>
-                                <div className="flex items-center justify-between mb-2">
-                                    <h3 className="text-lg font-bold">Menu</h3>
-                                    <button
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
-                                    >
-                                        <FaTimes size={16} />
-                                    </button>
+                            {/* Enhanced Menu Header */}
+                            <div className={`p-6 text-white relative overflow-hidden
+                                ${isCoursesPage ? 'bg-gradient-to-br from-[#1a1a1a] via-slate-800 to-[#0a0a0a]' : 'bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900'}`}>
+                                {/* Background Pattern */}
+                                <div className="absolute inset-0 opacity-10">
+                                    <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                                 </div>
-                                <p className="text-sm opacity-90">Navigate through thinkskool</p>
+                                
+                                <div className="relative z-10">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 className="text-xl font-bold mb-1">Menu</h3>
+                                            <p className="text-sm opacity-80">Navigate through thinkskool</p>
+                                        </div>
+                                        <motion.button
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="p-3 bg-white/20 rounded-xl hover:bg-white/30 transition-all hover:scale-110"
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <FaTimes size={16} />
+                                        </motion.button>
+                                    </div>
+                                    
+                                    {/* Quick Stats */}
+                                    <div className="flex gap-4 text-xs">
+                                        <div className="bg-white/10 px-3 py-1.5 rounded-full">
+                                            <span className="opacity-80">5+ Courses</span>
+                                        </div>
+                                        <div className="bg-white/10 px-3 py-1.5 rounded-full">
+                                            <span className="opacity-80">1000+ Students</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
-                            {/* Navigation Items */}
+                            {/* Enhanced Navigation Items */}
                             <div className="flex-1 overflow-y-auto">
-                                <div className="p-4 space-y-2">
+                                <div className="p-4 space-y-3">
                                     {(isCourseDetailsPage ? COURSE_MOBILE_NAV_ITEMS : MOBILE_NAV_ITEMS).map((item, index) => {
                                         const Icon = item.icon;
                                         return (
@@ -282,7 +302,9 @@ const PremiumNavbar = memo(({ variant }) => {
                                                 key={item.label}
                                                 initial={{ opacity: 0, x: 20 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: index * 0.05 }}
+                                                transition={{ delay: index * 0.08 }}
+                                                whileHover={{ scale: 1.02, x: 5 }}
+                                                whileTap={{ scale: 0.98 }}
                                                 onClick={() => {
                                                     setIsMobileMenuOpen(false);
                                                     if (!item.href) return;
@@ -300,38 +322,122 @@ const PremiumNavbar = memo(({ variant }) => {
                                                         }
                                                     }
                                                 }}
-                                                className="w-full flex items-center gap-4 p-4 bg-slate-50 hover:bg-blue-50 rounded-xl transition-all group"
+                                                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all group relative overflow-hidden
+                                                    ${isCoursesPage 
+                                                        ? 'bg-slate-800 hover:bg-slate-700 text-white' 
+                                                        : 'bg-gradient-to-r from-slate-50 to-slate-100 hover:from-blue-50 hover:to-blue-100 text-slate-900'}`}
                                             >
-                                                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                                                    <Icon className="text-blue-600" size={18} />
+                                                {/* Hover Effect Background */}
+                                                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                                                    ${isCoursesPage 
+                                                        ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20' 
+                                                        : 'bg-gradient-to-r from-blue-100/50 to-purple-100/50'}`} />
+                                                
+                                                {/* Icon */}
+                                                <motion.div 
+                                                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all group-hover:scale-110 relative z-10
+                                                        ${isCoursesPage 
+                                                            ? 'bg-slate-700 group-hover:bg-blue-600/30 text-blue-400' 
+                                                            : 'bg-blue-100 group-hover:bg-blue-200 text-blue-600'}`}
+                                                    whileHover={{ rotate: 5 }}
+                                                >
+                                                    <Icon size={20} />
+                                                </motion.div>
+                                                
+                                                {/* Content */}
+                                                <div className="flex-1 text-left relative z-10">
+                                                    <div className={`font-semibold mb-1 ${isCoursesPage ? 'text-white' : 'text-slate-900'}`}>
+                                                        {item.label}
+                                                    </div>
+                                                    <div className={`text-xs opacity-60 ${isCoursesPage ? 'text-slate-400' : 'text-slate-600'}`}>
+                                                        {item.href.includes('course-hero') ? 'Start here' : 
+                                                         item.href.includes('curriculum') ? 'Learn more' :
+                                                         item.href.includes('reviews') ? 'See feedback' :
+                                                         item.href.includes('offerings') ? 'What we offer' :
+                                                         item.href.includes('faculty') ? 'Meet experts' :
+                                                         item.href.includes('home') ? 'Main page' :
+                                                         item.href.includes('courses') ? 'Explore programs' :
+                                                         item.href.includes('projects') ? 'Student work' :
+                                                         item.href.includes('mentors') ? 'Guidance' :
+                                                         item.href.includes('contact') ? 'Get in touch' : 'Navigate'}
+                                                    </div>
                                                 </div>
-                                                <div className="flex-1 text-left">
-                                                    <div className="font-semibold text-slate-900">{item.label}</div>
-                                                </div>
-                                                <div className="text-slate-400">
+                                                
+                                                {/* Arrow */}
+                                                <motion.div 
+                                                    className={`transition-all group-hover:translate-x-1 relative z-10
+                                                        ${isCoursesPage ? 'text-slate-400' : 'text-slate-600'}`}
+                                                    whileHover={{ scale: 1.2 }}
+                                                >
                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                         <path d="M9 18l6-6-6-6" />
                                                     </svg>
-                                                </div>
+                                                </motion.div>
                                             </motion.button>
                                         );
                                     })}
                                 </div>
                                 
-                                {/* CTA Section */}
-                                <div className="p-4 border-t border-slate-200">
-                                    <Link
-                                        to="/student/login"
-                                        onClick={() => {
-                                            navigate('/student/login');
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl border border-white/10"
-                                    >
-                                        <span className="flex items-center justify-center">
-                                            Sign In
-                                        </span>
-                                    </Link>
+                                {/* Enhanced CTA Section */}
+                                <div className={`p-4 border-t ${isCoursesPage ? 'border-slate-700' : 'border-slate-200'}`}>
+                                    <div className="space-y-3">
+                                        {/* Sign In Button */}
+                                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                            <Link
+                                                to="/student/login"
+                                                onClick={() => {
+                                                    navigate('/student/login');
+                                                    setIsMobileMenuOpen(false);
+                                                }}
+                                                className={`w-full py-4 font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border relative overflow-hidden group
+                                                    ${isCoursesPage 
+                                                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-blue-500/30' 
+                                                        : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-white/10'}`}
+                                            >
+                                                {/* Button Shine Effect */}
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                                                
+                                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+                                                    </svg>
+                                                    Sign In
+                                                </span>
+                                            </Link>
+                                        </motion.div>
+                                        
+                                        {/* Quick Links */}
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => {
+                                                    setIsMobileMenuOpen(false);
+                                                    navigate('/school-partnerships');
+                                                }}
+                                                className={`py-2 px-3 rounded-lg text-xs font-medium transition-all
+                                                    ${isCoursesPage 
+                                                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' 
+                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}
+                                            >
+                                                Partner with Us
+                                            </motion.button>
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => {
+                                                    setIsMobileMenuOpen(false);
+                                                    handleContactClick();
+                                                }}
+                                                className={`py-2 px-3 rounded-lg text-xs font-medium transition-all
+                                                    ${isCoursesPage 
+                                                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' 
+                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}
+                                            >
+                                                Request Callback
+                                            </motion.button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
