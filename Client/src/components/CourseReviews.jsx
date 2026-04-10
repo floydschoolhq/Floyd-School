@@ -334,6 +334,9 @@ const CourseReviews = ({ courseId, variant }) => {
     }, []);
 
     const active = useMemo(() => AI_REVIEWS[activeIndex], [activeIndex]);
+    
+    // Memoize mobile reviews to prevent re-renders
+    const mobileReviews = useMemo(() => AI_REVIEWS.slice(0, 5), []);
 
     return (
         <section className="py-0 px-0 relative overflow-hidden bg-black">

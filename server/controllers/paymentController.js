@@ -257,6 +257,29 @@ const verifyPayment = async (req, res) => {
             }
         }
 
+        // SECURITY: Verify payment amount matches the course price via Razorpay API
+        if (razorpay) {
+            try {
+                const payment = await razorpay.payments.fetch(razorpayPaymentId);
+                const expectedAmountPaise = Math.round(enrollment.amount * 100);
+
+                if (payment.amount !== expectedAmountPaise) {
+                    console.error('[Payment Security] Amount mismatch!', {
+                        expected: expectedAmountPaise,
+                        received: payment.amount,
+                        orderId: razorpayOrderId
+                    });
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Payment amount mismatch. Please contact support.'
+                    });
+                }
+            } catch (fetchError) {
+                console.error('[Payment Warning] Could not verify payment amount:', fetchError.message);
+                // Continue with enrollment if fetch fails - signature is already verified
+            }
+        }
+
         // Update enrollment record
         const updatedEnrollment = await Enrollment.findByIdAndUpdate(
             enrollment._id,
@@ -430,9 +453,9 @@ const handleRazorpayWebhook = async (req, res) => {
             const { order_id } = payment.entity;
             
             // Update enrollment status
-            const enrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
-            if (enrollment) {
-                await Enrollment.findByIdAndUpdate(enrollment._id, {
+            const failedEnrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
+            if (failedEnrollment) {
+                await Enrollment.findByIdAndUpdate(failedEnrollment._id, {
                     paymentStatus: 'failed',
                     status: 'cancelled'
                 });
@@ -526,6 +549,8 @@ const getEnrollment = async (req, res) => {
 module.exports = {
     createOrder,
     verifyPayment,
+    initiateRefund,
+    handlePaymentCancellation,
     initiateRefund,
     handlePaymentCancellation,
     handleRazorpayWebhook,
