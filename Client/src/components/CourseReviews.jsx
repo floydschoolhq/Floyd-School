@@ -163,6 +163,7 @@ const CourseReviews = ({ courseId, variant }) => {
     const containerRef = useRef(null);
     const controls = useAnimation();
     const [isHovered, setIsHovered] = useState(false);
+    const currentXRef = useRef(0);
 
     if (courseId !== '1') return null;
 
@@ -175,8 +176,9 @@ const CourseReviews = ({ courseId, variant }) => {
         if (isHovered) {
             controls.stop();
         } else {
+            const startPos = currentXRef.current % distance;
             controls.start({
-                x: [0, distance],
+                x: [startPos, distance],
                 transition: {
                     duration: 80,
                     repeat: Infinity,
@@ -187,7 +189,10 @@ const CourseReviews = ({ courseId, variant }) => {
         }
     }, [isHovered, controls, cardWidth]);
 
-    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseEnter = async () => {
+        currentXRef.current = await controls.get();
+        setIsHovered(true);
+    };
     const handleMouseLeave = () => setIsHovered(false);
 
     if (isMobile) {

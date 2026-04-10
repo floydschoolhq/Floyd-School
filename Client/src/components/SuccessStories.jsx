@@ -136,6 +136,7 @@ const SuccessStories = ({ variant }) => {
     const containerRef = useRef(null);
     const controls = useAnimation();
     const [isHovered, setIsHovered] = useState(false);
+    const currentXRef = useRef(0);
     
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -154,10 +155,12 @@ const SuccessStories = ({ variant }) => {
             const distance = -cardWidth * ALL_REVIEWS.length * 2;
             
             if (isHovered) {
+                currentXRef.current = await controls.get();
                 await controls.stop();
             } else {
+                const startPos = currentXRef.current % distance;
                 await controls.start({
-                    x: [0, distance],
+                    x: [startPos, distance],
                     transition: {
                         duration: 80,
                         repeat: Infinity,
@@ -171,8 +174,9 @@ const SuccessStories = ({ variant }) => {
         startAnimation();
     }, [isHovered, controls, cardWidth]);
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = async () => {
         setIsHovered(true);
+        currentXRef.current = await controls.get();
         controls.stop();
     };
 
