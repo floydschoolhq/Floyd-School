@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
 import { Star } from 'lucide-react';
@@ -162,8 +162,6 @@ const CourseReviews = ({ courseId, variant }) => {
     const isMobile = useIsMobile();
     const containerRef = useRef(null);
     const controls = useAnimation();
-    const [isHovered, setIsHovered] = useState(false);
-    const currentXRef = useRef(0);
 
     if (courseId !== '1') return null;
 
@@ -171,29 +169,20 @@ const CourseReviews = ({ courseId, variant }) => {
     const cardWidth = 350 + 24; // width + gap
 
     useEffect(() => {
+        if (isMobile) return;
+        
         const distance = -cardWidth * AI_REVIEWS.length * 2;
         
-        if (isHovered) {
-            controls.stop();
-        } else {
-            const startPos = currentXRef.current % distance;
-            controls.start({
-                x: [startPos, distance],
-                transition: {
-                    duration: 80,
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    ease: "linear",
-                }
-            });
-        }
-    }, [isHovered, controls, cardWidth]);
-
-    const handleMouseEnter = async () => {
-        currentXRef.current = await controls.get();
-        setIsHovered(true);
-    };
-    const handleMouseLeave = () => setIsHovered(false);
+        controls.start({
+            x: [0, distance],
+            transition: {
+                duration: 80,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+            }
+        });
+    }, [isMobile, controls, cardWidth]);
 
     if (isMobile) {
         return (
@@ -303,8 +292,6 @@ const CourseReviews = ({ courseId, variant }) => {
                 <div 
                     className="overflow-hidden py-8"
                     ref={containerRef}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
                 >
                     <motion.div 
                         className="flex gap-6"

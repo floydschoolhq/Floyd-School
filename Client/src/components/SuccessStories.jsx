@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence, useMotionValue, useAnimation } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValue, useAnimation } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import useIsMobile from '../hooks/useIsMobile';
@@ -135,8 +135,6 @@ const SuccessStories = ({ variant }) => {
     const isMobile = useIsMobile();
     const containerRef = useRef(null);
     const controls = useAnimation();
-    const [isHovered, setIsHovered] = useState(false);
-    const currentXRef = useRef(0);
     
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -151,38 +149,20 @@ const SuccessStories = ({ variant }) => {
     const cardWidth = 350 + 24; // width + gap
 
     useEffect(() => {
-        const startAnimation = async () => {
-            const distance = -cardWidth * ALL_REVIEWS.length * 2;
-            
-            if (isHovered) {
-                currentXRef.current = await controls.get();
-                await controls.stop();
-            } else {
-                const startPos = currentXRef.current % distance;
-                await controls.start({
-                    x: [startPos, distance],
-                    transition: {
-                        duration: 80,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        ease: "linear",
-                    }
-                });
-            }
-        };
+        if (isMobile) return;
         
-        startAnimation();
-    }, [isHovered, controls, cardWidth]);
-
-    const handleMouseEnter = async () => {
-        setIsHovered(true);
-        currentXRef.current = await controls.get();
-        controls.stop();
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
+        const distance = -cardWidth * ALL_REVIEWS.length * 2;
+        
+        controls.start({
+            x: [0, distance],
+            transition: {
+                duration: 80,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+            }
+        });
+    }, [isMobile, controls, cardWidth]);
 
     // Mobile auto-swipe
     useEffect(() => {
@@ -277,8 +257,6 @@ const SuccessStories = ({ variant }) => {
                 <div 
                     className="overflow-hidden py-8"
                     ref={containerRef}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
                 >
                     <motion.div 
                         className="flex gap-6"
