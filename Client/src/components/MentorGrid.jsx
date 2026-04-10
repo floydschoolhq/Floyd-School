@@ -10,6 +10,7 @@ import ananimikaImg from '../assets/tutors/anamika.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import poojaImg from '../assets/tutors/pooja.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
+import shanImg from '../assets/tutors/shan.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -19,36 +20,36 @@ const LEADERS = [
         role: "Founder | AI/ML Engineer",
         image: shivamImg,
         imageScale: 1.9,
-        bio: "visionary founder of thinkskool, architecting the future of STEM education through advanced AI and machine learning integration.",
+        bio: "AI/ML expert building intelligent, real-world solutions with machine learning.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
-        tags: ["AI/ML", "Founder", "Visionary"]
+        tags: ["AI/ML", "Founder"]
     },
     {
         name: "Raghav",
         role: "Lead Mentor & Product Architect",
         image: raghavImg,
         imageScale: 1.9,
-        bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
+        bio: "Cybersecurity specialist focused on securing systems and preventing threats.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-        tags: ["Lead Mentor", "Architect", "Eng"]
+        tags: [ "Architect", "CyberSecurity"]
     },
     {
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
         image: abhayImg,
         imageScale: 1.5,
-        bio: "Full-stack enthusiast focused on building premium web experiences and scalable frontend architectures.",
+        bio: "Builds fast, scalable, and modern web applications using latest technologies.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
-        tags: ["Web Dev", "Manager", "Full Stack"]
+        tags: ["Web Developer", "Manager"]
     },
     {
         name: "Anamika Vashisth",
         role: "UI/UX & System Designer",
         image: ananimikaImg,
         imageScale: 1.15,
-        bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
+        bio: "Designs intuitive, user-friendly interfaces focused on seamless experience.",
         linkedin: "#",
-        tags: ["UI/UX", "Design", "Product"]
+        tags: ["UI/UX", "Design"]
     },
     {
         name: "Shashwat Vashishth",
@@ -56,18 +57,18 @@ const LEADERS = [
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-center",
-        bio: "Expert in Artificial Intelligence and Machine Learning, guiding students through complex algorithm development and data science.",
+        bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
-        tags: ["AI/ML", "Algorithm", "Data Science"]
+        tags: ["AI/ML", "Algorithm"]
     },
     {
         name: "Shan Sharma",
         role: "System Development",
-        image: null,
+        image: shanImg,
         imageScale: 1.0,
-        bio: "Specializing in low-level system design and high-performance development architectures.",
-        linkedin: "#",
-        tags: ["System Dev", "Low-level", "Architecture"]
+        bio: "Develops scalable systems and modern web applications with strong architecture.",
+        linkedin: "https://www.linkedin.com/in/shan-sharma-726706292",
+        tags: ["System Design", "Architecture"]
     },
     {
         name: "Nitesh Kumar",
@@ -75,18 +76,18 @@ const LEADERS = [
         image: niteshImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
-        bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
+        bio: "Leads structured design systems focused on clarity, usability, and product growth.",
         linkedin: "#",
-        tags: ["UI/UX", "Management", "Leadership"]
+        tags: ["UI/UX", "Management"]
     },
     {
         name: "Pooja Kumari",
         role: "UI and UX Management",
         image: poojaImg,
         imageScale: 1.0,
-        bio: "Expert in user-centric design strategies and management for professional-grade platforms.",
+        bio: "Designs user-centered experiences that balance creativity and functionality.",
         linkedin: "#",
-        tags: ["UI/UX", "Management", "Design strategy"]
+        tags: ["UI/UX", "Design strategy"]
     }
 ];
 

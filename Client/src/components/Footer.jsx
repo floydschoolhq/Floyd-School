@@ -99,7 +99,7 @@ const Footer = () => {
             <div className="flex space-x-4">
               {[
                 { icon: FaFacebookF, href: 'https://www.facebook.com/thinkskool.in' },
-                { icon: FaTwitter, href: 'https://www.twitter.com/thinkskool' },
+                { icon: FaTwitter, href: 'https://x.com/thinkskool' },
                 { icon: FaLinkedinIn, href: 'https://www.linkedin.com/company/thinkskool/' },
                 { icon: FaInstagram, href: 'https://www.instagram.com/thinkskool.in?igsh=MWlhOWlpc2ZuOGd6&utm_source=qr' }
               ].map(({ icon: Icon, href }, index) => (
