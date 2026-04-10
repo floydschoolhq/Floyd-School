@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, Sparkles, Brain, Cpu, Zap } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
@@ -8,7 +9,7 @@ const AI_REVIEWS = [
         id: 1,
         name: "Manav",
         role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ManavBoy",
+        avatar: "M",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -17,12 +18,16 @@ const AI_REVIEWS = [
         tags: ["AI", "ML", "Python"],
         achievement: "Completed course successfully",
         color: "blue",
+        category: "Non-tech to Tech",
+        text: "The course has been an outstanding learning journey. I gained a solid understanding of AI fundamentals and practical applications.",
+        before: "Beginner",
+        after: "AI Developer",
     },
     {
         id: 2,
-        name: "Samyak",
+        name: "Priya",
         role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Samyak",
+        avatar: "P",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -31,12 +36,16 @@ const AI_REVIEWS = [
         tags: ["AI", "ML", "Understanding"],
         achievement: "Strong grasp of concepts",
         color: "emerald",
+        category: "Tier 2/3 Colleges",
+        text: "I understood every concept thoroughly. The teaching methodology is exceptional.",
+        before: "Tier 3 Student",
+        after: "AI Engineer",
     },
     {
         id: 3,
         name: "Kushagra",
         role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kushagra",
+        avatar: "K",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -45,12 +54,16 @@ const AI_REVIEWS = [
         tags: ["Logic", "Problem Solving", "AI"],
         achievement: "Excellent logical thinking",
         color: "purple",
+        category: "Bootcamp",
+        text: "The course enhanced my logical thinking abilities tremendously.",
+        before: "Student",
+        after: "ML Specialist",
     },
     {
         id: 4,
-        name: "Aayar",
+        name: "Ananya",
         role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aayar",
+        avatar: "A",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -59,12 +72,16 @@ const AI_REVIEWS = [
         tags: ["AI", "ML", "Excellence"],
         achievement: "Excellent performance",
         color: "rose",
+        category: "Upskilling",
+        text: "This course exceeded all my expectations. The curriculum covers everything from basic concepts to advanced applications.",
+        before: "Developer",
+        after: "AI Expert",
     },
     {
         id: 5,
         name: "Shutanh",
         role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Shutanh",
+        avatar: "S",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -73,77 +90,18 @@ const AI_REVIEWS = [
         tags: ["AI", "ML", "Learning"],
         achievement: "Good progress",
         color: "amber",
+        category: "Non-tech to Tech",
+        text: "I'm thoroughly impressed with the quality of education provided.",
+        before: "Non-tech Student",
+        after: "Data Scientist",
     },
-    {
-        id: 6,
-        name: "Anant",
-        role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Anant",
-        rating: 3,
-        course: "AI & Machine Learning",
-        batch: "Current Batch",
-        highlight: "Rapid Skill Development",
-        content: "I made significant progress in a short time. The course content is well-paced and the practical assignments helped reinforce theoretical concepts. The instructor's guidance was invaluable throughout the journey.",
-        tags: ["AI", "ML", "Progress"],
-        achievement: "Rapid progress achieved",
-        color: "blue",
-    },
-    {
-        id: 7,
-        name: "Kavyansh",
-        role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kavyansh",
-        rating: 2,
-        course: "AI & Machine Learning",
-        batch: "Current Batch",
-        highlight: "Solid Foundation Building",
-        content: "The course provided a strong foundation in AI and machine learning concepts. While I had some prior knowledge, I still learned many new techniques and approaches. The fundamentals are explained very clearly.",
-        tags: ["AI", "ML", "Basics"],
-        achievement: "Completed fundamentals",
-        color: "emerald",
-    },
-    {
-        id: 8,
-        name: "Arnav Kumar",
-        role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ArnavKumar",
-        rating: 2,
-        course: "AI & Machine Learning",
-        batch: "Current Batch",
-        highlight: "Strong Foundation Established",
-        content: "I've built a strong foundation in AI and machine learning. The course covers essential topics comprehensively and the practical exercises helped me understand how to apply these concepts in real projects.",
-        tags: ["AI", "ML", "Foundation"],
-        achievement: "Strong foundation built",
-        color: "purple",
-    },
-    {
-        id: 9,
-        name: "Laksh Chaudhary",
-        role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=LakshChaudhary",
-        rating: 2.5,
-        course: "AI & Machine Learning",
-        batch: "Current Batch",
-        highlight: "Excellent Skill Development",
-        content: "The course has been excellent for skill development. I learned many new techniques and approaches to problem-solving. The hands-on projects were particularly valuable in understanding real-world applications.",
-        tags: ["AI", "ML", "Skills"],
-        achievement: "Good skill development",
-        color: "rose",
-    },
-    {
-        id: 10,
-        name: "Ranveer Sharma",
-        role: "Student, STEPUP SCHOOL",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RanveerSharma",
-        rating: 3,
-        course: "AI & Machine Learning",
-        batch: "Current Batch",
-        highlight: "Comprehensive Learning Experience",
-        content: "Good but not everything new - however, I still gained valuable insights and learned several new approaches. The course content is well-structured and the teaching quality is consistently high throughout.",
-        tags: ["AI", "ML", "Experience"],
-        achievement: "Completed with good understanding",
-        color: "amber",
-    },
+];
+
+const categories = [
+    "Non-tech to Tech",
+    "Tier 2/3 Colleges", 
+    "Bootcamp",
+    "Upskilling"
 ];
 
 const colorMap = {
@@ -223,46 +181,33 @@ const FeaturedCard = ({ review, variant }) => {
     
     if (isMobile) {
         return (
-            <motion.div 
-                whileTap={{ scale: 0.98 }}
-                className={`relative rounded-[2.5rem] p-8 overflow-hidden border backdrop-blur-xl ${
-                isDark 
-                    ? 'bg-slate-900/30 border-white/10 shadow-2xl shadow-black/40' 
-                    : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
-            }`}>
-                <div className="relative z-10 flex flex-col items-center text-center gap-6">
-                    <div className="flex flex-col items-center gap-4">
-                        <div className={`w-14 h-14 rounded-2xl overflow-hidden border p-0.5 shadow-sm ${
-                            isDark ? 'border-white/10 bg-slate-800' : 'border-slate-100 bg-white'
-                        }`}>
-                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover rounded-xl" />
-                        </div>
-                        <div className="min-w-0">
-                            <h4 className={`text-[15px] font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
-                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mt-0.5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{review.role}</p>
-                        </div>
-                    </div>
-                    
-                    <h3 className={`text-[17px] font-black tracking-tight leading-[1.4] transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                         "{review.highlight}"
-                    </h3>
-
-                    <p className={`text-[14px] leading-[1.6] font-medium transition-colors ${
-                        isDark ? 'text-slate-300' : 'text-slate-600'
-                    }`}>
-                        {review.content}
-                    </p>
-
-                    <div className="flex flex-wrap justify-center gap-2 mt-2">
-                        {review.tags.slice(0, 3).map(tag => (
-                            <span key={tag} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full transition-all
-                                ${isDark ? 'bg-white/5 text-slate-400 border border-white/5' : 'bg-slate-50 text-slate-500 border border-slate-100'}`}>
-                                {tag}
-                            </span>
-                        ))}
+            <div className="min-w-[85%] snap-center rounded-2xl p-5 bg-white/[0.03] border border-white/10">
+                {/* Profile */}
+                <div className="flex items-center gap-3">
+                    <img 
+                        src={review.avatar} 
+                        alt={review.name} 
+                        className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                        loading="lazy"
+                    />
+                    <div>
+                        <p className="font-semibold text-sm text-white">{review.name}</p>
+                        <p className="text-xs text-slate-400">{review.role}</p>
                     </div>
                 </div>
-            </motion.div>
+
+                {/* Text */}
+                <p className="mt-4 text-sm text-slate-300 leading-relaxed">
+                    {review.text}
+                </p>
+
+                {/* Before After */}
+                <div className="flex items-center justify-between mt-4 text-xs text-slate-400">
+                    <span>{review.before}</span>
+                    <span className="text-cyan-400">→</span>
+                    <span>{review.after}</span>
+                </div>
+            </div>
         );
     }
 
@@ -277,11 +222,9 @@ const FeaturedCard = ({ review, variant }) => {
         >
             <div className="relative z-10 flex flex-col gap-6">
                 <div className="flex items-center gap-4">
-                    <img
-                        src={review.avatar}
-                        alt={review.name}
-                        className="w-14 h-14 rounded-xl border border-white/10 object-cover"
-                    />
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center border border-white/10">
+                        <span className="text-lg font-bold text-white">{review.avatar}</span>
+                    </div>
                     <div>
                         <h4 className="text-base font-bold text-white/90">{review.name}</h4>
                         <p className="text-[10px] font-semibold uppercase tracking-widest mt-0.5 text-cyan-500/70">{review.role}</p>
@@ -331,11 +274,9 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 }`}
             >
                 <div className="flex flex-col items-center gap-4">
-                    <img
-                        src={review.avatar}
-                        alt={review.name}
-                        className={`w-12 h-12 rounded-xl object-cover border ${isDark ? 'border-white/10' : 'border-slate-100'}`}
-                    />
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center border ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                        <span className="text-sm font-bold text-white">{review.avatar}</span>
+                    </div>
                     <div className="flex-1 min-w-0 text-center">
                         <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
                         <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
@@ -357,11 +298,9 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 }`}
         >
             <div className="flex items-center gap-3">
-                <img
-                    src={review.avatar}
-                    alt={review.name}
-                    className="w-9 h-9 rounded-lg object-cover border border-white/10"
-                />
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center border border-white/10">
+                    <span className="text-xs font-bold text-white">{review.avatar}</span>
+                </div>
                 <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-white/80 truncate">{review.name}</p>
                     <p className="text-[10px] font-medium uppercase tracking-widest truncate mt-0.5 text-slate-500">{review.role}</p>
@@ -378,46 +317,26 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
 };
 
 const CourseReviews = ({ courseId, variant }) => {
+    const navigate = useNavigate();
     const isDark = variant === 'dark';
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
+    const isMobile = useIsMobile();
 
     // Only show this section for the AI course (id = '1')
     if (courseId !== '1') return null;
 
-    const handlePrev = () => setActiveIndex(i => (i - 1 + AI_REVIEWS.length) % AI_REVIEWS.length);
-    const handleNext = () => setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
+    const handlePrev = useCallback(() => {
+        setActiveIndex(i => (i - 1 + AI_REVIEWS.length) % AI_REVIEWS.length);
+    }, []);
 
-    const active = AI_REVIEWS[activeIndex];
-    const isMobile = window.innerWidth < 768;
+    const handleNext = useCallback(() => {
+        setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
+    }, []);
 
-    // Auto-advance only for mobile, desktop stays static
-    React.useEffect(() => {
-        if (!isMobile || isPaused) return;
-        
-        let animationFrame;
-        let lastTime = 0;
-        const interval = 2000; // 2 seconds
-        
-        const animate = (currentTime) => {
-            if (currentTime - lastTime >= interval) {
-                setActiveIndex(i => (i + 1) % AI_REVIEWS.length);
-                lastTime = currentTime;
-            }
-            animationFrame = requestAnimationFrame(animate);
-        };
-        
-        animationFrame = requestAnimationFrame(animate);
-        
-        return () => {
-            if (animationFrame) {
-                cancelAnimationFrame(animationFrame);
-            }
-        };
-    }, [isMobile, isPaused, AI_REVIEWS.length]);
+    const active = useMemo(() => AI_REVIEWS[activeIndex], [activeIndex]);
 
     return (
-        <section className="py-24 px-6 relative overflow-hidden bg-black">
+        <section className="py-0 px-0 relative overflow-hidden bg-black">
             <div className="absolute inset-0 -z-10">
                 <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />
@@ -425,9 +344,9 @@ const CourseReviews = ({ courseId, variant }) => {
                 <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
             </div>
 
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className={`${isMobile ? 'w-full' : 'max-w-7xl mx-auto'} relative z-10`}>
                 {/* Section Header */}
-                <div className="text-center mb-16">
+                <div className={`text-center ${isMobile ? 'mb-0' : 'mb-16'}`}>
                     <motion.h2 
                         className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tight leading-[1.1]"
                         initial={{ opacity: 0, y: 30 }}
@@ -437,77 +356,83 @@ const CourseReviews = ({ courseId, variant }) => {
                     >
                         Course <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
                     </motion.h2>
-                    <p className="text-lg text-slate-500 font-light tracking-wide max-w-xl mx-auto">
-                        Real stories from students who mastered AI & Machine Learning with us.
-                    </p>
+                    {!isMobile && (
+                        <p className="text-lg text-slate-500 font-light tracking-wide max-w-xl mx-auto">
+                            Real stories from students who mastered AI & Machine Learning with us.
+                        </p>
+                    )}
 
-                    {/* Aggregate stats */}
-                    <div className="flex items-center justify-center gap-8 mt-10">
-                        <div className="text-center">
-                            <div className="text-3xl font-black text-white">4.9</div>
-                            <div className="flex justify-center mt-1">
-                                {[...Array(3)].map((_, i) => (
-                                    <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
-                                ))}
+                    {/* Aggregate stats - Desktop only */}
+                    {!isMobile && (
+                        <div className="flex items-center justify-center gap-8 mt-10">
+                            <div className="text-center">
+                                <div className="text-3xl font-black text-white">4.9</div>
+                                <div className="flex justify-center mt-1">
+                                    {[...Array(3)].map((_, i) => (
+                                        <Star key={i} size={12} className="text-amber-400 fill-amber-400" />
+                                    ))}
+                                </div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Avg Rating</div>
                             </div>
-                            <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Avg Rating</div>
+                            <div className="w-px h-12 bg-white/10" />
+                            <div className="text-center">
+                                <div className="text-3xl font-black text-white">200+</div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Reviews</div>
+                            </div>
                         </div>
-                        <div className="w-px h-12 bg-white/10" />
-                        <div className="text-center">
-                            <div className="text-3xl font-black text-white">200+</div>
-                            <div className="text-[10px] font-bold uppercase tracking-widest mt-1 text-slate-500">Reviews</div>
-                        </div>
-                    </div>
+                    )}
                 </div>
 
                 {isMobile ? (
-                    <div className="flex flex-col gap-10">
-                        <div>
-                            <AnimatePresence mode="sync">
-                                <FeaturedCard key={active.id} review={active} variant={variant} />
-                            </AnimatePresence>
-                            
-                            <div className="flex items-center justify-between mt-6">
-                                <div className="flex gap-1.5">
-                                    {AI_REVIEWS.slice(0, 5).map((_, i) => (
-                                        <motion.button
-                                            key={i}
-                                            onClick={() => setActiveIndex(i)}
-                                            className={`rounded-full h-1.5 ${
-                                                i === activeIndex
-                                                    ? "w-6 bg-gradient-to-r from-cyan-400 to-blue-400"
-                                                    : "w-1.5 bg-white/10"
-                                            }`}
-                                            animate={{
-                                                scale: i === activeIndex ? [1, 1.2, 1] : 1,
-                                                opacity: i === activeIndex ? 1 : 0.3
-                                            }}
-                                            transition={{
-                                                duration: 2,
-                                                repeat: i === activeIndex ? Infinity : 0,
-                                                repeatDelay: 0.5
-                                            }}
-                                        />
-                                    ))}
-                                </div>
-                                <div className="flex gap-2">
-                                    <button onClick={handlePrev} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400"><ChevronLeft size={18} /></button>
-                                    <button onClick={handleNext} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400"><ChevronRight size={18} /></button>
-                                </div>
-                            </div>
+                    <div className="bg-black text-white py-0 px-0">
+                        {/* Heading */}
+                        <h2 className="text-center mb-6 text-slate-500 italic" style={{ fontFamily: 'cursive', fontSize: '20px' }}>
+                            Stories from people like you
+                        </h2>
+
+                        
+                        {/* Swipe Cards */}
+                        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+                            {mobileReviews.map((review, i) => (
+                                <FeaturedCard key={review.id} review={review} variant={variant} />
+                            ))}
                         </div>
 
+                        {/* Dots */}
+                        <div className="flex justify-center mt-4 gap-2">
+                            {mobileReviews.map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`h-2 w-2 rounded-full transition ${
+                                        i === activeIndex ? "bg-cyan-400 w-4" : "bg-white/20"
+                                    }`}
+                                />
+                            ))}
+                        </div>
+
+                        {/* CTA */}
+                        <button 
+                            onClick={() => {
+                                navigate(`/course/${courseId}?openRegistration=true`);
+                            }}
+                            className="mt-6 w-full py-3 rounded-xl font-semibold 
+                            bg-gradient-to-r from-cyan-500 to-blue-500 
+                            hover:opacity-90 transition">
+                            Enroll Now
+                        </button>
+
+                        {/* Hide scrollbar */}
+                        <style jsx>{`
+                            .no-scrollbar::-webkit-scrollbar {
+                                display: none;
+                            }
+                        `}</style>
                     </div>
                 ) : (
                     <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
                         {/* Featured review */}
-                        <div 
-                            onMouseEnter={() => setIsPaused(true)}
-                            onMouseLeave={() => setIsPaused(false)}
-                        >
-                            <AnimatePresence mode="wait">
-                                <FeaturedCard key={active.id} review={active} variant={variant} />
-                            </AnimatePresence>
+                        <div>
+                            <FeaturedCard key={active.id} review={active} variant={variant} />
     
                             {/* Navigation controls */}
                             <div className="flex items-center justify-between mt-6">
