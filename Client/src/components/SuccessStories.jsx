@@ -11,31 +11,31 @@ const REVIEWS_ROW_1 = [
         name: "Priyal Panwar",
         role: "Student, STEPUP SCHOOL",
         content: "Good Efforts very Informative!",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priyal"
+        avatar: "P"
     },
     {
         name: "Navya",
         role: "Student, STEPUP SCHOOL",
         content: "Good efforts liked it!",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Navya"
+        avatar: "N"
     },
     {
         name: "Pratishtha Thakur",
         role: "Student, STEPUP SCHOOL",
         content: "Amazing!!",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pratishtha"
+        avatar: "P"
     },
     {
         name: "Aahana Jain",
         role: "Student, STEPUP SCHOOL",
         content: "The course was really nice it was quite easy to be aware of such program that easy",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aahana"
+        avatar: "A"
     },
     {
         name: "Siya Kapoor",
         role: "Student, STEPUP SCHOOL",
         content: "It was so nice, we learnt a lot",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Siya"
+        avatar: "S"
     }
 ];
 
@@ -44,31 +44,31 @@ const REVIEWS_ROW_2 = [
         name: "Kanisha Kapoor",
         role: "Student, STEPUP SCHOOL",
         content: "It was very nice time to learn this workshop",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kanisha"
+        avatar: "K"
     },
     {
         name: "Ishanvi Shukla",
         role: "Student, STEPUP SCHOOL",
         content: "This was very good experience to have new ideas...",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ishanvi"
+        avatar: "I"
     },
     {
         name: "Bhavya Singh",
         role: "Student, STEPUP SCHOOL",
         content: "The Presentation was very nice and goood job bhai",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bhavya"
+        avatar: "B"
     },
     {
         name: "Sanvi Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "It was a very good experience learning about it and very good explanation.",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lily"
+        avatar: "S"
     },
     {
         name: "Daksh Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "The course was really good and interactive",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Boy"
+        avatar: "D"
     }
 ];
 
@@ -116,11 +116,9 @@ const ReviewCard = ({ review, index = 0, variant }) => {
                 <div className="relative mb-8 pt-2">
                     <div className={`absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-700 ${accent.bg}`} />
                     <div className={`relative p-1 rounded-2xl border transition-colors duration-500 ${isDark ? 'border-white/10 group-hover:border-white/20' : 'border-slate-100 group-hover:border-slate-200'} bg-gradient-to-b from-white/5 to-transparent`}>
-                        <img
-                            src={review.avatar}
-                            alt={review.name}
-                            className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover shadow-sm transition-transform duration-700 group-hover:scale-105"
-                        />
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm transition-transform duration-700 group-hover:scale-105">
+                            <span className="text-lg md:text-xl font-bold text-white">{review.avatar}</span>
+                        </div>
                     </div>
                 </div>
 

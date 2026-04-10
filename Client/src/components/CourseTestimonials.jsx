@@ -8,7 +8,7 @@ const AI_REVIEWS = [
         id: 1,
         name: "Priyal Panwar",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=PriyalPanwar",
+        avatar: "P",
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -22,7 +22,7 @@ const AI_REVIEWS = [
         id: 2,
         name: "Navya",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Navya",
+        avatar: "N",
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -36,7 +36,7 @@ const AI_REVIEWS = [
         id: 3,
         name: "Pratishtha Thakur",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=PratishthaThakur",
+        avatar: "P",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -50,7 +50,7 @@ const AI_REVIEWS = [
         id: 4,
         name: "Aarshi Bhati",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AarshiBhati",
+        avatar: "A",
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -64,7 +64,7 @@ const AI_REVIEWS = [
         id: 5,
         name: "Aakriti Gupta",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AakritiGupta",
+        avatar: "A",
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -78,7 +78,7 @@ const AI_REVIEWS = [
         id: 6,
         name: "Aahana Jain",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AahanaJain",
+        avatar: "A",
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -92,7 +92,7 @@ const AI_REVIEWS = [
         id: 7,
         name: "Navya Chaudhary",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=NavyaChaudhary",
+        avatar: "N",
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -106,7 +106,7 @@ const AI_REVIEWS = [
         id: 8,
         name: "Siya Kapoor",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SiyaKapoor",
+        avatar: "S",
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -120,7 +120,7 @@ const AI_REVIEWS = [
         id: 9,
         name: "Kanisha Kapoor",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=KanishaKapoor",
+        avatar: "K",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -134,7 +134,7 @@ const AI_REVIEWS = [
         id: 10,
         name: "Ishanvi Shukla",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=IshanviShukla",
+        avatar: "I",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -148,7 +148,7 @@ const AI_REVIEWS = [
         id: 11,
         name: "Bhavya Singh",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=BhavyaSingh",
+        avatar: "B",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -162,7 +162,7 @@ const AI_REVIEWS = [
         id: 12,
         name: "Sanvi Chaudhary",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lily",
+        avatar: "L",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -176,7 +176,7 @@ const AI_REVIEWS = [
         id: 13,
         name: "Daksh Chaudhary",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+        avatar: "J",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -190,7 +190,7 @@ const AI_REVIEWS = [
         id: 14,
         name: "Ishan Srivastava",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=IshanSrivastava",
+        avatar: "I",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -204,7 +204,7 @@ const AI_REVIEWS = [
         id: 15,
         name: "Sahaj Tyagi",
         role: "Student",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SahajTyagi",
+        avatar: "S",
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -302,10 +302,10 @@ const FeaturedCard = ({ review, variant }) => {
             }`}>
                 <div className="relative z-10 flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl overflow-hidden border p-0.5 shadow-sm ${
-                            isDark ? 'border-white/10 bg-slate-800' : 'border-slate-100 bg-white'
+                        <div className={`w-12 h-12 rounded-2xl overflow-hidden border p-0.5 shadow-sm bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center ${
+                            isDark ? 'border-white/10' : 'border-slate-100'
                         }`}>
-                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover rounded-xl" />
+                            <span className="text-sm font-bold text-white">{review.avatar}</span>
                         </div>
                         <div className="min-w-0">
                             <h4 className={`text-[14px] font-bold tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
@@ -359,11 +359,9 @@ const FeaturedCard = ({ review, variant }) => {
                     <div className="flex flex-col items-center gap-5">
                         <div className="relative">
                             <div className={`absolute inset-0 rounded-2xl blur-md ${c.glow} bg-gradient-to-br`} />
-                            <img
-                                src={review.avatar}
-                                alt={review.name}
-                                className="relative w-20 h-20 rounded-2xl border-2 border-white shadow-lg object-cover"
-                            />
+                            <div className="relative w-20 h-20 rounded-2xl border-2 border-white shadow-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                                <span className="text-2xl font-bold text-white">{review.avatar}</span>
+                            </div>
                             <div className={`absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-full ${c.dot} border-2 border-white flex items-center justify-center`}>
                                 <Zap size={10} className="text-white fill-current" />
                             </div>
@@ -424,11 +422,9 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 }`}
             >
                 <div className="flex flex-col items-center gap-4">
-                    <img
-                        src={review.avatar}
-                        alt={review.name}
-                        className={`w-12 h-12 rounded-xl object-cover border ${isDark ? 'border-white/10' : 'border-slate-100'}`}
-                    />
+                    <div className={`w-12 h-12 rounded-xl border bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                        <span className="text-sm font-bold text-white">{review.avatar}</span>
+                    </div>
                     <div className="flex-1 min-w-0 text-center">
                         <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
                         <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>
@@ -456,12 +452,10 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 />
             )}
             <div className="flex items-center gap-3 pl-2">
-                <img
-                    src={review.avatar}
-                    alt={review.name}
-                    className={`w-9 h-9 rounded-xl object-cover border transition-all
-                        ${isDark ? 'border-white/10' : 'border-slate-100'}`}
-                />
+                <div className={`w-9 h-9 rounded-xl border bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center transition-all
+                    ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                    <span className="text-xs font-bold text-white">{review.avatar}</span>
+                </div>
                 <div className="flex-1 min-w-0">
                     <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
                     <p className={`text-[10px] font-medium uppercase tracking-widest truncate mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{review.role}</p>

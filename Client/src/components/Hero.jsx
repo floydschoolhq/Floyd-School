@@ -17,9 +17,9 @@ const ScrollingAvatars = ({ isMobile }) => {
         return (
             <div className="flex flex-col items-center gap-2">
                 <div className="flex -space-x-1 justify-center">
-                    {[1, 2, 3].map(i => (
-                        <div key={i} className="w-5 h-5 rounded-full border-[1.5px] border-white bg-slate-200 overflow-hidden shadow-sm">
-                            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${['Felix', 'Lily', 'Leo'][i-1]}`} alt="student" className="w-full h-full object-cover" />
+                    {['A', 'B', 'C'].map((letter, i) => (
+                        <div key={i} className="w-5 h-5 rounded-full border-[1.5px] border-white bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm">
+                            <span className="text-white text-[8px] font-bold">{letter}</span>
                         </div>
                     ))}
                     <div className="w-5 h-5 rounded-full border-[1.5px] border-white bg-orange-500 flex items-center justify-center shadow-sm">
@@ -36,9 +36,9 @@ const ScrollingAvatars = ({ isMobile }) => {
     return (
         <div className="flex flex-row items-center justify-center gap-4">
             <div className="flex -space-x-3 justify-center">
-                {[1, 2, 3, 4, 5].map(i => (
-                    <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-[3px] border-white bg-slate-200 overflow-hidden shadow-sm relative z-[i]">
-                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${['Felix', 'Lily', 'Leo', 'Mia', 'Jake'][i-1]}`} alt="student" className="w-full h-full object-cover" />
+                {['A', 'B', 'C', 'D', 'E'].map((letter, i) => (
+                    <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-[3px] border-white bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm relative z-[i]">
+                        <span className="text-sm md:text-base font-bold text-white">{letter}</span>
                     </div>
                 ))}
             </div>

@@ -27,7 +27,7 @@ const PROJECTS_DATA = [
     color: "green",
     author: {
       name: "Priya Sharma",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya",
+      avatar: "P",
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://snakegame1-nine.vercel.app/"
@@ -44,7 +44,7 @@ const PROJECTS_DATA = [
     color: "blue",
     author: {
       name: "Rahul Verma",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul",
+      avatar: "R",
       course: "Full Stack Web Dev"
     },
     liveUrl: "https://ai-expense-coach--shansharma.replit.app/"
@@ -61,7 +61,7 @@ const PROJECTS_DATA = [
     color: "purple",
     author: {
       name: "Sneha Patel",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sneha",
+      avatar: "S",
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://todo-app-delta-one-65.vercel.app/"
@@ -78,7 +78,7 @@ const PROJECTS_DATA = [
     color: "orange",
     author: {
       name: "Kavya Reddy",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kavya",
+      avatar: "K",
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://thinkskool-bootcamp-webdev-project.vercel.app/"
@@ -95,7 +95,7 @@ const PROJECTS_DATA = [
     color: "red",
     author: {
       name: "Vikram Singh",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram",
+      avatar: "V",
       course: "Full Stack Web Dev"
     },
     liveUrl: "https://netfixcopy9.vercel.app/"
@@ -430,9 +430,11 @@ const StudentProjects = () => {
                    <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
                    
                    <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
-                       <div className="flex items-center gap-3">
-                          <img src={project.author.avatar} alt={project.author.name} className="w-10 h-10 rounded-full border border-slate-100" />
-                          <div>
+<div className="flex items-center gap-3">
+                           <div className="w-10 h-10 rounded-full border border-slate-100 bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                               <span className="text-sm font-bold text-white">{project.author.avatar}</span>
+                           </div>
+                           <div>
                               <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
                               <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>
                           </div>
