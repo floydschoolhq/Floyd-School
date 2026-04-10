@@ -83,7 +83,7 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     const accent = accents[index % accents.length];
 
     return (
-        <div className="w-[350px] h-[420px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center rounded-2xl bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0">
+        <div className="w-[350px] h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center rounded-2xl bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0">
             <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-1000 ${accent.bg}`} />
             <div className={`absolute top-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
@@ -115,16 +115,6 @@ const ReviewCard = ({ review, index = 0, variant }) => {
                     <p className="text-[12px] md:text-[15px] leading-relaxed font-medium italic mb-4 relative z-10 text-slate-200 group-hover:text-white">
                         "{review.content}"
                     </p>
-                </div>
-
-                <div className="mt-auto w-full pt-4 border-t border-slate-500/10 flex items-center justify-center gap-1.5">
-                    {[...Array(5)].map((_, i) => (
-                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-700 ${
-                            i < 4 
-                                ? `${accent.text} shadow-[0_0_8px_currentColor] opacity-100` 
-                                : 'opacity-20 bg-white'
-                        }`} />
-                    ))}
                 </div>
             </div>
         </div>

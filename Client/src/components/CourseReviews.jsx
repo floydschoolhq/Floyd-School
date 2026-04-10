@@ -104,7 +104,7 @@ const ReviewCard = ({ review }) => {
     const colors = colorMap[review.color] || colorMap.blue;
     
     return (
-        <div className="flex-shrink-0 w-[350px] h-[420px]">
+        <div className="flex-shrink-0 w-[350px] h-[336px]">
             <div className={`
                 relative rounded-2xl p-6 border ${colors.border} bg-white/5 backdrop-blur-sm
                 hover:bg-white/10 transition-all duration-300 hover:shadow-lg ${colors.glow}
@@ -118,16 +118,6 @@ const ReviewCard = ({ review }) => {
                         <h4 className="text-base font-bold text-white">{review.name}</h4>
                         <p className="text-xs text-slate-400">{review.role}</p>
                     </div>
-                </div>
-
-                <div className="flex items-center gap-1 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                        <Star 
-                            key={i} 
-                            size={14} 
-                            className={i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-slate-600"} 
-                        />
-                    ))}
                 </div>
 
                 <h3 className="text-lg font-semibold text-white mb-2">
