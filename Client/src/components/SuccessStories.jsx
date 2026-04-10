@@ -230,7 +230,7 @@ const SuccessStories = ({ variant }) => {
 
     // Desktop - Marquee Animation
     return (
-        <section className="pt-10 pb-16 md:pt-16 md:pb-32 relative overflow-hidden transition-colors duration-500 bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
+        <section className="pt-8 pb-16 md:pt-10 md:pb-20 relative overflow-hidden transition-colors duration-500 bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 opacity-30 invert brightness-200" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
                 <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 bg-blue-600/5" />
@@ -238,14 +238,14 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="max-w-[1440px] mx-auto relative z-10 px-0 md:px-8">
-                <div className="text-center mb-16 md:mb-24">
+                <div className="text-center mb-8">
                     <ScrollDarkenHeading sizeClass="text-5xl md:text-7xl" variant={variant} uppercase={false}>
                         transformed by <span className="font-black tracking-tighter"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </ScrollDarkenHeading>
                 </div>
 
                 <div 
-                    className="overflow-hidden py-8"
+                    className="overflow-hidden"
                     ref={containerRef}
                 >
                     <motion.div 
