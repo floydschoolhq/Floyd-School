@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useAnimation } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -83,7 +83,7 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     const accent = accents[index % accents.length];
 
     return (
-        <div className="w-[350px] h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center rounded-2xl bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0">
+        <div className="w-full md:w-[350px] h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center rounded-2xl bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0">
             <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-1000 ${accent.bg}`} />
             <div className={`absolute top-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
@@ -130,10 +130,9 @@ const SuccessStories = ({ variant }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const pauseTimeoutRef = useRef(null);
-    const x = useMotionValue(0);
 
-    const CARD_WIDTH_RATIO = 0.46;
-    const GAP = 8;
+    const CARD_WIDTH_RATIO = 0.85;
+    const GAP = 16;
 
     const duplicatedReviews = [...ALL_REVIEWS, ...ALL_REVIEWS, ...ALL_REVIEWS];
     const cardWidth = 350 + 24; // width + gap
@@ -154,30 +153,15 @@ const SuccessStories = ({ variant }) => {
         });
     }, [isMobile, controls, cardWidth]);
 
-    // Mobile auto-swipe
-    useEffect(() => {
-        if (!isMobile || isDragging || isPaused) return;
+    const handlePrev = () => {
+        setCurrentIndex((prev) => (prev - 1 + ALL_REVIEWS.length) % ALL_REVIEWS.length);
+    };
 
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % ALL_REVIEWS.length);
-        }, 3000);
+    const handleNext = () => {
+        setCurrentIndex((prev) => (prev + 1) % ALL_REVIEWS.length);
+    };
 
-        return () => clearInterval(interval);
-    }, [isMobile, isDragging, isPaused]);
-
-    useEffect(() => {
-        if (!isMobile || isDragging) return;
-        
-        const vw = window.innerWidth;
-        const cardFullWidth = (vw * CARD_WIDTH_RATIO) + GAP;
-        
-        const animate = () => {
-            x.set(-currentIndex * cardFullWidth);
-        };
-        
-        const rafId = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(rafId);
-    }, [currentIndex, isMobile, isDragging, x]);
+    // Removed manual x.set animation as we'll use animate prop directly
 
     const handleDragStart = () => {
         setIsDragging(true);
@@ -207,21 +191,48 @@ const SuccessStories = ({ variant }) => {
                         </h2>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full relative">
                         <motion.div 
-                            className="flex gap-2 -mx-2 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
-                            animate={{ x: x.get() }}
+                            className="flex gap-4 px-6 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
+                            animate={{ x: isMobile ? -currentIndex * (window.innerWidth * CARD_WIDTH_RATIO + GAP) : 0 }}
                             transition={isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 100, damping: 20 }}
-                            drag="x"
+                            drag={isMobile ? "x" : false}
+                            dragConstraints={{ left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * CARD_WIDTH_RATIO + GAP)), right: 0 }}
                             onDragStart={handleDragStart}
                             onDragEnd={handleDragEnd}
                         >
-                            {[...ALL_REVIEWS, ...ALL_REVIEWS, ...ALL_REVIEWS].map((review, i) => (
-                                <div key={i} className="shrink-0 w-[46vw]">
+                            {ALL_REVIEWS.map((review, i) => (
+                                <div key={i} className="shrink-0 w-[85vw]">
                                     <ReviewCard review={review} index={i} variant="dark" />
                                 </div>
                             ))}
                         </motion.div>
+
+                        {/* Navigation Buttons */}
+                        <div className="flex justify-center gap-6 mt-4 pb-8">
+                            <button 
+                                onClick={handlePrev}
+                                className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white active:scale-90 transition-transform hover:bg-white/10"
+                                aria-label="Previous story"
+                            >
+                                <ChevronLeft size={24} />
+                            </button>
+                            <div className="flex items-center gap-2">
+                                {ALL_REVIEWS.map((_, i) => (
+                                    <div 
+                                        key={i} 
+                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-blue-500' : 'bg-white/20'}`} 
+                                    />
+                                ))}
+                            </div>
+                            <button 
+                                onClick={handleNext}
+                                className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white active:scale-90 transition-transform hover:bg-white/10"
+                                aria-label="Next story"
+                            >
+                                <ChevronRight size={24} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
