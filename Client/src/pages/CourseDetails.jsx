@@ -204,7 +204,7 @@ const CourseDetails = () => {
                 )}
 
                 {/* Enhanced Mentors Section */}
-                <section id="course-faculty" className="bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 md:pt-12 md:pb-20 p-0">
+                <section id="course-faculty" className="bg-white md:bg-gradient-to-br md:from-black md:via-slate-950 md:to-black border-t border-white/5 md:pt-12 md:pb-20 pt-8 pb-4 p-0">
                     <div className="max-w-7xl mx-auto px-0 md:px-6">
                         {/* Faculty Grid */}
                         <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
@@ -212,7 +212,7 @@ const CourseDetails = () => {
                 </section>
 
                 {/* Course Offerings Section */}
-                <section id="course-offerings">
+                <section id="course-offerings" className="bg-white px-0 overflow-hidden">
                     <CourseOfferings variant="dark" />
                 </section>
 

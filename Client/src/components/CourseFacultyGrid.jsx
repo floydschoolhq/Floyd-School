@@ -7,6 +7,7 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
+import shashwatImg from '../assets/tutors/shashwat.jpg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -41,13 +42,14 @@ const LEADERS = [
         tags: ["UI/UX", "Management", "Leadership"]
     },
     {
-        name: "Raghav",
-        role: "Mentor",
-        image: raghavImg,
-        imageScale: 2.5,
-        bio: "Leading industrial engineering programs with a focus on production-scale systems and AI architecture.",
-        linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-        tags: ["Lead Mentor", "Architect", "Eng"]
+        name: "Shashwat Vashishth",
+        role: "Mentor AI/ML",
+        image: shashwatImg,
+        imageScale: 1.0,
+        imagePosition: "object-center",
+        bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
+        linkedin: "#",
+        tags: ["AI/ML", "Algorithm"]
     }
 ];
 
@@ -171,26 +173,106 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
     
-    // Default to a 3-item slice array to maintain original UI logic structure
     const displayLeaders = filteredLeaders.slice(0, 3);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    // Swap animation index loop
-    useEffect(() => {
-        if (!isMobile) return;
-        const intervalId = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % displayLeaders.length);
-        }, 2000);
-        return () => clearInterval(intervalId);
-    }, [isMobile, displayLeaders.length]);
+    const handlePrev = () => setActiveIndex((prev) => (prev - 1 + displayLeaders.length) % displayLeaders.length);
+    const handleNext = () => setActiveIndex((prev) => (prev + 1) % displayLeaders.length);
+
+    if (isMobile) {
+        const mentor = displayLeaders[activeIndex];
+        return (
+            <section id="course-faculty-grid" className="px-6 relative overflow-hidden bg-white w-full">
+                
+                {/* Heading — dark text on light bg */}
+                <div className="text-center pb-6 pt-0">
+                    <h2 className="text-2xl font-black tracking-tighter text-slate-900 leading-tight">
+                        Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Experienced</span> Mentors
+                    </h2>
+                </div>
+
+                {/* Card — fully white/light like the reference */}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeIndex}
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -30 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="rounded-3xl overflow-hidden bg-white shadow-2xl shadow-black/20 border border-slate-200"
+                    >
+                        {/* Photo Area: soft blue-white gradient — fixed height, clipped corners */}
+                        <div className="relative bg-gradient-to-b from-blue-100 via-blue-50 to-slate-50 h-[280px] overflow-hidden">
+                            {/* Decorative blob */}
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div className="w-48 h-48 rounded-full bg-blue-200/40 blur-2xl" />
+                            </div>
+                            {/* Tag badge */}
+                            <div className="absolute top-4 right-4 z-20 bg-white text-slate-700 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md border border-slate-200">
+                                {mentor.tags[0]}
+                            </div>
+                            <img
+                                src={mentor.image}
+                                alt={mentor.name}
+                                className={`absolute inset-0 w-full h-full object-cover object-top z-10 ${mentor.imagePosition || ''}`}
+                            />
+                        </div>
+
+                        {/* Info Area: dark text on white */}
+                        <div className="bg-white px-5 py-5 h-[90px] flex items-center justify-between border-t border-slate-100">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <h3 className="text-base font-black text-slate-900 tracking-tight leading-tight">
+                                        {mentor.name}
+                                    </h3>
+                                    <a
+                                        href={mentor.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center text-white shadow-sm flex-shrink-0"
+                                    >
+                                        <FaLinkedinIn size={11} />
+                                    </a>
+                                </div>
+                                <p className="text-[12px] font-medium text-slate-500 mt-0.5">
+                                    {mentor.role}
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
+
+                <div className="flex justify-center gap-4 mt-4">
+                    <button
+                        onClick={handlePrev}
+                        className="w-12 h-12 rounded-full border-2 border-slate-300 bg-white flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-100 hover:border-slate-400 transition-all active:scale-95"
+                        aria-label="Previous mentor"
+                    >
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button
+                        onClick={handleNext}
+                        className="w-12 h-12 rounded-full border-2 border-slate-300 bg-white flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-100 hover:border-slate-400 transition-all active:scale-95"
+                        aria-label="Next mentor"
+                    >
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section 
             id="course-faculty-grid" 
-            className={`${isMobile ? 'p-0' : 'py-14'} relative overflow-hidden transition-colors duration-500 bg-transparent`}
+            className={`py-14 relative overflow-hidden transition-colors duration-500 bg-transparent`}
         >
-            <div className={`max-w-[1440px] mx-auto ${isMobile ? 'px-0' : 'px-6 md:px-12'} relative z-10`}>
-                <div className={`flex flex-col items-center justify-center ${isMobile ? 'm-0' : 'mt-10 mb-10 text-center sm:mt-20 md:mt-16'}`}>
+            <div className={`max-w-[1440px] mx-auto px-6 md:px-12 relative z-10`}>
+                <div className={`flex flex-col items-center justify-center mt-10 mb-10 text-center sm:mt-20 md:mt-16`}>
                     <div className="w-full">
                         <div className="flex justify-center">
                             <ScrollDarkenHeading variant={variant}>
@@ -200,48 +282,17 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                     </div>
                 </div>
 
-                <div className={`max-w-6xl mx-auto ${isMobile ? 'px-0' : 'md:px-6'} relative z-10 w-full ${isMobile ? 'mb-0' : 'mb-20'}`}>
-                    {isMobile ? (
-                        <div className="relative w-full px-0 overflow-hidden">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeIndex}
-                                    initial={{ opacity: 0, x: 30 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -30 }}
-                                    transition={{ duration: 0.3, ease: "easeOut" }}
-                                    className="w-full"
-                                >
-                                    <CourseFacultyCard 
-                                        mentor={displayLeaders[activeIndex]}
-                                        index={activeIndex}
-                                        variant={variant}
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
-                            
-                            {/* Pagination dots indicator */}
-                            <div className="flex justify-center gap-2 mt-8">
-                                {displayLeaders.map((_, idx) => (
-                                    <div 
-                                        key={idx} 
-                                        className={`h-2 rounded-full transition-all duration-500 ${activeIndex === idx ? 'bg-blue-500 w-6' : 'bg-slate-700/50 w-2'}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {displayLeaders.map((mentor, index) => (
-                                <CourseFacultyCard 
-                                    key={index}
-                                    mentor={mentor}
-                                    index={index}
-                                    variant={variant}
-                                />
-                            ))}
-                        </div>
-                    )}
+                <div className={`max-w-6xl mx-auto md:px-6 relative z-10 w-full mb-20`}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {displayLeaders.map((mentor, index) => (
+                            <CourseFacultyCard 
+                                key={index}
+                                mentor={mentor}
+                                index={index}
+                                variant={variant}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
@@ -249,3 +300,4 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
 };
 
 export default CourseFacultyGrid;
+

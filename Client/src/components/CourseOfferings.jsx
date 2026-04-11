@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import useIsMobile from '../hooks/useIsMobile';
+import { motion } from 'framer-motion';
+ import useIsMobile from '../hooks/useIsMobile';
 
 const CourseOfferings = ({ variant = 'dark' }) => {
     const isDark = variant === 'dark';
     const isMobile = useIsMobile();
     const cardsRef = useRef([]);
-    const [activeIndex, setActiveIndex] = useState(0);
 
     const mobileFeatures = [
-        { icon: "01", title: "Live Mentor Guidance", desc: "Every session has a real mentor guiding you — answering questions, reviewing code, and making sure no one falls behind." },
-        { icon: "02", title: "Weekly Doubt Sessions", desc: "Every week there is a dedicated session just for clearing doubts. Bring anything you are stuck on and leave with clarity." },
-        { icon: "03", title: "24/7 Doubt Assistant", desc: "Stuck at midnight? The assistant is right there — no waiting till next class." },
-        { icon: "04", title: "Growth Associate", desc: "Someone who tracks your journey, checks in regularly and ensures you never fall behind." },
-        { icon: "05", title: "Live Dashboard", desc: "A live view of exactly where you are — for both students and parents to stay informed." },
-        { icon: "06", title: "Class Recordings", desc: "Missed a class or want to revisit a concept? Every session is recorded and available for you to watch anytime." },
+        { icon: "01", title: "Live Mentor Guidance", desc: "Real mentors in every session to guide you and review your code." },
+        { icon: "02", title: "Weekly Doubt Sessions", desc: "Dedicated weekly sessions to clear all your doubts with clarity." },
+        { icon: "03", title: "24/7 Doubt Assistant", desc: "Get your doubts resolved instantly, anytime, day or night." },
+        { icon: "04", title: "Growth Associate", desc: "Personal tracking and regular check-ins to ensure your progress." },
+        { icon: "05", title: "Live Dashboard", desc: "Comprehensive real-time tracking for students and parents." },
+        { icon: "06", title: "Class Recordings", desc: "Access session recordings to revisit concepts anytime." },
     ];
 
     useEffect(() => {
@@ -43,28 +42,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
         };
     }, [isMobile]);
 
-    const lastInteractionRef = useRef(Date.now());
 
-    useEffect(() => {
-        if (!isMobile) return;
-        const intervalId = setInterval(() => {
-            const timeSinceLastInteraction = Date.now() - lastInteractionRef.current;
-            if (timeSinceLastInteraction > 3000) {
-                setActiveIndex((prev) => (prev + 1) % mobileFeatures.length);
-            }
-        }, 3000);
-        return () => clearInterval(intervalId);
-    }, [isMobile, mobileFeatures.length]);
-
-    const handleDragEnd = (_, info) => {
-        lastInteractionRef.current = Date.now();
-        const threshold = 50;
-        if (info.offset.x < -threshold) {
-            setActiveIndex((prev) => (prev + 1) % mobileFeatures.length);
-        } else if (info.offset.x > threshold) {
-            setActiveIndex((prev) => (prev - 1 + mobileFeatures.length) % mobileFeatures.length);
-        }
-    };
 
     const addToRefs = (el) => {
         if (el && !cardsRef.current.includes(el)) {
@@ -73,79 +51,59 @@ const CourseOfferings = ({ variant = 'dark' }) => {
     };
 
     if (isMobile) {
+        const shapes = [
+            <svg key="triangle" viewBox="0 0 24 24" className="w-5 h-5 fill-yellow-400"><path d="M12 2L2 22h20L12 2z" /></svg>,
+            <svg key="arch" viewBox="0 0 24 24" className="w-5 h-5 fill-orange-500"><path d="M12 4C7.58 4 4 7.58 4 12v8h16v-8c0-4.42-3.58-8-8-8z" /></svg>,
+            <svg key="pentagon" viewBox="0 0 24 24" className="w-5 h-5 fill-blue-500"><path d="M12 2.5l9 6.5-3.5 10.5h-11l-3.5-10.5 9-6.5z" /></svg>,
+            <svg key="square" viewBox="0 0 24 24" className="w-5 h-5 fill-purple-500"><rect x="4" y="4" width="16" height="16" rx="2" /></svg>,
+            <svg key="hexagon" viewBox="0 0 24 24" className="w-5 h-5 fill-cyan-500"><path d="M12 2.5L20.5 7.5v10L12 22.5 3.5 17.5v-10L12 2.5z" /></svg>,
+            <svg key="diamond" viewBox="0 0 24 24" className="w-5 h-5 fill-amber-500"><path d="M12 2l9 10-9 10-9-10 9-10z" /></svg>
+        ];
+
         return (
-            <section className="py-8 px-5 relative overflow-hidden bg-transparent text-center">
-                <style>{`
-                    .hide-scrollbar::-webkit-scrollbar { display: none; }
-                    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-                `}</style>
+            <section id="course-offerings" className="py-8 px-0 relative overflow-hidden bg-white w-full">
+                <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50/50 via-transparent to-transparent pointer-events-none"></div>
                 
-                <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent pointer-events-none"></div>
-                
-                <div className="relative z-10 px-0">
-                    <div className="text-center mb-8 px-0">
-                        <h2 className="text-2xl font-black mb-4 tracking-tighter text-white drop-shadow-md leading-tight">
-                            We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Back.</span> Always.
-                        </h2>
-                    </div>
+                <div className="relative z-10 text-center mb-10 px-0">
+                    <h2 className="text-xl font-bold mb-3 tracking-tighter text-slate-900 leading-tight">
+                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Back.</span> Always.
+                    </h2>
+                    <p className="text-sm text-slate-500 font-normal leading-relaxed px-4">
+                        Everything you need is already included.
+                    </p>
                 </div>
 
-                <div className="px-0 relative min-h-[350px]">
-                    <AnimatePresence mode="wait">
-                        <motion.div 
-                            key={activeIndex}
-                            drag="x"
-                            dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.2}
-                            onDragEnd={handleDragEnd}
-                            onDragStart={() => lastInteractionRef.current = Date.now()}
-                            initial={{ opacity: 0, x: 20, scale: 0.95 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            exit={{ opacity: 0, x: -20, scale: 0.95 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="w-full min-h-[350px] p-2 rounded-[2.5rem] border bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl border-white/20 flex flex-col justify-center items-center text-center relative overflow-hidden shadow-2xl shadow-blue-500/10 touch-pan-y"
-                        >
-                            {/* Animated background glow */}
-                            <motion.div 
-                                animate={{ 
-                                    scale: [1, 1.2, 1],
-                                    opacity: [0.1, 0.2, 0.1]
-                                }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute top-0 right-0 w-60 h-60 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none"
-                            ></motion.div>
-                            
-                            <div className="flex flex-col items-center gap-6 mb-8 relative z-10">
-                                <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-black text-xl shadow-xl">
-                                    {mobileFeatures[activeIndex].icon}
+                <div className="w-full mx-auto rounded-3xl overflow-hidden border border-white/40 bg-white/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-1 ring-black/5 relative">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
+                    {mobileFeatures.map((feature, i) => (
+                        <React.Fragment key={i}>
+                            <div className="flex items-center gap-3 px-2 py-5 min-h-[130px]">
+                                <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center shadow-sm">
+                                    <div className="scale-75 flex items-center justify-center">
+                                        {shapes[i % shapes.length]}
+                                    </div>
                                 </div>
-                                <h3 className="text-xl font-black uppercase tracking-tight text-white leading-tight">
-                                    {mobileFeatures[activeIndex].title}
-                                </h3>
+                                <div className="flex-1 w-full text-left flex flex-col justify-center">
+                                    <h3 className="text-sm font-semibold text-slate-900 mb-1 leading-tight tracking-wide">
+                                        {feature.title}
+                                    </h3>
+                                    <p className="text-xs text-slate-500 leading-snug pr-1">
+                                        {feature.desc}
+                                    </p>
+                                </div>
                             </div>
-                            <p className="text-[13px] leading-relaxed font-semibold text-slate-300 relative z-10">
-                                {mobileFeatures[activeIndex].desc}
-                            </p>
-                        </motion.div>
-                    </AnimatePresence>
-
-                    {/* Pagination Indicators */}
-                    <div className="flex justify-center gap-3 mt-8">
-                        {mobileFeatures.map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setActiveIndex(i)}
-                                className={`h-1.5 rounded-full transition-all duration-500 ${activeIndex === i ? 'bg-blue-400 w-8 shadow-[0_0_10px_rgba(96,165,250,0.5)]' : 'bg-white/10 w-3'}`}
-                            />
-                        ))}
-                    </div>
+                            {i < mobileFeatures.length - 1 && (
+                                <div className="h-px w-full bg-slate-100" />
+                            )}
+                        </React.Fragment>
+                    ))}
                 </div>
             </section>
         );
     }
 
     return (
-        <section className="pt-12 pb-12 relative overflow-hidden bg-black">
+        <section id="course-offerings" className="pt-12 pb-12 relative overflow-hidden bg-black">
             <div className="absolute inset-0 -z-10">
                 <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/8 to-transparent" />
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/8 to-transparent" />
@@ -157,10 +115,10 @@ const CourseOfferings = ({ variant = 'dark' }) => {
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
                 <div className="text-center mb-20">
-                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">
+                    <h2 className="text-2xl md:text-3xl font-black text-white mb-6 tracking-tighter">
                         We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Back.</span> Always.
                     </h2>
-                    <p className="text-xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
+                    <p className="text-lg text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
                         Everything you need is already included.
                     </p>
                 </div>

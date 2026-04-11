@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
 
 const AI_REVIEWS = [
@@ -104,7 +104,7 @@ const ReviewCard = ({ review }) => {
     const colors = colorMap[review.color] || colorMap.blue;
     
     return (
-        <div className="flex-shrink-0 w-[350px] h-[336px]">
+        <div className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[380px] lg:w-[420px] xl:w-[450px] h-[336px]">
             <div className={`
                 relative rounded-2xl p-6 border ${colors.border} bg-white/5 backdrop-blur-sm
                 hover:bg-white/10 transition-all duration-300 hover:shadow-lg ${colors.glow}
@@ -151,7 +151,19 @@ const CourseReviews = ({ courseId, variant }) => {
     const navigate = useNavigate();
     const isMobile = useIsMobile();
     const containerRef = useRef(null);
+    const mobileScrollRef = useRef(null);
     const controls = useAnimation();
+    const controls2 = useAnimation();
+
+    const handleScroll = (direction) => {
+        if (mobileScrollRef.current) {
+            const scrollAmount = 280;
+            mobileScrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     if (courseId !== '1') return null;
 
@@ -172,7 +184,18 @@ const CourseReviews = ({ courseId, variant }) => {
                 ease: "linear",
             }
         });
-    }, [isMobile, controls, cardWidth]);
+
+        // Second animation in opposite direction
+        controls2.start({
+            x: [distance, 0],
+            transition: {
+                duration: 80,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+            }
+        });
+    }, [isMobile, controls, controls2, cardWidth]);
 
     if (isMobile) {
         return (
@@ -183,25 +206,42 @@ const CourseReviews = ({ courseId, variant }) => {
                 </div>
 
                 <div className="w-full relative z-10">
-                    <div className="text-center mb-8">
+                    <div className="flex items-end justify-between mb-8 px-4 sm:px-6">
                         <motion.h2 
-                            className="text-3xl font-black text-white mb-2 tracking-tight"
+                            className="text-3xl font-black text-white tracking-tight"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                         >
-                            Student <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
+                            Student <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
                         </motion.h2>
+                        <div className="flex gap-2">
+                            <button 
+                                onClick={() => handleScroll('left')} 
+                                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button 
+                                onClick={() => handleScroll('right')} 
+                                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide">
+                    <div 
+                        ref={mobileScrollRef}
+                        className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 px-4 sm:px-6 snap-x snap-mandatory scrollbar-hide"
+                    >
                         {AI_REVIEWS.map((review) => {
                             const colors = colorMap[review.color] || colorMap.blue;
                             return (
                                 <div 
                                     key={review.id} 
-                                    className="flex-shrink-0 w-[280px] snap-center"
+                                    className="flex-shrink-0 w-[260px] sm:w-[280px] snap-center"
                                 >
                                     <div className={`
                                         relative rounded-xl p-4 border ${colors.border} bg-white/5 backdrop-blur-sm
@@ -284,11 +324,23 @@ const CourseReviews = ({ courseId, variant }) => {
                     ref={containerRef}
                 >
                     <motion.div 
-                        className="flex gap-6"
+                        className="flex gap-4 sm:gap-6 lg:gap-8"
                         animate={controls}
                     >
                         {duplicatedReviews.map((review, index) => (
                             <ReviewCard key={`${review.id}-${index}`} review={review} />
+                        ))}
+                    </motion.div>
+                </div>
+
+                {/* Second row with opposite direction animation */}
+                <div className="overflow-hidden py-8">
+                    <motion.div 
+                        className="flex gap-4 sm:gap-6 lg:gap-8"
+                        animate={controls2}
+                    >
+                        {duplicatedReviews.map((review, index) => (
+                            <ReviewCard key={`${review.id}-second-${index}`} review={review} />
                         ))}
                     </motion.div>
                 </div>
