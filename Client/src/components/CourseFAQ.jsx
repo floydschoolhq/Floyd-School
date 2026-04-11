@@ -119,7 +119,7 @@ const CourseFAQ = () => {
             <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl font-bold text-white mb-2">
-                        Frequently Asked Questions
+                        <span className="text-blue-500">F</span>requently <span className="text-blue-500">A</span>sked <span className="text-blue-500">Q</span>uestions
                     </h2>
                 </div>
 

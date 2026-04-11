@@ -15,6 +15,7 @@
   --color-accent-secondary: var(--accent-secondary);
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Outfit', sans-serif;
+  --font-ubuntu: 'Ubuntu', sans-serif;
   --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
@@ -184,7 +185,7 @@ body {
 /* Global Mobile Optimizations */
 @media (max-width: 768px) {
     section { 
-        padding: 4rem 1.25rem; 
+        padding: 1rem 1rem; 
         text-align: center;
     }
     

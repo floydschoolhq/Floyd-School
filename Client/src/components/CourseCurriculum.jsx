@@ -16,69 +16,68 @@ const CourseCurriculum = ({ variant = "light" }) => {
         {
             month: "01",
             title: "Python Fundamentals",
-            subtitle: "Weeks 1-4: The Foundation of everything",
             color: "primary",
             weeks: [
                 {
                     week: "Week 01",
                     title: "Python from Scratch",
-                    description: "Environment setup, variables, and the logic of computation."
+                    description: "Variables, Datatypes and Basic Logic."
                 },
                 {
                     week: "Week 02", 
                     title: "Loops & Functions",
-                    description: "Mastering control flow and modular code architecture."
+                    description: "Automating repetitive tasks with ease."
                 },
                 {
                     week: "Week 03",
                     title: "Files & Libraries", 
-                    description: "Working with external data and the powerful Python ecosystem."
+                    description: "Handling external data and open-source tools."
                 },
                 {
                     week: "Week 04",
                     title: "Python Like a Pro",
-                    description: "Advanced patterns, debugging, and building clean projects."
+                    description: "Writing clean, production-level code.",
+                    isSpecial: true
                 }
             ]
         },
         {
             month: "02",
             title: "APIs, AI & ML",
-            subtitle: "Weeks 5-8: Real-world intelligence",
             color: "secondary",
             weeks: [
                 {
                     week: "Week 05",
                     title: "ChatGPT & OpenAI API",
-                    description: "Integrating LLMs into your own custom applications."
+                    description: "Integrating LLMs into your own projects."
                 },
                 {
                     week: "Week 06",
                     title: "APIs & Live Data",
-                    description: "Fetching and processing real-time web information."
+                    description: "Connecting your apps to the real world."
                 },
                 {
                     week: "Week 07",
                     title: "Intro to Machine Learning",
-                    description: "How machines learn: Regression, patterns, and data math."
+                    description: "Teaching computers to recognize patterns."
                 },
                 {
                     week: "Week 08",
                     title: "Classification",
-                    description: "Teaching computers to categorize and decide."
+                    description: "Building models that predict and group data.",
+                    isSpecial: true
                 }
             ]
         },
         {
             month: "03", 
             title: "Vision, Web & Demo",
-            subtitle: "Weeks 9-12: The final masterpiece",
             color: "primary",
             weeks: [
                 {
                     week: "Week 09",
-                    title: "OpenCV & Computer Vision",
-                    description: "Giving eyes to your code using visual recognition libraries."
+                    title: "OpenCV & Vision",
+                    description: "Developing apps that can see and perceive."
                 },
                 {
                     week: "Week 10",
@@ -87,7 +86,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 },
                 {
                     week: "Final Milestone",
-                    title: "Capstone & Demo Day", 
+                    title: "Final Project & Demo Day", 
                     description: "Intensive building followed by a live global presentation of your Face Recognition system.",
                     isSpecial: true
                 }
@@ -103,7 +102,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         { number: "3", label: "Classes / Week" }
     ];
 
-    const capstoneFeatures = [
+    const finalProjectFeatures = [
         {
             icon: "psychology",
             title: "Face Recognition Engine"
@@ -176,23 +175,30 @@ const CourseCurriculum = ({ variant = "light" }) => {
 
     if (isMobile) {
         return (
-            <div className="py-16 px-0">
-                <div className="text-center mb-10">
-                    <p className="text-[13px] text-on-surface-variant mb-8 font-medium leading-relaxed px-2">
-                        "The question isn't whether AI will shape your child's future. It's whether they'll build it — or just watch."
-                    </p>
-                    <button 
-                        onClick={handleSecureSpot}
-                        disabled={isSecuring}
-                        className="w-full bg-blue-600 text-white py-4 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-500/20 hover:scale-[0.98] active:scale-[0.98] transition-transform disabled:opacity-50"
-                    >
-                        {isSecuring ? 'Processing...' : 'Secure Your Spot'}
-                    </button>
+            <div className="pt-4 pb-0 px-0">
+                <div className="text-center mb-10 px-2 w-full">
+                    <div className="relative inline-block w-full">
+                        <p className="text-[10.5px] text-on-surface-variant font-bold leading-relaxed italic relative z-10 px-1 whitespace-nowrap">
+                            "Will your child build the AI future, or just watch it?"
+                        </p>
+                        <motion.div 
+                            initial={{ width: 0, opacity: 0 }}
+                            whileInView={{ width: '108%', opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                            className="absolute bottom-[-3px] -left-[4%] h-[18px] bg-blue-500/15 -z-0 -rotate-1 -skew-x-12"
+                            style={{ clipPath: 'polygon(0% 15%, 98% 10%, 100% 85%, 2% 95%)' }}
+                        />
+                    </div>
                 </div>
                 
-                <div className="mb-12">
-                    <div className="flex items-center gap-3 mb-6 px-2">
-                        <h3 className="text-xl font-black uppercase tracking-tight text-white">The 90-Day Roadmap</h3>
+                <div className="mb-12 w-full">
+                    <div className="flex items-center justify-center gap-6 mb-6 w-full px-4">
+                        <div className="w-3 h-3 border-t-2 border-l-2 border-blue-500/40 -mt-2" />
+                        <h3 className="text-xl font-bold uppercase tracking-tight text-white whitespace-nowrap">
+                            The <span className="text-blue-500">90-Day</span> Roadmap
+                        </h3>
+                        <div className="w-3 h-3 border-t-2 border-r-2 border-blue-500/40 -mt-2" />
                     </div>
                     <div className="space-y-6 border-l-2 border-slate-800 ml-4 pl-6 relative">
                         <motion.div 
@@ -204,29 +210,35 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 01</span>
-                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">Python Fundamentals</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 1-4</p>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 01</span>
+                                <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">Python Fundamentals</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 01</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 01</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Python from Scratch</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 02</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 02</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Loops &amp; Functions</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 03</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 03</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Files &amp; Libraries</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 04</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 04</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Python Like a Pro</h5>
                                 </div>
                             </div>
                         </motion.div>
+
+                        <div className="my-2 -ml-[33px] flex items-center gap-3">
+                            <div className="w-[17px] h-[17px] rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center relative z-20">
+                                <div className="w-1.5 h-1.5 rounded-full bg-blue-500/60 animate-pulse shadow-[0_0_8px_#3b82f6]" />
+                            </div>
+                            <div className="h-px w-6 bg-gradient-to-r from-slate-800 to-transparent" />
+                        </div>
 
                         <motion.div 
                             initial={{ opacity: 0, x: -20 }}
@@ -237,29 +249,35 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 02</span>
-                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">APIs, AI &amp; ML</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 5-8</p>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 02</span>
+                                <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">APIs, AI &amp; ML</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 05</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 05</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">ChatGPT &amp; OpenAI API</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 06</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 06</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">APIs &amp; Live Data</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 07</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 07</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Intro to Machine Learning</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 08</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 08</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Classification</h5>
                                 </div>
                             </div>
                         </motion.div>
+
+                        <div className="my-2 -ml-[33px] flex items-center gap-3">
+                            <div className="w-[17px] h-[17px] rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center relative z-20">
+                                <div className="w-1.5 h-1.5 rounded-full bg-blue-500/60 animate-pulse shadow-[0_0_8px_#3b82f6]" />
+                            </div>
+                            <div className="h-px w-6 bg-gradient-to-r from-slate-800 to-transparent" />
+                        </div>
 
                         <motion.div 
                             initial={{ opacity: 0, x: -20 }}
@@ -270,28 +288,35 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest block mb-1">Phase 03</span>
-                                <h4 className="text-lg font-black uppercase tracking-tight text-white mb-1">Vision, Web &amp; Demo</h4>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Weeks 9-12</p>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 03</span>
+                                <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">Vision, Web &amp; Demo</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 09</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 09</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">OpenCV &amp; Vision</h5>
                                 </div>
                                 <div className="p-3 rounded-xl border bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-blue-400">Week 10</span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-slate-400">Week 10</span>
                                     <h5 className="text-xs font-bold uppercase tracking-tight text-white/90">Flask Web Framework</h5>
                                 </div>
                                 <motion.div 
                                     whileHover={{ scale: 1.02 }}
                                     className="p-3 rounded-xl border bg-blue-600 border-blue-500 text-white col-span-2 shadow-lg shadow-blue-600/20"
                                 >
-                                    <span className="text-[8px] font-black uppercase tracking-widest mb-1 block text-white/80">Final Milestone</span>
-                                    <h5 className="text-xs font-black uppercase tracking-tight mb-1">Capstone &amp; Demo Day</h5>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest mb-1 block text-white/80">Final Milestone</span>
+                                    <h5 className="text-xs font-bold uppercase tracking-tight mb-1">Final Project &amp; Demo Day</h5>
                                 </motion.div>
                             </div>
                         </motion.div>
+                    </div>
+                </div>
+
+                {/* Tapered Luminating Divider - Top Version */}
+                <div className="py-4 my-2 flex justify-center relative">
+                    <div className="w-[60%] h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent relative z-10">
+                        <div className="absolute inset-0 bg-blue-400 blur-[6px] opacity-30" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_10px_#3b82f6]" />
                     </div>
                 </div>
 
@@ -306,57 +331,64 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     
                     <div className="relative z-10">
-                        <h3 className="text-xl font-black uppercase tracking-tighter mb-4 leading-tight text-white">
+                        <h3 className="text-xl font-bold uppercase tracking-tighter mb-4 leading-tight text-white">
                             Ready to build your child's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">AI future?</span>
                         </h3>
-                        <p className="text-slate-400 text-[11px] font-semibold mb-6 leading-relaxed">
+                        <p className="text-slate-400 text-[11px] font-medium mb-6 leading-relaxed">
                             Strictly limited seats per batch to ensure personalized 1-on-1 mentorship sessions.
                         </p>
                         
                         <div className="grid grid-cols-2 gap-2 w-full">
                             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
-                                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block mb-1">Upcoming Batch</span>
-                                <span className="text-[11px] font-black uppercase text-white">15th April</span>
+                                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Upcoming Batch</span>
+                                <span className="text-[11px] font-bold uppercase text-white">15th April</span>
                             </div>
                             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
-                                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
+                                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
                                     <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
                                     Seats Left
                                 </span>
-                                <span className="text-[11px] font-black uppercase text-orange-400">
+                                <span className="text-[11px] font-bold uppercase text-orange-400">
                                     {totalSeats - registeredCount} / {totalSeats}
                                 </span>
                             </div>
                         </div>
                     </div>
                 </motion.div>
+                
+                {/* Tapered Luminating Divider - Small Version */}
+                <div className="py-4 my-2 flex justify-center relative">
+                    <div className="w-[60%] h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent relative z-10">
+                        <div className="absolute inset-0 bg-blue-400 blur-[6px] opacity-30" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_10px_#3b82f6]" />
+                    </div>
+                </div>
 
-                {/* Card 2: Investment & Action */}
                 <motion.div 
                     initial={{ opacity: 0, y: 30, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="relative bg-[#0F172A]/40 backdrop-blur-3xl border border-white/10 p-5 rounded-[2rem] text-center mb-12 overflow-hidden shadow-2xl"
+                    className="relative bg-[#0F172A]/40 backdrop-blur-3xl border border-white/10 p-5 rounded-[2rem] text-center mb-0 overflow-hidden shadow-2xl"
                 >
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none"></div>
                     
                     <div className="relative z-10">
                         <div className="w-full p-5 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 flex flex-col items-center justify-center mb-6">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
+                            <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
                             <div className="flex items-center justify-center gap-3">
-                                <span className="text-sm font-bold text-slate-600 line-through">₹2,999</span>
-                                <span className="text-3xl font-black text-white tracking-tighter">₹1,999</span>
+                                <span className="text-sm font-semibold text-slate-600 line-through">₹2,999</span>
+                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹1,999</span>
                             </div>
                             <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
-                                <span className="text-blue-400 text-[9px] font-black uppercase tracking-widest">33% Launch Offer</span>
+                                <span className="text-blue-400 text-[9px] font-bold uppercase tracking-widest">33% Launch Offer</span>
                             </div>
                         </div>
 
                         <button 
                             onClick={handleReserveAdmission}
                             disabled={isEnrolling}
-                            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-5 rounded-xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-blue-500/20 active:scale-[0.97] transition-all disabled:opacity-70 group"
+                            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-5 rounded-xl font-bold text-sm uppercase tracking-wider shadow-2xl shadow-blue-500/20 active:scale-[0.97] transition-all disabled:opacity-70 group"
                         >
                             <span className="flex items-center justify-center gap-2">
                                 {isEnrolling ? 'Processing...' : (
@@ -369,71 +401,26 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     </div>
                 </motion.div>
 
-                {/* Video Demo Unit (Standalone) */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-4"
-                >
-                    <div className="aspect-video bg-[#0A0A0A] rounded-[1.5rem] overflow-hidden shadow-2xl border border-white/10 relative group">
-                        <iframe 
-                            width="100%" 
-                            height="100%" 
-                            style={{ pointerEvents: 'none' }}
-                            src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
-                            title="YouTube video player" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen
-                        ></iframe>
-                        <div className="absolute inset-0 bg-blue-500/5 mix-blend-overlay pointer-events-none"></div>
-                    </div>
-                </motion.div>
-
-                {/* Features Info Card */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[1.5rem] p-5 text-white shadow-xl"
-                >
-                    <h2 className="text-lg font-black uppercase tracking-tighter leading-tight mb-5">
-                        Capstone: Face Recognition System
-                    </h2>
-                    
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">👤</div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Face Recognition Engine</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">📋</div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Live Attendance Logger</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 text-sm shadow-inner">🖥️</div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Flask Web Dashboard</span>
-                        </div>
-                    </div>
-                </motion.div>
             </div>
         );
     }
 
     return (
         <div>
-            <div className="text-center mb-6 px-4 sm:px-6 lg:px-8">
-                <p className="max-w-2xl mx-auto text-lg text-on-surface-variant mb-6 font-light leading-relaxed">
-                    "The question isn't whether AI will shape your child's future. It's whether they'll build it — or just watch."
-                </p>
-                <button 
-                    onClick={handleSecureSpot}
-                    disabled={isSecuring}
-                    className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-3 rounded-lg font-headline font-extrabold text-base shadow-lg shadow-[0_20px_40px_rgba(0,229,255,0.25)] hover:scale-[1.03] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    {isSecuring ? 'Processing...' : 'Secure Your Spot'}
-                </button>
+            <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
+                <div className="relative inline-block mx-auto text-center">
+                    <p className="max-w-4xl mx-auto text-base text-on-surface-variant font-light leading-relaxed italic relative z-10 px-6 whitespace-nowrap">
+                        "Will your child build the AI future, or just watch it?"
+                    </p>
+                    <motion.div 
+                        initial={{ width: 0, opacity: 0 }}
+                        whileInView={{ width: '108%', opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+                        className="absolute bottom-[-5px] -left-[4%] h-[26px] bg-blue-500/15 -z-0 -rotate-1 -skew-x-12"
+                        style={{ clipPath: 'polygon(1% 20%, 99% 12%, 100% 82%, 2% 90%)' }}
+                    />
+                </div>
             </div>
 
             <div className="py-8 px-6 bg-surface-container-low">
@@ -459,9 +446,12 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 <div className="flex-1">
                     <div className="max-w-3xl relative" style={{marginLeft: '8%', marginRight: 'auto'}}>
                         <div className="text-left mb-4">
-                            <h2 className="text-3xl font-headline font-extrabold tracking-tight mb-1 text-on-surface">
-                                The 90-Day Roadmap
-                            </h2>
+                            <div className="flex items-center gap-4 mb-1">
+                                <h2 className="text-3xl font-headline font-extrabold tracking-tight text-on-surface whitespace-nowrap">
+                                    The <span className="text-blue-500">90-Day</span> Roadmap
+                                </h2>
+                                <div className="h-px flex-1 bg-gradient-to-r from-blue-500/30 to-transparent max-w-[100px]" />
+                            </div>
                             <p className="text-on-surface-variant text-sm">
                                 From code basics to shipping production-ready AI models.
                             </p>
@@ -492,9 +482,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                         <h3 className="text-lg font-headline font-bold text-on-surface">
                                             {month.title}
                                         </h3>
-                                        <p className="text-on-surface-variant text-xs">
-                                            {month.subtitle}
-                                        </p>
                                     </div>
                                 </div>
 
@@ -618,65 +605,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     </div>
                 </div>
             </div>
-
-            <section className="py-12 px-6">
-                <div className="max-w-6xl mx-auto bg-surface-container p-6 md:p-10 rounded-2xl border border-outline-variant/20 shadow-xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[60px] pointer-events-none" />
-                    <div className="grid lg:grid-cols-2 gap-8 items-center">
-                        <div>
-                            <h2 className="text-2xl md:text-3xl font-headline font-extrabold tracking-tight mb-3 text-on-surface">
-                                Face Recognition Attendance System
-                            </h2>
-                            <p className="text-on-surface-variant text-sm mb-6 leading-relaxed">
-                                Build a live system that opens the webcam, recognises student faces in real time, logs attendance automatically with timestamps and displays everything on a web dashboard. Every part of it written and built by you.
-                            </p>
-                            <ul className="space-y-3">
-                                <li className="flex items-start gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
-                                        👤
-                                    </div>
-                                    <div>
-                                        <span className="text-sm font-bold text-on-surface block">Face Recognition Engine</span>
-                                        <span className="text-xs text-on-surface-variant">Detects and identifies faces live using OpenCV and Dlib.</span>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
-                                        📋
-                                    </div>
-                                    <div>
-                                        <span className="text-sm font-bold text-on-surface block">Live Attendance Logger</span>
-                                        <span className="text-xs text-on-surface-variant">Automatically records name and timestamp the moment a face is recognised.</span>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary mt-0.5 text-sm">
-                                        🖥️
-                                    </div>
-                                    <div>
-                                        <span className="text-sm font-bold text-on-surface block">Flask Web Dashboard</span>
-                                        <span className="text-xs text-on-surface-variant">View and manage all attendance records from a clean browser interface.</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="relative">
-                            <div className="aspect-video bg-surface-container-highest rounded-xl border-2 border-outline-variant/30 overflow-hidden shadow-xl">
-                                <iframe 
-                                    width="100%" 
-                                    height="100%" 
-                                    style={{ pointerEvents: 'none' }}
-                                    src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
-                                    title="YouTube video player" 
-                                    frameBorder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowFullScreen
-                                ></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 };

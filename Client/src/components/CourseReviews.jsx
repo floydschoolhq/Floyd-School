@@ -199,42 +199,37 @@ const CourseReviews = ({ courseId, variant }) => {
 
     if (isMobile) {
         return (
-            <section className="py-8 px-0 relative overflow-hidden bg-black">
+            <section className="pt-72 pb-52 px-0 relative overflow-hidden bg-black">
                 <div className="absolute inset-0 -z-10">
                     <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
                     <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />
                 </div>
 
                 <div className="w-full relative z-10">
-                    <div className="flex items-end justify-between mb-8 px-4 sm:px-6">
+                    {/* Top Tapered Luminating Divider */}
+                    <div className="pt-8 mb-20 flex justify-center relative">
+                        <div className="w-[70%] h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent relative z-10">
+                            <div className="absolute inset-0 bg-blue-400 blur-[8px] opacity-50" />
+                            {/* Central Glow Node */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_15px_#3b82f6,0_0_30px_#3b82f6]" />
+                        </div>
+                    </div>
+
+                    <div className="mb-6 px-6">
                         <motion.h2 
-                            className="text-3xl font-black text-white tracking-tight"
+                            className="text-2xl font-black text-white tracking-tight"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                         >
-                            Student <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
+                            Student <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300">Reviews</span>
                         </motion.h2>
-                        <div className="flex gap-2">
-                            <button 
-                                onClick={() => handleScroll('left')} 
-                                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform"
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <button 
-                                onClick={() => handleScroll('right')} 
-                                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform"
-                            >
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
                     </div>
 
                     <div 
                         ref={mobileScrollRef}
-                        className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 px-4 sm:px-6 snap-x snap-mandatory scrollbar-hide"
+                        className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 px-6 snap-x snap-mandatory scrollbar-hide"
                     >
                         {AI_REVIEWS.map((review) => {
                             const colors = colorMap[review.color] || colorMap.blue;
@@ -284,6 +279,30 @@ const CourseReviews = ({ courseId, variant }) => {
                                 </div>
                             );
                         })}
+                    </div>
+
+                    <div className="flex justify-center gap-4 mt-8">
+                        <button 
+                            onClick={() => handleScroll('left')} 
+                            className="w-12 h-12 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform shadow-xl"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+                        <button 
+                            onClick={() => handleScroll('right')} 
+                            className="w-12 h-12 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform shadow-xl"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </div>
+
+                    {/* Tapered Luminating Divider */}
+                    <div className="mt-32 mb-0 flex justify-center relative">
+                        <div className="w-[70%] h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent relative z-10">
+                            <div className="absolute inset-0 bg-blue-400 blur-[8px] opacity-50" />
+                            {/* Central Glow Node */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_15px_#3b82f6,0_0_30px_#3b82f6]" />
+                        </div>
                     </div>
                 </div>
 

@@ -26,6 +26,7 @@ import CourseFAQ from '../components/CourseFAQ';
 import PaymentModal from '../components/PaymentModal';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
+import FinalProject from '../components/FinalProject';
 
 const iconMap = {
     Cpu: Cpu,
@@ -83,54 +84,52 @@ const CourseDetails = () => {
                         </button>
 
                         {isMobile ? (
-                            <div className="flex flex-col gap-10">
-                                <div>
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-500 py-1 px-2 bg-blue-500/10 rounded-md">{course.duration} program</span>
-                                    </div>
-                                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
-                                        Foundation of<br className="block"/>
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
-                                            AI and Machine Learning
-                                        </span>
-                                    </h1>
-                                    <p className="text-sm text-slate-400 font-medium leading-relaxed mb-8">
-                                        {course.detailedDescription}
+                            <div className="flex flex-col gap-6 mt-12">
+                                {/* Image Card at Top */}
+                                <div className="w-full bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
+                                    <img 
+                                        src={course.image} 
+                                        alt={course.title} 
+                                        className="w-full h-auto block opacity-100"
+                                    />
+                                </div>
+
+                                <div className="text-center">
+                                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 inline-block mb-2">
+                                        {course.duration} program
+                                    </span>
+                                    <p className="text-base font-bold tracking-tight mb-4 leading-tight text-white px-4">
+                                        Foundation of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">AI and Machine Learning</span>
+                                    </p>
+                                    <p className="text-[13px] text-slate-400 font-medium leading-relaxed mb-8 px-4 text-center">
+                                        Master AI from scratch. Build real Machine Learning and Computer Vision models. No experience required.
                                     </p>
                                     
                                     <div className="flex flex-col gap-3">
                                         <button 
                                             onClick={() => setIsRegistrationModalOpen(true)}
-                                            className="w-full py-4 bg-blue-600 text-white rounded-xl font-black uppercase text-[11px] tracking-widest shadow-[0_10px_30px_rgba(59,130,246,0.3)] flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                                            className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold uppercase text-[11px] tracking-widest shadow-[0_10px_30px_rgba(59,130,246,0.3)] flex items-center justify-center gap-3 active:scale-95 transition-transform"
                                         >
                                             Apply Now <ArrowRight size={16} />
                                         </button>
                                         <button 
                                             onClick={() => window.open('/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
-                                            className="w-full py-4 bg-white/5 border border-white/10 text-white rounded-xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                                            className="w-full py-4 bg-white/5 border border-white/10 text-white rounded-xl font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
                                         >
                                             <Download size={16} /> Download Curriculum
                                         </button>
                                     </div>
-                                </div>
-
-                                <div className="w-full aspect-video bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
-                                    <img 
-                                        src={course.image} 
-                                        alt={course.title} 
-                                        className="w-full h-full object-contain p-4 opacity-90"
-                                    />
                                 </div>
                                 
                                 <div className="flex items-center gap-4 px-6 py-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md self-center">
                                     <div className="flex -space-x-3">
                                         {['A', 'B', 'C'].map((letter, i) => (
                                             <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                                <span className="text-[10px] font-black text-white uppercase">{letter}</span>
+                                                <span className="text-[10px] font-bold text-white uppercase">{letter}</span>
                                             </div>
                                         ))}
                                     </div>
-                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
+                                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
                                 </div>
                             </div>
                         ) : (
@@ -198,21 +197,51 @@ const CourseDetails = () => {
 
                 {/* Course Curriculum Section - Only for AI & ML Course */}
                 {courseId === '1' && (
-                    <section id="course-curriculum">
+                    <section id="course-curriculum" className="p-0">
                         <CourseCurriculum variant="dark" />
                     </section>
                 )}
 
+                {/* Independent Final Project Section */}
+                {courseId === '1' && <FinalProject />}
+
+                {/* Luminating Divider below Final Project */}
+                {isMobile && (
+                    <div className="bg-white py-16 flex justify-center overflow-hidden">
+                        <div className="relative w-full max-w-[280px] flex items-center justify-center">
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-600/60 to-transparent" />
+                        </div>
+                    </div>
+                )}
+
                 {/* Enhanced Mentors Section */}
-                <section id="course-faculty" className="bg-white md:bg-gradient-to-br md:from-black md:via-slate-950 md:to-black border-t border-white/5 md:pt-12 md:pb-20 pt-8 pb-4 p-0">
+                <section 
+                    id="course-faculty" 
+                    className={isMobile 
+                        ? "bg-white border-t border-slate-100 p-0" 
+                        : "bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20 p-0"
+                    }
+                >
                     <div className="max-w-7xl mx-auto px-0 md:px-6">
                         {/* Faculty Grid */}
-                        <CourseFacultyGrid title="Faculty" isStatic={true} excludeName="Shivam Mishra" variant="dark" />
+                        <CourseFacultyGrid 
+                            title="Faculty" 
+                            isStatic={true} 
+                            excludeName="Shivam Mishra" 
+                            variant={isMobile ? "light" : "dark"} 
+                        />
                     </div>
                 </section>
+                
+                {/* Luminating Divider - Bottom of Faculty (Mobile Only) */}
+                {isMobile && (
+                    <div className="bg-white py-12 flex justify-center">
+                        <div className="h-px w-[85%] bg-gradient-to-r from-transparent via-blue-600/60 to-transparent relative z-10 shadow-[0_0_60px_rgba(37,99,235,0.6)]" />
+                    </div>
+                )}
 
                 {/* Course Offerings Section */}
-                <section id="course-offerings" className="bg-white px-0 overflow-hidden">
+                <section id="course-offerings" className={`bg-white px-0 overflow-hidden ${isMobile ? 'pb-16' : ''}`}>
                     <CourseOfferings variant="dark" />
                 </section>
 
