@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Marketing Pages -->
+  <url>
+    <loc>https://thinkskool.in/</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/contact</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/course</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/school-partnerships</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/online-program</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/bootcamp-gallery</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/faq</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/downloads</loc>
+  </url>
+  
+  <!-- Authentication Pages -->
+  <url>
+    <loc>https://thinkskool.in/student/login</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/classes</loc>
+  </url>
+  
+  <!-- Student Dashboard Pages (Protected) -->
+  <url>
+    <loc>https://thinkskool.in/student</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/dashboard</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/classroom</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/coding-lab</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/recordings</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/live-session</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/progress</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/reports</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/student/support</loc>
+  </url>
+  <url>
+    <loc>https://thinkskool.in/classroom</loc>
+  </url>
+</urlset>
