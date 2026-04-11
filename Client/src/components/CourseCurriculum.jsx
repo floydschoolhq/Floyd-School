@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 const CourseCurriculum = ({ variant = "light" }) => {
@@ -16,6 +16,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         {
             month: "01",
             title: "Python Fundamentals",
+            phaseDescription: "The absolute baseline: build high-performance logic with world-class Python patterns.",
             color: "primary",
             weeks: [
                 {
@@ -44,6 +45,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         {
             month: "02",
             title: "APIs, AI & ML",
+            phaseDescription: "From static code to intelligent systems: Integrating LLMs and predictive models.",
             color: "secondary",
             weeks: [
                 {
@@ -72,6 +74,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
         {
             month: "03", 
             title: "Vision, Web & Demo",
+            phaseDescription: "The Grand Finale: Give your AI 'eyes' and deploy your masterpiece to the internet.",
             color: "primary",
             weeks: [
                 {
@@ -423,26 +426,42 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
             </div>
 
-            <div className="py-8 px-6 bg-surface-container-low">
-                <div className="max-w-7xl mx-auto grid grid-cols-5 gap-8">
-                    {stats.map((stat, index) => (
-                        <div 
-                            key={index} 
-                            className="text-center group cursor-pointer hover:scale-105 transition-transform"
-                            onClick={() => console.log(`Stat clicked: ${stat.label}`)}
+            {/* Premium Stats Command Center */}
+            <div className="py-12 px-6 bg-surface-container-low relative overflow-hidden">
+                <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
+                    {stats.map((stat, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            viewport={{ once: true }}
+                            className="relative group"
                         >
-                            <div className="text-2xl font-headline font-black text-primary mb-1 group-hover:text-cyan-400 transition-colors">
-                                {stat.number}
+                            {/* Orbital Glow (Hover Only) */}
+                            <div className="absolute inset-0 bg-blue-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
+                            
+                            <div className="h-full bg-white/[0.04] backdrop-blur-3xl border border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center transition-all duration-500 hover:border-blue-500/30 hover:-translate-y-2 group relative overflow-hidden shadow-2xl">
+                                {/* Digital Top Tracer */}
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+                                
+                                <span className="text-4xl md:text-5xl font-headline font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 mb-3 group-hover:from-blue-400 group-hover:to-blue-600 transition-all duration-500">
+                                    {stat.number}
+                                </span>
+                                
+                                <span className="text-[10px] md:text-[11px] font-ubuntu font-bold tracking-[0.3em] text-on-surface-variant uppercase text-center opacity-60 group-hover:opacity-100 group-hover:text-blue-400 transition-all duration-500">
+                                    {stat.label}
+                                </span>
+
+                                {/* Bottom Interactive Tracer */}
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-500 group-hover:w-full transition-all duration-700 rounded-full" />
                             </div>
-                            <div className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                                {stat.label}
-                            </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-8 px-6 py-6 bg-surface-container-lowest relative">
+            <div className="flex flex-col lg:flex-row items-center gap-8 px-6 py-6 bg-surface-container-lowest relative">
                 <div className="flex-1">
                     <div className="max-w-3xl relative" style={{marginLeft: '8%', marginRight: 'auto'}}>
                         <div className="text-left mb-4">
@@ -460,87 +479,151 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         {curriculumData.map((month, monthIndex) => (
                             <div
                                 key={monthIndex}
-                                className={`mb-4 relative ${monthIndex === 2 ? 'mb-0' : ''}`}
+                                className={`mb-6 relative ${monthIndex === 2 ? 'mb-0' : ''}`}
                             >
-                                <div 
-                                    className="flex items-center gap-3 mb-3 cursor-pointer hover:translate-x-2 transition-transform"
+                                <motion.div 
+                                    layout
+                                    className={`flex items-center gap-8 cursor-pointer transition-all duration-700 rounded-[2rem] group mb-4 relative overflow-hidden
+                                        ${selectedMonth === monthIndex 
+                                            ? 'p-3 bg-white/[0.03] border border-white/10 shadow-2xl' 
+                                            : 'p-6 bg-gradient-to-br from-white/[0.04] via-transparent to-white/[0.02] backdrop-blur-3xl border border-white/5 hover:border-blue-500/20 hover:bg-white/[0.06] shadow-xl'}`}
                                     onClick={() => handleMonthClick(monthIndex)}
                                 >
-                                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center border hover:scale-110 transition-transform ${
-                                        month.color === 'primary'
-                                            ? 'bg-primary-container/20 border-primary/30'
-                                            : 'bg-secondary-container/20 border-secondary/30'
-                                    }`}
+                                    {/* Phase Tracer Line (Left Edge) */}
+                                    <div className={`absolute left-0 top-0 bottom-0 w-1 transition-all duration-700
+                                        ${selectedMonth === monthIndex ? 'bg-blue-500' : 'bg-white/5 group-hover:bg-blue-500/40'}`} />
+
+                                    {/* Tech Number Box */}
+                                    <motion.div 
+                                        layout
+                                        className={`rounded-2xl flex items-center justify-center border-2 transition-all duration-700 relative
+                                            ${selectedMonth === monthIndex ? 'w-10 h-10' : 'w-14 h-14'}
+                                            ${month.color === 'primary'
+                                                ? 'bg-blue-500/5 border-blue-500/20 group-hover:border-blue-500/40'
+                                                : 'bg-indigo-500/5 border-indigo-500/20 group-hover:border-indigo-500/40'}`}
                                     >
-                                        <span className={`font-headline font-black text-lg ${
-                                            month.color === 'primary' ? 'text-primary' : 'text-secondary'
-                                        }`}>
-                                            {month.month}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-headline font-bold text-on-surface">
-                                            {month.title}
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div className={`ml-5 pl-9 border-l-2 relative ${
-                                    monthIndex === 2 ? 'border-dashed' : ''
-                                } border-surface-container-highest`}>
-                                    {month.weeks.map((week, weekIndex) => (
-                                        <div 
-                                            key={weekIndex} 
-                                            className={`mb-3 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
+                                        <motion.span 
+                                            layout
+                                            className={`font-headline font-black transition-all duration-700
+                                                ${selectedMonth === monthIndex ? 'text-lg' : 'text-2xl'}
+                                                ${month.color === 'primary' ? 'text-blue-400' : 'text-indigo-400'}`}
                                         >
-                                            <div 
-                                                className={`absolute -left-[48px] top-1 w-3 h-3 rounded-full border-3 cursor-pointer hover:scale-125 transition-transform ${
-                                                    week.isSpecial
-                                                        ? 'bg-primary border-surface shadow-[0_0_10px_rgba(0,229,255,0.6)]'
-                                                        : 'bg-surface-container-highest border-surface'
-                                                }`}
-                                                onClick={() => handleWeekClick(monthIndex, weekIndex)}
-                                                onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
-                                                onMouseLeave={() => setHoveredWeek(null)}
-                                            />
-
-                                            <div 
-                                                className={`p-2.5 rounded-lg border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
-                                                    week.isSpecial
-                                                        ? 'bg-gradient-to-br from-primary via-primary-container to-secondary'
-                                                        : ''
-                                                } ${
-                                                    hoveredWeek === `${monthIndex}-${weekIndex}` 
-                                                        ? 'scale-105 shadow-xl border-primary/50' 
-                                                        : 'hover:scale-105 hover:shadow-xl hover:border-primary/50'
-                                                }`}
-                                                onClick={() => handleWeekClick(monthIndex, weekIndex)}
-                                                onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
-                                                onMouseLeave={() => setHoveredWeek(null)}
+                                            {month.month}
+                                        </motion.span>
+                                        
+                                        {/* Decorative Corner Notch (Hover Only) */}
+                                        <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </motion.div>
+                                    
+                                    <motion.div layout className="flex-1 text-left">
+                                        <div className="flex flex-col">
+                                            <motion.h3 
+                                                layout
+                                                className={`font-headline font-black text-on-surface transition-all duration-700
+                                                    ${selectedMonth === monthIndex ? 'text-xl' : 'text-3xl tracking-tight'}`}
                                             >
-                                                <span 
-                                                    className={`text-[10px] font-bold mb-0.5 block uppercase tracking-widest ${
-                                                        month.color === 'primary' ? 'text-primary' : 'text-secondary'
-                                                    }`}
+                                                {month.title}
+                                            </motion.h3>
+                                            
+                                            {selectedMonth !== monthIndex && (
+                                                <motion.p 
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    className="text-on-surface-variant text-sm mt-1 font-medium opacity-80"
                                                 >
-                                                    {week.week}
-                                                </span>
-                                                <h4 className="text-sm font-bold mb-0.5 text-on-surface">
-                                                    {week.title}
-                                                </h4>
-                                                <p className="text-on-surface-variant text-xs">
-                                                    {week.description}
-                                                </p>
-                                            </div>
+                                                    {month.phaseDescription}
+                                                </motion.p>
+                                            )}
                                         </div>
-                                    ))}
-                                </div>
+                                    </motion.div>
+
+                                    {/* Action Icon: Sophisticated Bracket-style Arrow */}
+                                    <motion.div 
+                                        animate={{ rotate: selectedMonth === monthIndex ? 180 : 0, scale: selectedMonth === monthIndex ? 0.9 : 1.2 }}
+                                        transition={{ duration: 0.5, ease: "anticipate" }}
+                                        className={`p-4 rounded-full border transition-colors duration-500
+                                            ${selectedMonth === monthIndex ? 'border-blue-500/40 bg-blue-500/10' : 'border-white/10 bg-white/5'}`}
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </motion.div>
+                                </motion.div>
+
+                                <AnimatePresence>
+                                    {selectedMonth === monthIndex && (
+                                        <motion.div 
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className={`ml-5 pl-9 border-l-2 relative ${
+                                                monthIndex === 2 ? 'border-dashed' : ''
+                                            } border-surface-container-highest pb-6`}>
+                                                {month.weeks.map((week, weekIndex) => (
+                                                    <div 
+                                                        key={weekIndex} 
+                                                        className={`mb-3 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
+                                                    >
+                                                        <div 
+                                                            className={`absolute -left-[48px] top-1 w-3 h-3 rounded-full border-3 cursor-pointer hover:scale-125 transition-transform ${
+                                                                week.isSpecial
+                                                                    ? 'bg-primary border-surface shadow-[0_0_10px_rgba(0,229,255,0.6)]'
+                                                                    : 'bg-surface-container-highest border-surface'
+                                                            }`}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleWeekClick(monthIndex, weekIndex);
+                                                            }}
+                                                            onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
+                                                            onMouseLeave={() => setHoveredWeek(null)}
+                                                        />
+
+                                                        <div 
+                                                            className={`p-2.5 rounded-lg border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
+                                                                week.isSpecial
+                                                                    ? 'bg-gradient-to-br from-primary via-primary-container to-secondary'
+                                                                    : ''
+                                                            } ${
+                                                                hoveredWeek === `${monthIndex}-${weekIndex}` 
+                                                                    ? 'scale-105 shadow-xl border-primary/50' 
+                                                                    : 'hover:scale-[1.02] hover:shadow-xl hover:border-primary/50'
+                                                            }`}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleWeekClick(monthIndex, weekIndex);
+                                                            }}
+                                                            onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
+                                                            onMouseLeave={() => setHoveredWeek(null)}
+                                                        >
+                                                            <span 
+                                                                className={`text-[10px] font-bold mb-0.5 block uppercase tracking-widest ${
+                                                                    month.color === 'primary' ? 'text-primary' : 'text-secondary'
+                                                                }`}
+                                                            >
+                                                                {week.week}
+                                                            </span>
+                                                            <h4 className="text-sm font-bold mb-0.5 text-on-surface">
+                                                                {week.title}
+                                                            </h4>
+                                                            <p className="text-on-surface-variant text-xs">
+                                                                {week.description}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-6 lg:self-end lg:ml-8">
+                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-6 lg:ml-8">
                     <div className="bg-surface-container-low p-8 rounded-[2.5rem] border border-primary/20 shadow-xl">
                         <h2 className="text-3xl md:text-4xl font-headline font-extrabold tracking-tight mb-6 text-on-surface text-center">
                             Ready to build your child's AI future?
@@ -555,7 +638,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                         Next Cohort Starts
                                     </p>
                                     <p className="text-lg font-bold text-on-surface">
-                                        15th April 2026
+                                        1st May 2026
                                     </p>
                                 </div>
                                 <div className="text-right">

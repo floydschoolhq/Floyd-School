@@ -105,11 +105,13 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             {/* Content Core: Pure Data Hierarchy */}
             <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 flex flex-col items-center">
-                <h3 className={`text-xl md:text-2xl font-ubuntu font-bold tracking-widest uppercase leading-none transition-colors w-full break-words whitespace-nowrap
-                    ${isDark ? 'text-slate-50 group-hover:text-white' : 'text-slate-900 group-hover:text-blue-600'}`}>
+                <h3 className={`text-xl md:text-2xl font-ubuntu font-bold tracking-[0.25em] uppercase leading-tight transition-all duration-500 w-full break-words whitespace-nowrap
+                    ${isDark 
+                        ? 'text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 group-hover:from-blue-400 group-hover:to-blue-600' 
+                        : 'text-slate-900 group-hover:text-blue-600'}`}>
                     {mentor.name}
                 </h3>
-                    <p className={`font-bold text-sm md:text-[13px] tracking-[0.2em] uppercase pb-4
+                    <p className={`font-bold text-sm md:text-[13px] uppercase pb-4
                         ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                         <span className="mr-2">[</span>
                         {mentor.role}

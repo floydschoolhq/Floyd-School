@@ -154,13 +154,20 @@ const PremiumNavbar = memo(({ variant }) => {
             <MaintenanceBanner />
 
             <motion.nav
-                className="fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center px-4 md:px-0"
+                className={`fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center ${isCoursesPage ? 'px-0' : 'px-4'} md:px-0`}
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: isVisible ? 0 : -100, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
                 <div
-                    className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center ${styles.navbar}`}
+                    className={`pointer-events-auto transition-all duration-700 ease-out flex items-center justify-center 
+                        ${isCoursesPage 
+                            ? isScrolled 
+                                ? 'w-full md:w-[90%] lg:w-[85%] md:rounded-full rounded-none bg-slate-900/80 backdrop-blur-md border-b md:border border-white/20 px-6 py-0 h-14'
+                                : 'w-full rounded-none bg-gradient-to-r from-slate-900/80 to-slate-800/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-white/20'
+                            : isScrolled
+                                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/80 backdrop-blur-md border border-pink-200/60 px-6 py-0 h-14'
+                                : 'w-full rounded-none bg-gradient-to-r from-pink-50/80 to-pink-100/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-pink-200/60'}`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
 
