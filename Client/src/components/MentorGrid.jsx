@@ -56,7 +56,7 @@ const LEADERS = [
         role: "Mentor AI/ML",
         image: shashwatImg,
         imageScale: 1.0,
-        imagePosition: "object-center",
+        imagePosition: "object-[center_85%]",
         bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
@@ -389,7 +389,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                         <img 
                                             src={mentor.image} 
                                             alt={mentor.name} 
-                                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'}`}
+                                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-center'}`}
                                             style={{ transform: `scale(${mentor.imageScale})` }}
                                         />
                                     </div>

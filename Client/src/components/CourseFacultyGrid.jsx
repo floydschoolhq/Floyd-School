@@ -17,7 +17,7 @@ const LEADERS = [
         role: "Mentor AI/ML",
         image: shashwatImg,
         imageScale: 1.0,
-        imagePosition: "object-center",
+        imagePosition: "object-[center_85%]",
         bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
@@ -200,30 +200,28 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                             <img
                                 src={mentor.image}
                                 alt={mentor.name}
-                                className={`absolute inset-0 w-full h-full object-cover object-top z-10 ${mentor.imagePosition || ''}`}
+                                className={`absolute inset-0 w-full h-full object-cover z-10 ${mentor.imagePosition || 'object-center'}`}
                             />
                         </div>
 
                         {/* Info Area: dark text on white */}
-                        <div className="bg-white px-5 py-5 h-[90px] flex items-center justify-between border-t border-slate-100">
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <h3 className="text-base font-black text-slate-900 tracking-tight leading-tight">
-                                        {mentor.name}
-                                    </h3>
-                                    <a
-                                        href={mentor.linkedin}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center text-white shadow-sm flex-shrink-0"
-                                    >
-                                        <FaLinkedinIn size={11} />
-                                    </a>
-                                </div>
-                                <p className="text-[12px] font-medium text-slate-500 mt-0.5">
+                        <div className="bg-white px-5 py-5 min-h-[100px] flex items-center justify-center border-t border-slate-100 relative">
+                            <div className="flex flex-col items-center text-center w-full relative z-10 px-8">
+                                <h3 className="text-[22px] font-black text-slate-900 tracking-tighter leading-tight">
+                                    {mentor.name}
+                                </h3>
+                                <p className="text-[12px] font-bold text-slate-500 mt-1.5 uppercase tracking-wide">
                                     {mentor.role}
                                 </p>
                             </div>
+                            <a
+                                href={mentor.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md z-20 hover:bg-blue-700 transition-colors"
+                            >
+                                <FaLinkedinIn size={14} />
+                            </a>
                         </div>
                     </motion.div>
                 </AnimatePresence>
