@@ -140,8 +140,8 @@ const CourseDetails = () => {
                                     transition={{ duration: 0.8 }}
                                 >
                                     <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-white inline-block mb-6">{course.duration} program</span>
-                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
-                                        Foundation of<br className="block"/>
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-6xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
+                                        Foundation of{' '}
                                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
                                             AI and Machine Learning
                                         </span>
