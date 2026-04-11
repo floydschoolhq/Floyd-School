@@ -42,14 +42,12 @@ const COURSE_MOBILE_NAV_ITEMS = [
 ];
 
 const PremiumNavbar = memo(({ variant }) => {
+    const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [source, setSource] = useState('navbar');
-    const navigate = useNavigate();
-    const { user } = useContext(PortalContext);
-    const [courses, setCourses] = useState([]);
     const location = useLocation();
 
     // Optimized theme detection - single string check
@@ -59,6 +57,8 @@ const PremiumNavbar = memo(({ variant }) => {
     // Check if we're on a specific course details page
     const isCourseDetailsPage = location.pathname.includes('/course/') && 
                                 location.pathname.split('/').length > 2;
+
+    // Optimized scroll handler logic ... (rest of component)
 
     // Optimized event handlers - defined before use
     const handleContactClick = useCallback(() => {
@@ -126,18 +126,6 @@ const PremiumNavbar = memo(({ variant }) => {
     }, []);
 
     useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const res = await api.get('/courses');
-                let data = Array.isArray(res.data) ? res.data : res.data.data || [];
-                if (data.length === 0) data = FALLBACK_COURSES;
-                setCourses(data);
-            } catch {
-                setCourses(FALLBACK_COURSES);
-            }
-        };
-        fetchCourses();
-
         // Handle cross-page scrolling from state
         if (location.state?.scrollTo) {
             const sectionId = location.state.scrollTo;

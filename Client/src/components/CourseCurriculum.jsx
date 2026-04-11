@@ -105,20 +105,6 @@ const CourseCurriculum = ({ variant = "light" }) => {
         { number: "3", label: "Classes / Week" }
     ];
 
-    const finalProjectFeatures = [
-        {
-            icon: "psychology",
-            title: "Face Recognition Engine"
-        },
-        {
-            icon: "terminal",
-            title: "Live Attendance Logger"
-        },
-        {
-            icon: "dashboard",
-            title: "Flask Web Dashboard"
-        }
-    ];
 
     const handleSecureSpot = async () => {
         setIsSecuring(true);
@@ -461,9 +447,9 @@ const CourseCurriculum = ({ variant = "light" }) => {
                 </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row items-center gap-8 px-6 py-6 bg-surface-container-lowest relative">
-                <div className="flex-1">
-                    <div className="max-w-3xl relative" style={{marginLeft: '8%', marginRight: 'auto'}}>
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 px-6 lg:px-12 py-6 bg-surface-container-lowest relative">
+                <div className="flex-1 w-full">
+                    <div className="max-w-3xl relative mx-auto lg:ml-0 lg:mr-auto">
                         <div className="text-left mb-4">
                             <div className="flex items-center gap-4 mb-1">
                                 <h2 className="text-3xl font-headline font-extrabold tracking-tight text-on-surface whitespace-nowrap">
@@ -623,69 +609,99 @@ const CourseCurriculum = ({ variant = "light" }) => {
                     </div>
                 </div>
 
-                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-6 lg:ml-8">
-                    <div className="bg-surface-container-low p-8 rounded-[2.5rem] border border-primary/20 shadow-xl">
-                        <h2 className="text-3xl md:text-4xl font-headline font-extrabold tracking-tight mb-6 text-on-surface text-center">
+                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-12 lg:ml-8 perspective-1000">
+                    <motion.div 
+                        whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="relative bg-slate-900/40 backdrop-blur-3xl p-8 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden group"
+                    >
+                        {/* 3D Bevel/Reflective Edge */}
+                        <div className="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 pointer-events-none z-10" />
+                        <div className="absolute inset-0 rounded-[3rem] border-b border-r border-black/40 pointer-events-none z-10" />
+
+                        {/* Ambient Corner Glows */}
+                        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
+                        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
+
+                        <h2 className="text-3xl md:text-4xl font-headline font-black tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60 text-center">
                             Ready to build your child's AI future?
                         </h2>
-                        <p className="text-lg text-on-surface-variant mb-8 text-center">
+                        
+                        <p className="text-base text-on-surface-variant/80 mb-8 text-center font-medium leading-relaxed">
                             Enroll today — limited seats per cohort to ensure personalized mentorship.
                         </p>
-                        <div className="flex flex-col gap-6">
-                            <div className="flex justify-between items-center text-left">
-                                <div>
-                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
-                                        Next Cohort Starts
+
+                        <div className="flex flex-col gap-8">
+                            {/* Technical Data Grid */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
+                                    <p className="text-[10px] text-secondary font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
+                                        Cohort Starts
                                     </p>
-                                    <p className="text-lg font-bold text-on-surface">
-                                        1st May 2026
-                                    </p>
+                                    <p className="text-lg font-bold text-white">1st May 2026</p>
+                                    <div className="absolute bottom-0 left-0 h-0.5 bg-blue-500 w-0 group-hover/item:w-full transition-all duration-500" />
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-sm text-secondary font-bold uppercase tracking-widest">
+                                <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
+                                    <p className="text-[10px] text-secondary font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
                                         Seats Left
                                     </p>
                                     <p className="text-lg font-bold text-secondary">
                                         {String(totalSeats - registeredCount).padStart(2, '0')} / {totalSeats}
                                     </p>
+                                    <div className="absolute bottom-0 left-0 h-0.5 bg-secondary w-0 group-hover/item:w-full transition-all duration-500" />
                                 </div>
                             </div>
 
-                            {/* Price Display */}
-                            <div className="flex items-center justify-between bg-primary/10 border border-primary/30 rounded-2xl px-5 py-4">
-                                <div>
-                                    <p className="text-xs text-secondary font-bold uppercase tracking-widest mb-1">Course Fee</p>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-sm text-on-surface-variant line-through font-medium">₹2,999</span>
-                                        <span className="text-2xl font-headline font-black text-primary">₹1,999</span>
+                            {/* 3D Pricing Plate */}
+                            <div className="relative bg-black/40 border border-white/10 rounded-[2rem] p-6 shadow-inner overflow-hidden group/pricing">
+                                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                                <div className="flex items-center justify-between relative z-10">
+                                    <div>
+                                        <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Investment</p>
+                                        <div className="flex items-end gap-2">
+                                            <span className="text-sm text-white/30 line-through font-medium">₹2,999</span>
+                                            <span className="text-3xl font-headline font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">
+                                                ₹1,999
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                                        33% OFF
                                     </div>
                                 </div>
-                                <div className="bg-primary/20 border border-primary/40 text-primary text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
-                                    33% OFF
-                                </div>
                             </div>
 
-                            <button 
-                                onClick={handleReserveAdmission}
-                                disabled={isEnrolling}
-                                className="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-black text-xl shadow-xl shadow-[0_25px_50px_rgba(0,229,255,0.3)] hover:scale-[1.05] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <div className="flex items-center justify-center gap-2">
-                                    {isEnrolling ? (
-                                        <>
-                                            <div className="w-4 h-4 border-2 border-on-primary border-t-transparent rounded-full animate-spin" />
-                                            Processing...
-                                        </>
-                                    ) : (
-                                        'Reserve Admission Now'
-                                    )}
-                                </div>
-                            </button>
-                            <p className="text-xs text-on-surface-variant text-center">
-                                Secure payment. Immediate curriculum access upon enrollment.
+                            {/* Tactile 3D Button */}
+                            <div className="relative group/btn">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-2xl blur opacity-25 group-hover/btn:opacity-60 transition duration-1000 group-hover:duration-200" />
+                                <button 
+                                    onClick={handleReserveAdmission}
+                                    disabled={isEnrolling}
+                                    className="relative w-full bg-slate-950 text-white py-6 rounded-2xl font-headline font-black text-xl border border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+                                >
+                                    <div className="flex items-center justify-center gap-3">
+                                        {isEnrolling ? (
+                                            <>
+                                                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                                Processing...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>Reserve Admission</span>
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="group-hover/btn:translate-x-1 transition-transform">
+                                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                                </svg>
+                                            </>
+                                        )}
+                                    </div>
+                                </button>
+                            </div>
+
+                            <p className="text-[10px] text-white/40 text-center font-medium tracking-wide">
+                                SECURE ENCRYPTION • IMMEDIATE ACCESS • 100% SUCCESS RATE
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>
