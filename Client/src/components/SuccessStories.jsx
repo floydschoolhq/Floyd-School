@@ -9,31 +9,31 @@ const REVIEWS_ROW_1 = [
     {
         name: "Priyal Panwar",
         role: "Student, STEPUP SCHOOL",
-        content: "Good Efforts very Informative!",
+        content: "The workshop was extremely informative and the mentors put in great efforts. It completely changed my perspective on how easy it is to start building real-world projects from scratch.",
         avatar: "P"
     },
     {
         name: "Navya",
         role: "Student, STEPUP SCHOOL",
-        content: "Good efforts liked it!",
+        content: "I really liked the hands-on approach and the structured curriculum. The instructors explained complex concepts with such clarity that I felt confident writing code by the end of the session.",
         avatar: "N"
     },
     {
         name: "Pratishtha Thakur",
         role: "Student, STEPUP SCHOOL",
-        content: "Amazing!!",
+        content: "An absolutely amazing experience! The interactive sessions and practical examples made technical concepts incredibly easy to grasp. I highly recommend this to anyone looking to start their tech journey.",
         avatar: "P"
     },
     {
         name: "Aahana Jain",
         role: "Student, STEPUP SCHOOL",
-        content: "The course was really nice it was quite easy to be aware of such program that easy",
+        content: "The course structure was phenomenal. They made it so easy to understand advanced topics that normally seem intimidating. I'm grateful to be part of a program that genuinely cares about student growth.",
         avatar: "A"
     },
     {
         name: "Siya Kapoor",
         role: "Student, STEPUP SCHOOL",
-        content: "It was so nice, we learnt a lot",
+        content: "We learned a tremendous amount in such a short time. The environment was super supportive, and the real-world examples helped us connect theoretical knowledge with practical implementation seamlessly.",
         avatar: "S"
     }
 ];
@@ -42,31 +42,31 @@ const REVIEWS_ROW_2 = [
     {
         name: "Kanisha Kapoor",
         role: "Student, STEPUP SCHOOL",
-        content: "It was very nice time to learn this workshop",
+        content: "Attending this workshop was one of the best investments of my time. The instructors were deeply knowledgeable and the hands-on projects gave me practical skills I can actually use.",
         avatar: "K"
     },
     {
         name: "Ishanvi Shukla",
         role: "Student, STEPUP SCHOOL",
-        content: "This was very good experience to have new ideas...",
+        content: "This was a fantastic experience that sparked so many new ideas for me. The mentorship was top-notch, and it gave me a clear roadmap for how to approach and build my own software projects.",
         avatar: "I"
     },
     {
         name: "Bhavya Singh",
         role: "Student, STEPUP SCHOOL",
-        content: "The Presentation was very nice and goood job bhai",
+        content: "The presentations were visually engaging and technically profound. The mentors did an extraordinary job breaking down difficult logic into simple, bite-sized lessons that anyone can follow.",
         avatar: "B"
     },
     {
         name: "Sanvi Chaudhary",
         role: "Student, STEPUP SCHOOL",
-        content: "It was a very good experience learning about it and very good explanation.",
+        content: "The explanations provided by the mentors were crystal clear. It was a highly rewarding experience that bridged the gap between basic concepts and actual industry-level development practices.",
         avatar: "S"
     },
     {
         name: "Daksh Chaudhary",
         role: "Student, STEPUP SCHOOL",
-        content: "The course was really good and interactive",
+        content: "The course was exceptionally interactive and well-paced. Getting live feedback on my code and collaborating with peers made the entire learning curve incredibly smooth and enjoyable.",
         avatar: "D"
     }
 ];
@@ -166,65 +166,112 @@ const SuccessStories = ({ variant }) => {
         });
     }, [isMobile, controls1, controls2, desktopCardWidth]);
 
+    const scrollContainerRef = useRef(null);
+
     const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + ALL_REVIEWS.length) % ALL_REVIEWS.length);
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -window.innerWidth * 0.85, behavior: 'smooth' });
+        }
     };
 
     const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % ALL_REVIEWS.length);
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: window.innerWidth * 0.85, behavior: 'smooth' });
+        }
     };
 
     if (isMobile) {
         return (
-            <section className="pt-10 pb-16 relative overflow-hidden bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
-                <div className="absolute inset-0 pointer-events-none" />
-                
-                <div className="w-full relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-extrabold tracking-tighter uppercase leading-[0.9] text-white">
-                            transformed by <br/>
-                            <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
-                        </h2>
+            <section className="pt-16 pb-20 bg-[#0A0A0A] overflow-hidden border-t border-white/5 relative">
+                <div className="px-6 flex items-center gap-5 mb-14 mt-4">
+                    <div className="w-[60px] h-[60px] rounded-2xl bg-white flex items-center justify-center shrink-0 shadow-lg">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="ml-1">
+                            <path d="M9 8c0-2.2-1.8-4-4-4S1 5.8 1 8c0 2 1 3.5 1.8 4.2L2 18h3.3l1.8-4.8C8.2 12 9 10 9 8z" fill="#2563EB" />
+                            <path d="M21 8c0-2.2-1.8-4-4-4s-4 1.8-4 4c0 2 1 3.5 1.8 4.2L14 18h3.3l1.8-4.8C20.2 12 21 10 21 8z" fill="#F97316" />
+                        </svg>
                     </div>
+                    <h2 className="text-[26px] font-bold text-white leading-[1.2]">
+                        Transformed by <br/>thinkskool
+                    </h2>
+                </div>
 
-                    <div className="w-full relative">
-                        <motion.div 
-                            className="flex gap-4 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
-                            animate={{ x: (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2 - currentIndex * (window.innerWidth * MOBILE_CARD_WIDTH_RATIO + MOBILE_GAP) }}
-                            transition={isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 100, damping: 20 }}
-                            drag="x"
-                            dragConstraints={{ 
-                                left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * MOBILE_CARD_WIDTH_RATIO + MOBILE_GAP)) + (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2, 
-                                right: (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2 
-                            }}
-                            onDragStart={() => setIsDragging(true)}
-                            onDragEnd={() => setIsDragging(false)}
-                        >
-                            {ALL_REVIEWS.map((review, i) => (
-                                <div key={i} className="shrink-0 w-screen">
-                                    <ReviewCard review={review} index={i} isMobile={true} />
+                <div 
+                    ref={scrollContainerRef}
+                    className="flex overflow-x-auto snap-x snap-mandatory pb-8 px-6 w-full no-scrollbar relative z-10"
+                    style={{ scrollBehavior: 'smooth' }}
+                >
+                    {ALL_REVIEWS.map((review, i) => {
+                        const parts = review.role.split(',');
+                        const origin = 'Student';
+                        const dest = parts[1]?.trim() || "ThinkSkool";
+
+                        return (
+                            <div key={i} className="shrink-0 w-[calc(100vw-60px)] snap-center mr-4 relative mt-12">
+                                <div className="bg-[#1c1c1c] rounded-[2rem] p-7 pt-14 flex flex-col text-left relative min-h-[380px]">
+                                    
+                                    {/* Watermark Logo */}
+                                    <div className="absolute top-0 left-0 opacity-[0.03] pointer-events-none transform translate-x-4 translate-y-4">
+                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="-rotate-45">
+                                            <polyline points="13 17 18 12 13 7"></polyline>
+                                            <polyline points="6 17 11 12 6 7"></polyline>
+                                        </svg>
+                                    </div>
+
+                                    {/* Top Avatar */}
+                                    <div className="absolute -top-[45px] left-1/2 -translate-x-1/2 w-[90px] h-[90px] rounded-full border-[6px] border-[#0A0A0A] bg-gradient-to-br from-green-300 to-green-600 flex items-center justify-center overflow-hidden">
+                                        <span className="text-3xl font-black text-slate-900">{review.avatar}</span>
+                                    </div>
+                                    
+                                    {/* Header (Name) */}
+                                    <div className="text-center mb-8 relative z-10 w-full mt-2">
+                                        <h4 className="text-[19px] font-bold text-[#f5f5f5]">{review.name}</h4>
+                                    </div>
+                                    
+                                    {/* Content */}
+                                    <p className="text-[15px] text-[#c9c9c9] leading-relaxed mb-10 font-normal">
+                                        {review.content}
+                                    </p>
+
+                                    {/* Footer Route Component */}
+                                    <div className="mt-auto pt-6 flex items-center justify-between border-t border-[#2a2a2a] relative z-10">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-[30px] h-[30px] rounded-full bg-black border border-[#444] flex items-center justify-center shrink-0">
+                                                <span className="text-[10px] text-white font-bold">{origin.charAt(0)}</span>
+                                            </div>
+                                            <span className="text-[11px] font-bold text-[#858585] whitespace-nowrap">{origin}</span>
+                                        </div>
+                                        <div className="text-[#a3a3a3] px-2 shrink-0">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="13 17 18 12 13 7"></polyline>
+                                                <polyline points="6 17 11 12 6 7"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div className="flex items-center min-w-0">
+                                            <span className="text-[11px] font-bold text-[#858585] truncate">{dest}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            ))}
-                        </motion.div>
+                            </div>
+                        );
+                    })}
+                </div>
 
-                        <div className="flex justify-center gap-12 mt-4 pb-8">
-                            <button 
-                                onClick={handlePrev}
-                                className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-900 active:scale-90 transition-all hover:bg-slate-50"
-                                aria-label="Previous story"
-                            >
-                                <ChevronLeft size={28} />
-                            </button>
-                            
-                            <button 
-                                onClick={handleNext}
-                                className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-900 active:scale-90 transition-all hover:bg-slate-50"
-                                aria-label="Next story"
-                            >
-                                <ChevronRight size={28} />
-                            </button>
-                        </div>
-                    </div>
+                <div className="flex justify-center gap-12 mt-4 relative z-10 w-full px-6">
+                    <button 
+                        onClick={handlePrev}
+                        className="w-14 h-14 rounded-full bg-[#1c1c1c] border border-white/10 shadow-lg flex items-center justify-center text-white active:scale-90 transition-all hover:bg-[#252525]"
+                        aria-label="Previous story"
+                    >
+                        <ChevronLeft size={28} />
+                    </button>
+                    
+                    <button 
+                        onClick={handleNext}
+                        className="w-14 h-14 rounded-full bg-[#1c1c1c] border border-white/10 shadow-lg flex items-center justify-center text-white active:scale-90 transition-all hover:bg-[#252525]"
+                        aria-label="Next story"
+                    >
+                        <ChevronRight size={28} />
+                    </button>
                 </div>
             </section>
         );

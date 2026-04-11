@@ -103,37 +103,21 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
     };
 
     return (
-        <section id="contact" className={`py-24 md:py-32 px-6 relative overflow-hidden ${isDark ? 'bg-black text-white' : 'bg-white text-slate-900'}`}>
-            {/* Background elements */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-blue-600 -mr-64 -mt-64`} />
-                <div className={`absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-10 bg-orange-600 -ml-64 -mb-64`} />
-            </div>
-
+        <section id="contact" className={`py-24 md:py-32 px-6 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#0A0A0A] text-white border-t border-white/5' : 'bg-white text-slate-900'}`}>
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header Subtitle */}
-                <div className="flex flex-col items-center mb-16 md:mb-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
-                    >
-                        <ShieldCheck size={16} className="text-blue-500" />
-                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400">Trusted Support Excellence</span>
-                    </motion.div>
-
+                <div className="flex flex-col items-center mb-12 md:mb-16">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         className="text-center"
                     >
-                        <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+                        <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-3">
                             Need <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Help?</span>
                         </h2>
                         <p className="text-sm md:text-xl font-medium tracking-tight opacity-50 max-w-xl mx-auto md:leading-relaxed">
-                            Professional support for all stakeholders. Our dedicated team is ready to assist you.
+                            Professional support for all students.
                         </p>
                     </motion.div>
                 </div>
@@ -150,7 +134,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             onClick={(e) => handleAction(e, method)}
                             className={`group relative p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden flex flex-col items-center text-center
                                 ${isDark 
-                                    ? 'bg-white/[0.03] border-white/10 hover:bg-white/[0.08] hover:border-white/20' 
+                                    ? 'bg-[#1c1c1c] border-[#2a2a2a] hover:bg-[#252525] hover:border-[#333]' 
                                     : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl hover:bg-slate-50'
                                 }`}
                         >
@@ -160,7 +144,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                             {/* Icon Container with Glow */}
                             <div className="relative mb-8">
                                 <div className={`absolute inset-0 blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 bg-gradient-to-br ${method.color}`} />
-                                <div className="relative w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 overflow-hidden">
+                                <div className={`relative w-16 h-16 rounded-2xl border flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 overflow-hidden ${isDark ? 'bg-[#0A0A0A] border-[#2a2a2a]' : 'bg-slate-900 border-white/5'}`}>
                                      {/* Background Accent */}
                                     <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${method.color}`} />
                                     <method.icon size={32} className="relative z-10 text-white" />
