@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Phone, Mail, Send, Headphones, Clock, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, Mail, Send, Clock, ArrowRight, ShieldCheck } from 'lucide-react';
 import MessageForm from './MessageForm';
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -20,7 +20,6 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2000);
         } catch (err) {
-            // Fallback for older browsers
             const textArea = document.createElement('textarea');
             textArea.value = text;
             document.body.appendChild(textArea);
@@ -40,7 +39,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             title: 'Message Us',
             description: 'Send us your query and we\'ll get back to you soon',
             action: 'Send Message',
-            color: 'blue',
+            color: 'from-blue-500 to-cyan-500',
             highlight: 'Live Support'
         },
         {
@@ -50,7 +49,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             description: 'Speak directly with our course advisors',
             action: '+91 85277 40849',
             copyText: '+91 85277 40849',
-            color: 'green',
+            color: 'from-emerald-500 to-teal-500',
             highlight: '9AM - 8PM'
         },
         {
@@ -60,7 +59,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             description: 'Get detailed responses via email',
             action: 'thinkskool.office@gmail.com',
             copyText: 'thinkskool.office@gmail.com',
-            color: 'purple',
+            color: 'from-violet-500 to-purple-500',
             highlight: 'Official'
         },
         {
@@ -70,151 +69,127 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             description: 'Quick answers to common questions',
             action: 'View FAQ',
             path: '/faq',
-            color: 'orange',
+            color: 'from-amber-500 to-orange-500',
             highlight: 'Self Help'
         }
     ];
 
-    const colorMap = {
-        blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-500', icon: 'text-blue-500' },
-        green: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-500', icon: 'text-green-500' },
-        purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/20', text: 'text-purple-500', icon: 'text-purple-500' }
+    const handleAction = (e, method) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        if (isMobile) {
+            if (method.id === 'message') {
+                setIsMessageFormOpen(true);
+            } else if (method.path) {
+                navigate(method.path);
+            } else if (method.id === 'call') {
+                const cleanNum = method.copyText.replace(/[^0-9+]/g, '');
+                window.location.href = `tel:${cleanNum}`;
+            } else if (method.id === 'email') {
+                window.location.href = `mailto:${method.copyText}`;
+            }
+        } else {
+            if (method.copyText) {
+                copyToClipboard(method.copyText, method.id === 'call' ? 'Phone number' : 'Email address');
+            } else if (method.path) {
+                navigate(method.path);
+            } else {
+                setIsMessageFormOpen(true);
+            }
+        }
     };
 
-    if (isMobile) {
-        return (
-            <section id="contact" className={`py-20 px-6 ${isDark ? 'bg-black' : 'bg-white'}`}>
-                <div className="max-w-7xl mx-auto flex flex-col items-center">
-                    {/* Header: Centered & Minimalist */}
-                    <div className="text-center mb-12">
-                        <h2 className={`text-4xl font-black uppercase tracking-tighter mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Need <span className="text-orange-500">Help?</span>
+    return (
+        <section id="contact" className={`py-24 md:py-32 px-6 relative overflow-hidden ${isDark ? 'bg-black text-white' : 'bg-white text-slate-900'}`}>
+            {/* Background elements */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-blue-600 -mr-64 -mt-64`} />
+                <div className={`absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-10 bg-orange-600 -ml-64 -mb-64`} />
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Header Subtitle */}
+                <div className="flex flex-col items-center mb-16 md:mb-24">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+                    >
+                        <ShieldCheck size={16} className="text-blue-500" />
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400">Trusted Support Excellence</span>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="text-center"
+                    >
+                        <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+                            Need <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Help?</span>
                         </h2>
-                        <p className={`text-[12px] font-medium tracking-tight opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                            Professional support for all stakeholders.
+                        <p className="text-sm md:text-xl font-medium tracking-tight opacity-50 max-w-xl mx-auto md:leading-relaxed">
+                            Professional support for all stakeholders. Our dedicated team is ready to assist you.
                         </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 w-full">
-                        {contactMethods.map((method) => {
-                            const handleAction = (e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                
-                                if (method.id === 'message') {
-                                    setIsMessageFormOpen(true);
-                                } else if (method.path) {
-                                    navigate(method.path);
-                                } else if (method.id === 'call') {
-                                    const cleanNum = method.copyText.replace(/[^0-9+]/g, '');
-                                    window.location.href = `tel:${cleanNum}`;
-                                } else if (method.id === 'email') {
-                                    window.location.href = `mailto:${method.copyText}`;
-                                }
-                            };
-
-                            return (
-                                <motion.button
-                                    key={method.id}
-                                    whileTap={{ scale: 0.97 }}
-                                    onClick={handleAction}
-                                    className={`p-5 rounded-2xl border flex flex-col items-center text-center gap-3 transition-all select-none cursor-pointer ${
-                                        isDark 
-                                            ? 'bg-white/[0.03] border-white/10 active:bg-white/[0.08]' 
-                                            : 'bg-white border-slate-200 shadow-sm active:bg-slate-50'
-                                    }`}
-                                >
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                                        isDark ? 'bg-white/5 text-blue-400' : 'bg-blue-50 text-blue-600'
-                                    }`}>
-                                        <method.icon size={20} />
-                                    </div>
-                                    <div className="space-y-0.5">
-                                        <h3 className={`text-[13px] uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                            {method.title.split(' ')[0]}
-                                        </h3>
-                                        <p className={`text-[8px] font-bold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                                            {method.highlight}
-                                        </p>
-                                    </div>
-                                </motion.button>
-                            );
-                        })}
-                    </div>
+                    </motion.div>
                 </div>
 
-                <MessageForm 
-                    isOpen={isMessageFormOpen} 
-                    onClose={() => setIsMessageFormOpen(false)} 
-                    variant={variant}
-                />
-            </section>
-        );
-    }
+                {/* Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {contactMethods.map((method, index) => (
+                        <motion.div
+                            key={method.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            onClick={(e) => handleAction(e, method)}
+                            className={`group relative p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden flex flex-col items-center text-center
+                                ${isDark 
+                                    ? 'bg-white/[0.03] border-white/10 hover:bg-white/[0.08] hover:border-white/20' 
+                                    : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl hover:bg-slate-50'
+                                }`}
+                        >
+                            {/* Inner Glass Flare */}
+                            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                            
+                            {/* Icon Container with Glow */}
+                            <div className="relative mb-8">
+                                <div className={`absolute inset-0 blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 bg-gradient-to-br ${method.color}`} />
+                                <div className="relative w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 overflow-hidden">
+                                     {/* Background Accent */}
+                                    <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${method.color}`} />
+                                    <method.icon size={32} className="relative z-10 text-white" />
+                                </div>
+                            </div>
 
-    return (
-        <section id="contact" className={`py-32 px-6 ${isDark ? 'bg-black' : 'bg-white'}`}>
-            <div className="max-w-7xl mx-auto flex flex-col items-center">
-                {/* Minimal Header Desktop */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-20"
-                >
-                    <h2 className={`text-6xl font-black uppercase tracking-tighter mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        Need <span className="text-orange-500">Help?</span>
-                    </h2>
-                    <p className={`text-lg font-medium tracking-tight opacity-60 max-w-2xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        Our dedicated support team is here to help you succeed through your preferred channel.
-                    </p>
-                </motion.div>
+                            {/* Content */}
+                            <div className="relative z-10 flex flex-col items-center w-full">
+                                <div className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest mb-4 bg-gradient-to-r ${method.color} text-white`}>
+                                    {method.highlight}
+                                </div>
+                                <h3 className={`text-2xl font-black uppercase tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                    {method.title}
+                                </h3>
+                                <p className={`text-sm font-medium leading-relaxed opacity-50 mb-8 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                                    {method.description}
+                                </p>
 
-                {/* Centered Grid Desktop */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
-                    {contactMethods.map((method, index) => {
-                        const colors = colorMap[method.color] || { bg: 'bg-orange-500/10', text: 'text-orange-500' };
-                        const handleAction = () => {
-                            if (method.copyText) {
-                                copyToClipboard(method.copyText, method.title === 'Call Us' ? 'Phone number' : 'Email address');
-                            } else if (method.path) {
-                                navigate(method.path);
-                            } else {
-                                setIsMessageFormOpen(true);
-                            }
-                        };
-
-                        return (
-                                <motion.div
-                                    key={method.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                    onClick={handleAction}
-                                    className={`p-10 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 transition-all hover:scale-[1.02] cursor-pointer group select-none ${
-                                        isDark ? 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20 shadow-2xl' : 'bg-slate-50 border-slate-100 hover:bg-white hover:shadow-xl'
-                                    }`}
-                                >
-                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 ${colors.bg} ${colors.text}`}>
-                                        <method.icon size={32} />
-                                    </div>
-                                    <div className="space-y-4 flex flex-col items-center w-full">
-                                        <h3 className={`text-2xl uppercase tracking-tight font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                            {method.title}
-                                        </h3>
-                                        <p className={`text-sm opacity-60 leading-relaxed px-4 font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                            {method.description}
-                                        </p>
-                                        <div className={`mt-4 px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all w-full truncate
-                                            ${isDark ? 'bg-white text-slate-950 group-hover:bg-orange-500 group-hover:text-white' : 'bg-slate-950 text-white group-hover:bg-orange-500'}`}>
-                                            {method.action}
-                                        </div>
-                                    </div>
-                                </motion.div>
-                        );
-                    })}
+                                {/* Action Bar */}
+                                <div className={`w-full py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2
+                                    ${isDark 
+                                        ? 'bg-white text-slate-950 group-hover:gap-4' 
+                                        : 'bg-slate-900 text-white group-hover:gap-4'}`}>
+                                    {method.action}
+                                    <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
 
@@ -225,20 +200,23 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             />
             
             {/* Toast Notification */}
-            {showToast && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full font-medium text-sm z-50 ${
-                        isDark 
-                            ? 'bg-white text-slate-900 shadow-xl' 
-                            : 'bg-slate-900 text-white shadow-xl'
-                    }`}
-                >
-                    {toastMessage}
-                </motion.div>
-            )}
+            <AnimatePresence>
+                {showToast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest z-[100] shadow-2xl backdrop-blur-xl border flex items-center gap-3
+                            ${isDark 
+                                ? 'bg-white text-slate-900 border-white/20' 
+                                : 'bg-slate-900 text-white border-black/20'
+                            }`}
+                    >
+                        <ShieldCheck size={20} className="text-blue-500" />
+                        {toastMessage}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
