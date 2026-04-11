@@ -193,11 +193,14 @@ const SuccessStories = ({ variant }) => {
 
                     <div className="w-full relative">
                         <motion.div 
-                            className="flex gap-4 px-6 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
-                            animate={{ x: isMobile ? -currentIndex * (window.innerWidth * CARD_WIDTH_RATIO + GAP) : 0 }}
+                            className="flex gap-4 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
+                            animate={{ x: isMobile ? (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2 - currentIndex * (window.innerWidth * CARD_WIDTH_RATIO + GAP) : 0 }}
                             transition={isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 100, damping: 20 }}
                             drag={isMobile ? "x" : false}
-                            dragConstraints={{ left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * CARD_WIDTH_RATIO + GAP)), right: 0 }}
+                            dragConstraints={{ 
+                                left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * CARD_WIDTH_RATIO + GAP)) + (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2, 
+                                right: (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2 
+                            }}
                             onDragStart={handleDragStart}
                             onDragEnd={handleDragEnd}
                         >
@@ -209,28 +212,21 @@ const SuccessStories = ({ variant }) => {
                         </motion.div>
 
                         {/* Navigation Buttons */}
-                        <div className="flex justify-center gap-6 mt-4 pb-8">
+                        <div className="flex justify-center gap-12 mt-4 pb-8">
                             <button 
                                 onClick={handlePrev}
-                                className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white active:scale-90 transition-transform hover:bg-white/10"
+                                className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-900 active:scale-90 transition-all hover:bg-slate-50"
                                 aria-label="Previous story"
                             >
-                                <ChevronLeft size={24} />
+                                <ChevronLeft size={28} />
                             </button>
-                            <div className="flex items-center gap-2">
-                                {ALL_REVIEWS.map((_, i) => (
-                                    <div 
-                                        key={i} 
-                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-blue-500' : 'bg-white/20'}`} 
-                                    />
-                                ))}
-                            </div>
+                            
                             <button 
                                 onClick={handleNext}
-                                className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white active:scale-90 transition-transform hover:bg-white/10"
+                                className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-900 active:scale-90 transition-all hover:bg-slate-50"
                                 aria-label="Next story"
                             >
-                                <ChevronRight size={24} />
+                                <ChevronRight size={28} />
                             </button>
                         </div>
                     </div>
