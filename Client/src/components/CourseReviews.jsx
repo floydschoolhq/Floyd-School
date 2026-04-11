@@ -303,7 +303,7 @@ const CourseReviews = ({ courseId, variant }) => {
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />
             </div>
 
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="w-full relative z-10 px-0">
                 <div className="text-center mb-12">
                     <motion.h2 
                         className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight"

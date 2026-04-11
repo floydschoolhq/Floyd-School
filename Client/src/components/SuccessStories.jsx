@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import useIsMobile from '../hooks/useIsMobile';
@@ -73,7 +73,7 @@ const REVIEWS_ROW_2 = [
 
 const ALL_REVIEWS = [...REVIEWS_ROW_1, ...REVIEWS_ROW_2];
 
-const ReviewCard = ({ review, index = 0, variant }) => {
+const ReviewCard = ({ review, index = 0, isMobile = false }) => {
     const accents = [
         { text: 'text-blue-400', bg: 'bg-blue-500/10' },
         { text: 'text-amber-400', bg: 'bg-amber-500/10' },
@@ -83,7 +83,7 @@ const ReviewCard = ({ review, index = 0, variant }) => {
     const accent = accents[index % accents.length];
 
     return (
-        <div className="w-full md:w-[350px] h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center rounded-2xl bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0">
+        <div className={`${isMobile ? 'w-full rounded-none border-x-0' : 'w-[350px] rounded-2xl'} h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0`}>
             <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-1000 ${accent.bg}`} />
             <div className={`absolute top-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
@@ -123,35 +123,48 @@ const ReviewCard = ({ review, index = 0, variant }) => {
 
 const SuccessStories = ({ variant }) => {
     const isMobile = useIsMobile();
-    const containerRef = useRef(null);
-    const controls = useAnimation();
+    const controls1 = useAnimation();
+    const controls2 = useAnimation();
     
+    // Mobile-specific state
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const pauseTimeoutRef = useRef(null);
-
-    const CARD_WIDTH_RATIO = 0.85;
-    const GAP = 16;
-
-    const duplicatedReviews = [...ALL_REVIEWS, ...ALL_REVIEWS, ...ALL_REVIEWS];
-    const cardWidth = 350 + 24; // width + gap
+    
+    // Desktop constants
+    const DESKTOP_GAP = 24;
+    const desktopCardWidth = 350 + DESKTOP_GAP;
+    
+    // Mobile constants
+    const MOBILE_CARD_WIDTH_RATIO = 1;
+    const MOBILE_GAP = 16;
 
     useEffect(() => {
         if (isMobile) return;
         
-        const distance = -cardWidth * ALL_REVIEWS.length * 2;
-        
-        controls.start({
-            x: [0, distance],
+        // Row 1 - Left
+        const distance1 = -desktopCardWidth * REVIEWS_ROW_1.length;
+        controls1.start({
+            x: [0, distance1],
             transition: {
-                duration: 80,
+                duration: 40,
                 repeat: Infinity,
                 repeatType: "loop",
                 ease: "linear",
             }
         });
-    }, [isMobile, controls, cardWidth]);
+
+        // Row 2 - Right
+        const distance2 = -desktopCardWidth * REVIEWS_ROW_2.length;
+        controls2.start({
+            x: [distance2, 0],
+            transition: {
+                duration: 40,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+            }
+        });
+    }, [isMobile, controls1, controls2, desktopCardWidth]);
 
     const handlePrev = () => {
         setCurrentIndex((prev) => (prev - 1 + ALL_REVIEWS.length) % ALL_REVIEWS.length);
@@ -161,30 +174,13 @@ const SuccessStories = ({ variant }) => {
         setCurrentIndex((prev) => (prev + 1) % ALL_REVIEWS.length);
     };
 
-    // Removed manual x.set animation as we'll use animate prop directly
-
-    const handleDragStart = () => {
-        setIsDragging(true);
-        setIsPaused(true);
-        if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
-    };
-
-    const handleDragEnd = () => {
-        setIsDragging(false);
-        pauseTimeoutRef.current = setTimeout(() => setIsPaused(false), 2000);
-    };
-
     if (isMobile) {
         return (
-            <section className="pt-10 pb-16 md:pt-16 md:pb-32 relative overflow-hidden transition-colors duration-500 bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute inset-0 opacity-30 invert brightness-200" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-                    <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full blur-[140px] -ml-80 -mt-80 opacity-40 bg-blue-600/5" />
-                    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 bg-amber-600/5" />
-                </div>
-
-                <div className="max-w-[1440px] mx-auto relative z-10 px-0 md:px-8">
-                    <div className="text-center mb-16 md:mb-24">
+            <section className="pt-10 pb-16 relative overflow-hidden bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
+                <div className="absolute inset-0 pointer-events-none" />
+                
+                <div className="w-full relative z-10">
+                    <div className="text-center mb-16">
                         <h2 className="text-4xl font-extrabold tracking-tighter uppercase leading-[0.9] text-white">
                             transformed by <br/>
                             <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
@@ -194,24 +190,23 @@ const SuccessStories = ({ variant }) => {
                     <div className="w-full relative">
                         <motion.div 
                             className="flex gap-4 pt-4 pb-14 no-scrollbar cursor-grab active:cursor-grabbing"
-                            animate={{ x: isMobile ? (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2 - currentIndex * (window.innerWidth * CARD_WIDTH_RATIO + GAP) : 0 }}
+                            animate={{ x: (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2 - currentIndex * (window.innerWidth * MOBILE_CARD_WIDTH_RATIO + MOBILE_GAP) }}
                             transition={isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 100, damping: 20 }}
-                            drag={isMobile ? "x" : false}
+                            drag="x"
                             dragConstraints={{ 
-                                left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * CARD_WIDTH_RATIO + GAP)) + (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2, 
-                                right: (window.innerWidth - (window.innerWidth * CARD_WIDTH_RATIO)) / 2 
+                                left: -((ALL_REVIEWS.length - 1) * (window.innerWidth * MOBILE_CARD_WIDTH_RATIO + MOBILE_GAP)) + (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2, 
+                                right: (window.innerWidth - (window.innerWidth * MOBILE_CARD_WIDTH_RATIO)) / 2 
                             }}
-                            onDragStart={handleDragStart}
-                            onDragEnd={handleDragEnd}
+                            onDragStart={() => setIsDragging(true)}
+                            onDragEnd={() => setIsDragging(false)}
                         >
                             {ALL_REVIEWS.map((review, i) => (
-                                <div key={i} className="shrink-0 w-[85vw]">
-                                    <ReviewCard review={review} index={i} variant="dark" />
+                                <div key={i} className="shrink-0 w-screen">
+                                    <ReviewCard review={review} index={i} isMobile={true} />
                                 </div>
                             ))}
                         </motion.div>
 
-                        {/* Navigation Buttons */}
                         <div className="flex justify-center gap-12 mt-4 pb-8">
                             <button 
                                 onClick={handlePrev}
@@ -235,7 +230,7 @@ const SuccessStories = ({ variant }) => {
         );
     }
 
-    // Desktop - Marquee Animation
+    // Desktop - Two Directional Rows
     return (
         <section className="pt-8 pb-16 md:pt-10 md:pb-20 relative overflow-hidden transition-colors duration-500 bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5">
             <div className="absolute inset-0 pointer-events-none">
@@ -244,25 +239,31 @@ const SuccessStories = ({ variant }) => {
                 <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] -mr-60 -mb-60 opacity-40 bg-amber-600/5" />
             </div>
 
-            <div className="max-w-[1440px] mx-auto relative z-10 px-0 md:px-8">
-                <div className="text-center mb-8">
+            <div className="w-full relative z-10 px-0">
+                <div className="text-center mb-12">
                     <ScrollDarkenHeading sizeClass="text-5xl md:text-7xl" variant={variant} uppercase={false}>
                         transformed by <span className="font-black tracking-tighter"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </ScrollDarkenHeading>
                 </div>
 
-                <div 
-                    className="overflow-hidden"
-                    ref={containerRef}
-                >
-                    <motion.div 
-                        className="flex gap-6"
-                        animate={controls}
-                    >
-                        {duplicatedReviews.map((review, index) => (
-                            <ReviewCard key={`${review.name}-${index}`} review={review} index={index} variant="dark" />
-                        ))}
-                    </motion.div>
+                <div className="flex flex-col gap-8">
+                    {/* Row 1 - Left */}
+                    <div className="overflow-hidden">
+                        <motion.div className="flex gap-6" animate={controls1}>
+                            {[...REVIEWS_ROW_1, ...REVIEWS_ROW_1, ...REVIEWS_ROW_1].map((review, index) => (
+                                <ReviewCard key={`r1-${index}`} review={review} index={index} isMobile={false} />
+                            ))}
+                        </motion.div>
+                    </div>
+
+                    {/* Row 2 - Right */}
+                    <div className="overflow-hidden">
+                        <motion.div className="flex gap-6" animate={controls2}>
+                            {[...REVIEWS_ROW_2, ...REVIEWS_ROW_2, ...REVIEWS_ROW_2].map((review, index) => (
+                                <ReviewCard key={`r2-${index}`} review={review} index={index} isMobile={false} />
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
