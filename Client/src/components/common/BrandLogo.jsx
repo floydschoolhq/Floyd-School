@@ -1,7 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false, scrolled = false, showTagline = true }) => {
+    const navigate = useNavigate();
+    
+    const handleLogoClick = () => {
+        navigate('/');
+    };
+    
     const sizeClasses = {
         xs: 'text-sm',
         sm: 'text-xl',
@@ -39,7 +46,10 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false,
 
     return (
         <div className={`flex flex-col items-center ${className}`}>
-            <div className={`flex items-center font-bold ${sizeClasses[size] || sizeClasses.md} lowercase tracking-tight transition-all duration-300`}>
+            <div 
+                onClick={handleLogoClick}
+                className={`flex items-center font-bold ${sizeClasses[size] || sizeClasses.md} lowercase tracking-tight transition-all duration-300 cursor-pointer hover:opacity-80`}
+            >
                 {letters.map((char, i) => {
                     const isThink = i < 5;
                     const colorClass = isThink ? colors.think : colors.skool;
