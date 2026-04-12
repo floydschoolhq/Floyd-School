@@ -346,75 +346,123 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     };
 
     if (isMobile) {
-        // Reduce duplication for mobile performance
-        const mobileMentorItems = [...filteredLeaders, ...filteredLeaders];
+        const totalCards = filteredLeaders.length;
+        
+        const goToPrev = () => {
+            setCurrentIndex(prev => (prev - 1 + totalCards) % totalCards);
+        };
+        
+        const goToNext = () => {
+            setCurrentIndex(prev => (prev + 1) % totalCards);
+        };
         
         return (
-            <section id="mentors-grid" className={`py-16 overflow-hidden ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
-                <div id="mentors-grid-mobile" className="absolute inset-0" />
-                <div className="text-center mb-10 px-10">
-                    <h2 className={`text-3xl font-extrabold uppercase tracking-tighter leading-[1.1] text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <section id="mentors-grid" className={`py-12 overflow-hidden ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
+                <div className="text-center mb-8 px-6">
+                    <h2 className={`text-2xl font-extrabold uppercase tracking-tighter leading-[1.1] text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {title}
                     </h2>
                 </div>
                 
-                <div className="relative w-full">
-
+                <div className="relative w-full px-4">
                     <motion.div 
                         ref={containerRef}
-                        className="flex gap-4 px-4 cursor-grab active:cursor-grabbing"
-                        animate={{ x: x.get() }}
-                        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                        className="flex gap-4 cursor-grab active:cursor-grabbing"
+                        animate={{ x: -currentIndex * (280 + 16) }}
+                        transition={{ type: "spring", stiffness: 150, damping: 18 }}
                         drag="x"
                         dragConstraints={{ 
-                            left: -(filteredLeaders.length - 1) * (280 + 16), 
+                            left: -(totalCards - 1) * (280 + 16), 
                             right: 0 
                         }}
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                         style={{ willChange: 'transform' }}
                     >
-                        {/* Reduced items for better performance */}
-                        {mobileMentorItems.map((mentor, index) => (
+                        {filteredLeaders.map((mentor, index) => (
                             <div 
                                 key={index}
-                                className={`shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center gap-6 cursor-default transition-all duration-300 backdrop-blur-xl ${
+                                className={`shrink-0 w-[280px] p-6 rounded-[2rem] border flex flex-col items-center text-center transition-all duration-300 backdrop-blur-xl ${
                                     isDark 
                                         ? 'bg-slate-900/30 border-white/10 shadow-xl shadow-black/20' 
                                         : 'bg-white/60 border-slate-200/40 shadow-lg shadow-slate-200/10'
                                 }`}
                             >
-                                <div className="w-24 h-24 rounded-full overflow-hidden">
-                                    <div className="w-full h-full rounded-full overflow-hidden">
-                                        <img 
-                                            src={mentor.image} 
-                                            alt={mentor.name} 
-                                            className={`w-full h-full object-cover ${mentor.imagePosition || 'object-center'}`}
-                                            style={{ transform: `scale(${mentor.imageScale})` }}
-                                        />
-                                    </div>
+                                <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
+                                    <img 
+                                        src={mentor.image} 
+                                        alt={mentor.name} 
+                                        className={`w-full h-full object-cover ${mentor.imagePosition || 'object-center'}`}
+                                        style={{ transform: `scale(${mentor.imageScale})` }}
+                                    />
                                 </div>
-                                <div>
-                                    <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                
+                                <div className="mb-3">
+                                    <h3 className={`text-base font-black uppercase tracking-tight leading-none mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                         {mentor.name}
                                     </h3>
-                                    <p className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full ${
-                                        isDark 
-                                            ? 'bg-blue-600/10 text-blue-400' 
-                                            : 'bg-blue-50 text-blue-600'
+                                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                                        isDark ? 'text-blue-400' : 'text-blue-600'
                                     }`}>
                                         {mentor.role}
                                     </p>
+                                </div>
+                                
+                                <p className={`text-xs leading-relaxed mb-4 px-1 line-clamp-2 ${
+                                    isDark ? 'text-slate-400' : 'text-slate-500'
+                                }`}>
+                                    {mentor.bio}
+                                </p>
+                                
+                                <div className="flex flex-wrap justify-center gap-1.5 mt-auto">
+                                    {mentor.tags.slice(0, 2).map(tag => (
+                                        <span key={tag} className={`text-[7px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg ${
+                                            isDark ? 'bg-white/5 text-slate-500' : 'bg-slate-100 text-slate-400'
+                                        }`}>
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
                         ))}
                     </motion.div>
                 </div>
 
-                <div className="flex justify-center mt-8">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
-                        EXPLORE
-                    </span>
+                <div className="flex items-center justify-center gap-6 mt-6">
+                    <button 
+                        onClick={goToPrev}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                        aria-label="Previous mentor"
+                    >
+                        ←
+                    </button>
+                    
+                    <div className="flex gap-1.5">
+                        {filteredLeaders.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setCurrentIndex(idx)}
+                                className={`w-2 h-2 rounded-full transition-all ${
+                                    idx === currentIndex 
+                                        ? 'w-6 bg-orange-500' 
+                                        : isDark ? 'bg-white/30' : 'bg-slate-300'
+                                }`}
+                                aria-label={`Go to mentor ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
+                    
+                    <button 
+                        onClick={goToNext}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                        aria-label="Next mentor"
+                    >
+                        →
+                    </button>
                 </div>
             </section>
         );
