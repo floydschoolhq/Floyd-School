@@ -183,15 +183,10 @@ const SuccessStories = ({ variant }) => {
     if (isMobile) {
         return (
             <section className="pt-16 pb-20 bg-[#0A0A0A] overflow-hidden border-t border-white/5 relative">
-                <div className="px-6 flex items-center gap-5 mb-14 mt-4">
-                    <div className="w-[60px] h-[60px] rounded-2xl bg-white flex items-center justify-center shrink-0 shadow-lg">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="ml-1">
-                            <path d="M9 8c0-2.2-1.8-4-4-4S1 5.8 1 8c0 2 1 3.5 1.8 4.2L2 18h3.3l1.8-4.8C8.2 12 9 10 9 8z" fill="#2563EB" />
-                            <path d="M21 8c0-2.2-1.8-4-4-4s-4 1.8-4 4c0 2 1 3.5 1.8 4.2L14 18h3.3l1.8-4.8C20.2 12 21 10 21 8z" fill="#F97316" />
-                        </svg>
-                    </div>
-                    <h2 className="text-[26px] font-bold text-white leading-[1.2]">
-                        Transformed by <br/>thinkskool
+                <div className="px-6 flex flex-col justify-center mb-14 mt-4">
+                    <h2 className="text-[32px] font-extrabold text-white leading-[1.1] text-center tracking-tight">
+                        Transformed by <br/>
+                        <span><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
                     </h2>
                 </div>
 
@@ -246,8 +241,10 @@ const SuccessStories = ({ variant }) => {
                                                 <polyline points="6 17 11 12 6 7"></polyline>
                                             </svg>
                                         </div>
-                                        <div className="flex items-center min-w-0">
-                                            <span className="text-[11px] font-bold text-[#858585] truncate">{dest}</span>
+                                        <div className="flex items-center">
+                                            <span className={`text-[12px] uppercase tracking-widest font-extrabold ${dest === "STEPUP SCHOOL" ? "animate-text-shimmer" : "text-[#858585]"}`}>
+                                                {dest}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
