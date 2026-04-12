@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useAnimation, useMotionValue, useAnimationFrame } from 'framer-motion';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
@@ -7,10 +7,9 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import niteshImg from '../assets/tutors/nitesh.jpg';
-import poojaImg from '../assets/tutors/pooja.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
 import shanImg from '../assets/tutors/shan.jpeg';
+import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -71,34 +70,24 @@ const LEADERS = [
         tags: ["System Design", "Architecture"]
     },
     {
-        name: "Nitesh Kumar",
-        role: "UI and UX Management",
-        image: niteshImg,
+        name: "Ayushman Mishra",
+        role: "Tech Lead | AI Engineer",
+        image: ayushmanImg,
         imageScale: 1.0,
-        imagePosition: "object-[center_20%]",
-        bio: "Leads structured design systems focused on clarity, usability, and product growth.",
+        bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
         linkedin: "#",
-        tags: ["UI/UX", "Management"]
+        tags: ["AI/ML", "Tech Lead"]
     },
-    {
-        name: "Pooja Kumari",
-        role: "UI and UX Management",
-        image: poojaImg,
-        imageScale: 1.0,
-        bio: "Designs user-centered experiences that balance creativity and functionality.",
-        linkedin: "#",
-        tags: ["UI/UX", "Design strategy"]
-    }
-];
+    ];
 
-const MentorCard = React.memo(({ mentor, index, variant }) => {
+const MentorCard = React.memo(({ mentor, variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     
     if (isMobile) {
         return (
             <div 
-                className={`snap-center shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
+                className={`shrink-0 w-[280px] h-full p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
                     ${isDark 
                         ? 'bg-[#0F172A]/40 border-white/5 shadow-2xl shadow-black/20' 
                         : 'bg-white border-slate-200 shadow-sm shadow-slate-200/50'}`}
@@ -146,7 +135,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
 
     return (
         <div
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-300 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
+            className={`snap-center flex-shrink-0 w-[85vw] md:w-[400px] h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-300 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
                 ${isDark
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40'
                     : 'bg-white border-slate-100 hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30'}`}
@@ -179,7 +168,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                 </a>
             </div>
 
-            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+            <div className="flex-grow flex flex-col items-center justify-between text-center min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
                     <h3 className={`text-xl md:text-3xl font-black uppercase tracking-tight leading-none transition-colors duration-300 w-full
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
@@ -229,7 +218,34 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const [isPaused, setIsPaused] = useState(false);
     const pauseTimeoutRef = useRef(null);
 
-    const CARD_WIDTH = 280 + 16; // w-[280px] + gap-4
+    const handleNext = () => setCurrentIndex(prev => prev + 1);
+    const handlePrev = () => setCurrentIndex(prev => prev - 1);
+
+    const CARD_WIDTH = 280;
+
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Initial centering
+    useLayoutEffect(() => {
+        if (isMobile) {
+            const cardWidth = CARD_WIDTH + 16;
+            const centerOffset = getCenterOffset();
+            x.set(-currentIndex * cardWidth + centerOffset);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMobile, windowWidth]);
+
+    // Center offset calculation
+    const getCenterOffset = () => {
+        const containerWidth = containerRef.current?.parentElement?.offsetWidth || window.innerWidth;
+        return (containerWidth - CARD_WIDTH) / 2;
+    };
 
     // Optimized auto-scroll logic for Desktop (Marquee)
     useEffect(() => {
@@ -262,7 +278,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                 cancelAnimationFrame(animationFrame);
             }
         };
-    }, [isMobile, isDragging, isStatic, hoveredCard]);
+    }, [isMobile, isDragging, isStatic, hoveredCard, x]);
 
     // Optimized auto-swipe logic for Mobile (Infinite Loop)
     useEffect(() => {
@@ -274,8 +290,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         
         const animate = (currentTime) => {
             if (currentTime - lastTime >= interval) {
-                const total = filteredLeaders.length * 3;
-                setCurrentIndex(prev => (prev + 1) % total);
+                setCurrentIndex(prev => prev + 1);
                 lastTime = currentTime;
             }
             animationFrame = requestAnimationFrame(animate);
@@ -290,26 +305,47 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         };
     }, [isMobile, isDragging, isStatic, isPaused, filteredLeaders.length]);
 
-    // Animate to current index on mobile with Seamless Loop handling
+    // Update X position for mobile slider based on currentIndex
     useEffect(() => {
         if (!isMobile || isDragging) return;
         
-        const cardWidth = CARD_WIDTH;
+        const cardWidth = CARD_WIDTH + 16; // card width + gap
         const totalItems = filteredLeaders.length;
         
-        // If we reached the end of the first set, we animate to the first item of the second set
-        // Then, we'll reset to 0 after the animation
-        x.set(-currentIndex * cardWidth);
-
-        // Seamless reset logic: if we are at the "extra" copy of the first item
-        if (currentIndex >= totalItems) {
-            const timer = setTimeout(() => {
-                // Disable transition for a split second to jump back
-                setCurrentIndex(0);
-                x.jump(0); 
-            }, 600); // Slight delay to allow the 1.5s interval to feel natural
+        // Center the current card
+        const centerOffset = getCenterOffset();
+        const targetX = -currentIndex * cardWidth + centerOffset;
+        
+        // Optimize loop reset: if the distance is too large, it's a jump reset.
+        // We should snap instantly to prevent swiping through all cards.
+        const currentX = x.get();
+        if (Math.abs(currentX - targetX) > cardWidth * 1.5) {
+            x.stop();
+            x.set(targetX);
+        } else {
+            animate(x, targetX, {
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                mass: 0.8
+            });
         }
-    }, [currentIndex, isMobile, isDragging, x, filteredLeaders.length]);
+        
+        // Seamless reset logic: if we are at the end of the middle set
+        if (currentIndex >= totalItems * 2) {
+            const timer = setTimeout(() => {
+                setCurrentIndex(totalItems);
+                x.set(-(totalItems) * cardWidth + centerOffset); 
+            }, 600);
+            return () => clearTimeout(timer);
+        } else if (currentIndex < totalItems) {
+            const timer = setTimeout(() => {
+                setCurrentIndex(totalItems * 2 - 1);
+                x.set(-(totalItems * 2 - 1) * cardWidth + centerOffset);
+            }, 600);
+            return () => clearTimeout(timer);
+        }
+    }, [currentIndex, isMobile, isDragging, x, filteredLeaders.length, windowWidth]);
 
     const handleDragStart = () => {
         setIsDragging(true);
@@ -322,31 +358,17 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         
         // Sync currentIndex with manual scroll position
         const finalX = x.get();
-        const nearestIndex = Math.round(Math.abs(finalX) / CARD_WIDTH);
-        const totalItems = filteredLeaders.length;
-        
-        // Clamp and wrap for manual interaction
-        const wrappedIndex = nearestIndex % totalItems;
-        setCurrentIndex(wrappedIndex);
-        x.set(-wrappedIndex * CARD_WIDTH);
+        const cardWidth = CARD_WIDTH + 16;
+        const nearestIndex = Math.round((getCenterOffset() - finalX) / cardWidth);
+        setCurrentIndex(nearestIndex);
 
-        // Resume after 1 second (faster response)
+        // Resume after 1 second
         pauseTimeoutRef.current = setTimeout(() => {
             setIsPaused(false);
         }, 1000);
     };
 
-    // Center offset calculation
-    const getCenterOffset = () => {
-        if (!containerRef.current) return 0;
-        const containerWidth = window.innerWidth;
-        const cardWidth = 280 + 16; // CARD_WIDTH
-        return (containerWidth - cardWidth) / 2 - 16; // Center the card
-    };
-
     if (isMobile) {
-        const totalCards = filteredLeaders.length;
-        
         const goToPrev = () => {
             setCurrentIndex(prev => prev - 1);
         };
@@ -358,14 +380,6 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         // Infinite loop: duplicate cards 3x for seamless scroll
         const allCards = [...filteredLeaders, ...filteredLeaders, ...filteredLeaders];
         
-        // Calculate display position - normalize to middle set
-        const getDisplayIndex = () => {
-            const total = filteredLeaders.length;
-            let idx = currentIndex % (total * 3);
-            if (idx < 0) idx += total * 3;
-            return idx;
-        };
-        
         return (
             <section id="mentors-grid" className={`py-12 overflow-hidden ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
                 <div className="text-center mb-8 px-6">
@@ -374,62 +388,31 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     </h2>
                 </div>
                 
-                <div className="relative w-full px-2 overflow-visible">
+                <div className="relative w-full overflow-visible flex justify-start items-stretch">
                     <motion.div 
                         ref={containerRef}
-                        className="flex gap-4 justify-center"
-                        animate={{ x: 0 }}
-                        transition={{ duration: 0 }}
-                        style={{ x: 0, overflow: 'visible' }}
+                        className="flex flex-nowrap items-stretch w-max"
+                        style={{ x, gap: '16px' }}
+                        drag="x"
+                        dragConstraints={{ left: -10000, right: 10000 }}
+                        onDragStart={handleDragStart}
+                        onDragEnd={handleDragEnd}
                     >
                         {allCards.map((mentor, idx) => (
-                            <div 
+                            <MentorCard 
                                 key={idx}
-                                className={`shrink-0 w-[280px] p-6 rounded-[2rem] border-x border-y-[3px] flex flex-col items-center text-center transition-all duration-300 ${
-                                    idx === getDisplayIndex() 
-                                        ? 'opacity-100 scale-100'
-                                        : 'opacity-0 scale-95 absolute pointer-events-none'
-                                } ${
-                                    isDark 
-                                        ? 'bg-slate-900/30 border-white/20 shadow-[0_0_20px_rgba(249,115,22,0.3)] shadow-orange-500/30' 
-                                        : 'bg-white border-slate-300 shadow-[0_0_20px_rgba(249,115,22,0.2)] shadow-orange-500/30'
-                                }`}
-                            >
-                                <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-                                    <img 
-                                        src={mentor.image} 
-                                        alt={mentor.name} 
-                                        className={`w-full h-full object-cover ${mentor.imagePosition || 'object-center'}`}
-                                        style={{ transform: `scale(${mentor.imageScale || 1})` }}
-                                    />
-                                </div>
-                                
-                                <div className="mb-3">
-                                    <h3 className={`text-base font-black uppercase tracking-tight leading-none mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                        {mentor.name}
-                                    </h3>
-                                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
-                                        isDark ? 'text-blue-400' : 'text-blue-600'
-                                    }`}>
-                                        {mentor.role}
-                                    </p>
-                                </div>
-                                
-                                <p className={`text-xs leading-relaxed px-1 line-clamp-2 ${
-                                    isDark ? 'text-slate-400' : 'text-slate-500'
-                                }`}>
-                                    {mentor.bio}
-                                </p>
-                            </div>
+                                mentor={mentor}
+                                variant={variant}
+                            />
                         ))}
                     </motion.div>
                 </div>
 
-                <div className="flex items-center justify-center gap-6 mt-6">
+                <div className="flex items-center justify-center gap-6 mt-10">
                     <button 
                         onClick={goToPrev}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all ${
-                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm'
                         }`}
                         aria-label="Previous"
                     >
@@ -438,8 +421,8 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     
                     <button 
                         onClick={goToNext}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all ${
-                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm'
                         }`}
                         aria-label="Next"
                     >
@@ -485,11 +468,11 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     >
                         <motion.div 
                             ref={containerRef}
-                            className="flex items-center gap-6 md:gap-8 w-max"
+                            className="flex items-stretch gap-6 md:gap-8 w-max"
                             style={{ x }}
                             drag="x"
                             dragConstraints={{ 
-                                left: containerRef.current ? -(containerRef.current.scrollWidth / 2) : -1000, 
+                                left: -2000, // Large enough to allow scrolling before manual reset
                                 right: 0 
                             }}
                             onDragStart={() => setIsDragging(true)}

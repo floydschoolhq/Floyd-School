@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
-import raghavImg from '../assets/tutors/raghav.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
@@ -64,7 +63,7 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={!isMobile ? { y: -10, scale: 1.01 } : {}}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
-            className={`snap-center flex-shrink-0 ${isMobile ? 'w-full aspect-[0.8/1]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-8 relative cursor-default group
+            className={`shrink-0 ${isMobile ? 'w-[280px] h-[400px]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-8 relative cursor-default group
                 ${isDark 
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-white/[0.04] hover:border-blue-500/20' 
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100'}`}
@@ -151,99 +150,135 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
 
 CourseFacultyCard.displayName = 'CourseFacultyCard';
 
-const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeName = null, variant = 'light' }) => {
+const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant = 'light' }) => {
     const isMobile = useIsMobile();
-    const isDark = variant === 'dark';
 
     const filteredLeaders = excludeName 
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
     
     const displayLeaders = filteredLeaders.slice(0, 3);
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(displayLeaders.length);
+    const x = useMotionValue(0);
+    const [isDragging, setIsDragging] = useState(false);
+    const containerRef = React.useRef(null);
+    const CARD_WIDTH = 280;
 
-    const handlePrev = () => setActiveIndex((prev) => (prev - 1 + displayLeaders.length) % displayLeaders.length);
-    const handleNext = () => setActiveIndex((prev) => (prev + 1) % displayLeaders.length);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const getCenterOffset = () => {
+        const containerWidth = containerRef.current?.parentElement?.offsetWidth || window.innerWidth;
+        return (containerWidth - CARD_WIDTH) / 2;
+    };
+
+    useLayoutEffect(() => {
+        if (isMobile) {
+            const cardWidth = CARD_WIDTH + 16;
+            const centerOffset = getCenterOffset();
+            x.set(-currentIndex * cardWidth + centerOffset);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMobile, windowWidth]);
+
+    useEffect(() => {
+        if (!isMobile || isDragging) return;
+        const cardWidth = CARD_WIDTH + 16;
+        const totalItems = displayLeaders.length;
+        const centerOffset = getCenterOffset();
+        const targetX = -currentIndex * cardWidth + centerOffset;
+
+        // Optimize loop reset: if the distance is too large, it's a jump reset.
+        const currentX = x.get();
+        if (Math.abs(currentX - targetX) > cardWidth * 1.5) {
+            x.stop();
+            x.set(targetX);
+        } else {
+            animate(x, targetX, {
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                mass: 0.8
+            });
+        }
+
+        if (currentIndex >= totalItems * 2) {
+            const timer = setTimeout(() => {
+                setCurrentIndex(totalItems);
+                x.set(-(totalItems) * cardWidth + centerOffset);
+            }, 600);
+            return () => clearTimeout(timer);
+        } else if (currentIndex < totalItems) {
+            const timer = setTimeout(() => {
+                setCurrentIndex(totalItems * 2 - 1);
+                x.set(-(totalItems * 2 - 1) * cardWidth + centerOffset);
+            }, 600);
+            return () => clearTimeout(timer);
+        }
+    }, [currentIndex, isMobile, isDragging, x, displayLeaders.length, windowWidth]);
+
+    const handleNext = () => setCurrentIndex(prev => prev + 1);
+    const handlePrev = () => setCurrentIndex(prev => prev - 1);
+
+    const handleDragEnd = () => {
+        setIsDragging(false);
+        const finalX = x.get();
+        const offset = getCenterOffset();
+        const cardWidth = CARD_WIDTH + 16;
+        const nearestIndex = Math.round((offset - finalX) / cardWidth);
+        setCurrentIndex(nearestIndex);
+    };
 
     if (isMobile) {
-        const mentor = displayLeaders[activeIndex];
+        const allCards = [...displayLeaders, ...displayLeaders, ...displayLeaders];
         return (
-            <section id="course-faculty-grid" className="px-6 relative overflow-hidden bg-white w-full">
-                
-                {/* Heading — dark text on light bg */}
+            <section id="course-faculty-grid" className="py-12 relative overflow-hidden bg-white w-full">
                 <div className="text-center pb-6 pt-0">
                     <h2 className="text-2xl font-black tracking-tighter text-slate-900 leading-tight">
                         Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Experienced</span> Mentors
                     </h2>
                 </div>
 
-                {/* Card — fully white/light like the reference */}
-                <AnimatePresence mode="wait">
+                <div className="relative w-full overflow-visible flex justify-start items-center">
                     <motion.div
-                        key={activeIndex}
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -30 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="rounded-3xl overflow-hidden bg-white shadow-2xl shadow-black/20 border border-slate-200"
+                        ref={containerRef}
+                        className="flex flex-nowrap items-center w-max"
+                        style={{ x, gap: '16px' }}
+                        drag="x"
+                        dragConstraints={{ left: -10000, right: 10000 }}
+                        onDragStart={() => setIsDragging(true)}
+                        onDragEnd={handleDragEnd}
                     >
-                        {/* Photo Area: soft blue-white gradient — fixed height, clipped corners */}
-                        <div className="relative bg-gradient-to-b from-blue-100 via-blue-50 to-slate-50 h-[280px] overflow-hidden">
-                            {/* Decorative blob */}
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <div className="w-48 h-48 rounded-full bg-blue-200/40 blur-2xl" />
-                            </div>
-                            {/* Tag badge */}
-                            <div className="absolute top-4 right-4 z-20 bg-white text-slate-700 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md border border-slate-200">
-                                {mentor.tags[0]}
-                            </div>
-                            <img
-                                src={mentor.image}
-                                alt={mentor.name}
-                                className={`absolute inset-0 w-full h-full object-cover z-10 ${mentor.imagePosition || 'object-center'}`}
+                        {allCards.map((mentor, idx) => (
+                            <CourseFacultyCard 
+                                key={idx}
+                                mentor={mentor}
+                                index={idx}
+                                variant={variant}
                             />
-                        </div>
-
-                        {/* Info Area: dark text on white */}
-                        <div className="bg-white px-5 py-5 min-h-[100px] flex items-center justify-center border-t border-slate-100 relative">
-                            <div className="flex flex-col items-center text-center w-full relative z-10 px-8">
-                                <h3 className="text-[22px] font-black text-slate-900 tracking-tighter leading-tight">
-                                    {mentor.name}
-                                </h3>
-                                <p className="text-[12px] font-bold text-slate-500 mt-1.5 uppercase tracking-wide">
-                                    {mentor.role}
-                                </p>
-                            </div>
-                            <a
-                                href={mentor.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md z-20 hover:bg-blue-700 transition-colors"
-                            >
-                                <FaLinkedinIn size={14} />
-                            </a>
-                        </div>
+                        ))}
                     </motion.div>
-                </AnimatePresence>
+                </div>
 
-                <div className="flex justify-center gap-4 mt-4">
+                <div className="flex justify-center gap-6 mt-10">
                     <button
                         onClick={handlePrev}
-                        className="w-12 h-12 rounded-full border-2 border-slate-300 bg-white flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-100 hover:border-slate-400 transition-all active:scale-95"
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm"
                         aria-label="Previous mentor"
                     >
-                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
+                        ‹
                     </button>
                     <button
                         onClick={handleNext}
-                        className="w-12 h-12 rounded-full border-2 border-slate-300 bg-white flex items-center justify-center text-slate-700 shadow-md hover:bg-slate-100 hover:border-slate-400 transition-all active:scale-95"
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm"
                         aria-label="Next mentor"
                     >
-                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
+                        ›
                     </button>
                 </div>
             </section>

@@ -73,21 +73,20 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                     </p>
                 </div>
 
-                <div className="w-full mx-auto rounded-3xl overflow-hidden border border-white/40 bg-white/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-1 ring-black/5 relative">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
+                <div className="w-full mx-auto rounded-3xl overflow-hidden bg-white shadow-2xl shadow-black/20 border border-slate-200 relative">
                     {mobileFeatures.map((feature, i) => (
                         <React.Fragment key={i}>
-                            <div className="flex items-center gap-3 px-2 py-5 min-h-[130px]">
-                                <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center shadow-sm">
-                                    <div className="scale-75 flex items-center justify-center">
-                                        {shapes[i % shapes.length]}
+                            <div className="flex items-center gap-3 px-4 py-6 min-h-[280px]">
+                                <div className="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center shadow-lg">
+                                    <div className="text-blue-300 font-black text-lg">
+                                        {feature.icon}
                                     </div>
                                 </div>
                                 <div className="flex-1 w-full text-left flex flex-col justify-center">
-                                    <h3 className="text-sm font-semibold text-slate-900 mb-1 leading-tight tracking-wide">
+                                    <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-xs text-slate-500 leading-snug pr-1">
+                                    <p className="text-sm text-slate-600 leading-relaxed">
                                         {feature.desc}
                                     </p>
                                 </div>
