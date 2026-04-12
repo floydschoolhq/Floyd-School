@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Split from 'react-split';
 import { Play, Save, RotateCcw, Download, Upload, Settings, Lock } from 'lucide-react';
@@ -24,6 +24,36 @@ const CodingLabPage = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [stdin, setStdin] = useState('');
   const [requestingAccess, setRequestingAccess] = useState(false);
+
+  useEffect(() => {
+    if (!user?._id || !canAccessLabs) return;
+
+    let isActive = true;
+
+    const loadSavedCode = async () => {
+      try {
+        const response = await api.get(`/code-snippets/${selectedLanguage.id}`);
+        if (!isActive) return;
+
+        const savedSnippet = response.data?.data || response.data?.snippet || response.data;
+        if (savedSnippet && typeof savedSnippet.code === 'string') {
+          setCode(savedSnippet.code);
+        } else {
+          setCode(getTemplate(selectedLanguage.id));
+        }
+      } catch (error) {
+        if (isActive) {
+          setCode(getTemplate(selectedLanguage.id));
+        }
+      }
+    };
+
+    loadSavedCode();
+
+    return () => {
+      isActive = false;
+    };
+  }, [selectedLanguage.id, user?._id, canAccessLabs]);
 
   const handleRequestAccess = async () => {
     setRequestingAccess(true);
@@ -99,24 +129,39 @@ const CodingLabPage = () => {
     }
   };
 
-  const handleSaveCode = () => {
-    const codeData = {
-      language: selectedLanguage.name,
-      code: code,
-      timestamp: new Date().toISOString()
-    };
-    localStorage.setItem(`code_${selectedLanguage.id}`, JSON.stringify(codeData));
-    setOutput([{ type: 'success', content: 'Code saved successfully!' }]);
+  const handleSaveCode = async () => {
+    try {
+      const response = await api.put(`/code-snippets/${selectedLanguage.id}`, {
+        code,
+        languageName: selectedLanguage.name
+      });
+
+      const savedSnippet = response.data?.data || response.data;
+      setOutput([{ type: 'success', content: `${savedSnippet.languageName || selectedLanguage.name} saved to cloud successfully!` }]);
+    } catch (error) {
+      setOutput([
+        { type: 'error', content: 'Failed to save code to cloud' },
+        { type: 'error', content: error.response?.data?.message || error.message }
+      ]);
+    }
   };
 
-  const handleLoadCode = () => {
-    const savedCode = localStorage.getItem(`code_${selectedLanguage.id}`);
-    if (savedCode) {
-      const codeData = JSON.parse(savedCode);
-      setCode(codeData.code);
-      setOutput([{ type: 'success', content: 'Code loaded successfully!' }]);
-    } else {
-      setOutput([{ type: 'info', content: 'No saved code found for this language.' }]);
+  const handleLoadCode = async () => {
+    try {
+      const response = await api.get(`/code-snippets/${selectedLanguage.id}`);
+      const savedSnippet = response.data?.data || response.data;
+
+      if (savedSnippet && typeof savedSnippet.code === 'string') {
+        setCode(savedSnippet.code);
+        setOutput([{ type: 'success', content: 'Code loaded from cloud successfully!' }]);
+      } else {
+        setOutput([{ type: 'info', content: 'No saved code found for this language.' }]);
+      }
+    } catch (error) {
+      setOutput([
+        { type: 'error', content: 'Failed to load code from cloud' },
+        { type: 'error', content: error.response?.data?.message || error.message }
+      ]);
     }
   };
 

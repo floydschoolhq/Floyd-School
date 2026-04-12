@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import Masterclasses from '../../components/Masterclasses';
+import AssignmentSubmissionModal from '../../components/Student/AssignmentSubmissionModal';
 
 import { PortalContext } from '../../components/Context/PortalProvider';
 import { useSocket } from '../../components/Context/SocketContext';
@@ -26,6 +27,7 @@ const ClassroomPage = () => {
   const canAccessContent = user?.permissions?.canAccessCourses;
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
   const [scheduledLives, setScheduledLives] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +35,7 @@ const ClassroomPage = () => {
   const [isSignaling, setIsSignaling] = useState(false);
   const [requestingAccess, setRequestingAccess] = useState(false);
   const [activeScheduledVideo, setActiveScheduledVideo] = useState(null);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
   const handleRequestAccess = async () => {
     setRequestingAccess(true);
@@ -47,6 +50,25 @@ const ClassroomPage = () => {
     } finally {
       setRequestingAccess(false);
     }
+  };
+
+  const getSubmissionAssignmentId = (submission) => {
+    return (submission?.assignment?._id || submission?.assignment || '').toString();
+  };
+
+  const getAssignmentSubmission = (assignmentId) => {
+    return submissions.find(sub => getSubmissionAssignmentId(sub) === assignmentId.toString());
+  };
+
+  const handleAssignmentSubmitted = (submission) => {
+    const assignmentId = getSubmissionAssignmentId(submission);
+
+    setSubmissions(prev => [
+      submission,
+      ...prev.filter(item => getSubmissionAssignmentId(item) !== assignmentId)
+    ]);
+
+    setSelectedAssignment(null);
   };
 
   useEffect(() => {
@@ -178,12 +200,14 @@ const ClassroomPage = () => {
 
   const fetchClassroomData = async () => {
     try {
-      const [coursesRes, assignmentsRes] = await Promise.all([
+      const [coursesRes, assignmentsRes, dashboardRes] = await Promise.all([
         api.get('/courses'),
-        api.get('/assignments')
+        api.get('/assignments'),
+        api.get('/dashboard/student').catch(() => null)
       ]);
       setCourses(Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data);
       setAssignments(Array.isArray(assignmentsRes.data) ? assignmentsRes.data : assignmentsRes.data.data);
+      setSubmissions(dashboardRes?.data?.submissions || []);
     } catch (error) {
       console.error('Failed to fetch classroom data:', error);
     } finally {
@@ -575,32 +599,60 @@ const ClassroomPage = () => {
             Assignments
           </h2>
           <div className="space-y-3">
-            {assignments.slice(0, 2).map((assignment, index) => (
-              <motion.div
-                key={assignment._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-surface-base rounded-xl p-4 border border-surface-el shadow-sm"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-text-main text-sm mb-1">{assignment.title}</h3>
-                    <p className="text-xs text-text-muted mb-2">{assignment.course?.title}</p>
-                    <div className="flex items-center gap-2 text-xs text-text-muted/70">
-                      <Clock className="w-3 h-3" />
-                      Due: {new Date(assignment.dueDate).toLocaleDateString()}
+            {assignments.slice(0, 2).map((assignment, index) => {
+              const submission = getAssignmentSubmission(assignment._id);
+
+              return (
+                <motion.div
+                  key={assignment._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-surface-base rounded-xl p-4 border border-surface-el shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-text-main text-sm mb-1">{assignment.title}</h3>
+                      <p className="text-xs text-text-muted mb-2">{assignment.course?.title}</p>
+                      <div className="flex items-center gap-2 text-xs text-text-muted/70">
+                        <Clock className="w-3 h-3" />
+                        Due: {new Date(assignment.dueDate).toLocaleDateString()}
+                      </div>
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <span className={`px-2 py-1 rounded text-[11px] font-black uppercase tracking-widest ${submission
+                          ? submission.status === 'graded'
+                            ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                            : 'bg-blue-50 text-blue-600 border border-blue-100'
+                          : 'bg-slate-50 text-slate-500 border border-slate-100'
+                          }`}>
+                          {submission
+                            ? submission.status === 'graded'
+                              ? 'Graded'
+                              : 'Submitted'
+                            : 'Not submitted'}
+                        </span>
+
+                        <button
+                          onClick={() => setSelectedAssignment(assignment)}
+                          className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-colors ${submission
+                            ? 'bg-surface-soft text-text-main border border-surface-el'
+                            : 'bg-blue-500 text-white'
+                            }`}
+                        >
+                          {submission ? 'View Submission' : 'Submit Work'}
+                        </button>
+                      </div>
                     </div>
+                    <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${assignment.status === 'published'
+                      ? 'bg-orange-50 text-orange-600 border border-orange-100'
+                      : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                      }`}>
+                      {assignment.status}
+                    </span>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${assignment.status === 'published'
-                    ? 'bg-orange-50 text-orange-600 border border-orange-100'
-                    : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                    }`}>
-                    {assignment.status}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
             {assignments.length === 0 && (
               <div className="text-center py-8 text-text-muted/70">
                 <FileText className="w-12 h-12 mx-auto mb-3 opacity-30" />
@@ -619,33 +671,62 @@ const ClassroomPage = () => {
             Technical Assignments
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {assignments.map((assignment, index) => (
-              <motion.div
-                key={assignment._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-slate-800 mb-1 tracking-normal">{assignment.title}</h3>
-                      <p className="text-base font-medium text-text-muted mb-4">{assignment.course?.title}</p>
-                      <div className="flex items-center gap-2 text-[13px] font-semibold text-text-muted/70 font-medium">
-                        <Clock className="w-3 h-3" />
-                        Due: {new Date(assignment.dueDate).toLocaleDateString()}
+            {assignments.map((assignment, index) => {
+              const submission = getAssignmentSubmission(assignment._id);
+
+              return (
+                <motion.div
+                  key={assignment._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="font-bold text-slate-800 mb-1 tracking-normal">{assignment.title}</h3>
+                        <p className="text-base font-medium text-text-muted mb-4">{assignment.course?.title}</p>
+                        <div className="flex items-center gap-2 text-[13px] font-semibold text-text-muted/70 font-medium">
+                          <Clock className="w-3 h-3" />
+                          Due: {new Date(assignment.dueDate).toLocaleDateString()}
+                        </div>
+
+                        <div className="mt-4 flex items-center gap-3 flex-wrap">
+                          <span className={`px-2 py-1 rounded text-[11px] font-black uppercase tracking-widest ${submission
+                            ? submission.status === 'graded'
+                              ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                              : 'bg-blue-50 text-blue-600 border border-blue-100'
+                            : 'bg-slate-50 text-slate-500 border border-slate-100'
+                            }`}>
+                            {submission
+                              ? submission.status === 'graded'
+                                ? 'Graded'
+                                : 'Submitted'
+                              : 'Not submitted'}
+                          </span>
+
+                          <button
+                            onClick={() => setSelectedAssignment(assignment)}
+                            className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-colors ${submission
+                              ? 'bg-surface-soft text-text-main border border-surface-el'
+                              : 'bg-blue-500 text-white'
+                              }`}
+                          >
+                            {submission ? 'View Submission' : 'Submit Work'}
+                          </button>
+                        </div>
                       </div>
+                      <span className={`px-2 py-1 rounded text-[13px] font-semibold uppercase tracking-normal ${assignment.status === 'published'
+                        ? 'bg-orange-50 text-orange-600 border border-orange-100'
+                        : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                        }`}>
+                        {assignment.status}
+                      </span>
                     </div>
-                    <span className={`px-2 py-1 rounded text-[13px] font-semibold uppercase tracking-normal ${assignment.status === 'published'
-                      ? 'bg-orange-50 text-orange-600 border border-orange-100'
-                      : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                      }`}>
-                      {assignment.status}
-                    </span>
-                  </div>
-                </GradientCard>
-              </motion.div>
-            ))}
+                  </GradientCard>
+                </motion.div>
+              );
+            })}
             {assignments.length === 0 && (
               <div className="col-span-full text-center py-12 text-text-muted/70">
                 <FileText className="w-16 h-16 mx-auto mb-4 opacity-30" />
@@ -732,6 +813,14 @@ const ClassroomPage = () => {
           </div>
         </div>
       )}
+
+      <AssignmentSubmissionModal
+        isOpen={Boolean(selectedAssignment)}
+        assignment={selectedAssignment}
+        submission={selectedAssignment ? getAssignmentSubmission(selectedAssignment._id) : null}
+        onClose={() => setSelectedAssignment(null)}
+        onSubmitted={handleAssignmentSubmitted}
+      />
     </div>
   );
 };

@@ -37,29 +37,51 @@ const SupportPage = () => {
 
     useEffect(() => {
         fetchInitialData();
+    }, []);
 
-        socket.on('message:received', (data) => {
-            if (selectedTicket && data.ticketId === selectedTicket._id) {
-                setTickets(prev => prev.map(t =>
-                    t._id === data.ticketId
-                        ? { ...t, messages: [...t.messages, data.message] }
-                        : t
-                ));
-            }
-        });
+    useEffect(() => {
+        const mergeMessage = (ticket, message) => {
+            if (!ticket) return ticket;
 
-        socket.on('ticket:updated', (updatedTicket) => {
-            setTickets(prev => prev.map(t => t._id === updatedTicket._id ? updatedTicket : t));
-            if (selectedTicket?._id === updatedTicket._id) {
-                setSelectedTicket(updatedTicket);
-            }
-        });
+            const messages = ticket.messages || [];
+            const exists = messages.some((msg) => {
+                const existingId = msg?._id?.toString?.() || msg?._id;
+                const incomingId = message?._id?.toString?.() || message?._id;
+
+                return (existingId && incomingId && existingId === incomingId)
+                    || (msg?.text === message?.text && msg?.timestamp === message?.timestamp);
+            });
+
+            if (exists) return ticket;
+
+            return {
+                ...ticket,
+                messages: [...messages, message]
+            };
+        };
+
+        const handleMessage = (data) => {
+            setTickets(prev => prev.map(t => (
+                t._id === data.ticketId ? mergeMessage(t, data.message) : t
+            )));
+
+            setSelectedTicket(prev => (
+                prev && prev._id === data.ticketId ? mergeMessage(prev, data.message) : prev
+            ));
+        };
+
+        const handleTicket = (ticket) => {
+            setTickets(prev => prev.some(t => t._id === ticket._id) ? prev : [ticket, ...prev]);
+        };
+
+        socket.on('support:message_received', handleMessage);
+        socket.on('support:ticket_new', handleTicket);
 
         return () => {
-            socket.off('message:received');
-            socket.off('ticket:updated');
+            socket.off('support:message_received', handleMessage);
+            socket.off('support:ticket_new', handleTicket);
         };
-    }, [selectedTicket]);
+    }, []);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -68,12 +90,12 @@ const SupportPage = () => {
     const fetchInitialData = async () => {
         try {
             const [ticketsRes, userRes] = await Promise.all([
-                api.get('/support'),
+                api.get('/support/tickets'),
                 api.get('/auth/me')
             ]);
-            setTickets(ticketsRes.data);
+            setTickets(ticketsRes.data.tickets || ticketsRes.data || []);
             setCurrentUser(userRes.data);
-            socket.emit('auth:join', userRes.data._id);
+            socket.emit('authenticate', userRes.data._id);
         } catch (error) {
             console.error('Failed to fetch support data:', error);
         } finally {
@@ -84,8 +106,10 @@ const SupportPage = () => {
     const handleCreateTicket = async (e) => {
         e.preventDefault();
         try {
-            const res = await api.post('/support', newTicketData);
-            setTickets([res.data, ...tickets]);
+            const res = await api.post('/support/tickets', newTicketData);
+            const createdTicket = res.data.ticket || res.data;
+            setTickets(prev => [createdTicket, ...prev.filter(t => t._id !== createdTicket._id)]);
+            setSelectedTicket(createdTicket);
             setShowNewTicketModal(false);
             setNewTicketData({ subject: '', issue: '', priority: 'medium' });
         } catch (error) {
@@ -98,17 +122,11 @@ const SupportPage = () => {
         if (!newMessage.trim() || !selectedTicket) return;
 
         try {
-            const res = await api.post(`/support/${selectedTicket._id}/messages`, { text: newMessage });
-            const updatedTicket = { ...selectedTicket, messages: [...selectedTicket.messages, res.data] };
+            const res = await api.post(`/support/tickets/${selectedTicket._id}/messages`, { text: newMessage });
+            const updatedTicket = res.data.ticket || res.data;
             setSelectedTicket(updatedTicket);
-            setTickets(tickets.map(t => t._id === selectedTicket._id ? updatedTicket : t));
+            setTickets(prev => prev.map(t => t._id === updatedTicket._id ? updatedTicket : t));
             setNewMessage('');
-
-            socket.emit('message:send', {
-                ticketId: selectedTicket._id,
-                message: res.data,
-                receiverId: selectedTicket.assignedTo
-            });
         } catch (error) {
             console.error('Failed to send message:', error);
         }
@@ -218,25 +236,29 @@ const SupportPage = () => {
                                     <p className="text-base font-medium text-slate-700 leading-relaxed">{selectedTicket.issue}</p>
                                 </div>
 
-                                {selectedTicket.messages.map((msg, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className={`flex ${msg.sender === currentUser?._id ? 'justify-end' : 'justify-start'}`}
-                                    >
-                                        <div className={`max-w-[80%] p-4 rounded-2xl ${msg.sender === currentUser?._id
-                                                ? 'bg-slate-900 text-white rounded-br-none'
-                                                : 'bg-slate-100 text-slate-700 rounded-bl-none'
-                                            }`}>
-                                            <p className="text-base font-medium leading-relaxed">{msg.text}</p>
-                                            <p className={`text-\[11px\] mt-2 font-black uppercase tracking-widest ${msg.sender === currentUser?._id ? 'text-white/40' : 'text-slate-400'
+                                {selectedTicket.messages.map((msg, idx) => {
+                                    const senderId = msg.sender?._id || msg.sender;
+
+                                    return (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className={`flex ${senderId === currentUser?._id ? 'justify-end' : 'justify-start'}`}
+                                        >
+                                            <div className={`max-w-[80%] p-4 rounded-2xl ${senderId === currentUser?._id
+                                                    ? 'bg-slate-900 text-white rounded-br-none'
+                                                    : 'bg-slate-100 text-slate-700 rounded-bl-none'
                                                 }`}>
-                                                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                            </p>
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                                <p className="text-base font-medium leading-relaxed">{msg.text}</p>
+                                                <p className={`text-\[11px\] mt-2 font-black uppercase tracking-widest ${senderId === currentUser?._id ? 'text-white/40' : 'text-slate-400'
+                                                    }`}>
+                                                    {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </p>
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
                                 <div ref={chatEndRef} />
                             </div>
 
