@@ -153,7 +153,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
 
                             {/* Content */}
                             <div className="relative z-10 flex flex-col items-center w-full">
-                                <div className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest mb-4 bg-gradient-to-r ${method.color} text-white`}>
+                                <div className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest mb-4 ${isDark ? 'bg-white/10 border border-white/15 text-white/70' : `bg-gradient-to-r ${method.color} text-white`}`}>
                                     {method.highlight}
                                 </div>
                                 <h3 className={`text-2xl font-black uppercase tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
