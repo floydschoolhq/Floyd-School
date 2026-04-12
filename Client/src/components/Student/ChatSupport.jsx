@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Loader2, CheckCircle } from 'lucide-react';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
-import { PortalContext } from '../Context/PortalProvider';
+import { PortalContext } from '../../contexts/PortalProvider';
 
 const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
     withCredentials: true,

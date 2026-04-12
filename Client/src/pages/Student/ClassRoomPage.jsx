@@ -9,8 +9,8 @@ import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import Masterclasses from '../../components/Masterclasses';
 import AssignmentSubmissionModal from '../../components/Student/AssignmentSubmissionModal';
 
-import { PortalContext } from '../../components/Context/PortalProvider';
-import { useSocket } from '../../components/Context/SocketContext';
+import { PortalContext } from '../../contexts/PortalProvider';
+import { useSocket } from '../../contexts/SocketProvider';
 import { useContext } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 

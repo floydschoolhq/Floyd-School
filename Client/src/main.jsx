@@ -2,11 +2,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import { PortalProvider } from './components/Context/PortalProvider.jsx'
-import { SocketProvider } from './components/Context/SocketContext.jsx'
-import { ThemeProvider } from './components/Context/ThemeProvider.jsx'
-import { ToastProvider } from './components/Context/ToastProvider.jsx'
-import { FirebaseAuthProvider } from './components/Context/FirebaseAuthContext.jsx'
+import { PortalProvider } from './contexts/PortalProvider.jsx'
+import { SocketProvider } from './contexts/SocketProvider.jsx'
+import { ThemeProvider } from './contexts/ThemeProvider.jsx'
+import { ToastProvider } from './contexts/ToastProvider.jsx'
+import { FirebaseAuthProvider } from './contexts/FirebaseAuthContext.jsx'
 
 // Clear out stale service workers from previous projects on this port
 if ('serviceWorker' in navigator) {

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { PortalContext } from "../Context/PortalProvider";
-import { useTheme } from "../Context/ThemeProvider";
-import { useToast } from "../Context/ToastProvider";
+import { PortalContext } from "../../contexts/PortalProvider";
+import { useTheme } from "../../contexts/ThemeProvider";
+import { useToast } from "../../contexts/ToastProvider";
 import StudentSidebar from "./StudentSidebar";
 import ChatSupport from "./ChatSupport";
 import CommandPalette from "../dashboard/CommandPalette";

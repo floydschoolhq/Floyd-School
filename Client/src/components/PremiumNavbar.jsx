@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook, FaUserTie, FaBullseye } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LeadFormModal from './LeadFormModal';
-import { PortalContext } from './Context/PortalProvider';
+import { PortalContext } from '../contexts/PortalProvider';
 import MaintenanceBanner from './MaintenanceBanner';
 import api from '../api/axios';
 import BrandLogo from './common/BrandLogo';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, animate } from 'framer-motion';
 import { cn } from '../../lib/utils';
-import { useTheme } from '../Context/ThemeProvider';
+import { useTheme } from '../../contexts/ThemeProvider';
 
 export const GradientCard = ({
     children,

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Users, MessageCircle, ShieldCheck } from 'lucide-react';
 import api from '../../api/axios';
-import { PortalContext } from '../Context/PortalProvider';
-import { useSocket } from '../Context/SocketContext';
+import { PortalContext } from '../../contexts/PortalProvider';
+import { useSocket } from '../../contexts/SocketProvider';
 
 const LiveChatSidebar = ({ classId }) => {
     const socket = useSocket();

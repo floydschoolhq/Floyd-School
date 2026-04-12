@@ -4,7 +4,7 @@ import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shie
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import api from '../../api/axios';
-import { useSocket } from '../../components/Context/SocketContext';
+import { useSocket } from '../../contexts/SocketProvider';
 
 const LiveSessionView = ({ liveClass, onBack }) => {
     const socket = useSocket();

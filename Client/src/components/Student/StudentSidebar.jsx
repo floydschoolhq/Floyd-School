@@ -1,7 +1,7 @@
 import { BarChart, BookOpen, ClipboardCheck, Code, LayoutDashboard, Video, X, LifeBuoy, PlayCircle, ChevronRight } from "lucide-react";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { PortalContext } from "../Context/PortalProvider";
+import { PortalContext } from "../../contexts/PortalProvider";
 import { NavLink } from "./SharedComponentStudent";
 import { motion, AnimatePresence } from "framer-motion";
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { PortalContext } from '../Context/PortalProvider';
+import { PortalContext } from '../../contexts/PortalProvider';
 
 const ProtectedRoute = ({ children }) => {
     const { user } = useContext(PortalContext);

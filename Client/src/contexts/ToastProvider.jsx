@@ -35,7 +35,6 @@ const Toast = ({ id, type = 'info', title, message, onDismiss, duration = 4000 }
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className={`relative flex items-start gap-3 w-[340px] rounded-2xl p-4 shadow-2xl overflow-hidden ${c.bg} ${c.text}`}
         >
-            {/* Progress bar */}
             <motion.div
                 initial={{ scaleX: 1 }}
                 animate={{ scaleX: 0 }}
@@ -83,7 +82,6 @@ export const ToastProvider = ({ children }) => {
         <ToastContext.Provider value={api}>
             {children}
 
-            {/* Toast Container */}
             <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3 items-end pointer-events-none">
                 <AnimatePresence mode="popLayout">
                     {toasts.map(t => (
@@ -103,3 +101,4 @@ export const useToast = () => {
     return ctx;
 };
 
+export default ToastContext;

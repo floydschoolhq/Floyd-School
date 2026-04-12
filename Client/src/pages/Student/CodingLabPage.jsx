@@ -6,8 +6,8 @@ import { MonacoEditor } from '../../components/ide/MonacoEditor';
 import { Terminal } from '../../components/ide/Terminal';
 import { LanguageSelector, LANGUAGES } from '../../components/ide/LanguageSelector';
 import { getTemplate } from '../../components/ide/CodeTemplates';
-import { PortalContext } from '../../components/Context/PortalProvider';
-import { useSocket } from '../../hooks/useSocket';
+import { PortalContext } from '../../contexts/PortalProvider';
+import { useSocket } from '../../contexts/SocketProvider';
 import api from '../../api/axios';
 
 const CodingLabPage = () => {

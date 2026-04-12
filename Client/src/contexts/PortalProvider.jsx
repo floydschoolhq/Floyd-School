@@ -1,10 +1,17 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import api from "../../api/axios";
+import api from "../api/axios";
 
 export const PortalContext = createContext();
 
+export const usePortal = () => {
+  const context = useContext(PortalContext);
+  if (!context) {
+    throw new Error('usePortal must be used within a PortalProvider');
+  }
+  return context;
+};
+
 export const PortalProvider = ({ children }) => {
-  // Check for classroom user in sessionStorage first (priority)
   const getClassroomUser = () => {
     try {
       const classroomUser = sessionStorage.getItem('classroomUser');
@@ -14,7 +21,6 @@ export const PortalProvider = ({ children }) => {
     }
   };
 
-  // Initialize user from localStorage (fallback)
   const getStoredUser = () => {
     try {
       const userInfo = localStorage.getItem('userInfo');
@@ -25,7 +31,6 @@ export const PortalProvider = ({ children }) => {
     }
   };
 
-  // Priority: sessionStorage > localStorage
   const getInitialUser = () => {
     const classroomUser = getClassroomUser();
     if (classroomUser) {
@@ -40,24 +45,20 @@ export const PortalProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
 
-  // Function to update user (useful after login/signup)
   const updateUser = (userData) => {
     setUser(userData);
     localStorage.setItem('userInfo', JSON.stringify(userData));
-    // Also sync with classroom session if active
     if (sessionStorage.getItem('classroomUser')) {
       sessionStorage.setItem('classroomUser', JSON.stringify(userData));
     }
   };
 
-  // Function to update classroom user specifically
   const updateClassroomUser = (userData) => {
     setUser(userData);
     sessionStorage.setItem('classroomUser', JSON.stringify(userData));
     localStorage.setItem('userInfo', JSON.stringify(userData));
   };
 
-  // Function to logout
   const logout = () => {
     setUser(null);
     localStorage.removeItem('userInfo');
@@ -66,7 +67,6 @@ export const PortalProvider = ({ children }) => {
     sessionStorage.removeItem('classroomToken');
   };
 
-  // Update user when localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
       const classroomUser = sessionStorage.getItem('classroomUser');
@@ -82,7 +82,6 @@ export const PortalProvider = ({ children }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Fetch latest user data on mount (Refresh Profile)
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
@@ -128,10 +127,4 @@ export const PortalProvider = ({ children }) => {
   );
 };
 
-export const usePortal = () => {
-  const context = useContext(PortalContext);
-  if (!context) {
-    throw new Error('usePortal must be used within a PortalProvider');
-  }
-  return context;
-};
+export default PortalContext;

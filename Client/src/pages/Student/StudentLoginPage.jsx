@@ -3,9 +3,9 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
-import { PortalContext } from '../../components/Context/PortalProvider';
+import { PortalContext } from '../../contexts/PortalProvider';
 import BrandLogo from '../../components/common/BrandLogo';
-import { useFirebaseAuth } from '../../components/Context/FirebaseAuthContext';
+import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import toast from 'react-hot-toast';
 
 const StudentLoginPage = () => {

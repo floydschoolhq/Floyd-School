@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useLayoutEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
+import { Route, Routes, useLocation } from 'react-router-dom';
 
-// Layout Components (Always visible or shared)
+// Layout Components (Always visible)
 import Footer from './components/Footer';
 import NeedHelpSection from './components/NeedHelpSection';
 
-// Static Marketing Page Components (Should only be visible on Home route)
+// Static Marketing Page Components (home page)
 import Hero from './components/Hero';
-import About from './components/About';
 import Marque from './components/Marque';
 import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
@@ -20,6 +19,8 @@ import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
+
+// Eager load ALL student portal pages (priority - instant for logged-in users)
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import ClassroomPage from './pages/Student/ClassRoomPage.jsx';
 import ClassroomAuthPage from './pages/Student/ClassroomAuthPage.jsx';
@@ -36,18 +37,15 @@ import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import AdminMessages from './components/AdminMessages.jsx';
-import { PortalContext, usePortal } from './components/Context/PortalProvider.jsx';
 import SchoolPartnership from "./pages/SchoolPartnership.jsx";
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 import FAQPage from './pages/FAQPage.jsx';
 import AdminStudentsPage from './pages/Admin/AdminStudentsPage.jsx';
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
-import Logo from './components/Logo.jsx';
-
-import Masterclasses from './components/Masterclasses.jsx';
-import IndustrialNetwork from './components/IndustrialNetwork.jsx';
+import { usePortal } from './contexts/PortalProvider.jsx';
 
 import { MotionConfig } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile.js';
@@ -74,8 +72,6 @@ const HomePage = () => {
         </MotionConfig>
     )
 };
-
-import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
 const App = () => {
 

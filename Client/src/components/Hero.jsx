@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePres
 import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award, Sparkles, Video, MessageSquare, Users, Zap } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
-import { PortalContext } from './Context/PortalProvider';
+import { PortalContext } from '../contexts/PortalProvider';
 import api from '../api/axios';
 import BrandLogo from './common/BrandLogo';
 import Magnet from './common/Magnet';

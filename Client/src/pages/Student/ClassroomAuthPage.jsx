@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LogOutIcon, CheckCircle, BookOpen, Users, Calendar, PlayCircle } from 'lucide-react';
-import { useFirebaseAuth } from '../../components/Context/FirebaseAuthContext';
+import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
 import BrandLogo from '../../components/common/BrandLogo';

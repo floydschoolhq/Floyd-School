@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { PortalContext } from '../Context/PortalProvider';
+import { PortalContext } from '../../contexts/PortalProvider';
 
 export const LogoutButton = ({ className = '' }) => {
     const navigate = useNavigate();
