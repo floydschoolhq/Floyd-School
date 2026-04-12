@@ -1,0 +1,365 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ScrollDarkenHeading from './common/ScrollDarkenHeading';
+import { FaCode, FaRobot, FaChartLine, FaUserTie, FaCloud, FaCheckCircle, FaTimes, FaArrowRight, FaBrain, FaTerminal, FaShieldAlt } from 'react-icons/fa';
+import useIsMobile from '../hooks/useIsMobile';
+
+
+const FEATURES = [
+    {
+        title: "Personalized Learning",
+        miniTitle: "Learning System",
+        icon: <FaBrain />,
+        image: "/images/ecosystem/adaptive_learning.jpg",
+        desc: "Advanced systems that adapt curriculum delivery to your individual learning pace.",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Personalized Study", desc: "Course content that adjusts based on your real-time progress." },
+            { label: "Progress Tracking", desc: "Identify areas that need more attention early on." },
+            { label: "Quick Feedback", desc: "Get instant guidance on your coding logic and project structure." }
+        ]
+    },
+    {
+        title: "Online Coding Workspace",
+        miniTitle: "Development Lab",
+        icon: <FaTerminal />,
+        image: "/images/ecosystem/cloud_ide.jpg",
+        desc: "High-performance coding environment ready for real-world projects.",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Industry Ready", desc: "Pre-configured environments that match modern industry standards." },
+            { label: "Pair Programming", desc: "Collaborate in real-time with mentors and peers." },
+            { label: "Powerful Resources", desc: "Dedicated resources for complex AI and engineering simulations." }
+        ]
+    },
+    {
+        title: "Growth & Progress Dashboard",
+        miniTitle: "Performance Tracking",
+        icon: <FaChartLine />,
+        image: "/images/ecosystem/performance.jpg",
+        desc: "Detailed tracking of your professional growth according to industry benchmarks.",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Skill Assessment", desc: "See exactly where you stand against international standards." },
+            { label: "Career Milestones", desc: "Monitor your progress towards your career goals." },
+            { label: "Success Path", desc: "Data-driven guidance for your future career specialization." }
+        ]
+    },
+    {
+        title: "Global Professional Network",
+        miniTitle: "Career Support",
+        icon: <FaUserTie />,
+        image: "/images/ecosystem/networking.jpg",
+        desc: "Connect directly with global engineering teams and top technology recruiters.",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Industry Connections", desc: "Network with senior engineers and technology leaders." },
+            { label: "Hiring Opportunities", desc: "Direct access to job openings in top-tier tech companies." },
+            { label: "Career Mentoring", desc: "Ongoing professional guidance from industry experts." }
+        ]
+    },
+    {
+        title: "Security & Data Protection",
+        miniTitle: "Privacy First",
+        icon: <FaShieldAlt />,
+        image: "/images/ecosystem/security.jpg",
+        desc: "Industry-standard security protecting your personal and academic information.",
+        color: "text-slate-600",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Secure Content", desc: "Advanced encryption for all your code and project work." },
+            { label: "Privacy Standards", desc: "A learning environment that respects global privacy laws." },
+            { label: "Safe Access", desc: "Multi-layered security to keep your information private." }
+        ]
+    },
+    {
+        title: "AI-Powered Mentorship",
+        miniTitle: "Smart Support",
+        icon: <FaRobot />,
+        image: "/images/ecosystem/mentorship.jpg",
+        desc: "Smart AI tools providing real-time code reviews and learning suggestions.",
+        color: "text-slate-900",
+        bg: "bg-slate-50",
+        details: [
+            { label: "Smart Reviews", desc: "AI-powered feedback on your code and project structure." },
+            { label: "Intelligent Guidance", desc: "Get helpful hints and suggestions while you code." },
+            { label: "Optimal Learning", desc: "Pacing that adapts to keep you engaged and productive." }
+        ]
+    }
+];
+
+const StudentEcosystem = () => {
+    const [selectedFeature, setSelectedFeature] = useState(null);
+    const isMobile = useIsMobile();
+
+    if (isMobile) {
+        return (
+            <section id="infrastructure" className="bg-slate-50 py-24 px-6 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] -ml-40 -mt-40" />
+                
+                <div className="relative z-10 text-center">
+                    <div className="mb-14 px-4">
+                        <h2 className="text-3xl font-extrabold text-[#0F172A] tracking-tighter uppercase leading-[1.1]">
+                            THE thinkskool ADVANTAGE
+                        </h2>
+                    </div>
+
+                    <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide">
+                        {FEATURES.map((feature, index) => (
+                            <div 
+                                key={index}
+                                onClick={() => setSelectedFeature(feature)}
+                                className="snap-center shrink-0 w-[70vw] group bg-white border border-slate-200 p-6 rounded-[2.5rem] flex flex-col items-center text-center gap-6 active:scale-[0.98] transition-all shadow-sm"
+                            >
+                                <div className="w-24 h-24 shrink-0 rounded-[2rem] overflow-hidden bg-slate-100 relative border border-slate-100 shadow-inner">
+                                    <img src={feature.image} className="w-full h-full object-cover grayscale-[0.2]" alt="" />
+                                    <div className="absolute inset-0 bg-slate-950/20 flex items-center justify-center text-white text-3xl drop-shadow-md transition-transform group-hover:scale-110">
+                                        {feature.icon}
+                                    </div>
+                                </div>
+                                
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-600 mb-2 opacity-80 leading-none">
+                                        {feature.miniTitle}
+                                    </div>
+                                    <h3 className="text-[16px] font-black uppercase tracking-tight text-slate-900 leading-tight mb-4">
+                                        {feature.title}
+                                    </h3>
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-[9px] font-black uppercase tracking-widest text-slate-500">
+                                        View Details <FaArrowRight size={10} className="text-orange-500" />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-center mt-6">
+                        <div className="flex justify-center mt-6">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
+                            EXPLORE
+                        </span>
+                    </div>
+                    </div>
+                </div>
+
+                <AnimatePresence>
+                    {selectedFeature && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[100] flex items-end justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+                            onClick={() => setSelectedFeature(null)}
+                        >
+                            <motion.div
+                                initial={{ y: "100%" }}
+                                animate={{ y: 0 }}
+                                exit={{ y: "100%" }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="bg-white w-full max-w-md rounded-[2.5rem] overflow-hidden p-8 pb-10"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-8" />
+                                
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="text-2xl text-blue-600 drop-shadow-sm">{selectedFeature.icon}</div>
+                                    <div>
+                                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
+                                            {selectedFeature.miniTitle}
+                                        </div>
+                                        <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 leading-none">
+                                            {selectedFeature.title}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4 mb-10">
+                                    {selectedFeature.details.map((detail, idx) => (
+                                        <div key={idx} className="flex gap-4 items-start">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1 shrink-0" />
+                                            <div>
+                                                <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-tight mb-1 leading-none">{detail.label}</h4>
+                                                <p className="text-[10px] font-medium text-slate-500 uppercase tracking-tight leading-tight opacity-80">{detail.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => setSelectedFeature(null)}
+                                    className="w-full bg-slate-900 text-white py-4 rounded-[1.5rem] font-black text-[10px] uppercase tracking-widest shadow-xl shadow-slate-900/20 active:scale-95 transition-transform"
+                                >
+                                    Dismiss
+                                </button>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </section>
+        );
+    }
+
+    return (
+        <section id="infrastructure" className="bg-white py-12 md:py-24 relative overflow-hidden border-t border-slate-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {/* Header */}
+                <div className="text-center mb-12">
+                    <ScrollDarkenHeading sizeClass="text-4xl md:text-6xl">
+                        THE <span className="lowercase"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span> ADVANTAGE
+                    </ScrollDarkenHeading>
+                </div>
+
+                {/* Features Grid - Pro Bento Style */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {FEATURES.map((feature, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, scale: 0.8, y: 50, rotate: index % 2 === 0 ? -2 : 2 }}
+                            whileInView={{ 
+                                opacity: 1, 
+                                scale: 1, 
+                                y: 0, 
+                                rotate: 0,
+                                transition: { 
+                                    duration: 0.8, 
+                                    delay: index * 0.1, 
+                                    ease: [0.16, 1, 0.3, 1] 
+                                } 
+                            }}
+                            whileHover={{ 
+                                y: -12,
+                                transition: { type: "spring", stiffness: 400, damping: 10 }
+                            }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            onClick={() => setSelectedFeature(feature)}
+                            className="group relative bg-white p-4 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_40px_80px_rgba(0,0,0,0.04)]"
+                        >
+                            <div className="relative z-10 flex flex-col h-full bg-white items-center text-center md:items-start md:text-left">
+                                {/* Image Container - Enforced 16:9 Aspect Ratio */}
+                                <div className="w-full aspect-video overflow-hidden border-b border-slate-100 relative group-hover:shadow-md transition-all">
+                                    <img
+                                        src={feature.image}
+                                        alt={feature.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute top-3 left-3 flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-slate-900/40 blur-xl scale-150 transition-opacity duration-500" />
+                                        <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:text-slate-200 transition-colors relative z-10 text-xl">
+                                            {feature.icon}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Content Body */}
+                                <div className="p-4 flex-1 flex flex-col w-full justify-end">
+                                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 tracking-tight leading-tight group-hover:text-black transition-colors">{feature.title}</h3>
+
+                                    <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between group-hover:border-slate-200 transition-colors">
+                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors flex items-center gap-2">
+                                            Program Details
+                                        </span>
+                                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[10px] text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all transform group-hover:translate-x-1 shadow-sm">
+                                            <FaArrowRight />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Feature Deep Dive Modal */}
+            <AnimatePresence>
+                {selectedFeature && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/10 backdrop-blur-md"
+                    >
+                        <div
+                            className="min-h-full flex items-center justify-center p-4"
+                            onClick={() => setSelectedFeature(null)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                className="bg-white w-full max-w-2xl overflow-hidden relative shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-white"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div className="p-12 relative">
+                                    <button
+                                        onClick={() => setSelectedFeature(null)}
+                                        className="absolute top-10 right-10 w-12 h-12 bg-slate-50 flex items-center justify-center text-slate-400 hover:text-black hover:bg-slate-100 transition-all border border-slate-100"
+                                    >
+                                        <FaTimes size={14} />
+                                    </button>
+
+                                    <div className="w-full h-48 overflow-hidden mb-8 border border-slate-100 shadow-2xl relative">
+                                        <img
+                                            src={selectedFeature.image}
+                                            alt={selectedFeature.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute top-6 left-6 flex items-center justify-center">
+                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl scale-150 opacity-100" />
+                                            <div className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] relative z-10 text-4xl">
+                                                {selectedFeature.icon}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-8 mb-12">
+                                        <div>
+                                            <p className="text-slate-400 font-black uppercase tracking-[0.5em] text-[10px] mb-2">
+                                                {selectedFeature.miniTitle}
+                                            </p>
+                                            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-none">
+                                                {selectedFeature.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-8 mb-16">
+                                        {selectedFeature.details.map((detail, idx) => (
+                                            <div key={idx} className="flex items-start gap-6 group/item">
+                                                <div className="mt-1.5 flex-shrink-0">
+                                                    <div className="w-2 h-2 bg-slate-900 shadow-[0_0_12px_rgba(0,0,0,0.1)]" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-[14px] font-black text-slate-900 mb-1.5 uppercase tracking-tight">{detail.label}</h4>
+                                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.1em] leading-relaxed">{detail.desc}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="pt-10 border-t border-slate-100 flex items-center justify-between">
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
+                                            Verified Program Standards
+                                        </p>
+                                        <button
+                                            onClick={() => setSelectedFeature(null)}
+                                            className="bg-slate-900 hover:bg-black text-white px-10 py-5 font-black text-[10px] uppercase tracking-[0.3em] transition-all shadow-xl shadow-slate-900/10 hover:-translate-y-1"
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence >
+        </section >
+    );
+};
+
+
+export default StudentEcosystem;
