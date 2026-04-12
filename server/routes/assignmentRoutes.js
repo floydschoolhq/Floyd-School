@@ -44,7 +44,7 @@ router.post('/upload', protect, authorize('mentor', 'admin'), upload.single('fil
     if (!req.file) {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
-    const fileUrl = `/ uploads / assignments / ${req.file.filename} `;
+    const fileUrl = `/uploads/assignments/${req.file.filename}`;
     res.status(200).json({
         success: true,
         file: {

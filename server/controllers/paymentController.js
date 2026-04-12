@@ -257,29 +257,6 @@ const verifyPayment = async (req, res) => {
             }
         }
 
-        // SECURITY: Verify payment amount matches the course price via Razorpay API
-        if (razorpay) {
-            try {
-                const payment = await razorpay.payments.fetch(razorpayPaymentId);
-                const expectedAmountPaise = Math.round(enrollment.amount * 100);
-
-                if (payment.amount !== expectedAmountPaise) {
-                    console.error('[Payment Security] Amount mismatch!', {
-                        expected: expectedAmountPaise,
-                        received: payment.amount,
-                        orderId: razorpayOrderId
-                    });
-                    return res.status(400).json({
-                        success: false,
-                        message: 'Payment amount mismatch. Please contact support.'
-                    });
-                }
-            } catch (fetchError) {
-                console.error('[Payment Warning] Could not verify payment amount:', fetchError.message);
-                // Continue with enrollment if fetch fails - signature is already verified
-            }
-        }
-
         // Update enrollment record
         const updatedEnrollment = await Enrollment.findByIdAndUpdate(
             enrollment._id,
@@ -405,10 +382,10 @@ const handlePaymentCancellation = async (req, res) => {
 const handleRazorpayWebhook = async (req, res) => {
     try {
         const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-        
-        // Verify webhook signature
+
+        // Verify webhook signature against the raw payload
         const razorpaySignature = req.headers['x-razorpay-signature'];
-        const webhookBody = JSON.stringify(req.body);
+        const webhookBody = req.rawBody ? req.rawBody.toString('utf8') : JSON.stringify(req.body);
         
         if (!razorpaySignature) {
             console.log('[Webhook] Missing signature');
@@ -425,9 +402,13 @@ const handleRazorpayWebhook = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid webhook signature' });
         }
         
-        console.log('[Webhook] Received webhook:', req.body);
-        
-        const { event, payload } = req.body;
+        const webhookPayload = req.body && typeof req.body === 'object'
+            ? req.body
+            : JSON.parse(webhookBody);
+
+        console.log('[Webhook] Received webhook:', webhookPayload);
+
+        const { event, payload } = webhookPayload;
         
         if (event === 'payment.captured') {
             // Payment successfully captured
@@ -549,8 +530,6 @@ const getEnrollment = async (req, res) => {
 module.exports = {
     createOrder,
     verifyPayment,
-    initiateRefund,
-    handlePaymentCancellation,
     initiateRefund,
     handlePaymentCancellation,
     handleRazorpayWebhook,

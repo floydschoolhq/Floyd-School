@@ -142,7 +142,7 @@ const PremiumNavbar = memo(({ variant }) => {
             <MaintenanceBanner />
 
             <motion.nav
-                className={`fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center ${isCoursesPage ? 'px-0' : 'px-4'} md:px-0`}
+                className="fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center px-0"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: isVisible ? 0 : -100, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}

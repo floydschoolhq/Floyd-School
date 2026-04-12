@@ -7,8 +7,7 @@ const {
     initiateRefund,
     handlePaymentCancellation,
     getPaymentStatus,
-    getEnrollment,
-    handleRazorpayWebhook
+    getEnrollment
 } = require('../controllers/paymentController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
@@ -21,7 +20,7 @@ router.post('/verify', verifyPayment);
 
 // PROTECTED: Refund and cancel must require authentication + admin role
 router.post('/refund', protect, authorize('admin'), initiateRefund);
-router.post('/cancel', protect, handlePaymentCancellation);
+router.post('/cancel', protect, authorize('admin'), handlePaymentCancellation);
 
 // Protected endpoints (authentication required)
 router.get('/status/:enrollmentId', protect, getPaymentStatus);

@@ -15,6 +15,9 @@ async function check() {
     
     const allCourses = await Course.find();
     const fs = require('fs');
+    const counts = {
+      totalCourses: allCourses.length
+    };
     const results = {
       counts,
       courseData: allCourses.map(c => ({

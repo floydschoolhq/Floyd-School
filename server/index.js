@@ -37,6 +37,7 @@ const liveClassRoutes = require('./routes/liveClassRoutes');
 const doubtRoutes = require('./routes/doubtRoutes');
 const scheduledLiveRoutes = require('./routes/scheduledLiveRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const { handleRazorpayWebhook } = require('./controllers/paymentController');
 
 connectDB();
 
@@ -106,7 +107,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Body parser with size limit to prevent large payload attacks
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({
+    limit: '10kb',
+    verify: (req, res, buf) => {
+        req.rawBody = Buffer.from(buf);
+    }
+}));
 
 // ===== RATE LIMITERS =====
 
@@ -175,6 +181,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authLimiter, authRoutes);
 
 // Payment routes with payment-specific rate limiting
+app.post('/api/payments/webhook', handleRazorpayWebhook);
 app.use('/api/payments', paymentLimiter, paymentRoutes);
 
 // Contact/lead routes with form spam protection
