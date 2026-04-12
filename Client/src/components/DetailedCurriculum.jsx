@@ -1,4 +1,5 @@
 import React from 'react';
+import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
 
 const DetailedCurriculum = () => {
     return (
@@ -428,7 +429,7 @@ const DetailedCurriculum = () => {
                     <div className="text-lg font-bold text-primary font-headline">Luminescent Academy</div>
                     <div className="flex flex-wrap justify-center gap-6">
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-200 font-inter text-sm antialiased" href="#">Privacy Policy</a>
-                        <a className="text-on-surface-variant hover:text-secondary transition-colors duration-200 font-inter text-sm antialiased" href="#">Terms of Service</a>
+                        <a className="text-on-surface-variant hover:text-secondary transition-colors duration-200 font-inter text-sm antialiased" href={termsPDF} target="_blank" rel="noopener noreferrer">Terms of Service</a>
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-200 font-inter text-sm antialiased" href="#">Research Labs</a>
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-200 font-inter text-sm antialiased" href="#">Support</a>
                     </div>

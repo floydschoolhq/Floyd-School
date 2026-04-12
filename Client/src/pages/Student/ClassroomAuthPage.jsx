@@ -6,6 +6,7 @@ import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
 import BrandLogo from '../../components/common/BrandLogo';
+import termsPDF from '../../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
 
 const ClassroomAuthPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -183,7 +184,7 @@ const ClassroomAuthPage = () => {
 
               <div className="text-center pt-4">
                 <p className="text-xs text-slate-400">
-                  By signing in, you agree to our Terms of Service and Privacy Policy
+                  By signing in, you agree to our <a href={termsPDF} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Terms of Service</a> and Privacy Policy
                 </p>
               </div>
             </div>

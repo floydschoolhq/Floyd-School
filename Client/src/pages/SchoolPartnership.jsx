@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
 
 // Tailwind config is assumed to be set up in your project with the same config
 // Google Fonts (Manrope, Inter, Material Symbols) should be added to your index.html or global CSS
@@ -906,7 +907,7 @@ const SchoolPartnership = () => {
             <div className="flex flex-col gap-3">
               {[
                 { name: "Privacy Policy", action: () => alert("Privacy Policy will be available soon!") },
-                { name: "Terms of Service", action: () => alert("Terms of Service will be available soon!") },
+                { name: "Terms of Service", action: () => window.open(termsPDF, '_blank') },
                 { name: "Contact", action: () => navigate('/contact') }
               ].map((link) => (
                 <button 
