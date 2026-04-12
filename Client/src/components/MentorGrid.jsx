@@ -10,7 +10,7 @@ import ananimikaImg from '../assets/tutors/anamika.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import poojaImg from '../assets/tutors/pooja.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
-import shanImg from '../assets/tutors/shan.jpeg';
+import shanImg from '../assets/tutors/sshan.png';
 
 import useIsMobile from '../hooks/useIsMobile';
 
