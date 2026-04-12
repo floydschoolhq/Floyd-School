@@ -43,6 +43,7 @@ import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 import FAQPage from './pages/FAQPage.jsx';
 import AdminStudentsPage from './pages/Admin/AdminStudentsPage.jsx';
+import ChatbotLeadsPage from './pages/Admin/ChatbotLeadsPage.jsx';
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
 import { usePortal } from './contexts/PortalProvider.jsx';
@@ -50,6 +51,9 @@ import { usePortal } from './contexts/PortalProvider.jsx';
 import { MotionConfig } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile.js';
 import { Toaster } from 'react-hot-toast';
+
+// Import Chatbot
+import Chatbot from './components/Chatbot';
 
 // --- Home Page Component ---
 const HomePage = () => {
@@ -68,6 +72,8 @@ const HomePage = () => {
                     <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
                 </div>
+                {/* Chatbot - Always visible on home page */}
+                <Chatbot />
             </div>
         </MotionConfig>
     )
@@ -163,6 +169,8 @@ const App = () => {
                 <Route path='/course' element={<Course />} />
                 <Route path='/course/:courseId' element={<CourseDetails />} />
                 <Route path='/admin/messages' element={<ProtectedRoute><AdminMessages variant="dark" /></ProtectedRoute>} />
+                <Route path='/admin/students' element={<ProtectedRoute><AdminStudentsPage /></ProtectedRoute>} />
+                <Route path='/admin/chatbot-leads' element={<ProtectedRoute><ChatbotLeadsPage /></ProtectedRoute>} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={

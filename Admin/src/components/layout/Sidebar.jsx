@@ -15,7 +15,8 @@ import {
     Monitor,
     GraduationCap,
     Video,
-    DollarSign
+    DollarSign,
+    MessageCircle
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
@@ -30,6 +31,7 @@ const Sidebar = () => {
         { icon: <GraduationCap size={20} />, label: 'Student Registrations', path: '/student-registrations' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
+        { icon: <MessageCircle size={20} />, label: 'Chatbot Leads', path: '/chatbot-leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
         { icon: <Video size={20} />, label: 'Recordings', path: '/recordings' },
