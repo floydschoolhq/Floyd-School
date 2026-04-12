@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Award, Target, BarChart3 } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import { ProgressChart } from '../../components/dashboard/ProgressChart';
+import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 import api from '../../api/axios';
 
 const PerformanceReportPage = () => {
@@ -30,8 +31,16 @@ const PerformanceReportPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
-        <div className="text-slate-900 text-xl font-black animate-pulse">Analyzing Performance Data...</div>
+      <div className="min-h-screen bg-surface-base p-6">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
+          </div>
+          <div className="space-y-4">
+            <CardSkeleton lines={3} />
+            <CardSkeleton lines={2} />
+          </div>
+        </div>
       </div>
     );
   }

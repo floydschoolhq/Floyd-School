@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
@@ -8,6 +8,7 @@ import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import Masterclasses from '../../components/Masterclasses';
 import AssignmentSubmissionModal from '../../components/Student/AssignmentSubmissionModal';
+import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 
 import { PortalContext } from '../../contexts/PortalProvider';
 import { useSocket } from '../../contexts/SocketProvider';
@@ -217,8 +218,19 @@ const ClassroomPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-surface-base">
-        <div className="text-text-main text-xl font-semibold animate-pulse">Initializing Framework...</div>
+      <div className="min-h-screen bg-surface-base p-6">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-4">
+              <CardSkeleton lines={3} />
+              <CardSkeleton lines={2} />
+            </div>
+            <CardSkeleton lines={4} />
+          </div>
+        </div>
       </div>
     );
   }

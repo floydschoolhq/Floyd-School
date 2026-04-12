@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Clock, Target } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import { ProgressChart } from '../../components/dashboard/ProgressChart';
+import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 import api from '../../api/axios';
 
 const ProgressTrackingPage = () => {
@@ -26,8 +27,16 @@ const ProgressTrackingPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
-        <div className="text-slate-900 text-xl font-black animate-pulse">Mapping Growth Trajectory...</div>
+      <div className="min-h-screen bg-surface-base p-6">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <CardSkeleton lines={4} />
+            <CardSkeleton lines={3} />
+          </div>
+        </div>
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Video, Play, Calendar, Clock, X, GraduationCap, PlayCircle, BookOpen, MessageSquare } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
+import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 import api from '../../api/axios';
 import CommentSection from '../../components/Student/CommentSection';
 
@@ -39,10 +40,18 @@ const RecordingsPage = () => {
         }
     };
 
-    if (loading) {
+if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-white">
-                <div className="text-slate-900 text-xl font-black animate-pulse uppercase tracking-widest">Accessing Archive...</div>
+            <div className="min-h-screen bg-surface-base p-6">
+                <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {[...Array(3)].map((_, i) => <StatSkeleton key={i} />)}
+                    </div>
+                    <div className="space-y-4">
+                        <CardSkeleton lines={3} />
+                        <CardSkeleton lines={2} />
+                    </div>
+                </div>
             </div>
         );
     }

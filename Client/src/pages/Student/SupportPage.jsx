@@ -16,6 +16,7 @@ import {
     Shield
 } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
+import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 import api from '../../api/axios';
 import { io } from 'socket.io-client';
 
@@ -134,8 +135,18 @@ const SupportPage = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-white">
-                <div className="text-slate-900 text-xl font-black animate-pulse uppercase tracking-widest">Securing Support Channel...</div>
+            <div className="min-h-screen bg-slate-50 p-6">
+                <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {[...Array(3)].map((_, i) => <StatSkeleton key={i} />)}
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2 space-y-4">
+                            <CardSkeleton lines={3} />
+                        </div>
+                        <CardSkeleton lines={4} />
+                    </div>
+                </div>
             </div>
         );
     }
