@@ -15,6 +15,7 @@ const LEADERS = [
     {
         name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
+        experience: "3+",
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
@@ -25,6 +26,7 @@ const LEADERS = [
     {
         name: "Shivam Mishra",
         role: "Founder | AI/ML Engineer",
+        experience: "4+",
         image: shivamImg,
         imageScale: 1.9,
         bio: "visionary founder of thinkskool, architecting the future of STEM education through advanced AI and machine learning integration.",
@@ -34,6 +36,7 @@ const LEADERS = [
     {
         name: "Anamika Vashisth",
         role: "Growth Associate",
+        experience: "3+",
         image: ananimikaImg,
         imageScale: 1,
         imagePosition: "object-[center_22%]",
@@ -44,6 +47,7 @@ const LEADERS = [
     {
         name: "Nitesh Kumar",
         role: "UI and UX Management",
+        experience: "2+",
         image: niteshImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
@@ -111,12 +115,18 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         : 'text-slate-900 group-hover:text-blue-600'}`}>
                     {mentor.name}
                 </h3>
-                    <p className={`font-bold text-sm md:text-[13px] uppercase pb-4
-                        ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        <span className="mr-2">[</span>
-                        {mentor.role}
-                        <span className="ml-2">]</span>
-                    </p>
+                    <div className="flex items-center justify-center gap-2 mb-3">
+                        <p className={`font-bold text-sm md:text-[13px] uppercase
+                            ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                            <span className="mr-2">[</span>
+                            {mentor.role}
+                            <span className="ml-2">]</span>
+                        </p>
+                        <span className={`px-2.5 py-1 text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-full transition-all duration-500
+                            ${isDark ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 group-hover:bg-blue-500/30 group-hover:text-blue-300' : 'bg-blue-100 text-blue-600 border border-blue-200 group-hover:bg-blue-200 group-hover:text-blue-700'}`}>
+                            {mentor.experience} years
+                        </span>
+                    </div>
                     <div className={`w-16 h-1.5 transition-all duration-500 rounded-full
                         ${isDark ? 'bg-white/10 group-hover:w-32 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:w-32 group-hover:bg-blue-600'}`} />
                 </div>
@@ -210,9 +220,14 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", isStatic = false, excludeNa
                                 <h3 className="text-[22px] font-black text-slate-900 tracking-tighter leading-tight">
                                     {mentor.name}
                                 </h3>
-                                <p className="text-[12px] font-bold text-slate-500 mt-1.5 uppercase tracking-wide">
-                                    {mentor.role}
-                                </p>
+                                <div className="flex items-center justify-center gap-2 mt-1.5 mb-2">
+                                    <p className="text-[12px] font-bold text-slate-500 uppercase tracking-wide">
+                                        {mentor.role}
+                                    </p>
+                                    <span className="px-2 py-0.5 text-[8px] font-black uppercase tracking-wider rounded-full bg-blue-100 text-blue-600 border border-blue-200">
+                                        {mentor.experience} years
+                                    </span>
+                                </div>
                             </div>
                             <a
                                 href={mentor.linkedin}

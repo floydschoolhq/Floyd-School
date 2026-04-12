@@ -19,7 +19,7 @@ const Footer = () => {
         { name: 'About Us', href: '#how-it-works' },
         { name: 'Careers', href: '/careers' },
         { name: 'Privacy Policy', href: '/privacy' },
-        { name: 'Terms & Conditions', href: '/terms' },
+        { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
       ],
     },
     {
@@ -52,11 +52,13 @@ const Footer = () => {
               {[
                 { name: 'About Us', href: '#how-it-works' },
                 { name: 'Privacy Policy', href: '/privacy' },
-                { name: 'Terms & Conditions', href: '/terms' },
+                { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
               ].map((link, i) => (
                 <li key={i}>
                   <a 
                     href={link.href} 
+                    target={link.target || '_self'}
+                    rel={link.rel || ''}
                     className="text-slate-400 text-[12px] font-black tracking-[0.2em] hover:text-orange-500 transition-colors uppercase"
                   >
                     {link.name}
@@ -126,6 +128,8 @@ const Footer = () => {
                     <li key={linkIndex}>
                       <a
                         href={link.href}
+                        target={link.target || '_self'}
+                        rel={link.rel || ''}
                         className="text-[14px] font-bold tracking-tight text-slate-500 hover:text-orange-500 transition-all duration-300"
                       >
                         {link.name}

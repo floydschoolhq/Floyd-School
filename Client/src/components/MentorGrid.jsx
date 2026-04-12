@@ -18,6 +18,7 @@ const LEADERS = [
     {
         name: "Shivam Mishra",
         role: "Founder | AI/ML Engineer",
+        experience: "4+",
         image: shivamImg,
         imageScale: 1.9,
         bio: "AI/ML expert building intelligent, real-world solutions with machine learning.",
@@ -27,6 +28,7 @@ const LEADERS = [
     {
         name: "Raghav",
         role: "Lead Mentor & Product Architect",
+        experience: "3+",
         image: raghavImg,
         imageScale: 1.9,
         bio: "Cybersecurity specialist focused on securing systems and preventing threats.",
@@ -36,6 +38,7 @@ const LEADERS = [
     {
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
+        experience: "2+",
         image: abhayImg,
         imageScale: 1.8,
         bio: "Builds fast, scalable, and modern web applications using latest technologies.",
@@ -45,6 +48,7 @@ const LEADERS = [
     {
         name: "Anamika Vashisth",
         role: "UI/UX & System Designer",
+        experience: "3+",
         image: ananimikaImg,
         imageScale: 1.4,
         bio: "Designs intuitive, user-friendly interfaces focused on seamless experience.",
@@ -54,6 +58,7 @@ const LEADERS = [
     {
         name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
+        experience: "3+",
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
@@ -64,6 +69,7 @@ const LEADERS = [
     {
         name: "Shan Sharma",
         role: "System Development",
+        experience: "4+",
         image: shanImg,
         imageScale: 1.0,
         bio: "Develops scalable systems and modern web applications with strong architecture.",
@@ -73,6 +79,7 @@ const LEADERS = [
     {
         name: "Nitesh Kumar",
         role: "UI and UX Management",
+        experience: "2+",
         image: niteshImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
@@ -83,6 +90,7 @@ const LEADERS = [
     {
         name: "Pooja Kumari",
         role: "UI and UX Management",
+        experience: "1+",
         image: poojaImg,
         imageScale: 1.0,
         bio: "Designs user-centered experiences that balance creativity and functionality.",
@@ -131,9 +139,14 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
-                        <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
-                            {mentor.role}
-                        </p>
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
+                                {mentor.role}
+                            </p>
+                            <span className={`px-2 py-0.5 text-[8px] font-black uppercase tracking-wider rounded-full ${isDark ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-orange-100 text-orange-600 border border-orange-200'}`}>
+                                {mentor.experience} years
+                            </span>
+                        </div>
                     </div>
 
                     <p className={`text-[13px] font-medium leading-relaxed mb-2 px-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -185,10 +198,16 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
                         {mentor.name}
                     </h3>
-                    <p className={`font-semibold text-[11px] md:text-[13px] tracking-wide uppercase truncate pb-4
-                        ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                        {mentor.role}
-                    </p>
+                    <div className="flex items-center justify-center gap-2 mb-3">
+                        <p className={`font-semibold text-[11px] md:text-[13px] tracking-wide uppercase truncate
+                            ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                            {mentor.role}
+                        </p>
+                        <span className={`px-2.5 py-1 text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-full transition-all duration-300
+                            ${isDark ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30 group-hover:bg-orange-500/30 group-hover:text-orange-300' : 'bg-orange-100 text-orange-600 border border-orange-200 group-hover:bg-orange-200 group-hover:text-orange-700'}`}>
+                            {mentor.experience} years
+                        </span>
+                    </div>
                     <div className={`w-12 h-1 transition-all duration-300 rounded-full
                         ${isDark ? 'bg-white/10 group-hover:w-20 group-hover:bg-orange-400' : 'bg-slate-100 group-hover:w-20 group-hover:bg-orange-500'}`} />
                 </div>
@@ -237,7 +256,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         
         let animationFrame;
         let lastTime = 0;
-        const speed = -0.5; // Slower speed for better performance
+        const speed = -1.5; // 2x faster speed
         
         const animate = (currentTime) => {
             if (currentTime - lastTime >= 16) { // Cap at 60fps
@@ -270,7 +289,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
 
         let animationFrame;
         let lastTime = 0;
-        const interval = 3000; // 3 seconds between swipes
+        const interval = 1000; // 1.5 seconds between swipes (2x faster)
         
         const animate = (currentTime) => {
             if (currentTime - lastTime >= interval) {
@@ -408,11 +427,18 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                     <h3 className={`text-base font-black uppercase tracking-tight leading-none mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                                         {mentor.name}
                                     </h3>
-                                    <p className={`text-[8px] font-bold uppercase tracking-wider ${
-                                        isDark ? 'text-blue-400' : 'text-blue-600'
-                                    }`}>
-                                        {mentor.role}
-                                    </p>
+                                    <div className="flex items-center justify-center gap-2 mb-2">
+                                        <p className={`text-[8px] font-bold uppercase tracking-wider ${
+                                            isDark ? 'text-blue-400' : 'text-blue-600'
+                                        }`}>
+                                            {mentor.role}
+                                        </p>
+                                        <span className={`px-2 py-0.5 text-[7px] font-black uppercase tracking-wider rounded-full ${
+                                            isDark ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-orange-100 text-orange-600 border border-orange-200'
+                                        }`}>
+                                            {mentor.experience} years
+                                        </span>
+                                    </div>
                                 </div>
                                 
                                 <p className={`text-xs leading-relaxed px-1 line-clamp-2 ${
