@@ -12,7 +12,22 @@ const Chatbot = () => {
   const [formError, setFormError] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [userPath, setUserPath] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   // Only show chatbot on home page
   if (location.pathname !== '/') {
@@ -219,14 +234,18 @@ const Chatbot = () => {
       {/* Floating Chat Button */}
       <button
         onClick={() => setIsOpen(o => !o)}
-        className="fixed bottom-4 right-4 z-50 w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-300 group"
+        className={`fixed z-50 shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-300 group ${
+          isMobile 
+            ? 'bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full' 
+            : 'bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full'
+        }`}
       >
         {isOpen ? (
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
         )}
@@ -234,41 +253,45 @@ const Chatbot = () => {
       </button>
 
       {/* Chat Window */}
-      <div className={`fixed bottom-20 right-4 z-40 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 ${!isOpen ? 'opacity-0 pointer-events-none scale-95' : 'opacity-100'} transition-all duration-300`}>
+      <div className={`fixed z-40 rounded-2xl shadow-2xl border border-gray-200 transition-all duration-300 ${
+        isMobile 
+          ? 'bottom-16 left-4 right-4 w-[calc(100vw-2rem)] h-[calc(100vh-6rem)] bg-white' 
+          : 'bottom-24 right-6 w-80 bg-white'
+      } ${!isOpen ? 'opacity-0 pointer-events-none scale-95' : 'opacity-100'}`}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-3 rounded-t-2xl flex items-center justify-between">
+        <div className={`bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-t-2xl flex items-center justify-between ${isMobile ? 'p-2' : 'p-3'}`}>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span className="text-orange-500 text-sm font-bold">🤖</span>
+            <div className={`w-5 h-5 bg-white rounded-full flex items-center justify-center ${isMobile ? '' : 'flex-shrink-0'}`}>
+              <span className={`${isMobile ? 'text-[10px]' : 'text-sm'} text-orange-500 font-bold`}>{'\ud83e\udd16'}</span>
             </div>
             <div>
-              <div className="font-semibold text-sm">ThinkSkool Assistant</div>
-              <div className="text-xs text-orange-100 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-green-300 rounded-full animate-pulse"></span>
-                Online • Ready to help
+              <div className={`font-semibold ${isMobile ? 'text-xs' : 'text-base'}`}>ThinkSkool</div>
+              <div className={`text-xs ${isMobile ? 'text-orange-100' : 'text-orange-100'} flex items-center gap-1`}>
+                <span className={`w-1 h-1 bg-green-300 rounded-full animate-pulse`}></span>
+                <span className={isMobile ? 'hidden' : ''}>Online</span>
               </div>
             </div>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+            className={`hover:bg-white/20 rounded-lg transition-colors ${isMobile ? 'p-1' : 'p-2'}`}
           >
-            <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`text-white ${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Messages Area */}
-        <div className="h-80 overflow-y-auto p-3 space-y-2">
+        <div className={`overflow-y-auto space-y-2 ${isMobile ? 'p-2 h-[calc(100vh-10rem)]' : 'p-3 h-80'}`}>
           {messages.map((m, i) => (
             <div key={m.id || i} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${m.sender === 'user' ? 'bg-orange-200 order-2' : 'bg-gray-100'}`}>
-                <span className="text-xs">
-                  {m.sender === 'bot' ? '🤖' : '👤'}
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${m.sender === 'user' ? 'bg-orange-200 order-2' : 'bg-gray-100'}`}>
+                <span className="text-[8px]">
+                  {m.sender === 'bot' ? '\ud83e\udd16' : '\ud83d\udc64'}
                 </span>
               </div>
-              <div className={`max-w-[75%] p-2 rounded-xl text-sm ${m.sender === 'user' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none'}`}>
+              <div className={`max-w-[75%] p-2 rounded-xl ${isMobile ? 'text-xs' : 'text-sm'} ${m.sender === 'user' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none'}`}>
                 <div className="whitespace-pre-line">{m.text}</div>
               </div>
             </div>
@@ -277,14 +300,14 @@ const Chatbot = () => {
           {/* Typing Indicator */}
           {isTyping && (
             <div className="flex justify-start animate-fadeIn">
-              <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                <span className="text-xs">🤖</span>
+              <div className={`w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0`}>
+                <span className="text-[8px]">\ud83e\udd16</span>
               </div>
               <div className="bg-gray-100 text-gray-800 p-2 rounded-xl rounded-bl-none">
                 <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+                  <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -293,15 +316,15 @@ const Chatbot = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-3 border-t border-gray-200">
+        <div className={`border-t border-gray-200 ${isMobile ? 'p-2' : 'p-4'}`}>
           {/* Quick Reply Buttons */}
           {showBtns && (
-            <div className="flex flex-wrap gap-1.5 mb-2">
+            <div className={`grid gap-1.5 mb-2 ${isMobile ? 'grid-cols-2' : 'flex flex-wrap'}`}>
               {lastMsg.btns.map((b, bi) => (
                 <button
                   key={bi}
                   onClick={() => handleBtn(b.val, b.label)}
-                  className="px-2 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg text-xs font-medium transition-colors"
+                  className={`px-2 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg font-medium transition-colors ${isMobile ? 'text-[10px]' : 'text-xs'}`}
                 >
                   {b.label}
                 </button>
@@ -311,14 +334,14 @@ const Chatbot = () => {
 
           {/* Form Inputs */}
           {step === 4 && (
-            <div className="space-y-2">
+            <div className={`space-y-2 ${isMobile ? 'space-y-1' : ''}`}>
               <input
                 type="text"
                 placeholder="Student Name"
                 value={formData.name}
                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
               />
               <input
                 type="text"
@@ -326,12 +349,12 @@ const Chatbot = () => {
                 value={formData.school}
                 onChange={e => setFormData(p => ({ ...p, school: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
               />
-              {formError && <div className="text-red-500 text-xs mt-1">{formError}</div>}
+              {formError && <div className={`text-red-500 mt-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
               <button
                 onClick={handleFormSubmit}
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg py-2 font-medium hover:from-orange-600 hover:to-orange-700 transition-colors text-sm"
+                className={`w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium hover:from-orange-600 hover:to-orange-700 transition-colors ${isMobile ? 'text-xs py-1.5' : 'text-sm py-2'}`}
               >
                 Continue
               </button>
@@ -339,19 +362,19 @@ const Chatbot = () => {
           )}
 
           {step === 6 && (
-            <div className="space-y-2">
+            <div className={`space-y-2 ${isMobile ? 'space-y-1' : ''}`}>
               <input
                 type="text"
                 placeholder="WhatsApp number or Email"
                 value={formData.contact}
                 onChange={e => setFormData(p => ({ ...p, contact: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
               />
-              {formError && <div className="text-red-500 text-xs mt-1">{formError}</div>}
+              {formError && <div className={`text-red-500 mt-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
               <button
                 onClick={handleFormSubmit}
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg py-2 font-medium hover:from-orange-600 hover:to-orange-700 transition-colors text-sm"
+                className={`w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium hover:from-orange-600 hover:to-orange-700 transition-colors ${isMobile ? 'text-xs py-1.5' : 'text-sm py-2'}`}
               >
                 Send Details
               </button>
@@ -359,20 +382,20 @@ const Chatbot = () => {
           )}
 
           {step === 7 && (
-            <div className="text-center py-3">
-              <div className="text-green-600 font-medium text-sm">✅ You are all set! We will be in touch soon.</div>
+            <div className={`text-center py-2 ${isMobile ? 'py-1' : ''}`}>
+              <div className={`text-green-600 font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>You are all set!</div>
             </div>
           )}
 
           {/* Reset Button */}
-          <div className="flex justify-between items-center mt-2">
+          <div className={`flex justify-between items-center ${isMobile ? 'mt-1' : 'mt-3'}`}>
             <button
               onClick={resetChat}
-              className="text-gray-400 hover:text-gray-600 text-xs transition-colors"
+              className={`text-gray-400 hover:text-gray-600 transition-colors ${isMobile ? 'text-[10px]' : 'text-xs'}`}
             >
               Start over
             </button>
-            <div className="text-gray-400 text-xs">Powered by <span className="text-orange-500">ThinkSkool</span></div>
+            <div className={`text-gray-400 text-xs ${isMobile ? 'text-[10px]' : ''}`}>ThinkSkool</div>
           </div>
         </div>
       </div>
