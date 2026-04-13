@@ -75,11 +75,11 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             {/* Image Section: High-End Industrial Housing */}
             <div className="w-40 h-40 flex-shrink-0 relative pt-2">
                 {/* Secondary Outer Frame for Depth */}
-                <div className={`absolute inset-0 rounded-[2.5rem_0.5rem_2.5rem_0.5rem] rotate-3 transition-transform duration-700 group-hover:rotate-6
+                <div className={`absolute inset-0 rounded-3xl transition-transform duration-700
                     ${isDark ? 'bg-blue-500/10' : 'bg-blue-100/50'}`} />
                 
                 {/* Main Profile Housing */}
-                <div className={`w-full h-full rounded-[2.5rem_0.5rem_2.5rem_0.5rem] overflow-hidden relative border-2 transition-all duration-700 -rotate-3 group-hover:rotate-0
+                <div className={`w-full h-full rounded-3xl overflow-hidden relative border-2 transition-all duration-700
                     ${isDark ? 'border-white/10 group-hover:border-blue-500/40 shadow-2xl' : 'border-slate-200 group-hover:border-blue-300 shadow-xl'}`}>
                     {/* Dynamic Background */}
                     <div className={`absolute inset-0 transition-colors duration-700
