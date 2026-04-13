@@ -284,25 +284,31 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                                 index={idx}
                                 variant={variant}
                             />
-                        </div>
+                        ))}
+                    </motion.div>
+                </div>
 
-                        {/* Info Area: dark text on white */}
+                {/* Info Area: dark text on white */}
+                {(() => {
+                    const activeMentor = displayLeaders[currentIndex % displayLeaders.length];
+                    if (!activeMentor) return null;
+                    return (
                         <div className="bg-white px-5 py-5 min-h-[100px] flex items-center justify-center border-t border-slate-100 relative">
                             <div className="flex flex-col items-center text-center w-full relative z-10 px-8">
                                 <h3 className="text-[22px] font-black text-slate-900 tracking-tighter leading-tight">
-                                    {mentor.name}
+                                    {activeMentor.name}
                                 </h3>
                                 <div className="flex items-center justify-center gap-2 mt-1.5 mb-2">
                                     <p className="text-[12px] font-bold text-slate-500 uppercase tracking-wide">
-                                        {mentor.role}
+                                        {activeMentor.role}
                                     </p>
                                     <span className="px-2 py-0.5 text-[8px] font-black uppercase tracking-wider rounded-full bg-blue-100 text-blue-600 border border-blue-200">
-                                        {mentor.experience} years
+                                        {activeMentor.experience} years
                                     </span>
                                 </div>
                             </div>
                             <a
-                                href={mentor.linkedin}
+                                href={activeMentor.linkedin}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md z-20 hover:bg-blue-700 transition-colors"
@@ -310,8 +316,9 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                                 <FaLinkedinIn size={14} />
                             </a>
                         </div>
-                    </motion.div>
-                </div>
+                    );
+                })()}
+                {/* End of Info Area */}
 
                 <div className="flex justify-center gap-6 mt-10">
                     <button
