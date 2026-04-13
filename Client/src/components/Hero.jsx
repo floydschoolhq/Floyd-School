@@ -12,17 +12,25 @@ import Magnet from './common/Magnet';
 import useIsMobile from '../hooks/useIsMobile';
 import RegistrationForm from './RegistrationForm';
 
+import avatar1 from '../assets/avatars/avatar1.png';
+import avatar2 from '../assets/avatars/avatar2.png';
+import avatar3 from '../assets/avatars/avatar3.png';
+import avatar4 from '../assets/avatars/avatar4.png';
+import avatar5 from '../assets/avatars/avatar5.png';
+
+const AVATARS = [avatar1, avatar2, avatar3, avatar4, avatar5];
+
 const ScrollingAvatars = ({ isMobile }) => {
     if (isMobile) {
         return (
             <div className="flex flex-col items-center gap-2">
                 <div className="flex -space-x-1 justify-center">
-                    {['A', 'B', 'C'].map((letter, i) => (
-                        <div key={i} className="w-5 h-5 rounded-full border-[1.5px] border-white bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm">
-                            <span className="text-white text-[8px] font-bold">{letter}</span>
+                    {AVATARS.slice(0, 3).map((img, i) => (
+                        <div key={i} className="w-5 h-5 rounded-full border-[1.5px] border-white overflow-hidden shadow-sm bg-slate-100">
+                            <img src={img} alt={`Student ${i+1}`} className="w-full h-full object-cover" />
                         </div>
                     ))}
-                    <div className="w-5 h-5 rounded-full border-[1.5px] border-white bg-orange-500 flex items-center justify-center shadow-sm">
+                    <div className="w-5 h-5 rounded-full border-[1.5px] border-white bg-slate-900 flex items-center justify-center shadow-sm">
                         <span className="text-white text-[8px] font-bold">+2</span>
                     </div>
                 </div>
@@ -36,9 +44,9 @@ const ScrollingAvatars = ({ isMobile }) => {
     return (
         <div className="flex flex-row items-center justify-center gap-4">
             <div className="flex -space-x-3 justify-center">
-                {['A', 'B', 'C', 'D', 'E'].map((letter, i) => (
-                    <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-[3px] border-white bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm relative z-[i]">
-                        <span className="text-sm md:text-base font-bold text-white">{letter}</span>
+                {AVATARS.map((img, i) => (
+                    <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-[3px] border-white overflow-hidden shadow-sm relative z-[i] bg-slate-100">
+                        <img src={img} alt={`Student ${i+1}`} className="w-full h-full object-cover" />
                     </div>
                 ))}
             </div>
