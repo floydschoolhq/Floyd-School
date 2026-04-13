@@ -8,12 +8,12 @@ const CourseOfferings = ({ variant = 'dark' }) => {
     const cardsRef = useRef([]);
 
     const mobileFeatures = [
-        { icon: "01", title: "Live Mentor Guidance", desc: "Real mentors in every session to guide you and review your code." },
-        { icon: "02", title: "Weekly Doubt Sessions", desc: "Dedicated weekly sessions to clear all your doubts with clarity." },
-        { icon: "03", title: "24/7 Doubt Assistant", desc: "Get your doubts resolved instantly, anytime, day or night." },
-        { icon: "04", title: "Growth Associate", desc: "Personal tracking and regular check-ins to ensure your progress." },
-        { icon: "05", title: "Live Dashboard", desc: "Comprehensive real-time tracking for students and parents." },
-        { icon: "06", title: "Class Recordings", desc: "Access session recordings to revisit concepts anytime." },
+        { icon: "01", title: "Personal Mentor Guidance", desc: "Real-time assistance in every class. Mentors actively review your code, provide instant feedback, and ensure you grasp every concept before moving forward." },
+        { icon: "02", title: "Weekly Clearing Sessions", desc: "Deep-dive sessions dedicated solely to your questions. Our mentors stay until every single student's queries are resolved with absolute clarity." },
+        { icon: "03", title: "24/7 Doubt Support", desc: "Round-the-clock assistance through our dedicated support systems. Never pause your learning; get unstuck at 3 AM just as easily as at 3 PM." },
+        { icon: "04", title: "Growth & Success Partner", desc: "We track your journey, provide regular check-ins and tailored career advice to keep you on the fastest path to your professional growth." },
+        { icon: "05", title: "Real-time Progress Tracker", desc: "Total transparency for your journey. An interactive portal for students and parents to track progress, grades, and identify focus areas in real-time." },
+        { icon: "06", title: "HD Class Recordings", desc: "A permanent library of your education. Every session is captured in high-definition, allowing you to re-watch complex explanations anytime you need." },
     ];
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 <div className="w-full mx-auto rounded-3xl overflow-hidden bg-white shadow-2xl shadow-black/20 border border-slate-200 relative">
                     {mobileFeatures.map((feature, i) => (
                         <React.Fragment key={i}>
-                            <div className="flex items-center gap-3 px-4 py-6 min-h-[280px]">
+                            <div className="flex items-center gap-5 px-6 py-10">
                                 <div className="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center shadow-lg">
                                     <div className="text-blue-300 font-black text-lg">
                                         {feature.icon}

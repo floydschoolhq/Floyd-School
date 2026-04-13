@@ -135,12 +135,10 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         ${isDark ? 'bg-white/10 group-hover:w-32 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:w-32 group-hover:bg-blue-600'}`} />
                 </div>
 
-                {!isMobile && (
-                    <p className={`text-[15px] md:text-[16px] leading-[1.6] mb-8 font-medium px-4
-                        ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        {mentor.bio}
-                    </p>
-                )}
+                <p className={`text-[14px] md:text-[16px] leading-[1.6] mb-6 md:mb-8 font-medium px-4 opacity-100
+                    ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    {mentor.bio}
+                </p>
 
 
             </div>
