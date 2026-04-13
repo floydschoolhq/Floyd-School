@@ -125,6 +125,19 @@ const PremiumNavbar = memo(({ variant }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isMobileMenuOpen]);
+
     useEffect(() => {
         // Handle cross-page scrolling from state
         if (location.state?.scrollTo) {
@@ -235,20 +248,20 @@ const PremiumNavbar = memo(({ variant }) => {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        className="fixed inset-0 z-50 md:hidden"
+                        className="fixed inset-0 z-50 md:hidden overflow-hidden"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     >
                         {/* Backdrop */}
-                        <div
+                        <motion.div
                             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         
                         {/* Enhanced Mobile Menu Panel */}
                         <motion.div
-                            className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl
+                            className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl overflow-y-auto
                                 ${isCoursesPage ? 'bg-slate-900' : 'bg-white'}`}
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
