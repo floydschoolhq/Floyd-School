@@ -251,9 +251,9 @@ const ThinkskoolAdvantageGrid = () => {
                         initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-slate-950 mb-8 cursor-default"
+                        className="text-slate-950 mb-6 cursor-default"
                     >
-                        <span className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight block text-black mb-2">
+                        <span className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight block text-black mb-1">
                             Schools teach concepts.
                         </span>
                         <span className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight block bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">

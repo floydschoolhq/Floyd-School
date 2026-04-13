@@ -285,10 +285,10 @@ const ThinkskoolAdvantage = () => {
                         viewport={{ once: true }}
                         className="text-left"
                     >
-                        <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">
+                        <h2 className="text-[26px] font-black text-slate-900 mb-1 leading-tight">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-tight">
+                        <h2 className="text-[26px] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-tight">
                             We teach you to build.
                         </h2>
                     </motion.div>
@@ -370,12 +370,12 @@ const ThinkskoolAdvantage = () => {
         <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">
             {/* Heading */}
             <div className="flex flex-col items-center text-center leading-tight mb-16 md:mb-20 lg:mb-24">
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-black tracking-tight">
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-black tracking-tight">
                     Schools teach concepts.
                 </h2>
 
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-orange-500 mt-3 tracking-tight">
-                    We teach students to build real things.
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-orange-500 mt-3 tracking-tight">
+                    We teach you to build real things.
                 </h2>
             </div>
 
