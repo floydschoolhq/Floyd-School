@@ -112,14 +112,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                                 />
                             </div>
                         
-                                    <div className="absolute top-0 right-0 z-20">
-                                        <div className={`px-1.5 py-0.5 rounded-lg backdrop-blur-md border text-[7px] font-black uppercase tracking-widest shadow-lg
-                                            ${isDark ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-white/80 border-orange-200 text-orange-600'}`}>
-                                            {mentor.experience}
-                                        </div>
-                                    </div>
-                                </div>
-                        
                         <a 
                             href={mentor.linkedin}
                             target="_blank"
@@ -131,7 +123,13 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         </a>
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mb-6 flex flex-col items-center">
+                        <div className="mb-3">
+                            <span className={`px-1.5 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-widest shadow-sm
+                                ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' : 'bg-orange-50 border-orange-100 text-orange-600'}`}>
+                                {mentor.experience} Exp.
+                            </span>
+                        </div>
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
@@ -171,13 +169,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                     </div>
                 </div>
 
-                <div className={`absolute -top-2 -right-2 z-20`}>
-                    <div className={`px-2 py-1 rounded-xl backdrop-blur-md border text-[9px] font-black uppercase tracking-widest shadow-xl
-                        ${isDark ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-white/90 border-orange-100 text-orange-600'}`}>
-                        {mentor.experience}
-                    </div>
-                </div>
-
                 <a 
                     href={mentor.linkedin}
                     target="_blank"
@@ -191,6 +182,12 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
             </div>
 
             <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+                <div className="mb-4">
+                    <span className={`px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest shadow-sm
+                        ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' : 'bg-orange-50 border-orange-100 text-orange-600'}`}>
+                        {mentor.experience} Experienced
+                    </span>
+                </div>
                 <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
                     <h3 className={`text-xl md:text-3xl font-black uppercase tracking-tight leading-none transition-colors duration-300 w-full
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>

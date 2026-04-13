@@ -102,21 +102,19 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                     {/* Industrial Overlay */}
                     <div className={`absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100
                         ${isDark ? 'bg-gradient-to-t from-blue-500/20 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
-
-                    {/* Experience Badge */}
-                    <div className="absolute top-2 right-2 z-20">
-                        <div className={`px-2 py-1 rounded-lg backdrop-blur-md border text-[8px] font-black uppercase tracking-widest shadow-lg
-                            ${isDark 
-                                ? 'bg-blue-500/20 border-blue-500/40 text-blue-400' 
-                                : 'bg-white/80 border-blue-100 text-blue-600'}`}>
-                            {mentor.experience}
-                        </div>
-                    </div>
                 </div>
             </div>
  
             {/* Content Core: Pure Data Hierarchy */}
             <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+                <div className="mb-4">
+                    <span className={`px-2 py-1 rounded-lg border text-[8px] font-black uppercase tracking-[0.2em] shadow-sm
+                        ${isDark 
+                            ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' 
+                            : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
+                        {mentor.experience} Experienced
+                    </span>
+                </div>
                 <div className="space-y-1 mb-4 flex flex-col items-center">
                 <h3 className={`text-xl md:text-2xl font-ubuntu font-bold tracking-[0.25em] uppercase leading-tight transition-all duration-500 w-full break-words whitespace-nowrap
                     ${isDark 
