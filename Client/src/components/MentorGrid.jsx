@@ -127,9 +127,10 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
-                        <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
+                        <p className={`text-[10px] font-bold uppercase tracking-[0.15em] mb-4 ${isDark ? 'text-blue-500' : 'text-blue-600'}`}>
                             {mentor.role}
                         </p>
+                        <div className={`w-10 h-1 rounded-full ${isDark ? 'bg-white/10' : 'bg-slate-100'}`} />
                     </div>
 
                     <p className={`text-[13px] font-medium leading-relaxed mb-2 px-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
