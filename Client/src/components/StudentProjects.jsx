@@ -227,14 +227,17 @@ const ProjectCard = ({ project, index, isFeatured }) => {
   }
 
   return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 ${
+    <a
+      href={project.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
         isFeatured 
           ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
           : 'lg:col-span-1 md:row-span-1'
       }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div
         className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out rounded-2xl"
@@ -333,7 +336,7 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
         )}
       </div>
-    </div>
+    </a>
   );
 };
 
@@ -425,9 +428,12 @@ const StudentProjects = () => {
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide"
           >
              {filteredProjects.map((project) => (
-               <div 
+               <a 
                  key={project.id} 
-                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300"
+                 href={project.liveUrl}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300 block"
                >
                  <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
                    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
@@ -461,7 +467,7 @@ const StudentProjects = () => {
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
                     </div>
                  </div>
-               </div>
+               </a>
              ))}
           </div>
 

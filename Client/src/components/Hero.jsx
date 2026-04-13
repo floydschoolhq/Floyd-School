@@ -102,13 +102,7 @@ const Hero = () => {
                             Enroll now →
                         </button>
                         
-                        <button
-                            onClick={() => navigate('/school-partnerships')}
-                            className="w-full px-10 py-5 bg-white border-2 border-slate-900 text-slate-900 font-black text-xs uppercase tracking-widest rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-all"
-                        >
-                            Partner with Us
-                        </button>
-
+                        
                         <div className="pt-4 opacity-80 scale-90">
                             <ScrollingAvatars isMobile={true} />
                         </div>
