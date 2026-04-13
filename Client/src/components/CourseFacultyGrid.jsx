@@ -7,6 +7,7 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import niteshImg from '../assets/tutors/nitesh.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
+import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -44,15 +45,14 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Nitesh Kumar",
-        role: "UI and UX Management",
-        image: niteshImg,
+        name: "Ayushman Mishra",
+        role: "Tech Lead | AI Engineer",
+        image: ayushmanImg,
         imageScale: 1.0,
-        imagePosition: "object-[center_20%]",
         experience: "2+ Years",
-        bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
+        bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
         linkedin: "#",
-        tags: ["UI/UX", "Management", "Leadership"]
+        tags: ["AI/ML", "Tech Lead"]
     }
 ];
 
