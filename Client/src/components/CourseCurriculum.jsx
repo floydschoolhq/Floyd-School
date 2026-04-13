@@ -199,7 +199,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 01</span>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Month 01</span>
                                 <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">Python Fundamentals</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
@@ -238,7 +238,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 02</span>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Month 02</span>
                                 <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">APIs, AI &amp; ML</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
@@ -277,7 +277,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         >
                             <div className="absolute -left-[35px] top-0.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 z-10"></div>
                             <div className="mb-3">
-                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Phase 03</span>
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Month 03</span>
                                 <h4 className="text-lg font-bold uppercase tracking-tight text-white mb-1">Vision, Web &amp; Demo</h4>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
@@ -366,8 +366,8 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         <div className="w-full p-5 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 flex flex-col items-center justify-center mb-6">
                             <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
                             <div className="flex items-center justify-center gap-3">
-                                <span className="text-sm font-semibold text-slate-600 line-through">₹2,999</span>
-                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹1,999</span>
+                                <span className="text-sm font-semibold text-slate-600 line-through">₹3,499</span>
+                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹2,499</span>
                             </div>
                             <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
                                 <span className="text-blue-400 text-[9px] font-bold uppercase tracking-widest">33% Launch Offer</span>
@@ -482,19 +482,18 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                     {/* Tech Number Box */}
                                     <motion.div 
                                         layout
-                                        className={`rounded-2xl flex items-center justify-center border-2 transition-all duration-700 relative
-                                            ${selectedMonth === monthIndex ? 'w-10 h-10' : 'w-14 h-14'}
+                                        className={`rounded-2xl flex items-center justify-center border-2 transition-all duration-700 relative px-3 py-2
                                             ${month.color === 'primary'
                                                 ? 'bg-blue-500/5 border-blue-500/20 group-hover:border-blue-500/40'
                                                 : 'bg-indigo-500/5 border-indigo-500/20 group-hover:border-indigo-500/40'}`}
                                     >
                                         <motion.span 
                                             layout
-                                            className={`font-headline font-black transition-all duration-700
-                                                ${selectedMonth === monthIndex ? 'text-lg' : 'text-2xl'}
+                                            className={`font-headline font-black transition-all duration-700 whitespace-nowrap
+                                                ${selectedMonth === monthIndex ? 'text-xs' : 'text-sm'}
                                                 ${month.color === 'primary' ? 'text-blue-400' : 'text-indigo-400'}`}
                                         >
-                                            {month.month}
+                                            Month {month.month}
                                         </motion.span>
                                         
                                         {/* Decorative Corner Notch (Hover Only) */}
@@ -659,9 +658,9 @@ const CourseCurriculum = ({ variant = "light" }) => {
                                     <div>
                                         <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Investment</p>
                                         <div className="flex items-end gap-2">
-                                            <span className="text-sm text-white/30 line-through font-medium">₹2,999</span>
+                                            <span className="text-sm text-white/30 line-through font-medium">₹3,499</span>
                                             <span className="text-3xl font-headline font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">
-                                                ₹1,999
+                                                ₹2,499
                                             </span>
                                         </div>
                                     </div>

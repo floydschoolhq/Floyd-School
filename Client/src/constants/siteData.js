@@ -16,7 +16,7 @@ export const FALLBACK_COURSES = [
         color: "#2563EB",
         rating: 4.9,
         duration: "3 month",
-        price: 1999,
+        price: 2499,
         currency: "INR",
         tags: ["AI", "Python", "ML"],
         live: true,

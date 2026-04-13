@@ -227,8 +227,10 @@ const ProjectCard = ({ project, index, isFeatured }) => {
   }
 
   return (
-    <div
-      onClick={() => window.open(project.liveUrl, '_blank')}
+    <a
+      href={project.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
         isFeatured 
           ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
@@ -326,7 +328,6 @@ const ProjectCard = ({ project, index, isFeatured }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
               className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
             >
               <ExternalLink size={12} />
@@ -335,7 +336,7 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
         )}
       </div>
-    </div>
+    </a>
   );
 };
 
@@ -427,52 +428,43 @@ const StudentProjects = () => {
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide"
           >
              {filteredProjects.map((project) => (
-               <div 
-                 key={project.id} 
-                 onClick={() => window.open(project.liveUrl, '_blank')}
-                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300 block cursor-pointer"
-               >
-                 <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
-                   <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
-                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-900 border border-white/20 shadow-sm">
-                       {project.category}
-                   </div>
-                 </div>
-                 
-                 <div className="p-8">
-                   <h3 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tight leading-tight">{project.title}</h3>
-                   <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
-                   
-                   <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
-                       <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-full border border-slate-100 overflow-hidden bg-slate-100">
-                               <img src={project.author.avatar} alt={project.author.name} className="w-full h-full object-cover" />
-                           </div>
-                           <div>
-                              <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
-                              <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>
-                          </div>
-                       </div>
-                       
-                       <div className="flex items-center gap-1">
-                           <Star size={12} className="text-orange-500 fill-orange-500" />
-                           <span className="text-[10px] font-black text-slate-900">{project.stats.stars}</span>
-                       </div>
-                   </div>
-                   
-                   <div className="flex gap-3">
-                        <a 
-                          href={project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all"
-                        >
-                          Launch
-                        </a>
+                <div 
+                  key={project.id} 
+                  className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300"
+                >
+                  <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] transition-all duration-500" />
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-900 border border-white/20 shadow-sm">
+                        {project.category}
                     </div>
-                 </div>
-               </div>
+                  </div>
+                  
+                  <div className="p-8">
+                    <h3 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tight leading-tight">{project.title}</h3>
+                    <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
+                    
+                    <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full border border-slate-100 overflow-hidden bg-slate-100">
+                                <img src={project.author.avatar} alt={project.author.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                               <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
+                               <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>
+                           </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-1">
+                            <Star size={12} className="text-orange-500 fill-orange-500" />
+                            <span className="text-[10px] font-black text-slate-900">{project.stats.stars}</span>
+                        </div>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
+                    </div>
+                  </div>
+                </div>
              ))}
           </div>
 

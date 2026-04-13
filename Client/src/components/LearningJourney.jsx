@@ -19,7 +19,7 @@ const JOURNEY_STEPS = [
     {
         id: "demo-bootcamp",
         icon: Video,
-        tag: "Phase 01",
+        tag: "Month 01",
         title: "Demo Bootcamp",
         description: "Experience our elite ecosystem with a high-impact intro.",
         features: [
@@ -33,7 +33,7 @@ const JOURNEY_STEPS = [
     {
         id: "course-selection",
         icon: Target,
-        tag: "Phase 02",
+        tag: "Month 02",
         title: "Course Selection",
         description: "Personalized pathways selected by students for their goals.",
         features: [
@@ -47,7 +47,7 @@ const JOURNEY_STEPS = [
     {
         id: "live-sessions",
         icon: MessageSquare,
-        tag: "Phase 03",
+        tag: "Month 03",
         title: "Live Sessions",
         description: "Interactive expert-led sessions building production-grade logic.",
         features: [
@@ -61,7 +61,7 @@ const JOURNEY_STEPS = [
     {
         id: "real-world-projects",
         icon: Monitor,
-        tag: "Phase 04",
+        tag: "Month 04",
         title: "Real World Projects",
         description: "Production implementation and industrial project learning.",
         features: [
@@ -75,7 +75,7 @@ const JOURNEY_STEPS = [
     {
         id: "inter-batch-hackathon",
         icon: Trophy,
-        tag: "Phase 05",
+        tag: "Month 05",
         title: "Inter-Batch Hackathon",
         description: "Compete with every batch. Build a real product in 48 hours and ship it live.",
         features: [

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import boy1Img from '../assets/avatars/boy1.jpg';
+import boy2Img from '../assets/avatars/boy2.jpg';
+import girl1Img from '../assets/avatars/girl1.jpg';
 import { 
     CheckCircle2, 
     Clock, 
@@ -123,9 +126,9 @@ const CourseDetails = () => {
                                 
                                 <div className="flex items-center gap-4 px-6 py-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md self-center">
                                     <div className="flex -space-x-3">
-                                        {['A', 'B', 'C'].map((letter, i) => (
-                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                                <span className="text-[10px] font-bold text-white uppercase">{letter}</span>
+                                        {[boy1Img, girl1Img, boy2Img].map((src, i) => (
+                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] overflow-hidden">
+                                                <img src={src} alt="student" className="w-full h-full object-cover" />
                                             </div>
                                         ))}
                                     </div>
@@ -165,9 +168,9 @@ const CourseDetails = () => {
                                         </button>
                                         <div className="flex items-center gap-4 px-6 py-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md">
                                             <div className="flex -space-x-3">
-                                                {['A', 'B', 'C'].map((letter, i) => (
-                                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                                        <span className="text-[10px] font-black text-white uppercase">{letter}</span>
+                                                {[boy1Img, girl1Img, boy2Img].map((src, i) => (
+                                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] overflow-hidden">
+                                                        <img src={src} alt="student" className="w-full h-full object-cover" />
                                                     </div>
                                                 ))}
                                             </div>

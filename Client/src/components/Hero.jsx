@@ -12,13 +12,11 @@ import Magnet from './common/Magnet';
 import useIsMobile from '../hooks/useIsMobile';
 import RegistrationForm from './RegistrationForm';
 
-import avatar1 from '../assets/avatars/avatar1.png';
-import avatar2 from '../assets/avatars/avatar2.png';
-import avatar3 from '../assets/avatars/avatar3.png';
-import avatar4 from '../assets/avatars/avatar4.png';
-import avatar5 from '../assets/avatars/avatar5.png';
+import boy1Img from '../assets/avatars/boy1.jpg';
+import boy2Img from '../assets/avatars/boy2.jpg';
+import girl1Img from '../assets/avatars/girl1.jpg';
 
-const AVATARS = [avatar1, avatar2, avatar3, avatar4, avatar5];
+const AVATARS = [boy1Img, girl1Img, boy2Img, girl1Img, boy1Img];
 
 const ScrollingAvatars = ({ isMobile }) => {
     if (isMobile) {

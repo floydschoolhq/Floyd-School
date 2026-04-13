@@ -4,7 +4,6 @@ import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
-import niteshImg from '../assets/tutors/nitesh.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
@@ -15,7 +14,6 @@ const LEADERS = [
     {
         name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
-        experience: "3+",
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
@@ -48,19 +46,18 @@ const LEADERS = [
         tags: ["UI/UX", "Design", "Product"]
     },
     {
-        name: "Nitesh Kumar",
-        role: "UI and UX Management",
-        experience: "2+",
-        image: niteshImg,
+        name: "Ayushman Mishra",
+        role: "Lead Mentor & Full Stack Developer",
+        image: ayushmanImg,
         imageScale: 1.0,
-        experience: "2+ Years",
-        bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
+        experience: "3+ Years",
+        bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
         linkedin: "#",
-        tags: ["AI/ML", "Tech Lead"]
+        tags: ["Full Stack", "Architect"]
     }
 ];
 
-const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
+const CourseFacultyCard = React.memo(({ mentor, index, variant, onMouseEnter, onMouseLeave }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     return (
@@ -70,6 +67,10 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             viewport={{ once: true, margin: "-50px" }}
             transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={!isMobile ? { y: -10, scale: 1.01 } : {}}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            onTouchStart={onMouseEnter}
+            onTouchEnd={onMouseLeave}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             className={`shrink-0 ${isMobile ? 'w-[280px] h-[400px]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-8 relative cursor-default group
                 ${isDark 
@@ -81,15 +82,13 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
 
             {/* Card-Level Experience Badge (Top Right) - Desktop Only */}
-            {!isMobile && (
-                <div className="absolute top-6 right-6 z-30">
-                    <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                        <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
-                            {mentor.experience} years exp
-                        </span>
-                    </div>
+            <div className="absolute top-6 right-6 z-30">
+                <div className={`${isDark ? 'bg-white/[0.03] border-white/5 text-slate-500' : 'bg-slate-50/60 border-slate-200/60 text-slate-400'} px-2.5 py-1.5 rounded-lg border flex items-center justify-center`}>
+                    <span className="text-[9px] font-medium font-ubuntu tracking-widest uppercase whitespace-nowrap opacity-70">
+                        {mentor.experience.replace(/ Years/i, "")} years experience
+                    </span>
                 </div>
-            )}
+            </div>
             
             {/* Image Section: High-End Industrial Housing */}
             <div className="w-40 h-40 flex-shrink-0 relative pt-2">
@@ -129,18 +128,16 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                         : 'text-slate-900 group-hover:text-blue-600'}`}>
                     {mentor.name}
                 </h3>
-                    <div className="flex items-center justify-center gap-2 mb-3">
-                        <p className={`font-bold text-sm md:text-[13px] uppercase
-                            ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                            <span className="mr-2">[</span>
-                            {mentor.role}
-                            <span className="ml-2">]</span>
-                        </p>
-                        <span className={`px-2.5 py-1 text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-full transition-all duration-500
-                            ${isDark ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 group-hover:bg-blue-500/30 group-hover:text-blue-300' : 'bg-blue-100 text-blue-600 border border-blue-200 group-hover:bg-blue-200 group-hover:text-blue-700'}`}>
-                            {mentor.experience} years
-                        </span>
-                    </div>
+                    {!isMobile && (
+                        <div className="flex items-center justify-center gap-2 mb-3">
+                            <p className={`font-bold text-sm md:text-[13px] uppercase
+                                ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                                <span className="mr-2">[</span>
+                                {mentor.role}
+                                <span className="ml-2">]</span>
+                            </p>
+                        </div>
+                    )}
                     <div className={`w-16 h-1.5 transition-all duration-500 rounded-full
                         ${isDark ? 'bg-white/10 group-hover:w-32 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:w-32 group-hover:bg-blue-600'}`} />
                 </div>
@@ -182,6 +179,7 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
     
     const displayLeaders = filteredLeaders.slice(0, 3);
     const [currentIndex, setCurrentIndex] = useState(displayLeaders.length);
+    const [hoveredCard, setHoveredCard] = useState(null);
     const x = useMotionValue(0);
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = React.useRef(null);
@@ -210,7 +208,7 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
     }, [isMobile, windowWidth]);
 
     useEffect(() => {
-        if (!isMobile || isDragging) return;
+        if (!isMobile || isDragging || hoveredCard !== null) return;
         const cardWidth = CARD_WIDTH + 16;
         const totalItems = displayLeaders.length;
         const centerOffset = getCenterOffset();
@@ -243,7 +241,7 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
             }, 600);
             return () => clearTimeout(timer);
         }
-    }, [currentIndex, isMobile, isDragging, x, displayLeaders.length, windowWidth]);
+    }, [currentIndex, isMobile, isDragging, hoveredCard, x, displayLeaders.length, windowWidth]);
 
     const handleNext = () => setCurrentIndex(prev => prev + 1);
     const handlePrev = () => setCurrentIndex(prev => prev - 1);
@@ -283,42 +281,12 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                                 mentor={mentor}
                                 index={idx}
                                 variant={variant}
+                                onMouseEnter={() => setHoveredCard(idx)}
+                                onMouseLeave={() => setHoveredCard(null)}
                             />
                         ))}
                     </motion.div>
                 </div>
-
-                {/* Info Area: dark text on white */}
-                {(() => {
-                    const activeMentor = displayLeaders[currentIndex % displayLeaders.length];
-                    if (!activeMentor) return null;
-                    return (
-                        <div className="bg-white px-5 py-5 min-h-[100px] flex items-center justify-center border-t border-slate-100 relative">
-                            <div className="flex flex-col items-center text-center w-full relative z-10 px-8">
-                                <h3 className="text-[22px] font-black text-slate-900 tracking-tighter leading-tight">
-                                    {activeMentor.name}
-                                </h3>
-                                <div className="flex items-center justify-center gap-2 mt-1.5 mb-2">
-                                    <p className="text-[12px] font-bold text-slate-500 uppercase tracking-wide">
-                                        {activeMentor.role}
-                                    </p>
-                                    <span className="px-2 py-0.5 text-[8px] font-black uppercase tracking-wider rounded-full bg-blue-100 text-blue-600 border border-blue-200">
-                                        {activeMentor.experience} years
-                                    </span>
-                                </div>
-                            </div>
-                            <a
-                                href={activeMentor.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md z-20 hover:bg-blue-700 transition-colors"
-                            >
-                                <FaLinkedinIn size={14} />
-                            </a>
-                        </div>
-                    );
-                })()}
-                {/* End of Info Area */}
 
                 <div className="flex justify-center gap-6 mt-10">
                     <button

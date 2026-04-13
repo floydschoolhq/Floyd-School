@@ -38,20 +38,6 @@ const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  useEffect(() => {
-    if (!autoTriggered) {
-      const t = setTimeout(() => {
-        setAutoTriggered(true);
-        setIsOpen(true);
-        pushBot(
-          'Hello \ud83d\udc4b\nConfused about which tech skill your child should start with?\nI can guide you in 30 seconds.',
-          [{ label: '\u2705 Yes, guide me!', val: 'yes' }]
-        );
-      }, 4000);
-      return () => clearTimeout(t);
-    }
-  }, [autoTriggered]);
-
   const pushBot = (text, btns) => {
     setMessages(prev => [...prev, { sender: 'bot', text, btns: btns || null, id: Math.random() }]);
   };
@@ -233,7 +219,16 @@ const Chatbot = () => {
     <>
       {/* Floating Chat Button */}
       <button
-        onClick={() => setIsOpen(o => !o)}
+      onClick={() => {
+        const opening = !isOpen;
+        setIsOpen(opening);
+        if (opening && messages.length === 0) {
+          pushBot(
+            'Hello \ud83d\udc4b\nConfused about which tech skill your child should start with?\nI can guide you in 30 seconds.',
+            [{ label: '\u2705 Yes, guide me!', val: 'yes' }]
+          );
+        }
+      }}
         className={`fixed z-50 shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-300 group ${
           isMobile 
             ? 'bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full' 
