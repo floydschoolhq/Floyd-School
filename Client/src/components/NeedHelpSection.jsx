@@ -34,15 +34,6 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
 
     const contactMethods = [
         {
-            id: 'message',
-            icon: Send,
-            title: 'Message Us',
-            description: 'Send us your query and we\'ll get back to you soon',
-            action: 'Send Message',
-            color: 'from-blue-500 to-cyan-500',
-            highlight: 'Live Support'
-        },
-        {
             id: 'call',
             icon: Phone,
             title: 'Call Us',
@@ -123,7 +114,7 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
                 </div>
 
                 {/* Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {contactMethods.map((method, index) => (
                         <motion.div
                             key={method.id}
