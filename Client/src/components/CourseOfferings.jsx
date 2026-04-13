@@ -76,17 +76,19 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                 <div className="w-full mx-auto rounded-3xl overflow-hidden bg-white shadow-2xl shadow-black/20 border border-slate-200 relative">
                     {mobileFeatures.map((feature, i) => (
                         <React.Fragment key={i}>
-                            <div className="flex items-center gap-5 px-6 py-10">
-                                <div className="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center shadow-lg">
-                                    <div className="text-blue-300 font-black text-lg">
-                                        {feature.icon}
+                            <div className="flex flex-col gap-4 px-6 py-8">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/10 border border-blue-500/30 flex items-center justify-center shadow-lg">
+                                        <div className="text-blue-500 font-black text-lg">
+                                            {feature.icon}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="flex-1 w-full text-left flex flex-col justify-center">
-                                    <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">
+                                    <h3 className="text-lg font-bold text-slate-900 leading-tight">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-sm text-slate-600 leading-relaxed">
+                                </div>
+                                <div className="w-full text-left">
+                                    <p className="text-sm text-slate-600 leading-relaxed font-medium">
                                         {feature.desc}
                                     </p>
                                 </div>

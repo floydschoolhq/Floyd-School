@@ -460,7 +460,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                         onDragEnd={handleDragEnd}
                     >
                         {allCards.map((mentor, idx) => (
-                            <MentorCard 
+                            <div 
                                 key={idx}
                                 className={`shrink-0 w-[280px] p-6 rounded-[2rem] border-x border-y-[3px] flex flex-col items-center text-center transition-all duration-300 ${
                                     idx === getDisplayIndex() 
