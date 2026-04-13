@@ -80,7 +80,7 @@ const LEADERS = [
     },
     ];
 
-const MentorCard = React.memo(({ mentor, variant }) => {
+const MentorCard = React.memo(({ mentor, index, variant }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
     
@@ -135,7 +135,7 @@ const MentorCard = React.memo(({ mentor, variant }) => {
 
     return (
         <div
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[400px] h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-300 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
+            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-300 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
                 ${isDark
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40'
                     : 'bg-white border-slate-100 hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30'}`}
@@ -168,7 +168,7 @@ const MentorCard = React.memo(({ mentor, variant }) => {
                 </a>
             </div>
 
-            <div className="flex-grow flex flex-col items-center justify-between text-center min-w-0 relative z-10 w-full">
+            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
                     <h3 className={`text-xl md:text-3xl font-black uppercase tracking-tight leading-none transition-colors duration-300 w-full
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
@@ -468,7 +468,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     >
                         <motion.div 
                             ref={containerRef}
-                            className="flex items-stretch gap-6 md:gap-8 w-max"
+                            className="flex items-center gap-6 md:gap-8 w-max"
                             style={{ x }}
                             drag="x"
                             dragConstraints={{ 
