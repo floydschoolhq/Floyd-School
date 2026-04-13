@@ -36,7 +36,7 @@ const LEADERS = [
         name: "Anamika Vashisth",
         role: "Data Analyst • Strategy Lead",
         image: ananimikaImg,
-        imageScale: 0.85,
+        imageScale: 1.0,
         imagePosition: "object-[center_20%]",
         experience: "2+ Years",
         bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
