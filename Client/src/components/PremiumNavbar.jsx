@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback, memo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook, FaUserTie, FaBullseye } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome, FaGraduationCap, FaUsers, FaPhone, FaBook, FaUserTie, FaBullseye, FaAward } from 'react-icons/fa';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LeadFormModal from './LeadFormModal';
 import { PortalContext } from '../contexts/PortalProvider';
@@ -29,6 +29,7 @@ const COURSE_NAV_ITEMS = [
     { name: 'Overview', id: 'course-hero' },
     { name: 'Curriculum', id: 'course-curriculum' },
     { name: 'Reviews', id: 'course-reviews' },
+    { name: 'Certificate', id: 'sample-certificate' },
     { name: 'Offerings', id: 'course-offerings' },
     { name: 'Faculty', id: 'course-faculty' }
 ];
@@ -37,6 +38,7 @@ const COURSE_MOBILE_NAV_ITEMS = [
     { icon: FaBook, label: "Overview", href: "#course-hero" },
     { icon: FaGraduationCap, label: "Curriculum", href: "#course-curriculum" },
     { icon: FaUsers, label: "Reviews", href: "#course-reviews" },
+    { icon: FaAward, label: "Certificate", href: "#sample-certificate" },
     { icon: FaBullseye, label: "Offerings", href: "#course-offerings" },
     { icon: FaUserTie, label: "Faculty", href: "#course-faculty" }
 ];

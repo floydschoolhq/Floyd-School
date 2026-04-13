@@ -29,8 +29,9 @@ const Chatbot = () => {
     };
   }, []);
 
-  // Only show chatbot on home page
-  if (location.pathname !== '/') {
+  // Show chatbot on home page and AI & ML course page
+  const isAIMLCourse = location.pathname === '/course/1';
+  if (!isAIMLCourse && location.pathname !== '/') {
     return null;
   }
 
@@ -250,7 +251,7 @@ const Chatbot = () => {
       {/* Chat Window */}
       <div className={`fixed z-40 rounded-2xl shadow-2xl border border-gray-200 transition-all duration-300 ${
         isMobile 
-          ? 'bottom-16 left-4 right-4 w-[calc(100vw-2rem)] h-[calc(100vh-6rem)] bg-white' 
+          ? 'bottom-20 left-2 right-2 w-[calc(100vw-1rem)] max-h-[70vh] bg-white' 
           : 'bottom-24 right-6 w-80 bg-white'
       } ${!isOpen ? 'opacity-0 pointer-events-none scale-95' : 'opacity-100'}`}>
         {/* Header */}
@@ -278,7 +279,7 @@ const Chatbot = () => {
         </div>
 
         {/* Messages Area */}
-        <div className={`overflow-y-auto space-y-2 ${isMobile ? 'p-2 h-[calc(100vh-10rem)]' : 'p-3 h-80'}`}>
+        <div className={`overflow-y-auto space-y-2 ${isMobile ? 'p-2 h-[60vh] max-h-[400px]' : 'p-3 h-80'}`}>
           {messages.map((m, i) => (
             <div key={m.id || i} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
               <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${m.sender === 'user' ? 'bg-orange-200 order-2' : 'bg-gray-100'}`}>

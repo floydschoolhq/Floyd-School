@@ -15,11 +15,11 @@ const LEADERS = [
         name: "Shashwat Vashishth",
         role: "Industry Expert • Solution Architect",
         image: shashwatImg,
-        imageScale: 1.0,
-        imagePosition: "object-[center_65%]",
+        imageScale: 1.4,
+        imagePosition: "object-[center_1%]",
         experience: "2+ Years",
         bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/shashwat-vashishth",
         tags: ["AI/ML", "Algorithm"]
     },
     {
@@ -36,22 +36,22 @@ const LEADERS = [
         name: "Anamika Vashisth",
         role: "Data Analyst • Strategy Lead",
         image: ananimikaImg,
-        imageScale: 1.1,
+        imageScale: 0.85,
         imagePosition: "object-[center_20%]",
         experience: "2+ Years",
         bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["UI/UX", "Design", "Product"]
     },
     {
         name: "Ayushman Mishra",
         role: "Lead Mentor & Full Stack Developer",
         image: ayushmanImg,
-        imageScale: 1.0,
-        imagePosition: "object-[center_40%]",
+        imageScale: 1.4,
+        imagePosition: "object-[center_50%]",
         experience: "3+ Years",
         bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/ayushman-mishra17/",
         tags: ["Full Stack", "Architect"]
     }
 ];
@@ -84,15 +84,6 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant, onMouseEnter, on
                     className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${mentor.imagePosition || 'object-top'}`}
                     style={{ transform: `scale(${mentor.imageScale || 1})` }}
                 />
-
-                {/* Card-Level Experience Badge (Top Right) */}
-                <div className="absolute top-4 right-4 z-30">
-                    <div className={`transition-opacity duration-500 opacity-60 group-hover:opacity-100 ${isDark ? 'bg-[#050505]/60 backdrop-blur-md border border-white/10 text-white' : 'bg-white/80 backdrop-blur-md border border-slate-200 text-slate-800'} px-2.5 py-1.5 rounded-lg shadow-xl flex items-center justify-center`}>
-                        <span className="text-[9px] font-medium font-ubuntu tracking-widest uppercase whitespace-nowrap">
-                            {mentor.experience.replace(/ Years/i, "")} years experience
-                        </span>
-                    </div>
-                </div>
             </div>
 
             {/* Bottom Half: Info */}
@@ -104,13 +95,14 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant, onMouseEnter, on
                             : 'text-slate-900 group-hover:text-blue-600'}`}>
                         {mentor.name}
                     </h3>
+                    <p className={`text-[10px] font-medium uppercase tracking-wider mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                        {mentor.experience} Experience
+                    </p>
 
                     <div className="flex items-center justify-center gap-2 mt-1 mb-3">
                         <p className={`font-bold text-[10px] md:text-xs uppercase
                             ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                            <span className="mr-2">[</span>
                             {mentor.role}
-                            <span className="ml-2">]</span>
                         </p>
                     </div>
 

@@ -19,7 +19,8 @@ import {
     Globe,
     Terminal,
     ShieldCheck,
-    Download
+    Download,
+    Award
 } from 'lucide-react';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
@@ -30,6 +31,7 @@ import PaymentModal from '../components/PaymentModal';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
 import FinalProject from '../components/FinalProject';
+import sampleCertificate from '../assets/images/sample2Certificate.png';
 
 const iconMap = {
     Cpu: Cpu,
@@ -252,6 +254,54 @@ const CourseDetails = () => {
                 <div id="course-reviews" className="bg-[#080808]">
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
+
+                {/* Sample Certificate Section */}
+                {courseId === '1' && (
+                    <section id="sample-certificate" className="bg-[#080808] py-16 md:py-24 px-4">
+                        <div className="max-w-[65%] mx-auto">
+                            {/* Section Header */}
+                            <div className="text-center mb-12 md:mb-16">
+                                <div className="inline-flex items-center gap-2 mb-4">
+                                    <Award className="w-5 h-5 md:w-6 md:h-6 text-orange-500" />
+                                    <span className="text-orange-500 font-semibold text-sm md:text-base uppercase tracking-wider">Certification</span>
+                                </div>
+                                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
+                                    Earn Your <span className="text-orange-500">Professional Certificate</span>
+                                </h2>
+                                <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto">
+                                    Upon successful completion, receive a recognized certificate that showcases your AI & ML skills to future employers
+                                </p>
+                            </div>
+
+                            {/* Certificate Display */}
+                            <div className="relative">
+                                {/* Desktop: Full certificate with shadow and border */}
+                                <div className="hidden md:block relative max-w-[90%] mx-auto">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-transparent to-blue-500/20 rounded-3xl blur-xl"></div>
+                                    <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-1 border border-slate-700/50">
+                                        <img 
+                                            src={sampleCertificate} 
+                                            alt="ThinkSkool AI & ML Certificate" 
+                                            className="w-full h-auto rounded-[22px] shadow-2xl"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Mobile: Scaled certificate with scroll */}
+                                <div className="md:hidden relative">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-500/10 rounded-2xl blur-lg"></div>
+                                    <div className="relative bg-slate-900 rounded-2xl p-1 border border-slate-800">
+                                        <img 
+                                            src={sampleCertificate} 
+                                            alt="ThinkSkool AI & ML Certificate" 
+                                            className="w-full h-auto rounded-xl shadow-xl"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
 
                 {/* FAQ Section */}
                 <CourseFAQ />

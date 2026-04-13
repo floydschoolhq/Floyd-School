@@ -86,7 +86,7 @@ const LEADERS = [
         imagePosition: "object-[center_20%]",
         experience: "3+ Years",
         bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/ayushman-mishra17/",
         tags: ["Full Stack", "Architect"]
     },
     {
@@ -96,7 +96,7 @@ const LEADERS = [
         imageScale: 1.0,
         experience: "1+ Years",
         bio: "Designs user-centered experiences that balance creativity and functionality.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/pooja-kumari-569888333?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
         tags: ["UI/UX", "Design strategy"]
     }
 ];
@@ -104,6 +104,20 @@ const LEADERS = [
 const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, onMouseEnter, onMouseLeave }) => {
     const isMobile = useIsMobile();
     const isDark = variant === 'dark';
+    const getNameFontSize = (name) => {
+        const len = name.length;
+        if (len <= 12) return 'text-lg';
+        if (len <= 16) return 'text-base';
+        if (len <= 20) return 'text-sm';
+        return 'text-xs';
+    };
+    const getDesktopNameFontSize = (name) => {
+        const len = name.length;
+        if (len <= 12) return 'text-3xl';
+        if (len <= 16) return 'text-2xl';
+        if (len <= 20) return 'text-xl';
+        return 'text-lg';
+    };
 
     if (isMobile) {
         return (
@@ -112,18 +126,14 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                 onMouseLeave={onMouseLeave}
                 onTouchStart={onMouseEnter}
                 onTouchEnd={onMouseLeave}
-                className={`shrink-0 w-[280px] h-full p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
+                className={`shrink-0 w-[300px] h-auto min-h-[480px] p-10 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
                     ${isDark
                         ? 'bg-[#0F172A]/40 border-white/5 shadow-2xl shadow-black/20'
                         : 'bg-white border-slate-200 shadow-sm shadow-slate-200/50'}`}
             >
-                <div className={`absolute top-4 right-4 z-20 px-2 py-0.5 text-[8px] font-medium uppercase tracking-wider rounded-full opacity-60 ${isDark ? 'bg-white/[0.04] text-slate-400 border border-white/5' : 'bg-slate-100/60 text-slate-400 border border-slate-200/50'}`}>
-                    {mentor.experience.replace(/ Years/i, "")} year experience
-                </div>
-
                 <div className="relative z-10 w-full flex flex-col items-center">
-                    <div className="relative mb-6">
-                        <div className="w-24 h-24 rounded-full overflow-hidden">
+                    <div className="relative mb-8">
+                        <div className="w-32 h-32 rounded-full overflow-hidden">
                             <img
                                 src={mentor.image}
                                 alt={mentor.name}
@@ -143,10 +153,13 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                         </a>
                     </div>
 
-                    <div className="mb-6 flex flex-col items-center">
-                        <h3 className={`text-lg font-black uppercase tracking-tight leading-none ${isDark ? 'text-white' : 'text-slate-950'}`}>
+                    <div className="mb-4 flex flex-col items-center">
+                        <h3 className={`${getNameFontSize(mentor.name)} font-black uppercase tracking-tight leading-none whitespace-nowrap ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
+                        <p className={`text-[10px] font-medium uppercase tracking-wider mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                            {mentor.experience} Experience
+                        </p>
                     </div>
 
                     <p className={`text-[13px] font-medium leading-relaxed mb-2 px-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -178,34 +191,17 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
         >
-            {/* Background Decorative Mesh */}
-            <div className={`absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl -mr-24 -mt-24 pointer-events-none transition-all duration-700
-                ${isDark ? 'bg-orange-500/10 group-hover:bg-orange-500/30 scale-100 group-hover:scale-150' : 'bg-orange-100/40 group-hover:bg-orange-200/60 scale-100 group-hover:scale-150'}`} />
-            
             {/* Image Section: High-End Industrial Housing */}
             <div className="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 relative">
-                {/* Rotating Border Aura */}
-                <motion.div 
-                    animate={isMobile ? {} : { rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-                    style={{ translateZ: 0 }}
-                    className={`absolute inset-[-15px] rounded-full border border-dashed opacity-0 group-hover:opacity-60 transition-opacity duration-1000 pointer-events-none
-                        ${isDark ? 'border-orange-400' : 'border-orange-500'}`}
-                />
-                
                 {/* Main Profile Housing */}
-                <div className={`absolute inset-0 rounded-full p-[3px] border transition-all duration-700 z-10 
-                    ${isDark ? 'bg-white/5 border-white/10 group-hover:border-orange-400/60' : 'bg-white border-slate-100 group-hover:border-orange-400/60'}`}>
+                <div className={`absolute inset-0 rounded-full overflow-hidden z-10`}>
                     <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 relative">
                          <img
                             src={mentor.image}
                             alt={mentor.name}
-                            className="w-full h-full object-cover object-top transition-all duration-1000 group-hover:scale-105"
+                            className="w-full h-full object-cover object-top"
                             style={{ transform: `scale(${mentor.imageScale})` }}
                         />
-                        {/* Glass Overlay on Image */}
-                        <div className={`absolute inset-0 opacity-20 group-hover:opacity-0 transition-opacity duration-700
-                            ${isDark ? 'bg-gradient-to-tr from-orange-950/30 to-transparent' : 'bg-gradient-to-tr from-orange-900/20 via-transparent'}`} />
                     </div>
                 </div>
 
@@ -225,13 +221,12 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
             {/* Content Core: Pure Data Hierarchy */}
             <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left min-w-0 relative z-10 w-full">
                 <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center md:items-start">
-                    <h3 className={`text-xl md:text-3xl font-bold tracking-tight uppercase leading-none transition-colors w-full pl-1
+                    <h3 className={`${getDesktopNameFontSize(mentor.name)} font-bold tracking-tight uppercase leading-none transition-colors w-full pl-1 whitespace-nowrap
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
                         {mentor.name}
                     </h3>
-                    <p className={`font-semibold text-[11px] md:text-[13px] tracking-wide uppercase truncate pb-4
-                        ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                        {mentor.role}
+                    <p className={`text-[10px] md:text-[11px] font-medium uppercase tracking-wider ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                        {mentor.experience} Experience
                     </p>
                     <div className={`w-12 h-1 transition-all duration-500 rounded-full
                         ${isDark ? 'bg-white/10 group-hover:w-24 group-hover:bg-orange-400' : 'bg-slate-100 group-hover:w-24 group-hover:bg-orange-500'}`} />
@@ -241,18 +236,6 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                     ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     {mentor.bio}
                 </p>
-
-                {/* Interaction Footer */}
-                <div className="flex items-center pt-2 w-full">
-                    <div className="flex gap-4">
-                        {mentor.tags.slice(0, 2).map(tag => (
-                            <span key={tag} className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-colors
-                                ${isDark ? 'text-slate-500 group-hover:text-orange-400' : 'text-slate-400 group-hover:text-orange-600'}`}>
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
-                </div>
             </div>
         </motion.div>
     );
@@ -278,7 +261,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const handleNext = () => setCurrentIndex(prev => prev + 1);
     const handlePrev = () => setCurrentIndex(prev => prev - 1);
 
-    const CARD_WIDTH = 280;
+    const CARD_WIDTH = 300;
 
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 

@@ -72,8 +72,6 @@ const HomePage = () => {
                     <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
                 </div>
-                {/* Chatbot - Always visible on home page */}
-                <Chatbot />
             </div>
         </MotionConfig>
     )
@@ -267,6 +265,9 @@ const App = () => {
                     </ProtectedRoute>
                 } />
             </Routes>
+
+            {/* Chatbot - Visible on home page and AI & ML course page */}
+            <Chatbot />
 
             {/* Conditional Footer Rendering - Only on Home Page */}
             {showFooter && (
