@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { motion, useMotionValue, animate } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useAnimation, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
@@ -7,9 +7,10 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
+import niteshImg from '../assets/tutors/nitesh.jpg';
+import poojaImg from '../assets/tutors/pooja.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
 import shanImg from '../assets/tutors/sshan.png';
-import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -17,9 +18,10 @@ const LEADERS = [
     {
         name: "Shivam Mishra",
         role: "Founder | AI/ML Engineer",
+        experience: "4+",
+        experience: "4+",
         image: shivamImg,
         imageScale: 1.9,
-        experience: "3+ Years",
         bio: "AI/ML expert building intelligent, real-world solutions with machine learning.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder"]
@@ -27,9 +29,10 @@ const LEADERS = [
     {
         name: "Raghav",
         role: "Lead Mentor & Product Architect",
+        experience: "3+",
+        experience: "3+",
         image: raghavImg,
         imageScale: 1.9,
-        experience: "4+ Years",
         bio: "Cybersecurity specialist focused on securing systems and preventing threats.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: [ "Architect", "CyberSecurity"]
@@ -37,9 +40,10 @@ const LEADERS = [
     {
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
+        experience: "2+",
+        experience: "2+",
         image: abhayImg,
         imageScale: 1.8,
-        experience: "3+ Years",
         bio: "Builds fast, scalable, and modern web applications using latest technologies.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Developer", "Manager"]
@@ -47,9 +51,10 @@ const LEADERS = [
     {
         name: "Anamika Vashisth",
         role: "UI/UX & System Designer",
+        experience: "3+",
+        experience: "3+",
         image: ananimikaImg,
         imageScale: 1.4,
-        experience: "2+ Years",
         bio: "Designs intuitive, user-friendly interfaces focused on seamless experience.",
         linkedin: "#",
         tags: ["UI/UX", "Design"]
@@ -57,10 +62,11 @@ const LEADERS = [
     {
         name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
+        experience: "1+",
+        experience: "3+",
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
-        experience: "2+ Years",
         bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
@@ -68,23 +74,37 @@ const LEADERS = [
     {
         name: "Shan Sharma",
         role: "System Development",
+        experience: "4+",
+        experience: "4+",
         image: shanImg,
         imageScale: 1.0,
-        experience: "3+ Years",
         bio: "Develops scalable systems and modern web applications with strong architecture.",
         linkedin: "https://www.linkedin.com/in/shan-sharma-726706292",
         tags: ["System Design", "Architecture"]
     },
     {
-        name: "Ayushman Mishra",
-        role: "Tech Lead | AI Engineer",
-        image: ayushmanImg,
+        name: "Nitesh Kumar",
+        role: "UI and UX Management",
+        experience: "2+",
+        experience: "2+",
+        image: niteshImg,
         imageScale: 1.0,
-        experience: "2+ Years",
-        bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
+        imagePosition: "object-[center_20%]",
+        bio: "Leads structured design systems focused on clarity, usability, and product growth.",
         linkedin: "#",
-        tags: ["AI/ML", "Tech Lead"]
+        tags: ["UI/UX", "Management"]
     },
+    {
+        name: "Pooja Kumari",
+        role: "UI and UX Management",
+        experience: "1+",
+        experience: "1+",
+        image: poojaImg,
+        imageScale: 1.0,
+        bio: "Designs user-centered experiences that balance creativity and functionality.",
+        linkedin: "#",
+        tags: ["UI/UX", "Design strategy"]
+    }
 ];
 
 const MentorCard = React.memo(({ mentor, index, variant }) => {
@@ -94,7 +114,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
     if (isMobile) {
         return (
             <div 
-                className={`shrink-0 w-[280px] h-full p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
+                className={`snap-center shrink-0 w-[280px] p-8 rounded-[2.5rem] border flex flex-col items-center text-center transition-all duration-500 relative overflow-hidden cursor-default
                     ${isDark 
                         ? 'bg-[#0F172A]/40 border-white/5 shadow-2xl shadow-black/20' 
                         : 'bg-white border-slate-200 shadow-sm shadow-slate-200/50'}`}
@@ -123,7 +143,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         </a>
                     </div>
 
-                    <div className="mb-6 flex flex-col items-center">
+                    <div className="mb-6">
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
@@ -159,15 +179,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
         >
             <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-all duration-300
                 ${isDark ? 'bg-orange-500/10 group-hover:bg-orange-500/20' : 'bg-orange-100/40 group-hover:bg-orange-200/60'}`} />
-            
-            {/* Card-Level Experience Badge (Top Right) */}
-            <div className="absolute top-6 right-8 z-30">
-                <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                    <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
-                        {mentor.experience} years exp
-                    </span>
-                </div>
-            </div>
             
             <div className="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 relative">
                 <div className={`absolute inset-0 rounded-full p-[3px] transition-all duration-300 z-10 
@@ -255,34 +266,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
     const [isPaused, setIsPaused] = useState(false);
     const pauseTimeoutRef = useRef(null);
 
-    const handleNext = () => setCurrentIndex(prev => prev + 1);
-    const handlePrev = () => setCurrentIndex(prev => prev - 1);
-
-    const CARD_WIDTH = 280;
-
-    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
-
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    // Initial centering
-    useLayoutEffect(() => {
-        if (isMobile) {
-            const cardWidth = CARD_WIDTH + 16;
-            const centerOffset = getCenterOffset();
-            x.set(-currentIndex * cardWidth + centerOffset);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMobile, windowWidth]);
-
-    // Center offset calculation
-    const getCenterOffset = () => {
-        const containerWidth = containerRef.current?.parentElement?.offsetWidth || window.innerWidth;
-        return (containerWidth - CARD_WIDTH) / 2;
-    };
+    const CARD_WIDTH = 280 + 16; // w-[280px] + gap-4
 
     // Optimized auto-scroll logic for Desktop (Marquee)
     useEffect(() => {
@@ -315,7 +299,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                 cancelAnimationFrame(animationFrame);
             }
         };
-    }, [isMobile, isDragging, isStatic, hoveredCard, x]);
+    }, [isMobile, isDragging, isStatic, hoveredCard]);
 
     // Optimized auto-swipe logic for Mobile (Infinite Loop)
     useEffect(() => {
@@ -327,7 +311,8 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         
         const animate = (currentTime) => {
             if (currentTime - lastTime >= interval) {
-                setCurrentIndex(prev => prev + 1);
+                const total = filteredLeaders.length * 3;
+                setCurrentIndex(prev => (prev + 1) % total);
                 lastTime = currentTime;
             }
             animationFrame = requestAnimationFrame(animate);
@@ -342,47 +327,26 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         };
     }, [isMobile, isDragging, isStatic, isPaused, filteredLeaders.length]);
 
-    // Update X position for mobile slider based on currentIndex
+    // Animate to current index on mobile with Seamless Loop handling
     useEffect(() => {
         if (!isMobile || isDragging) return;
         
-        const cardWidth = CARD_WIDTH + 16; // card width + gap
+        const cardWidth = CARD_WIDTH;
         const totalItems = filteredLeaders.length;
         
-        // Center the current card
-        const centerOffset = getCenterOffset();
-        const targetX = -currentIndex * cardWidth + centerOffset;
-        
-        // Optimize loop reset: if the distance is too large, it's a jump reset.
-        // We should snap instantly to prevent swiping through all cards.
-        const currentX = x.get();
-        if (Math.abs(currentX - targetX) > cardWidth * 1.5) {
-            x.stop();
-            x.set(targetX);
-        } else {
-            animate(x, targetX, {
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-                mass: 0.8
-            });
-        }
-        
-        // Seamless reset logic: if we are at the end of the middle set
-        if (currentIndex >= totalItems * 2) {
+        // If we reached the end of the first set, we animate to the first item of the second set
+        // Then, we'll reset to 0 after the animation
+        x.set(-currentIndex * cardWidth);
+
+        // Seamless reset logic: if we are at the "extra" copy of the first item
+        if (currentIndex >= totalItems) {
             const timer = setTimeout(() => {
-                setCurrentIndex(totalItems);
-                x.set(-(totalItems) * cardWidth + centerOffset); 
-            }, 600);
-            return () => clearTimeout(timer);
-        } else if (currentIndex < totalItems) {
-            const timer = setTimeout(() => {
-                setCurrentIndex(totalItems * 2 - 1);
-                x.set(-(totalItems * 2 - 1) * cardWidth + centerOffset);
-            }, 600);
-            return () => clearTimeout(timer);
+                // Disable transition for a split second to jump back
+                setCurrentIndex(0);
+                x.jump(0); 
+            }, 600); // Slight delay to allow the 1.5s interval to feel natural
         }
-    }, [currentIndex, isMobile, isDragging, x, filteredLeaders.length, windowWidth]);
+    }, [currentIndex, isMobile, isDragging, x, filteredLeaders.length]);
 
     const handleDragStart = () => {
         setIsDragging(true);
@@ -395,17 +359,31 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         
         // Sync currentIndex with manual scroll position
         const finalX = x.get();
-        const cardWidth = CARD_WIDTH + 16;
-        const nearestIndex = Math.round((getCenterOffset() - finalX) / cardWidth);
-        setCurrentIndex(nearestIndex);
+        const nearestIndex = Math.round(Math.abs(finalX) / CARD_WIDTH);
+        const totalItems = filteredLeaders.length;
+        
+        // Clamp and wrap for manual interaction
+        const wrappedIndex = nearestIndex % totalItems;
+        setCurrentIndex(wrappedIndex);
+        x.set(-wrappedIndex * CARD_WIDTH);
 
-        // Resume after 1 second
+        // Resume after 1 second (faster response)
         pauseTimeoutRef.current = setTimeout(() => {
             setIsPaused(false);
         }, 1000);
     };
 
+    // Center offset calculation
+    const getCenterOffset = () => {
+        if (!containerRef.current) return 0;
+        const containerWidth = window.innerWidth;
+        const cardWidth = 280 + 16; // CARD_WIDTH
+        return (containerWidth - cardWidth) / 2 - 16; // Center the card
+    };
+
     if (isMobile) {
+        const totalCards = filteredLeaders.length;
+        
         const goToPrev = () => {
             setCurrentIndex(prev => prev - 1);
         };
@@ -417,6 +395,14 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
         // Infinite loop: duplicate cards 3x for seamless scroll
         const allCards = [...filteredLeaders, ...filteredLeaders, ...filteredLeaders];
         
+        // Calculate display position - normalize to middle set
+        const getDisplayIndex = () => {
+            const total = filteredLeaders.length;
+            let idx = currentIndex % (total * 3);
+            if (idx < 0) idx += total * 3;
+            return idx;
+        };
+        
         return (
             <section id="mentors-grid" className={`py-12 overflow-hidden ${isDark ? 'bg-[#050505]' : 'bg-white'}`}>
                 <div className="text-center mb-8 px-6">
@@ -425,15 +411,13 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     </h2>
                 </div>
                 
-                <div className="relative w-full overflow-visible flex justify-start items-stretch">
+                <div className="relative w-full px-2 overflow-visible">
                     <motion.div 
                         ref={containerRef}
-                        className="flex flex-nowrap items-stretch w-max"
-                        style={{ x, gap: '16px' }}
-                        drag="x"
-                        dragConstraints={{ left: -10000, right: 10000 }}
-                        onDragStart={handleDragStart}
-                        onDragEnd={handleDragEnd}
+                        className="flex gap-4 justify-center"
+                        animate={{ x: 0 }}
+                        transition={{ duration: 0 }}
+                        style={{ x: 0, overflow: 'visible' }}
                     >
                         {allCards.map((mentor, idx) => (
                             <div 
@@ -492,11 +476,11 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     </motion.div>
                 </div>
 
-                <div className="flex items-center justify-center gap-6 mt-10">
+                <div className="flex items-center justify-center gap-6 mt-6">
                     <button 
                         onClick={goToPrev}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all ${
-                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                         }`}
                         aria-label="Previous"
                     >
@@ -505,8 +489,8 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                     
                     <button 
                         onClick={goToNext}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all ${
-                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all ${
+                            isDark ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                         }`}
                         aria-label="Next"
                     >
@@ -556,7 +540,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                             style={{ x }}
                             drag="x"
                             dragConstraints={{ 
-                                left: -2000, // Large enough to allow scrolling before manual reset
+                                left: containerRef.current ? -(containerRef.current.scrollWidth / 2) : -1000, 
                                 right: 0 
                             }}
                             onDragStart={() => setIsDragging(true)}
