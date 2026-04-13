@@ -177,7 +177,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         {/* Logo */}
                         <div
                             className="flex items-center cursor-pointer group"
-                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            onClick={() => isCourseDetailsPage ? navigate('/') : window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             <BrandLogo
                                 size="md"
