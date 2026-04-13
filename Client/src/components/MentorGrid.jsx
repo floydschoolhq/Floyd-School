@@ -19,6 +19,7 @@ const LEADERS = [
         role: "Founder | AI/ML Engineer",
         image: shivamImg,
         imageScale: 1.9,
+        experience: "3+ Years",
         bio: "AI/ML expert building intelligent, real-world solutions with machine learning.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder"]
@@ -28,6 +29,7 @@ const LEADERS = [
         role: "Lead Mentor & Product Architect",
         image: raghavImg,
         imageScale: 1.9,
+        experience: "4+ Years",
         bio: "Cybersecurity specialist focused on securing systems and preventing threats.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: [ "Architect", "CyberSecurity"]
@@ -37,6 +39,7 @@ const LEADERS = [
         role: "Management & Web Development",
         image: abhayImg,
         imageScale: 1.8,
+        experience: "3+ Years",
         bio: "Builds fast, scalable, and modern web applications using latest technologies.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Developer", "Manager"]
@@ -46,6 +49,7 @@ const LEADERS = [
         role: "UI/UX & System Designer",
         image: ananimikaImg,
         imageScale: 1.4,
+        experience: "2+ Years",
         bio: "Designs intuitive, user-friendly interfaces focused on seamless experience.",
         linkedin: "#",
         tags: ["UI/UX", "Design"]
@@ -56,6 +60,7 @@ const LEADERS = [
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
+        experience: "2+ Years",
         bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
@@ -65,6 +70,7 @@ const LEADERS = [
         role: "System Development",
         image: shanImg,
         imageScale: 1.0,
+        experience: "3+ Years",
         bio: "Develops scalable systems and modern web applications with strong architecture.",
         linkedin: "https://www.linkedin.com/in/shan-sharma-726706292",
         tags: ["System Design", "Architecture"]
@@ -74,6 +80,7 @@ const LEADERS = [
         role: "Tech Lead | AI Engineer",
         image: ayushmanImg,
         imageScale: 1.0,
+        experience: "2+ Years",
         bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
         linkedin: "#",
         tags: ["AI/ML", "Tech Lead"]
@@ -104,6 +111,14 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                                     style={{ transform: `scale(${mentor.imageScale})` }}
                                 />
                             </div>
+                        
+                                    <div className="absolute top-0 right-0 z-20">
+                                        <div className={`px-1.5 py-0.5 rounded-lg backdrop-blur-md border text-[7px] font-black uppercase tracking-widest shadow-lg
+                                            ${isDark ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-white/80 border-orange-200 text-orange-600'}`}>
+                                            {mentor.experience}
+                                        </div>
+                                    </div>
+                                </div>
                         
                         <a 
                             href={mentor.linkedin}
@@ -153,6 +168,13 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                             className={`w-full h-full object-cover ${mentor.imagePosition || 'object-top'} transition-all duration-300 group-hover:scale-105`}
                             style={{ transform: `scale(${mentor.imageScale})` }}
                         />
+                    </div>
+                </div>
+
+                <div className={`absolute -top-2 -right-2 z-20`}>
+                    <div className={`px-2 py-1 rounded-xl backdrop-blur-md border text-[9px] font-black uppercase tracking-widest shadow-xl
+                        ${isDark ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-white/90 border-orange-100 text-orange-600'}`}>
+                        {mentor.experience}
                     </div>
                 </div>
 

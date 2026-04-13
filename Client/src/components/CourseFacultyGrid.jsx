@@ -17,6 +17,7 @@ const LEADERS = [
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
+        experience: "2+ Years",
         bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
@@ -26,6 +27,7 @@ const LEADERS = [
         role: "Founder | AI/ML Engineer",
         image: shivamImg,
         imageScale: 1.9,
+        experience: "3+ Years",
         bio: "visionary founder of thinkskool, architecting the future of STEM education through advanced AI and machine learning integration.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder", "Visionary"]
@@ -36,6 +38,7 @@ const LEADERS = [
         image: ananimikaImg,
         imageScale: 1,
         imagePosition: "object-[center_22%]",
+        experience: "2+ Years",
         bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
         linkedin: "#",
         tags: ["UI/UX", "Design", "Product"]
@@ -46,6 +49,7 @@ const LEADERS = [
         image: niteshImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
+        experience: "2+ Years",
         bio: "Specializing in digital product management and UI/UX design leadership within multidisciplinary teams.",
         linkedin: "#",
         tags: ["UI/UX", "Management", "Leadership"]
@@ -98,6 +102,16 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                     {/* Industrial Overlay */}
                     <div className={`absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100
                         ${isDark ? 'bg-gradient-to-t from-blue-500/20 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
+
+                    {/* Experience Badge */}
+                    <div className="absolute top-2 right-2 z-20">
+                        <div className={`px-2 py-1 rounded-lg backdrop-blur-md border text-[8px] font-black uppercase tracking-widest shadow-lg
+                            ${isDark 
+                                ? 'bg-blue-500/20 border-blue-500/40 text-blue-400' 
+                                : 'bg-white/80 border-blue-100 text-blue-600'}`}>
+                            {mentor.experience}
+                        </div>
+                    </div>
                 </div>
             </div>
  
