@@ -104,7 +104,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                 {/* Card-Level Experience Badge (Top Right) */}
                 <div className="absolute top-6 right-6 z-30">
                     <div className="bg-white px-2 py-1 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                        <span className="text-[8px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                        <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
                             {mentor.experience} years exp
                         </span>
                     </div>
@@ -171,7 +171,7 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
             {/* Card-Level Experience Badge (Top Right) */}
             <div className="absolute top-6 right-8 z-30">
                 <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                    <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                    <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
                         {mentor.experience} years exp
                     </span>
                 </div>
