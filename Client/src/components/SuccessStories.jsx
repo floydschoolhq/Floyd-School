@@ -4,37 +4,45 @@ import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import useIsMobile from '../hooks/useIsMobile';
 
+import boy1 from '../assets/avatars/boy1.jpg';
+import boy2 from '../assets/avatars/boy2.jpg';
+import boy3 from '../assets/avatars/boy3.avif';
+import boy4 from '../assets/avatars/boy4.avif';
+import girl1 from '../assets/avatars/girl1.jpg';
+import girl2 from '../assets/avatars/girl2.avif';
+import girl3 from '../assets/avatars/girl3.avif';
+
 
 const REVIEWS_ROW_1 = [
     {
         name: "Priyal Panwar",
         role: "Student, STEPUP SCHOOL",
         content: "The workshop was extremely informative and the mentors put in great efforts. It completely changed my perspective on how easy it is to start building real-world projects from scratch.",
-        avatar: "P"
+        avatar: girl1
     },
     {
         name: "Navya",
         role: "Student, STEPUP SCHOOL",
         content: "I really liked the hands-on approach and the structured curriculum. The instructors explained complex concepts with such clarity that I felt confident writing code by the end of the session.",
-        avatar: "N"
+        avatar: girl2
     },
     {
         name: "Pratishtha Thakur",
         role: "Student, STEPUP SCHOOL",
         content: "An absolutely amazing experience! The interactive sessions and practical examples made technical concepts incredibly easy to grasp. I highly recommend this to anyone looking to start their tech journey.",
-        avatar: "P"
+        avatar: girl3
     },
     {
         name: "Aahana Jain",
         role: "Student, STEPUP SCHOOL",
         content: "The course structure was phenomenal. They made it so easy to understand advanced topics that normally seem intimidating. I'm grateful to be part of a program that genuinely cares about student growth.",
-        avatar: "A"
+        avatar: girl1
     },
     {
         name: "Siya Kapoor",
         role: "Student, STEPUP SCHOOL",
         content: "We learned a tremendous amount in such a short time. The environment was super supportive, and the real-world examples helped us connect theoretical knowledge with practical implementation seamlessly.",
-        avatar: "S"
+        avatar: girl2
     }
 ];
 
@@ -43,31 +51,31 @@ const REVIEWS_ROW_2 = [
         name: "Kanisha Kapoor",
         role: "Student, STEPUP SCHOOL",
         content: "Attending this workshop was one of the best investments of my time. The instructors were deeply knowledgeable and the hands-on projects gave me practical skills I can actually use.",
-        avatar: "K"
+        avatar: girl3
     },
     {
         name: "Ishanvi Shukla",
         role: "Student, STEPUP SCHOOL",
         content: "This was a fantastic experience that sparked so many new ideas for me. The mentorship was top-notch, and it gave me a clear roadmap for how to approach and build my own software projects.",
-        avatar: "I"
+        avatar: girl1
     },
     {
         name: "Bhavya Singh",
         role: "Student, STEPUP SCHOOL",
         content: "The presentations were visually engaging and technically profound. The mentors did an extraordinary job breaking down difficult logic into simple, bite-sized lessons that anyone can follow.",
-        avatar: "B"
+        avatar: girl2
     },
     {
         name: "Sanvi Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "The explanations provided by the mentors were crystal clear. It was a highly rewarding experience that bridged the gap between basic concepts and actual industry-level development practices.",
-        avatar: "S"
+        avatar: girl3
     },
     {
         name: "Daksh Chaudhary",
         role: "Student, STEPUP SCHOOL",
         content: "The course was exceptionally interactive and well-paced. Getting live feedback on my code and collaborating with peers made the entire learning curve incredibly smooth and enjoyable.",
-        avatar: "D"
+        avatar: boy1
     }
 ];
 
@@ -91,8 +99,8 @@ const ReviewCard = ({ review, index = 0, isMobile = false }) => {
                 <div className="relative mb-6 md:mb-8 pt-2">
                     <div className={`absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-700 ${accent.bg}`} />
                     <div className="relative p-1 rounded-2xl border border-white/10 group-hover:border-white/20 bg-gradient-to-b from-white/5 to-transparent">
-                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-sm transition-transform duration-700 group-hover:scale-105">
-                            <span className="text-lg md:text-xl font-bold text-white">{review.avatar}</span>
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl border border-white/10 overflow-hidden shadow-sm transition-transform duration-700 group-hover:scale-105 bg-slate-800">
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                         </div>
                     </div>
                 </div>
@@ -213,8 +221,8 @@ const SuccessStories = ({ variant }) => {
                                     </div>
 
                                     {/* Top Avatar */}
-                                    <div className="absolute -top-[45px] left-1/2 -translate-x-1/2 w-[90px] h-[90px] rounded-full border-[6px] border-[#0A0A0A] bg-gradient-to-br from-green-300 to-green-600 flex items-center justify-center overflow-hidden">
-                                        <span className="text-3xl font-black text-slate-900">{review.avatar}</span>
+                                    <div className="absolute -top-[45px] left-1/2 -translate-x-1/2 w-[90px] h-[90px] rounded-full border-[6px] border-[#0A0A0A] overflow-hidden bg-slate-800">
+                                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                                     </div>
                                     
                                     {/* Header (Name) */}
@@ -230,8 +238,8 @@ const SuccessStories = ({ variant }) => {
                                     {/* Footer Route Component */}
                                     <div className="mt-auto pt-6 flex items-center justify-between border-t border-[#2a2a2a] relative z-10">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-[30px] h-[30px] rounded-full bg-black border border-[#444] flex items-center justify-center shrink-0">
-                                                <span className="text-[10px] text-white font-bold">{origin.charAt(0)}</span>
+                                            <div className="w-[30px] h-[30px] rounded-full bg-black border border-[#444] overflow-hidden shrink-0">
+                                                <img src={review.avatar} alt={origin} className="w-full h-full object-cover" />
                                             </div>
                                             <span className="text-[11px] font-bold text-[#858585] whitespace-nowrap">{origin}</span>
                                         </div>

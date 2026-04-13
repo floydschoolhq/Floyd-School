@@ -4,12 +4,20 @@ import { motion, useAnimation } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
 
+import boy1 from '../assets/avatars/boy1.jpg';
+import boy2 from '../assets/avatars/boy2.jpg';
+import boy3 from '../assets/avatars/boy3.avif';
+import boy4 from '../assets/avatars/boy4.avif';
+import girl1 from '../assets/avatars/girl1.jpg';
+import girl2 from '../assets/avatars/girl2.avif';
+import girl3 from '../assets/avatars/girl3.avif';
+
 const AI_REVIEWS = [
     {
         id: 1,
         name: "Manav",
         role: "Student, STEPUP SCHOOL",
-        avatar: "M",
+        avatar: boy1,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -23,7 +31,7 @@ const AI_REVIEWS = [
         id: 2,
         name: "Priya",
         role: "Student, STEPUP SCHOOL",
-        avatar: "P",
+        avatar: girl1,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -37,7 +45,7 @@ const AI_REVIEWS = [
         id: 3,
         name: "Kushagra",
         role: "Student, STEPUP SCHOOL",
-        avatar: "K",
+        avatar: boy2,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -51,7 +59,7 @@ const AI_REVIEWS = [
         id: 4,
         name: "Ananya",
         role: "Student, STEPUP SCHOOL",
-        avatar: "A",
+        avatar: girl2,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -65,7 +73,7 @@ const AI_REVIEWS = [
         id: 5,
         name: "Shutanh",
         role: "Student, STEPUP SCHOOL",
-        avatar: "S",
+        avatar: boy3,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -79,7 +87,7 @@ const AI_REVIEWS = [
         id: 6,
         name: "Rahul",
         role: "Student, STEPUP SCHOOL",
-        avatar: "R",
+        avatar: boy4,
         rating: 5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -111,8 +119,8 @@ const ReviewCard = ({ review }) => {
                 h-full flex flex-col
             `}>
                 <div className="flex items-center gap-4 mb-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center shadow-lg`}>
-                        <span className="text-lg font-bold text-white">{review.avatar}</span>
+                    <div className={`w-12 h-12 rounded-xl border border-white/10 overflow-hidden shadow-lg bg-slate-800`}>
+                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <h4 className="text-base font-bold text-white">{review.name}</h4>
@@ -242,8 +250,8 @@ const CourseReviews = ({ courseId, variant }) => {
                                         relative rounded-xl p-4 border ${colors.border} bg-white/5 backdrop-blur-sm
                                     `}>
                                         <div className="flex items-center gap-3 mb-3">
-                                            <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${colors.gradient} flex items-center justify-center`}>
-                                                <span className="text-sm font-bold text-white">{review.avatar}</span>
+                                            <div className={`w-10 h-10 rounded-lg border border-white/10 overflow-hidden bg-slate-800`}>
+                                                <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                                             </div>
                                             <div>
                                                 <h4 className="text-sm font-bold text-white">{review.name}</h4>
