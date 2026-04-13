@@ -272,23 +272,23 @@ const ThinkskoolAdvantage = () => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className="py-20 bg-[#F8FAFC] relative w-full overflow-hidden">
+            <section className="py-12 bg-[#F8FAFC] relative w-full overflow-hidden">
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 -mr-32 -mt-32" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-[100px] opacity-50 -ml-32 -mb-32" />
 
                 {/* Mobile Header */}
-                <div className="px-6 mb-12 relative z-10">
+                <div className="px-4 mb-6 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="text-left"
                     >
-                        <h2 className="text-[32px] font-black text-slate-900 leading-none">
+                        <h2 className="text-[34px] font-black text-slate-900 leading-[1.1]">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-[32px] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-none">
+                        <h2 className="text-[34px] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-[1.1]">
                             We teach you to build.
                         </h2>
                     </motion.div>
