@@ -288,13 +288,13 @@ const CourseDetails = () => {
                                 </div>
 
                                 {/* Mobile: Scaled certificate with scroll */}
-                                <div className="md:hidden relative">
+                                <div className="md:hidden relative px-4">
                                     <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-500/10 rounded-2xl blur-lg"></div>
                                     <div className="relative bg-slate-900 rounded-2xl p-1 border border-slate-800">
                                         <img 
                                             src={sampleCertificate} 
                                             alt="ThinkSkool AI & ML Certificate" 
-                                            className="w-full h-auto rounded-xl shadow-xl"
+                                            className="w-[120%] h-auto -ml-[10%] rounded-xl shadow-xl"
                                         />
                                     </div>
                                 </div>
