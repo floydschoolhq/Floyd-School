@@ -91,7 +91,7 @@ const ReviewCard = ({ review, index = 0, isMobile = false }) => {
     const accent = accents[index % accents.length];
 
     return (
-        <div className={`${isMobile ? 'w-full rounded-none border-x-0' : 'w-[350px] rounded-2xl'} h-[336px] p-6 md:p-8 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0`}>
+        <div className={`${isMobile ? 'w-full rounded-none border-x-0 h-auto min-h-[336px]' : 'w-[350px] rounded-2xl h-[400px]'} p-6 md:p-8 pb-10 md:pb-12 group relative transition-all duration-700 overflow-hidden border backdrop-blur-2xl flex flex-col items-center text-center bg-slate-950/90 border-white/10 shadow-2xl shadow-black/60 flex-shrink-0`}>
             <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-1000 ${accent.bg}`} />
             <div className={`absolute top-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
