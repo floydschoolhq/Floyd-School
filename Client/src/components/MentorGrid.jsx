@@ -121,15 +121,18 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         >
                             <FaLinkedinIn size={12} />
                         </a>
+
+                        {/* Reference-style Experience Badge */}
+                        <div className="absolute top-0 right-0 z-30 translate-x-1.5 -translate-y-1.5">
+                            <div className="bg-white px-2 py-1 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
+                                <span className="text-[8px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                                    {mentor.experience} years exp
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="mb-6 flex flex-col items-center">
-                        <div className="mb-3">
-                            <span className={`px-1.5 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-widest shadow-sm
-                                ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' : 'bg-orange-50 border-orange-100 text-orange-600'}`}>
-                                {mentor.experience} Exp.
-                            </span>
-                        </div>
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
                             {mentor.name}
                         </h3>
@@ -169,26 +172,30 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                     </div>
                 </div>
 
-                <a 
-                    href={mentor.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className={`absolute bottom-0 right-0 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-all duration-300 z-20 border-2
-                        ${isDark ? 'bg-white/10 backdrop-blur-xl border-white/10 hover:bg-orange-500 hover:border-orange-400' : 'bg-slate-900 border-white hover:bg-orange-500'}`}
-                >
-                    <FaLinkedinIn size={14} />
-                </a>
-            </div>
+                        <a 
+                            href={mentor.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className={`absolute bottom-0 right-0 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-all duration-300 z-20 border-2
+                                ${isDark ? 'bg-white/10 backdrop-blur-xl border-white/10 hover:bg-orange-500 hover:border-orange-400' : 'bg-slate-900 border-white hover:bg-orange-500'}`}
+                        >
+                            <FaLinkedinIn size={14} />
+                        </a>
+                    </div>
 
-            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
-                <div className="mb-4">
-                    <span className={`px-2 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest shadow-sm
-                        ${isDark ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' : 'bg-orange-50 border-orange-100 text-orange-600'}`}>
-                        {mentor.experience} Experienced
-                    </span>
+                    {/* Reference-style Experience Badge */}
+                    <div className="absolute top-2 right-2 z-30">
+                        <div className="bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-lg shadow-xl shadow-black/10 flex items-center justify-center border border-slate-100">
+                            <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                                {mentor.experience} years exp
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
+
+                <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
+                    <div className="space-y-1 mb-4 md:mb-6 flex flex-col items-center">
                     <h3 className={`text-xl md:text-3xl font-black uppercase tracking-tight leading-none transition-colors duration-300 w-full
                         ${isDark ? 'text-white group-hover:text-orange-400' : 'text-slate-900 group-hover:text-orange-600'}`}>
                         {mentor.name}
