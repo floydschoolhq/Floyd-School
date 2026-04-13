@@ -74,4 +74,7 @@ router.post('/broadcast', broadcastNotification);
 router.get('/access-requests', getAccessRequests);
 router.patch('/access-requests/:id', reviewAccessRequest);
 
+// Chatbot Leads
+router.use('/chatbot', require('./chatbotRoutes'));
+
 module.exports = router;

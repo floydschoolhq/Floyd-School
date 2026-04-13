@@ -38,9 +38,19 @@ const liveClassRoutes = require('./routes/liveClassRoutes');
 const doubtRoutes = require('./routes/doubtRoutes');
 const scheduledLiveRoutes = require('./routes/scheduledLiveRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+// const chatbotRoutes = require('./routes/chatbotRoutes');
 const { handleRazorpayWebhook } = require('./controllers/paymentController');
 
-connectDB();
+// connectDB(); // Temporarily commented
+
+// Handle MongoDB connection errors
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected');
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -188,6 +198,7 @@ app.use('/api/payments', paymentLimiter, paymentRoutes);
 // Contact/lead routes with form spam protection
 app.use('/api/contact', formLimiter, contactRoutes);
 app.use('/api/leads', formLimiter, leadRoutes);
+// app.use('/api/chatbot', formLimiter, chatbotRoutes);
 
 // General API routes with standard rate limiting
 app.use('/api/courses', generalLimiter, courseRoutes);

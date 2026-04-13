@@ -108,6 +108,21 @@ const createOrder = async (req, res) => {
             });
         }
 
+        // IDEMPOTENCY: Check if there's already a pending order for this email+course in last 10 minutes
+        const recentPending = await Enrollment.findOne({
+            'userDetails.email': sanitizedEmail,
+            course: course._id,
+            paymentStatus: 'pending',
+            createdAt: { $gte: new Date(Date.now() - 10 * 60 * 1000) }
+        });
+
+        if (recentPending) {
+            return res.status(429).json({
+                success: false,
+                message: 'A payment order was recently created. Please complete or wait before trying again.'
+            });
+        }
+
         // Check if email already enrolled in this course
         const existingEnrollment = await Enrollment.findOne({
             'userDetails.email': sanitizedEmail,
@@ -209,6 +224,28 @@ const verifyPayment = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid payment signature'
+            });
+        }
+
+        // Find enrollment by razorpay order ID
+        const enrollment = await Enrollment.findOne({ razorpayOrderId });
+        
+        if (!enrollment) {
+            return res.status(404).json({
+                success: false,
+                message: 'Enrollment not found for this order'
+            });
+        }
+
+        // Prevent double verification
+        if (enrollment.paymentStatus === 'completed') {
+            return res.status(200).json({
+                success: true,
+                message: 'Payment already verified',
+                enrollment: {
+                    _id: enrollment._id,
+                    paymentStatus: enrollment.paymentStatus
+                }
             });
         }
 
@@ -382,7 +419,7 @@ const handlePaymentCancellation = async (req, res) => {
 const handleRazorpayWebhook = async (req, res) => {
     try {
         const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-
+        
         // Verify webhook signature against the raw payload
         const razorpaySignature = req.headers['x-razorpay-signature'];
         const webhookBody = req.rawBody ? req.rawBody.toString('utf8') : JSON.stringify(req.body);
@@ -434,9 +471,9 @@ const handleRazorpayWebhook = async (req, res) => {
             const { order_id } = payment.entity;
             
             // Update enrollment status
-            const failedEnrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
-            if (failedEnrollment) {
-                await Enrollment.findByIdAndUpdate(failedEnrollment._id, {
+            const enrollment = await Enrollment.findOne({ razorpayOrderId: order_id });
+            if (enrollment) {
+                await Enrollment.findByIdAndUpdate(enrollment._id, {
                     paymentStatus: 'failed',
                     status: 'cancelled'
                 });
