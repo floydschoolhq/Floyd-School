@@ -23,7 +23,7 @@ const LEADERS = [
         image: shivamImg,
         imageScale: 1.9,
         experience: "3+ Years",
-        bio: "Multi international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
+        bio: "An international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder"]
     },
