@@ -122,7 +122,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                             <FaLinkedinIn size={12} />
                         </a>
                     </div>
-                </div>
 
                     <div className="mb-6 flex flex-col items-center">
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>
