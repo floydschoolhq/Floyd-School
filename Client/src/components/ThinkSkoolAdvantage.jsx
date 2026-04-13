@@ -285,10 +285,10 @@ const ThinkskoolAdvantage = () => {
                         viewport={{ once: true }}
                         className="text-left"
                     >
-                        <h2 className="text-[34px] font-black text-slate-900 leading-[1.1]">
+                        <h2 className="text-[28px] font-black text-slate-900 leading-tight whitespace-nowrap">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-[34px] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-[1.1]">
+                        <h2 className="text-[28px] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-tight whitespace-nowrap">
                             We teach you to build.
                         </h2>
                     </motion.div>
