@@ -3,12 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight, Sparkles, Brain, Cpu, Zap } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
 
+import boy1 from '../assets/avatars/boy1.jpg';
+import boy2 from '../assets/avatars/boy2.jpg';
+import boy3 from '../assets/avatars/boy3.avif';
+import girl1 from '../assets/avatars/girl1.jpg';
+import girl2 from '../assets/avatars/girl2.avif';
+import girl3 from '../assets/avatars/girl3.avif';
+
 const AI_REVIEWS = [
     {
         id: 1,
         name: "Priyal Panwar",
         role: "Student",
-        avatar: "P",
+        avatar: girl1,
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -22,7 +29,7 @@ const AI_REVIEWS = [
         id: 2,
         name: "Navya",
         role: "Student",
-        avatar: "N",
+        avatar: girl2,
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -36,7 +43,7 @@ const AI_REVIEWS = [
         id: 3,
         name: "Pratishtha Thakur",
         role: "Student",
-        avatar: "P",
+        avatar: girl3,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -50,7 +57,7 @@ const AI_REVIEWS = [
         id: 4,
         name: "Aarshi Bhati",
         role: "Student",
-        avatar: "A",
+        avatar: girl1,
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -64,7 +71,7 @@ const AI_REVIEWS = [
         id: 5,
         name: "Aakriti Gupta",
         role: "Student",
-        avatar: "A",
+        avatar: girl2,
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -78,7 +85,7 @@ const AI_REVIEWS = [
         id: 6,
         name: "Aahana Jain",
         role: "Student",
-        avatar: "A",
+        avatar: girl3,
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -92,7 +99,7 @@ const AI_REVIEWS = [
         id: 7,
         name: "Navya Chaudhary",
         role: "Student",
-        avatar: "N",
+        avatar: girl1,
         rating: 2,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -106,7 +113,7 @@ const AI_REVIEWS = [
         id: 8,
         name: "Siya Kapoor",
         role: "Student",
-        avatar: "S",
+        avatar: girl2,
         rating: 2.5,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -120,7 +127,7 @@ const AI_REVIEWS = [
         id: 9,
         name: "Kanisha Kapoor",
         role: "Student",
-        avatar: "K",
+        avatar: girl3,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -134,7 +141,7 @@ const AI_REVIEWS = [
         id: 10,
         name: "Ishanvi Shukla",
         role: "Student",
-        avatar: "I",
+        avatar: girl1,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -148,7 +155,7 @@ const AI_REVIEWS = [
         id: 11,
         name: "Bhavya Singh",
         role: "Student",
-        avatar: "B",
+        avatar: girl2,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -162,7 +169,7 @@ const AI_REVIEWS = [
         id: 12,
         name: "Sanvi Chaudhary",
         role: "Student",
-        avatar: "L",
+        avatar: girl3,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -176,7 +183,7 @@ const AI_REVIEWS = [
         id: 13,
         name: "Daksh Chaudhary",
         role: "Student",
-        avatar: "J",
+        avatar: boy1,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -190,7 +197,7 @@ const AI_REVIEWS = [
         id: 14,
         name: "Ishan Srivastava",
         role: "Student",
-        avatar: "I",
+        avatar: boy2,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -204,7 +211,7 @@ const AI_REVIEWS = [
         id: 15,
         name: "Sahaj Tyagi",
         role: "Student",
-        avatar: "S",
+        avatar: boy3,
         rating: 3,
         course: "AI & Machine Learning",
         batch: "Current Batch",
@@ -302,10 +309,10 @@ const FeaturedCard = ({ review, variant }) => {
             }`}>
                 <div className="relative z-10 flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl overflow-hidden border p-0.5 shadow-sm bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center ${
+                        <div className={`w-12 h-12 rounded-2xl overflow-hidden border p-0.5 shadow-sm bg-slate-800 flex items-center justify-center ${
                             isDark ? 'border-white/10' : 'border-slate-100'
                         }`}>
-                            <span className="text-sm font-bold text-white">{review.avatar}</span>
+                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="min-w-0">
                             <h4 className={`text-[14px] font-bold tracking-tight truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</h4>
@@ -359,8 +366,8 @@ const FeaturedCard = ({ review, variant }) => {
                     <div className="flex flex-col items-center gap-5">
                         <div className="relative">
                             <div className={`absolute inset-0 rounded-2xl blur-md ${c.glow} bg-gradient-to-br`} />
-                            <div className="relative w-20 h-20 rounded-2xl border-2 border-white shadow-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                <span className="text-2xl font-bold text-white">{review.avatar}</span>
+                            <div className="relative w-20 h-20 rounded-2xl border-2 border-white shadow-lg overflow-hidden bg-slate-100">
+                                <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                             </div>
                             <div className={`absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-full ${c.dot} border-2 border-white flex items-center justify-center`}>
                                 <Zap size={10} className="text-white fill-current" />
@@ -422,8 +429,8 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 }`}
             >
                 <div className="flex flex-col items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl border bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
-                        <span className="text-sm font-bold text-white">{review.avatar}</span>
+                    <div className={`w-12 h-12 rounded-xl border overflow-hidden bg-slate-100 ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0 text-center">
                         <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
@@ -452,9 +459,8 @@ const MiniCard = ({ review, isActive, onClick, variant }) => {
                 />
             )}
             <div className="flex items-center gap-3 pl-2">
-                <div className={`w-9 h-9 rounded-xl border bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center transition-all
-                    ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
-                    <span className="text-xs font-bold text-white">{review.avatar}</span>
+                 <div className={`w-9 h-9 rounded-xl border overflow-hidden bg-slate-100 transition-all ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                     <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{review.name}</p>
