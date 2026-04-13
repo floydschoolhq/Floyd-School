@@ -75,6 +75,15 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             {/* Background Decorative Mesh */}
             <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none transition-colors duration-700
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
+
+            {/* Card-Level Experience Badge (Top Right) */}
+            <div className="absolute top-6 right-6 z-30">
+                <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
+                    <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                        {mentor.experience} years exp
+                    </span>
+                </div>
+            </div>
             
             {/* Image Section: High-End Industrial Housing */}
             <div className="w-40 h-40 flex-shrink-0 relative pt-2">
@@ -102,15 +111,6 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
                     {/* Industrial Overlay */}
                     <div className={`absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100
                         ${isDark ? 'bg-gradient-to-t from-blue-500/20 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
-
-                    {/* Reference-style Experience Badge */}
-                    <div className="absolute top-3 right-3 z-30">
-                        <div className="bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-lg shadow-xl shadow-black/10 flex items-center justify-center">
-                            <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
-                                {mentor.experience} years exp
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </div>
  

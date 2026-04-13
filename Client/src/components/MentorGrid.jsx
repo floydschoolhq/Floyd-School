@@ -101,6 +101,15 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
             >
                 <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] -mr-16 -mt-16 pointer-events-none ${isDark ? 'bg-orange-500/10' : 'bg-orange-500/5'}`} />
 
+                {/* Card-Level Experience Badge (Top Right) */}
+                <div className="absolute top-6 right-6 z-30">
+                    <div className="bg-white px-2 py-1 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
+                        <span className="text-[8px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                            {mentor.experience} years exp
+                        </span>
+                    </div>
+                </div>
+
                 <div className="relative z-10 w-full flex flex-col items-center">
                     <div className="relative mb-6">
                         <div className="w-24 h-24 rounded-full overflow-hidden">
@@ -159,6 +168,15 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
             <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-all duration-300
                 ${isDark ? 'bg-orange-500/10 group-hover:bg-orange-500/20' : 'bg-orange-100/40 group-hover:bg-orange-200/60'}`} />
             
+            {/* Card-Level Experience Badge (Top Right) */}
+            <div className="absolute top-6 right-8 z-30">
+                <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
+                    <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
+                        {mentor.experience} years exp
+                    </span>
+                </div>
+            </div>
+            
             <div className="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 relative">
                 <div className={`absolute inset-0 rounded-full p-[3px] transition-all duration-300 z-10 
                     ${isDark ? 'bg-white/5 border-white/10 group-hover:border-orange-400/40' : 'bg-white border-slate-100 group-hover:border-orange-400/40'}`}>
@@ -182,15 +200,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                 >
                     <FaLinkedinIn size={14} />
                 </a>
-
-                {/* Reference-style Experience Badge */}
-                <div className="absolute top-2 right-2 z-30">
-                    <div className="bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-lg shadow-xl shadow-black/10 flex items-center justify-center border border-slate-100">
-                        <span className="text-[9px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
-                            {mentor.experience} years exp
-                        </span>
-                    </div>
-                </div>
             </div>
 
             <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
