@@ -54,7 +54,7 @@ const LEADERS = [
         imageScale: 1.15,
         experience: "2+ Years",
         bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["UI/UX", "Design"]
     },
     {
@@ -65,7 +65,7 @@ const LEADERS = [
         imagePosition: "object-[center_65%]",
         experience: "2+ Years",
         bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/shashwat-vashishth",
         tags: ["AI/ML", "Algorithm"]
     },
     {
