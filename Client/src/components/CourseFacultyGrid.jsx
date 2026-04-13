@@ -5,7 +5,7 @@ import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shivamImg from '../assets/tutors/shivam.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import shashwatImg from '../assets/tutors/shashwat.jpg';
+import shashwatImg from '../assets/tutors/shashwat.png';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
@@ -13,35 +13,33 @@ import useIsMobile from '../hooks/useIsMobile';
 const LEADERS = [
     {
         name: "Shashwat Vashishth",
-        role: "Mentor AI/ML",
+        role: "Industry Expert • Solution Architect",
         image: shashwatImg,
         imageScale: 1.0,
-        imagePosition: "object-[center_85%]",
+        imagePosition: "object-[center_65%]",
         experience: "2+ Years",
-        bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
+        bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
     },
     {
         name: "Shivam Mishra",
-        role: "Founder | AI/ML Engineer",
-        experience: "4+",
+        role: "System Engineer • Entrepreneur",
         image: shivamImg,
         imageScale: 1.9,
         experience: "3+ Years",
-        bio: "visionary founder of thinkskool, architecting the future of STEM education through advanced AI and machine learning integration.",
+        bio: "Multi international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder", "Visionary"]
     },
     {
         name: "Anamika Vashisth",
-        role: "Growth Associate",
-        experience: "3+",
+        role: "Data Analyst • Strategy Lead",
         image: ananimikaImg,
-        imageScale: 1,
-        imagePosition: "object-[center_22%]",
+        imageScale: 1.1,
+        imagePosition: "object-[center_20%]",
         experience: "2+ Years",
-        bio: "Specializing in UI/UX coordination and system design to ensure seamless and intuitive user experiences.",
+        bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
         linkedin: "#",
         tags: ["UI/UX", "Design", "Product"]
     },
@@ -50,6 +48,7 @@ const LEADERS = [
         role: "Lead Mentor & Full Stack Developer",
         image: ayushmanImg,
         imageScale: 1.0,
+        imagePosition: "object-[center_40%]",
         experience: "3+ Years",
         bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
         linkedin: "#",
@@ -72,96 +71,70 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant, onMouseEnter, on
             onTouchStart={onMouseEnter}
             onTouchEnd={onMouseLeave}
             style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
-            className={`shrink-0 ${isMobile ? 'w-[280px] h-[400px]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col items-center justify-center p-8 md:p-10 gap-8 relative cursor-default group
-                ${isDark 
-                    ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-white/[0.04] hover:border-blue-500/20' 
+            className={`shrink-0 ${isMobile ? 'w-[280px] h-[400px]' : 'w-full aspect-[3/4]'} rounded-2xl overflow-hidden border-2 transition-all duration-700 flex flex-col relative cursor-default group
+                ${isDark
+                    ? 'bg-[#0A0A0A] border-white/5 hover:border-blue-500/20'
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] hover:border-blue-100'}`}
         >
-            {/* Background Decorative Mesh */}
-            <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none transition-colors duration-700
-                ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
+            {/* Top Half: Image */}
+            <div className={`w-full h-[55%] relative overflow-hidden rounded-t-2xl flex-shrink-0 ${isDark ? 'bg-[#0A0A0A]' : 'bg-slate-100'}`} style={{ transform: 'translateZ(0)' }}>
+                <img
+                    src={mentor.image}
+                    alt={mentor.name}
+                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${mentor.imagePosition || 'object-top'}`}
+                    style={{ transform: `scale(${mentor.imageScale || 1})` }}
+                />
 
-            {/* Card-Level Experience Badge (Top Right) - Desktop Only */}
-            <div className="absolute top-6 right-6 z-30">
-                <div className={`${isDark ? 'bg-white/[0.03] border-white/5 text-slate-500' : 'bg-slate-50/60 border-slate-200/60 text-slate-400'} px-2.5 py-1.5 rounded-lg border flex items-center justify-center`}>
-                    <span className="text-[9px] font-medium font-ubuntu tracking-widest uppercase whitespace-nowrap opacity-70">
-                        {mentor.experience.replace(/ Years/i, "")} years experience
-                    </span>
+                {/* Card-Level Experience Badge (Top Right) */}
+                <div className="absolute top-4 right-4 z-30">
+                    <div className={`transition-opacity duration-500 opacity-60 group-hover:opacity-100 ${isDark ? 'bg-[#050505]/60 backdrop-blur-md border border-white/10 text-white' : 'bg-white/80 backdrop-blur-md border border-slate-200 text-slate-800'} px-2.5 py-1.5 rounded-lg shadow-xl flex items-center justify-center`}>
+                        <span className="text-[9px] font-medium font-ubuntu tracking-widest uppercase whitespace-nowrap">
+                            {mentor.experience.replace(/ Years/i, "")} years experience
+                        </span>
+                    </div>
                 </div>
             </div>
-            
-            {/* Image Section: High-End Industrial Housing */}
-            <div className="w-40 h-40 flex-shrink-0 relative pt-2">
-                {/* Secondary Outer Frame for Depth */}
-                <div className={`absolute inset-0 rounded-3xl transition-transform duration-700
-                    ${isDark ? 'bg-blue-500/10' : 'bg-blue-100/50'}`} />
-                
-                {/* Main Profile Housing */}
-                <div className={`w-full h-full rounded-3xl overflow-hidden relative border-2 transition-all duration-700
-                    ${isDark ? 'border-white/10 group-hover:border-blue-500/40 shadow-2xl' : 'border-slate-200 group-hover:border-blue-300 shadow-xl'}`}>
-                    {/* Dynamic Background */}
-                    <div className={`absolute inset-0 transition-colors duration-700
-                        ${isDark ? 'bg-gradient-to-br from-slate-900 via-blue-950/20 to-slate-900' : 'bg-gradient-to-br from-blue-50 via-white to-slate-50'}`} />
-                    
-                    {/* Profile Image */}
-                    <img 
-                        src={mentor.image} 
-                        alt={mentor.name}
-                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${mentor.imagePosition || 'object-center'}`}
-                        style={{ 
-                            transform: `scale(${mentor.imageScale})`
-                        }}
-                    />
-                    
-                    {/* Industrial Overlay */}
-                    <div className={`absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100
-                        ${isDark ? 'bg-gradient-to-t from-blue-500/20 to-transparent' : 'bg-gradient-to-t from-blue-500/10 to-transparent'}`} />
-                </div>
-            </div>
- 
-            {/* Content Core: Pure Data Hierarchy */}
-            <div className="flex-grow flex flex-col items-center text-center min-w-0 relative z-10 w-full">
-                <div className="space-y-1 mb-4 flex flex-col items-center">
-                <h3 className={`text-xl md:text-2xl font-ubuntu font-bold tracking-[0.25em] uppercase leading-tight transition-all duration-500 w-full break-words whitespace-nowrap
-                    ${isDark 
-                        ? 'text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 group-hover:from-blue-400 group-hover:to-blue-600' 
-                        : 'text-slate-900 group-hover:text-blue-600'}`}>
-                    {mentor.name}
-                </h3>
-                    {!isMobile && (
-                        <div className="flex items-center justify-center gap-2 mb-3">
-                            <p className={`font-bold text-sm md:text-[13px] uppercase
-                                ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                <span className="mr-2">[</span>
-                                {mentor.role}
-                                <span className="ml-2">]</span>
-                            </p>
-                        </div>
-                    )}
-                    <div className={`w-16 h-1.5 transition-all duration-500 rounded-full
-                        ${isDark ? 'bg-white/10 group-hover:w-32 group-hover:bg-blue-500' : 'bg-slate-100 group-hover:w-32 group-hover:bg-blue-600'}`} />
+
+            {/* Bottom Half: Info */}
+            <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 pb-6 pt-2 relative z-10">
+                <div className="space-y-1 w-full flex flex-col items-center">
+                    <h3 className={`text-lg md:text-xl font-ubuntu font-bold tracking-[0.15em] uppercase leading-tight transition-all duration-500 w-full break-words
+                        ${isDark
+                            ? 'text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 group-hover:from-blue-400 group-hover:to-blue-600'
+                            : 'text-slate-900 group-hover:text-blue-600'}`}>
+                        {mentor.name}
+                    </h3>
+
+                    <div className="flex items-center justify-center gap-2 mt-1 mb-3">
+                        <p className={`font-bold text-[10px] md:text-xs uppercase
+                            ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                            <span className="mr-2">[</span>
+                            {mentor.role}
+                            <span className="ml-2">]</span>
+                        </p>
+                    </div>
+
+                    <div className={`w-12 h-1 mb-3 transition-all duration-500 rounded-full
+                        ${isDark ? 'bg-white/10 group-hover:w-24 group-hover:bg-blue-500' : 'bg-slate-200 group-hover:w-24 group-hover:bg-blue-600'}`} />
                 </div>
 
-                <p className={`text-[14px] md:text-[16px] leading-[1.6] mb-6 md:mb-8 font-medium px-4 opacity-100
+                <p className={`text-[12px] md:text-[13px] leading-[1.6] line-clamp-3 md:line-clamp-4 font-medium
                     ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     {mentor.bio}
                 </p>
-
-
             </div>
 
-            {/* Integrated LinkedIn Tag */}
             {/* Integrated LinkedIn Tag - Desktop Only */}
             {!isMobile && (
-                <a 
+                <a
                     href={mentor.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className={`absolute bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center text-white shadow-2xl transition-all duration-500 z-20 border-2 group/linkedin
+                    className={`absolute bottom-4 right-4 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center text-white shadow-2xl transition-all duration-500 z-20 border-2 group/linkedin
                         ${isDark ? 'bg-white/10 backdrop-blur-xl border-white/10 hover:bg-blue-500 hover:border-blue-500' : 'bg-slate-900 border-white hover:bg-blue-600'}`}
                 >
-                    <FaLinkedinIn size={18} className="group-hover/linkedin:scale-110 transition-transform" />
+                    <FaLinkedinIn size={16} className="group-hover/linkedin:scale-110 transition-transform" />
                 </a>
             )}
         </motion.div>
@@ -173,10 +146,10 @@ CourseFacultyCard.displayName = 'CourseFacultyCard';
 const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant = 'light' }) => {
     const isMobile = useIsMobile();
 
-    const filteredLeaders = excludeName 
+    const filteredLeaders = excludeName
         ? LEADERS.filter(m => m.name !== excludeName)
         : LEADERS;
-    
+
     const displayLeaders = filteredLeaders.slice(0, 3);
     const [currentIndex, setCurrentIndex] = useState(displayLeaders.length);
     const [hoveredCard, setHoveredCard] = useState(null);
@@ -276,7 +249,7 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                         onDragEnd={handleDragEnd}
                     >
                         {allCards.map((mentor, idx) => (
-                            <CourseFacultyCard 
+                            <CourseFacultyCard
                                 key={idx}
                                 mentor={mentor}
                                 index={idx}
@@ -309,8 +282,8 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
     }
 
     return (
-        <section 
-            id="course-faculty-grid" 
+        <section
+            id="course-faculty-grid"
             className={`py-14 relative overflow-hidden transition-colors duration-500 bg-transparent`}
         >
             <div className={`max-w-[1440px] mx-auto px-6 md:px-12 relative z-10`}>
@@ -327,7 +300,7 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                 <div className={`max-w-6xl mx-auto md:px-6 relative z-10 w-full mb-20`}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {displayLeaders.map((mentor, index) => (
-                            <CourseFacultyCard 
+                            <CourseFacultyCard
                                 key={index}
                                 mentor={mentor}
                                 index={index}

@@ -101,9 +101,10 @@ const CourseDetails = () => {
                                     <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 inline-block mb-2">
                                         {course.duration} program
                                     </span>
-                                    <p className="text-base font-bold tracking-tight mb-4 leading-tight text-white px-4">
-                                        Foundation of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">AI and Machine Learning</span>
-                                    </p>
+                                    <h1 className="font-black tracking-tight mb-4 leading-tight text-white px-4 flex flex-col items-center">
+                                        <span className="text-2xl mb-1">Foundation of</span>
+                                        <span className="text-[17px] text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">AI and Machine Learning</span>
+                                    </h1>
                                     <p className="text-[13px] text-slate-400 font-medium leading-relaxed mb-8 px-4 text-center">
                                         Master AI from scratch. Build real Machine Learning and Computer Vision models. No experience required.
                                     </p>
@@ -143,9 +144,9 @@ const CourseDetails = () => {
                                     transition={{ duration: 0.8 }}
                                 >
                                     <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-white inline-block mb-6">{course.duration} program</span>
-                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-6xl font-black tracking-tighter mb-6 leading-tight text-white break-words">
-                                        Foundation of{' '}
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
+                                    <h1 className="font-black tracking-tighter mb-6 leading-tight text-white break-words flex flex-col">
+                                        <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-6xl mb-1 lg:mb-2 text-white">Foundation of</span>
+                                        <span className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
                                             AI and Machine Learning
                                         </span>
                                     </h1>

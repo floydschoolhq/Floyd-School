@@ -9,8 +9,8 @@ import shivamImg from '../assets/tutors/shivam.jpg';
 import raghavImg from '../assets/tutors/raghav.jpg';
 import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import shashwatImg from '../assets/tutors/shashwat.jpg';
-import shanImg from '../assets/tutors/shan.jpeg';
+import shashwatImg from '../assets/tutors/shashwat.png';
+import shanImg from '../assets/tutors/sshan.png';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 import poojaImg from '../assets/tutors/pooja.jpg';
 
@@ -19,62 +19,62 @@ import useIsMobile from '../hooks/useIsMobile';
 const LEADERS = [
     {
         name: "Shivam Mishra",
-        role: "Founder | AI/ML Engineer",
+        role: "System Engineer • Entrepreneur",
         image: shivamImg,
         imageScale: 1.9,
         experience: "3+ Years",
-        bio: "AI/ML expert building intelligent, real-world solutions with machine learning.",
+        bio: "Multi international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder"]
     },
     {
-        name: "Raghav",
-        role: "Lead Mentor & Product Architect",
+        name: "Raghav Sharma",
+        role: "Red Team Specialist • Security Researcher",
         image: raghavImg,
         imageScale: 1.9,
         experience: "4+ Years",
-        bio: "Cybersecurity specialist focused on securing systems and preventing threats.",
+        bio: "A B.Tech CSE student specializing in web application security and advanced vulnerability assessment. Certified CRTA and CNSP, with hands-on expertise in offensive security tools and real-world attack simulations. Applies practical cybersecurity skills and enhances hands-on learning at ThinkSkool.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["Architect", "CyberSecurity"]
     },
     {
         name: "Abhay Singh Chauhan",
-        role: "Management & Web Development",
+        role: "Software Developer • Full Stack Developer",
         image: abhayImg,
         imageScale: 1.8,
         experience: "3+ Years",
-        bio: "Builds fast, scalable, and modern web applications using latest technologies.",
+        bio: "A developer skilled in building modern, scalable web solutions. Combines AI with practical development for real-world applications. Leads web development and training at ThinkSkool.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Developer", "Manager"]
     },
     {
         name: "Anamika Vashisth",
-        role: "UI/UX & System Designer",
+        role: "Data Analyst • Strategy Lead",
         image: ananimikaImg,
-        imageScale: 1.4,
+        imageScale: 1.15,
         experience: "2+ Years",
-        bio: "Designs intuitive, user-friendly interfaces focused on seamless experience.",
+        bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
         linkedin: "#",
         tags: ["UI/UX", "Design"]
     },
     {
         name: "Shashwat Vashishth",
-        role: "Mentor AI/ML",
+        role: "Industry Expert • Solution Architect",
         image: shashwatImg,
         imageScale: 1.0,
-        imagePosition: "object-[center_85%]",
+        imagePosition: "object-[center_65%]",
         experience: "2+ Years",
-        bio: "Mentors in building intelligent AI solutions that solve real-world problems.",
+        bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
         linkedin: "#",
         tags: ["AI/ML", "Algorithm"]
     },
     {
         name: "Shan Sharma",
-        role: "System Development",
+        role: "Senior Software Engineer • Project Lead",
         image: shanImg,
         imageScale: 1.0,
         experience: "3+ Years",
-        bio: "Develops scalable systems and modern web applications with strong architecture.",
+        bio: "A tech professional working in an MNC with international project experience. Strong in problem-solving and structured execution. Supported and mentored 3000+ students at ThinkSkool.",
         linkedin: "https://www.linkedin.com/in/shan-sharma-726706292",
         tags: ["System Design", "Architecture"]
     },
@@ -83,6 +83,7 @@ const LEADERS = [
         role: "Lead Mentor & Full Stack Developer",
         image: ayushmanImg,
         imageScale: 1.0,
+        imagePosition: "object-[center_20%]",
         experience: "3+ Years",
         bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
         linkedin: "#",
@@ -170,11 +171,9 @@ const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, on
                 scale: 1.02,
                 transition: { duration: 0.3 }
             }}
-            whileTap={{ scale: 0.98 }}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onClick={() => onSelect(mentor)}
-            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-pointer
+            className={`snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[450px] md:h-[320px] rounded-[2rem] md:rounded-[3rem] overflow-hidden border transition-all duration-700 flex flex-col md:flex-row items-center p-8 md:p-10 gap-8 md:gap-10 relative group cursor-default
                 ${isDark
                     ? 'bg-white/[0.02] backdrop-blur-md border-white/5 hover:bg-orange-500/10 hover:border-orange-500/40 shadow-[0_0_40px_rgba(251,146,60,0.15)]'
                     : 'bg-white border-slate-100 shadow-[0_8px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(251,146,60,0.25)] hover:border-orange-500/30 bg-gradient-to-br from-white to-orange-50/30'}`}
@@ -471,7 +470,7 @@ const MentorGrid = ({ title = "Mentors", isStatic = false, excludeName = null, v
                                 animation: mentorsMarquee 35s linear infinite;
                                 will-change: transform;
                             }
-                            #mentors-grid.mentors-paused .mentors-marquee-track {
+                            #mentors-grid .mentors-marquee-track:hover {
                                 animation-play-state: paused;
                             }
                             @keyframes mentorsMarquee {
