@@ -9,6 +9,7 @@ import abhayImg from '../assets/tutors/abhay.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import shashwatImg from '../assets/tutors/shashwat.jpg';
 import shanImg from '../assets/tutors/sshan.png';
+import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -16,8 +17,6 @@ const LEADERS = [
     {
         name: "Shivam Mishra",
         role: "Founder | AI/ML Engineer",
-        experience: "4+",
-        experience: "4+",
         image: shivamImg,
         imageScale: 1.9,
         experience: "3+ Years",
@@ -28,8 +27,6 @@ const LEADERS = [
     {
         name: "Raghav",
         role: "Lead Mentor & Product Architect",
-        experience: "3+",
-        experience: "3+",
         image: raghavImg,
         imageScale: 1.9,
         experience: "4+ Years",
@@ -40,8 +37,6 @@ const LEADERS = [
     {
         name: "Abhay Singh Chauhan",
         role: "Management & Web Development",
-        experience: "2+",
-        experience: "2+",
         image: abhayImg,
         imageScale: 1.8,
         experience: "3+ Years",
@@ -52,8 +47,6 @@ const LEADERS = [
     {
         name: "Anamika Vashisth",
         role: "UI/UX & System Designer",
-        experience: "3+",
-        experience: "3+",
         image: ananimikaImg,
         imageScale: 1.4,
         experience: "2+ Years",
@@ -64,8 +57,6 @@ const LEADERS = [
     {
         name: "Shashwat Vashishth",
         role: "Mentor AI/ML",
-        experience: "1+",
-        experience: "3+",
         image: shashwatImg,
         imageScale: 1.0,
         imagePosition: "object-[center_85%]",
@@ -77,8 +68,6 @@ const LEADERS = [
     {
         name: "Shan Sharma",
         role: "System Development",
-        experience: "4+",
-        experience: "4+",
         image: shanImg,
         imageScale: 1.0,
         experience: "3+ Years",
@@ -87,28 +76,15 @@ const LEADERS = [
         tags: ["System Design", "Architecture"]
     },
     {
-        name: "Nitesh Kumar",
-        role: "UI and UX Management",
-        experience: "2+",
-        experience: "2+",
-        image: niteshImg,
+        name: "Ayushman Mishra",
+        role: "Tech Lead | AI Engineer",
+        image: ayushmanImg,
         imageScale: 1.0,
         experience: "2+ Years",
         bio: "AI Engineer, working as a Tech Lead on international AI projects. Multi-time hackathon winner, leading weekly AI/ML doubt sessions at ThinkSkool.",
         linkedin: "#",
         tags: ["AI/ML", "Tech Lead"]
     },
-    {
-        name: "Pooja Kumari",
-        role: "UI and UX Management",
-        experience: "1+",
-        experience: "1+",
-        image: poojaImg,
-        imageScale: 1.0,
-        bio: "Designs user-centered experiences that balance creativity and functionality.",
-        linkedin: "#",
-        tags: ["UI/UX", "Design strategy"]
-    }
 ];
 
 const MentorCard = React.memo(({ mentor, index, variant }) => {
