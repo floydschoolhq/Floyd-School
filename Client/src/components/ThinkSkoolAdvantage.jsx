@@ -272,7 +272,7 @@ const ThinkskoolAdvantage = () => {
     // Mobile-specific rendering
     if (isMobile) {
         return (
-            <section className="py-12 bg-[#F8FAFC] relative w-full overflow-hidden">
+            <section className="py-16 bg-[#F8FAFC] relative w-full overflow-hidden">
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 -mr-32 -mt-32" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-[100px] opacity-50 -ml-32 -mb-32" />
