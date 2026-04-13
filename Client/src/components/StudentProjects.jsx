@@ -14,6 +14,13 @@ import {
 import useIsMobile from '../hooks/useIsMobile';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
+import boy1 from '../assets/avatars/boy1.jpg';
+import boy2 from '../assets/avatars/boy2.jpg';
+import boy3 from '../assets/avatars/boy3.avif';
+import girl1 from '../assets/avatars/girl1.jpg';
+import girl2 from '../assets/avatars/girl2.avif';
+import girl3 from '../assets/avatars/girl3.avif';
+
 const PROJECTS_DATA = [
   {
     id: 1,
@@ -27,7 +34,7 @@ const PROJECTS_DATA = [
     color: "green",
     author: {
       name: "Priya Sharma",
-      avatar: "P",
+      avatar: girl1,
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://snakegame1-nine.vercel.app/"
@@ -44,7 +51,7 @@ const PROJECTS_DATA = [
     color: "blue",
     author: {
       name: "Rahul Verma",
-      avatar: "R",
+      avatar: boy1,
       course: "Full Stack Web Dev"
     },
     liveUrl: "https://ai-expense-coach--shansharma.replit.app/"
@@ -61,7 +68,7 @@ const PROJECTS_DATA = [
     color: "purple",
     author: {
       name: "Sneha Patel",
-      avatar: "S",
+      avatar: girl2,
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://todo-app-delta-one-65.vercel.app/"
@@ -78,7 +85,7 @@ const PROJECTS_DATA = [
     color: "orange",
     author: {
       name: "Kavya Reddy",
-      avatar: "K",
+      avatar: girl3,
       course: "Web Dev Bootcamp"
     },
     liveUrl: "https://thinkskool-bootcamp-webdev-project.vercel.app/"
@@ -95,7 +102,7 @@ const PROJECTS_DATA = [
     color: "red",
     author: {
       name: "Vikram Singh",
-      avatar: "V",
+      avatar: boy2,
       course: "Full Stack Web Dev"
     },
     liveUrl: "https://netfixcopy9.vercel.app/"
@@ -192,11 +199,13 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <div className="flex flex-col items-center gap-1">
-              <img
-                src={project.author.avatar}
-                alt={project.author.name}
-                className="w-6 h-6 rounded-full border border-white shadow-sm"
-              />
+              <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
+                <img
+                  src={project.author.avatar}
+                  alt={project.author.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <p className="text-[8px] font-bold text-slate-800">{project.author.name}</p>
             </div>
 
@@ -284,11 +293,13 @@ const ProjectCard = ({ project, index, isFeatured }) => {
 
           <div className="flex flex-col items-center gap-4 w-full">
             <div className="flex flex-col items-center gap-3">
-              <img
-                src={project.author.avatar}
-                alt={project.author.name}
-                className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform"
-              />
+              <div className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
+                <img
+                  src={project.author.avatar}
+                  alt={project.author.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="text-center">
                 <p className="text-base font-bold text-slate-900">{project.author.name}</p>
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.author.course}</p>
@@ -431,8 +442,8 @@ const StudentProjects = () => {
                    
                    <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
 <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-full border border-slate-100 bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                               <span className="text-sm font-bold text-white">{project.author.avatar}</span>
+                           <div className="w-10 h-10 rounded-full border border-slate-100 overflow-hidden bg-slate-100">
+                               <img src={project.author.avatar} alt={project.author.name} className="w-full h-full object-cover" />
                            </div>
                            <div>
                               <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
