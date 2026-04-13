@@ -227,10 +227,8 @@ const ProjectCard = ({ project, index, isFeatured }) => {
   }
 
   return (
-    <a
-      href={project.liveUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
+      onClick={() => window.open(project.liveUrl, '_blank')}
       className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
         isFeatured 
           ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
@@ -328,6 +326,7 @@ const ProjectCard = ({ project, index, isFeatured }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
             >
               <ExternalLink size={12} />
@@ -336,7 +335,7 @@ const ProjectCard = ({ project, index, isFeatured }) => {
           </div>
         )}
       </div>
-    </a>
+    </div>
   );
 };
 
@@ -428,12 +427,10 @@ const StudentProjects = () => {
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide"
           >
              {filteredProjects.map((project) => (
-               <a 
+               <div 
                  key={project.id} 
-                 href={project.liveUrl}
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300 block"
+                 onClick={() => window.open(project.liveUrl, '_blank')}
+                 className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300 block cursor-pointer"
                >
                  <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
                    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" />
@@ -447,7 +444,7 @@ const StudentProjects = () => {
                    <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
                    
                    <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
-<div className="flex items-center gap-3">
+                       <div className="flex items-center gap-3">
                            <div className="w-10 h-10 rounded-full border border-slate-100 overflow-hidden bg-slate-100">
                                <img src={project.author.avatar} alt={project.author.name} className="w-full h-full object-cover" />
                            </div>
@@ -464,10 +461,18 @@ const StudentProjects = () => {
                    </div>
                    
                    <div className="flex gap-3">
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
+                        <a 
+                          href={project.liveUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all"
+                        >
+                          Launch
+                        </a>
                     </div>
                  </div>
-               </a>
+               </div>
              ))}
           </div>
 
