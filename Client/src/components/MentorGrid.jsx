@@ -101,15 +101,6 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
             >
                 <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] -mr-16 -mt-16 pointer-events-none ${isDark ? 'bg-orange-500/10' : 'bg-orange-500/5'}`} />
 
-                {/* Card-Level Experience Badge (Top Right) */}
-                <div className="absolute top-6 right-6 z-30">
-                    <div className="bg-white px-2 py-1 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                        <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
-                            {mentor.experience} years exp
-                        </span>
-                    </div>
-                </div>
-
                 <div className="relative z-10 w-full flex flex-col items-center">
                     <div className="relative mb-6">
                         <div className="w-24 h-24 rounded-full overflow-hidden">
@@ -130,16 +121,8 @@ const MentorCard = React.memo(({ mentor, index, variant }) => {
                         >
                             <FaLinkedinIn size={12} />
                         </a>
-
-                        {/* Reference-style Experience Badge */}
-                        <div className="absolute top-0 right-0 z-30 translate-x-1.5 -translate-y-1.5">
-                            <div className="bg-white px-2 py-1 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                                <span className="text-[8px] font-black text-slate-800 tracking-tighter whitespace-nowrap">
-                                    {mentor.experience} years exp
-                                </span>
-                            </div>
-                        </div>
                     </div>
+                </div>
 
                     <div className="mb-6 flex flex-col items-center">
                         <h3 className={`text-lg font-black uppercase tracking-tight leading-none mb-1.5 ${isDark ? 'text-white' : 'text-slate-950'}`}>

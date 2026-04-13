@@ -76,14 +76,16 @@ const CourseFacultyCard = React.memo(({ mentor, index, variant }) => {
             <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none transition-colors duration-700
                 ${isDark ? 'bg-blue-500/8 group-hover:bg-blue-500/12' : 'bg-blue-50/30 group-hover:bg-blue-100/40'}`} />
 
-            {/* Card-Level Experience Badge (Top Right) */}
-            <div className="absolute top-6 right-6 z-30">
-                <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
-                    <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
-                        {mentor.experience} years exp
-                    </span>
+            {/* Card-Level Experience Badge (Top Right) - Desktop Only */}
+            {!isMobile && (
+                <div className="absolute top-6 right-6 z-30">
+                    <div className="bg-white px-2.5 py-1.5 rounded-lg shadow-xl border border-slate-100 flex items-center justify-center">
+                        <span className="text-[10px] font-bold font-ubuntu text-slate-800 tracking-widest uppercase whitespace-nowrap">
+                            {mentor.experience} years exp
+                        </span>
+                    </div>
                 </div>
-            </div>
+            )}
             
             {/* Image Section: High-End Industrial Housing */}
             <div className="w-40 h-40 flex-shrink-0 relative pt-2">
