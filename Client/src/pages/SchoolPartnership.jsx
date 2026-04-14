@@ -346,7 +346,7 @@ const SchoolPartnership = () => {
                 {[
                   { num: "01", title: "Demo Bootcamp", desc: "A 7-day high-energy intro for all students to find their spark." },
                   { num: "02", title: "Domain Selection", desc: "Guided counseling to pick technology path that fits their talent." },
-                  { num: "03", title: "Full 4 Month Program", desc: "Deep-dive technical training on campus with specialized mentors." },
+                  { num: "03", title: "Full 3 Month Program", desc: "Deep-dive technical training on campus with specialized mentors." },
                   { num: "04", title: "National Hackathon", desc: "Students build and showcase products in a nationwide competition." },
                   { num: "05", title: "Certification", desc: "Institutional recognition and career-ready skill verification." },
                 ].map((item, index) => (
@@ -377,7 +377,7 @@ const SchoolPartnership = () => {
               {[
                 { num: "01", title: "Demo Bootcamp", desc: "A 7-day high-energy intro for all students to find their spark." },
                 { num: "02", title: "Domain Selection", desc: "Guided counseling to pick technology path that fits their talent." },
-                { num: "03", title: "Full 4 Month Program", desc: "Deep-dive technical training on campus with specialized mentors." },
+                { num: "03", title: "Full 3 Month Program", desc: "Deep-dive technical training on campus with specialized mentors." },
                 { num: "04", title: "National Hackathon", desc: "Students build and showcase products in a nationwide competition." },
                 { num: "05", title: "Certification", desc: "Institutional recognition and career-ready skill verification." },
               ].map((item, index) => (
