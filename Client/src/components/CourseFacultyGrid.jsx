@@ -3,9 +3,9 @@ import { motion, useMotionValue, animate } from 'framer-motion';
 import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
+import shashwatImg from '../assets/tutors/shashwat.png';
 import shivamImg from '../assets/tutors/shivam.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
-import shashwatImg from '../assets/tutors/shashwat.png';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 
 import useIsMobile from '../hooks/useIsMobile';
@@ -13,46 +13,36 @@ import useIsMobile from '../hooks/useIsMobile';
 const LEADERS = [
     {
         name: "Shashwat Vashishth",
-        role: "Industry Expert • Solution Architect",
+        role: "Lead Instructor",
         image: shashwatImg,
         imageScale: 1.4,
         imagePosition: "object-[center_1%]",
         experience: "2+ Years",
-        bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
+        bio: "Delivers all live sessions and teaches every concept through real hands-on projects, making sure every student is building alongside learning.",
         linkedin: "https://www.linkedin.com/in/shashwat-vashishth",
-        tags: ["AI/ML", "Algorithm"]
-    },
-    {
-        name: "Shivam Mishra",
-        role: "System Engineer • Entrepreneur",
-        image: shivamImg,
-        imageScale: 1.9,
-        experience: "3+ Years",
-        bio: "Multi international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
-        linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
-        tags: ["AI/ML", "Founder", "Visionary"]
+        tags: ["AI/ML", "Instructor"]
     },
     {
         name: "Anamika Vashisth",
-        role: "Data Analyst • Strategy Lead",
+        role: "Growth Associate",
         image: ananimikaImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
         experience: "2+ Years",
-        bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
+        bio: "Personally monitors each student's progress, provides guidance whenever needed and keeps parents regularly updated every step of the way.",
         linkedin: "https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-        tags: ["UI/UX", "Design", "Product"]
+        tags: ["UI/UX", "Design"]
     },
     {
         name: "Ayushman Mishra",
-        role: "Lead Mentor & Full Stack Developer",
+        role: "Doubt Mentor",
         image: ayushmanImg,
         imageScale: 1.4,
         imagePosition: "object-[center_50%]",
         experience: "3+ Years",
-        bio: "Expert in React, Node.js and scalable cloud architectures. Passionate about teaching modern web technologies and industrial best practices.",
+        bio: "Hosts dedicated weekly sessions where students can freely ask questions and clear anything they found unclear before moving ahead.",
         linkedin: "https://www.linkedin.com/in/ayushman-mishra17/",
-        tags: ["Full Stack", "Architect"]
+        tags: ["Full Stack", "Mentor"]
     }
 ];
 

@@ -330,7 +330,7 @@ const CourseCurriculum = ({ variant = "light" }) => {
                         <div className="grid grid-cols-2 gap-2 w-full">
                             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
                                 <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Upcoming Batch</span>
-                                <span className="text-[11px] font-bold uppercase text-white">15th April</span>
+                                <span className="text-[11px] font-bold uppercase text-white">1st May</span>
                             </div>
                             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
                                 <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">

@@ -12,7 +12,7 @@ import ananimikaImg from '../assets/tutors/anamika.jpg';
 import shashwatImg from '../assets/tutors/shashwat.png';
 import shanImg from '../assets/tutors/sshan.png';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
-import poojaImg from '../assets/tutors/pooja.jpg';
+
 
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -89,16 +89,6 @@ const LEADERS = [
         linkedin: "https://www.linkedin.com/in/ayushman-mishra17/",
         tags: ["Full Stack", "Architect"]
     },
-    {
-        name: "Pooja Kumari",
-        role: "UI and UX Management",
-        image: poojaImg,
-        imageScale: 1.0,
-        experience: "1+ Years",
-        bio: "Designs user-centered experiences that balance creativity and functionality.",
-        linkedin: "https://www.linkedin.com/in/pooja-kumari-569888333?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-        tags: ["UI/UX", "Design strategy"]
-    }
 ];
 
 const MentorCard = React.memo(({ mentor, index, onSelect, variant, isHovered, onMouseEnter, onMouseLeave }) => {
