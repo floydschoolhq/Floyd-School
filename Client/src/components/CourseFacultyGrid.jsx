@@ -17,7 +17,7 @@ const LEADERS = [
         image: shashwatImg,
         imageScale: 1.4,
         imagePosition: "object-[center_1%]",
-        experience: "2+ Years",
+        experience: "3 years+",
         bio: "Delivers all live sessions and teaches every concept through real hands-on projects, making sure every student is building alongside learning.",
         linkedin: "https://www.linkedin.com/in/shashwat-vashishth",
         tags: ["AI/ML", "Instructor"]
@@ -28,7 +28,7 @@ const LEADERS = [
         image: ananimikaImg,
         imageScale: 1.0,
         imagePosition: "object-[center_20%]",
-        experience: "2+ Years",
+        experience: "2 years+",
         bio: "Personally monitors each student's progress, provides guidance whenever needed and keeps parents regularly updated every step of the way.",
         linkedin: "https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["UI/UX", "Design"]
