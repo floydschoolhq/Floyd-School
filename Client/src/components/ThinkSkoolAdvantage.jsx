@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Award, Headphones } from 'lucide-react';
+import { Clock, Award, Headphones, Video, Calendar } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useIsMobile from '../hooks/useIsMobile';
@@ -31,6 +31,14 @@ const ADVANTAGES = [
     },
     {
         id: 4,
+        title: "3 Live Classes Every Week + Weekend Doubt Sessions",
+        description: "Get 3 interactive live classes per week where you code alongside mentors, plus dedicated doubt-clearing sessions every weekend to ensure no concept is left unclear.",
+        image: "/images/ecosystem/adaptive_learning.jpg",
+        icon: Video,
+        isSchedule: true
+    },
+    {
+        id: 5,
         title: "We teach you to think like a builder",
         description: "Anyone can follow a tutorial. ThinkSkool teaches you to break problems down, experiment and figure things out yourself. That skill stays with you forever.",
         image: "/images/ecosystem/adaptive_learning.jpg",
@@ -41,16 +49,18 @@ const ADVANTAGES = [
 const AdvantageCard = ({ advantage, index, isActive }) => {
     const isImageLeft = index % 2 === 0;
     
-    // Updated color scheme: 2nd white, 3rd black, 4th white
+    // Updated color scheme: 5 cards - white, blue gradient, black, white, gray
     const cardColors = [
         { bg: 'from-orange-400 via-orange-500 to-red-500', border: 'border-orange-200', text: 'text-white', innerBg: 'from-orange-500 via-orange-600 to-red-600' },
-        { bg: 'from-white to-gray-50', border: 'border-gray-200', text: 'text-gray-900', innerBg: 'from-white to-gray-50' },
+        { bg: 'from-blue-400 via-blue-500 to-indigo-600', border: 'border-blue-200', text: 'text-white', innerBg: 'from-blue-500 via-blue-600 to-indigo-600' },
         { bg: 'from-gray-900 via-black to-gray-800', border: 'border-gray-700', text: 'text-white', innerBg: 'from-gray-900 via-black to-gray-800' },
+        { bg: 'from-white to-gray-50', border: 'border-gray-200', text: 'text-gray-900', innerBg: 'from-white to-gray-50' },
         { bg: 'from-white to-gray-50', border: 'border-gray-200', text: 'text-gray-900', innerBg: 'from-white to-gray-50' }
     ];
     
-    const currentColor = cardColors[index % 4];
+    const currentColor = cardColors[index % 5];
     const isDarkBg = index === 0 || index === 2; // Only orange and black cards are dark
+    const isScheduleCard = advantage.isSchedule;
 
     return (
         <div 
@@ -98,6 +108,20 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
                                 <h1 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-6 leading-tight ${isDarkBg ? 'text-white' : 'text-gray-900'} transition-all duration-500`}>
                                     {advantage.title}
                                 </h1>
+
+                                {/* Schedule Badge for Schedule Card */}
+                                {isScheduleCard && (
+                                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                                        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                                            <Video className="w-5 h-5 text-white" />
+                                            <span className="text-white font-medium">3 Live Classes/Week</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                                            <Calendar className="w-5 h-5 text-white" />
+                                            <span className="text-white font-medium">Doubt Class Every Weekend</span>
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Description */}
                                 <p className={`text-lg mb-10 leading-relaxed max-w-xl ${isDarkBg ? 'text-white/90' : 'text-gray-700'} transition-all duration-500`}>
@@ -304,11 +328,13 @@ const ThinkskoolAdvantage = () => {
                         {ADVANTAGES.map((advantage, index) => {
                             const cardColors = [
                                 { bg: 'from-orange-400 to-red-500', innerBg: 'from-orange-500 to-red-600', text: 'text-white', isDark: true },
-                                { bg: 'from-white to-gray-50', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false },
+                                { bg: 'from-blue-400 to-indigo-600', innerBg: 'from-blue-500 to-indigo-600', text: 'text-white', isDark: true },
                                 { bg: 'from-gray-900 to-black', innerBg: 'from-gray-900 to-black', text: 'text-white', isDark: true },
+                                { bg: 'from-white to-gray-100', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false },
                                 { bg: 'from-white to-gray-100', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false }
                             ];
-                            const cur = cardColors[index % 4];
+                            const cur = cardColors[index % 5];
+                            const isScheduleCard = advantage.isSchedule;
                             
                             return (
                                 <motion.div
@@ -341,6 +367,20 @@ const ThinkskoolAdvantage = () => {
                                                 <h3 className={`text-xl font-bold leading-snug ${cur.isDark ? 'text-white' : 'text-gray-900'}`}>
                                                     {advantage.title}
                                                 </h3>
+                                                
+                                                {/* Schedule Badges for Mobile */}
+                                                {isScheduleCard && (
+                                                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                                                        <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20">
+                                                            <Video className="w-4 h-4 text-white" />
+                                                            <span className="text-white text-xs font-medium">3 Live Classes/Week</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20">
+                                                            <Calendar className="w-4 h-4 text-white" />
+                                                            <span className="text-white text-xs font-medium">Weekend Doubt</span>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
