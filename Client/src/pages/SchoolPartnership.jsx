@@ -236,19 +236,19 @@ const SchoolPartnership = () => {
       <section className="py-24 px-6 bg-slate-950">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-blue-400 font-bold text-xs tracking-widest uppercase mb-4 block">
+            <span className="text-blue-400 font-bold text-sm tracking-widest uppercase mb-4 block">
               What You Get
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
               A Complete Technology Education Partnership
             </h2>
-            <p className="text-base text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
               From first session to final certification, we handle every operational detail.
             </p>
           </div>
           
           {/* Mobile: Card carousel */}
-          <div className="flex overflow-x-auto gap-4 pb-4 snap-x px-2">
+          <div className="lg:hidden flex overflow-x-auto gap-4 pb-4 snap-x px-2">
             {[
               { title: "School Recognition", desc: "Position your school as a leader in future-tech education within your region." },
               { title: "Industry Professionals", desc: "Students learn from active engineers who bring real-world context into classroom." },
@@ -269,18 +269,47 @@ const SchoolPartnership = () => {
               </div>
             ))}
           </div>
+
+          {/* Desktop: Grid Layout */}
+          <div className="hidden lg:grid md:grid-cols-2 lg:grid-cols-3 gap-x-24 gap-y-20">
+            {[
+              { title: "School Recognition", desc: "Position your school as a leader in future-tech education within your region." },
+              { title: "Industry Professionals", desc: "Students learn from active engineers who bring real-world context into classroom." },
+              { title: "Admin Dashboard", desc: "Complete visibility into attendance, grades, and student progress." },
+              { title: "Session Recordings", desc: "Every live session recorded for students to revisit and master at their pace." },
+              { title: "Custom Curriculum", desc: "Learning paths tailored to align with your school's schedule and goals." },
+              { title: "Zero Management", desc: "We provide trainers, content, and framework. You provide the space." },
+            ].map((item) => (
+              <div className="group cursor-default">
+                <h3 className="text-xl font-bold text-blue-300 mb-4 relative inline-block">
+                  {item.title}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-500"></span>
+                </h3>
+                <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── What Students Get ── */}
       <section className="bg-slate-950 pt-24 pb-24 w-full relative overflow-hidden">
-        <div className="w-full px-6 mb-12 relative z-10">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tighter text-blue-50/90 text-center">
-            Practical skills, <span className="text-blue-400">verified projects</span> & national level recognition.
+        {/* Desktop Heading */}
+        <div className="hidden lg:block w-full px-8 mb-12 relative z-10 border-b border-white/5 pb-12">
+          <h2 className="text-4xl lg:text-5xl font-bold leading-tight tracking-tighter text-blue-50/90 text-center">
+            Practical skills, <span className="text-blue-400/80 group-hover:text-blue-400">verified projects</span> & national level recognition.
           </h2>
         </div>
 
-        <div className="max-w-[1600px] mx-auto px-4 relative z-10">
+        {/* Mobile Only - Horizontal Scroll */}
+        <div className="lg:hidden max-w-[1600px] mx-auto px-4 relative z-10">
+          <div className="w-full px-6 mb-12 relative z-10">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tighter text-blue-50/90 text-center">
+              Practical skills, <span className="text-blue-400">verified projects</span> & national level recognition.
+            </h2>
+          </div>
           <div className="flex overflow-x-auto gap-4 pb-4 snap-x px-2">
             {[
               { 
@@ -317,6 +346,52 @@ const SchoolPartnership = () => {
                     {item.desc}
                   </p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: Grid Layout */}
+        <div className="hidden lg:block max-w-[1600px] mx-auto px-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-16">
+            {[
+              { 
+                title: "REAL WORLD PROJECTS", 
+                desc: "Moving beyond theoretical tutorials. Students engineer functional applications, AI models, and integrated hardware systems that address industry challenges."
+              },
+              { 
+                title: "THINKSKOOL CERTIFICATION", 
+                desc: "A credential that carries weight. Our certification process involves rigorous project validation and peer-reviewed technical assessment."
+              },
+              { 
+                title: "TECHNICAL MENTORSHIP", 
+                desc: "Direct access to practitioners. Every student receives personalized technical feedback and architectural guidance during live development sessions."
+              },
+              { 
+                title: "PERFORMANCE TRACKING", 
+                desc: "Granular data on student progress. Individual dashboards provide transparency into skill acquisition, project milestones, and developmental areas."
+              },
+              { 
+                title: "NATIONAL HACKATHONS", 
+                desc: "A stage for innovation. Students compete at the national level, presenting their solutions to a jury of senior engineers and product leaders."
+              },
+              { 
+                title: "KNOWLEDGE REPOSITORIES", 
+                desc: "Long-term learning retention. Comprehensive archives of every live session are maintained for permanent student access and ongoing reference."
+              },
+            ].map((item) => (
+              <div 
+                className="group flex flex-col items-start border-l border-white/5 pl-10 hover:border-blue-500/50 hover:bg-blue-500/[0.02] py-4 -ml-4 transition-all duration-500 rounded-r-2xl"
+              >
+                <h3 className="text-2xl font-bold text-blue-50/90 mb-4 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-500 tracking-tight uppercase leading-none">
+                  {item.title}
+                </h3>
+                
+                <p className="text-slate-400 text-lg leading-relaxed max-w-sm group-hover:text-slate-200 transition-colors font-medium">
+                  {item.desc}
+                </p>
+                
+                <div className="mt-10 h-[2px] w-0 bg-gradient-to-r from-blue-600 to-blue-400 group-hover:w-full transition-all duration-1000 ease-out" />
               </div>
             ))}
           </div>
@@ -713,65 +788,65 @@ const SchoolPartnership = () => {
             </p>
           </div>
 
-          <div className="bg-slate-800/40 backdrop-blur-sm border border-blue-900/30 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Mobile: Stacked layout */}
-            <div className="lg:grid lg:grid-cols-5">
-              <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white relative overflow-hidden lg:p-12">
+          <div className="bg-slate-800/40 backdrop-blur-sm border border-blue-900/30 rounded-3xl shadow-2xl overflow-hidden">
+            {/* Mobile: Stacked layout, Desktop: Side by side */}
+            <div className="grid md:grid-cols-5">
+              <div className="md:col-span-2 bg-gradient-to-br from-blue-600 to-blue-700 p-12 text-white relative overflow-hidden">
                 <div className="absolute inset-0 bg-blue-500/10"></div>
                 
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold mb-8 lg:text-2xl lg:mb-8">Partnership Details</h3>
+                  <h3 className="text-2xl font-bold mb-8">Partnership Details</h3>
                   
-                  <div className="space-y-6 lg:space-y-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 bg-blue-500/30 rounded flex items-center justify-center flex-shrink-0 lg:w-8 lg:h-8">
-                        <span className="text-blue-200 font-bold text-sm lg:text-sm">01</span>
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-blue-200 font-bold text-sm">01</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white text-base lg:text-base mb-0.5 lg:mb-1">For Schools</h4>
-                        <p className="text-blue-100 text-sm lg:text-sm">Classes 6-12</p>
+                        <h4 className="font-semibold text-white mb-1">For Schools</h4>
+                        <p className="text-blue-100 text-sm">Classes 6-12</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 bg-blue-500/30 rounded flex items-center justify-center flex-shrink-0 lg:w-8 lg:h-8">
-                        <span className="text-blue-200 font-bold text-sm lg:text-sm">02</span>
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-blue-200 font-bold text-sm">02</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white text-base lg:text-base mb-0.5 lg:mb-1">Batch Size</h4>
-                        <p className="text-blue-100 text-sm lg:text-sm">25-100+ Students</p>
+                        <h4 className="font-semibold text-white mb-1">Batch Size</h4>
+                        <p className="text-blue-100 text-sm">25-100+ Students</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 bg-blue-500/30 rounded flex items-center justify-center flex-shrink-0 lg:w-8 lg:h-8">
-                        <span className="text-blue-200 font-bold text-sm lg:text-sm">03</span>
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-blue-200 font-bold text-sm">03</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white text-base lg:text-base mb-0.5 lg:mb-1">Response Time</h4>
-                        <p className="text-blue-100 text-sm lg:text-sm">Within 24 hours</p>
+                        <h4 className="font-semibold text-white mb-1">Response Time</h4>
+                        <p className="text-blue-100 text-sm">Within 24 hours</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30 lg:mt-12 lg:px-4 lg:py-2">
-                    <div className="w-2 h-2 bg-blue-300 rounded-full animate-pulse lg:w-2 lg:h-2"></div>
-                    <span className="text-blue-200 text-sm font-medium lg:text-sm">Quick Response</span>
+                  <div className="mt-12 inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30">
+                    <div className="w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
+                    <span className="text-blue-200 text-sm font-medium">Quick Response Guaranteed</span>
                   </div>
                 </div>
               </div>
               
-              <div className="p-8 lg:p-12">
-                <form onSubmit={handleSubmit} className="space-y-6 lg:space-y-6">
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-6">
-                    <div className="lg:col-span-2">
+              <div className="md:col-span-3 p-12">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="md:col-span-2">
                       <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">School Name *</label>
                       <input 
                         name="schoolName" 
                         type="text" 
                         value={formData.schoolName} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none text-white placeholder-slate-500" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none text-white placeholder-slate-500" 
                         placeholder="Enter your school name"
                         required
                       />
@@ -783,7 +858,7 @@ const SchoolPartnership = () => {
                         type="text" 
                         value={formData.contactPerson} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
                         placeholder="Contact person name"
                         required
                       />
@@ -795,7 +870,7 @@ const SchoolPartnership = () => {
                         type="text" 
                         value={formData.designation} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-3 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500 text-sm" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
                         placeholder="Your designation"
                       />
                     </div>
@@ -806,7 +881,7 @@ const SchoolPartnership = () => {
                         type="tel" 
                         value={formData.phone} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
                         placeholder="Phone number"
                         required
                       />
@@ -818,7 +893,7 @@ const SchoolPartnership = () => {
                         type="text" 
                         value={formData.city} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
                         placeholder="Your city"
                       />
                     </div>
@@ -828,7 +903,7 @@ const SchoolPartnership = () => {
                         name="domain" 
                         value={formData.domain} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white"
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white"
                       >
                         <option value="AI & Machine Learning">AI & Machine Learning</option>
                         <option value="Web Development">Web Development</option>
@@ -844,32 +919,32 @@ const SchoolPartnership = () => {
                         type="number" 
                         value={formData.students} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
                         placeholder="Number of students"
                       />
                     </div>
-                    <div className="lg:col-span-2">
+                    <div className="md:col-span-2">
                       <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Specific Requirements</label>
                       <textarea 
                         name="requirements" 
                         rows={4} 
                         value={formData.requirements} 
                         onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 lg:p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500 resize-none" 
+                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500 resize-none" 
                         placeholder="Tell us about your specific requirements..."
                       />
                     </div>
                   </div>
                   
-                  <div className="pt-6 lg:pt-6">
+                  <div className="pt-6">
                     <button 
                       type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 lg:py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                     >
-                      Submit Request →
+                      Submit Partnership Request →
                     </button>
-                    <p className="text-center text-sm text-slate-400 mt-4 font-medium">
-                      We respond within 24 hours.
+                    <p className="text-center text-xs text-slate-400 mt-4 font-medium">
+                      We respond within 24 hours of submission.
                     </p>
                   </div>
                 </form>
