@@ -123,8 +123,8 @@ const App = () => {
         }
     }, []);
 
-    // 5. Scroll to top on route change or page refresh (using layoutEffect for immediate execution)
-    useLayoutEffect(() => {
+    // 5. Scroll to top on route change - with small delay for mobile to ensure content is rendered
+    useEffect(() => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
