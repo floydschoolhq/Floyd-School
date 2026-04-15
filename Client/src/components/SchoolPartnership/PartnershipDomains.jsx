@@ -19,7 +19,7 @@ const PartnershipDomains = () => {
     {
       id: 2,
       title: "Foundations of Web Development",
-      image: "/images/web-dev-course.jpg",
+      image: "/images/web-course.jpg",
       rating: 4.8,
       status: "live",
       duration: "4 month",
