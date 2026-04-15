@@ -598,21 +598,6 @@ const SchoolPartnership = () => {
                 </div>
               ))}
             </div>
-            
-            {/* Custom Curriculum Card - Mobile */}
-            <div className="mt-6 flex justify-center">
-              <div className="flex items-center gap-4 p-6 bg-slate-800/40 border-2 border-dashed border-blue-500/30 rounded-2xl max-w-sm">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                  <div className="text-white font-bold text-xl">+</div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-white mb-1">Custom Curriculum</h3>
-                  <p className="text-xs text-slate-300">
-                    Bespoke tech track for your school.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Desktop: Circular Layout */}
@@ -704,26 +689,6 @@ const SchoolPartnership = () => {
               </div>
             </div>
 
-            <div className="text-center mt-32 mb-16">
-              <div className="inline-flex flex-col items-center gap-6 p-8 bg-slate-800/40 backdrop-blur-sm border-2 border-dashed border-blue-500/30 rounded-3xl hover:border-blue-500/50 transition-all duration-300">
-                <div className="relative">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                    <div className="text-white font-bold text-2xl">+</div>
-                  </div>
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full opacity-20 animate-pulse"></div>
-                </div>
-                
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-3">Custom Curriculum</h3>
-                  <p className="text-slate-300 mb-6 max-w-md">
-                    We can design a bespoke tech track that aligns perfectly with your school's specific pedagogy and goals.
-                  </p>
-                  <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                    Design Your Program
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

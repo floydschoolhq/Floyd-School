@@ -26,7 +26,10 @@ const ChatbotLeadsPage = () => {
         ...(courseFilter && { course: courseFilter })
       });
 
-      const response = await fetch(`/admin/chatbot/leads?${queryParams}`);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/admin/chatbot/leads?${queryParams}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const data = await response.json();
 
       if (data.success) {
@@ -45,7 +48,10 @@ const ChatbotLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/admin/chatbot/stats');
+      const token = localStorage.getItem('token');
+      const response = await fetch('/admin/chatbot/stats', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const data = await response.json();
 
       if (data.success) {
@@ -58,10 +64,12 @@ const ChatbotLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`/admin/chatbot/lead/${leadId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ status: newStatus }),
       });
@@ -87,8 +95,10 @@ const ChatbotLeadsPage = () => {
     }
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`/admin/chatbot/lead/${leadId}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       const data = await response.json();
