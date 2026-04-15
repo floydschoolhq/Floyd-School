@@ -1,0 +1,498 @@
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Code2,
+  ExternalLink,
+  Star,
+  Eye,
+  ArrowRight,
+  Layers,
+  Cpu,
+  Smartphone,
+  Globe,
+  Database
+} from 'lucide-react';
+
+import boy1 from '../../assets/avatars/boy1.jpg';
+import boy2 from '../../assets/avatars/boy2.jpg';
+import boy3 from '../../assets/avatars/boy3.avif';
+import girl1 from '../../assets/avatars/girl1.jpg';
+import girl2 from '../../assets/avatars/girl2.avif';
+import girl3 from '../../assets/avatars/girl3.avif';
+
+const PROJECTS_DATA = [
+  {
+    id: 1,
+    title: "Snake Game",
+    category: "Game Development",
+    description: "A classic Snake game built with modern web technologies — smooth controls, score tracking, and addictive gameplay.",
+    image: "/projects/snake_game.png",
+    tech: ["JavaScript", "HTML5", "CSS3"],
+    stats: { stars: 142, forks: 28, views: "950" },
+    featured: false,
+    color: "green",
+    author: {
+      name: "Priya Sharma",
+      avatar: girl1,
+      course: "Web Dev Bootcamp"
+    },
+    liveUrl: "https://snakegame1-nine.vercel.app/"
+  },
+  {
+    id: 2,
+    title: "AI Expense Coach",
+    category: "Full Stack Development",
+    description: "An AI-powered personal finance coach that helps users track expenses, set budgets, and get smart spending insights.",
+    image: "/projects/E_commerce.png",
+    tech: ["React", "Node.js", "AI API", "Firebase"],
+    stats: { stars: 189, forks: 32, views: "1.1k" },
+    featured: true,
+    color: "blue",
+    author: {
+      name: "Rahul Verma",
+      avatar: boy1,
+      course: "Full Stack Web Dev"
+    },
+    liveUrl: "https://ai-expense-coach--shansharma.replit.app/"
+  },
+  {
+    id: 5,
+    title: "Todo App",
+    category: "Productivity",
+    description: "A clean and intuitive todo application to manage daily tasks with priority levels, deadlines, and progress tracking.",
+    image: "/projects/task_management.jpg",
+    tech: ["React", "CSS3", "LocalStorage"],
+    stats: { stars: 98, forks: 21, views: "620" },
+    featured: false,
+    color: "purple",
+    author: {
+      name: "Sneha Patel",
+      avatar: girl2,
+      course: "Web Dev Bootcamp"
+    },
+    liveUrl: "https://todo-app-delta-one-65.vercel.app/"
+  },
+  {
+    id: 3,
+    title: "School Website",
+    category: "Web Development",
+    description: "A fully responsive school website featuring course listings, faculty profiles, admissions info, and a modern design.",
+    image: "/projects/IoT-For-Home-Automation.jpg",
+    tech: ["HTML5", "CSS3", "JavaScript"],
+    stats: { stars: 176, forks: 34, views: "1.4k" },
+    featured: true,
+    color: "orange",
+    author: {
+      name: "Kavya Reddy",
+      avatar: girl3,
+      course: "Web Dev Bootcamp"
+    },
+    liveUrl: "https://thinkskool-bootcamp-webdev-project.vercel.app/"
+  },
+  {
+    id: 4,
+    title: "Netflix Clone",
+    category: "Full Stack Development",
+    description: "A fully functional Netflix clone with movie browsing, trailer playback, user authentication, and personalized recommendations.",
+    image: "/projects/netflix_clone.png",
+    tech: ["React", "Node.js", "MongoDB", "TMDB API", "Stripe"],
+    stats: { stars: 342, forks: 89, views: "3.2k" },
+    featured: true,
+    color: "red",
+    author: {
+      name: "Vikram Singh",
+      avatar: boy2,
+      course: "Full Stack Web Dev"
+    },
+    liveUrl: "https://netfixcopy9.vercel.app/"
+  }
+];
+
+const TechIcon = ({ tech }) => {
+  const getIcon = (tech) => {
+    const iconMap = {
+      'React': <Code2 size={14} />,
+      'Node.js': <Database size={14} />,
+      'OpenAI API': <Cpu size={14} />,
+      'WebSocket': <Globe size={14} />,
+      'Next.js': <Layers size={14} />,
+      'MongoDB': <Database size={14} />,
+      'Stripe': <Cpu size={14} />,
+      'TMDB API': <Cpu size={14} />,
+      'Tailwind': <Layers size={14} />,
+      'Arduino': <Cpu size={14} />,
+      'Raspberry Pi': <Cpu size={14} />,
+      'Python': <Code2 size={14} />,
+      'MQTT': <Globe size={14} />,
+      'React Native': <Smartphone size={14} />,
+      'Firebase': <Database size={14} />,
+      'Redux': <Layers size={14} />,
+      'Animations': <Cpu size={14} />,
+      'Scapy': <Database size={14} />,
+      'Nmap': <Globe size={14} />,
+      'Plotly': <Database size={14} />,
+      'PostgreSQL': <Database size={14} />,
+      'Docker': <Layers size={14} />
+    };
+    return iconMap[tech] || <Code2 size={14} />;
+  };
+
+  return (
+    <div className="px-2 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium flex items-center gap-1">
+      {getIcon(tech)}
+      <span>{tech}</span>
+    </div>
+  );
+};
+
+const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const colorGradients = {
+    purple: 'from-purple-500/20 to-purple-600/20 border-purple-500/30',
+    blue: 'from-blue-500/20 to-blue-600/20 border-blue-500/30',
+    orange: 'from-orange-500/20 to-orange-600/20 border-orange-500/30',
+    green: 'from-green-500/20 to-green-600/20 border-green-500/30',
+    red: 'from-red-500/20 to-red-600/20 border-red-500/30',
+    cyan: 'from-cyan-500/20 to-cyan-600/20 border-cyan-500/30'
+  };
+
+  if (isMobile) {
+    return (
+      <div
+        className={`relative bg-white rounded-lg border overflow-hidden transition-all duration-300 ${
+          isFeatured 
+            ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-md` 
+            : 'border-slate-200/60 shadow-sm'
+        }`}
+      >
+        <div className="relative h-24 overflow-hidden bg-slate-100">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+          <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
+            {project.category}
+          </div>
+        </div>
+
+        <div className="p-4 flex flex-col items-center text-center">
+          <h3 className="text-sm font-bold text-slate-900 mb-1.5">
+            {project.title}
+          </h3>
+
+          <p className="text-slate-600 text-[10px] leading-relaxed mb-3">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-1 mb-3">
+            {project.tech.slice(0, 2).map((tech, i) => (
+              <TechIcon key={i} tech={tech} />
+            ))}
+            {project.tech.length > 2 && (
+              <span className="text-[7px] text-slate-500 font-bold">+{project.tech.length - 2}</span>
+            )}
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
+                <img
+                  src={project.author.avatar}
+                  alt={project.author.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-[8px] font-bold text-slate-800">{project.author.name}</p>
+            </div>
+
+            <div className="flex items-center gap-4 text-slate-500">
+              <div className="flex items-center gap-1">
+                <Star size={10} className="text-yellow-500 fill-yellow-500" />
+                <span className="text-[8px] font-bold">{project.stats.stars}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Eye size={10} />
+                <span className="text-[8px] font-bold">{project.stats.views}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={project.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
+        isFeatured 
+          ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
+          : 'lg:col-span-1 md:row-span-1'
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out rounded-2xl"
+        style={{
+          background: `linear-gradient(135deg, ${project.color}-500/10 0%, ${project.color}-600/10 50%, ${project.color}-500/10 100%)`
+        }}
+      />
+
+      {isHovered && (
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center z-20">
+          <Star size={16} className="text-yellow-500 fill-yellow-500" />
+        </div>
+      )}
+      {project.featured && isHovered && (
+        <div className="absolute top-4 right-4 text-xs font-bold text-white bg-black/80 px-2 py-1 rounded z-20">
+          FEATURED
+        </div>
+      )}
+
+      <div className={`relative bg-white rounded-2xl border overflow-hidden transition-all duration-300 ease-out ${
+        isFeatured 
+          ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-2xl` 
+          : 'border-slate-200/60 shadow-lg group-hover:shadow-xl'
+      }`}>
+        
+        <div className="relative h-48 md:h-56 overflow-hidden bg-slate-100">
+          <div
+            className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+            style={{ backgroundImage: `url(${project.image})` }}
+          />
+          
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+          
+          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800">
+            {project.category}
+          </div>
+        </div>
+
+        <div className="p-8 flex flex-col items-center text-center">
+          <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">
+            {project.title}
+          </h3>
+
+          <p className="text-slate-600 text-base leading-relaxed mb-6 max-w-sm">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {project.tech.slice(0, 3).map((tech, i) => (
+              <TechIcon key={i} tech={tech} />
+            ))}
+            {project.tech.length > 3 && (
+              <span className="text-xs text-slate-500 font-bold">+{project.tech.length - 3} more</span>
+            )}
+          </div>
+
+          <div className="flex flex-col items-center gap-4 w-full">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
+                <img
+                  src={project.author.avatar}
+                  alt={project.author.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-base font-bold text-slate-900">{project.author.name}</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.author.course}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 text-slate-500">
+              <div className="flex items-center gap-1 hover:scale-105 transition-transform">
+                <Star size={14} className="text-yellow-500 fill-yellow-500" />
+                <span className="text-xs font-medium">{project.stats.stars}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Eye size={14} />
+                <span className="text-xs font-medium">{project.stats.views}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {isHovered && (
+          <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-30">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
+            >
+              <ExternalLink size={12} />
+              Live
+            </a>
+          </div>
+        )}
+      </div>
+    </a>
+  );
+};
+
+const GroupProjects = () => {
+  const [filter, setFilter] = useState('all');
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const mobileScrollRef = useRef(null);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const featuredProjects = PROJECTS_DATA.filter(p => p.featured);
+  const allProjects = PROJECTS_DATA;
+
+  const filteredProjects = filter === 'featured' ? featuredProjects : allProjects;
+
+  // Auto-scroll logic for mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const interval = setInterval(() => {
+      if (!mobileScrollRef.current) return;
+
+      const nextIndex = (mobileActiveIndex + 1) % filteredProjects.length;
+      const scrollAmount = mobileScrollRef.current.offsetWidth * 0.85 + 24; // Card width (85vw) + gap (6)
+      
+      mobileScrollRef.current.scrollTo({
+        left: nextIndex * scrollAmount,
+        behavior: 'smooth'
+      });
+      setMobileActiveIndex(nextIndex);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isMobile, mobileActiveIndex, filteredProjects.length]);
+
+  const handleMobileScroll = (e) => {
+    if (!isMobile) return;
+    const scrollLeft = e.target.scrollLeft;
+    const cardWidth = e.target.offsetWidth * 0.85 + 24;
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    if (newIndex !== mobileActiveIndex) {
+      setMobileActiveIndex(newIndex);
+    }
+  };
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+        const { current } = scrollRef;
+        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640;
+        if (direction === 'left') {
+            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    }
+  };
+
+  const skills = [
+    'Leadership',
+    'Team Collaboration',
+    'Problem Solving',
+    'Project Management',
+    'Technical Communication',
+    'Critical Thinking'
+  ];
+
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 right-[-10%] w-[500px] h-[500px] bg-purple-500/[0.04] rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/4 left-[-10%] w-[400px] h-[400px] bg-blue-500/[0.04] rounded-full blur-[100px]"></div>
+      </div>
+
+      <div className="max-w-[1440px] mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
+            Build Together
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6">
+            Group Projects That Build
+            <br />
+            <span className="text-blue-600">Leaders, Not Just Coders</span>
+          </h2>
+          <p className="text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+            Students are placed in teams to collaborate on real technology projects. They learn to divide work, communicate ideas, resolve conflicts, and ship a product together — the exact skills the tech industry demands.
+          </p>
+        </div>
+
+        {/* Skills Tags */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
+          {skills.map((skill, idx) => (
+            <span
+              key={idx}
+              className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold border border-blue-200"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+
+        {/* Filter Tabs */}
+        <div className="flex justify-center gap-4 mb-12">
+          {['all', 'featured'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setFilter(tab)}
+              className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
+                filter === tab
+                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
+                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+              }`}
+            >
+              {tab === 'all' ? 'All Projects' : 'Featured Only'}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16 auto-rows-auto">
+          {filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              isFeatured={project.featured}
+              isMobile={isMobile}
+            />
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <button
+            onClick={() => {
+              document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-500/25 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+          >
+            Start Building Your Own Project
+            <ArrowRight size={20} />
+          </button>
+          <p className="text-slate-600 mt-4">
+            Partner with us and bring real projects to your school
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default GroupProjects;
