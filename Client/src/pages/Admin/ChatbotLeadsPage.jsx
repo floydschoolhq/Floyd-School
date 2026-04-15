@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import api from '../../api/axios';
 
 const ChatbotLeadsPage = () => {
   const [leads, setLeads] = useState([]);
@@ -26,11 +27,8 @@ const ChatbotLeadsPage = () => {
         ...(courseFilter && { course: courseFilter })
       });
 
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/admin/chatbot/leads?${queryParams}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await response.json();
+      const response = await api.get(`/admin/chatbot/leads?${queryParams}`);
+      const data = response.data;
 
       if (data.success) {
         setLeads(data.data);
@@ -48,11 +46,8 @@ const ChatbotLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/admin/chatbot/stats', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await response.json();
+      const response = await api.get('/admin/chatbot/stats');
+      const data = response.data;
 
       if (data.success) {
         setStats(data.data);
@@ -64,17 +59,8 @@ const ChatbotLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/admin/chatbot/lead/${leadId}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ status: newStatus }),
-      });
-
-      const data = await response.json();
+      const response = await api.put(`/admin/chatbot/lead/${leadId}/status`, { status: newStatus });
+      const data = response.data;
 
       if (data.success) {
         toast.success('Lead status updated successfully');
@@ -95,13 +81,8 @@ const ChatbotLeadsPage = () => {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/admin/chatbot/lead/${leadId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      const data = await response.json();
+      const response = await api.delete(`/admin/chatbot/lead/${leadId}`);
+      const data = response.data;
 
       if (data.success) {
         toast.success('Lead deleted successfully');
