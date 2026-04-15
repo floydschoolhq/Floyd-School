@@ -6,8 +6,6 @@ const {
     verifyPayment,
     initiateRefund,
     handlePaymentCancellation,
-    initiateRefund,
-    handlePaymentCancellation,
     getPaymentStatus,
     getEnrollment
 } = require('../controllers/paymentController');
