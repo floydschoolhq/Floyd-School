@@ -165,27 +165,32 @@ const Chatbot = () => {
       
       // Save to MongoDB
       try {
+        const payload = {
+          studentName: formData.name || 'Not provided',
+          schoolName: formData.school || 'Not provided',
+          contactInfo: formData.contact,
+          selectedCourse: selectedCourse || 'Not Sure',
+          userPath: userPath || 'direct'
+        };
+        
+        console.log('[Chatbot] Submitting lead:', payload);
+        
         const response = await fetch('/api/chatbot/lead', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            studentName: formData.name,
-            schoolName: formData.school,
-            contactInfo: formData.contact,
-            selectedCourse: selectedCourse,
-            userPath: userPath
-          }),
+          body: JSON.stringify(payload),
         });
 
-        if (response.ok) {
-          console.log('Chatbot lead saved successfully');
-        } else {
-          console.error('Failed to save chatbot lead');
+        const data = await response.json();
+        console.log('[Chatbot] Response:', data);
+        
+        if (data.success) {
+          console.log('[Chatbot] Lead saved:', data.data?._id);
         }
       } catch (error) {
-        console.error('Error saving chatbot lead:', error);
+        console.error('[Chatbot] Error:', error);
       }
 
       pushUser(formData.contact);

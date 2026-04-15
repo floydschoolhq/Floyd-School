@@ -4,18 +4,18 @@ const chatbotLeadSchema = new mongoose.Schema({
   // Student Information
   studentName: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: null
   },
   schoolName: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: null
   },
   contactInfo: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: null
   },
   
   // Chat Flow Information
