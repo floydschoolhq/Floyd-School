@@ -31,22 +31,25 @@ const FourStageLearning = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-blue-500/[0.03] to-purple-500/[0.03] rounded-full blur-[150px]"></div>
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/[0.08] rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-orange-500/[0.08] rounded-full blur-[80px]"></div>
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
-            Our Pedagogy
+          <span className="inline-block px-4 py-2 bg-purple-500/10 text-purple-400 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
+            Four-Stage Learning Model
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6">
-            The Four-Stage Learning Model
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+            From Curiosity to
+            <br />
+            <span className="text-purple-400">Confidence in Four Steps.</span>
           </h2>
-          <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
             Every thinkskool program follows the same proven framework — from curiosity to creation.
           </p>
         </div>
@@ -63,22 +66,20 @@ const FourStageLearning = () => {
                 <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-gradient-to-r from-blue-300 to-purple-300 transform translate-x-1/2"></div>
               )}
               
-              <div className="relative bg-white border-2 border-slate-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 h-full">
+              <div className="group relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-2xl p-8 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-2" h-full>
                 <div className="absolute -top-3 left-6 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-lg">
                   {stage.number}
                 </div>
                 
                 <div className="pt-4">
                   <div className="text-5xl mb-4">{stage.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {stage.title}
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-3">{stage.title}</h3>
+                  <p className="text-slate-400 text-base leading-relaxed mb-4">
                     {stage.description}
                   </p>
-                  <div className="pt-4 border-t border-slate-200">
+                  <div className="pt-4 border-t border-white/10">
                     <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Goal</div>
-                    <div className="text-sm font-bold text-blue-600">{stage.goal}</div>
+                    <div className="text-sm font-bold text-purple-400">{stage.goal}</div>
                   </div>
                 </div>
               </div>
