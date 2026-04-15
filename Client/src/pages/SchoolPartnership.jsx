@@ -60,6 +60,7 @@ const SchoolPartnership = () => {
       
       if (response.data.success) {
         setIsSubmitted(true);
+        toast.success('Partnership request submitted successfully!');
         
         // Reset form
         setFormData({
@@ -72,10 +73,12 @@ const SchoolPartnership = () => {
           students: "",
           requirements: "",
         });
+      } else {
+        toast.error(response.data.message || 'Failed to submit request');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setIsSubmitted(true);
+      toast.error(error.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

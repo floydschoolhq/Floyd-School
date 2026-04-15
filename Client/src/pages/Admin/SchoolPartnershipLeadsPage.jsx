@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import api from '../../api/axios';
 
 const SchoolPartnershipLeadsPage = () => {
   const [leads, setLeads] = useState([]);
@@ -24,11 +25,8 @@ const SchoolPartnershipLeadsPage = () => {
         ...(statusFilter && { status: statusFilter })
       });
 
-      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
-      const response = await fetch(`/admin/school-partnership/leads?${queryParams}`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {}
-      });
-      const data = await response.json();
+      const response = await api.get(`/admin/school-partnership/leads?${queryParams}`);
+      const data = response.data;
 
       if (data.success) {
         setLeads(data.data);
@@ -46,11 +44,8 @@ const SchoolPartnershipLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
-      const response = await fetch('/admin/school-partnership/stats', {
-        headers: token ? { Authorization: `Bearer ${token}` } : {}
-      });
-      const data = await response.json();
+      const response = await api.get('/admin/school-partnership/stats');
+      const data = response.data;
 
       if (data.success) {
         setStats(data.data);
@@ -62,17 +57,8 @@ const SchoolPartnershipLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
-      const response = await fetch(`/admin/school-partnership/lead/${leadId}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` })
-        },
-        body: JSON.stringify({ status: newStatus }),
-      });
-
-      const data = await response.json();
+      const response = await api.put(`/admin/school-partnership/lead/${leadId}/status`, { status: newStatus });
+      const data = response.data;
 
       if (data.success) {
         toast.success('Lead status updated successfully');
@@ -93,13 +79,8 @@ const SchoolPartnershipLeadsPage = () => {
     }
 
     try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
-      const response = await fetch(`/admin/school-partnership/lead/${leadId}`, {
-        method: 'DELETE',
-        headers: token ? { Authorization: `Bearer ${token}` } : {}
-      });
-
-      const data = await response.json();
+      const response = await api.delete(`/admin/school-partnership/lead/${leadId}`);
+      const data = response.data;
 
       if (data.success) {
         toast.success('Lead deleted successfully');

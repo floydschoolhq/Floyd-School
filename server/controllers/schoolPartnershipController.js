@@ -16,20 +16,19 @@ exports.saveSchoolPartnershipLead = async (req, res) => {
       requirements
     });
 
-    await newLead.save();
-
-    console.log(`[School Partnership] New lead from ${contactPerson} (${schoolName})`);
+    const savedLead = await newLead.save();
+    console.log(`[School Partnership] Lead saved successfully: ${savedLead._id} from ${schoolName}`);
 
     res.status(201).json({
       success: true,
       message: 'Partnership request submitted successfully',
-      data: newLead
+      data: savedLead
     });
   } catch (error) {
-    console.error('Error saving school partnership lead:', error);
+    console.error('[School Partnership] SAVE ERROR:', error);
     res.status(500).json({
       success: false,
-      message: 'Error submitting partnership request',
+      message: 'Failed to save partnership request',
       error: error.message
     });
   }
