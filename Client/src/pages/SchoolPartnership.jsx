@@ -19,6 +19,9 @@ const SchoolPartnership = () => {
     students: "",
     requirements: "",
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {
@@ -47,15 +50,16 @@ const SchoolPartnership = () => {
     
     // Basic validation
     if (!formData.schoolName || !formData.contactPerson || !formData.phone) {
-      alert('Please fill in all required fields (School Name, Contact Person, and Phone Number)');
       return;
     }
+    
+    setIsSubmitting(true);
     
     try {
       const response = await api.post('/school-partnership/lead', formData);
       
       if (response.data.success) {
-        alert(`Thank you for your partnership request, ${formData.contactPerson}! We will contact you at ${formData.phone} within 24 hours.`);
+        setIsSubmitted(true);
         
         // Reset form
         setFormData({
@@ -71,7 +75,9 @@ const SchoolPartnership = () => {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Thank you for your partnership request! We will contact you within 24 hours.');
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -805,117 +811,148 @@ const SchoolPartnership = () => {
               </div>
               
               <div className="md:col-span-3 p-12">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="md:col-span-2">
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">School Name *</label>
-                      <input 
-                        name="schoolName" 
-                        type="text" 
-                        value={formData.schoolName} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none text-white placeholder-slate-500" 
-                        placeholder="Enter your school name"
-                        required
-                      />
+                {isSubmitted ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
+                      <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Contact Person *</label>
-                      <input 
-                        name="contactPerson" 
-                        type="text" 
-                        value={formData.contactPerson} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
-                        placeholder="Contact person name"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Designation</label>
-                      <input 
-                        name="designation" 
-                        type="text" 
-                        value={formData.designation} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
-                        placeholder="Your designation"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Phone Number *</label>
-                      <input 
-                        name="phone" 
-                        type="tel" 
-                        value={formData.phone} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
-                        placeholder="Phone number"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">City</label>
-                      <input 
-                        name="city" 
-                        type="text" 
-                        value={formData.city} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
-                        placeholder="Your city"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Preferred Domain</label>
-                      <select 
-                        name="domain" 
-                        value={formData.domain} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white"
-                      >
-                        <option value="AI & Machine Learning">AI & Machine Learning</option>
-                        <option value="Web Development">Web Development</option>
-                        <option value="Cybersecurity">Cybersecurity</option>
-                        <option value="IoT & Robotics">IoT & Robotics</option>
-                        <option value="Custom Curriculum">Custom Curriculum</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Approx. Students</label>
-                      <input 
-                        name="students" 
-                        type="number" 
-                        value={formData.students} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
-                        placeholder="Number of students"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Specific Requirements</label>
-                      <textarea 
-                        name="requirements" 
-                        rows={4} 
-                        value={formData.requirements} 
-                        onChange={handleChange} 
-                        className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500 resize-none" 
-                        placeholder="Tell us about your specific requirements..."
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="pt-6">
-                    <button 
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                    >
-                      Submit Partnership Request →
-                    </button>
-                    <p className="text-center text-xs text-slate-400 mt-4 font-medium">
-                      We respond within 24 hours of submission.
+                    <h3 className="text-2xl font-bold text-white mb-3">Thank You!</h3>
+                    <p className="text-slate-300 mb-6 max-w-md">
+                      Your partnership request has been submitted successfully. Our team will contact you within 24 hours.
                     </p>
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                    >
+                      Submit Another Request
+                    </button>
                   </div>
-                </form>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">School Name *</label>
+                        <input 
+                          name="schoolName" 
+                          type="text" 
+                          value={formData.schoolName} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none text-white placeholder-slate-500" 
+                          placeholder="Enter your school name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Contact Person *</label>
+                        <input 
+                          name="contactPerson" 
+                          type="text" 
+                          value={formData.contactPerson} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                          placeholder="Contact person name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Designation</label>
+                        <input 
+                          name="designation" 
+                          type="text" 
+                          value={formData.designation} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                          placeholder="Your designation"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Phone Number *</label>
+                        <input 
+                          name="phone" 
+                          type="tel" 
+                          value={formData.phone} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                          placeholder="Phone number"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">City</label>
+                        <input 
+                          name="city" 
+                          type="text" 
+                          value={formData.city} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                          placeholder="Your city"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Preferred Domain</label>
+                        <select 
+                          name="domain" 
+                          value={formData.domain} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white"
+                        >
+                          <option value="AI & Machine Learning">AI & Machine Learning</option>
+                          <option value="Web Development">Web Development</option>
+                          <option value="Cybersecurity">Cybersecurity</option>
+                          <option value="IoT & Robotics">IoT & Robotics</option>
+                          <option value="Custom Curriculum">Custom Curriculum</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Approx. Students</label>
+                        <input 
+                          name="students" 
+                          type="number" 
+                          value={formData.students} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500" 
+                          placeholder="Number of students"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Specific Requirements</label>
+                        <textarea 
+                          name="requirements" 
+                          rows={4} 
+                          value={formData.requirements} 
+                          onChange={handleChange} 
+                          className="w-full bg-slate-900/50 border border-blue-900/30 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-white placeholder-slate-500 resize-none" 
+                          placeholder="Tell us about your specific requirements..."
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="pt-6">
+                      <button 
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            Submitting...
+                          </>
+                        ) : (
+                          'Submit Partnership Request ?'
+                        )}
+                      </button>
+                      <p className="text-center text-xs text-slate-400 mt-4 font-medium">
+                        We respond within 24 hours of submission.
+                      </p>
+                    </div>
+                  </form>
+                )}
               </div>
             </div>
           </div>
