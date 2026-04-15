@@ -26,7 +26,7 @@ const ChatbotLeadsPage = () => {
         ...(courseFilter && { course: courseFilter })
       });
 
-      const response = await fetch(`/api/chatbot/leads?${queryParams}`);
+      const response = await fetch(`/admin/chatbot/leads?${queryParams}`);
       const data = await response.json();
 
       if (data.success) {
@@ -45,7 +45,7 @@ const ChatbotLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/chatbot/stats');
+      const response = await fetch('/admin/chatbot/stats');
       const data = await response.json();
 
       if (data.success) {
@@ -58,7 +58,7 @@ const ChatbotLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const response = await fetch(`/api/chatbot/lead/${leadId}/status`, {
+      const response = await fetch(`/admin/chatbot/lead/${leadId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const ChatbotLeadsPage = () => {
     }
 
     try {
-      const response = await fetch(`/api/chatbot/lead/${leadId}`, {
+      const response = await fetch(`/admin/chatbot/lead/${leadId}`, {
         method: 'DELETE',
       });
 

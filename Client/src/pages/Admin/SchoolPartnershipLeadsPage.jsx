@@ -24,7 +24,7 @@ const SchoolPartnershipLeadsPage = () => {
         ...(statusFilter && { status: statusFilter })
       });
 
-      const response = await fetch(`/api/school-partnership/leads?${queryParams}`);
+      const response = await fetch(`/admin/school-partnership/leads?${queryParams}`);
       const data = await response.json();
 
       if (data.success) {
@@ -43,7 +43,7 @@ const SchoolPartnershipLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/school-partnership/stats');
+      const response = await fetch('/admin/school-partnership/stats');
       const data = await response.json();
 
       if (data.success) {
@@ -56,7 +56,7 @@ const SchoolPartnershipLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const response = await fetch(`/api/school-partnership/lead/${leadId}/status`, {
+      const response = await fetch(`/admin/school-partnership/lead/${leadId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const SchoolPartnershipLeadsPage = () => {
     }
 
     try {
-      const response = await fetch(`/api/school-partnership/lead/${leadId}`, {
+      const response = await fetch(`/admin/school-partnership/lead/${leadId}`, {
         method: 'DELETE',
       });
 
