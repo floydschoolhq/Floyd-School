@@ -21,7 +21,8 @@ exports.saveChatbotLead = async (req, res) => {
       ipAddress
     });
 
-    await newLead.save();
+    const savedLead = await newLead.save();
+    console.log(`[Chatbot] Lead saved successfully: ${savedLead._id} - ${studentName}`);
 
     res.status(201).json({
       success: true,

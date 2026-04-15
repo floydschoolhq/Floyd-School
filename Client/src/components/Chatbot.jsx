@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import api from '../api/axios';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -175,22 +176,16 @@ const Chatbot = () => {
         
         console.log('[Chatbot] Submitting lead:', payload);
         
-        const response = await fetch('/api/chatbot/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        const data = await response.json();
+        const response = await api.post('/chatbot/lead', payload);
+        const data = response.data;
+        
         console.log('[Chatbot] Response:', data);
         
         if (data.success) {
           console.log('[Chatbot] Lead saved:', data.data?._id);
         }
       } catch (error) {
-        console.error('[Chatbot] Error:', error);
+        console.error('[Chatbot] Submission Error:', error.response?.data || error.message);
       }
 
       pushUser(formData.contact);
@@ -229,8 +224,8 @@ const Chatbot = () => {
       }}
         className={`fixed z-50 shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-300 group ${
           isMobile 
-            ? 'bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full' 
-            : 'bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full'
+            ? 'bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full' 
+            : 'bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full'
         }`}
       >
         {isOpen ? (
@@ -246,22 +241,22 @@ const Chatbot = () => {
       </button>
 
       {/* Chat Window */}
-      <div className={`fixed z-40 rounded-2xl shadow-2xl border border-gray-200 transition-all duration-300 ${
+      <div className={`fixed z-40 rounded-3xl shadow-2xl border border-sky-500/20 transition-all duration-300 backdrop-blur-xl ${
         isMobile 
-          ? 'bottom-20 left-2 right-2 w-[calc(100vw-1rem)] max-h-[70vh] bg-white' 
-          : 'bottom-24 right-6 w-80 bg-white'
+          ? 'bottom-20 left-2 right-2 w-[calc(100vw-1rem)] max-h-[70vh] bg-white/95' 
+          : 'bottom-24 right-6 w-80 bg-white/95'
       } ${!isOpen ? 'opacity-0 pointer-events-none scale-95' : 'opacity-100'}`}>
         {/* Header */}
-        <div className={`bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-t-2xl flex items-center justify-between ${isMobile ? 'p-2' : 'p-3'}`}>
-          <div className="flex items-center gap-2">
-            <div className={`w-5 h-5 bg-white rounded-full flex items-center justify-center ${isMobile ? '' : 'flex-shrink-0'}`}>
-              <span className={`${isMobile ? 'text-[10px]' : 'text-sm'} text-orange-500 font-bold`}>{'\ud83e\udd16'}</span>
+        <div className={`bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-t-3xl flex items-center justify-between ${isMobile ? 'p-2' : 'p-4'}`}>
+          <div className="flex items-center gap-3">
+            <div className={`w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center ${isMobile ? '' : 'flex-shrink-0'}`}>
+              <span className={`${isMobile ? 'text-xs' : 'text-lg'} text-white font-bold`}>{'\ud83e\udd16'}</span>
             </div>
             <div>
-              <div className={`font-semibold ${isMobile ? 'text-xs' : 'text-base'}`}>ThinkSkool</div>
-              <div className={`text-xs ${isMobile ? 'text-orange-100' : 'text-orange-100'} flex items-center gap-1`}>
-                <span className={`w-1 h-1 bg-green-300 rounded-full animate-pulse`}></span>
-                <span className={isMobile ? 'hidden' : ''}>Online</span>
+              <div className={`font-bold tracking-tight ${isMobile ? 'text-xs' : 'text-base'}`}>ThinkSkool AI</div>
+              <div className={`text-[10px] ${isMobile ? 'text-sky-100' : 'text-sky-100'} flex items-center gap-1 uppercase font-black tracking-widest`}>
+                <span className={`w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.5)]`}></span>
+                <span>Active Presence</span>
               </div>
             </div>
           </div>
@@ -279,13 +274,13 @@ const Chatbot = () => {
         <div className={`overflow-y-auto space-y-2 ${isMobile ? 'p-2 h-[60vh] max-h-[400px]' : 'p-3 h-80'}`}>
           {messages.map((m, i) => (
             <div key={m.id || i} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${m.sender === 'user' ? 'bg-orange-200 order-2' : 'bg-gray-100'}`}>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${m.sender === 'user' ? 'bg-sky-100 order-2' : 'bg-gray-100'}`}>
                 <span className="text-[8px]">
                   {m.sender === 'bot' ? '\ud83e\udd16' : '\ud83d\udc64'}
                 </span>
               </div>
-              <div className={`max-w-[75%] p-2 rounded-xl ${isMobile ? 'text-xs' : 'text-sm'} ${m.sender === 'user' ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none'}`}>
-                <div className="whitespace-pre-line">{m.text}</div>
+              <div className={`max-w-[80%] p-3 rounded-2xl ${isMobile ? 'text-xs' : 'text-sm'} ${m.sender === 'user' ? 'bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-tr-none shadow-md shadow-sky-500/20' : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200'}`}>
+                <div className="whitespace-pre-line leading-relaxed">{m.text}</div>
               </div>
             </div>
           ))}
@@ -312,12 +307,12 @@ const Chatbot = () => {
         <div className={`border-t border-gray-200 ${isMobile ? 'p-2' : 'p-4'}`}>
           {/* Quick Reply Buttons */}
           {showBtns && (
-            <div className={`grid gap-1.5 mb-2 ${isMobile ? 'grid-cols-2' : 'flex flex-wrap'}`}>
+            <div className={`grid gap-2 mb-2 ${isMobile ? 'grid-cols-2' : 'flex flex-wrap'}`}>
               {lastMsg.btns.map((b, bi) => (
                 <button
                   key={bi}
                   onClick={() => handleBtn(b.val, b.label)}
-                  className={`px-2 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg font-medium transition-colors ${isMobile ? 'text-[10px]' : 'text-xs'}`}
+                  className={`px-3 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-xl font-bold border border-sky-100 transition-all duration-300 ${isMobile ? 'text-[10px]' : 'text-xs'} hover:shadow-sm hover:scale-[1.02]`}
                 >
                   {b.label}
                 </button>
@@ -334,7 +329,7 @@ const Chatbot = () => {
                 value={formData.name}
                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
+                className={`w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all ${isMobile ? 'text-xs' : 'text-sm'}`}
               />
               <input
                 type="text"
@@ -342,12 +337,12 @@ const Chatbot = () => {
                 value={formData.school}
                 onChange={e => setFormData(p => ({ ...p, school: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
+                className={`w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all ${isMobile ? 'text-xs' : 'text-sm'}`}
               />
-              {formError && <div className={`text-red-500 mt-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
+              {formError && <div className={`text-rose-500 mt-1 font-bold ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
               <button
                 onClick={handleFormSubmit}
-                className={`w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium hover:from-orange-600 hover:to-orange-700 transition-colors ${isMobile ? 'text-xs py-1.5' : 'text-sm py-2'}`}
+                className={`w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl font-black uppercase tracking-widest hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-sky-500/20 active:scale-95 ${isMobile ? 'text-[10px] py-3' : 'text-xs py-3.5'}`}
               >
                 Continue
               </button>
@@ -362,12 +357,12 @@ const Chatbot = () => {
                 value={formData.contact}
                 onChange={e => setFormData(p => ({ ...p, contact: e.target.value }))}
                 onKeyDown={e => e.key === 'Enter' && handleFormSubmit()}
-                className={`w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 ${isMobile ? 'text-xs py-1.5' : 'text-sm'}`}
+                className={`w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all ${isMobile ? 'text-xs' : 'text-sm'}`}
               />
-              {formError && <div className={`text-red-500 mt-1 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
+              {formError && <div className={`text-rose-500 mt-1 font-bold ${isMobile ? 'text-[10px]' : 'text-xs'}`}>{formError}</div>}
               <button
                 onClick={handleFormSubmit}
-                className={`w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium hover:from-orange-600 hover:to-orange-700 transition-colors ${isMobile ? 'text-xs py-1.5' : 'text-sm py-2'}`}
+                className={`w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl font-black uppercase tracking-widest hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-sky-500/20 active:scale-95 ${isMobile ? 'text-[10px] py-3' : 'text-xs py-3.5'}`}
               >
                 Send Details
               </button>

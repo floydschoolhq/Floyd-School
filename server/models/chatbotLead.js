@@ -26,8 +26,8 @@ const chatbotLeadSchema = new mongoose.Schema({
   },
   userPath: {
     type: String,
-    enum: ['direct_ai', 'redirected_to_ai', 'partnership_inquiry'],
-    default: null
+    enum: ['direct', 'direct_ai', 'redirected_to_ai', 'partnership_inquiry', 'chatbot'],
+    default: 'direct'
   },
   
   // Metadata
