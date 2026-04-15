@@ -24,7 +24,10 @@ const SchoolPartnershipLeadsPage = () => {
         ...(statusFilter && { status: statusFilter })
       });
 
-      const response = await fetch(`/admin/school-partnership/leads?${queryParams}`);
+      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
+      const response = await fetch(`/admin/school-partnership/leads?${queryParams}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
       const data = await response.json();
 
       if (data.success) {
@@ -43,7 +46,10 @@ const SchoolPartnershipLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/admin/school-partnership/stats');
+      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
+      const response = await fetch('/admin/school-partnership/stats', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
       const data = await response.json();
 
       if (data.success) {
@@ -56,10 +62,12 @@ const SchoolPartnershipLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
       const response = await fetch(`/admin/school-partnership/lead/${leadId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          ...(token && { Authorization: `Bearer ${token}` })
         },
         body: JSON.stringify({ status: newStatus }),
       });
@@ -85,8 +93,10 @@ const SchoolPartnershipLeadsPage = () => {
     }
 
     try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('classroomToken');
       const response = await fetch(`/admin/school-partnership/lead/${leadId}`, {
         method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
 
       const data = await response.json();

@@ -13,6 +13,7 @@ import UserGovernance from './pages/UserGovernance';
 import CourseGovernance from './pages/CourseGovernance';
 import LeadIntelligence from './pages/LeadIntelligence';
 import ChatbotLeadsPage from './pages/ChatbotLeadsPage';
+import SchoolPartnershipLeadsPage from './pages/SchoolPartnershipLeadsPage';
 import GlobalNotifications from './pages/GlobalNotifications';
 import SystemSettings from './pages/SystemSettings';
 import SuccessEngine from './pages/SuccessEngine';
@@ -45,6 +46,7 @@ function App() {
               <Route path="courses" element={<CourseGovernance />} />
               <Route path="leads" element={<LeadIntelligence />} />
               <Route path="chatbot-leads" element={<ChatbotLeadsPage />} />
+              <Route path="school-partnership-leads" element={<SchoolPartnershipLeadsPage />} />
               <Route path="broadcast" element={<GlobalNotifications />} />
               <Route path="success-engine" element={<SuccessEngine />} />
               <Route path="settings" element={<SystemSettings />} />

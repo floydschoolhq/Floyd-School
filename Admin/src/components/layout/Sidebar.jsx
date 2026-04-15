@@ -32,6 +32,7 @@ const Sidebar = () => {
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <MessageCircle size={20} />, label: 'Chatbot Leads', path: '/chatbot-leads' },
+        { icon: <ShieldCheck size={20} />, label: 'School Partners', path: '/school-partnership-leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
         { icon: <Video size={20} />, label: 'Recordings', path: '/recordings' },
