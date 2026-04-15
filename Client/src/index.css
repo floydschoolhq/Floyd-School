@@ -143,23 +143,25 @@ body {
   @apply text-xs font-bold uppercase tracking-widest leading-relaxed;
 }
 
-/* Custom Premium Scrollbar - Dark Refined Style */
+/* Custom Premium Scrollbar - Light Glassy Style */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222222;
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
-  border: 2px solid #050505;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Scrollbar Hide Utility */
