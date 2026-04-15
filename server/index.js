@@ -39,6 +39,7 @@ const doubtRoutes = require('./routes/doubtRoutes');
 const scheduledLiveRoutes = require('./routes/scheduledLiveRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const chatbotRoutes = require('./routes/chatbotRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const { handleRazorpayWebhook } = require('./controllers/paymentController');
 
 connectDB();
