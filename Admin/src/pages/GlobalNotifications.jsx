@@ -9,7 +9,7 @@ import {
     GraduationCap,
     CheckCircle2
 } from 'lucide-react';
-import { adminApi } from '../api/axios';
+import api from '../api/axios';
 
 const GlobalNotifications = () => {
     const location = useLocation();
@@ -35,7 +35,7 @@ const GlobalNotifications = () => {
         e.preventDefault();
         setSending(true);
         try {
-            await adminApi.post('/admin/broadcast', formData);
+            await api.post('/admin/broadcast', formData);
             setSuccess(true);
             setFormData({ title: '', message: '', targetGroup: 'all', type: 'info' });
             setTimeout(() => setSuccess(false), 3000);

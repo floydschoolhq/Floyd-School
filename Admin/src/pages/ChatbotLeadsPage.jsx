@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { adminApi } from '../api/axios';
+import api from '../api/axios';
 
 const ChatbotLeadsPage = () => {
   const [leads, setLeads] = useState([]);
@@ -27,7 +27,7 @@ const ChatbotLeadsPage = () => {
         ...(courseFilter && { course: courseFilter })
       });
 
-      const response = await adminApi.get(`/admin/chatbot/leads?${queryParams}`);
+      const response = await api.get(`/admin/chatbot/leads?${queryParams}`);
       const data = response.data;
 
       if (data.success) {
@@ -46,7 +46,7 @@ const ChatbotLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await adminApi.get('/admin/chatbot/stats');
+      const response = await api.get('/admin/chatbot/stats');
       const data = response.data;
 
       if (data.success) {
@@ -59,7 +59,7 @@ const ChatbotLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const response = await adminApi.put(`/admin/chatbot/lead/${leadId}/status`, { status: newStatus });
+      const response = await api.put(`/admin/chatbot/lead/${leadId}/status`, { status: newStatus });
       const data = response.data;
 
       if (data.success) {
@@ -81,7 +81,7 @@ const ChatbotLeadsPage = () => {
     }
 
     try {
-      const response = await adminApi.delete(`/admin/chatbot/lead/${leadId}`);
+      const response = await api.delete(`/admin/chatbot/lead/${leadId}`);
       const data = response.data;
 
       if (data.success) {

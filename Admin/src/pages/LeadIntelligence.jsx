@@ -12,7 +12,7 @@ import {
     Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { adminApi } from '../api/axios';
+import api from '../api/axios';
 import { toast } from 'react-hot-toast';
 
 const LeadIntelligence = () => {
@@ -22,7 +22,7 @@ const LeadIntelligence = () => {
 
     const fetchLeads = async () => {
         try {
-            const res = await adminApi.get('/admin/leads');
+            const res = await api.get('/admin/leads');
             setLeads(res.data.leads);
         } catch (err) {
             console.error('Failed to fetch leads', err);
@@ -38,7 +38,7 @@ const LeadIntelligence = () => {
 
     const handleUpdateStatus = async (id, status) => {
         try {
-            await adminApi.patch(`/admin/leads/${id}/status`, { status });
+            await api.patch(`/admin/leads/${id}/status`, { status });
             toast.success(`Lead marked as ${status}`);
             fetchLeads();
         } catch (err) {
@@ -49,7 +49,7 @@ const LeadIntelligence = () => {
     const handleTerminate = async (id) => {
         if (!window.confirm('Terminate this lead permanently? This action cannot be undone.')) return;
         try {
-            await adminApi.delete(`/admin/leads/${id}`);
+            await api.delete(`/admin/leads/${id}`);
             toast.success('Lead terminated');
             fetchLeads();
         } catch (err) {

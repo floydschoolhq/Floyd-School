@@ -10,7 +10,7 @@ import {
     Search
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { adminApi } from '../../api/axios';
+import api from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 const FrictionDetailsModal = ({ isOpen, onClose, moduleTitle }) => {
@@ -27,7 +27,7 @@ const FrictionDetailsModal = ({ isOpen, onClose, moduleTitle }) => {
     const fetchDetails = async () => {
         setLoading(true);
         try {
-            const res = await adminApi.get(`/admin/friction/${encodeURIComponent(moduleTitle)}`);
+            const res = await api.get(`/admin/friction/${encodeURIComponent(moduleTitle)}`);
             setComments(res.data.comments);
         } catch (err) {
             console.error('Failed to fetch friction details', err);

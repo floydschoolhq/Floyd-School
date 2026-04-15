@@ -11,7 +11,7 @@ import {
     Activity
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { adminApi } from '../api/axios';
+import api from '../api/axios';
 
 const PlatformAnalytics = () => {
     const [stats, setStats] = useState(null);
@@ -22,7 +22,7 @@ const PlatformAnalytics = () => {
         setLoading(true);
         setError(false);
         try {
-            const res = await adminApi.get('/admin/stats');
+            const res = await api.get('/admin/stats');
             if (res.data.success) {
                 setStats(res.data.stats);
             } else {
