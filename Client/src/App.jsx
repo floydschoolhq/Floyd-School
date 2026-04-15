@@ -104,7 +104,6 @@ const App = () => {
         '/contact',
         '/online-program',
         '/classroom',
-        '/school-partnerships',
         '/course',
         '/faq',
         '/bootcamp-gallery'

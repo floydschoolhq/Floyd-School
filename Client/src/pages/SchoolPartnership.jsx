@@ -77,45 +77,6 @@ const SchoolPartnership = () => {
 
   return (
     <div className="bg-slate-950 text-white font-inter selection:bg-blue-500 selection:text-white">
-
-      {/* ── Top Nav ── */}
-      <nav className="bg-slate-900/90 backdrop-blur-lg border-b border-blue-900/30 top-0 sticky z-50">
-        <div className="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
-          <div 
-            className="text-2xl font-extrabold tracking-tighter font-bold cursor-pointer hover:opacity-80 transition-colors"
-            onClick={navigateToHome}
-          >
-            <span className="text-blue-500">think</span> <span className="text-orange-500">skool</span>
-          </div>
-          <div className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={navigateToCourses}
-              className="text-blue-400 font-bold border-b-2 border-blue-400 pb-1 font-bold tracking-tight hover:text-blue-300 transition-colors cursor-pointer"
-            >
-              Programs
-            </button>
-            <button 
-              onClick={() => scrollToSection('roadmap')}
-              className="text-slate-300 font-medium hover:text-blue-400 transition-colors duration-300 font-bold tracking-tight cursor-pointer"
-            >
-              Roadmap
-            </button>
-            <button 
-              onClick={() => scrollToSection('domains')}
-              className="text-slate-300 font-medium hover:text-blue-400 transition-colors duration-300 font-bold tracking-tight cursor-pointer"
-            >
-              Domains
-            </button>
-          </div>
-          <button 
-            onClick={() => scrollToSection('partner-form')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded shadow-sm hover:opacity-90 transition-opacity font-bold text-sm tracking-wide cursor-pointer"
-          >
-            Partner With Us
-          </button>
-        </div>
-      </nav>
-
       {/* ── Hero ── */}
       <header className="relative overflow-hidden pt-20 pb-32 px-8 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
