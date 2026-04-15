@@ -203,6 +203,7 @@ app.use('/api/payments', paymentLimiter, paymentRoutes);
 app.use('/api/contact', formLimiter, contactRoutes);
 app.use('/api/leads', formLimiter, leadRoutes);
 app.use('/api/chatbot', formLimiter, chatbotRoutes);
+app.use('/api/school-partnership', formLimiter, require('./routes/schoolPartnershipRoutes'));
 
 // General API routes with standard rate limiting
 app.use('/api/courses', generalLimiter, courseRoutes);

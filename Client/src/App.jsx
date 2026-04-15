@@ -37,6 +37,7 @@ import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import AdminMessages from './components/AdminMessages.jsx';
+import SchoolPartnershipLeadsPage from './pages/Admin/SchoolPartnershipLeadsPage.jsx';
 import SchoolPartnership from "./pages/SchoolPartnership.jsx";
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
@@ -169,6 +170,7 @@ const App = () => {
                 <Route path='/admin/messages' element={<ProtectedRoute><AdminMessages variant="dark" /></ProtectedRoute>} />
                 <Route path='/admin/students' element={<ProtectedRoute><AdminStudentsPage /></ProtectedRoute>} />
                 <Route path='/admin/chatbot-leads' element={<ProtectedRoute><ChatbotLeadsPage /></ProtectedRoute>} />
+                <Route path='/admin/school-partnership-leads' element={<ProtectedRoute><SchoolPartnershipLeadsPage /></ProtectedRoute>} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={
@@ -267,7 +269,7 @@ const App = () => {
             </Routes>
 
             {/* Chatbot - Visible on home page and AI & ML course page */}
-            <Chatbot />
+            {(location.pathname === '/' || location.pathname === '/course/1') && <Chatbot />}
 
             {/* Conditional Footer Rendering - Only on Home Page */}
             {showFooter && (

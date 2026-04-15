@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
+import api from '../api/axios';
 
 // Tailwind config is assumed to be set up in your project with the same config
 // Google Fonts (Manrope, Inter, Material Symbols) should be added to your index.html or global CSS
@@ -41,9 +42,8 @@ const SchoolPartnership = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
     
     // Basic validation
     if (!formData.schoolName || !formData.contactPerson || !formData.phone) {
@@ -51,21 +51,28 @@ const SchoolPartnership = () => {
       return;
     }
     
-    // Here you would typically send the data to your backend
-    // For now, we'll show a success message
-    alert(`Thank you for your partnership request, ${formData.contactPerson}! We will contact you at ${formData.phone} within 24 hours.`);
-    
-    // Reset form
-    setFormData({
-      schoolName: "",
-      contactPerson: "",
-      designation: "",
-      phone: "",
-      city: "",
-      domain: "AI & Machine Learning",
-      students: "",
-      requirements: "",
-    });
+    try {
+      const response = await api.post('/school-partnership/lead', formData);
+      
+      if (response.data.success) {
+        alert(`Thank you for your partnership request, ${formData.contactPerson}! We will contact you at ${formData.phone} within 24 hours.`);
+        
+        // Reset form
+        setFormData({
+          schoolName: "",
+          contactPerson: "",
+          designation: "",
+          phone: "",
+          city: "",
+          domain: "AI & Machine Learning",
+          students: "",
+          requirements: "",
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Thank you for your partnership request! We will contact you within 24 hours.');
+    }
   };
 
   return (

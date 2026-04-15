@@ -77,4 +77,7 @@ router.patch('/access-requests/:id', reviewAccessRequest);
 // Chatbot Leads
 router.use('/chatbot', require('./chatbotRoutes'));
 
+// School Partnership Leads
+router.use('/school-partnership', require('./schoolPartnershipRoutes'));
+
 module.exports = router;

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 
 const Chatbot = () => {
-  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -28,12 +26,6 @@ const Chatbot = () => {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
-
-  // Show chatbot on home page and AI & ML course page
-  const isAIMLCourse = location.pathname === '/course/1';
-  if (!isAIMLCourse && location.pathname !== '/') {
-    return null;
-  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
