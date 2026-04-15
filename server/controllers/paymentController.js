@@ -234,28 +234,6 @@ const verifyPayment = async (req, res) => {
             });
         }
 
-        // Find enrollment by razorpay order ID
-        const enrollment = await Enrollment.findOne({ razorpayOrderId });
-        
-        if (!enrollment) {
-            return res.status(404).json({
-                success: false,
-                message: 'Enrollment not found for this order'
-            });
-        }
-
-        // Prevent double verification
-        if (enrollment.paymentStatus === 'completed') {
-            return res.status(200).json({
-                success: true,
-                message: 'Payment already verified',
-                enrollment: {
-                    _id: enrollment._id,
-                    paymentStatus: enrollment.paymentStatus
-                }
-            });
-        }
-
         // SECURITY: Verify payment amount matches the course price via Razorpay API
         if (razorpay) {
             try {
