@@ -159,23 +159,23 @@ const SchoolPartnership = () => {
         </div>
       </section>
 
-      {/* ── Bootcamp Gallery ── */}
-      <section className="py-24 px-0 bg-slate-950">
+      {/* ── Bootcamp Gallery (Light Theme) ── */}
+      <section className="py-24 px-0 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 px-6">
-            <span className="text-blue-400 font-bold text-xs tracking-widest uppercase mb-4 block">
+            <span className="text-blue-600 font-bold text-xs tracking-widest uppercase mb-4 block">
               Our Impact
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
               Bootcamp Gallery
             </h2>
-            <p className="text-base text-slate-400 max-w-2xl mx-auto">
+            <p className="text-base text-slate-600 max-w-2xl mx-auto">
               Moments from our hands-on technology bootcamps delivered in schools across the country.
             </p>
           </div>
           
           {/* Mobile: Horizontal scrollable carousel */}
-          <div className="flex overflow-x-auto gap-4 px-4 pb-4 snap-x">
+          <div className="flex overflow-x-auto gap-4 pb-4 snap-x px-2">
             {[
               { src: "/images/bootcamp-1.jpg", alt: "Students in bootcamp", label: "Students in bootcamp" },
               { src: "/images/bootcamp-2.jpg", alt: "Coding session", label: "Coding session" },
@@ -185,7 +185,7 @@ const SchoolPartnership = () => {
               { src: "/images/frontview.jpg", alt: "Classroom view", label: "Classroom view" },
             ].map((img, idx) => (
               <div key={idx} className="flex-shrink-0 w-[85vw] max-w-[320px] snap-center">
-                <div className="relative group overflow-hidden rounded-2xl aspect-[4/3]">
+                <div className="relative group overflow-hidden rounded-2xl aspect-[4/3] shadow-lg">
                   <img 
                     src={img.src} 
                     alt={img.alt} 
@@ -200,7 +200,7 @@ const SchoolPartnership = () => {
           </div>
           <div className="flex justify-center gap-2 mt-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="w-2 h-2 rounded-full bg-blue-500/50"></div>
+              <div key={i} className="w-2 h-2 rounded-full bg-blue-300"></div>
             ))}
           </div>
         </div>
