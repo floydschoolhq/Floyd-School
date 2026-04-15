@@ -108,21 +108,6 @@ const createOrder = async (req, res) => {
             });
         }
 
-        // IDEMPOTENCY: Check if there's already a pending order for this email+course in last 10 minutes
-        const recentPending = await Enrollment.findOne({
-            'userDetails.email': sanitizedEmail,
-            course: course._id,
-            paymentStatus: 'pending',
-            createdAt: { $gte: new Date(Date.now() - 10 * 60 * 1000) }
-        });
-
-        if (recentPending) {
-            return res.status(429).json({
-                success: false,
-                message: 'A payment order was recently created. Please complete or wait before trying again.'
-            });
-        }
-
         // Check if email already enrolled in this course
         const existingEnrollment = await Enrollment.findOne({
             'userDetails.email': sanitizedEmail,
