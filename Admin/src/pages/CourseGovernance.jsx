@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import {
     BookOpen,
     Search,
@@ -9,7 +10,7 @@ import {
     FileText
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 
 const CourseGovernance = () => {
     const [courses, setCourses] = useState([]);
@@ -19,7 +20,7 @@ const CourseGovernance = () => {
 
     const fetchCourses = async () => {
         try {
-            const res = await api.get('/admin/courses');
+            const res = await adminApi.get('/admin/courses');
             setCourses(res.data.courses);
         } catch (err) {
             console.error('Failed to fetch courses', err);
@@ -35,7 +36,7 @@ const CourseGovernance = () => {
     const updateStatus = async (id, status) => {
         if (!window.confirm(`Are you sure you want to mark this course as ${status}?`)) return;
         try {
-            await api.patch(`/admin/courses/${id}/status`, { status });
+            await adminApi.patch(`/admin/courses/${id}/status`, { status });
             fetchCourses();
         } catch (err) {
             alert('Failed to update status');

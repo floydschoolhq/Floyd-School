@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import {
     Users,
     ShieldCheck,
@@ -20,7 +21,7 @@ import {
     RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 
 const UserGovernance = () => {
     const [users, setUsers] = useState([]);
@@ -39,7 +40,7 @@ const UserGovernance = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await api.get('/admin/users');
+            const res = await adminApi.get('/admin/users');
             setUsers(res.data.users);
         } catch (err) {
             console.error('Governance failure', err);
@@ -54,7 +55,7 @@ const UserGovernance = () => {
 
     const toggleUserStatus = async (id, currentStatus) => {
         try {
-            await api.patch(`/admin/users/${id}/status`, { isActive: !currentStatus });
+            await adminApi.patch(`/admin/users/${id}/status`, { isActive: !currentStatus });
             fetchUsers();
         } catch (err) {
             console.error('Status override failed', err);
@@ -64,7 +65,7 @@ const UserGovernance = () => {
     const handleDeleteUser = async (id) => {
         if (!window.confirm('PROTOCOL WARNING: This will permanently terminate the ecosystem node. Proceed?')) return;
         try {
-            await api.delete(`/admin/users/${id}`);
+            await adminApi.delete(`/admin/users/${id}`);
             fetchUsers();
         } catch (err) {
             console.error('Termination sequence failed', err);
@@ -75,7 +76,7 @@ const UserGovernance = () => {
     const handleCreateUser = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/admin/users', formData);
+            await adminApi.post('/admin/users', formData);
             setShowModal(false);
             setFormData({ name: '', email: '', password: '', role: 'student' });
             fetchUsers();
@@ -88,7 +89,7 @@ const UserGovernance = () => {
     const togglePermission = async (userId, permissionKey, currentValue) => {
         setUpdatingPermission(`${userId}-${permissionKey}`);
         try {
-            await api.patch(`/admin/users/${userId}/permissions`, {
+            await adminApi.patch(`/admin/users/${userId}/permissions`, {
                 permissions: { [permissionKey]: !currentValue }
             });
 

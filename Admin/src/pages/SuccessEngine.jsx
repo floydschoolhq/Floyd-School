@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import {
     TrendingUp,
     Activity,
@@ -11,7 +12,7 @@ import {
     Shield
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 import FrictionDetailsModal from '../components/modals/FrictionDetailsModal';
 
 const SuccessEngine = () => {
@@ -25,7 +26,7 @@ const SuccessEngine = () => {
     const fetchIntelligence = async () => {
         setRefreshing(true);
         try {
-            const res = await api.get('/admin/growth-intelligence');
+            const res = await adminApi.get('/admin/growth-intelligence');
             setIntel(res.data.intelligence);
         } catch (err) {
             console.error('Failed to fetch analytics:', err);

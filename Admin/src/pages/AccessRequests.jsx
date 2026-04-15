@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/axios';
+import { toast } from 'react-hot-toast';
+import { adminApi } from '../api/axios';
 import {
     CheckCircle2,
     XCircle,
@@ -26,7 +27,7 @@ const AccessRequests = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await api.get('/admin/access-requests');
+            const res = await adminApi.get('/admin/access-requests');
             setRequests(res.data.requests || []);
         } catch (error) {
             console.error("Failed to fetch requests", error);
@@ -41,7 +42,7 @@ const AccessRequests = () => {
 
         setProcessing(requestId);
         try {
-            await api.patch(`/admin/access-requests/${requestId}`, { status });
+            await adminApi.patch(`/admin/access-requests/${requestId}`, { status });
 
             // Optimistic update
             setRequests(requests.map(r =>

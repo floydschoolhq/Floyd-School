@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import {
     Settings as SettingsIcon,
     Lock,
@@ -14,7 +15,7 @@ import {
     ShieldCheck
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 
 const SystemSettings = () => {
     const [settings, setSettings] = useState(null);
@@ -31,7 +32,7 @@ const SystemSettings = () => {
         setTerminalInput('');
 
         try {
-            const res = await api.post('/admin/system/command', { command: cmd });
+            const res = await adminApi.post('/admin/system/command', { command: cmd });
             if (res.data.success) {
                 if (res.data.output.includes('__CLEAR__')) {
                     setTerminalOutput(['[SYSTEM] Terminal context refreshed.']);
@@ -48,7 +49,7 @@ const SystemSettings = () => {
 
     const fetchSettings = async () => {
         try {
-            const res = await api.get('/admin/settings');
+            const res = await adminApi.get('/admin/settings');
             setSettings(res.data.settings);
         } catch (err) {
             console.error('Failed to fetch settings', err);
@@ -64,7 +65,7 @@ const SystemSettings = () => {
     const handleUpdate = async (updates) => {
         setSaving(true);
         try {
-            const res = await api.patch('/admin/settings', updates);
+            const res = await adminApi.patch('/admin/settings', updates);
             setSettings(res.data.settings);
         } catch (err) {
             alert('Failed to sync system configuration.');

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/axios';
+import { toast } from 'react-hot-toast';
+import { adminApi } from '../api/axios';
 import {
     DollarSign,
     Users,
@@ -187,7 +188,7 @@ const PaymentTracking = () => {
             const params = new URLSearchParams();
             if (search) params.append('search', search);
             
-            const res = await api.get(`/admin/payments?${params.toString()}`);
+            const res = await adminApi.get(`/admin/payments?${params.toString()}`);
             const enrollments = res.data.enrollments || [];
             setPayments(enrollments);
             

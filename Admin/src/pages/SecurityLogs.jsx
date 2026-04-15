@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import { adminApi } from '../api/axios';
 import { Shield, AlertTriangle, AlertCircle, CheckCircle, Search, Filter, RefreshCw, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../api/axios';
 
 const SecurityLogs = () => {
     const [logs, setLogs] = useState([]);
@@ -15,7 +16,7 @@ const SecurityLogs = () => {
     const fetchLogs = async () => {
         setLoading(true);
         try {
-            const res = await api.get(`/admin/logs?level=${filterLevel}`);
+            const res = await adminApi.get(`/admin/logs?level=${filterLevel}`);
             setLogs(res.data.logs);
         } catch (err) {
             console.error(err);
@@ -28,7 +29,7 @@ const SecurityLogs = () => {
         if (!window.confirm('INITIATE TACTICAL SUSPENSION: Are you sure you want to restrict access for this node?')) return;
 
         try {
-            await api.patch(`/admin/users/${userId}/status`, { isActive: false });
+            await adminApi.patch(`/admin/users/${userId}/status`, { isActive: false });
             alert('PROTOCOL EXECUTED: User access restricted.');
             fetchLogs();
         } catch (err) {

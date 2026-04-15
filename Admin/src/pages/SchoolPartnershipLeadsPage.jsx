@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 
 const SchoolPartnershipLeadsPage = () => {
   const [leads, setLeads] = useState([]);
@@ -24,7 +24,7 @@ const SchoolPartnershipLeadsPage = () => {
         ...(statusFilter && { status: statusFilter })
       });
 
-      const response = await api.get(`/admin/school-partnership/leads?${queryParams}`);
+      const response = await adminApi.get(`/admin/school-partnership/leads?${queryParams}`);
       const data = response.data;
 
       if (data.success) {
@@ -43,7 +43,7 @@ const SchoolPartnershipLeadsPage = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await api.get('/admin/school-partnership/stats');
+      const response = await adminApi.get('/admin/school-partnership/stats');
       const data = response.data;
 
       if (data.success) {
@@ -56,7 +56,7 @@ const SchoolPartnershipLeadsPage = () => {
 
   const updateLeadStatus = async (leadId, newStatus) => {
     try {
-      const response = await api.put(`/admin/school-partnership/lead/${leadId}/status`, { status: newStatus });
+      const response = await adminApi.put(`/admin/school-partnership/lead/${leadId}/status`, { status: newStatus });
       
       if (response.data.success) {
         toast.success('Lead status updated');
@@ -75,7 +75,7 @@ const SchoolPartnershipLeadsPage = () => {
     if (!window.confirm('Delete this lead?')) return;
     
     try {
-      const response = await api.delete(`/admin/school-partnership/lead/${leadId}`);
+      const response = await adminApi.delete(`/admin/school-partnership/lead/${leadId}`);
       
       if (response.data.success) {
         toast.success('Lead deleted');

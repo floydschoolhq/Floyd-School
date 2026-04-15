@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import {
     Bell,
     Send,
@@ -8,7 +9,7 @@ import {
     GraduationCap,
     CheckCircle2
 } from 'lucide-react';
-import api from '../api/axios';
+import { adminApi } from '../api/axios';
 
 const GlobalNotifications = () => {
     const location = useLocation();
@@ -34,7 +35,7 @@ const GlobalNotifications = () => {
         e.preventDefault();
         setSending(true);
         try {
-            await api.post('/admin/broadcast', formData);
+            await adminApi.post('/admin/broadcast', formData);
             setSuccess(true);
             setFormData({ title: '', message: '', targetGroup: 'all', type: 'info' });
             setTimeout(() => setSuccess(false), 3000);
