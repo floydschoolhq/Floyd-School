@@ -102,7 +102,6 @@ app.set('io', io);
 
 // Admin routes
 app.use('/admin', adminRoutes);
-app.use('/admin/chatbot', chatbotRoutes);
 
 // ===== SECURITY MIDDLEWARE =====
 
