@@ -257,14 +257,16 @@ const PremiumNavbar = memo(({ variant }) => {
                     >
                         {/* Backdrop */}
                         <motion.div
-                            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                            className="absolute inset-0 bg-black/40 backdrop-blur-md"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
                         
                         {/* Enhanced Mobile Menu Panel */}
                         <motion.div
                             className={`absolute top-0 right-0 bottom-0 w-80 shadow-2xl overflow-y-auto
-                                ${isCoursesPage ? 'bg-slate-900' : 'bg-white'}`}
+                                ${isCoursesPage 
+                                    ? 'bg-slate-900/95 backdrop-blur-xl' 
+                                    : 'bg-white/90 backdrop-blur-xl border border-white/20'}`}
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
@@ -272,34 +274,36 @@ const PremiumNavbar = memo(({ variant }) => {
                         >
                             {/* Enhanced Menu Header */}
                             <div className={`p-6 text-white relative overflow-hidden
-                                ${isCoursesPage ? 'bg-gradient-to-br from-[#1a1a1a] via-slate-800 to-[#0a0a0a]' : 'bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900'}`}>
-                                {/* Background Pattern */}
-                                <div className="absolute inset-0 opacity-10">
-                                    <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                                ${isCoursesPage 
+                                    ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' 
+                                    : 'bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200'}`}>
+                                {/* Subtle Pattern */}
+                                <div className="absolute inset-0 opacity-[0.03]">
+                                    <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
                                 </div>
                                 
                                 <div className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <div>
-                                            <h3 className="text-xl font-bold mb-1">Menu</h3>
-                                            <p className="text-sm opacity-80">Navigate through thinkskool</p>
+                                        <div className={isCoursesPage ? 'text-white' : 'text-slate-800'}>
+                                            <h3 className="text-xl font-semibold mb-1">Menu</h3>
+                                            <p className="text-sm opacity-60">Navigate through thinkskool</p>
                                         </div>
                                         <motion.button
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="p-3 bg-white/20 rounded-xl hover:bg-white/30 transition-all hover:scale-110"
+                                            className={`p-3 rounded-xl transition-all hover:scale-110 ${isCoursesPage ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-slate-200/60 hover:bg-slate-300/60 text-slate-600'}`}
                                             whileTap={{ scale: 0.95 }}
                                         >
                                             <FaTimes size={16} />
                                         </motion.button>
                                     </div>
                                     
-                                    {/* Quick Stats */}
-                                    <div className="flex gap-4 text-xs">
-                                        <div className="bg-white/10 px-3 py-1.5 rounded-full">
-                                            <span className="opacity-80">5+ Courses</span>
+                                    {/* Quick Stats - Minimal */}
+                                    <div className={`flex gap-3 text-xs ${isCoursesPage ? 'text-slate-400' : 'text-slate-500'}`}>
+                                        <div className={isCoursesPage ? 'bg-white/5 px-3 py-1.5 rounded-full' : 'bg-slate-200/60 px-3 py-1.5 rounded-full'}>
+                                            5+ Courses
                                         </div>
-                                        <div className="bg-white/10 px-3 py-1.5 rounded-full">
-                                            <span className="opacity-80">1000+ Students</span>
+                                        <div className={isCoursesPage ? 'bg-white/5 px-3 py-1.5 rounded-full' : 'bg-slate-200/60 px-3 py-1.5 rounded-full'}>
+                                            1000+ Students
                                         </div>
                                     </div>
                                 </div>
@@ -335,34 +339,34 @@ const PremiumNavbar = memo(({ variant }) => {
                                                         }
                                                     }
                                                 }}
-                                                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all group relative overflow-hidden
+                                                className={`w-full flex items-center gap-3 md:gap-4 p-2 md:p-4 rounded-xl transition-all group relative overflow-hidden
                                                     ${isCoursesPage 
-                                                        ? 'bg-slate-800 hover:bg-slate-700 text-white' 
-                                                        : 'bg-gradient-to-r from-slate-50 to-slate-100 hover:from-blue-50 hover:to-blue-100 text-slate-900'}`}
+                                                        ? 'bg-slate-800/60 hover:bg-slate-700/80 text-white border border-slate-700/50' 
+                                                        : 'bg-white/70 hover:bg-white/90 text-slate-800 border border-slate-200/50 backdrop-blur-sm'}`}
                                             >
-                                                {/* Hover Effect Background */}
-                                                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                                                {/* Hover Effect Background - Minimal Gray */}
+                                                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl
                                                     ${isCoursesPage 
-                                                        ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20' 
-                                                        : 'bg-gradient-to-r from-blue-100/50 to-purple-100/50'}`} />
+                                                        ? 'bg-slate-700/40' 
+                                                        : 'bg-slate-100/80'}`} />
                                                 
-                                                {/* Icon */}
+                                                {/* Icon - Minimal */}
                                                 <motion.div 
-                                                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all group-hover:scale-110 relative z-10
+                                                    className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center transition-all group-hover:scale-110 relative z-10
                                                         ${isCoursesPage 
-                                                            ? 'bg-slate-700 group-hover:bg-blue-600/30 text-blue-400' 
-                                                            : 'bg-blue-100 group-hover:bg-blue-200 text-blue-600'}`}
+                                                            ? 'bg-slate-700/50 group-hover:bg-slate-600/70 text-slate-300' 
+                                                            : 'bg-slate-100 group-hover:bg-slate-200 text-slate-600'}`}
                                                     whileHover={{ rotate: 5 }}
                                                 >
-                                                    <Icon size={20} />
+                                                    <Icon size={18} />
                                                 </motion.div>
                                                 
                                                 {/* Content */}
                                                 <div className="flex-1 text-left relative z-10">
-                                                    <div className={`font-semibold mb-1 ${isCoursesPage ? 'text-white' : 'text-slate-900'}`}>
+                                                    <div className={`font-medium mb-0.5 md:mb-1 text-sm md:text-base ${isCoursesPage ? 'text-slate-100' : 'text-slate-700'}`}>
                                                         {item.label}
                                                     </div>
-                                                    <div className={`text-xs opacity-60 ${isCoursesPage ? 'text-slate-400' : 'text-slate-600'}`}>
+                                                    <div className={`text-[10px] md:text-xs opacity-50 ${isCoursesPage ? 'text-slate-400' : 'text-slate-500'}`}>
                                                         {item.href.includes('course-hero') ? 'Start here' : 
                                                          item.href.includes('curriculum') ? 'Learn more' :
                                                          item.href.includes('reviews') ? 'See feedback' :
@@ -391,10 +395,10 @@ const PremiumNavbar = memo(({ variant }) => {
                                     })}
                                 </div>
                                 
-                                {/* Enhanced CTA Section */}
-                                <div className={`p-4 border-t ${isCoursesPage ? 'border-slate-700' : 'border-slate-200'}`}>
+                                {/* Enhanced CTA Section - Minimalist */}
+                                <div className={`p-4 border-t ${isCoursesPage ? 'border-slate-700/50' : 'border-slate-200'}`}>
                                     <div className="space-y-3">
-                                        {/* Sign In Button */}
+                                        {/* Sign In Button - Minimal */}
                                         <motion.button
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
@@ -402,14 +406,11 @@ const PremiumNavbar = memo(({ variant }) => {
                                                 navigate('/student/login');
                                                 setIsMobileMenuOpen(false);
                                             }}
-                                            className={`w-full py-4 font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border relative overflow-hidden group
+                                            className={`w-full py-3.5 md:py-4 font-semibold rounded-xl transition-all duration-300 border relative overflow-hidden group
                                                 ${isCoursesPage 
-                                                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-blue-500/30' 
-                                                    : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-white/10'}`}
+                                                    ? 'bg-slate-700 hover:bg-slate-600 text-white border-slate-600' 
+                                                    : 'bg-slate-900 hover:bg-slate-800 text-white border-slate-800'}`}
                                         >
-                                            {/* Button Shine Effect */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                                            
                                             <span className="relative z-10 flex items-center justify-center gap-2">
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
@@ -418,33 +419,33 @@ const PremiumNavbar = memo(({ variant }) => {
                                             </span>
                                         </motion.button>
                                         
-                                        {/* Quick Links */}
+                                        {/* Quick Links - Minimal */}
                                         <div className="grid grid-cols-2 gap-2">
                                             <motion.button
-                                                whileHover={{ scale: 1.05 }}
-                                                whileTap={{ scale: 0.95 }}
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
                                                 onClick={() => {
                                                     setIsMobileMenuOpen(false);
                                                     navigate('/school-partnerships');
                                                 }}
                                                 className={`py-2 px-3 rounded-lg text-xs font-medium transition-all
                                                     ${isCoursesPage 
-                                                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' 
-                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}
+                                                        ? 'bg-slate-800/60 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50' 
+                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200'}`}
                                             >
                                                 Partner with Us
                                             </motion.button>
                                             <motion.button
-                                                whileHover={{ scale: 1.05 }}
-                                                whileTap={{ scale: 0.95 }}
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
                                                 onClick={() => {
                                                     setIsMobileMenuOpen(false);
                                                     handleContactClick();
                                                 }}
                                                 className={`py-2 px-3 rounded-lg text-xs font-medium transition-all
                                                     ${isCoursesPage 
-                                                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' 
-                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}
+                                                        ? 'bg-slate-800/60 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50' 
+                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200'}`}
                                             >
                                                 Request Callback
                                             </motion.button>
