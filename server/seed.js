@@ -19,7 +19,7 @@ const seedCourses = [
         color: "text-purple-500",
         rating: "4.9",
         duration: "12 Weeks",
-        price: 10,
+        price: 2499,
         currency: "INR",
         tags: ["Python", "TensorFlow", "Generative AI"],
         difficulty: "Advanced",
