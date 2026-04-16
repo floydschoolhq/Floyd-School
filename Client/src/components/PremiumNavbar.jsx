@@ -21,7 +21,8 @@ const MOBILE_NAV_ITEMS = [
 
     { icon: FaBook, label: "Projects", href: "#student-projects" },
     { icon: FaUsers, label: "Mentors", href: "#mentors-grid" },
-    { icon: FaPhone, label: "Contact", href: "#contact" }
+    { icon: FaPhone, label: "Contact", href: "#contact" },
+    { icon: FaUserTie, label: "Partner with Us", href: "/school-partnerships" }
 ];
 
 // Course-specific navigation items
@@ -235,6 +236,14 @@ const PremiumNavbar = memo(({ variant }) => {
                             </Link>
                         </div>
 
+                        {/* Partner with Us - Mobile visible button */}
+                        <button
+                            onClick={() => navigate('/school-partnerships')}
+                            className={`md:hidden px-2.5 py-1.5 rounded-lg text-[10px] font-semibold transition-colors ${isCoursesPage ? 'bg-slate-700 text-slate-200' : 'bg-orange-500 text-white'}`}
+                        >
+                            Partner
+                        </button>
+
                         {/* Mobile menu toggle */}
                         <button
                             className={`md:hidden p-2 rounded-xl transition-colors ${styles.mobileMenu}`}
@@ -420,21 +429,7 @@ const PremiumNavbar = memo(({ variant }) => {
                                         </motion.button>
                                         
                                         {/* Quick Links - Minimal */}
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <motion.button
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                onClick={() => {
-                                                    setIsMobileMenuOpen(false);
-                                                    navigate('/school-partnerships');
-                                                }}
-                                                className={`py-2 px-3 rounded-lg text-xs font-medium transition-all
-                                                    ${isCoursesPage 
-                                                        ? 'bg-slate-800/60 hover:bg-slate-700/80 text-slate-300 border border-slate-700/50' 
-                                                        : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200'}`}
-                                            >
-                                                Partner with Us
-                                            </motion.button>
+                                        <div className="grid grid-cols-1 gap-2">
                                             <motion.button
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
