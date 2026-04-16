@@ -1,6 +1,6 @@
 const PartnershipFooter = () => {
   return (
-    <footer className="bg-slate-900 text-white py-16 px-6">
+    <footer className="bg-slate-900 text-white py-16 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Mobile Footer */}
         <div className="md:hidden mb-12">
@@ -12,38 +12,39 @@ const PartnershipFooter = () => {
             Bridging classroom learning with real technology skills.
           </p>
 
-          {/* Programs */}
-          <div className="mb-6">
-            <h4 className="font-bold mb-3 text-white">Programs</h4>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">School Bootcamp</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AI & Machine Learning</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cybersecurity</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">IoT & Robotics</a></li>
-            </ul>
-          </div>
+          <div className="grid grid-cols-2 gap-6 mb-6">
+            {/* Programs */}
+            <div>
+              <h4 className="font-bold mb-3 text-white text-sm">Programs</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors">School Bootcamp</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">AI &amp; ML</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Cybersecurity</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">IoT &amp; Robotics</a></li>
+              </ul>
+            </div>
 
-          {/* For Schools */}
-          <div className="mb-6">
-            <h4 className="font-bold mb-3 text-white">For Schools</h4>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="#what-you-get" className="hover:text-white transition-colors">What You Get</a></li>
-              <li><a href="#roadmap" className="hover:text-white transition-colors">Program Roadmap</a></li>
-              <li><a href="#partner-form" className="hover:text-white transition-colors">Partner With Us</a></li>
-            </ul>
+            {/* For Schools */}
+            <div>
+              <h4 className="font-bold mb-3 text-white text-sm">For Schools</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#what-you-get" className="hover:text-white transition-colors">What You Get</a></li>
+                <li><a href="#roadmap" className="hover:text-white transition-colors">Program Roadmap</a></li>
+                <li><a href="#partner-form" className="hover:text-white transition-colors">Partner With Us</a></li>
+              </ul>
+            </div>
           </div>
 
           {/* Connect */}
-          <div className="mb-6">
-            <h4 className="font-bold mb-3 text-white">Connect</h4>
+          <div>
+            <h4 className="font-bold mb-3 text-white text-sm">Connect</h4>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><a href="https://thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">thinkskool.in</a></li>
               <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
-              <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">thinkskool.office@gmail.com</a></li>
-<li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
-              <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">thinkskool.office@gmail.com</a></li>
+              <li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
+              <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors break-all">thinkskool.office@gmail.com</a></li>
             </ul>
           </div>
         </div>
@@ -67,9 +68,9 @@ const PartnershipFooter = () => {
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><a href="#" className="hover:text-white transition-colors">School Bootcamp</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AI & Machine Learning</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">AI &amp; Machine Learning</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Cybersecurity</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">IoT & Robotics</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">IoT &amp; Robotics</a></li>
             </ul>
           </div>
 

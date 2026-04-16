@@ -1,6 +1,6 @@
 const TheProblem = () => {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.08] rounded-full blur-[120px]"></div>
@@ -45,26 +45,60 @@ const TheProblem = () => {
         </div>
 
         {/* Comparison Cards - Mobile */}
-        <div className="md:hidden max-w-5xl mx-auto">
-          <div className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-3xl p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="text-3xl">📚</div>
-              <h3 className="text-xl font-bold text-white">Traditional Learning</h3>
+        <div className="md:hidden space-y-4 max-w-md mx-auto">
+          {/* Traditional Learning */}
+          <div className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-2xl p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="text-2xl">📚</div>
+              <h3 className="text-lg font-bold text-white">Traditional Learning</h3>
             </div>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {[
                 'Outdated syllabus',
                 'Mostly theory',
                 'No real projects',
                 'Limited exposure'
               ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center mt-0.5">
-                    <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <li key={idx} className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </div>
-                  <span className="text-slate-300 font-medium text-base">{item}</span>
+                  <span className="text-slate-300 font-medium text-sm">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* VS Divider */}
+          <div className="flex items-center gap-3 px-2">
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-xs font-black text-slate-500 tracking-widest uppercase">vs</span>
+            <div className="flex-1 h-px bg-white/10" />
+          </div>
+
+          {/* With thinkskool */}
+          <div className="relative bg-gradient-to-br from-blue-900/20 to-orange-900/20 border-2 border-blue-500/30 rounded-2xl p-5 shadow-lg shadow-blue-500/10">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-orange-500/20 rounded-full blur-2xl" />
+            <div className="flex items-center gap-3 mb-4 relative z-10">
+              <div className="text-2xl">🚀</div>
+              <h3 className="text-lg font-bold text-white">With thinkskool</h3>
+            </div>
+            <ul className="space-y-3 relative z-10">
+              {[
+                'Industry-current tech skills',
+                '100% hands-on building',
+                'Real projects every month',
+                'Mentored by engineers'
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-slate-300 font-medium text-sm">{item}</span>
                 </li>
               ))}
             </ul>

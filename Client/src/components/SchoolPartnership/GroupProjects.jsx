@@ -377,7 +377,7 @@ const GroupProjects = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-[-10%] w-[500px] h-[500px] bg-purple-500/[0.04] rounded-full blur-[120px]"></div>

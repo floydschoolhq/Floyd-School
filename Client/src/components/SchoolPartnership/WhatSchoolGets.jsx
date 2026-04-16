@@ -86,7 +86,7 @@ const WhatSchoolGets = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/3 left-[-5%] w-[600px] h-[600px] bg-blue-500/[0.08] rounded-full blur-[120px]"></div>
@@ -158,7 +158,7 @@ const WhatSchoolGets = () => {
                 <div className="text-4xl mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  {feature.desc}
+                  {feature.description}
                 </p>
               </div>
             </div>

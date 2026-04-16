@@ -36,7 +36,7 @@ const WhyPartnerWithUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
+    <section id="why-us" className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/3 right-[-10%] w-[500px] h-[500px] bg-blue-500/[0.08] rounded-full blur-[120px]"></div>

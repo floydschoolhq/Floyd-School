@@ -61,7 +61,7 @@ const PartnershipRoadmap = () => {
   ];
 
   return (
-    <section id="roadmap" className="py-24 px-6 bg-white relative overflow-hidden">
+    <section id="roadmap" className="py-16 md:py-24 px-6 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-transparent to-purple-50"></div>
       
       <div className="max-w-6xl mx-auto relative z-10">

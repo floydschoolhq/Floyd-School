@@ -50,7 +50,7 @@ const FourStageLearning = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/[0.08] rounded-full blur-[100px]"></div>

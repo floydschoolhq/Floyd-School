@@ -100,7 +100,7 @@ const PartnershipHero = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-blue-50 via-orange-50 to-white overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-blue-50 via-orange-50 to-white overflow-hidden">
         {/* Background Blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-blue-500/[0.08] rounded-full blur-[100px]"></div>

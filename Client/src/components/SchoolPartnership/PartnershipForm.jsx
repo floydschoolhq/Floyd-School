@@ -58,7 +58,7 @@ const PartnershipForm = () => {
   };
 
   return (
-    <section id="partner-form" className="py-24 px-6 bg-[#050508] relative overflow-hidden">
+    <section id="partner-form" className="py-16 md:py-24 px-4 sm:px-6 bg-[#050508] relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Header - Mobile */}
         <div className="md:hidden text-center mb-12">
@@ -92,7 +92,7 @@ const PartnershipForm = () => {
           <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
             <div className="grid lg:grid-cols-5">
               {/* Left Side - Info */}
-              <div className="lg:col-span-2 bg-gradient-to-br from-orange-400 via-blue-500 to-purple-600 p-8 md:p-12">
+              <div className="lg:col-span-2 bg-gradient-to-br from-orange-400 via-blue-500 to-purple-600 p-6 sm:p-8 md:p-12">
                 <h3 className="text-2xl font-bold text-white mb-8">Quick Info</h3>
                 
                 {/* Info Cards */}
@@ -119,11 +119,11 @@ const PartnershipForm = () => {
                       </svg>
                       <span className="font-medium">+91-8368801220</span>
                     </a>
-                    <a href="mailto:thinkskool.office@gmail.com" className="flex items-center gap-3 text-white hover:text-blue-200 transition-colors">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="mailto:thinkskool.office@gmail.com" className="flex items-start gap-3 text-white hover:text-blue-200 transition-colors">
+                      <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="font-medium">thinkskool.office@gmail.com</span>
+                      <span className="font-medium text-sm break-all">thinkskool.office@gmail.com</span>
                     </a>
                     <a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white hover:text-blue-200 transition-colors">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

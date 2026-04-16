@@ -14,7 +14,7 @@ const NationalHackathon = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/[0.04] rounded-full blur-[120px] -ml-[300px] -mt-[300px]"></div>
@@ -75,17 +75,16 @@ const NationalHackathon = () => {
             </div>
           </div>
 
-          {/* Features - Desktop */}
           <div className="hidden md:grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="bg-white border-2 border-slate-200 rounded-xl p-4"
+                className="bg-white border-2 border-slate-200 rounded-xl p-4 flex items-start gap-3"
               >
-                <svg className="w-5 h-5 text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
-                <p className="text-slate-700 font-medium">{feature}</p>
+                <p className="text-slate-700 font-medium text-sm">{feature}</p>
               </div>
             ))}
           </div>
