@@ -236,14 +236,6 @@ const PremiumNavbar = memo(({ variant }) => {
                             </Link>
                         </div>
 
-                        {/* Partner with Us - Mobile visible button */}
-                        <button
-                            onClick={() => navigate('/school-partnerships')}
-                            className={`md:hidden px-2.5 py-1.5 rounded-lg text-[10px] font-semibold transition-colors ${isCoursesPage ? 'bg-slate-700 text-slate-200' : 'bg-orange-500 text-white'}`}
-                        >
-                            Partner
-                        </button>
-
                         {/* Mobile menu toggle */}
                         <button
                             className={`md:hidden p-2 rounded-xl transition-colors ${styles.mobileMenu}`}
