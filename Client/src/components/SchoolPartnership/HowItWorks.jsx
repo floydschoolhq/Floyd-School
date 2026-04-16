@@ -8,8 +8,21 @@ const HowItWorks = () => {
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-20">
+        {/* Section Header - Mobile */}
+        <div className="md:hidden text-center mb-12">
+          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-bold uppercase tracking-wider mb-4">
+            How It Works
+          </span>
+          <h2 className="text-3xl font-black text-slate-900 leading-tight mb-4">
+            Zero Risk. Maximum Impact.
+          </h2>
+          <p className="text-base text-slate-600 max-w-2xl mx-auto">
+            Start free, then continue only if students love the program.
+          </p>
+        </div>
+
+        {/* Section Header - Desktop */}
+        <div className="hidden md:block text-center mb-20">
           <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
             How It Works
           </span>
@@ -21,8 +34,90 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        {/* Two Phases */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+        {/* Mobile Phases */}
+        <div className="md:hidden max-w-md mx-auto space-y-6">
+          {/* Phase 1 - Mobile */}
+          <div className="relative">
+            <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-xl"></div>
+            <div className="bg-white border-2 border-green-200/50 rounded-2xl p-5 shadow-lg shadow-green-500/10 relative z-10 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/5 to-transparent rounded-full blur-2xl"></div>
+              
+              <div className="flex items-center gap-2 mb-3 relative z-10">
+                <span className="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-green-500/30">
+                  Phase 1 — FREE
+                </span>
+              </div>
+              <h3 className="text-xl font-black text-slate-900 mb-2 relative z-10">
+                7-Day Demo Bootcamp
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4 relative z-10">
+                Live sessions in your school. Students build mini tech projects.
+              </p>
+              <ul className="space-y-3 relative z-10">
+                {[
+                  '7 days on-campus learning',
+                  'Hands-on from day one',
+                  'No cost, no commitment',
+                  'Students keep projects'
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center shadow-md shadow-green-500/30">
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-slate-700 font-medium text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Phase 2 - Mobile */}
+          <div className="relative">
+            <div className="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
+            <div className="bg-white border-2 border-blue-200/50 rounded-2xl p-5 shadow-lg shadow-blue-500/10 relative z-10 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/5 to-transparent rounded-full blur-2xl"></div>
+              
+              <div className="flex items-center gap-2 mb-3 relative z-10">
+                <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-blue-500/30">
+                  Phase 2 — FULL PROGRAM
+                </span>
+              </div>
+              <h3 className="text-xl font-black text-slate-900 mb-2 relative z-10">
+                4-Month Deep Program
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4 relative z-10">
+                Advanced learning with expert mentors.
+              </p>
+              <ul className="space-y-3 relative z-10">
+                {[
+                  '2 classes per week',
+                  'For Classes 7–12',
+                  'Monthly real projects',
+                  'Certificate + Hackathon access'
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-md shadow-blue-500/30">
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-slate-700 font-medium text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 pt-4 border-t border-slate-200 relative z-10">
+                <p className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-2 rounded-lg inline-block">
+                  Students pay individually.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Phases */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
           {/* Phase 1 */}
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-20 h-20 bg-green-500/10 rounded-full blur-2xl"></div>
@@ -92,13 +187,6 @@ const HowItWorks = () => {
               </ul>
             </div>
           </div>
-        </div>
-
-        {/* Arrow connector */}
-        <div className="flex justify-center mt-8 lg:hidden">
-          <svg className="w-8 h-8 text-slate-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
         </div>
 
         {/* Desktop Arrow */}

@@ -2,7 +2,53 @@ const PartnershipFooter = () => {
   return (
     <footer className="bg-slate-900 text-white py-16 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        {/* Mobile Footer */}
+        <div className="md:hidden mb-12">
+          <h3 className="text-2xl font-bold mb-2">
+            <span className="text-blue-400">think</span>
+            <span className="text-orange-400">skool</span>
+          </h3>
+          <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            Bridging classroom learning with real technology skills.
+          </p>
+
+          {/* Programs */}
+          <div className="mb-6">
+            <h4 className="font-bold mb-3 text-white">Programs</h4>
+            <ul className="space-y-2 text-slate-400 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">School Bootcamp</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">AI & Machine Learning</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Cybersecurity</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">IoT & Robotics</a></li>
+            </ul>
+          </div>
+
+          {/* For Schools */}
+          <div className="mb-6">
+            <h4 className="font-bold mb-3 text-white">For Schools</h4>
+            <ul className="space-y-2 text-slate-400 text-sm">
+              <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+              <li><a href="#what-you-get" className="hover:text-white transition-colors">What You Get</a></li>
+              <li><a href="#roadmap" className="hover:text-white transition-colors">Program Roadmap</a></li>
+              <li><a href="#partner-form" className="hover:text-white transition-colors">Partner With Us</a></li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div className="mb-6">
+            <h4 className="font-bold mb-3 text-white">Connect</h4>
+            <ul className="space-y-2 text-slate-400 text-sm">
+              <li><a href="https://thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">thinkskool.in</a></li>
+              <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">thinkskool.office@gmail.com</a></li>
+              <li><a href="tel:+91-8527740849" className="hover:text-white transition-colors">+91-8527740849</a></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Desktop Footer */}
+        <div className="hidden md:grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
             <h3 className="text-2xl font-bold mb-4">
@@ -51,7 +97,7 @@ const PartnershipFooter = () => {
 
         {/* Bottom */}
         <div className="border-t border-slate-800 pt-8 text-center text-slate-400 text-sm">
-          <p>© 2024 thinkskool Institutional Group. All rights reserved.</p>
+          <p>© thinkskool. All rights reserved.</p>
         </div>
       </div>
     </footer>
