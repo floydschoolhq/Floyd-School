@@ -17,6 +17,24 @@ const WhyPartnerWithUs = () => {
     }
   ];
 
+  const mobileReasons = [
+    {
+      icon: '🎯',
+      title: 'No Risk Start',
+      description: '7-day free demo before commitment'
+    },
+    {
+      icon: '⚙️',
+      title: 'Complete Management',
+      description: 'We handle mentors, content, and operations'
+    },
+    {
+      icon: '📈',
+      title: 'Real Outcomes',
+      description: 'Projects, progress tracking, and visible results'
+    }
+  ];
+
   return (
     <section id="why-us" className="py-24 px-4 sm:px-6 lg:px-12 bg-[#050508] relative overflow-hidden">
       {/* Background decoration */}
@@ -26,8 +44,21 @@ const WhyPartnerWithUs = () => {
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+        {/* Section Header - Mobile */}
+        <div className="md:hidden text-center mb-10">
+          <span className="inline-block px-3 py-1.5 bg-blue-500/10 text-blue-400 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+            Why Partner With Us
+          </span>
+          <h2 className="text-2xl font-black text-white leading-tight mb-3">
+            A Smart Upgrade for Your Institution
+          </h2>
+          <p className="text-sm text-slate-400 max-w-2xl mx-auto">
+            We connect school learning with real industry skills.
+          </p>
+        </div>
+
+        {/* Section Header - Desktop */}
+        <div className="hidden md:block text-center mb-16">
           <span className="inline-block px-4 py-2 bg-blue-500/10 text-blue-400 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
             Why Partner With Us
           </span>
@@ -41,8 +72,26 @@ const WhyPartnerWithUs = () => {
           </p>
         </div>
 
-        {/* Reasons Cards */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Reasons Cards - Mobile */}
+        <div className="md:hidden grid grid-cols-1 gap-4 max-w-md mx-auto">
+          {mobileReasons.map((reason, idx) => (
+            <div
+              key={idx}
+              className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-xl p-5 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4">
+                <div className="text-3xl flex-shrink-0">{reason.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-bold text-white mb-1">{reason.title}</h3>
+                  <p className="text-slate-400 text-xs leading-relaxed">{reason.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Reasons Cards - Desktop */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {reasons.map((reason, idx) => (
             <div
               key={idx}

@@ -22,88 +22,88 @@ import girl3 from '../../assets/avatars/girl3.avif';
 const PROJECTS_DATA = [
   {
     id: 1,
-    title: "Snake Game",
-    category: "Game Development",
+    name: "Snake Game",
     description: "A classic Snake game built with modern web technologies — smooth controls, score tracking, and addictive gameplay.",
+    category: "Game Development",
     image: "/projects/snake_game.png",
+    link: "https://snakegame1-nine.vercel.app/",
     tech: ["JavaScript", "HTML5", "CSS3"],
-    stats: { stars: 142, forks: 28, views: "950" },
-    featured: false,
-    color: "green",
-    author: {
+    student: {
       name: "Priya Sharma",
-      avatar: girl1,
-      course: "Web Dev Bootcamp"
+      program: "Web Dev Bootcamp",
+      image: "/assets/girl1-B1PlKgIA.jpg"
     },
-    liveUrl: "https://snakegame1-nine.vercel.app/"
+    stats: { stars: 142, views: 950 },
+    featured: false,
+    color: "green"
   },
   {
     id: 2,
-    title: "AI Expense Coach",
-    category: "Full Stack Development",
+    name: "AI Expense Coach",
     description: "An AI-powered personal finance coach that helps users track expenses, set budgets, and get smart spending insights.",
+    category: "Full Stack Development",
     image: "/projects/E_commerce.png",
-    tech: ["React", "Node.js", "AI API", "Firebase"],
-    stats: { stars: 189, forks: 32, views: "1.1k" },
+    link: "https://ai-expense-coach--shansharma.replit.app/",
+    tech: ["React", "Node.js", "AI API", "+1 more"],
     featured: true,
-    color: "blue",
-    author: {
+    student: {
       name: "Rahul Verma",
-      avatar: boy1,
-      course: "Full Stack Web Dev"
+      program: "Full Stack Web Dev",
+      image: "/assets/boy1-hVNs9-xq.jpg"
     },
-    liveUrl: "https://ai-expense-coach--shansharma.replit.app/"
-  },
-  {
-    id: 5,
-    title: "Todo App",
-    category: "Productivity",
-    description: "A clean and intuitive todo application to manage daily tasks with priority levels, deadlines, and progress tracking.",
-    image: "/projects/task_management.jpg",
-    tech: ["React", "CSS3", "LocalStorage"],
-    stats: { stars: 98, forks: 21, views: "620" },
-    featured: false,
-    color: "purple",
-    author: {
-      name: "Sneha Patel",
-      avatar: girl2,
-      course: "Web Dev Bootcamp"
-    },
-    liveUrl: "https://todo-app-delta-one-65.vercel.app/"
+    stats: { stars: 189, views: "1.1k" },
+    color: "blue"
   },
   {
     id: 3,
-    title: "School Website",
-    category: "Web Development",
-    description: "A fully responsive school website featuring course listings, faculty profiles, admissions info, and a modern design.",
-    image: "/projects/IoT-For-Home-Automation.jpg",
-    tech: ["HTML5", "CSS3", "JavaScript"],
-    stats: { stars: 176, forks: 34, views: "1.4k" },
-    featured: true,
-    color: "orange",
-    author: {
-      name: "Kavya Reddy",
-      avatar: girl3,
-      course: "Web Dev Bootcamp"
+    name: "Todo App",
+    description: "A clean and intuitive todo application to manage daily tasks with priority levels, deadlines, and progress tracking.",
+    category: "Productivity",
+    image: "/projects/task_management.jpg",
+    link: "https://todo-app-delta-one-65.vercel.app/",
+    tech: ["React", "CSS3", "LocalStorage"],
+    student: {
+      name: "Sneha Patel",
+      program: "Web Dev Bootcamp",
+      image: "/assets/girl2-FrxMyR6l.avif"
     },
-    liveUrl: "https://thinkskool-bootcamp-webdev-project.vercel.app/"
+    stats: { stars: 98, views: 620 },
+    featured: false,
+    color: "purple"
   },
   {
     id: 4,
-    title: "Netflix Clone",
-    category: "Full Stack Development",
-    description: "A fully functional Netflix clone with movie browsing, trailer playback, user authentication, and personalized recommendations.",
-    image: "/projects/netflix_clone.png",
-    tech: ["React", "Node.js", "MongoDB", "TMDB API", "Stripe"],
-    stats: { stars: 342, forks: 89, views: "3.2k" },
+    name: "School Website",
+    description: "A fully responsive school website featuring course listings, faculty profiles, admissions info, and a modern design.",
+    category: "Web Development",
+    image: "/projects/IoT-For-Home-Automation.jpg",
+    link: "https://thinkskool-bootcamp-webdev-project.vercel.app/",
+    tech: ["HTML5", "CSS3", "JavaScript"],
     featured: true,
-    color: "red",
-    author: {
-      name: "Vikram Singh",
-      avatar: boy2,
-      course: "Full Stack Web Dev"
+    student: {
+      name: "Kavya Reddy",
+      program: "Web Dev Bootcamp",
+      image: "/assets/girl3-BwaFsbNB.avif"
     },
-    liveUrl: "https://netfixcopy9.vercel.app/"
+    stats: { stars: 176, views: "1.4k" },
+    color: "orange"
+  },
+  {
+    id: 5,
+    name: "Netflix Clone",
+    description: "A fully functional Netflix clone with movie browsing, trailer playback, user authentication, and personalized recommendations.",
+    category: "Full Stack Development",
+    image: "/projects/netflix_clone.png",
+    link: "https://netfixcopy9.vercel.app/",
+    tech: ["React", "Node.js", "MongoDB", "+2 more"],
+    featured: true,
+    student: {
+      name: "Vikram Singh",
+      program: "Full Stack Web Dev",
+      image: "/assets/boy2-zXUvLf2x.jpg"
+    },
+    stats: { stars: 342, views: "3.2k" },
+    color: "red"
   }
 ];
 
@@ -168,7 +168,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
         <div className="relative h-24 overflow-hidden bg-slate-100">
           <img
             src={project.image}
-            alt={project.title}
+            alt={project.name}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
@@ -179,7 +179,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
 
         <div className="p-4 flex flex-col items-center text-center">
           <h3 className="text-sm font-bold text-slate-900 mb-1.5">
-            {project.title}
+            {project.name}
           </h3>
 
           <p className="text-slate-600 text-[10px] leading-relaxed mb-3">
@@ -198,12 +198,12 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
             <div className="flex flex-col items-center gap-1">
               <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
                 <img
-                  src={project.author.avatar}
-                  alt={project.author.name}
+                  src={project.student.image}
+                  alt={project.student.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-[8px] font-bold text-slate-800">{project.author.name}</p>
+              <p className="text-[8px] font-bold text-slate-800">{project.student.name}</p>
             </div>
 
             <div className="flex items-center gap-4 text-slate-500">
@@ -225,7 +225,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
 
   return (
     <a
-      href={project.liveUrl}
+      href={project.link}
       target="_blank"
       rel="noopener noreferrer"
       className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
@@ -275,7 +275,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
 
         <div className="p-8 flex flex-col items-center text-center">
           <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">
-            {project.title}
+            {project.name}
           </h3>
 
           <p className="text-slate-600 text-base leading-relaxed mb-6 max-w-sm">
@@ -295,14 +295,14 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
                 <img
-                  src={project.author.avatar}
-                  alt={project.author.name}
+                  src={project.student.image}
+                  alt={project.student.name}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="text-center">
-                <p className="text-base font-bold text-slate-900">{project.author.name}</p>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.author.course}</p>
+                <p className="text-base font-bold text-slate-900">{project.student.name}</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.student.program}</p>
               </div>
             </div>
 
@@ -322,7 +322,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
         {isHovered && (
           <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-30">
             <a
-              href={project.liveUrl}
+              href={project.link}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
@@ -342,7 +342,6 @@ const GroupProjects = () => {
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const mobileScrollRef = useRef(null);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -358,26 +357,6 @@ const GroupProjects = () => {
 
   const filteredProjects = filter === 'featured' ? featuredProjects : allProjects;
 
-  // Auto-scroll logic for mobile
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const interval = setInterval(() => {
-      if (!mobileScrollRef.current) return;
-
-      const nextIndex = (mobileActiveIndex + 1) % filteredProjects.length;
-      const scrollAmount = mobileScrollRef.current.offsetWidth * 0.85 + 24; // Card width (85vw) + gap (6)
-      
-      mobileScrollRef.current.scrollTo({
-        left: nextIndex * scrollAmount,
-        behavior: 'smooth'
-      });
-      setMobileActiveIndex(nextIndex);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isMobile, mobileActiveIndex, filteredProjects.length]);
-
   const handleMobileScroll = (e) => {
     if (!isMobile) return;
     const scrollLeft = e.target.scrollLeft;
@@ -385,18 +364,6 @@ const GroupProjects = () => {
     const newIndex = Math.round(scrollLeft / cardWidth);
     if (newIndex !== mobileActiveIndex) {
       setMobileActiveIndex(newIndex);
-    }
-  };
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-        const { current } = scrollRef;
-        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640;
-        if (direction === 'left') {
-            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else {
-            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
     }
   };
 
@@ -418,8 +385,23 @@ const GroupProjects = () => {
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+        {/* Section Header - Mobile */}
+        <div className="md:hidden text-center mb-10">
+          <span className="inline-block px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+            Build Together
+          </span>
+          <h2 className="text-2xl font-black text-slate-900 leading-tight mb-3">
+            Group Projects That Build
+            <br />
+            <span className="text-blue-600">Leaders, Not Just Coders</span>
+          </h2>
+          <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Students are placed in teams to collaborate on real technology projects. They learn to divide work, communicate ideas, resolve conflicts, and ship a product together — the exact skills the tech industry demands.
+          </p>
+        </div>
+
+        {/* Section Header - Desktop */}
+        <div className="hidden md:block text-center mb-16">
           <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
             Build Together
           </span>
@@ -433,20 +415,25 @@ const GroupProjects = () => {
           </p>
         </div>
 
-        {/* Skills Tags */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
-          {skills.map((skill, idx) => (
-            <span
-              key={idx}
-              className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold border border-blue-200"
+        {/* Filter Tabs - Mobile */}
+        <div className="md:hidden flex justify-center gap-3 mb-10">
+          {['all', 'featured'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setFilter(tab)}
+              className={`px-4 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${
+                filter === tab
+                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
+                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+              }`}
             >
-              {skill}
-            </span>
+              {tab === 'all' ? 'All' : 'Featured'}
+            </button>
           ))}
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex justify-center gap-4 mb-12">
+        {/* Filter Tabs - Desktop */}
+        <div className="hidden md:flex justify-center gap-4 mb-12">
           {['all', 'featured'].map((tab) => (
             <button
               key={tab}
@@ -462,21 +449,100 @@ const GroupProjects = () => {
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16 auto-rows-auto">
+        {/* Projects Grid - Mobile */}
+        <div className="md:hidden relative mb-12">
+          <div 
+            ref={mobileScrollRef}
+            onScroll={handleMobileScroll}
+            className="flex overflow-x-auto gap-4 snap-x snap-mandatory px-2 -mx-2 pb-4 scrollbar-hide"
+          >
+            {filteredProjects.map((project, index) => (
+              <div
+                key={project.id}
+                className="flex-shrink-0 w-[85vw] max-w-[340px] snap-center"
+              >
+                <ProjectCard
+                  project={project}
+                  index={index}
+                  isFeatured={project.featured}
+                  isMobile={true}
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Navigation Buttons */}
+          <div className="flex justify-center gap-3 mt-4">
+            <button
+              onClick={() => {
+                if (mobileScrollRef.current) {
+                  mobileScrollRef.current.scrollBy({ left: -mobileScrollRef.current.offsetWidth * 0.85, behavior: 'smooth' });
+                }
+              }}
+              className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center hover:bg-slate-50 transition-colors"
+            >
+              <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={() => {
+                if (mobileScrollRef.current) {
+                  mobileScrollRef.current.scrollBy({ left: mobileScrollRef.current.offsetWidth * 0.85, behavior: 'smooth' });
+                }
+              }}
+              className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30 flex items-center justify-center hover:scale-105 transition-transform"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-3">
+            {filteredProjects.map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  idx === mobileActiveIndex ? 'bg-blue-500' : 'bg-slate-300'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Projects Grid - Desktop */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-12 md:mb-16 auto-rows-auto">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               project={project}
               index={index}
               isFeatured={project.featured}
-              isMobile={isMobile}
+              isMobile={false}
             />
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
+        {/* CTA - Mobile */}
+        <div className="md:hidden text-center">
+          <button
+            onClick={() => {
+              document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-500/25 cursor-pointer hover:scale-105 active:scale-95 transition-transform text-sm"
+          >
+            Start Your Project
+            <ArrowRight size={16} />
+          </button>
+          <p className="text-slate-600 text-xs mt-3">
+            Partner with us to bring real projects to your school
+          </p>
+        </div>
+
+        {/* CTA - Desktop */}
+        <div className="hidden md:block text-center">
           <button
             onClick={() => {
               document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' });

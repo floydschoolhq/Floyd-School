@@ -32,12 +32,54 @@ const PartnershipRoadmap = () => {
     }
   ];
 
+  const mobileSteps = [
+    {
+      title: "Demo Bootcamp",
+      subtitle: "(7 Days)",
+      description: "Hands-on introduction to technology with guided mini projects."
+    },
+    {
+      title: "Domain Selection",
+      subtitle: "",
+      description: "Students choose their preferred technology track."
+    },
+    {
+      title: "Full Program",
+      subtitle: "(4 Months)",
+      description: "Live classes, assignments, and real-world project building."
+    },
+    {
+      title: "National Hackathon",
+      subtitle: "",
+      description: "Students showcase projects in inter-school competition."
+    },
+    {
+      title: "Certification",
+      subtitle: "",
+      description: "Students graduate with portfolio-ready skills and certificate."
+    }
+  ];
+
   return (
     <section id="roadmap" className="py-24 px-6 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-transparent to-purple-50"></div>
       
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-16">
+        {/* Section Header - Mobile */}
+        <div className="lg:hidden text-center mb-12">
+          <span className="text-blue-600 font-bold text-xs tracking-widest uppercase mb-3 block">
+            Program Roadmap
+          </span>
+          <h2 className="text-2xl font-extrabold text-slate-900 mb-4 tracking-tight">
+            Student Learning Journey
+          </h2>
+          <p className="text-sm text-slate-600 max-w-2xl mx-auto">
+            A structured path from basics to real-world outcomes.
+          </p>
+        </div>
+
+        {/* Section Header - Desktop */}
+        <div className="hidden lg:block text-center mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase mb-4 block">
             Program Roadmap
           </span>
@@ -50,20 +92,23 @@ const PartnershipRoadmap = () => {
         </div>
 
         {/* Mobile: Vertical Timeline */}
-        <div className="lg:hidden space-y-8">
-          {roadmapSteps.map((step, idx) => (
-            <div key={idx} className="relative pl-8">
-              <div className="absolute left-0 top-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                {step.number}
+        <div className="lg:hidden space-y-4">
+          {mobileSteps.map((step, idx) => (
+            <div key={idx} className="relative pl-12">
+              <div className="absolute left-0 top-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl shadow-blue-500/40 border-2 border-white/50">
+                0{idx + 1}
               </div>
-              <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 shadow-lg">
-                <div className="flex items-center gap-3 mb-3">
-                  <h3 className="text-lg font-bold text-slate-900">{step.title}</h3>
-                  <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
-                    {step.subtitle}
-                  </span>
+              <div className="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-lg hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full blur-2xl"></div>
+                <div className="relative z-10">
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">{step.title}</h3>
+                  {step.subtitle && (
+                    <span className="inline-block text-xs font-semibold text-blue-600 bg-gradient-to-r from-blue-100 to-purple-100 px-3 py-1 rounded-full mb-3">
+                      {step.subtitle}
+                    </span>
+                  )}
+                  <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
                 </div>
-                <p className="text-sm text-slate-600">{step.description}</p>
               </div>
             </div>
           ))}

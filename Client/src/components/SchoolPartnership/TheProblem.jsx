@@ -8,8 +8,24 @@ const TheProblem = () => {
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+        {/* Section Header - Mobile */}
+        <div className="md:hidden text-center mb-12">
+          <span className="inline-block px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-sm font-bold uppercase tracking-wider mb-4">
+            The Problem
+          </span>
+          <h2 className="text-3xl font-black text-white leading-tight mb-4 max-w-4xl mx-auto">
+            Schools teach theory.
+            <br />
+            <span className="text-orange-400">We teach students to build.</span>
+          </h2>
+          <p className="text-base text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            Modern careers need skills in AI, coding, cybersecurity and real tech tools — but most schools still focus mainly on theory.
+            thinkskool helps students build real projects with guidance from industry mentors.
+          </p>
+        </div>
+
+        {/* Section Header - Desktop */}
+        <div className="hidden md:block text-center mb-16">
           <span className="inline-block px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
             The Problem
           </span>
@@ -26,8 +42,35 @@ const TheProblem = () => {
           </p>
         </div>
 
-        {/* Comparison Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {/* Comparison Cards - Mobile */}
+        <div className="md:hidden max-w-5xl mx-auto">
+          <div className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-3xl p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-3xl">📚</div>
+              <h3 className="text-xl font-bold text-white">Traditional Learning</h3>
+            </div>
+            <ul className="space-y-4">
+              {[
+                'Outdated syllabus',
+                'Mostly theory',
+                'No real projects',
+                'Limited exposure'
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center mt-0.5">
+                    <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <span className="text-slate-300 font-medium text-base">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Comparison Cards - Desktop */}
+        <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Traditional School Card */}
           <div className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-3xl p-8 md:p-10">
             <div className="flex items-center gap-3 mb-8">
