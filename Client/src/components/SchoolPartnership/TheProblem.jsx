@@ -9,18 +9,20 @@ const TheProblem = () => {
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Section Header - Mobile */}
-        <div className="md:hidden text-center mb-12">
-          <span className="inline-block px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-sm font-bold uppercase tracking-wider mb-4">
+        <div className="md:hidden text-center mb-12 px-4">
+          <span className="inline-block px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-xs font-bold uppercase tracking-wider mb-5">
             The Problem
           </span>
-          <h2 className="text-3xl font-black text-white leading-tight mb-4 max-w-4xl mx-auto">
-            Schools teach theory.
+          <h2 className="text-[1.75rem] sm:text-2xl font-black text-white leading-[1.2] mb-5 max-w-3xl mx-auto">
+            Schools teach concepts.
             <br />
-            <span className="text-orange-400">We teach students to build.</span>
+            <span className="text-orange-400">We teach students to build real things.</span>
           </h2>
-          <p className="text-base text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Modern careers need skills in AI, coding, cybersecurity and real tech tools — but most schools still focus mainly on theory.
-            thinkskool helps students build real projects with guidance from industry mentors.
+          <p className="text-sm sm:text-base text-slate-400 max-w-3xl mx-auto leading-relaxed mb-4">
+            AI, Machine Learning, Cybersecurity, Web Development, IoT. These technologies are reshaping every industry — yet most schools in India still run a curriculum designed 20 years ago.
+          </p>
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium">
+            thinkskool fills that gap. We make students build real technology — apps, AI models, smart hardware — with guidance from engineers.
           </p>
         </div>
 
