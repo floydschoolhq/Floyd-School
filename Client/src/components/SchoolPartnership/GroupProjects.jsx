@@ -104,6 +104,40 @@ const PROJECTS_DATA = [
     },
     stats: { stars: 342, views: "3.2k" },
     color: "red"
+  },
+  {
+    id: 6,
+    name: "AI Face Detection System",
+    description: "An intelligent computer vision application that detects and recognizes human faces in real-time using AI-powered image processing. The system can be used for smart attendance, security monitoring, and identity verification.",
+    category: "AI & Computer Vision",
+    image: "/projects/ai_face_detection.jpg",
+    link: "https://ai-face-detection-cqepauwtt5b4fc8h2yjnpa.streamlit.app/",
+    tech: ["Python", "OpenCV", "AI", "Vision"],
+    featured: true,
+    student: {
+      name: "lovleen Sharma",
+      program: "AI & Machine Learning Bootcamp",
+      image: "/assets/boy3.jpg"
+    },
+    stats: { stars: 245, views: 850 },
+    color: "cyan"
+  },
+  {
+    id: 7,
+    name: "Digital Piano",
+    description: "An interactive web-based piano that allows users to play musical notes using keyboard keys or mouse clicks. Designed to demonstrate event handling, audio integration, and responsive UI for real-time sound interaction.",
+    category: "Interactive Media",
+    image: "/projects/digital_piano.jpg",
+    link: "https://piano-ecru-rho.vercel.app/piano.html",
+    tech: ["HTML", "CSS", "JavaScript"],
+    featured: true,
+    student: {
+      name: "Arpit Sharma",
+      program: "Web Development Bootcamp",
+      image: "/assets/boy3.jpg"
+    },
+    stats: { stars: 168, views: 540 },
+    color: "indigo"
   }
 ];
 
@@ -131,7 +165,10 @@ const TechIcon = ({ tech }) => {
       'Nmap': <Globe size={14} />,
       'Plotly': <Database size={14} />,
       'PostgreSQL': <Database size={14} />,
-      'Docker': <Layers size={14} />
+      'Docker': <Layers size={14} />,
+      'OpenCV': <Cpu size={14} />,
+      'AI': <Cpu size={14} />,
+      'Vision': <Eye size={14} />
     };
     return iconMap[tech] || <Code2 size={14} />;
   };
@@ -260,7 +297,7 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
           : 'border-slate-200/60 shadow-lg group-hover:shadow-xl'
       }`}>
         
-        <div className="relative h-48 md:h-56 overflow-hidden bg-slate-100">
+        <div className="relative h-36 md:h-40 overflow-hidden bg-slate-100">
           <div
             className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
             style={{ backgroundImage: `url(${project.image})` }}
@@ -268,32 +305,32 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
           
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
           
-          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800">
+          <div className="absolute top-3 left-3 px-2 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-bold text-slate-800">
             {project.category}
           </div>
         </div>
 
-        <div className="p-8 flex flex-col items-center text-center">
-          <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">
+        <div className="p-5 flex flex-col items-center text-center">
+          <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight uppercase">
             {project.name}
           </h3>
 
-          <p className="text-slate-600 text-base leading-relaxed mb-6 max-w-sm">
+          <p className="text-slate-600 text-sm leading-relaxed mb-3 max-w-sm line-clamp-2">
             {project.description}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
+          <div className="flex flex-wrap justify-center gap-1.5 mb-3">
             {project.tech.slice(0, 3).map((tech, i) => (
               <TechIcon key={i} tech={tech} />
             ))}
             {project.tech.length > 3 && (
-              <span className="text-xs text-slate-500 font-bold">+{project.tech.length - 3} more</span>
+              <span className="text-[10px] text-slate-500 font-bold">+{project.tech.length - 3} more</span>
             )}
           </div>
 
-          <div className="flex flex-col items-center gap-4 w-full">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
+          <div className="flex flex-col items-center gap-3 w-full">
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-10 h-10 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
                 <img
                   src={project.student.image}
                   alt={project.student.name}
@@ -301,19 +338,19 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
                 />
               </div>
               <div className="text-center">
-                <p className="text-base font-bold text-slate-900">{project.student.name}</p>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.student.program}</p>
+                <p className="text-sm font-bold text-slate-900">{project.student.name}</p>
+                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">{project.student.program}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="flex items-center gap-1 hover:scale-105 transition-transform">
-                <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-medium">{project.stats.stars}</span>
+            <div className="flex items-center gap-3 text-slate-500">
+              <div className="flex items-center gap-0.5 hover:scale-105 transition-transform">
+                <Star size={12} className="text-yellow-500 fill-yellow-500" />
+                <span className="text-[10px] font-medium">{project.stats.stars}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Eye size={14} />
-                <span className="text-xs font-medium">{project.stats.views}</span>
+              <div className="flex items-center gap-0.5">
+                <Eye size={12} />
+                <span className="text-[10px] font-medium">{project.stats.views}</span>
               </div>
             </div>
           </div>
