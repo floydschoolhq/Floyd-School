@@ -42,7 +42,8 @@ const PartnershipFooter = () => {
               <li><a href="https://thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">thinkskool.in</a></li>
               <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
               <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">thinkskool.office@gmail.com</a></li>
-              <li><a href="tel:+91-8527740849" className="hover:text-white transition-colors">+91-8527740849</a></li>
+<li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
+              <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">thinkskool.office@gmail.com</a></li>
             </ul>
           </div>
         </div>
@@ -90,7 +91,7 @@ const PartnershipFooter = () => {
               <li><a href="https://thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">thinkskool.in</a></li>
               <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
               <li><a href="mailto:thinkskool.office@gmail.com" className="hover:text-white transition-colors">Email Us</a></li>
-              <li><a href="tel:+91-8527740849" className="hover:text-white transition-colors">+91-8527740849</a></li>
+              <li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
             </ul>
           </div>
         </div>

@@ -38,8 +38,8 @@ const NeedHelpSection = ({ variant = 'dark' }) => {
             icon: Phone,
             title: 'Call Us',
             description: 'Speak directly with our course advisors',
-            action: '+91 85277 40849',
-            copyText: '+91 85277 40849',
+            action: '+91 83688 01220',
+            copyText: '+91 83688 01220',
             color: 'from-emerald-500 to-teal-500',
             highlight: '9AM - 8PM'
         },

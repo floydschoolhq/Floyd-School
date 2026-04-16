@@ -239,10 +239,10 @@ const Contact = () => {
                                     <FiPhone className="text-2xl" />
                                 </div>
                                 <a
-                                    href="tel:+918527740849"
+                                    href="tel:+918368801220"
                                     className="text-lg font-black text-slate-900 hover:text-[#2563EB] transition tracking-tight"
                                 >
-                                    +91 85277 40849
+                                    +91 83688 01220
                                 </a>
                             </motion.div>
                         </div>
