@@ -28,7 +28,11 @@ const PartnershipHero = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex flex-col items-start">
-              <Link to="/" className="text-2xl md:text-3xl font-black tracking-tight">
+              <Link 
+                to="/" 
+                onClick={() => window.scrollTo(0, 0)}
+                className="text-2xl md:text-3xl font-black tracking-tight"
+              >
                 <span className="text-blue-600">think</span>
                 <span className="text-orange-500">skool</span>
               </Link>

@@ -54,7 +54,7 @@ const PartnershipDomains = () => {
   const filteredBatches = batches.filter(batch => batch.status === filter);
 
   return (
-    <section id="online-focus" className="relative py-20 lg:py-28 overflow-hidden transition-colors duration-500 bg-[#050508]">
+    <section id="domains" className="relative py-20 lg:py-28 overflow-hidden transition-colors duration-500 bg-[#050508]">
       {/* Dotted Grid Pattern */}
       <div 
         className="absolute inset-0 pointer-events-none invert brightness-200"
