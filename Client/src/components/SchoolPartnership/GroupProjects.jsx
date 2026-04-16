@@ -104,6 +104,40 @@ const PROJECTS_DATA = [
     },
     stats: { stars: 342, views: "3.2k" },
     color: "red"
+  },
+  {
+    id: 6,
+    name: "AI Face Detection System",
+    description: "An intelligent computer vision application that detects and recognizes human faces in real-time using AI-powered image processing. The system can be used for smart attendance, security monitoring, and identity verification.",
+    category: "AI & Computer Vision",
+    image: "/projects/ai_face_detection.jpg",
+    link: "https://ai-face-detection-cqepauwtt5b4fc8h2yjnpa.streamlit.app/",
+    tech: ["Python", "OpenCV", "AI", "Vision"],
+    featured: true,
+    student: {
+      name: "Shan Sharma",
+      program: "AI & Machine Learning Bootcamp",
+      image: "/assets/boy3.jpg"
+    },
+    stats: { stars: 245, views: 850 },
+    color: "cyan"
+  },
+  {
+    id: 7,
+    name: "Digital Piano",
+    description: "An interactive web-based piano that allows users to play musical notes using keyboard keys or mouse clicks. Designed to demonstrate event handling, audio integration, and responsive UI for real-time sound interaction.",
+    category: "Interactive Media",
+    image: "/projects/digital_piano.jpg",
+    link: "https://piano-ecru-rho.vercel.app/piano.html",
+    tech: ["HTML", "CSS", "JavaScript"],
+    featured: true,
+    student: {
+      name: "Shan Sharma",
+      program: "Web Development Bootcamp",
+      image: "/assets/boy3.jpg"
+    },
+    stats: { stars: 168, views: 540 },
+    color: "indigo"
   }
 ];
 
@@ -131,7 +165,10 @@ const TechIcon = ({ tech }) => {
       'Nmap': <Globe size={14} />,
       'Plotly': <Database size={14} />,
       'PostgreSQL': <Database size={14} />,
-      'Docker': <Layers size={14} />
+      'Docker': <Layers size={14} />,
+      'OpenCV': <Cpu size={14} />,
+      'AI': <Cpu size={14} />,
+      'Vision': <Eye size={14} />
     };
     return iconMap[tech] || <Code2 size={14} />;
   };

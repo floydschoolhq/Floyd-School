@@ -45,7 +45,8 @@ const TheProblem = () => {
         </div>
 
         {/* Comparison Cards - Mobile */}
-        <div className="md:hidden max-w-5xl mx-auto">
+        <div className="md:hidden max-w-5xl mx-auto space-y-6">
+          {/* Traditional Learning Card */}
           <div className="relative bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 rounded-3xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-3xl">📚</div>
@@ -62,6 +63,32 @@ const TheProblem = () => {
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center mt-0.5">
                     <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <span className="text-slate-300 font-medium text-base">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* With thinkskool Card */}
+          <div className="relative bg-gradient-to-br from-blue-900/20 to-orange-900/20 border-2 border-blue-500/30 rounded-3xl p-6 shadow-xl shadow-blue-500/10">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-orange-500/20 rounded-full blur-2xl"></div>
+            <div className="flex items-center gap-3 mb-6 relative z-10">
+              <div className="text-3xl">🚀</div>
+              <h3 className="text-xl font-bold text-white">With thinkskool</h3>
+            </div>
+            <ul className="space-y-4 relative z-10">
+              {[
+                'Industry-current tech skills',
+                '100% hands-on building',
+                'Real projects every month',
+                'Mentored by engineers'
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
+                    <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <span className="text-slate-300 font-medium text-base">{item}</span>
