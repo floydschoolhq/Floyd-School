@@ -117,7 +117,7 @@ const PROJECTS_DATA = [
     student: {
       name: "lovleen Sharma",
       program: "AI & Machine Learning Bootcamp",
-      image: "/assets/boy3.jpg"
+      image: girl3
     },
     stats: { stars: 245, views: 850 },
     color: "cyan"
@@ -134,7 +134,7 @@ const PROJECTS_DATA = [
     student: {
       name: "Arpit Sharma",
       program: "Web Development Bootcamp",
-      image: "/assets/boy3.jpg"
+      image: boy3
     },
     stats: { stars: 168, views: 540 },
     color: "indigo"
