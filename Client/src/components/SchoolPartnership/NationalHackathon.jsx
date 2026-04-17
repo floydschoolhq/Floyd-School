@@ -1,114 +1,161 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Globe, Target, Award, Users, ChevronRight, Zap } from 'lucide-react';
+
 const NationalHackathon = () => {
   const features = [
-    'Schools from across India compete',
-    'Real-world problem solving',
-    'Certificates valued in admissions',
-    'Judged by senior engineers'
-  ];
-
-  const mobileHighlights = [
-    'Real-world problem solving',
-    'Collaborate in teams',
-    'Recognized certificates',
-    'Evaluated by industry experts'
+    {
+      title: 'Global Competition',
+      highlight: 'Schools from across India compete',
+      icon: <Globe className="w-6 h-6" />,
+      desc: 'Students face off against the brightest minds from top institutions nationwide.'
+    },
+    {
+      title: 'Industry Challenges',
+      highlight: 'Real-world problem solving',
+      icon: <Target className="w-6 h-6" />,
+      desc: 'Solve actual problems sourced from industry leaders and tech pioneers.'
+    },
+    {
+      title: 'Elite Recognition',
+      highlight: 'Certificates valued in admissions',
+      icon: <Award className="w-6 h-6" />,
+      desc: 'Earn credentials that carry weight on college applications and resumes.'
+    },
+    {
+      title: 'Expert Feedback',
+      highlight: 'Judged by senior engineers',
+      icon: <Users className="w-6 h-6" />,
+      desc: 'Get direct evaluation and mentorship from veterans at top-tier tech firms.'
+    }
   ];
 
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/[0.04] rounded-full blur-[120px] -ml-[300px] -mt-[300px]"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/[0.04] rounded-full blur-[100px] -mr-[250px] -mb-[250px]"></div>
-        {/* Animated stars */}
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-white/50 rounded-full animate-pulse delay-100"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse delay-200"></div>
+    <section className="py-24 px-6 lg:px-12 bg-[#fafafc] relative overflow-hidden">
+      {/* Premium Background Elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div 
+          animate={{ 
+            x: [0, 30, 0], 
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-slate-200/40 rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, -40, 0], 
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-100/20 rounded-full blur-[100px]" 
+        />
       </div>
 
-      <div className="max-w-[1440px] mx-auto relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Section Header - Mobile */}
-          <div className="md:hidden mb-10">
-            <span className="inline-block px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-              Exclusive Access
-            </span>
-            <h2 className="text-2xl font-black text-slate-900 leading-tight mb-3">
-              National Inter-School Hackathon
-            </h2>
-            <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Students compete with peers across India by building real-world technology solutions.
-            </p>
-          </div>
+      <div className="max-w-7xl mx-auto relative z-10 text-center">
+        {/* Header Content */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="max-w-full mb-20 px-0"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-[60px] font-black text-slate-900 leading-[1.1] mb-8 tracking-tight">
+            48 Hours. Schools Across India. <br />
+            <span className="text-blue-600">One Champion.</span>
+          </h2>
+          
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
+            Exclusive 48-hour national competition where students solve real-world industry problems, collaborate across domains, and compete for elite recognition.
+          </p>
+        </motion.div>
 
-          {/* Section Header - Desktop */}
-          <div className="hidden md:block mb-12">
-            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">
-              National Hackathon
-            </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6">
-              48 Hours. Schools Across India.
-              <br />
-              <span className="text-blue-600">One Champion.</span>
-            </h2>
-            <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              Every student enrolled in the full program gets exclusive access to a 48-hour national-level competition between schools across India. Students solve real-world problems, collaborate across domains, and compete for recognition that carries genuine weight on college applications.
-            </p>
-          </div>
-
-          {/* Highlights - Mobile */}
-          <div className="md:hidden mb-10">
-            <h3 className="text-base font-bold text-slate-900 mb-4">Highlights</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {mobileHighlights.map((highlight, idx) => (
-                <div
-                  key={idx}
-                  className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4 flex items-center gap-3 hover:border-blue-400 hover:shadow-lg transition-all"
+        {/* Feature Cards: Gapless Sleek Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 px-4 mb-20">
+          {features.map((feature, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="h-full"
+            >
+              <div style={{ perspective: '1200px' }} className="h-full">
+                <motion.div
+                  style={{
+                    transform: 'translate3d(0px, 0px, -50px) rotateX(10deg) scale(1)',
+                    borderRadius: '40px',
+                    background: 'linear-gradient(145deg, rgba(30, 41, 59, 1) 0%, rgba(15, 23, 42, 1) 100%)', 
+                    backdropFilter: 'blur(40px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: `
+                      0 0 40px rgba(0, 0, 0, 0.2),
+                      0 50px 70px -20px rgba(0, 0, 0, 0.4),
+                      inset 0 0 0 1px rgba(255, 255, 255, 0.05)
+                    `,
+                    transformStyle: 'preserve-3d'
+                  }}
+                  whileHover={{
+                    transform: 'translate3d(0px, -10px, 20px) rotateX(0deg) scale(1.02)',
+                    background: 'linear-gradient(145deg, rgba(30, 58, 138, 1) 0%, rgba(15, 23, 42, 1) 100%)', // Subtle Indigo/Blue shift on hover
+                    borderColor: 'rgba(59, 130, 246, 0.3)',
+                    boxShadow: `
+                      0 30px 60px rgba(0, 0, 0, 0.6),
+                      0 0 40px rgba(59, 130, 246, 0.1)
+                    `,
+                  }}
+                  transition={{ 
+                    duration: 0.5, 
+                    ease: [0.22, 1, 0.36, 1] 
+                  }}
+                  className="p-10 relative flex flex-col items-center justify-center text-center h-full min-h-[440px] cursor-pointer group"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <div className="relative z-10 w-full flex flex-col items-center" style={{ transform: 'translateZ(50px)' }}>
+                    <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-8 group-hover:bg-white group-hover:text-slate-900 transition-all duration-500 transform group-hover:-translate-y-2">
+                      {React.cloneElement(feature.icon, { className: "w-7 h-7" })}
+                    </div>
+                    
+                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mb-4">
+                      {feature.title}
+                    </h3>
+                    
+                    <p className="text-xl font-bold text-white mb-4 leading-tight">
+                      {feature.highlight}
+                    </p>
+                    
+                    <p className="text-slate-400 text-base leading-relaxed font-medium">
+                      {feature.desc}
+                    </p>
                   </div>
-                  <p className="text-slate-700 font-medium text-xs">{highlight}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="hidden md:grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
-            {features.map((feature, idx) => (
-              <div
-                key={idx}
-                className="bg-white border-2 border-slate-200 rounded-xl p-4 flex items-start gap-3"
-              >
-                <svg className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-                <p className="text-slate-700 font-medium text-sm">{feature}</p>
+                  
+                  {/* Minimalist Bottom Shimmer Line */}
+                  <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                </motion.div>
               </div>
-            ))}
-          </div>
-
-          {/* CTA - Mobile */}
-          <div className="md:hidden">
-            <button
-              onClick={() => document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-colors shadow-lg text-sm"
-            >
-              Register Your School
-            </button>
-          </div>
-
-          {/* CTA - Desktop */}
-          <div className="hidden md:block">
-            <button
-              onClick={() => document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-2xl hover:from-blue-700 hover:to-purple-700 transition-colors shadow-xl"
-            >
-              Register Your School
-            </button>
-          </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Call to Action: Moved to Bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="pb-12"
+        >
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group inline-flex items-center gap-3 px-12 py-6 bg-orange-500 text-white font-bold rounded-2xl hover:bg-orange-600 transition-all shadow-[0_20px_50px_-20px_rgba(249,115,22,0.4)]"
+          >
+            Register Your School
+            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );

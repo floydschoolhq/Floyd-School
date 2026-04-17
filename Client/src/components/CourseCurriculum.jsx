@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const CourseCurriculum = ({ variant = "light" }) => {
+const CourseCurriculum = ({ variant = "light", initialRegisteredCount = 10, totalSeats = 50 }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
-    const [registeredCount, setRegisteredCount] = useState(20);
-    const totalSeats = 50;
+    const [registeredCount, setRegisteredCount] = useState(initialRegisteredCount);
+
+    useEffect(() => {
+        setRegisteredCount(initialRegisteredCount);
+    }, [initialRegisteredCount]);
     
     const curriculumData = [
         {

@@ -28,7 +28,7 @@ const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) =>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 
                 {!isComingSoon && (
-                    <div className="absolute bottom-3 right-3">
+                    <div className="absolute bottom-3 right-3 z-20">
                         <div className="px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
                             <span className="text-[10px] font-semibold text-white">{course.duration}</span>
                         </div>
@@ -87,6 +87,7 @@ const FeaturedCourseCard = ({ course, isDark, onRegister, onDetails }) => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    
                 </div>
 
                 <div className="flex-1 p-6 lg:p-8 flex flex-col items-center text-center justify-center">

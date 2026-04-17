@@ -204,7 +204,11 @@ const CourseDetails = () => {
                 {/* Course Curriculum Section - Only for AI & ML Course */}
                 {courseId === '1' && (
                     <section id="course-curriculum" className="p-0">
-                        <CourseCurriculum variant="dark" />
+                        <CourseCurriculum 
+                            variant="dark" 
+                            initialRegisteredCount={course.registeredCount}
+                            totalSeats={course.totalSeats}
+                        />
                     </section>
                 )}
 

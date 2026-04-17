@@ -32,6 +32,8 @@ export const FALLBACK_COURSES = [
             "Optimize Inference Engines",
             "Real-time Computer Vision"
         ],
+        registeredCount: 30,
+        totalSeats: 50,
         prerequisites: "Basic Python knowledge suggested"
     },
     {
@@ -60,6 +62,8 @@ export const FALLBACK_COURSES = [
             "Edge Computing Mastery",
             "Full-cycle Product Launch"
         ],
+        registeredCount: 10,
+        totalSeats: 50,
         prerequisites: "Familiarity with JS is helpful"
     },
     {
@@ -88,6 +92,8 @@ export const FALLBACK_COURSES = [
             "Smart City Infrastructure",
             "Industrial Robot Control"
         ],
+        registeredCount: 10,
+        totalSeats: 50,
         prerequisites: "Logic and math fundamentals"
     },
     {
@@ -116,6 +122,8 @@ export const FALLBACK_COURSES = [
             "Secure System Architecture",
             "Regulatory Compliance Lead"
         ],
+        registeredCount: 10,
+        totalSeats: 50,
         prerequisites: "Networking basics recommended"
     }
 ];
