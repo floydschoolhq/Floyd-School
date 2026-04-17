@@ -19,14 +19,14 @@ const ADVANTAGES = [
         id: 2,
         title: "You learn the skills schools completely skip",
         description: "AI, machine learning, cybersecurity, robotics, IoT. Technologies reshaping every industry that most students will never touch in school.",
-        image: "/images/card2.jpg",
+        image: "/images/advantages/card2.jpg",
         icon: Award
     },
     {
         id: 3,
         title: "Designed specifically for students aged 12 to 18",
         description: "Fast enough to keep things exciting. Never so fast anyone gets left behind. Built for exactly how students at this age learn best.",
-        image: "/images/card1.jpg",
+        image: "/images/advantages/card1.jpg",
         icon: Headphones
     },
     {

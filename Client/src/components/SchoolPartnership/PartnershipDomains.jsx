@@ -10,7 +10,7 @@ const PartnershipDomains = () => {
     {
       id: 1,
       title: "Foundation of AI and Machine Learning",
-      image: "/images/ai-course.jpg",
+      image: "/images/courses/ai-course.jpg",
       rating: 4.9,
       status: "live",
       duration: "3 month",
@@ -21,7 +21,7 @@ const PartnershipDomains = () => {
     {
       id: 2,
       title: "Foundations of Web Development",
-      image: "/images/web-course.jpg",
+      image: "/images/courses/web-course.jpg",
       rating: 4.8,
       status: "live",
       duration: "4 month",
@@ -32,7 +32,7 @@ const PartnershipDomains = () => {
     {
       id: 3,
       title: "Cybersecurity Essentials",
-      image: "/images/cyber-course.jpg",
+      image: "/images/courses/cyber-course.jpg",
       rating: 4.7,
       status: "coming-soon",
       duration: "4 month",
@@ -43,7 +43,7 @@ const PartnershipDomains = () => {
     {
       id: 4,
       title: "IoT & Robotics",
-      image: "/images/iot-course.jpg",
+      image: "/images/courses/iot-course.jpg",
       rating: 4.9,
       status: "coming-soon",
       duration: "4 month",
@@ -141,18 +141,17 @@ const BatchCard = ({ batch, centered = false }) => {
   };
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden cursor-pointer will-change-transform bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border border-white/10 hover:border-blue-500/50 ${centered ? 'w-full max-w-2xl' : ''}`}>
+    <div className={`relative rounded-3xl overflow-hidden cursor-pointer will-change-transform bg-gradient-to-br from-[#0f0f0f] via-[#141414] to-[#0f0f0f] border-2 border-white/10 hover:border-blue-500/50 transition-all duration-300 ${centered ? 'w-full max-w-4xl' : 'w-full'}`}>
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
 
       <div className="relative flex flex-col lg:flex-row">
-        <div className="relative w-full h-44 sm:h-52 lg:h-auto lg:w-[46%] lg:min-h-[280px] overflow-hidden">
+        <div className="relative w-full lg:w-[55%] aspect-video overflow-hidden flex items-center bg-[#0a0a0c]">
           <img
             alt={batch.title}
-            className="absolute inset-0 w-full h-full object-cover object-left-top transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
             src={batch.image}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none"></div>
         </div>
 
         <div className="flex-1 p-6 lg:p-6 flex flex-col items-center text-center justify-center">

@@ -195,68 +195,74 @@ const ProjectCard = ({ project, index, isFeatured, isMobile }) => {
 
   if (isMobile) {
     return (
-      <div
-        className={`relative bg-white rounded-lg border overflow-hidden transition-all duration-300 ${
-          isFeatured 
-            ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-md` 
-            : 'border-slate-200/60 shadow-sm'
-        }`}
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block cursor-pointer active:scale-95 transition-transform duration-200"
       >
-        <div className="relative h-24 overflow-hidden bg-slate-100">
-          <img
-            src={project.image}
-            alt={project.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-          <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
-            {project.category}
-          </div>
-        </div>
-
-        <div className="p-4 flex flex-col items-center text-center">
-          <h3 className="text-sm font-bold text-slate-900 mb-1.5">
-            {project.name}
-          </h3>
-
-          <p className="text-slate-600 text-[10px] leading-relaxed mb-3">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-1 mb-3">
-            {project.tech.slice(0, 2).map((tech, i) => (
-              <TechIcon key={i} tech={tech} />
-            ))}
-            {project.tech.length > 2 && (
-              <span className="text-[7px] text-slate-500 font-bold">+{project.tech.length - 2}</span>
-            )}
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
-                <img
-                  src={project.student.image}
-                  alt={project.student.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <p className="text-[8px] font-bold text-slate-800">{project.student.name}</p>
-            </div>
-
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="flex items-center gap-1">
-                <Star size={10} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-[8px] font-bold">{project.stats.stars}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Eye size={10} />
-                <span className="text-[8px] font-bold">{project.stats.views}</span>
-              </div>
+        <div
+          className={`relative bg-white rounded-lg border overflow-hidden transition-all duration-300 ${
+            isFeatured 
+              ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-md` 
+              : 'border-slate-200/60 shadow-sm'
+          }`}
+        >
+          <div className="relative h-24 overflow-hidden bg-slate-100">
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+            <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
+              {project.category}
             </div>
           </div>
-        </div>
 
-      </div>
+          <div className="p-4 flex flex-col items-center text-center">
+            <h3 className="text-sm font-bold text-slate-900 mb-1.5">
+              {project.name}
+            </h3>
+
+            <p className="text-slate-600 text-[10px] leading-relaxed mb-3 line-clamp-2">
+              {project.description}
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-1 mb-3">
+              {project.tech.slice(0, 2).map((tech, i) => (
+                <TechIcon key={i} tech={tech} />
+              ))}
+              {project.tech.length > 2 && (
+                <span className="text-[7px] text-slate-500 font-bold">+{project.tech.length - 2}</span>
+              )}
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
+                  <img
+                    src={project.student.image}
+                    alt={project.student.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-[8px] font-bold text-slate-800">{project.student.name}</p>
+              </div>
+
+              <div className="flex items-center gap-4 text-slate-500">
+                <div className="flex items-center gap-1">
+                  <Star size={10} className="text-yellow-500 fill-yellow-500" />
+                  <span className="text-[8px] font-bold">{project.stats.stars}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Eye size={10} />
+                  <span className="text-[8px] font-bold">{project.stats.views}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
     );
   }
 

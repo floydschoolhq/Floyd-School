@@ -25,34 +25,41 @@ const PartnershipHero = () => {
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="flex flex-col items-start">
-              <Link 
-                to="/" 
-                onClick={() => window.scrollTo(0, 0)}
-                className="text-2xl md:text-3xl font-black tracking-tight"
-              >
-                <span className="text-blue-600">think</span>
-                <span className="text-orange-500">skool</span>
-              </Link>
-              <span className="text-xs text-slate-500 font-medium tracking-wide">Learn Beyond Classroom</span>
+          <div className="flex items-center h-20 relative">
+            {/* Logo Group */}
+            <div className="flex-1 flex justify-start pl-2">
+              <div className="flex flex-col items-start">
+                <Link 
+                  to="/" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="text-2xl md:text-3xl font-black tracking-tight"
+                >
+                  <span className="text-blue-600">think</span>
+                  <span className="text-orange-500">skool</span>
+                </Link>
+                <span className="text-[10px] md:text-xs text-slate-500 font-medium tracking-wide">Learn Beyond Classroom</span>
+              </div>
             </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
+            {/* Centered Desktop Nav */}
+            <div className="hidden md:flex items-center justify-center gap-10 flex-1">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
                   onClick={link.action}
-                  className="text-slate-700 hover:text-blue-600 font-medium transition-colors"
+                  className="relative text-slate-700 hover:text-blue-600 font-semibold transition-all duration-300 group py-1"
                 >
                   {link.name}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                 </button>
               ))}
+            </div>
+
+            {/* Desktop CTA */}
+            <div className="hidden md:flex items-center justify-end flex-1 pr-2">
               <button
                 onClick={() => document.getElementById('partner-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors shadow-md hover:shadow-lg"
+                className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
               >
                 Partner With Us
               </button>
@@ -60,7 +67,7 @@ const PartnershipHero = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2"
+              className="md:hidden p-2 ml-auto"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,16 +107,16 @@ const PartnershipHero = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-blue-50 via-orange-50 to-white overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 md:pt-24 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-blue-50 via-orange-50 to-white overflow-hidden">
         {/* Background Blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-blue-500/[0.08] rounded-full blur-[100px]"></div>
           <div className="absolute bottom-[-10%] left-[-5%] w-[300px] h-[300px] bg-orange-300/[0.08] rounded-full blur-[80px]"></div>
         </div>
 
-        <div className="max-w-[1440px] mx-auto w-full relative z-10 pt-8 sm:pt-12">
+        <div className="max-w-[1440px] mx-auto w-full relative z-10 pt-2 sm:pt-4">
           {/* Mobile-optimized layout - hidden on desktop */}
-          <div className="flex flex-col items-center text-center space-y-5 sm:space-y-6 block md:hidden">
+          <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4 block md:hidden">
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">
               For Schools
@@ -174,7 +181,7 @@ const PartnershipHero = () => {
           </div>
 
           {/* Desktop layout - hidden on mobile */}
-          <div className="hidden md:flex flex-col items-center text-center space-y-8">
+          <div className="hidden md:flex flex-col items-center text-center space-y-4">
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
               For Schools & Institutions

@@ -11,7 +11,7 @@ import WhyPartnerWithUs from '../components/SchoolPartnership/WhyPartnerWithUs';
 import TestimonialsSection from '../components/SchoolPartnership/TestimonialsSection';
 import PartnershipForm from '../components/SchoolPartnership/PartnershipForm';
 import PartnershipFooter from '../components/SchoolPartnership/PartnershipFooter';
-// import BootcampGallery from '../components/SchoolPartnership/BootcampGallery';
+import BootcampGallery from '../components/SchoolPartnership/BootcampGallery';
 // import SchoolBenefits from '../components/SchoolPartnership/SchoolBenefits';
 // import StudentBenefits from '../components/SchoolPartnership/StudentBenefits';
 // import StudentProjects from '../components/SchoolPartnership/StudentProjects';
@@ -21,6 +21,7 @@ const SchoolPartnership = () => {
   return (
     <div className="bg-white text-slate-900 font-inter selection:bg-blue-500 selection:text-white">
       <PartnershipHero />
+      <BootcampGallery />
       <TheProblem />
       <HowItWorks />
       <WhatSchoolGets />
@@ -33,11 +34,6 @@ const SchoolPartnership = () => {
       <TestimonialsSection />
       <PartnershipForm />
       <PartnershipFooter />
-      {/* <BootcampGallery /> */}
-      {/* <SchoolBenefits /> */}
-      {/* <StudentBenefits /> */}
-      {/* <StudentProjects /> */}
-      {/* <MentorsSection /> */}
     </div>
   );
 };
