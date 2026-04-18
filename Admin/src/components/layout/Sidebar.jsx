@@ -29,6 +29,7 @@ const Sidebar = () => {
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
         { icon: <ShieldCheck size={20} />, label: 'Access Requests', path: '/requests' },
         { icon: <GraduationCap size={20} />, label: 'Student Registrations', path: '/student-registrations' },
+        { icon: <Cpu size={20} />, label: 'AI & ML Matrix', path: '/ai-ml-enrollment' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <MessageCircle size={20} />, label: 'Chatbot Leads', path: '/chatbot-leads' },
