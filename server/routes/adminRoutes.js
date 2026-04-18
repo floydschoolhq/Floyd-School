@@ -18,7 +18,8 @@ const {
     toggleUserStatus,
     updateLeadStatus,
     deleteLead,
-    getPaymentRecords
+    getPaymentRecords,
+    updateCourseEnrollmentStats
 } = require('../controllers/adminController');
 const { getAccessRequests, reviewAccessRequest } = require('../controllers/studentController');
 const { getSettings, updateSettings } = require('../controllers/settingsController');
@@ -55,6 +56,7 @@ router.get('/logs', getSystemLogs);
 // Curriculum
 router.get('/courses', getCourses);
 router.patch('/courses/:id/status', updateCourseStatus);
+router.patch('/courses/:id/enrollment-stats', updateCourseEnrollmentStats);
 
 // ThinkOS Settings
 router.get('/settings', getSettings);

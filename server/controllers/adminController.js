@@ -320,6 +320,32 @@ exports.updateCourseStatus = async (req, res) => {
 };
 
 /**
+ * @desc    Update course enrollment stats (Manual Enrollments & Capacity)
+ * @route   PATCH /api/admin/courses/:id/enrollment-stats
+ * @access  Private/Admin
+ */
+exports.updateCourseEnrollmentStats = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { totalSeats, manualEnrollmentCount } = req.body;
+
+        const course = await Course.findById(id);
+        if (!course) {
+            return res.status(404).json({ success: false, message: 'Course not found' });
+        }
+
+        if (totalSeats !== undefined) course.totalSeats = totalSeats;
+        if (manualEnrollmentCount !== undefined) course.manualEnrollmentCount = manualEnrollmentCount;
+
+        await course.save();
+
+        res.status(200).json({ success: true, course });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+/**
  * @desc    Get all leads for intelligence
  * @route   GET /api/admin/leads
  * @access  Private/Admin
