@@ -44,6 +44,7 @@ import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 import FAQPage from './pages/FAQPage.jsx';
 import AdminStudentsPage from './pages/Admin/AdminStudentsPage.jsx';
+import AdminCoursesPage from './pages/Admin/AdminCoursesPage.jsx';
 import ChatbotLeadsPage from './pages/Admin/ChatbotLeadsPage.jsx';
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
@@ -168,6 +169,7 @@ const App = () => {
                 <Route path='/course/:courseId' element={<CourseDetails />} />
                 <Route path='/admin/messages' element={<ProtectedRoute><AdminMessages variant="dark" /></ProtectedRoute>} />
                 <Route path='/admin/students' element={<ProtectedRoute><AdminStudentsPage /></ProtectedRoute>} />
+                <Route path='/admin/courses' element={<ProtectedRoute><AdminCoursesPage /></ProtectedRoute>} />
                 <Route path='/admin/chatbot-leads' element={<ProtectedRoute><ChatbotLeadsPage /></ProtectedRoute>} />
                 <Route path='/admin/school-partnership-leads' element={<ProtectedRoute><SchoolPartnershipLeadsPage /></ProtectedRoute>} />
 

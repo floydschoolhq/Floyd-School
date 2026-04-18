@@ -88,6 +88,14 @@ const courseSchema = new mongoose.Schema({
     currency: {
         type: String,
         default: 'INR'
+    },
+    totalSeats: {
+        type: Number,
+        default: 50
+    },
+    manualEnrollmentCount: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

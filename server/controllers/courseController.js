@@ -308,3 +308,36 @@ exports.createAnnouncement = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+// Update course enrollment stats (admin/mentor)
+exports.updateEnrollmentStats = async (req, res) => {
+    try {
+        const { totalSeats, manualEnrollmentCount } = req.body;
+        const course = await Course.findById(req.params.id);
+
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Auth check - handled by middleware but added here for double safety
+        if (course.instructor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        if (totalSeats !== undefined) course.totalSeats = totalSeats;
+        if (manualEnrollmentCount !== undefined) course.manualEnrollmentCount = manualEnrollmentCount;
+
+        await course.save();
+
+        res.json({
+            message: 'Enrollment statistics updated successfully',
+            course: {
+                _id: course._id,
+                totalSeats: course.totalSeats,
+                manualEnrollmentCount: course.manualEnrollmentCount
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};

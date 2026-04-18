@@ -3,17 +3,38 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const CourseCurriculum = ({ variant = "light", initialRegisteredCount = 10, totalSeats = 50 }) => {
+import api from '../api/axios';
+
+const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegisteredCount = 10, totalSeats: initialTotalSeats = 50 }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
     const [registeredCount, setRegisteredCount] = useState(initialRegisteredCount);
+    const [totalSeats, setTotalSeats] = useState(initialTotalSeats);
 
     useEffect(() => {
-        setRegisteredCount(initialRegisteredCount);
-    }, [initialRegisteredCount]);
+        const fetchLiveStats = async () => {
+            try {
+                // We use courseId '1' for the main AI course since its ID in DB might vary but currently referred as '1' in routes
+                // However, the real ID should be passed.
+                const res = await api.get(`/api/courses/${courseId}`);
+                if (res.data) {
+                    setRegisteredCount(res.data.manualEnrollmentCount || initialRegisteredCount);
+                    setTotalSeats(res.data.totalSeats || initialTotalSeats);
+                }
+            } catch (err) {
+                console.warn('Live stats fetch failed, using fallback data');
+                setRegisteredCount(initialRegisteredCount);
+                setTotalSeats(initialTotalSeats);
+            }
+        };
+
+        if (courseId) {
+            fetchLiveStats();
+        }
+    }, [courseId, initialRegisteredCount, initialTotalSeats]);
     
     const curriculumData = [
         {
@@ -330,19 +351,27 @@ const CourseCurriculum = ({ variant = "light", initialRegisteredCount = 10, tota
                             Strictly limited seats per batch to ensure personalized 1-on-1 mentorship sessions.
                         </p>
                         
-                        <div className="grid grid-cols-2 gap-2 w-full">
+                        <div className="grid grid-cols-1 gap-2 w-full">
                             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
                                 <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Upcoming Batch</span>
                                 <span className="text-[11px] font-bold uppercase text-white">1st May</span>
                             </div>
-                            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
-                                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
-                                    Seats Left
-                                </span>
-                                <span className="text-[11px] font-bold uppercase text-orange-400">
-                                    {totalSeats - registeredCount} / {totalSeats}
-                                </span>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center">
+                                    <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Last Week Enrolled</span>
+                                    <span className="text-[11px] font-bold uppercase text-blue-400">
+                                        {registeredCount}+
+                                    </span>
+                                </div>
+                                <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/10 flex flex-col items-center">
+                                    <span className="text-[8px] font-bold text-red-500 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                                        Seats Left
+                                    </span>
+                                    <span className="text-[11px] font-bold uppercase text-red-500">
+                                        {totalSeats - registeredCount} / {totalSeats}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -635,7 +664,7 @@ const CourseCurriculum = ({ variant = "light", initialRegisteredCount = 10, tota
 
                         <div className="flex flex-col gap-8">
                             {/* Technical Data Grid */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4">
                                 <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
                                     <p className="text-[10px] text-secondary font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
                                         Cohort Starts
@@ -643,14 +672,25 @@ const CourseCurriculum = ({ variant = "light", initialRegisteredCount = 10, tota
                                     <p className="text-lg font-bold text-white">1st May 2026</p>
                                     <div className="absolute bottom-0 left-0 h-0.5 bg-blue-500 w-0 group-hover/item:w-full transition-all duration-500" />
                                 </div>
-                                <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
-                                    <p className="text-[10px] text-secondary font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
-                                        Seats Left
-                                    </p>
-                                    <p className="text-lg font-bold text-secondary">
-                                        {String(totalSeats - registeredCount).padStart(2, '0')} / {totalSeats}
-                                    </p>
-                                    <div className="absolute bottom-0 left-0 h-0.5 bg-secondary w-0 group-hover/item:w-full transition-all duration-500" />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
+                                        <p className="text-[10px] text-secondary font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
+                                            Student Enrolled Last Week
+                                        </p>
+                                        <p className="text-lg font-bold text-blue-400">
+                                            {String(registeredCount).padStart(2, '0')}+
+                                        </p>
+                                        <div className="absolute bottom-0 left-0 h-0.5 bg-blue-500 w-0 group-hover/item:w-full transition-all duration-500" />
+                                    </div>
+                                    <div className="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl relative overflow-hidden group/item">
+                                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-[0.2em] mb-1 opacity-70">
+                                            Seats Left
+                                        </p>
+                                        <p className="text-lg font-bold text-red-500">
+                                            {String(totalSeats - registeredCount).padStart(2, '0')} / {totalSeats}
+                                        </p>
+                                        <div className="absolute bottom-0 left-0 h-0.5 bg-red-500 w-0 group-hover/item:w-full transition-all duration-500" />
+                                    </div>
                                 </div>
                             </div>
 

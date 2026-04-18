@@ -9,7 +9,8 @@ const {
     enrollStudent,
     updateModules,
     getMentorRoster,
-    createAnnouncement
+    createAnnouncement,
+    updateEnrollmentStats
 } = require('../controllers/courseController');
 const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
@@ -22,6 +23,7 @@ router.get('/:id', classroomProtect, checkPermission('canAccessCourses'), getCou
 router.post('/', protect, authorize('mentor', 'admin'), validate(schemas.course), createCourse);
 router.put('/:id', protect, authorize('mentor', 'admin'), validate(schemas.course), updateCourse);
 router.patch('/:id/modules', protect, authorize('mentor', 'admin'), updateModules);
+router.patch('/:id/enrollment-stats', protect, authorize('mentor', 'admin'), updateEnrollmentStats);
 router.delete('/:id', protect, authorize('mentor', 'admin'), deleteCourse);
 
 // Roster
