@@ -17,15 +17,14 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     useEffect(() => {
         const fetchLiveStats = async () => {
             try {
-                // We use courseId '1' for the main AI course since its ID in DB might vary but currently referred as '1' in routes
-                // However, the real ID should be passed.
-                const res = await api.get(`/api/courses/${courseId}`);
-                if (res.data) {
-                    setRegisteredCount(res.data.manualEnrollmentCount || initialRegisteredCount);
-                    setTotalSeats(res.data.totalSeats || initialTotalSeats);
+                // Fetch from the NEW public stats endpoint that doesn't require auth
+                const res = await api.get(`/public/courses/${courseId}/stats`);
+                if (res.data && res.data.success) {
+                    setRegisteredCount(res.data.manualEnrollmentCount);
+                    setTotalSeats(res.data.totalSeats);
                 }
             } catch (err) {
-                console.warn('Live stats fetch failed, using fallback data');
+                console.warn('Live stats fetch from public nexus failed, using fallback data');
                 setRegisteredCount(initialRegisteredCount);
                 setTotalSeats(initialTotalSeats);
             }

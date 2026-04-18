@@ -32,6 +32,7 @@ import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
 import FinalProject from '../components/FinalProject';
 import sampleCertificate from '../assets/images/sample2Certificate.png';
+import api from '../api/axios';
 
 const iconMap = {
     Cpu: Cpu,
@@ -45,6 +46,7 @@ const CourseDetails = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [course, setCourse] = useState(null);
+    const [stats, setStats] = useState({ manualEnrollmentCount: 20, totalSeats: 50 });
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
     useEffect(() => {
@@ -54,6 +56,25 @@ const CourseDetails = () => {
         }
         window.scrollTo(0, 0);
         
+        // Fetch live stats from database
+        const fetchStats = async () => {
+            try {
+                const res = await api.get(`/public/courses/${courseId}/stats`);
+                if (res.data && res.data.success) {
+                    setStats({
+                        manualEnrollmentCount: res.data.manualEnrollmentCount,
+                        totalSeats: res.data.totalSeats
+                    });
+                }
+            } catch (err) {
+                console.warn('Live stats fetch failed, using fallback');
+            }
+        };
+
+        if (courseId) {
+            fetchStats();
+        }
+
         // Check if registration form should be opened
         if (searchParams.get('openRegistration') === 'true') {
             setTimeout(() => {
@@ -135,8 +156,8 @@ const CourseDetails = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
-                                </div>
+                                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{stats.manualEnrollmentCount}+ Enrolled Last Week</span>
+                                 </div>
                             </div>
                         ) : (
                             <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -177,8 +198,8 @@ const CourseDetails = () => {
                                                     </div>
                                                 ))}
                                             </div>
-                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">20+ Enrolled Last Week</span>
-                                        </div>
+                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stats.manualEnrollmentCount}+ Enrolled Last Week</span>
+                                         </div>
                                     </div>
                                 </motion.div>
 

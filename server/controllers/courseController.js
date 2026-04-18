@@ -340,4 +340,42 @@ exports.updateEnrollmentStats = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
+};// Get public enrollment stats for marketing site
+exports.getPublicCourseStats = async (req, res) => {
+    try {
+        const { id } = req.params;
+        let query = {};
+
+        // Mapping for hardcoded IDs used in marketing site
+        if (id === '1') {
+            query = { title: { $regex: /foundation of ai|artificial intelligence/i } };
+        } else if (id === '2') {
+            query = { title: { $regex: /foundation of web/i } };
+        } else if (id === '3') {
+            query = { title: { $regex: /foundation of iot|robotics/i } };
+        } else if (id === '4') {
+            query = { title: { $regex: /foundation of cyber/i } };
+        } else if (id.length > 20) {
+            // Assume it's a real MongoDB ID
+            query = { _id: id };
+        } else {
+            // Search by title fallback
+            query = { title: { $regex: new RegExp(id, 'i') } };
+        }
+
+        const course = await Course.findOne(query).select('totalSeats manualEnrollmentCount title');
+        
+        if (!course) {
+            return res.status(404).json({ success: false, message: 'Course not found' });
+        }
+
+        res.json({
+            success: true,
+            totalSeats: course.totalSeats || 50,
+            manualEnrollmentCount: course.manualEnrollmentCount || 0,
+            title: course.title
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
 };
