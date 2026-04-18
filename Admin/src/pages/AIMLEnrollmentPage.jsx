@@ -27,6 +27,7 @@ const AIMLEnrollmentPage = () => {
             try {
                 const res = await api.get('/admin/courses');
                 const aiml = res.data.courses.find(c => 
+                    c.title.toLowerCase().includes('foundation of ai') || 
                     c.title.toLowerCase().includes('artificial intelligence') || 
                     c.title.toLowerCase().includes('ai & ml')
                 );
