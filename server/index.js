@@ -56,6 +56,10 @@ mongoose.connection.on('disconnected', () => {
 const app = express();
 const server = http.createServer(app);
 
+// CRITICAL: Trust proxy to get correct client IP behind Vercel/Render/Nginx load balancers
+// Without this, the rate limiter may see all users as having the same IP and block them together.
+app.set('trust proxy', 1);
+
 const allowedOrigins = [
     'http://localhost:5173', // Client
     'http://localhost:5174', // Admin
@@ -141,10 +145,10 @@ const generalLimiter = rateLimit({
     legacyHeaders: false
 });
 
-// Auth rate limit: 10 attempts per 15 minutes per IP (prevent brute force)
+// Auth rate limit: 30 attempts per 15 minutes per IP (prevent brute force)
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 10,
+    max: 30,
     message: { success: false, message: 'Too many login attempts, please try again after 15 minutes.' },
     standardHeaders: true,
     legacyHeaders: false
