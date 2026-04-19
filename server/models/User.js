@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
         canAccessCourses: { type: Boolean, default: false },
         canAccessLabs: { type: Boolean, default: false },
         canAccessCommunity: { type: Boolean, default: false },
-        enrolledSpecialCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+        enrolledSpecialCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+        grantedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
     },
     lastLogin: {
         type: Date,

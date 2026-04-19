@@ -236,6 +236,45 @@ exports.updateUserPermissions = async (req, res) => {
 };
 
 /**
+ * @desc    Grant or revoke specific course access for a user
+ * @route   PATCH /api/admin/users/:id/course-access
+ * @access  Private/Admin
+ */
+exports.updateUserCourseAccess = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { grantedCourses } = req.body; // Array of Course IDs
+
+        if (!Array.isArray(grantedCourses)) {
+            return res.status(400).json({ success: false, message: 'grantedCourses must be an array of course IDs.' });
+        }
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Replace the entire grantedCourses list with the new set
+        user.permissions = {
+            ...(user.permissions || {}),
+            grantedCourses
+        };
+
+        await user.save();
+
+        // Return populated courses for the UI
+        const updated = await User.findById(id)
+            .select('permissions')
+            .populate('permissions.grantedCourses', 'title _id');
+
+        res.status(200).json({ success: true, grantedCourses: updated.permissions.grantedCourses });
+    } catch (error) {
+        console.error('Course Access Update Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to update course access.' });
+    }
+};
+
+/**
  * @desc    Create a new user (admin only)
  * @route   POST /api/admin/users
  * @access  Private/Admin

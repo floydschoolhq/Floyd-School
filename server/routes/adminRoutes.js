@@ -10,6 +10,7 @@ const {
     deleteUser,
     updateUserStatus,
     updateUserPermissions,
+    updateUserCourseAccess,
     getSystemLogs,
     processSystemCommand,
     updateCourseStatus,
@@ -48,6 +49,7 @@ router.get('/users', getAllUsers);
 router.post('/users', createUser);
 router.patch('/users/:id/status', updateUserStatus);
 router.patch('/users/:id/permissions', updateUserPermissions);
+router.patch('/users/:id/course-access', updateUserCourseAccess);
 router.delete('/users/:id', deleteUser);
 
 // Infrastructure Logs

@@ -17,8 +17,22 @@ exports.getCourses = async (req, res) => {
         const { role, _id } = req.user;
 
         if (role === 'student') {
-            // Students see courses they're enrolled in or can enroll
-            courses = await Course.find({ isActive: true, status: 'published' })
+            // Fetch the student's granted course list
+            const User = require('../models/User');
+            const studentUser = await User.findById(_id).select('permissions.grantedCourses');
+            const grantedIds = studentUser?.permissions?.grantedCourses || [];
+
+            if (grantedIds.length === 0) {
+                // No courses granted → return empty list
+                return res.json([]);
+            }
+
+            // Only return the explicitly granted courses
+            courses = await Course.find({
+                _id: { $in: grantedIds },
+                isActive: true,
+                status: 'published'
+            })
                 .populate('instructor', 'name email')
                 .select('-__v');
         } else if (role === 'mentor') {

@@ -18,15 +18,19 @@ import {
     Lock,
     Unlock,
     Shield,
-    RefreshCw
+    RefreshCw,
+    BookOpen,
+    ChevronDown,
+    ChevronUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 
 const UserGovernance = () => {
     const [users, setUsers] = useState([]);
+    const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('student'); // Backend role names
+    const [activeTab, setActiveTab] = useState('student');
     const [searchTerm, setSearchTerm] = useState('');
     const [updatingPermission, setUpdatingPermission] = useState(null);
 
@@ -49,8 +53,18 @@ const UserGovernance = () => {
         }
     };
 
+    const fetchCourses = async () => {
+        try {
+            const res = await api.get('/admin/courses');
+            setCourses(res.data.courses || []);
+        } catch (err) {
+            console.error('Failed to fetch courses', err);
+        }
+    };
+
     useEffect(() => {
         fetchUsers();
+        fetchCourses();
     }, []);
 
     const toggleUserStatus = async (id, currentStatus) => {
@@ -258,124 +272,230 @@ const UserGovernance = () => {
                 </button>
             </div>
 
-            {/* Table */}
-            <div className="bg-slate-900/20 border border-slate-800 rounded-[3rem] overflow-hidden">
-                <table className="w-full text-left">
-                    <thead>
-                        <tr className="bg-slate-900/50 border-b border-slate-800">
-                            <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Neural Identity</th>
-                            {activeTab === 'student' ? (
-                                <>
-                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Course Sync</th>
-                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Lab Access</th>
-                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Net Comms</th>
-                                </>
-                            ) : (
-                                <>
-                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Protocol Status</th>
-                                    <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Initialization</th>
-                                </>
-                            )}
-                            <th className="p-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] text-right">Overrides</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800/50">
-                        {filteredUsers.map((user, idx) => (
-                            <motion.tr
-                                key={user._id}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: idx * 0.05 }}
-                                className="hover:bg-sky-500/5 transition-all group"
-                            >
-                                <td className="p-8">
-                                    <div className="flex items-center gap-5">
-                                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border font-black shadow-xl transition-all ${user.isActive === false ? 'bg-rose-500/10 border-rose-500/30 text-rose-500' : 'bg-slate-900 border-slate-800 text-sky-500 group-hover:border-sky-500/30'
-                                            }`}>
-                                            {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
-                                        </div>
-                                        <div>
-                                            <p className="text-lg font-black text-white tracking-tight uppercase">{user.name}</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <Mail size={12} className="text-slate-600" />
-                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">{user.email}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                {activeTab === 'student' ? (
-                                    <>
-                                        {['canAccessCourses', 'canAccessLabs', 'canAccessCommunity'].map(key => (
-                                            <td key={key} className="p-8">
-                                                <button
-                                                    onClick={() => togglePermission(user._id, key, user.permissions?.[key])}
-                                                    disabled={updatingPermission === `${user._id}-${key}`}
-                                                    className={`relative w-12 h-6 rounded-full transition-all duration-300 ${user.permissions?.[key] ? 'bg-sky-500' : 'bg-slate-800'
-                                                        } ${updatingPermission === `${user._id}-${key}` ? 'opacity-50 cursor-wait' : 'cursor-pointer'} border border-slate-700`}
-                                                >
-                                                    <div className={`absolute top-0.5 bottom-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-all duration-300 ${user.permissions?.[key] ? 'left-[calc(100%-1.4rem)]' : 'left-0.5'
-                                                        } flex items-center justify-center`}>
-                                                        {updatingPermission === `${user._id}-${key}` ? (
-                                                            <RefreshCw size={10} className="text-sky-500 animate-spin" />
-                                                        ) : user.permissions?.[key] ? (
-                                                            <Unlock size={10} className="text-sky-500" />
-                                                        ) : (
-                                                            <Lock size={10} className="text-slate-400" />
-                                                        )}
-                                                    </div>
-                                                </button>
-                                            </td>
-                                        ))}
-                                    </>
-                                ) : (
-                                    <>
-                                        <td className="p-8">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-2 h-2 rounded-full ${user.isActive !== false ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
-                                                    }`}></div>
-                                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${user.isActive !== false ? 'text-emerald-500' : 'text-rose-500'
-                                                    }`}>
-                                                    {user.isActive !== false ? 'ACTIVE_LINK' : 'TERMINATED'}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td className="p-8">
-                                            <div className="flex items-center gap-2">
-                                                <Calendar size={14} className="text-slate-600" />
-                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                                    {new Date(user.createdAt).toLocaleDateString()}
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </>
-                                )}
-                                <td className="p-8 text-right">
-                                    <div className="flex items-center justify-end gap-3">
-                                        <button
-                                            onClick={() => toggleUserStatus(user._id, user.isActive !== false)}
-                                            className={`p-3 rounded-xl border transition-all ${user.isActive === false
-                                                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
-                                                : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'
-                                                }`}
-                                            title={user.isActive !== false ? "Suspend Node" : "Activate Node"}
-                                        >
-                                            {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteUser(user._id)}
-                                            className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-transparent hover:border-rose-500/30"
-                                            title="Terminate Node Permanently"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </div>
-                                </td>
-                            </motion.tr>
-                        ))}
-                    </tbody>
-                </table>
+            {/* User List */}
+            <div className="space-y-4">
+                {filteredUsers.length === 0 ? (
+                    <div className="text-center py-20 bg-slate-900/10 border border-dashed border-slate-800 rounded-[3rem]">
+                        <Users size={48} className="text-slate-700 mx-auto mb-4" />
+                        <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No nodes detected in this sector.</p>
+                    </div>
+                ) : (
+                    filteredUsers.map((user, idx) => (
+                        <UserNode
+                            key={user._id}
+                            user={user}
+                            idx={idx}
+                            activeTab={activeTab}
+                            courses={courses}
+                            updatingPermission={updatingPermission}
+                            onTogglePermission={togglePermission}
+                            onToggleStatus={toggleUserStatus}
+                            onDelete={handleDeleteUser}
+                            onRefresh={fetchUsers}
+                        />
+                    ))
+                )}
             </div>
         </div>
+    );
+};
+
+// ─── Per-User Node Component ────────────────────────────────────────────────
+const UserNode = ({ user, idx, activeTab, courses, updatingPermission, onTogglePermission, onToggleStatus, onDelete, onRefresh }) => {
+    const [showCoursePanel, setShowCoursePanel] = useState(false);
+    const [savingCourses, setSavingCourses] = useState(false);
+    const [localGranted, setLocalGranted] = useState(
+        (user.permissions?.grantedCourses || []).map(c => (typeof c === 'object' ? c._id : c).toString())
+    );
+
+    const toggleCourse = (courseId) => {
+        const id = courseId.toString();
+        setLocalGranted(prev =>
+            prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+        );
+    };
+
+    const saveCourseAccess = async () => {
+        setSavingCourses(true);
+        try {
+            await api.patch(`/admin/users/${user._id}/course-access`, { grantedCourses: localGranted });
+            toast.success(`Course access updated for ${user.name}`);
+            onRefresh();
+        } catch (err) {
+            toast.error('Failed to update course access');
+        } finally {
+            setSavingCourses(false);
+        }
+    };
+
+    const grantedCount = localGranted.length;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.04 }}
+            className="bg-slate-900/20 border border-slate-800 rounded-3xl overflow-hidden hover:border-sky-500/20 transition-all"
+        >
+            {/* Main Row */}
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 p-6">
+                {/* Identity */}
+                <div className="flex items-center gap-4 min-w-[200px] flex-1">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border font-black shadow-xl flex-shrink-0 ${user.isActive === false
+                        ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
+                        : 'bg-slate-900 border-slate-800 text-sky-500'}`}
+                    >
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                    </div>
+                    <div>
+                        <p className="text-base font-black text-white tracking-tight uppercase">{user.name}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Mail size={11} className="text-slate-600" />
+                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">{user.email}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {activeTab === 'student' ? (
+                    <>
+                        {/* Permission Toggles */}
+                        <div className="flex items-center gap-6">
+                            {[
+                                { key: 'canAccessCourses', label: 'Course Sync' },
+                                { key: 'canAccessLabs', label: 'Lab Access' },
+                                { key: 'canAccessCommunity', label: 'Net Comms' }
+                            ].map(({ key, label }) => (
+                                <div key={key} className="flex flex-col items-center gap-2">
+                                    <span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">{label}</span>
+                                    <button
+                                        onClick={() => onTogglePermission(user._id, key, user.permissions?.[key])}
+                                        disabled={updatingPermission === `${user._id}-${key}`}
+                                        className={`relative w-12 h-6 rounded-full transition-all duration-300 ${user.permissions?.[key] ? 'bg-sky-500' : 'bg-slate-800'
+                                            } ${updatingPermission === `${user._id}-${key}` ? 'opacity-50 cursor-wait' : 'cursor-pointer'} border border-slate-700`}
+                                    >
+                                        <div className={`absolute top-0.5 bottom-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-all duration-300 ${user.permissions?.[key] ? 'left-[calc(100%-1.4rem)]' : 'left-0.5'
+                                            } flex items-center justify-center`}>
+                                            {updatingPermission === `${user._id}-${key}` ? (
+                                                <RefreshCw size={10} className="text-sky-500 animate-spin" />
+                                            ) : user.permissions?.[key] ? (
+                                                <Unlock size={10} className="text-sky-500" />
+                                            ) : (
+                                                <Lock size={10} className="text-slate-400" />
+                                            )}
+                                        </div>
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Course Access Button */}
+                        <button
+                            onClick={() => setShowCoursePanel(v => !v)}
+                            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl border font-black text-[10px] uppercase tracking-widest transition-all ${grantedCount > 0
+                                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+                                : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-sky-500/40 hover:text-sky-400'
+                                }`}
+                        >
+                            <BookOpen size={14} />
+                            {grantedCount > 0 ? `${grantedCount} Course${grantedCount > 1 ? 's' : ''} Granted` : 'Grant Courses'}
+                            {showCoursePanel ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                        </button>
+                    </>
+                ) : (
+                    <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-3">
+                            <div className={`w-2 h-2 rounded-full ${user.isActive !== false ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500'}`}></div>
+                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${user.isActive !== false ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                {user.isActive !== false ? 'ACTIVE_LINK' : 'TERMINATED'}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Calendar size={14} className="text-slate-600" />
+                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                {new Date(user.createdAt).toLocaleDateString()}
+                            </span>
+                        </div>
+                    </div>
+                )}
+
+                {/* Override buttons */}
+                <div className="flex items-center gap-3 flex-shrink-0">
+                    <button
+                        onClick={() => onToggleStatus(user._id, user.isActive !== false)}
+                        className={`p-3 rounded-xl border transition-all ${user.isActive === false
+                            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
+                            : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'}`}
+                        title={user.isActive !== false ? 'Suspend Node' : 'Activate Node'}
+                    >
+                        {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
+                    </button>
+                    <button
+                        onClick={() => onDelete(user._id)}
+                        className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-transparent hover:border-rose-500/30"
+                        title="Terminate Node Permanently"
+                    >
+                        <Trash2 size={18} />
+                    </button>
+                </div>
+            </div>
+
+            {/* Course Access Panel */}
+            <AnimatePresence>
+                {showCoursePanel && activeTab === 'student' && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden border-t border-slate-800/60"
+                    >
+                        <div className="p-6 bg-slate-950/40">
+                            <div className="flex items-center justify-between mb-4">
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Course Access Control</p>
+                                    <p className="text-[9px] text-slate-600 font-bold mt-0.5">Only selected courses will appear in this student's classroom.</p>
+                                </div>
+                                <button
+                                    onClick={saveCourseAccess}
+                                    disabled={savingCourses}
+                                    className="flex items-center gap-2 px-5 py-2.5 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 text-slate-950 font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
+                                >
+                                    {savingCourses ? <RefreshCw size={12} className="animate-spin" /> : <CheckCircle2 size={12} />}
+                                    Save Access
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {courses.map(course => {
+                                    const isGranted = localGranted.includes(course._id.toString());
+                                    return (
+                                        <button
+                                            key={course._id}
+                                            onClick={() => toggleCourse(course._id)}
+                                            className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all ${isGranted
+                                                ? 'bg-sky-500/10 border-sky-500/40 text-sky-300'
+                                                : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:border-slate-600'
+                                                }`}
+                                        >
+                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center flex-shrink-0 transition-all ${isGranted
+                                                ? 'bg-sky-500 border-sky-400'
+                                                : 'bg-slate-800 border-slate-700'
+                                                }`}>
+                                                {isGranted && <CheckCircle2 size={12} className="text-white" />}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-[11px] font-black uppercase tracking-tight truncate">{course.title}</p>
+                                                <p className="text-[9px] font-bold text-slate-600 mt-0.5 uppercase tracking-widest">{course.status}</p>
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 };
 
