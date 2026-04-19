@@ -60,10 +60,10 @@ const createOrder = async (req, res) => {
         
         // If courseId is a simple string like "1", "2", etc., map to actual course
         const courseMapping = {
-            '1': 'AI & Machine Learning',
-            '2': 'Development (Web/App)', 
-            '3': 'IoT & Robotics',
-            '4': 'Cyber Security'
+            '1': 'Foundation of AI and Machine Learning',
+            '2': 'Foundation of Web Development',
+            '3': 'Foundation of IoT and Robotics',
+            '4': 'Foundation of Cyber Security'
         };
         
         if (courseMapping[courseId]) {
