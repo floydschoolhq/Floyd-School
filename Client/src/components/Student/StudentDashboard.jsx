@@ -36,7 +36,7 @@ const StudentDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
-  const { isConnected, notifications } = useSocket(user?._id);
+  const { isConnected, notifications } = useSocket();
 
   const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
 

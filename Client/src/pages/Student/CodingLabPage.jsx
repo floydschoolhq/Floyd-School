@@ -12,7 +12,7 @@ import api from '../../api/axios';
 
 const CodingLabPage = () => {
   const { user } = useContext(PortalContext);
-  const { isConnected } = useSocket(user?._id);
+  const { isConnected } = useSocket();
 
   const isClassroomUser = user?.isClassroomAccess === true;
   // Classroom users still need admin approval for labs

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
@@ -9,14 +9,12 @@ import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import Masterclasses from '../../components/Masterclasses';
 import AssignmentSubmissionModal from '../../components/Student/AssignmentSubmissionModal';
 import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
-
 import { PortalContext } from '../../contexts/PortalProvider';
 import { useSocket } from '../../contexts/SocketProvider';
-import { useContext } from 'react';
 import useIsMobile from '../../hooks/useIsMobile';
 
 const ClassroomPage = () => {
-  const socket = useSocket();
+  const { socket } = useSocket();
   const isMobile = useIsMobile(768);
 
   const { user, setView, setActiveLiveClass: setGlobalActiveLiveClass } = useContext(PortalContext);

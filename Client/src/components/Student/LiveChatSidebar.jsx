@@ -6,7 +6,7 @@ import { PortalContext } from '../../contexts/PortalProvider';
 import { useSocket } from '../../contexts/SocketProvider';
 
 const LiveChatSidebar = ({ classId }) => {
-    const socket = useSocket();
+    const { socket } = useSocket();
     const { user } = React.useContext(PortalContext);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');

@@ -7,7 +7,7 @@ import api from '../../api/axios';
 import { useSocket } from '../../contexts/SocketProvider';
 
 const LiveSessionView = ({ liveClass, onBack }) => {
-    const socket = useSocket();
+    const { socket } = useSocket();
     const [myDoubt, setMyDoubt] = useState(null);
     const [isSignaling, setIsSignaling] = useState(false);
     const [participantCount, setParticipantCount] = useState(0);
