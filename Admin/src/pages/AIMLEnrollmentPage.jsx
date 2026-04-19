@@ -27,16 +27,16 @@ const AIMLEnrollmentPage = () => {
             try {
                 const res = await api.get('/admin/courses');
                 const aiml = res.data.courses.find(c => 
+                    c.title === 'Foundation of AI and Machine Learning' ||
                     c.title.toLowerCase().includes('foundation of ai') || 
-                    c.title.toLowerCase().includes('artificial intelligence') || 
-                    c.title.toLowerCase().includes('ai & ml')
+                    c.title.toLowerCase().includes('artificial intelligence')
                 );
                 
                 if (aiml) {
                     setCourse(aiml);
                     setStats({
                         totalSeats: aiml.totalSeats || 50,
-                        manualEnrollmentCount: aiml.manualEnrollmentCount || 0
+                        manualEnrollmentCount: aiml.manualEnrollmentCount || 45
                     });
                 }
             } catch (err) {
