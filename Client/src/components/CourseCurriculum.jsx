@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 
 import api from '../api/axios';
 
-const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegisteredCount = 10, totalSeats: initialTotalSeats = 50 }) => {
+const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegisteredCount = 45, totalSeats: initialTotalSeats = 50 }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
     const [isEnrolling, setIsEnrolling] = useState(false);

@@ -46,7 +46,7 @@ const CourseDetails = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [course, setCourse] = useState(null);
-    const [stats, setStats] = useState({ manualEnrollmentCount: 20, totalSeats: 50 });
+    const [stats, setStats] = useState({ manualEnrollmentCount: 45, totalSeats: 50 });
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
     useEffect(() => {
