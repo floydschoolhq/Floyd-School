@@ -102,10 +102,12 @@ const createOrder = async (req, res) => {
         });
 
         if (recentPending) {
-            return res.status(429).json({
-                success: false,
-                message: 'A payment order was recently created. Please complete or wait before trying again.'
+            // Cancel the old pending order and allow retry
+            await Enrollment.findByIdAndUpdate(recentPending._id, {
+                paymentStatus: 'cancelled',
+                status: 'cancelled'
             });
+            console.log('[Payment] Cancelled old pending order for retry:', recentPending.razorpayOrderId);
         }
 
         // Check if email already enrolled in this course
