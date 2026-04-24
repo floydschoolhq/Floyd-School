@@ -107,8 +107,8 @@ const PROJECTS_DATA = [
   },
   {
     id: 6,
-    name: "AI Face Detection System",
-    description: "An intelligent computer vision application that detects and recognizes human faces in real-time using AI-powered image processing. The system can be used for smart attendance, security monitoring, and identity verification.",
+    name: "Gesture Volume Control",
+    description: "A computer vision application that allows users to control system volume using hand gestures detected through a webcam.",
     category: "AI & Computer Vision",
     image: "/projects/ai_face_detection.jpg",
     link: "https://ai-face-detection-cqepauwtt5b4fc8h2yjnpa.streamlit.app/",
