@@ -176,12 +176,14 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                         } catch (error) {
                             console.error('Payment cancellation error:', error);
                         }
+                        // Reset to details step so user can try again
+                        setStep('details');
                     },
                     handle_failure: async (response) => {
                         setStep('error');
-                        setErrorMessage('Payment failed. Refund will be processed automatically.');
+                        setErrorMessage('Payment failed. Please try again.');
                         setLoading(false);
-                        
+
                         // Log the failure for debugging
                         console.error('Payment failed:', response);
                     }
@@ -201,7 +203,8 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
 
         } catch (error) {
             console.error('Payment creation error:', error);
-            setErrorMessage(error.response?.data?.message || 'Failed to create payment order. Please try again.');
+            const errorMsg = error.response?.data?.message || 'Failed to create payment order. Please try again.';
+            setErrorMessage(errorMsg);
             setStep('error');
             setLoading(false);
         }
@@ -217,6 +220,7 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
         setErrors({});
         setErrorMessage('');
         setSuccessMessage('');
+        setLoading(false);
         onClose();
     };
 
