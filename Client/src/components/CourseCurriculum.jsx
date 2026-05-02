@@ -397,8 +397,8 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                         <div className="w-full p-5 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 flex flex-col items-center justify-center mb-6">
                             <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
                             <div className="flex items-center justify-center gap-3">
-                                <span className="text-sm font-semibold text-slate-600 line-through">₹3,499</span>
-                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹2,499</span>
+                                <span className="text-sm font-semibold text-slate-600 line-through">₹5,999</span>
+                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹3,999</span>
                             </div>
                             <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
                                 <span className="text-blue-400 text-[9px] font-bold uppercase tracking-widest">33% Launch Offer</span>
@@ -700,9 +700,9 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                     <div>
                                         <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Investment</p>
                                         <div className="flex items-end gap-2">
-                                            <span className="text-sm text-white/30 line-through font-medium">₹3,499</span>
+                                            <span className="text-sm text-white/30 line-through font-medium">₹5,999</span>
                                             <span className="text-3xl font-headline font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">
-                                                ₹2,499
+                                                ₹3,999
                                             </span>
                                         </div>
                                     </div>
