@@ -1,17 +1,27 @@
 {
-  "counts": [
+  "counts": {
+    "totalCourses": 4
+  },
+  "courseData": [
     {
-      "_id": {
-        "status": "published",
-        "isActive": true
-      },
-      "count": 4
+      "title": "Foundation of AI and Machine Learning",
+      "moduleCount": 0,
+      "hasVideos": false
+    },
+    {
+      "title": "Foundation of Web Development",
+      "moduleCount": 0,
+      "hasVideos": false
+    },
+    {
+      "title": "Foundation of IoT and Robotics",
+      "moduleCount": 0,
+      "hasVideos": false
+    },
+    {
+      "title": "Foundation of Cyber Security",
+      "moduleCount": 0,
+      "hasVideos": false
     }
-  ],
-  "titles": [
-    "AI & Machine Learning",
-    "Development (Web/App)",
-    "Cyber Security",
-    "IoT & Robotics"
   ]
 }

@@ -9,7 +9,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/thinkskool'
     const Course = require('./server/models/Course');
     
     // Update all course prices to your desired amount
-    const newPrice = 1999; // Change this to your desired price
+    const newPrice = 3999; // Change this to your desired price
     
     const result = await Course.updateMany(
       {},
