@@ -5,6 +5,7 @@ import { FiMail, FiPhone, FiCalendar, FiX, FiArrowLeft } from 'react-icons/fi';
 // Make sure this path and the baseURL inside it are correct!
 import api from '../api/axios';
 import { LampContainer } from './ui/lamp';
+import SEO from './common/SEO';
 
 // --- Modal Component (No changes needed here) ---
 const BookingModal = ({ isOpen, onClose, onBook }) => {
@@ -163,6 +164,10 @@ const Contact = () => {
 
     return (
         <LampContainer className="pt-32 md:pt-48" id="contact">
+            <SEO 
+                title="Contact Us & Book a Demo" 
+                description="Get in touch with Thinkskool. Book a demo call to learn how our industrial tech programs can accelerate your engineering career."
+            />
             <motion.div
                 initial={{ opacity: 0.5, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}

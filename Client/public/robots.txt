@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /contact
+Allow: /course
+Allow: /school-partnerships
+Allow: /online-program
+Allow: /bootcamp-gallery
+Allow: /faq
+Allow: /downloads
+
+# Disallow Private/Auth Routes
+Disallow: /student/
+Disallow: /admin/
+Disallow: /login
+Disallow: /classroom
+Disallow: /classes
+
+# Sitemap
+Sitemap: https://thinkskool.in/sitemap.xml

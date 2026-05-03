@@ -9,6 +9,7 @@ import {
 import BrandLogo from './common/BrandLogo';
 import WaveText from './common/WaveText';
 import useIsMobile from '../hooks/useIsMobile';
+import { Link } from 'react-router-dom';
 
 import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
 
@@ -18,25 +19,28 @@ const Footer = () => {
     {
       title: 'Company',
       links: [
-        { name: 'About Us', href: '#how-it-works' },
-        { name: 'Careers', href: '/careers' },
-        { name: 'Privacy Policy', href: '/privacy' },
+        { name: 'Home', href: '/' },
+        { name: 'School Partnerships', href: '/school-partnerships' },
+        { name: 'Online Programs', href: '/online-program' },
+        { name: 'Contact Us', href: '/contact' },
         { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
       ],
     },
     {
-      title: 'Products',
+      title: 'Explore',
       links: [
-        { name: 'Future Tech Bootcamp', href: '#engineering-programs' },
-        { name: 'Certifications', href: '#engineering-programs' },
-        { name: 'Code 360', href: '/student/coding-lab' },
+        { name: 'All Courses', href: '/course' },
+        { name: 'Bootcamp Gallery', href: '/bootcamp-gallery' },
+        { name: 'FAQ', href: '/faq' },
+        { name: 'Downloads', href: '/downloads' },
       ],
     },
     {
-      title: 'Community',
+      title: 'Student Portal',
       links: [
-        { name: 'Events', href: '/events' },
-        { name: 'Blog', href: '/blog' },
+        { name: 'Student Login', href: '/student/login' },
+        { name: 'Classroom Access', href: '/classes' },
+        { name: 'Progress Tracking', href: '/student/progress' },
       ],
     },
   ];
@@ -52,19 +56,29 @@ const Footer = () => {
           <div className="w-full mb-16">
             <ul className="flex flex-col items-center gap-6">
               {[
-                { name: 'About Us', href: '#how-it-works' },
-                { name: 'Privacy Policy', href: '/privacy' },
+                { name: 'Home', href: '/' },
+                { name: 'Courses', href: '/course' },
+                { name: 'Partner with Us', href: '/school-partnerships' },
                 { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
               ].map((link, i) => (
                 <li key={i}>
-                  <a 
-                    href={link.href} 
-                    target={link.target || '_self'}
-                    rel={link.rel || ''}
-                    className="text-slate-400 text-[12px] font-black tracking-[0.2em] hover:text-orange-500 transition-colors uppercase"
-                  >
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('/') && !link.target ? (
+                    <Link 
+                      to={link.href} 
+                      className="text-slate-400 text-[12px] font-black tracking-[0.2em] hover:text-orange-500 transition-colors uppercase"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a 
+                      href={link.href} 
+                      target={link.target || '_self'}
+                      rel={link.rel || ''}
+                      className="text-slate-400 text-[12px] font-black tracking-[0.2em] hover:text-orange-500 transition-colors uppercase"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -128,14 +142,23 @@ const Footer = () => {
                 <ul className="space-y-5">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a
-                        href={link.href}
-                        target={link.target || '_self'}
-                        rel={link.rel || ''}
-                        className="text-[14px] font-bold tracking-tight text-slate-500 hover:text-orange-500 transition-all duration-300"
-                      >
-                        {link.name}
-                      </a>
+                      {link.href.startsWith('/') && !link.target ? (
+                        <Link
+                          to={link.href}
+                          className="text-[14px] font-bold tracking-tight text-slate-500 hover:text-orange-500 transition-all duration-300"
+                        >
+                          {link.name}
+                        </Link>
+                      ) : (
+                        <a
+                          href={link.href}
+                          target={link.target || '_self'}
+                          rel={link.rel || ''}
+                          className="text-[14px] font-bold tracking-tight text-slate-500 hover:text-orange-500 transition-all duration-300"
+                        >
+                          {link.name}
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>

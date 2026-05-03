@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FileText, FolderOpen, FlaskConical, Download } from 'lucide-react';
 import Logo from '../components/Logo';
 import Brochure from '../assets/pdf/Brochure.pdf';
+import SEO from '../components/common/SEO';
 
 // Mock data, replacing original icon references with Lucide icons
 const initialDocuments = [
@@ -84,6 +85,10 @@ const DownloadPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-8 font-sans">
+      <SEO 
+        title="Downloads & Resources" 
+        description="Access and download Thinkskool's official brochures, technical specifications, and industrial program details."
+      />
       <Logo/>
       <script src="https://cdn.tailwindcss.com"></script>
       <div className="max-w-4xl mx-auto mt-10">

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../api/axios';
+import SEO from '../components/common/SEO';
 
 const FAQPage = () => {
   const navigate = useNavigate();
@@ -146,6 +147,10 @@ const FAQPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
+      <SEO 
+          title="Frequently Asked Questions" 
+          description="Find answers to common questions about Thinkskool's industrial tech programs, school partnerships, student portal, and more."
+      />
       <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <button 

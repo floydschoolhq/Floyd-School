@@ -11,6 +11,7 @@ import LeadFormModal from '../components/LeadFormModal';
 import PremiumNavbar from '../components/PremiumNavbar';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
 import useIsMobile from '../hooks/useIsMobile';
+import SEO from '../components/common/SEO';
 
 const iconMap = {
     Cpu: Cpu,
@@ -291,6 +292,10 @@ const OnlineProgram = () => {
     if (isMobile) {
         return (
             <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
+                <SEO 
+                    title="Online Tech Specialization Programs" 
+                    description="Explore our high-intensity online specialization tracks in AI, Machine Learning, Robotics, and Web Architecture. Industrial-grade learning for future engineers."
+                />
                 <PremiumNavbar variant="dark" />
                 
                 {/* Background Decorative Mesh - Mobile */}
@@ -341,6 +346,25 @@ const OnlineProgram = () => {
                                 <div className="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">Deployment Rate</div>
                             </div>
                         </div>
+
+                        {/* Mobile Crawlable Content Section */}
+                        <div className="py-12 border-t border-white/5">
+                            <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-6">Industrial Learning Philosophy</h3>
+                            <div className="space-y-4 text-[10px] text-slate-400 font-medium leading-relaxed">
+                                <p>
+                                    At Thinkskool, we believe that engineering excellence isn't just about learning syntax; it's about mastering the architecture of complex systems. Our online programs are meticulously architected to bridge the gap between academic theory and industrial reality. Each track, from AI & Machine Learning to IoT & Robotics, is designed by industry veterans with decades of experience in production-scale deployments.
+                                </p>
+                                <p>
+                                    Our curriculum focuses on "Production-First" thinking. This means every line of code you write is evaluated against industrial standards—scalability, security, and maintainability. Unlike traditional online courses, we don't just provide video lectures. We provide an ecosystem where you work on real-world problems using the same tools used by top-tier engineering teams globally.
+                                </p>
+                                <p>
+                                    Students in our Academic Hub engage in a rigorous 3-month cycle of learning. The first phase covers core foundations, followed by a deep dive into advanced specializations. The final month is dedicated to a Capstone Project, where students build and deploy a production-ready application. This hands-on approach ensures that our graduates are not just "job-ready," but are capable of leading engineering initiatives from day one.
+                                </p>
+                                <p>
+                                    Furthermore, our 1-on-1 mentorship program ensures that no student is left behind. You get personalized feedback on your PRs (Pull Requests), architectural guidance, and career coaching. We believe in high-intensity, immersion-based learning that transforms a student into a professional engineer through consistent practice and expert guidance.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Final CTA - Mobile */}
@@ -373,6 +397,10 @@ const OnlineProgram = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-orange-600 selection:text-white relative font-['Outfit']">
+            <SEO 
+                title="Online Tech Specialization Programs" 
+                description="Explore our high-intensity online specialization tracks in AI, Machine Learning, Robotics, and Web Architecture. Industrial-grade learning for future engineers."
+            />
             <PremiumNavbar variant="dark" />
             
             {/* Background Decorative Mesh - Industrial Dark */}
@@ -442,6 +470,37 @@ const OnlineProgram = () => {
                             </div>
                         )}
                     </motion.div>
+                </div>
+
+                {/* Industrial Learning Philosophy Section - Desktop (300-500 words for SEO) */}
+                <div className="max-w-7xl mx-auto px-6 md:px-12 py-32 border-t border-white/5">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                        <div>
+                            <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-10">The Thinkskool <br/>Engineering Standard</h3>
+                            <div className="space-y-6 text-lg text-slate-400 font-medium leading-relaxed">
+                                <p>
+                                    In the rapidly evolving landscape of global technology, the gap between traditional education and industry requirements is widening. Thinkskool was founded with a singular mission: to architect the next generation of global engineering excellence through industrial immersion. Our online programs are not merely courses; they are comprehensive specialization tracks designed to transform aspiring developers into world-class engineers.
+                                </p>
+                                <p>
+                                    We believe that true mastery comes from building at scale. Every module in our Academic Hub is built around this "Production-First" philosophy. Whether you are specializing in <span className="text-blue-400">AI & Machine Learning</span>, <span className="text-orange-400">IoT & Robotics</span>, or <span className="text-cyan-400">Web Architecture</span>, you are exposed to the same architectural patterns, security protocols, and scalability challenges faced by senior engineers at top-tier tech firms.
+                                </p>
+                                <p>
+                                    Our curriculum is dynamic, updated quarterly to reflect the latest shifts in the tech ecosystem. We move beyond basic syntax, focusing on deep-tech concepts like distributed systems, edge computing, neural network optimization, and secure infrastructure. This ensures that our students are not just learning for today, but are building a foundation for the technology of tomorrow.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="space-y-6 text-lg text-slate-400 font-medium leading-relaxed lg:pt-[116px]">
+                            <p>
+                                The Thinkskool advantage lies in our 360-degree support ecosystem. Every student is paired with an industry mentor who provides 1-on-1 guidance, code reviews, and architectural feedback. This personalized approach ensures that you are not just watching videos, but are actively engaging with expert perspectives. Our Code Lab provides a high-performance environment for experimentation, allowing you to deploy and test your projects in real-world scenarios.
+                            </p>
+                            <p>
+                                Our commitment to your career extends beyond technical training. We provide comprehensive career support, including portfolio building, interview preparation, and direct placement access to our partner network of innovative tech companies. With a 100% deployment rate for our advanced tracks, we pride ourselves on being the definitive launchpad for high-intensity engineering careers.
+                            </p>
+                            <p>
+                                Join a community of forward-thinking innovators. At Thinkskool, you aren't just a student; you are an engineer-in-training, working on the frontier of what's possible. Secure your enrollment today and take the first step towards mastering the technologies that will define the future.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Final CTA - Dark Industrial */}

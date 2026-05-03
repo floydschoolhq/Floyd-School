@@ -3,66 +3,64 @@
   <!-- Main Marketing Pages -->
   <url>
     <loc>https://thinkskool.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/course</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/school-partnerships</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/online-program</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/bootcamp-gallery</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://thinkskool.in/downloads</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
-  
-  <!-- Authentication Pages -->
+
+  <!-- Individual Course Pages (Examples, should be updated dynamically or include main ones) -->
   <url>
-    <loc>https://thinkskool.in/student/login</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/classes</loc>
-  </url>
-  
-  <!-- Student Dashboard Pages (Protected) -->
-  <url>
-    <loc>https://thinkskool.in/student</loc>
+    <loc>https://thinkskool.in/course/1</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://thinkskool.in/student/dashboard</loc>
+    <loc>https://thinkskool.in/course/2</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://thinkskool.in/student/classroom</loc>
+    <loc>https://thinkskool.in/course/3</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://thinkskool.in/student/coding-lab</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/student/recordings</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/student/live-session</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/student/progress</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/student/reports</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/student/support</loc>
-  </url>
-  <url>
-    <loc>https://thinkskool.in/classroom</loc>
+    <loc>https://thinkskool.in/course/4</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Camera, Download } from 'lucide-react';
 import brochurePdf from '../assets/pdf/Brochure.pdf';
+import SEO from '../components/common/SEO';
 
 // Import images
 import img1 from '../assets/images/I1.jpg';
@@ -39,6 +40,10 @@ const BootcampGallery = () => {
 
     return (
         <div className="min-h-screen bg-[#0A0F1E] selection:bg-[#2563EB]/30">
+            <SEO 
+                title="Bootcamp Exhibition Gallery" 
+                description="Witness the industrial excellence of Thinkskool students. Explore our bootcamp exhibitions, project showcases, and industrial workshops in action."
+            />
             <div className="pt-40 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
@@ -121,6 +126,37 @@ const BootcampGallery = () => {
                             </div>
                         </motion.div>
                     ))}
+                </div>
+
+                {/* Descriptive Content for SEO (300+ words) */}
+                <div className="mt-32 pt-20 border-t border-white/5">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                        <div>
+                            <h2 className="text-2xl font-black text-white uppercase tracking-tighter mb-8">The Industrial Bootcamp Experience</h2>
+                            <div className="space-y-6 text-sm text-slate-400 font-medium leading-relaxed">
+                                <p>
+                                    Thinkskool's Industrial Bootcamps are designed to be high-intensity, immersive learning experiences that go far beyond traditional classroom training. Our exhibitions and galleries showcase the culmination of weeks of rigorous training, where students transition from theory to practice by building production-grade systems. From IoT-enabled robotics to full-scale web architectures, the projects displayed here represent the future of engineering.
+                                </p>
+                                <p>
+                                    Every exhibition is an opportunity for students to interact with industry veterans, receive feedback on their architectural decisions, and demonstrate their readiness for the global tech market. We believe that seeing is believing, and these visual archives serve as a testament to the growth and capability of our student community.
+                                </p>
+                                <p>
+                                    Our bootcamps focus on "Learning by Doing." Students are organized into agile squads, simulating a real-world engineering department. They use industry-standard tools like Git, Jira, and Docker, ensuring that their workflow is as professional as their output. The gallery captures these moments of intense collaboration, problem-solving, and the final "Eureka" moments of deployment.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="space-y-6 text-sm text-slate-400 font-medium leading-relaxed lg:pt-16">
+                            <p>
+                                Beyond the technical skills, our exhibitions highlight the "Soft Skills" critical for engineering success. Students present their work to panels of experts, explaining their technical choices, discussing trade-offs, and defending their architectural designs. This prepares them for the high-stakes environments of modern tech companies where communication is as important as code.
+                            </p>
+                            <p>
+                                We invite schools, universities, and industrial partners to explore these archives. They provide a window into the "Thinkskool Standard"—a benchmark for excellence in technical education. Each image tells a story of a student who dared to step out of their comfort zone and into the world of industrial-grade engineering.
+                            </p>
+                            <p>
+                                The projects showcased in our gallery often lead to real-world applications and startup ideas. We provide the mentorship and resources for students to take these prototypes further, fostering a culture of innovation and entrepreneurship. By witnessing these exhibitions, you are seeing the first steps of the next generation of tech leaders.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Bottom CTA */}

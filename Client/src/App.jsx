@@ -12,6 +12,7 @@ import PremiumNavbar from './components/PremiumNavbar';
 import MentorGrid from './components/MentorGrid';
 import PlatformPanels from './components/PlatformPanels';
 import StudentProjects from './components/StudentProjects';
+import SEOContentSection from './components/common/SEOContentSection';
 import SuccessStories from './components/SuccessStories';
 import TechStackStats from './components/TechStackStats';
 import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
@@ -19,6 +20,7 @@ import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
+import SEO from './components/common/SEO';
 
 // Eager load ALL student portal pages (priority - instant for logged-in users)
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
@@ -62,6 +64,10 @@ const HomePage = () => {
     const isMobile = useIsMobile();
     return (
         <MotionConfig transition={isMobile ? { duration: 0 } : undefined}>
+            <SEO 
+                title="Industrial Tech Training & Mentorship" 
+                description="Thinkskool offers industrial-grade tech training, 1-on-1 mentorship, and real-world project experience in AI, Robotics, Web Dev, and more."
+            />
             <div className='relative'>
                 <GlobalNotificationListener />
                 <div>
@@ -71,6 +77,7 @@ const HomePage = () => {
                     <OnlineCourseFocus variant="dark" />
                     <MentorGrid />
                     <StudentProjects />
+                    <SEOContentSection />
                     <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
                 </div>
@@ -114,8 +121,20 @@ const App = () => {
     // This returns true if the current path matches any path in the hideLayoutOnPaths array
     const shouldHideLayout = hideLayoutOnPaths.includes(location.pathname);
     
-    // Footer only shows on home page
-    const showFooter = location.pathname === '/';
+    // Footer shows on all public marketing pages
+    const publicPaths = [
+        '/',
+        '/contact',
+        '/course',
+        '/downloads',
+        '/school-partnerships',
+        '/online-program',
+        '/bootcamp-gallery',
+        '/faq'
+    ];
+    
+    const isPublicPath = publicPaths.includes(location.pathname) || location.pathname.startsWith('/course/');
+    const showFooter = isPublicPath;
 
     // 4. Disable browser's automatic scroll restoration
     useEffect(() => {
