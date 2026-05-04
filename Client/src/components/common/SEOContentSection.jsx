@@ -36,9 +36,9 @@ const Paragraph = ({ text, index, total, progress }) => {
                 y, 
                 scale, 
                 filter: blur,
-                position: index === 0 ? 'relative' : 'absolute' 
+                position: 'absolute' 
             }}
-            className="w-full text-lg md:text-2xl font-light tracking-wide leading-relaxed text-white"
+            className="w-full text-lg md:text-2xl font-light tracking-wide leading-relaxed text-white text-center"
         >
             {text}
         </motion.p>
@@ -61,7 +61,7 @@ const SEOContentSection = () => {
     });
 
     const scaleX = useSpring(scrollYProgress, {
-        stiffness: 40, // Very smooth, liquid movement
+        stiffness: 40,
         damping: 15,
         restDelta: 0.001
     });
@@ -69,10 +69,10 @@ const SEOContentSection = () => {
     return (
         <section 
             ref={containerRef}
-            style={{ height: `${(paragraphs.length + 1) * 100}vh` }}
+            style={{ height: `${(paragraphs.length + 1) * 120}vh` }}
             className="relative bg-black"
         >
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black/60 backdrop-blur-3xl">
+            <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-center overflow-hidden bg-black/60 backdrop-blur-3xl">
                 {/* Minimalist White Pinned Indicator */}
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-50">
                     <motion.div 
@@ -89,15 +89,15 @@ const SEOContentSection = () => {
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="mb-20"
+                        className="mb-12 md:mb-20"
                     >
-                        <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.25em] mb-6 leading-none">
+                        <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.25em] mb-4 md:mb-6 leading-none">
                             The <span className="text-[#2563EB]">Think</span><span className="text-[#F97316]">skool</span> <br/><span className="font-black text-white">Pedagogy</span>
                         </h2>
                         <div className="w-16 h-[1px] bg-white/40 mx-auto" />
                     </motion.div>
 
-                    <div className="relative h-64 md:h-48 flex items-center justify-center text-white">
+                    <div className="relative h-96 md:h-48 flex items-center justify-center text-white">
                         {paragraphs.map((text, i) => (
                             <Paragraph 
                                 key={i} 
@@ -115,10 +115,10 @@ const SEOContentSection = () => {
                             scale: useTransform(scrollYProgress, [0.92, 1], [0.9, 1]),
                             filter: useTransform(scrollYProgress, [0.92, 1], ["blur(10px)", "blur(0px)"])
                         }}
-                        className="mt-20 inline-flex items-center gap-8 p-10 bg-white/[0.03] rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl"
+                        className="mt-12 md:mt-20 inline-flex items-center gap-4 md:gap-8 p-6 md:p-10 bg-white/[0.03] rounded-[2.5rem] md:rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl"
                     >
-                        <div className="text-6xl font-black text-white tracking-tighter">1000+</div>
-                        <div className="text-[10px] font-light text-white/60 uppercase tracking-[0.4em] leading-tight text-left">
+                        <div className="text-4xl md:text-6xl font-black text-white tracking-tighter">1000+</div>
+                        <div className="text-[8px] md:text-[10px] font-light text-white/60 uppercase tracking-[0.4em] leading-tight text-left">
                             Students Trained <br/> & Deployed Globally
                         </div>
                     </motion.div>
@@ -129,7 +129,7 @@ const SEOContentSection = () => {
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
                 >
                     <span className="text-[10px] font-light text-white/30 uppercase tracking-[0.6em]">Begin Journey</span>
-                    <div className="w-[1px] h-16 bg-gradient-to-b from-white/30 to-transparent" />
+                    <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-white/30 to-transparent" />
                 </motion.div>
             </div>
         </section>

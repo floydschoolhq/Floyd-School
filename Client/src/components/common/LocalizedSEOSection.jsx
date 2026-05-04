@@ -5,7 +5,6 @@ const Paragraph = ({ text, index, total, progress }) => {
     const start = index / total;
     const end = (index + 1) / total;
     
-    // Smoother transitions with eased mapping
     const opacity = useTransform(
         progress,
         [start, start + 0.08, end - 0.08, end],
@@ -37,9 +36,9 @@ const Paragraph = ({ text, index, total, progress }) => {
                 y, 
                 scale, 
                 filter: blur,
-                position: index === 0 ? 'relative' : 'absolute' 
+                position: 'absolute' 
             }}
-            className="w-full text-lg md:text-2xl font-light tracking-wide leading-relaxed px-6 text-white"
+            className="w-full text-lg md:text-2xl font-light tracking-wide leading-relaxed px-6 text-white text-center"
         >
             {text}
         </motion.p>
@@ -54,12 +53,13 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
     });
 
     const scaleX = useSpring(scrollYProgress, {
-        stiffness: 50, // Lower stiffness for smoother "liquid" movement
+        stiffness: 50,
         damping: 20,
         restDelta: 0.001
     });
 
-    const containerHeight = `${(paragraphs.length + 1) * 100}vh`;
+    // Mobile needs a bit more scroll space to feel smooth
+    const containerHeight = `${(paragraphs.length + 1) * 120}vh`;
 
     return (
         <section 
@@ -67,7 +67,7 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
             style={{ height: containerHeight }}
             className="relative bg-black"
         >
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black/40 backdrop-blur-3xl">
+            <div className="sticky top-0 h-[100svh] w-full flex flex-col items-center justify-center overflow-hidden bg-black/40 backdrop-blur-3xl">
                 {/* Minimalist White Progress Indicator */}
                 <div className="absolute top-0 left-0 w-full h-[1px] z-50 bg-white/10">
                     <motion.div 
@@ -84,9 +84,9 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="mb-20"
+                        className="mb-12 md:mb-20"
                     >
-                        <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.2em] mb-6 leading-tight">
+                        <h2 className="text-3xl md:text-6xl font-light text-white uppercase tracking-[0.2em] mb-4 md:mb-6 leading-tight">
                             {title.includes('Thinkskool') ? (
                                 <>
                                     {title.split('Thinkskool')[0]}
@@ -101,7 +101,7 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                         <div className="w-12 h-[1px] bg-white/40 mx-auto" />
                     </motion.div>
 
-                    <div className="relative h-64 md:h-48 flex items-center justify-center">
+                    <div className="relative h-80 md:h-48 flex items-center justify-center">
                         {paragraphs.map((text, i) => (
                             <Paragraph 
                                 key={i} 
@@ -120,7 +120,7 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
                 >
                     <span className="text-[9px] font-light text-white uppercase tracking-[0.5em] opacity-30">Scroll Down</span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
+                    <div className="w-[1px] h-8 md:h-12 bg-gradient-to-b from-white/40 to-transparent" />
                 </motion.div>
             </div>
         </section>

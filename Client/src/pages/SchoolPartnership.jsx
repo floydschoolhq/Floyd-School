@@ -9,6 +9,8 @@ import PartnershipDomains from '../components/SchoolPartnership/PartnershipDomai
 import NationalHackathon from '../components/SchoolPartnership/NationalHackathon';
 import WhyPartnerWithUs from '../components/SchoolPartnership/WhyPartnerWithUs';
 import TestimonialsSection from '../components/SchoolPartnership/TestimonialsSection';
+import BootcampGallery from '../components/SchoolPartnership/BootcampGallery';
+import PartnershipForm from '../components/SchoolPartnership/PartnershipForm';
 import SEO from '../components/common/SEO';
 import LocalizedSEOSection from '../components/common/LocalizedSEOSection';
 // import SchoolBenefits from '../components/SchoolPartnership/SchoolBenefits';
@@ -41,8 +43,8 @@ const SchoolPartnership = () => {
       
       {/* Crawlable Content Section for SEO */}
       <LocalizedSEOSection 
-        title="Architecting Future Leaders"
-        highlight="through School Partnerships"
+        title="Architecting"
+        highlight="Future Leaders"
         dark={false}
         paragraphs={[
           "In today's rapidly evolving digital economy, the traditional academic curriculum often struggles to keep pace with industrial demands. Thinkskool's School Partnership program is designed to bridge this critical gap, transforming schools into hubs of technical excellence and innovation. By integrating industrial-grade tech education directly into the school ecosystem, we empower students with the skills required for the 21st-century workforce.",

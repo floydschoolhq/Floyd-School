@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import SectionHeader from '../components/common/SectionHeader';
 import LeadFormModal from '../components/LeadFormModal';
 import PremiumNavbar from '../components/PremiumNavbar';
+import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
+import useIsMobile from '../hooks/useIsMobile';
 import SEO from '../components/common/SEO';
 import LocalizedSEOSection from '../components/common/LocalizedSEOSection';
 

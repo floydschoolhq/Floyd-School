@@ -26,6 +26,8 @@ import { FALLBACK_COURSES } from '../constants/siteData';
 import PremiumNavbar from '../components/PremiumNavbar';
 import CourseFacultyGrid from '../components/CourseFacultyGrid';
 import CourseReviews from '../components/CourseReviews';
+import CourseFAQ from '../components/CourseFAQ';
+import PaymentModal from '../components/PaymentModal';
 import SEO from '../components/common/SEO';
 import LocalizedSEOSection from '../components/common/LocalizedSEOSection';
 import CourseOfferings from '../components/CourseOfferings';
