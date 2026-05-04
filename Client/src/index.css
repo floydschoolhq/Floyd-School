@@ -186,7 +186,7 @@ body {
 
 /* Global Mobile Optimizations */
 @media (max-width: 768px) {
-    section { 
+    section:not(.seo-immersive) { 
         padding: 1rem 1rem; 
         text-align: center;
     }
@@ -195,19 +195,11 @@ body {
     h2 { font-size: 2rem; line-height: 1.2; }
     h3 { font-size: 1.5rem; }
     
-    /* Global scroll overflow fix */
+    /* Global scroll overflow fix - changed to clip to avoid breaking sticky positioning */
     body, html { 
-        overflow-x: hidden; 
+        overflow-x: clip; 
         width: 100%; 
         position: relative; 
-    }
-
-    /* Stable mode: Disable animations on mobile */
-    *, *::before, *::after {
-        animation-duration: 0s !important;
-        animation-delay: 0s !important;
-        transition-duration: 0s !important;
-        transition-delay: 0s !important;
     }
 }
 
