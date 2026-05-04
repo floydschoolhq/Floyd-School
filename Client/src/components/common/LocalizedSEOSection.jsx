@@ -96,7 +96,13 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                                 </>
                             ) : title}
                             <br/>
-                            <span className="font-black text-white">{highlight}</span>
+                            <span className="font-black text-white">
+                                {highlight.split(' ').map((word, index) => {
+                                    if (word.includes('Career')) return <span key={index} className="text-[#2563EB]">{word} </span>;
+                                    if (word.includes('Support')) return <span key={index} className="text-[#F97316]">{word} </span>;
+                                    return <span key={index}>{word} </span>;
+                                })}
+                            </span>
                         </h2>
                         <div className="w-12 h-[1px] bg-white/40 mx-auto" />
                     </motion.div>
