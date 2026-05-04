@@ -203,7 +203,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
             <div
                 id="custom-yt-player"
                 className="w-full h-full pointer-events-none"
-                style={{ transform: 'scale(1.2) translateY(-5%)' }}
+                style={{ transform: 'scale(1.02)' }}
             />
 
             {/* Overlay Controls */}
