@@ -7,26 +7,38 @@ const Paragraph = ({ text, index, total, progress }) => {
     
     const opacity = useTransform(
         progress,
-        [start, start + 0.05, end - 0.05, end],
+        [start, start + 0.08, end - 0.08, end],
         [0, 1, 1, 0]
     );
     
     const y = useTransform(
         progress,
-        [start, start + 0.05, end - 0.05, end],
-        [30, 0, 0, -30]
+        [start, start + 0.08, end - 0.08, end],
+        [50, 0, 0, -50]
     );
 
     const scale = useTransform(
         progress,
-        [start, start + 0.05, end - 0.05, end],
-        [0.95, 1, 1, 1.05]
+        [start, start + 0.08, end - 0.08, end],
+        [0.98, 1, 1, 1.02]
+    );
+
+    const blur = useTransform(
+        progress,
+        [start, start + 0.08, end - 0.08, end],
+        ["blur(15px)", "blur(0px)", "blur(0px)", "blur(15px)"]
     );
 
     return (
         <motion.p
-            style={{ opacity, y, scale, position: index === 0 ? 'relative' : 'absolute' }}
-            className="w-full text-lg md:text-2xl font-medium leading-relaxed"
+            style={{ 
+                opacity, 
+                y, 
+                scale, 
+                filter: blur,
+                position: index === 0 ? 'relative' : 'absolute' 
+            }}
+            className="w-full text-lg md:text-2xl font-light tracking-wide leading-relaxed text-white"
         >
             {text}
         </motion.p>
@@ -49,8 +61,8 @@ const SEOContentSection = () => {
     });
 
     const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
+        stiffness: 40, // Very smooth, liquid movement
+        damping: 15,
         restDelta: 0.001
     });
 
@@ -58,34 +70,34 @@ const SEOContentSection = () => {
         <section 
             ref={containerRef}
             style={{ height: `${(paragraphs.length + 1) * 100}vh` }}
-            className="relative bg-white"
+            className="relative bg-black"
         >
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-                {/* Pinned Scroll Indicator */}
-                <div className="absolute top-0 left-0 w-full h-2 bg-slate-50 z-50">
+            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black/60 backdrop-blur-3xl">
+                {/* Minimalist White Pinned Indicator */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-50">
                     <motion.div 
                         style={{ scaleX }}
-                        className="h-full bg-gradient-to-r from-blue-600 to-pink-500 origin-left"
+                        className="h-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.6)] origin-left"
                     />
                 </div>
 
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[120px] -mr-64 -mt-64" />
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-50/50 rounded-full blur-[120px] -ml-64 -mb-64" />
+                {/* Subtle Radial Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.04] to-transparent pointer-events-none" />
                 
                 <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="mb-16"
+                        className="mb-20"
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 uppercase tracking-tighter mb-6 leading-none">
-                            The Thinkskool <br/><span className="text-blue-600">Pedagogy</span>
+                        <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.25em] mb-6 leading-none">
+                            The Thinkskool <br/><span className="font-black text-white">Pedagogy</span>
                         </h2>
-                        <div className="w-24 h-1.5 bg-blue-600 mx-auto rounded-full" />
+                        <div className="w-16 h-[1px] bg-white/40 mx-auto" />
                     </motion.div>
 
-                    <div className="relative h-64 md:h-48 flex items-center justify-center text-slate-600">
+                    <div className="relative h-64 md:h-48 flex items-center justify-center text-white">
                         {paragraphs.map((text, i) => (
                             <Paragraph 
                                 key={i} 
@@ -99,24 +111,25 @@ const SEOContentSection = () => {
 
                     <motion.div 
                         style={{ 
-                            opacity: useTransform(scrollYProgress, [0.9, 1], [0, 1]),
-                            scale: useTransform(scrollYProgress, [0.9, 1], [0.8, 1])
+                            opacity: useTransform(scrollYProgress, [0.92, 1], [0, 1]),
+                            scale: useTransform(scrollYProgress, [0.92, 1], [0.9, 1]),
+                            filter: useTransform(scrollYProgress, [0.92, 1], ["blur(10px)", "blur(0px)"])
                         }}
-                        className="mt-20 inline-flex items-center gap-6 p-8 bg-slate-50 rounded-[2.5rem] border border-slate-200 shadow-xl"
+                        className="mt-20 inline-flex items-center gap-8 p-10 bg-white/[0.03] rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl"
                     >
-                        <div className="text-5xl font-black text-blue-600 tracking-tighter">1000+</div>
-                        <div className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] leading-tight text-left">
+                        <div className="text-6xl font-black text-white tracking-tighter">1000+</div>
+                        <div className="text-[10px] font-light text-white/60 uppercase tracking-[0.4em] leading-tight text-left">
                             Students Trained <br/> & Deployed Globally
                         </div>
                     </motion.div>
                 </div>
 
                 <motion.div 
-                    style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                    style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
+                    className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
                 >
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Scroll to Explore Pedagogy</span>
-                    <div className="w-0.5 h-8 bg-gradient-to-b from-blue-600 to-transparent" />
+                    <span className="text-[10px] font-light text-white/30 uppercase tracking-[0.6em]">Begin Journey</span>
+                    <div className="w-[1px] h-16 bg-gradient-to-b from-white/30 to-transparent" />
                 </motion.div>
             </div>
         </section>
