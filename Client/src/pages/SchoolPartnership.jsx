@@ -12,6 +12,7 @@ import TestimonialsSection from '../components/SchoolPartnership/TestimonialsSec
 import PartnershipForm from '../components/SchoolPartnership/PartnershipForm';
 import BootcampGallery from '../components/SchoolPartnership/BootcampGallery';
 import SEO from '../components/common/SEO';
+import ScrollProgressIndicator from '../components/common/ScrollProgressIndicator';
 // import SchoolBenefits from '../components/SchoolPartnership/SchoolBenefits';
 // import StudentBenefits from '../components/SchoolPartnership/StudentBenefits';
 // import StudentProjects from '../components/SchoolPartnership/StudentProjects';
@@ -24,6 +25,7 @@ const SchoolPartnership = () => {
         title="School Partnerships & Tech Bootcamps" 
         description="Partner with Thinkskool to bring industrial-grade tech education to your school. We offer free trial bootcamps, specialized tracks, and national hackathons."
       />
+      <ScrollProgressIndicator />
       <PartnershipHero />
       <BootcampGallery />
       <TheProblem />

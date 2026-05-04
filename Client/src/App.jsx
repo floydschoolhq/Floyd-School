@@ -21,6 +21,7 @@ import Hackathon from './components/Hackathon.jsx';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 import SEO from './components/common/SEO';
+import ScrollProgressIndicator from './components/common/ScrollProgressIndicator';
 
 // Eager load ALL student portal pages (priority - instant for logged-in users)
 import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
@@ -68,6 +69,7 @@ const HomePage = () => {
                 title="Industrial Tech Training & Mentorship" 
                 description="Thinkskool offers industrial-grade tech training, 1-on-1 mentorship, and real-world project experience in AI, Robotics, Web Dev, and more."
             />
+            <ScrollProgressIndicator />
             <div className='relative'>
                 <GlobalNotificationListener />
                 <div>

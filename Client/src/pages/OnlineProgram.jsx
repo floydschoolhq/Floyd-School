@@ -12,6 +12,7 @@ import PremiumNavbar from '../components/PremiumNavbar';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
 import useIsMobile from '../hooks/useIsMobile';
 import SEO from '../components/common/SEO';
+import ScrollProgressIndicator from '../components/common/ScrollProgressIndicator';
 
 const iconMap = {
     Cpu: Cpu,
@@ -401,6 +402,7 @@ const OnlineProgram = () => {
                 title="Online Tech Specialization Programs" 
                 description="Explore our high-intensity online specialization tracks in AI, Machine Learning, Robotics, and Web Architecture. Industrial-grade learning for future engineers."
             />
+            <ScrollProgressIndicator />
             <PremiumNavbar variant="dark" />
             
             {/* Background Decorative Mesh - Industrial Dark */}

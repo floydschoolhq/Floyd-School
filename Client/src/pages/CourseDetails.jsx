@@ -34,6 +34,7 @@ import FinalProject from '../components/FinalProject';
 import sampleCertificate from '../assets/images/sample2Certificate.png';
 import api from '../api/axios';
 import SEO from '../components/common/SEO';
+import ScrollProgressIndicator from '../components/common/ScrollProgressIndicator';
 
 const iconMap = {
     Cpu: Cpu,
@@ -96,6 +97,7 @@ const CourseDetails = () => {
                 title={course?.title ? `${course.title} Program` : 'Course Details'} 
                 description={course?.description || 'Deep-tech specialization tracks architected for high-intensity industrial learning.'}
             />
+            <ScrollProgressIndicator />
             
             {/* Background Decorative Mesh - Industrial Dark */}
             <div className="fixed inset-0 pointer-events-none z-10">
