@@ -15,16 +15,17 @@ const FinalProject = () => {
                         viewport={{ once: true }}
                         className="mb-10"
                     >
-                        <div className="aspect-video bg-[#0A0A0A] rounded-2xl overflow-hidden shadow-2xl relative group border-4 border-slate-100">
+                        <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative group border-4 border-slate-100">
                             <iframe 
                                 width="100%" 
-                                height="100%" 
-                                style={{ pointerEvents: 'none' }}
+                                height="120%" 
+                                style={{ pointerEvents: 'none', top: '-10%', position: 'absolute' }}
                                 src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
                                 title="YouTube video player" 
                                 frameBorder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowFullScreen
+                                className="w-full object-cover scale-[1.1]"
                             ></iframe>
                         </div>
                     </motion.div>
@@ -134,15 +135,16 @@ const FinalProject = () => {
                             
                             <div className="relative aspect-video bg-black rounded-2xl border border-white/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform group-hover/video:scale-[1.02] transition-transform duration-500 w-full">
                                 <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none z-10" />
+                                
                                 <iframe 
                                     width="100%" 
-                                    height="100%" 
-                                    style={{ pointerEvents: 'none', border: 'none' }}
+                                    height="120%" 
+                                    style={{ pointerEvents: 'none', border: 'none', top: '-10%', position: 'absolute' }}
                                     src="https://www.youtube.com/embed/BREYIm9ctQU?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=BREYIm9ctQU&disablekb=1&fs=0" 
                                     title="YouTube video player" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                     allowFullScreen
-                                    className="opacity-90 group-hover/video:opacity-100 transition-opacity duration-500 absolute inset-0"
+                                    className="opacity-90 group-hover/video:opacity-100 transition-opacity duration-500 w-full object-cover scale-[1.1]"
                                 ></iframe>
                             </div>
                         </div>
