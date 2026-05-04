@@ -87,7 +87,14 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                         className="mb-20"
                     >
                         <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.2em] mb-6 leading-tight">
-                            {title} <br/>
+                            {title.includes('Thinkskool') ? (
+                                <>
+                                    {title.split('Thinkskool')[0]}
+                                    <span className="text-[#2563EB]">Thinkskool</span>
+                                    {title.split('Thinkskool')[1]}
+                                </>
+                            ) : title}
+                            <br/>
                             <span className="font-black text-white">{highlight}</span>
                         </h2>
                         <div className="w-12 h-[1px] bg-white/40 mx-auto" />
