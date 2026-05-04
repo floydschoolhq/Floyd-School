@@ -92,7 +92,7 @@ const SEOContentSection = () => {
                         className="mb-20"
                     >
                         <h2 className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.25em] mb-6 leading-none">
-                            The <span className="text-[#2563EB]">Thinkskool</span> <br/><span className="font-black text-white">Pedagogy</span>
+                            The <span className="text-[#2563EB]">Think</span><span className="text-[#F97316]">skool</span> <br/><span className="font-black text-white">Pedagogy</span>
                         </h2>
                         <div className="w-16 h-[1px] bg-white/40 mx-auto" />
                     </motion.div>

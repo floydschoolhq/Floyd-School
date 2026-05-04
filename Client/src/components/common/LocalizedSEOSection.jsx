@@ -90,7 +90,8 @@ const LocalizedSEOSection = ({ title, highlight, paragraphs }) => {
                             {title.includes('Thinkskool') ? (
                                 <>
                                     {title.split('Thinkskool')[0]}
-                                    <span className="text-[#2563EB]">Thinkskool</span>
+                                    <span className="text-[#2563EB]">Think</span>
+                                    <span className="text-[#F97316]">skool</span>
                                     {title.split('Thinkskool')[1]}
                                 </>
                             ) : title}
