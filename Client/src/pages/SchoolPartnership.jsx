@@ -28,6 +28,17 @@ const SchoolPartnership = () => {
       <TheProblem />
       <HowItWorks />
       
+
+
+      <WhatSchoolGets />
+      <GroupProjects />
+      <FourStageLearning />
+      <PartnershipRoadmap />
+      <PartnershipDomains />
+      <NationalHackathon />
+      <WhyPartnerWithUs />
+      <TestimonialsSection />
+      
       {/* Crawlable Content Section for SEO */}
       <LocalizedSEOSection 
         title="Architecting Future Leaders"
@@ -41,15 +52,6 @@ const SchoolPartnership = () => {
           "Our semester-end certifications and national-level hackathons provide students with the recognition and competitive edge they need for future academic and career pursuits. Join the growing network of forward-thinking educational institutions that are redefining what's possible in school-level technical education. Partner with Thinkskool today and let's architect the future of engineering excellence together."
         ]}
       />
-
-      <WhatSchoolGets />
-      <GroupProjects />
-      <FourStageLearning />
-      <PartnershipRoadmap />
-      <PartnershipDomains />
-      <NationalHackathon />
-      <WhyPartnerWithUs />
-      <TestimonialsSection />
       <PartnershipForm />
     </div>
   );
