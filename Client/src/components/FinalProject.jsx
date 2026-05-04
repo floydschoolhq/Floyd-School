@@ -1,9 +1,23 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import useIsMobile from '../hooks/useIsMobile';
 
 const FinalProject = () => {
     const isMobile = useIsMobile();
+    const [isRevealed, setIsRevealed] = useState(false);
+
+    // Technique to hide the initial YouTube logo/title during boot-up
+    useEffect(() => {
+        const timer = setTimeout(() => setIsRevealed(true), 3500);
+        return () => clearTimeout(timer);
+    }, []);
+
+    const VideoLoader = () => (
+        <div className="absolute inset-0 bg-black z-30 flex flex-col items-center justify-center gap-4">
+            <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Initializing Engine</span>
+        </div>
+    );
 
     if (isMobile) {
         return (
@@ -16,6 +30,18 @@ const FinalProject = () => {
                         className="mb-10"
                     >
                         <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative group border-4 border-slate-100">
+                            <AnimatePresence>
+                                {!isRevealed && (
+                                    <motion.div 
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.8 }}
+                                        className="absolute inset-0 z-40"
+                                    >
+                                        <VideoLoader />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                            
                             <iframe 
                                 width="100%" 
                                 height="120%" 
@@ -78,11 +104,9 @@ const FinalProject = () => {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="bg-slate-900/40 backdrop-blur-3xl p-8 md:p-12 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden group"
                 >
-                    {/* 3D Bevel/Reflective Edge */}
                     <div className="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 pointer-events-none z-10" />
                     <div className="absolute inset-0 rounded-[3rem] border-b border-r border-black/40 pointer-events-none z-10" />
 
-                    {/* Ambient Corner Glows */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -129,13 +153,23 @@ const FinalProject = () => {
                         </div>
                         
                         <div className="relative group/video mt-8 lg:mt-0 w-full max-w-[600px] mx-auto">
-
-                            {/* Video Aura */}
                             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur-2xl opacity-50 group-hover/video:opacity-100 transition duration-700 pointer-events-none" />
                             
                             <div className="relative aspect-video bg-black rounded-2xl border border-white/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform group-hover/video:scale-[1.02] transition-transform duration-500 w-full">
                                 <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none z-10" />
                                 
+                                <AnimatePresence>
+                                    {!isRevealed && (
+                                        <motion.div 
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 1 }}
+                                            className="absolute inset-0 z-40"
+                                        >
+                                            <VideoLoader />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
                                 <iframe 
                                     width="100%" 
                                     height="120%" 
