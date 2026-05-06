@@ -18,7 +18,7 @@ const PartnershipHero = () => {
     { name: 'Roadmap', action: () => scrollToSection('roadmap') },
     { name: 'Domains', action: () => scrollToSection('domains') },
     { name: 'Why Us', action: () => scrollToSection('why-us') },
-    { name: 'Host Hackathon', action: () => navigate('/bootcamp-gallery') },
+    { name: 'Host Hackathon', action: () => navigate('/hackathon') },
   ];
 
   return (

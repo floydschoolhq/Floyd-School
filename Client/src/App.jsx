@@ -45,6 +45,7 @@ import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
 import CourseDetails from './pages/CourseDetails.jsx';
 import FAQPage from './pages/FAQPage.jsx';
+import HackathonPage from './pages/HackathonPage.jsx';
 import AdminStudentsPage from './pages/Admin/AdminStudentsPage.jsx';
 import AdminCoursesPage from './pages/Admin/AdminCoursesPage.jsx';
 import ChatbotLeadsPage from './pages/Admin/ChatbotLeadsPage.jsx';
@@ -114,7 +115,8 @@ const App = () => {
         '/classroom',
         '/course',
         '/faq',
-        '/bootcamp-gallery'
+        '/bootcamp-gallery',
+        '/hackathon'
     ];
 
     // 3. Check if the current path is in the hidden list
@@ -130,7 +132,8 @@ const App = () => {
         '/school-partnerships',
         '/online-program',
         '/bootcamp-gallery',
-        '/faq'
+        '/faq',
+        '/hackathon'
     ];
     
     const isPublicPath = publicPaths.includes(location.pathname) || location.pathname.startsWith('/course/');
@@ -277,6 +280,9 @@ const App = () => {
 
                 {/* FAQ Page */}
                 <Route path='/faq' element={<FAQPage />} />
+
+                {/* Hackathon Page */}
+                <Route path='/hackathon' element={<HackathonPage />} />
 
                 {/* Classroom Access */}
                 <Route path='/classroom' element={
