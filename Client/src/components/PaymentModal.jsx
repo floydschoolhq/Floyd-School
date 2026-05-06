@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader, CheckCircle, AlertCircle } from 'lucide-react';
 import api from '../api/axios';
 
-const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 }) => {
+const PaymentModal = ({ isOpen, onClose, course }) => {
+    const courseId = course?._id;
+    const courseTitle = course?.title || '';
+    const coursePrice = course?.price || 0;
     const [step, setStep] = useState('details'); // details, success, error
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -334,7 +337,11 @@ const PaymentModal = ({ isOpen, onClose, courseId, courseTitle, coursePrice = 0 
                                         <div className="flex justify-between items-center">
                                             <span className="text-sm md:text-base text-slate-300 font-medium">Course Fee:</span>
                                             <div className="flex items-end gap-2">
-                                                <span className="text-xs md:text-sm font-medium text-slate-400 line-through mb-1">₹5,999</span>
+                                                {course?.originalPrice > 0 && (
+                                                    <span className="text-xs md:text-sm font-medium text-slate-400 line-through mb-1">
+                                                        ₹{course.originalPrice.toLocaleString('en-IN')}
+                                                    </span>
+                                                )}
                                                 <span className="text-xl md:text-2xl font-bold text-blue-400">
                                                     ₹{coursePrice.toLocaleString('en-IN')}
                                                 </span>

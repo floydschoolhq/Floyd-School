@@ -85,6 +85,11 @@ const courseSchema = new mongoose.Schema({
         default: 10,
         min: 0
     },
+    originalPrice: {
+        type: Number,
+        default: 15,
+        min: 0
+    },
     currency: {
         type: String,
         default: 'INR'

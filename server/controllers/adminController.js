@@ -769,3 +769,53 @@ exports.getFrictionDetails = async (req, res) => {
     }
 };
 
+/**
+ * @desc    Update course price
+ * @route   PATCH /api/admin/courses/:id/price
+ * @access  Private/Admin
+ */
+exports.updateCoursePrice = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { price, originalPrice } = req.body;
+        const updateData = {};
+
+        if (price !== undefined) {
+            if (price < 0) return res.status(400).json({ success: false, message: 'Invalid price value.' });
+            updateData.price = Number(price);
+        }
+
+        if (originalPrice !== undefined) {
+            if (originalPrice < 0) return res.status(400).json({ success: false, message: 'Invalid original price value.' });
+            updateData.originalPrice = Number(originalPrice);
+        }
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({ success: false, message: 'No price values provided.' });
+        }
+
+        const course = await Course.findByIdAndUpdate(id, updateData, { new: true });
+        if (!course) {
+            return res.status(404).json({ success: false, message: 'Course not found in the nexus.' });
+        }
+
+        if (req.user) {
+            const logMsg = `Price for course "${course.title}" updated: Price=₹${course.price}, Original=₹${course.originalPrice}`;
+            await SystemLog.create({
+                user: req.user._id,
+                event: 'Course Price Updated',
+                message: logMsg,
+                level: 'info'
+            }).catch(err => console.error('[Log Error]', err));
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            message: `Course pricing updated successfully.`,
+            course 
+        });
+    } catch (error) {
+        console.error('[AdminController:updateCoursePrice] ERROR:', error.stack);
+        res.status(500).json({ success: false, message: 'Failed to update course price.' });
+    }
+};

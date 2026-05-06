@@ -66,6 +66,9 @@ const CourseDetails = () => {
                         manualEnrollmentCount: res.data.manualEnrollmentCount,
                         totalSeats: res.data.totalSeats
                     });
+                    if (res.data.price) {
+                        setCourse(prev => ({ ...prev, price: res.data.price }));
+                    }
                 }
             } catch (err) {
                 console.warn('Live stats fetch failed, using fallback');
@@ -375,9 +378,7 @@ const CourseDetails = () => {
                 <PaymentModal 
                     isOpen={isRegistrationModalOpen} 
                     onClose={() => setIsRegistrationModalOpen(false)} 
-                    courseId={course?._id}
-                    courseTitle={course?.title || ''}
-                    coursePrice={course?.price || 0}
+                    course={course}
                 />
                 
             </div>

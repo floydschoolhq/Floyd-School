@@ -12,6 +12,7 @@ import PremiumNavbar from '../components/PremiumNavbar';
 import { FALLBACK_COURSES, supportRoles } from '../constants/siteData';
 import useIsMobile from '../hooks/useIsMobile';
 import SEO from '../components/common/SEO';
+import api from '../api/axios';
 
 const iconMap = {
     Cpu: Cpu,
@@ -242,7 +243,38 @@ const MentorSlideshow = () => {
 const OnlineProgram = () => {
     const navigate = useNavigate();
     const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+    const [courses, setCourses] = useState(FALLBACK_COURSES);
     const isMobile = useIsMobile();
+
+    React.useEffect(() => {
+        const fetchLiveCourses = async () => {
+            try {
+                // Try to get all courses or update prices for individual ones
+                // Since we have a public stats endpoint that includes price, we can use that for each course
+                const updatedCourses = await Promise.all(FALLBACK_COURSES.map(async (course) => {
+                    try {
+                        const res = await api.get(`/public/courses/${course._id}/stats`);
+                        if (res.data && res.data.success) {
+                            return { 
+                                ...course, 
+                                price: res.data.price || course.price,
+                                totalSeats: res.data.totalSeats || course.totalSeats,
+                                registeredCount: res.data.manualEnrollmentCount || course.registeredCount
+                            };
+                        }
+                    } catch (e) {
+                        console.warn(`Failed to fetch live data for course ${course._id}`);
+                    }
+                    return course;
+                }));
+                setCourses(updatedCourses);
+            } catch (err) {
+                console.error('Failed to synchronize course matrix', err);
+            }
+        };
+
+        fetchLiveCourses();
+    }, []);
 
     React.useEffect(() => {
         const hash = window.location.hash;
@@ -322,8 +354,8 @@ const OnlineProgram = () => {
 
                         {/* Courses Grid - Mobile 2 Columns */}
                         <div className="grid grid-cols-2 gap-4 mb-16">
-                            {FALLBACK_COURSES.length > 0 ? (
-                                FALLBACK_COURSES.map(course => (
+                            {courses.length > 0 ? (
+                                courses.map(course => (
                                     <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
                                 ))
                             ) : (
@@ -458,8 +490,8 @@ const OnlineProgram = () => {
                         }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
-                        {FALLBACK_COURSES.length > 0 ? (
-                            FALLBACK_COURSES.map(course => (
+                        {courses.length > 0 ? (
+                            courses.map(course => (
                                 <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
                             ))
                         ) : (

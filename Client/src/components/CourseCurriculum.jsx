@@ -13,6 +13,10 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     const [selectedMonth, setSelectedMonth] = useState(null);
     const [registeredCount, setRegisteredCount] = useState(initialRegisteredCount);
     const [totalSeats, setTotalSeats] = useState(initialTotalSeats);
+    const [price, setPrice] = useState(3999);
+    const [originalPrice, setOriginalPrice] = useState(5999);
+    
+    const discount = originalPrice > 0 ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
     useEffect(() => {
         const fetchLiveStats = async () => {
@@ -22,6 +26,8 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                 if (res.data && res.data.success) {
                     setRegisteredCount(res.data.manualEnrollmentCount);
                     setTotalSeats(res.data.totalSeats);
+                    if (res.data.price) setPrice(res.data.price);
+                    if (res.data.originalPrice) setOriginalPrice(res.data.originalPrice);
                 }
             } catch (err) {
                 console.warn('Live stats fetch from public nexus failed, using fallback data');
@@ -397,12 +403,14 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                         <div className="w-full p-5 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 flex flex-col items-center justify-center mb-6">
                             <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Program Contribution</span>
                             <div className="flex items-center justify-center gap-3">
-                                <span className="text-sm font-semibold text-slate-600 line-through">₹5,999</span>
-                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹3,999</span>
+                                {originalPrice > 0 && <span className="text-sm font-semibold text-slate-600 line-through">₹{originalPrice.toLocaleString('en-IN')}</span>}
+                                <span className="text-3xl font-extrabold text-white tracking-tighter">₹{price.toLocaleString('en-IN')}</span>
                             </div>
-                            <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
-                                <span className="text-blue-400 text-[9px] font-bold uppercase tracking-widest">33% Launch Offer</span>
-                            </div>
+                            {discount > 0 && (
+                                <div className="mt-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
+                                    <span className="text-blue-400 text-[9px] font-bold uppercase tracking-widest">{discount}% Launch Offer</span>
+                                </div>
+                            )}
                         </div>
 
                         <button 
@@ -700,15 +708,17 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                     <div>
                                         <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Investment</p>
                                         <div className="flex items-end gap-2">
-                                            <span className="text-sm text-white/30 line-through font-medium">₹5,999</span>
+                                            {originalPrice > 0 && <span className="text-sm text-white/30 line-through font-medium">₹{originalPrice.toLocaleString('en-IN')}</span>}
                                             <span className="text-3xl font-headline font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">
-                                                ₹3,999
+                                                ₹{price.toLocaleString('en-IN')}
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.2)]">
-                                        33% OFF
-                                    </div>
+                                    {discount > 0 && (
+                                        <div className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                                            {discount}% OFF
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

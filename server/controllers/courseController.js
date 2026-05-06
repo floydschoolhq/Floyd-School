@@ -377,7 +377,7 @@ exports.getPublicCourseStats = async (req, res) => {
             query = { title: { $regex: new RegExp(id, 'i') } };
         }
 
-        const course = await Course.findOne(query).select('totalSeats manualEnrollmentCount title');
+        const course = await Course.findOne(query).select('totalSeats manualEnrollmentCount title price originalPrice');
         
         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found' });
@@ -387,7 +387,9 @@ exports.getPublicCourseStats = async (req, res) => {
             success: true,
             totalSeats: course.totalSeats || 50,
             manualEnrollmentCount: course.manualEnrollmentCount || 0,
-            title: course.title
+            title: course.title,
+            price: course.price,
+            originalPrice: course.originalPrice
         });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });

@@ -7,7 +7,8 @@ import {
     XCircle,
     Eye,
     AlertCircle,
-    FileText
+    FileText,
+    IndianRupee
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../api/axios';
@@ -51,6 +52,16 @@ const CourseGovernance = () => {
             fetchCourses();
         } catch (err) {
             toast.error('Failed to update enrollment stats');
+        }
+    };
+
+    const updatePrice = async (id, pricingData) => {
+        try {
+            await api.patch(`/admin/courses/${id}/price`, pricingData);
+            toast.success('Pricing infrastructure updated');
+            fetchCourses();
+        } catch (err) {
+            toast.error('Failed to update pricing');
         }
     };
 
@@ -113,6 +124,7 @@ const CourseGovernance = () => {
                         course={course} 
                         onUpdateStatus={updateStatus}
                         onUpdateStats={updateEnrollmentStats}
+                        onUpdatePrice={updatePrice}
                         idx={idx}
                     />
                 )) : (
@@ -126,14 +138,13 @@ const CourseGovernance = () => {
     );
 };
 
-const CourseCard = ({ course, onUpdateStatus, onUpdateStats, idx }) => {
-    const [stats, setStats] = useState({
-        totalSeats: course.totalSeats || 50,
-        manualEnrollmentCount: course.manualEnrollmentCount || 0
-    });
-
-    const hasChanges = stats.totalSeats !== course.totalSeats || 
-                       stats.manualEnrollmentCount !== course.manualEnrollmentCount;
+const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, idx }) => {
+    const [stats, setStats] = useState({ totalSeats: course.totalSeats || 50, manualEnrollmentCount: course.manualEnrollmentCount || 0 });
+    const [price, setPrice] = useState(course.price || 0);
+    const [originalPrice, setOriginalPrice] = useState(course.originalPrice || 0);
+    
+    const hasChanges = stats.totalSeats !== course.totalSeats || stats.manualEnrollmentCount !== course.manualEnrollmentCount;
+    const hasPriceChanges = price !== course.price || originalPrice !== course.originalPrice;
 
     return (
         <motion.div
@@ -168,7 +179,7 @@ const CourseCard = ({ course, onUpdateStatus, onUpdateStats, idx }) => {
                     </div>
                 </div>
 
-                {/* Enrollment & Capacity Management (THE NEW FEATURE) */}
+                {/* Enrollment & Capacity Management */}
                 <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50">
                     <div className="space-y-2 text-center sm:text-left">
                         <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Enrollment Control</p>
@@ -219,6 +230,54 @@ const CourseCard = ({ course, onUpdateStatus, onUpdateStats, idx }) => {
                             : 'bg-slate-800 text-slate-600 opacity-50 cursor-not-allowed'
                         }`}
                         title="Save Matrix Stats"
+                    >
+                        <CheckCircle2 size={20} />
+                    </button>
+                </div>
+
+                {/* Price Management */}
+                <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50">
+                    <div className="space-y-2 text-center sm:text-left">
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Pricing Model (₹)</p>
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
+                                <input 
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(Number(e.target.value))}
+                                    className="w-24 bg-slate-800 border border-slate-700 rounded-lg py-2 pl-8 pr-2 text-sm font-black text-white focus:border-sky-500/50 outline-none transition-all"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="h-10 w-px bg-slate-800 hidden sm:block"></div>
+
+                    <div className="space-y-2 text-center sm:text-left">
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Strike Price (₹)</p>
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
+                                <input 
+                                    type="number"
+                                    value={originalPrice}
+                                    onChange={(e) => setOriginalPrice(parseInt(e.target.value) || 0)}
+                                    className="w-24 bg-slate-800 border border-slate-700 rounded-lg py-2 pl-8 pr-2 text-sm font-black text-slate-500 focus:border-sky-500/50 outline-none transition-all"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        disabled={!hasPriceChanges}
+                        onClick={() => onUpdatePrice(course._id, { price, originalPrice })}
+                        className={`p-3 rounded-xl transition-all ${
+                            hasPriceChanges 
+                            ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/30' 
+                            : 'bg-slate-800 text-slate-600 opacity-50 cursor-not-allowed'
+                        }`}
+                        title="Update Pricing Infrastructure"
                     >
                         <CheckCircle2 size={20} />
                     </button>
