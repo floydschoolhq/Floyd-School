@@ -77,8 +77,8 @@ const HomePage = () => {
                     <OnlineCourseFocus variant="dark" />
                     <MentorGrid />
                     <StudentProjects />
-                    <SuccessStories variant="dark" />
                     <SEOContentSection />
+                    <SuccessStories variant="dark" />
                     <NeedHelpSection variant="dark" />
                 </div>
             </div>
