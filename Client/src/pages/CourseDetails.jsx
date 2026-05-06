@@ -96,7 +96,7 @@ const CourseDetails = () => {
     const isMobile = window.innerWidth < 768;
 
     return (
-        <div className={`min-h-screen ${courseId === '5' ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'} selection:bg-blue-600 selection:text-white relative font-['Outfit']`}>
+        <div className={`min-h-screen ${courseId === '5' ? 'bg-black text-white' : 'bg-gradient-to-br from-black via-slate-950 to-black text-white'} selection:bg-blue-600 selection:text-white relative font-['Outfit']`}>
             <SEO 
                 title={course?.title ? `${course.title} Program` : 'Course Details'} 
                 description={course?.description || 'Deep-tech specialization tracks architected for high-intensity industrial learning.'}
@@ -244,7 +244,7 @@ const CourseDetails = () => {
                     <section id="course-curriculum" className="p-0">
                         <CourseCurriculum 
                             courseId={courseId}
-                            variant={courseId === '5' ? "dark" : "light"} 
+                            variant="dark" 
                             initialRegisteredCount={course.registeredCount}
                             totalSeats={course.totalSeats}
                         />
@@ -267,7 +267,7 @@ const CourseDetails = () => {
                 <section 
                     id="course-faculty" 
                     className={isMobile 
-                        ? "bg-black border-t border-slate-100 p-0" 
+                        ? `${courseId === '5' ? 'bg-black' : 'bg-slate-950'} border-t border-white/5 p-0` 
                         : "bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20 p-0"
                     }
                 >
@@ -277,7 +277,7 @@ const CourseDetails = () => {
                             title="Faculty" 
                             isStatic={true} 
                             excludeName="Shivam Mishra" 
-                            variant={courseId === '5' ? "dark" : "light"} 
+                            variant="dark" 
                         />
                     </div>
                 </section>
@@ -290,11 +290,11 @@ const CourseDetails = () => {
                 )}
 
                 {/* Course Offerings Section */}
-                <section id="course-offerings" className={`bg-black px-0 overflow-hidden ${isMobile ? 'pb-16' : ''}`}>
-                    <CourseOfferings variant="dark" />
+                <section id="course-offerings" className={`${courseId === '5' ? 'bg-black' : 'bg-slate-950'} px-0 overflow-hidden ${isMobile ? 'pb-16' : ''}`}>
+                    <CourseOfferings courseId={courseId} variant="dark" />
                 </section>
 
-                <div id="course-reviews" className="bg-black">
+                <div id="course-reviews" className={courseId === '5' ? 'bg-black' : 'bg-slate-950'}>
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
 

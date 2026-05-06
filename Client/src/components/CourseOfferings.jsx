@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
  import useIsMobile from '../hooks/useIsMobile';
 
-const CourseOfferings = ({ variant = 'dark' }) => {
+const CourseOfferings = ({ courseId, variant = 'dark' }) => {
     const isDark = variant === 'dark';
     const isMobile = useIsMobile();
     const cardsRef = useRef([]);
@@ -61,7 +61,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
         ];
 
         return (
-            <section id="course-offerings" className={`py-8 px-5 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'} w-full`}>
+            <section id="course-offerings" className={`py-8 px-5 relative overflow-hidden ${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'} w-full`}>
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent pointer-events-none"></div>
                 
                 <div className="relative z-10 text-center mb-10 px-0">
@@ -97,7 +97,7 @@ const CourseOfferings = ({ variant = 'dark' }) => {
     }
 
     return (
-        <section id="course-offerings" className={`pt-12 pb-12 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
+        <section id="course-offerings" className={`pt-12 pb-12 relative overflow-hidden ${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'}`}>
             <div className="absolute inset-0 -z-10">
                 <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/8 to-transparent" />
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/8 to-transparent" />

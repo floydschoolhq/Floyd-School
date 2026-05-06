@@ -370,7 +370,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     }
 
     return (
-        <div className={`${variant === 'dark' ? 'bg-black' : 'bg-slate-50'} w-full overflow-hidden`}>
+        <div className={`${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'} w-full overflow-hidden`}>
             <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
                 <div className="relative inline-block mx-auto text-center">
                     <p className="max-w-4xl mx-auto text-base text-on-surface-variant font-light leading-relaxed italic relative z-10 px-6 whitespace-nowrap">
@@ -388,7 +388,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
             </div>
 
             {/* Premium Stats Command Center */}
-            <div className={`py-12 px-6 ${variant === 'dark' ? 'bg-black border-white/5' : 'bg-white border-slate-100'} relative overflow-hidden w-full border-y`}>
+            <div className={`py-12 px-6 ${courseId === '5' ? 'bg-black' : 'bg-slate-950'} relative overflow-hidden w-full border-y border-white/5`}>
                 <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
                     {stats.map((stat, i) => (
                         <motion.div
@@ -422,7 +422,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                 </div>
             </div>
 
-            <div className={`w-full ${variant === 'dark' ? 'bg-black' : 'bg-slate-50'}`}>
+            <div className={`w-full ${courseId === '5' ? 'bg-black' : 'bg-transparent'}`}>
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 px-6 lg:px-12 py-12 relative">
                 <div className="flex-1 w-full">
                     <div className="max-w-3xl relative mx-auto lg:ml-0 lg:mr-auto">
@@ -466,7 +466,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                     
                                     <div className="flex-1 text-left">
                                         <div className="flex flex-col">
-                                            <h3 className={`font-headline font-black text-xl transition-all duration-700 ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                                            <h3 className={`font-headline font-black text-xl transition-all duration-700 ${courseId === '5' ? 'text-white' : 'text-white/90'}`}>
                                                 {month.title}
                                             </h3>
                                         </div>
@@ -478,7 +478,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                             className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all cursor-pointer ${
                                                 expandedMonths.includes(monthIndex) 
                                                     ? 'bg-blue-500 border-blue-500 text-white rotate-180' 
-                                                    : `${variant === 'dark' ? 'bg-white/5 border-white/10 text-white' : 'bg-slate-100 border-slate-200 text-slate-600'}`
+                                                    : `${courseId === '5' ? 'bg-white/5 border-white/10 text-white' : 'bg-white/5 border-white/10 text-white/80'}`
                                             }`}
                                             onClick={(e) => {
                                                 e.stopPropagation();
