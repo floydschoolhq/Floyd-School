@@ -48,7 +48,7 @@ const HowItWorks = () => {
                 </span>
               </div>
               <h3 className="text-xl font-black text-slate-900 mb-2 relative z-10">
-                7-Day Demo Bootcamp
+                1-Day Demo Bootcamp
               </h3>
               <p className="text-slate-600 text-sm leading-relaxed mb-4 relative z-10">
                 Live sessions in your school. Students build mini tech projects.
@@ -128,7 +128,7 @@ const HowItWorks = () => {
                 </span>
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">
-                7-Day Demo Bootcamp
+                1-Day Demo Bootcamp
               </h3>
               <p className="text-slate-600 leading-relaxed mb-8 text-lg">
                 Our mentors physically come to your school and run a high-energy, hands-on technology bootcamp — at zero cost. Students write real code, build mini-projects, and experience what learning technology actually feels like.

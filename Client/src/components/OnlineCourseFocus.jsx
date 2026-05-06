@@ -333,7 +333,7 @@ const OnlineCourseFocus = ({ variant }) => {
                     </div>
                 )}
 
-                {filteredCourses.filter(c => c.comingSoon || activeTab === 'upcoming').length > 0 && (
+                {filteredCourses.filter(c => (activeTab === 'upcoming' ? c.comingSoon : !c.featured)).length > 0 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredCourses.filter(c => (activeTab === 'upcoming' ? c.comingSoon : !c.featured)).map((course) => (
                             <CourseCard

@@ -4,6 +4,7 @@ const AI_IMG = '/images/courses/ai-course.jpg';
 const IOT_IMG = '/images/courses/iot-course.jpg';
 const WEB_IMG = '/images/courses/web-course.jpg';
 const CYBER_IMG = '/images/courses/cyber-course.jpg';
+const SUMMER_IMG = '/images/courses/summer-bootcamp.jpg?v=2';
 
 export const FALLBACK_COURSES = [
     {
@@ -20,6 +21,7 @@ export const FALLBACK_COURSES = [
         currency: "INR",
         tags: ["AI", "Python", "ML"],
         live: true,
+        featured: true,
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
         curriculum: [
             "Neural Network Architectures",
@@ -125,6 +127,37 @@ export const FALLBACK_COURSES = [
         registeredCount: 10,
         totalSeats: 50,
         prerequisites: "Networking basics recommended"
+    },
+    {
+        _id: '5',
+        title: "Summer Bootcamp",
+        image: SUMMER_IMG,
+        icon: 'Rocket',
+        description: "Intensive summer program covering AI, Web Development, and IoT. Build real projects in 1 month with expert mentorship and hands-on learning.",
+        detailedDescription: "Intensive summer program covering AI, Web Development, and IoT. Build real projects in 1 month with expert mentorship and hands-on learning.",
+        color: "#2563EB",
+        rating: 4.7,
+        duration: "1 month",
+        price: 2499,
+        currency: "INR",
+        tags: ["AI", "Web", "IoT"],
+        live: true,
+        featured: false,
+        deliveryDetails: { inSchool: { bootcamp: "Summer Intensive" } },
+        curriculum: [
+            "AI Fundamentals",
+            "Web Development Basics",
+            "IoT Introduction",
+            "Project Building"
+        ],
+        outcomes: [
+            "Build 3 Real Projects",
+            "Industry Mentorship",
+            "Certificate of Completion"
+        ],
+        registeredCount: 25,
+        totalSeats: 40,
+        prerequisites: "No prerequisites required"
     }
 ];
 
