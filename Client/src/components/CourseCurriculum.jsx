@@ -17,7 +17,16 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     const [totalSeats, setTotalSeats] = useState(courseId === '5' ? 50 : initialTotalSeats);
     const [price, setPrice] = useState(courseId === '5' ? 2499 : 3999);
     const [originalPrice, setOriginalPrice] = useState(courseId === '5' ? 4999 : 5999);
+    const [expandedMonths, setExpandedMonths] = useState(courseId === '5' ? [0] : [0]); // Default first month open for AI & ML
     
+    const toggleMonth = (index) => {
+        if (isSummerProgram) return; // Don't collapse for summer program
+        setExpandedMonths(prev => 
+            prev.includes(index) 
+                ? prev.filter(i => i !== index) 
+                : [...prev, index]
+        );
+    };
     const discount = originalPrice > 0 ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
     useEffect(() => {
@@ -361,7 +370,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     }
 
     return (
-        <div className="bg-black w-full overflow-hidden">
+        <div className={`${variant === 'dark' ? 'bg-black' : 'bg-slate-50'} w-full overflow-hidden`}>
             <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
                 <div className="relative inline-block mx-auto text-center">
                     <p className="max-w-4xl mx-auto text-base text-on-surface-variant font-light leading-relaxed italic relative z-10 px-6 whitespace-nowrap">
@@ -379,7 +388,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
             </div>
 
             {/* Premium Stats Command Center */}
-            <div className="py-12 px-6 bg-black relative overflow-hidden w-full border-y border-white/5">
+            <div className={`py-12 px-6 ${variant === 'dark' ? 'bg-black border-white/5' : 'bg-white border-slate-100'} relative overflow-hidden w-full border-y`}>
                 <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
                     {stats.map((stat, i) => (
                         <motion.div
@@ -413,7 +422,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                 </div>
             </div>
 
-            <div className="w-full bg-black">
+            <div className={`w-full ${variant === 'dark' ? 'bg-black' : 'bg-slate-50'}`}>
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 px-6 lg:px-12 py-12 relative">
                 <div className="flex-1 w-full">
                     <div className="max-w-3xl relative mx-auto lg:ml-0 lg:mr-auto">
@@ -457,14 +466,39 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                     
                                     <div className="flex-1 text-left">
                                         <div className="flex flex-col">
-                                            <h3 className="font-headline font-black text-on-surface text-xl transition-all duration-700">
+                                            <h3 className={`font-headline font-black text-xl transition-all duration-700 ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                                                 {month.title}
                                             </h3>
                                         </div>
                                     </div>
+
+                                    {/* Dropdown Button for AI & ML */}
+                                    {!isSummerProgram && (
+                                        <div 
+                                            className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all cursor-pointer ${
+                                                expandedMonths.includes(monthIndex) 
+                                                    ? 'bg-blue-500 border-blue-500 text-white rotate-180' 
+                                                    : `${variant === 'dark' ? 'bg-white/5 border-white/10 text-white' : 'bg-slate-100 border-slate-200 text-slate-600'}`
+                                            }`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleMonth(monthIndex);
+                                            }}
+                                        >
+                                            <ArrowRight size={20} className="rotate-90" />
+                                        </div>
+                                    )}
                                 </div>
 
-                                <div className="overflow-hidden">
+                                <AnimatePresence>
+                                    {(isSummerProgram || expandedMonths.includes(monthIndex)) && (
+                                        <motion.div 
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                                            className="overflow-hidden"
+                                        >
                                     <div className={`ml-5 pl-9 border-l-2 relative ${
                                         monthIndex === curriculumData.length - 1 ? 'border-dashed' : ''
                                     } border-surface-container-highest pb-6`}>
@@ -520,8 +554,10 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                                 </div>
                                             </div>
                                         ))}
-                                    </div>
-                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         ))}
                     </div>

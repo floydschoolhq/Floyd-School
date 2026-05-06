@@ -279,9 +279,11 @@ const CourseReviews = ({ courseId, variant }) => {
         });
     }, [isMobile, controls, controls2, cardWidth]);
 
+    const isDark = variant === 'dark';
+
     if (isMobile) {
         return (
-            <section className="pt-72 pb-52 px-0 relative overflow-hidden bg-black">
+            <section className={`pt-72 pb-52 px-0 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
                 <div className="absolute inset-0 -z-10">
                     <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
                     <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />
@@ -398,7 +400,7 @@ const CourseReviews = ({ courseId, variant }) => {
     }
 
     return (
-        <section className="py-16 px-0 relative overflow-hidden bg-black">
+        <section className={`py-16 px-0 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
             <div className="absolute inset-0 -z-10">
                 <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent" />

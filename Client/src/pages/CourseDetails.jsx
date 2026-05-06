@@ -96,7 +96,7 @@ const CourseDetails = () => {
     const isMobile = window.innerWidth < 768;
 
     return (
-        <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
+        <div className={`min-h-screen ${courseId === '5' ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'} selection:bg-blue-600 selection:text-white relative font-['Outfit']`}>
             <SEO 
                 title={course?.title ? `${course.title} Program` : 'Course Details'} 
                 description={course?.description || 'Deep-tech specialization tracks architected for high-intensity industrial learning.'}
@@ -236,15 +236,15 @@ const CourseDetails = () => {
                     </div>
                 </section>
 
-                {/* Institutional Partners Section */}
-                <InstitutionalPartners variant="dark" />
+                {/* Institutional Partners Section - Only for Summer Program */}
+                {courseId === '5' && <InstitutionalPartners variant="dark" />}
 
                 {/* Course Curriculum Section - For AI & ML and Summer Builder */}
                 {(courseId === '1' || courseId === '5') && (
                     <section id="course-curriculum" className="p-0">
                         <CourseCurriculum 
                             courseId={courseId}
-                            variant="dark" 
+                            variant={courseId === '5' ? "dark" : "light"} 
                             initialRegisteredCount={course.registeredCount}
                             totalSeats={course.totalSeats}
                         />
@@ -277,7 +277,7 @@ const CourseDetails = () => {
                             title="Faculty" 
                             isStatic={true} 
                             excludeName="Shivam Mishra" 
-                            variant="dark" 
+                            variant={courseId === '5' ? "dark" : "light"} 
                         />
                     </div>
                 </section>
