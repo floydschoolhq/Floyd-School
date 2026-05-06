@@ -10,7 +10,7 @@ const FinalProject = ({ courseId = "1" }) => {
 
     if (isMobile) {
         return (
-            <div className={`pt-16 pb-24 ${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'} w-full relative overflow-hidden`}>
+            <div className={`pt-16 pb-24 ${courseId === '5' ? 'bg-black' : 'bg-transparent'} w-full relative overflow-hidden`}>
                 <div className="px-6">
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
@@ -61,12 +61,12 @@ const FinalProject = ({ courseId = "1" }) => {
     }
 
     return (
-        <section className={`py-24 px-6 ${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'}`}>
+        <section className={`py-24 px-6 ${courseId === '5' ? 'bg-black' : 'bg-transparent'}`}>
             <div className="max-w-6xl mx-auto relative perspective-1000">
                 <motion.div 
                     whileHover={{ y: -5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className={`${courseId === '5' ? 'bg-slate-900/40 border-white/10' : 'bg-white border-slate-200'} backdrop-blur-3xl p-8 md:p-12 rounded-[3rem] border shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden group`}
+                    className="bg-slate-900/40 backdrop-blur-3xl p-8 md:p-12 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden group"
                 >
                     {/* 3D Bevel/Reflective Edge */}
                     <div className="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 pointer-events-none z-10" />
@@ -77,7 +77,7 @@ const FinalProject = ({ courseId = "1" }) => {
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
                     <div className="relative z-20 mb-10 lg:mb-12 w-full text-center">
-                        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-headline font-black tracking-tight mb-4 pb-2 ${courseId === '5' ? 'text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60' : 'text-white'}`}>
+                        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-headline font-black tracking-tight mb-4 pb-2 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60`}>
                             Final Project: {project.title}
                         </h2>
                         <p className="text-slate-400 text-lg font-medium leading-relaxed max-w-3xl mx-auto">
