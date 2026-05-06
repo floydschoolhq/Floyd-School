@@ -63,7 +63,8 @@ const createOrder = async (req, res) => {
             '1': 'Foundation of AI and Machine Learning',
             '2': 'Foundation of Web Development',
             '3': 'Foundation of IoT and Robotics',
-            '4': 'Foundation of Cyber Security'
+            '4': 'Foundation of Cyber Security',
+            '5': 'ThinkSkool Summer Builder Program'
         };
         
         if (courseMapping[courseId]) {
