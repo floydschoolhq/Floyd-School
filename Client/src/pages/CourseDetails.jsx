@@ -34,6 +34,8 @@ import FinalProject from '../components/FinalProject';
 import sampleCertificate from '../assets/images/sample2Certificate.png';
 import api from '../api/axios';
 import SEO from '../components/common/SEO';
+import InstitutionalPartners from '../components/InstitutionalPartners';
+import summerPdf from '../assets/pdf/1monthonlinecourseblue.pdf';
 
 const iconMap = {
     Cpu: Cpu,
@@ -94,7 +96,7 @@ const CourseDetails = () => {
     const isMobile = window.innerWidth < 768;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
+        <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative font-['Outfit']">
             <SEO 
                 title={course?.title ? `${course.title} Program` : 'Course Details'} 
                 description={course?.description || 'Deep-tech specialization tracks architected for high-intensity industrial learning.'}
@@ -133,11 +135,13 @@ const CourseDetails = () => {
                                         {course.duration} program
                                     </span>
                                     <h1 className="font-black tracking-tight mb-4 leading-tight text-white px-4 flex flex-col items-center">
-                                        <span className="text-2xl mb-1">Foundation of</span>
-                                        <span className="text-[17px] text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">AI and Machine Learning</span>
+                                        <span className="text-2xl mb-1">{course.title.includes('Foundation of') ? 'Foundation of' : ''}</span>
+                                        <span className="text-[17px] text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">
+                                            {course.title.replace('Foundation of ', '')}
+                                        </span>
                                     </h1>
                                     <p className="text-[13px] text-slate-400 font-medium leading-relaxed mb-8 px-4 text-center">
-                                        Master AI from scratch. Build real Machine Learning and Computer Vision models. No experience required.
+                                        {course.description}
                                     </p>
                                     
                                     <div className="flex flex-col gap-3">
@@ -176,9 +180,11 @@ const CourseDetails = () => {
                                 >
                                     <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-white inline-block mb-6">{course.duration} program</span>
                                     <h1 className="font-black tracking-tighter mb-6 leading-tight text-white break-words flex flex-col">
-                                        <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-6xl mb-1 lg:mb-2 text-white">Foundation of</span>
+                                        <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-6xl mb-1 lg:mb-2 text-white">
+                                            {course.title.includes('Foundation of') ? 'Foundation of' : ''}
+                                        </span>
                                         <span className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600">
-                                            AI and Machine Learning
+                                            {course.title.replace('Foundation of ', '')}
                                         </span>
                                     </h1>
                                     <p className="text-base md:text-lg text-slate-400 font-medium leading-relaxed mb-10 max-w-2xl">
@@ -193,7 +199,7 @@ const CourseDetails = () => {
                                             Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                         </button>
                                         <button 
-                                            onClick={() => window.open('/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
+                                            onClick={() => window.open(courseId === '5' ? summerPdf : '/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
                                             className="px-12 py-5 bg-gradient-to-r from-[#10B981] to-[#059669] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(16,185,129,0.25)] flex items-center gap-3 group"
                                         >
                                             <Download size={18} /> Download Curriculum
@@ -230,10 +236,14 @@ const CourseDetails = () => {
                     </div>
                 </section>
 
-                {/* Course Curriculum Section - Only for AI & ML Course */}
-                {courseId === '1' && (
+                {/* Institutional Partners Section */}
+                <InstitutionalPartners variant="dark" />
+
+                {/* Course Curriculum Section - For AI & ML and Summer Builder */}
+                {(courseId === '1' || courseId === '5') && (
                     <section id="course-curriculum" className="p-0">
                         <CourseCurriculum 
+                            courseId={courseId}
                             variant="dark" 
                             initialRegisteredCount={course.registeredCount}
                             totalSeats={course.totalSeats}
@@ -242,11 +252,11 @@ const CourseDetails = () => {
                 )}
 
                 {/* Independent Final Project Section */}
-                {courseId === '1' && <FinalProject />}
+                {(courseId === '1' || courseId === '5') && <FinalProject courseId={courseId} />}
 
                 {/* Luminating Divider below Final Project */}
                 {isMobile && (
-                    <div className="bg-white py-16 flex justify-center overflow-hidden">
+                    <div className="bg-black py-16 flex justify-center overflow-hidden">
                         <div className="relative w-full max-w-[280px] flex items-center justify-center">
                             <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-600/60 to-transparent" />
                         </div>
@@ -257,7 +267,7 @@ const CourseDetails = () => {
                 <section 
                     id="course-faculty" 
                     className={isMobile 
-                        ? "bg-white border-t border-slate-100 p-0" 
+                        ? "bg-black border-t border-slate-100 p-0" 
                         : "bg-gradient-to-br from-black via-slate-950 to-black border-t border-white/5 pt-12 pb-20 p-0"
                     }
                 >
@@ -267,30 +277,30 @@ const CourseDetails = () => {
                             title="Faculty" 
                             isStatic={true} 
                             excludeName="Shivam Mishra" 
-                            variant={isMobile ? "light" : "dark"} 
+                            variant="dark" 
                         />
                     </div>
                 </section>
                 
                 {/* Luminating Divider - Bottom of Faculty (Mobile Only) */}
                 {isMobile && (
-                    <div className="bg-white py-12 flex justify-center">
+                    <div className="bg-black py-12 flex justify-center">
                         <div className="h-px w-[85%] bg-gradient-to-r from-transparent via-blue-600/60 to-transparent relative z-10 shadow-[0_0_60px_rgba(37,99,235,0.6)]" />
                     </div>
                 )}
 
                 {/* Course Offerings Section */}
-                <section id="course-offerings" className={`bg-white px-0 overflow-hidden ${isMobile ? 'pb-16' : ''}`}>
+                <section id="course-offerings" className={`bg-black px-0 overflow-hidden ${isMobile ? 'pb-16' : ''}`}>
                     <CourseOfferings variant="dark" />
                 </section>
 
-                <div id="course-reviews" className="bg-[#080808]">
+                <div id="course-reviews" className="bg-black">
                     <CourseReviews courseId={courseId} variant="dark" />
                 </div>
 
                 {/* Sample Certificate Section */}
-                {courseId === '1' && (
-                    <section id="sample-certificate" className="bg-[#080808] py-16 md:py-24 px-4">
+                {(courseId === '1' || courseId === '5') && (
+                    <section id="sample-certificate" className="bg-black py-16 md:py-24 px-4">
                         <div className="max-w-[65%] mx-auto">
                             {/* Section Header */}
                             <div className="text-center mb-12 md:mb-16">
@@ -337,7 +347,7 @@ const CourseDetails = () => {
                 )}
 
                 {/* Technical Excellence & Career Support Section (SEO Content) */}
-                <section className="py-24 bg-slate-950 border-t border-white/5 overflow-hidden">
+                <section className="py-24 bg-black border-t border-white/5 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                             <div>

@@ -61,14 +61,14 @@ const CourseOfferings = ({ variant = 'dark' }) => {
         ];
 
         return (
-            <section id="course-offerings" className="py-8 px-5 relative overflow-hidden bg-white w-full">
-                <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50/50 via-transparent to-transparent pointer-events-none"></div>
+            <section id="course-offerings" className="py-8 px-5 relative overflow-hidden bg-black w-full">
+                <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent pointer-events-none"></div>
                 
                 <div className="relative z-10 text-center mb-10 px-0">
-                    <h2 className="text-xl font-bold mb-3 tracking-tighter text-slate-900 leading-tight">
-                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Back.</span> Always.
+                    <h2 className="text-xl font-bold mb-3 tracking-tighter text-white leading-tight">
+                        We've Got Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Back.</span> Always.
                     </h2>
-                    <p className="text-sm text-slate-500 font-normal leading-relaxed px-4">
+                    <p className="text-sm text-slate-400 font-normal leading-relaxed px-4">
                         Everything you need is already included.
                     </p>
                 </div>
@@ -82,10 +82,10 @@ const CourseOfferings = ({ variant = 'dark' }) => {
                                 </div>
                             </div>
                             <div className="flex-1 text-left flex flex-col justify-start">
-                                <h3 className="text-base font-bold text-slate-900 mb-1 leading-tight">
+                                <h3 className="text-base font-bold text-white mb-1 leading-tight">
                                     {feature.title}
                                 </h3>
-                                <p className="text-sm text-slate-600 leading-relaxed">
+                                <p className="text-sm text-slate-400 leading-relaxed">
                                     {feature.desc}
                                 </p>
                             </div>

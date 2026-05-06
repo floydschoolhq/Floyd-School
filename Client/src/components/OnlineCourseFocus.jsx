@@ -208,7 +208,7 @@ const OnlineCourseFocus = ({ variant }) => {
         return (
             <section 
                 id="online-focus" 
-                className={`relative py-20 px-5 overflow-hidden ${isDark ? 'bg-[#050508]' : 'bg-slate-50'}`}
+                className={`relative py-20 px-5 overflow-hidden ${isDark ? 'bg-black' : 'bg-slate-50'}`}
             >
                 <div className={`absolute inset-0 pointer-events-none ${isDark ? 'invert brightness-200' : ''}`} 
                     style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.3 }} />
@@ -286,7 +286,7 @@ const OnlineCourseFocus = ({ variant }) => {
 
     return (
         <section id="online-focus" className={`relative py-20 lg:py-28 overflow-hidden transition-colors duration-500 
-            ${isDark ? 'bg-[#050508]' : 'bg-slate-50'}`}>
+            ${isDark ? 'bg-black' : 'bg-slate-50'}`}>
             
             <div className={`absolute inset-0 pointer-events-none ${isDark ? 'invert brightness-200' : ''}`} 
                 style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '28px 28px', opacity: 0.4 }} />
@@ -322,30 +322,33 @@ const OnlineCourseFocus = ({ variant }) => {
                     ))}
                 </div>
 
-                {(activeTab === 'live' && featuredCourse) && (
-                    <div className="mb-12">
-                        <FeaturedCourseCard
-                            course={featuredCourse}
-                            isDark={isDark}
-                            onRegister={handleRegister}
-                            onDetails={handleDetails}
-                        />
-                    </div>
-                )}
-
-                {filteredCourses.filter(c => c.comingSoon || activeTab === 'upcoming').length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredCourses.filter(c => (activeTab === 'upcoming' ? c.comingSoon : !c.featured)).map((course) => (
-                            <CourseCard
+                {activeTab === 'live' ? (
+                    <div className="flex flex-col gap-12">
+                        {filteredCourses.map((course) => (
+                            <FeaturedCourseCard
                                 key={course._id}
                                 course={course}
                                 isDark={isDark}
                                 onRegister={handleRegister}
                                 onDetails={handleDetails}
-                                onEarlyAccess={handleEarlyAccess}
                             />
                         ))}
                     </div>
+                ) : (
+                    filteredCourses.length > 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredCourses.map((course) => (
+                                <CourseCard
+                                    key={course._id}
+                                    course={course}
+                                    isDark={isDark}
+                                    onRegister={handleRegister}
+                                    onDetails={handleDetails}
+                                    onEarlyAccess={handleEarlyAccess}
+                                />
+                            ))}
+                        </div>
+                    )
                 )}
 
             </div>

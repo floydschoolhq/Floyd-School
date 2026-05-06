@@ -213,10 +213,10 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
     if (isMobile) {
         const allCards = [...displayLeaders, ...displayLeaders, ...displayLeaders];
         return (
-            <section id="course-faculty-grid" className="py-12 relative overflow-hidden bg-white w-full">
+            <section id="course-faculty-grid" className="py-12 relative overflow-hidden bg-black w-full">
                 <div className="text-center pb-6 pt-0">
-                    <h2 className="text-2xl font-black tracking-tighter text-slate-900 leading-tight">
-                        Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Experienced</span> Mentors
+                    <h2 className="text-2xl font-black tracking-tighter text-white leading-tight">
+                        Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Experienced</span> Mentors
                     </h2>
                 </div>
 
@@ -246,14 +246,14 @@ const CourseFacultyGrid = ({ title = "MENTORS ONLY", excludeName = null, variant
                 <div className="flex justify-center gap-6 mt-10">
                     <button
                         onClick={handlePrev}
-                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm"
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10 shadow-sm"
                         aria-label="Previous mentor"
                     >
                         ‹
                     </button>
                     <button
                         onClick={handleNext}
-                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-slate-100 text-slate-600 hover:bg-slate-200 shadow-sm"
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-3xl pb-1 transition-all bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10 shadow-sm"
                         aria-label="Next mentor"
                     >
                         ›

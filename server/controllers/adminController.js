@@ -368,7 +368,16 @@ exports.updateCourseEnrollmentStats = async (req, res) => {
         const { id } = req.params;
         const { totalSeats, manualEnrollmentCount } = req.body;
 
-        const course = await Course.findById(id);
+        let query = {};
+        if (id === '1') query = { title: { $regex: /foundation of ai|artificial intelligence/i } };
+        else if (id === '2') query = { title: { $regex: /foundation of web/i } };
+        else if (id === '3') query = { title: { $regex: /foundation of iot|robotics/i } };
+        else if (id === '4') query = { title: { $regex: /foundation of cyber/i } };
+        else if (id === '5') query = { title: { $regex: /summer builder program/i } };
+        else if (id.length > 20) query = { _id: id };
+        else query = { title: { $regex: new RegExp(id, 'i') } };
+
+        const course = await Course.findOne(query);
         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found' });
         }
@@ -794,7 +803,16 @@ exports.updateCoursePrice = async (req, res) => {
             return res.status(400).json({ success: false, message: 'No price values provided.' });
         }
 
-        const course = await Course.findByIdAndUpdate(id, updateData, { new: true });
+        let query = {};
+        if (id === '1') query = { title: { $regex: /foundation of ai|artificial intelligence/i } };
+        else if (id === '2') query = { title: { $regex: /foundation of web/i } };
+        else if (id === '3') query = { title: { $regex: /foundation of iot|robotics/i } };
+        else if (id === '4') query = { title: { $regex: /foundation of cyber/i } };
+        else if (id === '5') query = { title: { $regex: /summer builder program/i } };
+        else if (id.length > 20) query = { _id: id };
+        else query = { title: { $regex: new RegExp(id, 'i') } };
+
+        const course = await Course.findOneAndUpdate(query, updateData, { new: true });
         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found in the nexus.' });
         }

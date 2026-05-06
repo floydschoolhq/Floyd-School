@@ -4,12 +4,14 @@ const AI_IMG = '/images/courses/ai-course.jpg';
 const IOT_IMG = '/images/courses/iot-course.jpg';
 const WEB_IMG = '/images/courses/web-course.jpg';
 const CYBER_IMG = '/images/courses/cyber-course.jpg';
+import SUMMER_IMG from '../assets/images/summerimage.png';
 
 export const FALLBACK_COURSES = [
     {
         _id: '1',
         title: "Foundation of AI and Machine Learning",
         image: AI_IMG,
+        featured: true,
         icon: 'Cpu',
         description: "Learn how AI actually works and build it yourself. From Python basics to real machine learning models and computer vision. No prior experience needed.",
         detailedDescription: "Learn how AI actually works and build it yourself. From Python basics to real machine learning models and computer vision. No prior experience needed.",
@@ -32,7 +34,7 @@ export const FALLBACK_COURSES = [
             "Optimize Inference Engines",
             "Real-time Computer Vision"
         ],
-        registeredCount: 30,
+        registeredCount: 24,
         totalSeats: 50,
         prerequisites: "Basic Python knowledge suggested"
     },
@@ -125,6 +127,37 @@ export const FALLBACK_COURSES = [
         registeredCount: 10,
         totalSeats: 50,
         prerequisites: "Networking basics recommended"
+    },
+    {
+        _id: '5',
+        title: "ThinkSkool Summer Builder Program",
+        image: SUMMER_IMG,
+        icon: 'Rocket',
+        description: "A high-octane 30-day summer internship. From foundations of software development to building real AI-powered applications with industry mentors.",
+        detailedDescription: "A high-octane 30-day summer internship designed for students to transition from consumers to creators. Master the foundations of software development, build real-world applications, and integrate cutting-edge AI tools into your projects.",
+        color: "#2563EB",
+        rating: 5.0,
+        duration: "1 month",
+        price: 2499,
+        originalPrice: 4999,
+        currency: "INR",
+        tags: ["Summer Internship", "Project Based", "Software", "AI"],
+        live: true,
+        deliveryDetails: { online: { tutor: "Live Mentorship", lectures: "Project Sessions" } },
+        curriculum: [
+            "Foundations of Software Development",
+            "Building Real Applications",
+            "AI Tool & Smart Applications",
+            "Final Project & Demo Day"
+        ],
+        outcomes: [
+            "Summer Internship Certificate",
+            "Industry Ready Portfolio",
+            "AI Implementation Skills"
+        ],
+        registeredCount: 24,
+        totalSeats: 50,
+        prerequisites: "No prior coding experience required"
     }
 ];
 
@@ -307,3 +340,81 @@ export const valueProps = [
         description: "Students graduate with active GitHub apps and industrial experience."
     }
 ];
+
+export const detailedCurriculums = {
+    "1": {
+        roadmap: [
+            {
+                month: "01",
+                title: "Python Fundamentals",
+                phaseDescription: "The absolute baseline: build high-performance logic with world-class Python patterns.",
+                color: "primary",
+                weeks: [
+                    { week: "Week 01", title: "Python from Scratch", description: "Variables, Datatypes and Basic Logic." },
+                    { week: "Week 02", title: "Loops & Functions", description: "Automating repetitive tasks with ease." },
+                    { week: "Week 03", title: "Files & Libraries", description: "Handling external data and open-source tools." },
+                    { week: "Week 04", title: "Python Like a Pro", description: "Writing clean, production-level code.", isSpecial: true }
+                ]
+            },
+            {
+                month: "02",
+                title: "APIs, AI & ML",
+                phaseDescription: "From static code to intelligent systems: Integrating LLMs and predictive models.",
+                color: "secondary",
+                weeks: [
+                    { week: "Week 05", title: "ChatGPT & OpenAI API", description: "Integrating LLMs into your own projects." },
+                    { week: "Week 06", title: "APIs & Live Data", description: "Connecting your apps to the real world." },
+                    { week: "Week 07", title: "Intro to Machine Learning", description: "Teaching computers to recognize patterns." },
+                    { week: "Week 08", title: "Classification", description: "Building models that predict and group data.", isSpecial: true }
+                ]
+            },
+            {
+                month: "03",
+                title: "Vision, Web & Demo",
+                phaseDescription: "The Grand Finale: Give your AI 'eyes' and deploy your masterpiece to the internet.",
+                color: "primary",
+                weeks: [
+                    { week: "Week 09", title: "OpenCV & Vision", description: "Developing apps that can see and perceive." },
+                    { week: "Week 10", title: "Flask Web Framework", description: "Turning scripts into web apps that anyone can use." },
+                    { week: "Final Milestone", title: "Final Project & Demo Day", description: "Intensive building followed by a live global presentation of your Face Recognition system.", isSpecial: true }
+                ]
+            }
+        ],
+        finalProject: {
+            title: "Face Recognition System",
+            description: "Build a live system that opens the webcam, recognises student faces in real time, logs attendance automatically with timestamps and displays everything on a web dashboard. Every part of it written and built by you.",
+            videoUrl: "https://www.youtube.com/embed/BREYIm9ctQU",
+            features: [
+                { icon: "👤", label: "Face Recognition Engine", desc: "Detects and identifies faces live using OpenCV and Dlib." },
+                { icon: "📋", label: "Live Attendance Logger", desc: "Automatically records name and timestamp instantly." },
+                { icon: "🖥️", label: "Flask Web Dashboard", desc: "View and manage records from a clean browser interface." }
+            ]
+        }
+    },
+    "5": {
+        roadmap: [
+            {
+                month: "01",
+                title: "30-Day Builder Roadmap",
+                phaseDescription: "A high-intensity sprint from software fundamentals to AI-powered production apps.",
+                color: "primary",
+                weeks: [
+                    { week: "Week 01", title: "Foundations of Software Development", description: "Mastering the core logic and architecture of modern software development." },
+                    { week: "Week 02", title: "Building Real Applications", description: "Transitioning from simple scripts to fully functional, interactive user applications." },
+                    { week: "Week 03", title: "AI Tool & Smart Applications", description: "Integrating LLMs and AI services to build intelligent, autonomous features." },
+                    { week: "Week 04", title: "Final Project Build & Demo", description: "Intensive project building followed by a professional demo day presentation.", isSpecial: true }
+                ]
+            }
+        ],
+        finalProject: {
+            title: "AI Personal Assistant",
+            description: "Build your own voice-activated AI personal assistant that can manage tasks, answer complex queries using GPT-4, and interact with external APIs to fetch real-world data like weather or news.",
+            videoUrl: "https://www.youtube.com/embed/BREYIm9ctQU", // Placeholder video
+            features: [
+                { icon: "🎙️", label: "Voice Recognition", desc: "Process natural language commands in real-time." },
+                { icon: "🧠", label: "GPT-4 Integration", desc: "Powered by advanced LLMs for intelligent responses." },
+                { icon: "🔌", label: "API Ecosystem", desc: "Connects with weather, maps, and productivity tools." }
+            ]
+        }
+    }
+};

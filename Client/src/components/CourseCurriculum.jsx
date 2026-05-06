@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 
+import useIsMobile from '../hooks/useIsMobile';
 import api from '../api/axios';
+import { detailedCurriculums } from '../constants/siteData';
 
 const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegisteredCount = 45, totalSeats: initialTotalSeats = 50 }) => {
     const navigate = useNavigate();
@@ -11,10 +13,10 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
-    const [registeredCount, setRegisteredCount] = useState(initialRegisteredCount);
-    const [totalSeats, setTotalSeats] = useState(initialTotalSeats);
-    const [price, setPrice] = useState(3999);
-    const [originalPrice, setOriginalPrice] = useState(5999);
+    const [registeredCount, setRegisteredCount] = useState(courseId === '5' ? 24 : initialRegisteredCount);
+    const [totalSeats, setTotalSeats] = useState(courseId === '5' ? 50 : initialTotalSeats);
+    const [price, setPrice] = useState(courseId === '5' ? 2499 : 3999);
+    const [originalPrice, setOriginalPrice] = useState(courseId === '5' ? 4999 : 5999);
     
     const discount = originalPrice > 0 ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
@@ -41,92 +43,17 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
         }
     }, [courseId, initialRegisteredCount, initialTotalSeats]);
     
-    const curriculumData = [
-        {
-            month: "01",
-            title: "Python Fundamentals",
-            phaseDescription: "The absolute baseline: build high-performance logic with world-class Python patterns.",
-            color: "primary",
-            weeks: [
-                {
-                    week: "Week 01",
-                    title: "Python from Scratch",
-                    description: "Variables, Datatypes and Basic Logic."
-                },
-                {
-                    week: "Week 02", 
-                    title: "Loops & Functions",
-                    description: "Automating repetitive tasks with ease."
-                },
-                {
-                    week: "Week 03",
-                    title: "Files & Libraries", 
-                    description: "Handling external data and open-source tools."
-                },
-                {
-                    week: "Week 04",
-                    title: "Python Like a Pro",
-                    description: "Writing clean, production-level code.",
-                    isSpecial: true
-                }
-            ]
-        },
-        {
-            month: "02",
-            title: "APIs, AI & ML",
-            phaseDescription: "From static code to intelligent systems: Integrating LLMs and predictive models.",
-            color: "secondary",
-            weeks: [
-                {
-                    week: "Week 05",
-                    title: "ChatGPT & OpenAI API",
-                    description: "Integrating LLMs into your own projects."
-                },
-                {
-                    week: "Week 06",
-                    title: "APIs & Live Data",
-                    description: "Connecting your apps to the real world."
-                },
-                {
-                    week: "Week 07",
-                    title: "Intro to Machine Learning",
-                    description: "Teaching computers to recognize patterns."
-                },
-                {
-                    week: "Week 08",
-                    title: "Classification",
-                    description: "Building models that predict and group data.",
-                    isSpecial: true
-                }
-            ]
-        },
-        {
-            month: "03", 
-            title: "Vision, Web & Demo",
-            phaseDescription: "The Grand Finale: Give your AI 'eyes' and deploy your masterpiece to the internet.",
-            color: "primary",
-            weeks: [
-                {
-                    week: "Week 09",
-                    title: "OpenCV & Vision",
-                    description: "Developing apps that can see and perceive."
-                },
-                {
-                    week: "Week 10",
-                    title: "Flask Web Framework",
-                    description: "Turning scripts into web apps that anyone can use."
-                },
-                {
-                    week: "Final Milestone",
-                    title: "Final Project & Demo Day", 
-                    description: "Intensive building followed by a live global presentation of your Face Recognition system.",
-                    isSpecial: true
-                }
-            ]
-        }
-    ];
+    const curriculumObj = detailedCurriculums[courseId] || detailedCurriculums["1"];
+    const curriculumData = curriculumObj.roadmap;
 
-    const stats = [
+    const isSummerProgram = courseId === "5";
+    const stats = isSummerProgram ? [
+        { number: "30", label: "Days Intensive" },
+        { number: "10+", label: "Live Projects" },
+        { number: "1:1", label: "Mentorship" },
+        { number: "1", label: "Portfolio" },
+        { number: "Daily", label: "Build Sessions" }
+    ] : [
         { number: "12", label: "Weeks Total" },
         { number: "36", label: "Live Classes" },
         { number: "8+", label: "Mini Projects" },
@@ -139,7 +66,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
         setIsSecuring(true);
         try {
             await new Promise(resolve => setTimeout(resolve, 1000));
-            navigate('/course/1?openRegistration=true&source=curriculum');
+            navigate(`/course/${courseId}?openRegistration=true&source=curriculum`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (error) {
             console.error('Navigation failed:', error);
@@ -173,7 +100,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
         setIsEnrolling(true);
         try {
             await new Promise(resolve => setTimeout(resolve, 2000));
-            navigate('/course/1?openRegistration=true&source=enrollment');
+            navigate(`/course/${courseId}?openRegistration=true&source=enrollment`);
         } catch (error) {
             console.error('Enrollment failed:', error);
         } finally {
@@ -197,7 +124,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                 <div className="text-center mb-10 px-2 w-full">
                     <div className="relative inline-block w-full">
                         <p className="text-[10.5px] text-on-surface-variant font-bold leading-relaxed italic relative z-10 px-1 whitespace-nowrap">
-                            "Will your child build the AI future, or just watch it?"
+                            {isSummerProgram ? '"Turn your summer into a launchpad for your career."' : '"Will your child build the AI future, or just watch it?"'}
                         </p>
                         <motion.div 
                             initial={{ width: 0, opacity: 0 }}
@@ -214,7 +141,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                     <div className="flex items-center justify-center gap-6 mb-6 w-full px-4">
                         <div className="w-3 h-3 border-t-2 border-l-2 border-blue-500/40 -mt-2" />
                         <h3 className="text-xl font-bold uppercase tracking-tight text-white whitespace-nowrap">
-                            The <span className="text-blue-500">90-Day</span> Roadmap
+                            The <span className="text-blue-500">{isSummerProgram ? '30-Day' : '90-Day'}</span> Roadmap
                         </h3>
                         <div className="w-3 h-3 border-t-2 border-r-2 border-blue-500/40 -mt-2" />
                     </div>
@@ -350,7 +277,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                     
                     <div className="relative z-10">
                         <h3 className="text-xl font-bold uppercase tracking-tighter mb-4 leading-tight text-white">
-                            Ready to build your child's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">AI future?</span>
+                            {isSummerProgram ? 'Ready to launch your ' : 'Ready to build your child\'s '} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{isSummerProgram ? 'Software Career?' : 'AI future?'}</span>
                         </h3>
                         <p className="text-slate-400 text-[11px] font-medium mb-6 leading-relaxed">
                             Strictly limited seats per batch to ensure personalized 1-on-1 mentorship sessions.
@@ -434,11 +361,11 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     }
 
     return (
-        <div>
+        <div className="bg-black w-full overflow-hidden">
             <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
                 <div className="relative inline-block mx-auto text-center">
                     <p className="max-w-4xl mx-auto text-base text-on-surface-variant font-light leading-relaxed italic relative z-10 px-6 whitespace-nowrap">
-                        "Will your child build the AI future, or just watch it?"
+                        {isSummerProgram ? '"Turn your summer into a launchpad for your career."' : '"Will your child build the AI future, or just watch it?"'}
                     </p>
                     <motion.div 
                         initial={{ width: 0, opacity: 0 }}
@@ -452,7 +379,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
             </div>
 
             {/* Premium Stats Command Center */}
-            <div className="py-12 px-6 bg-surface-container-low relative overflow-hidden">
+            <div className="py-12 px-6 bg-black relative overflow-hidden w-full border-y border-white/5">
                 <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
                     {stats.map((stat, i) => (
                         <motion.div
@@ -486,190 +413,143 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 px-6 lg:px-12 py-6 bg-surface-container-lowest relative">
+            <div className="w-full bg-black">
+                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 px-6 lg:px-12 py-12 relative">
                 <div className="flex-1 w-full">
                     <div className="max-w-3xl relative mx-auto lg:ml-0 lg:mr-auto">
                         <div className="text-left mb-4">
                             <div className="flex items-center gap-4 mb-1">
                                 <h2 className="text-3xl font-headline font-extrabold tracking-tight text-on-surface whitespace-nowrap">
-                                    The <span className="text-blue-500">90-Day</span> Roadmap
+                                    The <span className="text-blue-500">{isSummerProgram ? '30-Day' : '90-Day'}</span> Roadmap
                                 </h2>
                                 <div className="h-px flex-1 bg-gradient-to-r from-blue-500/30 to-transparent max-w-[100px]" />
                             </div>
                             <p className="text-on-surface-variant text-sm">
-                                From code basics to shipping production-ready AI models.
+                                {isSummerProgram ? 'From software foundations to production-ready AI tools.' : 'From code basics to shipping production-ready AI models.'}
                             </p>
                         </div>
 
                         {curriculumData.map((month, monthIndex) => (
                             <div
                                 key={monthIndex}
-                                className={`mb-6 relative ${monthIndex === 2 ? 'mb-0' : ''}`}
+                                className={`mb-12 relative ${monthIndex === curriculumData.length - 1 ? 'mb-0' : ''}`}
                             >
-                                <motion.div 
-                                    layout
-                                    className={`flex items-center gap-8 cursor-pointer transition-all duration-700 rounded-[2rem] group mb-4 relative overflow-hidden
-                                        ${selectedMonth === monthIndex 
-                                            ? 'p-3 bg-white/[0.03] border border-white/10 shadow-2xl' 
-                                            : 'p-6 bg-gradient-to-br from-white/[0.04] via-transparent to-white/[0.02] backdrop-blur-3xl border border-white/5 hover:border-blue-500/20 hover:bg-white/[0.06] shadow-xl'}`}
-                                    onClick={() => handleMonthClick(monthIndex)}
+                                <div 
+                                    className="flex items-center gap-8 p-6 bg-white/[0.03] border border-white/10 shadow-2xl rounded-[2rem] group mb-6 relative overflow-hidden"
                                 >
                                     {/* Phase Tracer Line (Left Edge) */}
-                                    <div className={`absolute left-0 top-0 bottom-0 w-1 transition-all duration-700
-                                        ${selectedMonth === monthIndex ? 'bg-blue-500' : 'bg-white/5 group-hover:bg-blue-500/40'}`} />
+                                    <div className={`absolute left-0 top-0 bottom-0 w-1 transition-all duration-700 bg-blue-500`} />
 
                                     {/* Tech Number Box */}
-                                    <motion.div 
-                                        layout
+                                    <div 
                                         className={`rounded-2xl flex items-center justify-center border-2 transition-all duration-700 relative px-3 py-2
                                             ${month.color === 'primary'
-                                                ? 'bg-blue-500/5 border-blue-500/20 group-hover:border-blue-500/40'
-                                                : 'bg-indigo-500/5 border-indigo-500/20 group-hover:border-indigo-500/40'}`}
+                                                ? 'bg-blue-500/5 border-blue-500/20'
+                                                : 'bg-indigo-500/5 border-indigo-500/20'}`}
                                     >
-                                        <motion.span 
-                                            layout
-                                            className={`font-headline font-black transition-all duration-700 whitespace-nowrap
-                                                ${selectedMonth === monthIndex ? 'text-xs' : 'text-sm'}
+                                        <span 
+                                            className={`font-headline font-black transition-all duration-700 whitespace-nowrap text-xs
                                                 ${month.color === 'primary' ? 'text-blue-400' : 'text-indigo-400'}`}
                                         >
-                                            Month {month.month}
-                                        </motion.span>
-                                        
-                                        {/* Decorative Corner Notch (Hover Only) */}
-                                        <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    </motion.div>
+                                            {isSummerProgram ? 'Week 0' + (monthIndex + 1) : 'Month ' + month.month}
+                                        </span>
+                                    </div>
                                     
-                                    <motion.div layout className="flex-1 text-left">
+                                    <div className="flex-1 text-left">
                                         <div className="flex flex-col">
-                                            <motion.h3 
-                                                layout
-                                                className={`font-headline font-black text-on-surface transition-all duration-700
-                                                    ${selectedMonth === monthIndex ? 'text-xl' : 'text-3xl tracking-tight'}`}
-                                            >
+                                            <h3 className="font-headline font-black text-on-surface text-xl transition-all duration-700">
                                                 {month.title}
-                                            </motion.h3>
-                                            
-                                            {selectedMonth !== monthIndex && (
-                                                <motion.p 
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    className="text-on-surface-variant text-sm mt-1 font-medium opacity-80"
-                                                >
-                                                    {month.phaseDescription}
-                                                </motion.p>
-                                            )}
+                                            </h3>
                                         </div>
-                                    </motion.div>
+                                    </div>
+                                </div>
 
-                                    {/* Action Icon: Sophisticated Bracket-style Arrow */}
-                                    <motion.div 
-                                        animate={{ rotate: selectedMonth === monthIndex ? 180 : 0, scale: selectedMonth === monthIndex ? 0.9 : 1.2 }}
-                                        transition={{ duration: 0.5, ease: "anticipate" }}
-                                        className={`p-4 rounded-full border transition-colors duration-500
-                                            ${selectedMonth === monthIndex ? 'border-blue-500/40 bg-blue-500/10' : 'border-white/10 bg-white/5'}`}
-                                    >
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </motion.div>
-                                </motion.div>
+                                <div className="overflow-hidden">
+                                    <div className={`ml-5 pl-9 border-l-2 relative ${
+                                        monthIndex === curriculumData.length - 1 ? 'border-dashed' : ''
+                                    } border-surface-container-highest pb-6`}>
+                                        {month.weeks.map((week, weekIndex) => (
+                                            <div 
+                                                key={weekIndex} 
+                                                className={`mb-4 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
+                                            >
+                                                <div 
+                                                    className={`absolute -left-[48px] top-1 w-3 h-3 rounded-full border-3 cursor-pointer hover:scale-125 transition-transform ${
+                                                        week.isSpecial
+                                                            ? 'bg-primary border-surface shadow-[0_0_10px_rgba(0,229,255,0.6)]'
+                                                            : 'bg-surface-container-highest border-surface'
+                                                    }`}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleWeekClick(monthIndex, weekIndex);
+                                                    }}
+                                                    onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
+                                                    onMouseLeave={() => setHoveredWeek(null)}
+                                                />
 
-                                <AnimatePresence>
-                                    {selectedMonth === monthIndex && (
-                                        <motion.div 
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                            className="overflow-hidden"
-                                        >
-                                            <div className={`ml-5 pl-9 border-l-2 relative ${
-                                                monthIndex === 2 ? 'border-dashed' : ''
-                                            } border-surface-container-highest pb-6`}>
-                                                {month.weeks.map((week, weekIndex) => (
-                                                    <div 
-                                                        key={weekIndex} 
-                                                        className={`mb-3 relative group ${weekIndex === month.weeks.length - 1 ? 'mb-0' : ''}`}
+                                                <div 
+                                                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
+                                                        week.isSpecial
+                                                            ? 'bg-gradient-to-br from-primary via-primary-container to-secondary'
+                                                            : ''
+                                                    } ${
+                                                        hoveredWeek === `${monthIndex}-${weekIndex}` 
+                                                            ? 'scale-105 shadow-xl border-primary/50' 
+                                                            : 'hover:scale-[1.02] hover:shadow-xl hover:border-primary/50'
+                                                    }`}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleWeekClick(monthIndex, weekIndex);
+                                                    }}
+                                                    onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
+                                                    onMouseLeave={() => setHoveredWeek(null)}
+                                                >
+                                                    <span 
+                                                        className={`text-[10px] font-bold mb-1 block uppercase tracking-widest ${
+                                                            month.color === 'primary' ? 'text-primary' : 'text-secondary'
+                                                        }`}
                                                     >
-                                                        <div 
-                                                            className={`absolute -left-[48px] top-1 w-3 h-3 rounded-full border-3 cursor-pointer hover:scale-125 transition-transform ${
-                                                                week.isSpecial
-                                                                    ? 'bg-primary border-surface shadow-[0_0_10px_rgba(0,229,255,0.6)]'
-                                                                    : 'bg-surface-container-highest border-surface'
-                                                            }`}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleWeekClick(monthIndex, weekIndex);
-                                                            }}
-                                                            onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
-                                                            onMouseLeave={() => setHoveredWeek(null)}
-                                                        />
-
-                                                        <div 
-                                                            className={`p-2.5 rounded-lg border transition-all cursor-pointer bg-surface-container-high border-outline-variant/20 ${
-                                                                week.isSpecial
-                                                                    ? 'bg-gradient-to-br from-primary via-primary-container to-secondary'
-                                                                    : ''
-                                                            } ${
-                                                                hoveredWeek === `${monthIndex}-${weekIndex}` 
-                                                                    ? 'scale-105 shadow-xl border-primary/50' 
-                                                                    : 'hover:scale-[1.02] hover:shadow-xl hover:border-primary/50'
-                                                            }`}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleWeekClick(monthIndex, weekIndex);
-                                                            }}
-                                                            onMouseEnter={() => setHoveredWeek(`${monthIndex}-${weekIndex}`)}
-                                                            onMouseLeave={() => setHoveredWeek(null)}
-                                                        >
-                                                            <span 
-                                                                className={`text-[10px] font-bold mb-0.5 block uppercase tracking-widest ${
-                                                                    month.color === 'primary' ? 'text-primary' : 'text-secondary'
-                                                                }`}
-                                                            >
-                                                                {week.week}
-                                                            </span>
-                                                            <h4 className="text-sm font-bold mb-0.5 text-on-surface">
-                                                                {week.title}
-                                                            </h4>
-                                                            <p className="text-on-surface-variant text-xs">
-                                                                {week.description}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                ))}
+                                                        {week.week}
+                                                    </span>
+                                                    <h4 className="text-base font-bold mb-1 text-on-surface">
+                                                        {week.title}
+                                                    </h4>
+                                                    <p className="text-on-surface-variant text-xs opacity-80 leading-relaxed">
+                                                        {week.description}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="lg:w-96 lg:sticky lg:top-auto lg:bottom-12 lg:ml-8 perspective-1000">
+                <div className="lg:w-[32rem] lg:sticky lg:top-auto lg:bottom-12 lg:ml-8 perspective-1000">
                     <motion.div 
                         whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="relative bg-slate-900/40 backdrop-blur-3xl p-8 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden group"
+                        className="relative bg-slate-900/40 backdrop-blur-3xl p-6 rounded-[2.5rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden group"
                     >
                         {/* 3D Bevel/Reflective Edge */}
-                        <div className="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 pointer-events-none z-10" />
-                        <div className="absolute inset-0 rounded-[3rem] border-b border-r border-black/40 pointer-events-none z-10" />
+                        <div className="absolute inset-0 rounded-[2.5rem] border-t border-l border-white/20 pointer-events-none z-10" />
+                        <div className="absolute inset-0 rounded-[2.5rem] border-b border-r border-black/40 pointer-events-none z-10" />
 
                         {/* Ambient Corner Glows */}
                         <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
                         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
 
-                        <h2 className="text-3xl md:text-4xl font-headline font-black tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60 text-center">
-                            Ready to build your child's AI future?
+                        <h2 className="text-2xl md:text-3xl font-headline font-black tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60 text-center">
+                            {isSummerProgram ? 'Ready to launch your software career?' : 'Ready to build your child\'s AI future?'}
                         </h2>
                         
-                        <p className="text-base text-on-surface-variant/80 mb-8 text-center font-medium leading-relaxed">
+                        <p className="text-sm text-on-surface-variant/80 mb-5 text-center font-medium leading-relaxed">
                             Enroll today — limited seats per cohort to ensure personalized mentorship.
                         </p>
 
-                        <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-5">
                             {/* Technical Data Grid */}
                             <div className="grid grid-cols-1 gap-4">
                                 <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative overflow-hidden group/item">
@@ -728,7 +608,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                 <button 
                                     onClick={handleReserveAdmission}
                                     disabled={isEnrolling}
-                                    className="relative w-full bg-slate-950 text-white py-6 rounded-2xl font-headline font-black text-xl border border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+                                    className="relative w-full bg-slate-950 text-white py-5 rounded-2xl font-headline font-black text-lg border border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
                                 >
                                     <div className="flex items-center justify-center gap-3">
                                         {isEnrolling ? (
@@ -748,14 +628,13 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                                 </button>
                             </div>
 
-                            <p className="text-[10px] text-white/40 text-center font-medium tracking-wide">
-                                SECURE ENCRYPTION • IMMEDIATE ACCESS • 100% SUCCESS RATE
-                            </p>
+
                         </div>
                     </motion.div>
                 </div>
             </div>
         </div>
+    </div>
     );
 };
 

@@ -369,6 +369,8 @@ exports.getPublicCourseStats = async (req, res) => {
             query = { title: { $regex: /foundation of iot|robotics/i } };
         } else if (id === '4') {
             query = { title: { $regex: /foundation of cyber/i } };
+        } else if (id === '5') {
+            query = { title: { $regex: /summer builder program/i } };
         } else if (id.length > 20) {
             // Assume it's a real MongoDB ID
             query = { _id: id };

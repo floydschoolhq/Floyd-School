@@ -12,6 +12,79 @@ import girl1 from '../assets/avatars/girl1.jpg';
 import girl2 from '../assets/avatars/girl2.avif';
 import girl3 from '../assets/avatars/girl3.avif';
 
+const SUMMER_REVIEWS = [
+    {
+        id: 1,
+        name: "Aryan",
+        role: "Student, DPS",
+        avatar: boy1,
+        rating: 5,
+        course: "Summer Builder Program",
+        batch: "Summer 2026",
+        highlight: "Most Productive Summer Ever",
+        content: "I never thought I could build a real AI app in just 30 days. The mentors made everything so easy to understand. Best summer investment!",
+        tags: ["Summer", "Building", "AI Tools"],
+        achievement: "Built Personal Assistant App",
+        color: "blue",
+    },
+    {
+        id: 2,
+        name: "Isha",
+        role: "Student, Heritage School",
+        avatar: girl1,
+        rating: 5,
+        course: "Summer Builder Program",
+        batch: "Summer 2026",
+        highlight: "From Zero to Creator",
+        content: "Before this, I only knew basic Python. Now I'm building production-ready applications. The 30-day roadmap is intense but totally worth it.",
+        tags: ["Creation", "Software", "Growth"],
+        achievement: "Mastered Full-Stack Basics",
+        color: "emerald",
+    },
+    {
+        id: 3,
+        name: "Kabir",
+        role: "Student, Modern School",
+        avatar: boy2,
+        rating: 5,
+        course: "Summer Builder Program",
+        batch: "Summer 2026",
+        highlight: "Industry Mentor Access",
+        content: "The best part was the 1:1 mentorship. Getting my code reviewed by industry pros was a game changer for my development skills.",
+        tags: ["Mentorship", "Industry", "Code"],
+        achievement: "Portfolio Ready",
+        color: "purple",
+    },
+    {
+        id: 4,
+        name: "Sanya",
+        role: "Student, Amity International",
+        avatar: girl2,
+        rating: 5,
+        course: "Summer Builder Program",
+        batch: "Summer 2026",
+        highlight: "Future Ready Skills",
+        content: "The AI tool integration week was my favorite. Learning how to use LLMs and smart APIs in my apps has given me a huge edge.",
+        tags: ["AI", "Future Tech", "Skills"],
+        achievement: "AI Specialist Badge",
+        color: "rose",
+    },
+    {
+        id: 5,
+        name: "Rohan",
+        role: "Student, Shiv Nadar School",
+        avatar: boy3,
+        rating: 5,
+        course: "Summer Builder Program",
+        batch: "Summer 2026",
+        highlight: "Real World Exposure",
+        content: "The final demo day was amazing. Presenting my project to a panel of experts felt like a real startup pitch. Highly recommend!",
+        tags: ["Demo Day", "Startup", "Tech"],
+        achievement: "Winner: Best Innovator",
+        color: "amber",
+    }
+];
+
 const AI_REVIEWS = [
     {
         id: 1,
@@ -173,15 +246,16 @@ const CourseReviews = ({ courseId, variant }) => {
         }
     };
 
-    if (courseId !== '1') return null;
+    if (courseId !== '1' && courseId !== '5') return null;
 
-    const duplicatedReviews = [...AI_REVIEWS, ...AI_REVIEWS, ...AI_REVIEWS];
+    const currentReviews = courseId === '5' ? SUMMER_REVIEWS : AI_REVIEWS;
+    const duplicatedReviews = [...currentReviews, ...currentReviews, ...currentReviews];
     const cardWidth = 350 + 24; // width + gap
 
     useEffect(() => {
         if (isMobile) return;
         
-        const distance = -cardWidth * AI_REVIEWS.length * 2;
+        const distance = -cardWidth * currentReviews.length * 2;
         
         controls.start({
             x: [0, distance],
@@ -239,7 +313,7 @@ const CourseReviews = ({ courseId, variant }) => {
                         ref={mobileScrollRef}
                         className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 px-6 snap-x snap-mandatory scrollbar-hide"
                     >
-                        {AI_REVIEWS.map((review) => {
+                        {currentReviews.map((review) => {
                             const colors = colorMap[review.color] || colorMap.blue;
                             return (
                                 <div 
