@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import {
-    BookOpen,
-    Search,
-    CheckCircle2,
-    XCircle,
-    Eye,
-    AlertCircle,
-    FileText,
-    IndianRupee
+import { 
+    BookOpen, 
+    Search, 
+    CheckCircle2, 
+    XCircle, 
+    Eye, 
+    AlertCircle, 
+    FileText, 
+    IndianRupee,
+    Layout,
+    Layers,
+    ChevronRight,
+    Zap
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
+import ModuleEditorModal from '../components/modals/ModuleEditorModal';
 
 const CourseGovernance = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('all');
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [isModuleModalOpen, setIsModuleModalOpen] = useState(false);
 
     const fetchCourses = async () => {
         try {
@@ -125,6 +132,10 @@ const CourseGovernance = () => {
                         onUpdateStatus={updateStatus}
                         onUpdateStats={updateEnrollmentStats}
                         onUpdatePrice={updatePrice}
+                        onManageModules={() => {
+                            setSelectedCourse(course);
+                            setIsModuleModalOpen(true);
+                        }}
                         idx={idx}
                     />
                 )) : (
@@ -134,11 +145,25 @@ const CourseGovernance = () => {
                     </div>
                 )}
             </div>
+
+            <AnimatePresence>
+                {isModuleModalOpen && (
+                    <ModuleEditorModal 
+                        isOpen={isModuleModalOpen}
+                        onClose={() => {
+                            setIsModuleModalOpen(false);
+                            setSelectedCourse(null);
+                        }}
+                        course={selectedCourse}
+                        onUpdate={fetchCourses}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 };
 
-const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, idx }) => {
+const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, onManageModules, idx }) => {
     const [stats, setStats] = useState({ totalSeats: course.totalSeats || 50, manualEnrollmentCount: course.manualEnrollmentCount || 0 });
     const [price, setPrice] = useState(course.price || 0);
     const [originalPrice, setOriginalPrice] = useState(course.originalPrice || 0);
@@ -286,6 +311,13 @@ const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, idx 
                 {/* Status Controls */}
                 <div className="flex items-center gap-3">
                     <button
+                        onClick={onManageModules}
+                        className="px-4 py-3 bg-sky-500/10 hover:bg-sky-500 text-sky-500 hover:text-slate-950 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2"
+                        title="Manage Curriculum Modules"
+                    >
+                        <Layers size={16} /> Content
+                    </button>
+                    <button
                         onClick={() => window.open(`https://thinkskool-9kaq.vercel.app/course/${course.title?.toLowerCase().replace(/ /g, '-') || '1'}`, '_blank')}
                         className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:text-white transition-colors"
                         title="Preview in Student Panel"
@@ -308,6 +340,25 @@ const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, idx 
                             <AlertCircle size={16} /> Unpublish
                         </button>
                     )}
+                </div>
+            </div>
+            
+            {/* Quick Stats Overlay */}
+            <div className="mt-6 pt-6 border-t border-slate-800/50 flex items-center gap-8">
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Curriculum:</span>
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">{course.modules?.length || 0} Modules</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pricing Protocol:</span>
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">₹{course.price} INR</span>
+                </div>
+                <div className="flex-1"></div>
+                <div className="flex items-center gap-2 opacity-50">
+                    <Zap size={10} className="text-amber-500" />
+                    <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest italic">Nexus Sync Active</span>
                 </div>
             </div>
         </motion.div>

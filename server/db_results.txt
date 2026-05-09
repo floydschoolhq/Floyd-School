@@ -1,25 +1,35 @@
 {
   "counts": {
-    "totalCourses": 4
+    "totalCourses": 5
   },
   "courseData": [
     {
-      "title": "Foundation of AI and Machine Learning",
+      "id": "69ff38141cad938780ccdbeb",
+      "title": "AI & Machine Learning",
       "moduleCount": 0,
       "hasVideos": false
     },
     {
-      "title": "Foundation of Web Development",
+      "id": "69ff38141cad938780ccdbec",
+      "title": "Cyber Security",
       "moduleCount": 0,
       "hasVideos": false
     },
     {
-      "title": "Foundation of IoT and Robotics",
+      "id": "69ff38141cad938780ccdbed",
+      "title": "IoT & Robotics",
       "moduleCount": 0,
       "hasVideos": false
     },
     {
-      "title": "Foundation of Cyber Security",
+      "id": "69ff38141cad938780ccdbee",
+      "title": "Development (Web/App)",
+      "moduleCount": 0,
+      "hasVideos": false
+    },
+    {
+      "id": "69ff38141cad938780ccdbef",
+      "title": "ThinkSkool Summer Builder Program",
       "moduleCount": 0,
       "hasVideos": false
     }

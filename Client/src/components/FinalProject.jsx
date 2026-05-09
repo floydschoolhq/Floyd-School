@@ -19,16 +19,35 @@ const FinalProject = ({ courseId = "1" }) => {
                         className="mb-10"
                     >
                         <div className="aspect-video bg-[#0A0A0A] rounded-2xl overflow-hidden shadow-2xl relative group border-2 border-white/10">
-                            <iframe 
-                                width="100%" 
-                                height="100%" 
-                                style={{ pointerEvents: 'none' }}
-                                src={`${project.videoUrl}?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=${project.videoUrl.split('/').pop()}&disablekb=1&fs=0`} 
-                                title={project.title} 
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                            ></iframe>
+                            {courseId === '5' ? (
+                                <img 
+                                    src="/images/projects/ai_assistant_project.png" 
+                                    alt="AI Personal Assistant" 
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : courseId === '1' ? (
+                                <video 
+                                    className="w-full h-full object-cover"
+                                    autoPlay 
+                                    loop 
+                                    muted 
+                                    playsInline
+                                >
+                                    <source src="/videos/facial_recognition.mp4" type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            ) : (
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    style={{ pointerEvents: 'none' }}
+                                    src={`${project.videoUrl}?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=${project.videoUrl.split('/').pop()}&disablekb=1&fs=0`} 
+                                    title={project.title} 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                ></iframe>
+                            )}
                         </div>
                     </motion.div>
 
@@ -105,16 +124,35 @@ const FinalProject = ({ courseId = "1" }) => {
                         <div className="relative group/video mt-8 lg:mt-0 w-full max-w-[600px] mx-auto">
                             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur-2xl opacity-50 group-hover/video:opacity-100 transition duration-700 pointer-events-none" />
                             <div className="relative aspect-video bg-[#0A0A0A] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover/video:border-blue-500/50 transition-all duration-700">
-                                <iframe 
-                                    width="100%" 
-                                    height="100%" 
-                                    style={{ pointerEvents: 'none' }}
-                                    src={`${project.videoUrl}?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=${project.videoUrl.split('/').pop()}&disablekb=1&fs=0`} 
-                                    title={project.title} 
-                                    frameBorder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowFullScreen
-                                ></iframe>
+                                {courseId === '5' ? (
+                                    <img 
+                                        src="/images/projects/ai_assistant_project.png" 
+                                        alt="AI Personal Assistant" 
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : courseId === '1' ? (
+                                    <video 
+                                        className="w-full h-full object-cover"
+                                        autoPlay 
+                                        loop 
+                                        muted 
+                                        playsInline
+                                    >
+                                        <source src="/videos/facial_recognition.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                ) : (
+                                    <iframe 
+                                        width="100%" 
+                                        height="100%" 
+                                        style={{ pointerEvents: 'none' }}
+                                        src={`${project.videoUrl}?autoplay=1&mute=1&controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=${project.videoUrl.split('/').pop()}&disablekb=1&fs=0`} 
+                                        title={project.title} 
+                                        frameBorder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowFullScreen
+                                    ></iframe>
+                                )}
                             </div>
                         </div>
                     </div>

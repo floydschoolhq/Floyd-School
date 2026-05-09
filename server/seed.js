@@ -110,6 +110,32 @@ const seedCourses = [
                 reporting: "Career readiness and code quality reports"
             }
         }
+    },
+    {
+        title: "ThinkSkool Summer Builder Program",
+        description: "A high-octane 30-day summer internship. From foundations of software development to building real AI-powered applications with industry mentors.",
+        category: "Summer Program",
+        icon: "Rocket",
+        color: "text-blue-600",
+        rating: "5.0",
+        duration: "1 Month",
+        price: 2499,
+        originalPrice: 4999,
+        currency: "INR",
+        tags: ["Summer Internship", "Project Based", "Software", "AI"],
+        difficulty: "Beginner",
+        deliveryDetails: {
+            inSchool: {
+                bootcamp: "30 Days Intensive Summer Program",
+                postBootcamp: "Project showcase and certification"
+            },
+            online: {
+                tutor: "Live Mentorship & Doubt Clearing",
+                lectures: "Project-focused Interactive Sessions",
+                chatSupport: "Dedicated Support Channel",
+                reporting: "Weekly Milestone Assessments"
+            }
+        }
     }
 ];
 

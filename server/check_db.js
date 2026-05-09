@@ -21,6 +21,7 @@ async function check() {
     const results = {
       counts,
       courseData: allCourses.map(c => ({
+        id: c._id,
         title: c.title,
         moduleCount: c.modules?.length || 0,
         hasVideos: c.modules?.some(m => m.videoUrl) || false
