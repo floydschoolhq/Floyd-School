@@ -220,6 +220,7 @@ app.use('/api/notifications', generalLimiter, require('./routes/notificationRout
 app.use('/api/students', generalLimiter, require('./routes/studentRoutes'));
 app.use('/api/mentors', generalLimiter, require('./routes/mentorRoutes'));
 app.use('/api/masterclasses', generalLimiter, require('./routes/masterclassRoutes'));
+app.use('/api/batches', generalLimiter, require('./routes/batchRoutes'));
 app.use('/api/admin', generalLimiter, require('./routes/adminRoutes'));
 app.use('/api/growth', generalLimiter, require('./routes/growthRoutes'));
 app.use('/api/support', generalLimiter, require('./routes/supportRoutes'));

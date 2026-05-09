@@ -12,19 +12,25 @@ import {
     Layout,
     Layers,
     ChevronRight,
-    Zap
+    Zap,
+    Users,
+    Settings,
+    MoreVertical,
+    Plus,
+    Terminal,
+    Target
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
-import ModuleEditorModal from '../components/modals/ModuleEditorModal';
+import CourseMasterModal from '../components/modals/CourseMasterModal';
 
 const CourseGovernance = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('all');
-    const [selectedCourse, setSelectedCourse] = useState(null);
-    const [isModuleModalOpen, setIsModuleModalOpen] = useState(false);
+    const [selectedCourseId, setSelectedCourseId] = useState(null);
+    const [isMasterModalOpen, setIsMasterModalOpen] = useState(false);
 
     const fetchCourses = async () => {
         try {
@@ -41,36 +47,22 @@ const CourseGovernance = () => {
         fetchCourses();
     }, []);
 
-    const updateStatus = async (id, status) => {
-        if (!window.confirm(`Are you sure you want to mark this course as ${status}?`)) return;
+    const handleCreateCourse = async () => {
+        const title = window.prompt('Enter Course Title:');
+        if (!title) return;
         try {
-            await api.patch(`/admin/courses/${id}/status`, { status });
+            await api.post('/courses', { 
+                title, 
+                description: 'Placeholder description...',
+                instructor: courses[0]?.instructor?._id || '6605786a3e6f9a001a8f903a' // Fallback to first mentor or hardcoded ID if empty
+            });
+            toast.success('Course entity initialized');
             fetchCourses();
-            toast.success(`Course ${status} successfully`);
         } catch (err) {
-            toast.error('Failed to update status');
+            toast.error('Failed to initialize course');
         }
     };
 
-    const updateEnrollmentStats = async (id, stats) => {
-        try {
-            await api.patch(`/admin/courses/${id}/enrollment-stats`, stats);
-            toast.success('Enrollment matrix updated');
-            fetchCourses();
-        } catch (err) {
-            toast.error('Failed to update enrollment stats');
-        }
-    };
-
-    const updatePrice = async (id, pricingData) => {
-        try {
-            await api.patch(`/admin/courses/${id}/price`, pricingData);
-            toast.success('Pricing infrastructure updated');
-            fetchCourses();
-        } catch (err) {
-            toast.error('Failed to update pricing');
-        }
-    };
 
     const filteredCourses = courses.filter(course =>
         (filter === 'all' || course.status === filter) &&
@@ -86,28 +78,38 @@ const CourseGovernance = () => {
 
     return (
         <div className="space-y-10">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
-                        Course <span className="text-sky-500 not-italic">Governance</span>
+                    <h2 className="text-5xl font-black text-white tracking-tighter uppercase italic leading-none">
+                        Root <span className="text-sky-500 not-italic">Governance</span>
                     </h2>
-                    <p className="text-slate-500 font-black mt-2 uppercase tracking-[0.3em] text-[10px]">
-                        Curriculum Oversight & Quality Control
+                    <p className="text-slate-500 font-bold mt-4 uppercase tracking-[0.5em] text-[9px] flex items-center gap-3">
+                        <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                        Neural Curriculum Control Center v4.2
                     </p>
                 </div>
-                <div className="flex gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl">
-                    {['all', 'published', 'draft'].map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setFilter(tab)}
-                            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${filter === tab
-                                ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
-                                : 'text-slate-500 hover:text-white'
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
+                <div className="flex items-center gap-4">
+                    <button 
+                        onClick={handleCreateCourse}
+                        className="px-8 py-4 bg-white text-slate-950 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-sky-500 transition-all flex items-center gap-2 shadow-lg shadow-white/5"
+                    >
+                        <Plus size={18} /> Initialize Course
+                    </button>
+                    <div className="h-10 w-px bg-slate-800 hidden md:block"></div>
+                    <div className="flex gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-[1.5rem]">
+                        {['all', 'published', 'draft'].map(tab => (
+                            <button
+                                key={tab}
+                                onClick={() => setFilter(tab)}
+                                className={`px-5 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${filter === tab
+                                    ? 'bg-slate-800 text-white shadow-lg shadow-black/20'
+                                    : 'text-slate-500 hover:text-white'
+                                    }`}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </header>
 
@@ -129,12 +131,9 @@ const CourseGovernance = () => {
                     <CourseCard 
                         key={course._id} 
                         course={course} 
-                        onUpdateStatus={updateStatus}
-                        onUpdateStats={updateEnrollmentStats}
-                        onUpdatePrice={updatePrice}
-                        onManageModules={() => {
-                            setSelectedCourse(course);
-                            setIsModuleModalOpen(true);
+                        onOpenMaster={() => {
+                            setSelectedCourseId(course._id);
+                            setIsMasterModalOpen(true);
                         }}
                         idx={idx}
                     />
@@ -147,14 +146,14 @@ const CourseGovernance = () => {
             </div>
 
             <AnimatePresence>
-                {isModuleModalOpen && (
-                    <ModuleEditorModal 
-                        isOpen={isModuleModalOpen}
+                {isMasterModalOpen && (
+                    <CourseMasterModal 
+                        isOpen={isMasterModalOpen}
                         onClose={() => {
-                            setIsModuleModalOpen(false);
-                            setSelectedCourse(null);
+                            setIsMasterModalOpen(false);
+                            setSelectedCourseId(null);
                         }}
-                        course={selectedCourse}
+                        courseId={selectedCourseId}
                         onUpdate={fetchCourses}
                     />
                 )}
@@ -163,204 +162,86 @@ const CourseGovernance = () => {
     );
 };
 
-const CourseCard = ({ course, onUpdateStatus, onUpdateStats, onUpdatePrice, onManageModules, idx }) => {
-    const [stats, setStats] = useState({ totalSeats: course.totalSeats || 50, manualEnrollmentCount: course.manualEnrollmentCount || 0 });
-    const [price, setPrice] = useState(course.price || 0);
-    const [originalPrice, setOriginalPrice] = useState(course.originalPrice || 0);
-    
-    const hasChanges = stats.totalSeats !== course.totalSeats || stats.manualEnrollmentCount !== course.manualEnrollmentCount;
-    const hasPriceChanges = price !== course.price || originalPrice !== course.originalPrice;
-
+const CourseCard = ({ course, onOpenMaster, idx }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.05 }}
-            className="bg-slate-900/20 border border-slate-800 rounded-3xl p-6 hover:border-sky-500/30 transition-all"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: idx * 0.05, type: 'spring', damping: 20 }}
+            className="group relative bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-1 hover:border-sky-500/50 transition-all duration-500"
         >
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
-                {/* Basic Course Info */}
-                <div className="flex items-start gap-4 flex-1">
-                    <div className="w-16 h-16 bg-slate-800 rounded-2xl overflow-hidden flex-shrink-0">
+            <div className="bg-slate-950/40 rounded-[2.25rem] p-6 flex flex-col lg:flex-row items-center justify-between gap-8 group-hover:bg-slate-950/60 transition-all">
+                {/* Course Main Intel */}
+                <div className="flex items-center gap-8 flex-1 w-full lg:w-auto">
+                    <div className="relative w-24 h-24 rounded-[2rem] overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform duration-700">
+                        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 to-transparent z-10"></div>
                         {course.thumbnail ? (
                             <img src={course.thumbnail} alt="" className="w-full h-full object-cover" />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center text-slate-600">
-                                <BookOpen size={24} />
+                            <div className="w-full h-full bg-slate-900 flex items-center justify-center text-slate-700">
+                                <BookOpen size={32} />
                             </div>
                         )}
+                        <div className="absolute top-2 right-2 z-20">
+                            <div className={`w-3 h-3 rounded-full border-2 border-slate-950 ${course.status === 'published' ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="text-lg font-black text-white uppercase tracking-tight">{course.title}</h3>
-                        <div className="flex items-center gap-3 mt-2">
-                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1">
-                                <FileText size={12} /> {course.instructor?.name || 'Unknown Instructor'}
+
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-4 mb-3">
+                            <span className="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full text-[8px] font-black text-sky-500 uppercase tracking-widest">{course.category || 'Development'}</span>
+                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest flex items-center gap-2">
+                                <Users size={12} /> {course.enrolledStudents?.length || 0} Registered
                             </span>
-                            <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${course.status === 'published' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
-                                }`}>
-                                {course.status}
-                            </span>
                         </div>
+                        <h3 className="text-2xl font-black text-white uppercase tracking-tight truncate group-hover:text-sky-400 transition-colors">
+                            {course.title}
+                        </h3>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2 flex items-center gap-2">
+                            <Target size={12} className="text-sky-500" /> Directed by {course.instructor?.name || 'Root Mentor'}
+                        </p>
                     </div>
                 </div>
 
-                {/* Enrollment & Capacity Management */}
-                <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50">
-                    <div className="space-y-2 text-center sm:text-left">
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Enrollment Control</p>
-                        <div className="flex items-center gap-3">
-                            <button 
-                                onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: Math.max(0, s.manualEnrollmentCount - 1) }))}
-                                className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition-all"
-                            >
-                                -
-                            </button>
-                            <span className="text-xl font-black text-sky-500 w-8 text-center">{stats.manualEnrollmentCount}</span>
-                            <button 
-                                onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: s.manualEnrollmentCount + 1 }))}
-                                className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition-all"
-                            >
-                                +
-                            </button>
-                        </div>
-                        <p className="text-[8px] font-bold text-slate-600 uppercase tracking-tighter">Student Enrolled Last Week</p>
+                {/* Quick Metrics Protocol */}
+                <div className="flex items-center gap-10 bg-slate-900/50 px-8 py-5 rounded-[2rem] border border-slate-800/50 w-full lg:w-auto">
+                    <div className="text-center">
+                        <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Commercial</p>
+                        <p className="text-lg font-black text-white leading-none">₹{course.price}</p>
                     </div>
-
-                    <div className="h-10 w-px bg-slate-800 hidden sm:block"></div>
-
-                    <div className="space-y-2 text-center sm:text-left">
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Total Capacity</p>
-                        <div className="flex items-center gap-4">
-                            <input 
-                                type="range" 
-                                min="1" 
-                                max="200" 
-                                value={stats.totalSeats}
-                                onChange={(e) => setStats(s => ({ ...s, totalSeats: parseInt(e.target.value) }))}
-                                className="w-24 accent-sky-500 h-1 bg-slate-800 rounded-lg appearance-none"
-                            />
-                            <span className="text-sm font-black text-white">{stats.totalSeats}</span>
-                        </div>
-                        <div className={`text-[8px] font-bold uppercase tracking-tighter ${(stats.totalSeats - stats.manualEnrollmentCount) < 5 ? 'text-rose-500' : 'text-slate-600'}`}>
-                            Live Preview: {stats.totalSeats - stats.manualEnrollmentCount} Seats Left
-                        </div>
+                    <div className="w-px h-8 bg-slate-800"></div>
+                    <div className="text-center">
+                        <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Curriculum</p>
+                        <p className="text-lg font-black text-white leading-none">{course.modules?.length || 0} <span className="text-[10px] text-slate-500 uppercase tracking-tighter ml-0.5 font-bold">Nodes</span></p>
                     </div>
-
-                    <button
-                        disabled={!hasChanges}
-                        onClick={() => onUpdateStats(course._id, stats)}
-                        className={`p-3 rounded-xl transition-all ${
-                            hasChanges 
-                            ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/30' 
-                            : 'bg-slate-800 text-slate-600 opacity-50 cursor-not-allowed'
-                        }`}
-                        title="Save Matrix Stats"
-                    >
-                        <CheckCircle2 size={20} />
-                    </button>
+                    <div className="w-px h-8 bg-slate-800"></div>
+                    <div className="text-center">
+                        <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Status</p>
+                        <p className={`text-[10px] font-black uppercase tracking-widest leading-none ${course.status === 'published' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                            {course.status}
+                        </p>
+                    </div>
                 </div>
 
-                {/* Price Management */}
-                <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-950/50 p-4 rounded-2xl border border-slate-800/50">
-                    <div className="space-y-2 text-center sm:text-left">
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Pricing Model (₹)</p>
-                        <div className="flex items-center gap-3">
-                            <div className="relative">
-                                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
-                                <input 
-                                    type="number"
-                                    value={price}
-                                    onChange={(e) => setPrice(Number(e.target.value))}
-                                    className="w-24 bg-slate-800 border border-slate-700 rounded-lg py-2 pl-8 pr-2 text-sm font-black text-white focus:border-sky-500/50 outline-none transition-all"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="h-10 w-px bg-slate-800 hidden sm:block"></div>
-
-                    <div className="space-y-2 text-center sm:text-left">
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Strike Price (₹)</p>
-                        <div className="flex items-center gap-3">
-                            <div className="relative">
-                                <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
-                                <input 
-                                    type="number"
-                                    value={originalPrice}
-                                    onChange={(e) => setOriginalPrice(parseInt(e.target.value) || 0)}
-                                    className="w-24 bg-slate-800 border border-slate-700 rounded-lg py-2 pl-8 pr-2 text-sm font-black text-slate-500 focus:border-sky-500/50 outline-none transition-all"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <button
-                        disabled={!hasPriceChanges}
-                        onClick={() => onUpdatePrice(course._id, { price, originalPrice })}
-                        className={`p-3 rounded-xl transition-all ${
-                            hasPriceChanges 
-                            ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/30' 
-                            : 'bg-slate-800 text-slate-600 opacity-50 cursor-not-allowed'
-                        }`}
-                        title="Update Pricing Infrastructure"
-                    >
-                        <CheckCircle2 size={20} />
-                    </button>
-                </div>
-
-                {/* Status Controls */}
-                <div className="flex items-center gap-3">
-                    <button
-                        onClick={onManageModules}
-                        className="px-4 py-3 bg-sky-500/10 hover:bg-sky-500 text-sky-500 hover:text-slate-950 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2"
-                        title="Manage Curriculum Modules"
-                    >
-                        <Layers size={16} /> Content
-                    </button>
-                    <button
+                {/* Master Entry Point */}
+                <div className="flex items-center gap-3 w-full lg:w-auto">
+                    <button 
                         onClick={() => window.open(`https://thinkskool-9kaq.vercel.app/course/${course.title?.toLowerCase().replace(/ /g, '-') || '1'}`, '_blank')}
-                        className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:text-white transition-colors"
-                        title="Preview in Student Panel"
+                        className="p-5 bg-slate-900 hover:bg-slate-800 text-slate-500 hover:text-white rounded-[1.75rem] transition-all border border-slate-800 shadow-xl"
                     >
-                        <Eye size={18} />
+                        <Eye size={20} />
                     </button>
-                    {course.status !== 'published' && (
-                        <button
-                            onClick={() => onUpdateStatus(course._id, 'published')}
-                            className="px-4 py-3 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-500 hover:text-slate-950 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2"
-                        >
-                            <CheckCircle2 size={16} /> Approve
-                        </button>
-                    )}
-                    {course.status === 'published' && (
-                        <button
-                            onClick={() => onUpdateStatus(course._id, 'draft')}
-                            className="px-4 py-3 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-slate-950 rounded-xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2"
-                        >
-                            <AlertCircle size={16} /> Unpublish
-                        </button>
-                    )}
+                    <button 
+                        onClick={onOpenMaster}
+                        className="flex-1 lg:flex-none px-8 py-5 bg-white text-slate-950 rounded-[1.75rem] font-black uppercase text-[11px] tracking-[0.2em] hover:bg-sky-500 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] transition-all flex items-center justify-center gap-3 active:scale-95 shadow-2xl"
+                    >
+                        <Settings size={18} /> Master Control
+                    </button>
                 </div>
             </div>
             
-            {/* Quick Stats Overlay */}
-            <div className="mt-6 pt-6 border-t border-slate-800/50 flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-sky-500"></div>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Curriculum:</span>
-                    <span className="text-[10px] font-black text-white uppercase tracking-widest">{course.modules?.length || 0} Modules</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
-                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pricing Protocol:</span>
-                    <span className="text-[10px] font-black text-white uppercase tracking-widest">₹{course.price} INR</span>
-                </div>
-                <div className="flex-1"></div>
-                <div className="flex items-center gap-2 opacity-50">
-                    <Zap size={10} className="text-amber-500" />
-                    <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest italic">Nexus Sync Active</span>
-                </div>
-            </div>
+            {/* Design Decoration */}
+            <div className="absolute -bottom-px left-20 right-20 h-[1px] bg-gradient-to-r from-transparent via-sky-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         </motion.div>
     );
 };
