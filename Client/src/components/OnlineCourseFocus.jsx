@@ -160,9 +160,6 @@ const OnlineCourseFocus = ({ variant }) => {
         setEarlyRegistrationCourse(course);
     };
 
-    const featuredCourse = FALLBACK_COURSES.find(c => !c.comingSoon);
-    const otherCourses = FALLBACK_COURSES.filter(c => c.comingSoon);
-
     const tabs = [
         { id: 'live', label: 'Live' },
         { id: 'upcoming', label: 'Coming Soon' }

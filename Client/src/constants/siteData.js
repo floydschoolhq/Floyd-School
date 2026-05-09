@@ -1,10 +1,10 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
+import SUMMER_IMG from '../assets/images/summerimage.png';
 
 const AI_IMG = '/images/courses/ai-course.jpg';
 const IOT_IMG = '/images/courses/iot-course.jpg';
 const WEB_IMG = '/images/courses/web-course.jpg';
 const CYBER_IMG = '/images/courses/cyber-course.jpg';
-import SUMMER_IMG from '../assets/images/summerimage.png';
 
 export const FALLBACK_COURSES = [
     {
@@ -22,7 +22,6 @@ export const FALLBACK_COURSES = [
         currency: "INR",
         tags: ["AI", "Python", "ML"],
         live: true,
-        featured: true,
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
         curriculum: [
             "Neural Network Architectures",
