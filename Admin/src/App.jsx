@@ -23,7 +23,7 @@ import LiveMonitoring from './pages/LiveMonitoring';
 import StudentRegistrations from './pages/StudentRegistrations';
 import RecordingsManagement from './pages/RecordingsManagement';
 import PaymentTracking from './pages/PaymentTracking';
-import AIMLEnrollmentPage from './pages/AIMLEnrollmentPage';
+
 
 function App() {
   return (
@@ -44,7 +44,7 @@ function App() {
               <Route path="users" element={<UserGovernance />} />
               <Route path="requests" element={<AccessRequests />} />
               <Route path="student-registrations" element={<StudentRegistrations />} />
-              <Route path="ai-ml-enrollment" element={<AIMLEnrollmentPage />} />
+
               <Route path="courses" element={<CourseGovernance />} />
               <Route path="leads" element={<LeadIntelligence />} />
               <Route path="chatbot-leads" element={<ChatbotLeadsPage />} />
