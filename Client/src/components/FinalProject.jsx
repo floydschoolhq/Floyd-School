@@ -20,11 +20,16 @@ const FinalProject = ({ courseId = "1" }) => {
                     >
                         <div className="aspect-video bg-[#0A0A0A] rounded-2xl overflow-hidden shadow-2xl relative group border-2 border-white/10">
                             {courseId === '5' ? (
-                                <img 
-                                    src="/images/projects/ai_assistant_project.png" 
-                                    alt="AI Personal Assistant" 
+                                <video 
                                     className="w-full h-full object-cover"
-                                />
+                                    autoPlay 
+                                    loop 
+                                    muted 
+                                    playsInline
+                                >
+                                    <source src="/videos/Video Project 4.mp4" type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
                             ) : courseId === '1' ? (
                                 <video 
                                     className="w-full h-full object-cover"
@@ -125,11 +130,16 @@ const FinalProject = ({ courseId = "1" }) => {
                             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur-2xl opacity-50 group-hover/video:opacity-100 transition duration-700 pointer-events-none" />
                             <div className="relative aspect-video bg-[#0A0A0A] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover/video:border-blue-500/50 transition-all duration-700">
                                 {courseId === '5' ? (
-                                    <img 
-                                        src="/images/projects/ai_assistant_project.png" 
-                                        alt="AI Personal Assistant" 
+                                    <video 
                                         className="w-full h-full object-cover"
-                                    />
+                                        autoPlay 
+                                        loop 
+                                        muted 
+                                        playsInline
+                                    >
+                                        <source src="/videos/Video Project 4.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
                                 ) : courseId === '1' ? (
                                     <video 
                                         className="w-full h-full object-cover"
