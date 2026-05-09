@@ -88,7 +88,7 @@ const JOURNEY_STEPS = [
     }
 ];
 
-const JourneyCard = ({ step, idx, isEven }) => {
+const JourneyCard = ({ step, isEven }) => {
     const navigate = useNavigate();
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -269,7 +269,6 @@ const LearningJourney = () => {
                             <JourneyCard
                                 key={step.id}
                                 step={step}
-                                idx={idx}
                                 isEven={idx % 2 === 0}
                             />
                         ))}

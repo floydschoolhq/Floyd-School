@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -229,7 +229,6 @@ const ReviewCard = ({ review }) => {
 };
 
 const CourseReviews = ({ courseId, variant }) => {
-    const navigate = useNavigate();
     const isMobile = useIsMobile();
     const containerRef = useRef(null);
     const mobileScrollRef = useRef(null);
@@ -246,14 +245,12 @@ const CourseReviews = ({ courseId, variant }) => {
         }
     };
 
-    if (courseId !== '1' && courseId !== '5') return null;
-
-    const currentReviews = courseId === '5' ? SUMMER_REVIEWS : AI_REVIEWS;
+    const currentReviews = (courseId === '5' || courseId === '1') ? (courseId === '5' ? SUMMER_REVIEWS : AI_REVIEWS) : [];
     const duplicatedReviews = [...currentReviews, ...currentReviews, ...currentReviews];
     const cardWidth = 350 + 24; // width + gap
 
     useEffect(() => {
-        if (isMobile) return;
+        if (isMobile || currentReviews.length === 0) return;
         
         const distance = -cardWidth * currentReviews.length * 2;
         
@@ -279,7 +276,8 @@ const CourseReviews = ({ courseId, variant }) => {
         });
     }, [isMobile, controls, controls2, cardWidth]);
 
-    const isDark = variant === 'dark';
+
+    if (currentReviews.length === 0) return null;
 
     if (isMobile) {
         return (

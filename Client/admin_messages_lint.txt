@@ -1,0 +1,42 @@
+﻿
+> lint_report.txt:10:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\AdminMessages.jsx
+  lint_report.txt:11:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                     no-unused-vars
+  lint_report.txt:12:  16:9   error  Error: Calling setState synchronously within an effect can trigger cascading 
+renders
+  lint_report.txt:13:
+  lint_report.txt:14:Effects are intended to synchronize state between React and external systems such as manually 
+updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one 
+or both of the following:
+  lint_report.txt:15:* Update external systems with the latest state from React.
+  lint_report.txt:16:* Subscribe for updates from some external system, calling setState in a callback function when 
+external state changes.
+  lint_report.txt:17:
+  lint_report.txt:18:Calling setState synchronously within an effect body causes cascading renders that can hurt 
+performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+  lint_report.txt:19:
+  lint_report.txt:20:  14 |         // Load messages from localStorage
+  lint_report.txt:21:  15 |         const storedMessages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+  lint_report.txt:22:> 16 |         setMessages(storedMessages.sort((a, b) => new Date(b.timestamp) - new 
+Date(a.timestamp)));
+  lint_report.txt:23:     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  lint_report.txt:24:  17 |         setFilteredMessages(storedMessages);
+  lint_report.txt:25:  18 |     }, []);
+  lint_report.txt:26:  19 |  react-hooks/set-state-in-effect
+  lint_report.txt:27:  37:9   error  Error: Calling setState synchronously within an effect can trigger cascading 
+renders
+  lint_report.txt:28:
+  lint_report.txt:29:Effects are intended to synchronize state between React and external systems such as manually 
+updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one 
+or both of the following:
+  lint_report.txt:30:* Update external systems with the latest state from React.
+
+

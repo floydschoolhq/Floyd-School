@@ -83,7 +83,7 @@ const FeaturedCourseCard = ({ course, isDark, onRegister, onDetails }) => {
                     <img 
                         src={course.image} 
                         alt={course.title} 
-                        className="absolute inset-0 w-full h-full object-cover object-left-top transition-transform duration-500 group-hover:scale-105"
+                        className="absolute inset-0 w-full h-full object-cover object-left transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />

@@ -7,10 +7,8 @@ export const GlowingEffect = ({
     glow = true,
     disabled = false,
     proximity = 64,
-    inactiveZone = 0.01,
     className,
 }) => {
-    const canvasRef = useRef(null);
     const containerRef = useRef(null);
     const [opacity, setOpacity] = useState(0);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -35,9 +33,7 @@ export const GlowingEffect = ({
         [disabled, proximity]
     );
 
-    const handleMouseLeave = useCallback(() => {
-        setOpacity(0);
-    }, []);
+
 
     useEffect(() => {
         if (disabled) return;

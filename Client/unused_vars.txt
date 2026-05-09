@@ -1,0 +1,608 @@
+﻿
+lint_report.txt:3:> eslint . --rule no-unused-vars: error
+lint_report.txt:7:  1:17  error  'useContext' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+  no-unused-vars
+lint_report.txt:8:  1:40  error  'useLayoutEffect' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:11:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                   no-unused-vars
+lint_report.txt:44:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:47:  9:10  error  'autoTriggered' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:50:    3:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                                    no-unused-vars
+lint_report.txt:51:    6:8   error    'useIsMobile' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                   no-unused-vars
+lint_report.txt:52:   10:45  error    'variant' is assigned a value but never used                                     
+                                                    no-unused-vars
+lint_report.txt:53:   14:12  error    'isSecuring' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                           no-unused-vars
+lint_report.txt:54:   43:22  error    'err' is defined but never used                                                  
+                                                    no-unused-vars
+lint_report.txt:55:   74:11  error    'handleSecureSpot' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                                     no-unused-vars
+lint_report.txt:57:  124:11  error    'handleMonthClick' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                                     no-unused-vars
+lint_report.txt:60:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:63:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+no-unused-vars
+lint_report.txt:64:  7:8   error  'shivamImg' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:67:   1:36  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+    no-unused-vars
+lint_report.txt:68:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+    no-unused-vars
+lint_report.txt:69:   6:11  error  'isDark' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:70:  54:15  error  'shapes' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:73:    1:17  error    'useMemo' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                                                                            
+no-unused-vars
+lint_report.txt:74:    3:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                                                                                            
+no-unused-vars
+lint_report.txt:75:   13:8   error    'girl3' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                                            
+no-unused-vars
+lint_report.txt:76:  232:11  error    'navigate' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                     
+no-unused-vars
+lint_report.txt:79:  282:11  error    'isDark' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                       
+no-unused-vars
+lint_report.txt:82:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:85:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:88:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:91:   14:8   error  'termsPDF' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:92:  123:30  error  'Icon' is defined but never used                                                 
+no-unused-vars
+lint_report.txt:95:  27:20  error  't' is defined but never used  no-unused-vars
+lint_report.txt:98:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u        
+no-unused-vars
+lint_report.txt:99:  2:29  error  'useAnimation' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:102:   1:17  error  'useContext' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+       no-unused-vars
+lint_report.txt:103:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+       no-unused-vars
+lint_report.txt:104:   3:18  error  'useScroll' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+       no-unused-vars
+lint_report.txt:105:   3:29  error  'useTransform' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]/u       no-unused-vars
+lint_report.txt:106:   3:43  error  'useSpring' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+       no-unused-vars
+lint_report.txt:107:   3:54  error  'useMotionValue' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]/u     no-unused-vars
+lint_report.txt:108:   3:87  error  'animate' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+       no-unused-vars
+lint_report.txt:109:   8:8   error  'api' is defined but never used. Allowed unused vars must match /^[A-Z_]/u         
+       no-unused-vars
+lint_report.txt:110:  59:11  error  'navigate' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:113:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:116:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:119:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:122:    2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                      
+no-unused-vars
+lint_report.txt:136:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:139:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:140:  65:29  error  'isDarkPage' is defined but never used                                         
+no-unused-vars
+lint_report.txt:143:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:144:  91:30  error  'idx' is defined but never used                                                
+no-unused-vars
+lint_report.txt:147:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:150:   4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:151:  23:22  error  'err' is defined but never used                                                
+no-unused-vars
+lint_report.txt:154:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:157:    3:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                           no-unused-vars
+lint_report.txt:158:   94:49  error    'onSelect' is defined but never used                                            
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                           no-unused-vars
+lint_report.txt:159:   94:68  error    'isHovered' is defined but never used                                           
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                           no-unused-vars
+lint_report.txt:160:  251:11  error    'handleNext' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                           no-unused-vars
+lint_report.txt:161:  252:11  error    'handlePrev' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                           no-unused-vars
+lint_report.txt:190:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:191:  17:30  error  'Icon' is defined but never used                                               
+no-unused-vars
+lint_report.txt:194:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+    no-unused-vars
+lint_report.txt:195:  7:11  error  'isDark' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:215:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                  
+no-unused-vars
+lint_report.txt:216:  22:18  error  'err' is defined but never used                                                    
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                  
+no-unused-vars
+lint_report.txt:241:    2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+              no-unused-vars
+lint_report.txt:242:   19:12  error  'successMessage' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u  no-unused-vars
+lint_report.txt:243:  155:38  error  'refundError' is defined but never used                                           
+              no-unused-vars
+lint_report.txt:246:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:247:  48:30  error  'Icon' is defined but never used                                               
+no-unused-vars
+lint_report.txt:250:   1:38  error  'useContext' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:251:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+no-unused-vars
+lint_report.txt:252:   8:8   error  'api' is defined but never used. Allowed unused vars must match /^[A-Z_]/u         
+no-unused-vars
+lint_report.txt:253:  47:31  error  'variant' is defined but never used                                                
+no-unused-vars
+lint_report.txt:256:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:259:   15:8   error  'boy1' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+      no-unused-vars
+lint_report.txt:260:   16:8   error  'boy2' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+      no-unused-vars
+lint_report.txt:261:   18:8   error  'girl1' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+      no-unused-vars
+lint_report.txt:262:   19:8   error  'girl2' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+      no-unused-vars
+lint_report.txt:263:  184:33  error  'index' is defined but never used                                                 
+      no-unused-vars
+lint_report.txt:264:  413:9   error  'skills' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:267:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:270:   7:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u        no-unused-vars
+lint_report.txt:271:  58:9  error  'handleApplyNow' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:274:  1:17  error  'useMemo' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:275:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+no-unused-vars
+lint_report.txt:276:  9:8   error  'boy4' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+no-unused-vars
+lint_report.txt:279:   2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                                                                                                       
+                                                                     no-unused-vars
+lint_report.txt:280:   9:12  error    'isHovered' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                       no-unused-vars
+lint_report.txt:284:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:287:   19:8   error  'boy3' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+      no-unused-vars
+lint_report.txt:288:  149:33  error  'index' is defined but never used                                                 
+      no-unused-vars
+lint_report.txt:289:  385:9   error  'scroll' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:292:   2:27  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                                 no-unused-vars
+lint_report.txt:296:   2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                                 no-unused-vars
+lint_report.txt:300:   2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                 no-unused-vars
+lint_report.txt:304:    3:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                                                          no-unused-vars
+lint_report.txt:312:   2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    
+                                 no-unused-vars
+lint_report.txt:313:  18:11  error    'isClassroomUser' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                   no-unused-vars
+lint_report.txt:317:  12:53  error  'currentView' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:318:  13:11  error  'theme' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u        no-unused-vars
+lint_report.txt:321:    2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                       no-unused-vars
+lint_report.txt:322:   25:17  error    'updateUser' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                             no-unused-vars
+lint_report.txt:323:   25:29  error    'setView' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                no-unused-vars
+lint_report.txt:324:   29:11  error    'streak' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                 no-unused-vars
+lint_report.txt:325:   32:9   error    'isClassroomUser' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                                        no-unused-vars
+lint_report.txt:326:   41:10  error    'showTimeoutWarning' is assigned a value but never used. Allowed unused vars 
+must match /^[A-Z_]/u                                     no-unused-vars
+lint_report.txt:328:  357:52  error    'idx' is defined but never used                                                 
+                                                       no-unused-vars
+lint_report.txt:331:   6:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+          no-unused-vars
+lint_report.txt:332:  11:25  error  'currentView' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:333:  11:38  error  'setView' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u      no-unused-vars
+lint_report.txt:337:    2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+               no-unused-vars
+lint_report.txt:338:    8:8   error  'boy2' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+               no-unused-vars
+lint_report.txt:339:    9:8   error  'boy3' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+               no-unused-vars
+lint_report.txt:340:   10:8   error  'boy4' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+               no-unused-vars
+lint_report.txt:341:  138:12  error  'currentIndex' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u     no-unused-vars
+lint_report.txt:342:  138:26  error  'setCurrentIndex' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u  no-unused-vars
+lint_report.txt:343:  139:12  error  'isDragging' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u       no-unused-vars
+lint_report.txt:344:  139:24  error  'setIsDragging' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u    no-unused-vars
+lint_report.txt:347:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:348:  39:27  error  'Icon' is defined but never used                                               
+no-unused-vars
+lint_report.txt:351:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:354:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:357:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:377:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+        no-unused-vars
+lint_report.txt:378:   9:12  error  'loading' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+              no-unused-vars
+lint_report.txt:379:   9:21  error  'setLoading' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+           no-unused-vars
+lint_report.txt:415:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:421:  1:17  error  'useRef' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:422:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:425:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:428:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:431:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:434:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                               no-unused-vars
+lint_report.txt:452:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:455:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+    no-unused-vars
+lint_report.txt:495:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:498:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:501:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:504:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:507:   31:29  error    'e' is defined but never used                                                   
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                          no-unused-vars
+lint_report.txt:508:   36:29  error    'e' is defined but never used                                                   
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                          no-unused-vars
+lint_report.txt:509:   90:7   error    'Tag' is assigned a value but never used                                        
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                          no-unused-vars
+lint_report.txt:550:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:553:  10:5   error  'inactiveZone' is assigned a value but never used                                  
+               no-unused-vars
+lint_report.txt:554:  13:11  error  'canvasRef' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u         no-unused-vars
+lint_report.txt:555:  38:11  error  'handleMouseLeave' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u  no-unused-vars
+lint_report.txt:558:    3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                  no-unused-vars
+lint_report.txt:605:  4:45  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:608:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:611:    3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+         no-unused-vars
+lint_report.txt:652:  19:14  error  'error' is defined but never used                                                  
+                                             no-unused-vars
+lint_report.txt:656:  37:39  error  'assignment' is defined but never used                                             
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:657:  40:42  error  'data' is defined but never used                                                   
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:658:  43:39  error  'course' is defined but never used                                                 
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:659:  46:42  error  'liveClass' is defined but never used                                              
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:660:  49:40  error  'classId' is defined but never used                                                
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:661:  52:42  error  'msg' is defined but never used                                                    
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:662:  55:48  error  'count' is defined but never used                                                  
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                             no-unused-vars
+lint_report.txt:683:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                             no-unused-vars
+lint_report.txt:704:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:707:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:710:  13:10  error    'selectedLead' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                   no-unused-vars
+lint_report.txt:711:  13:24  error    'setSelectedLead' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                no-unused-vars
+lint_report.txt:715:  12:10  error    'selectedLead' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                   no-unused-vars
+lint_report.txt:716:  12:24  error    'setSelectedLead' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                no-unused-vars
+lint_report.txt:720:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:723:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                       no-unused-vars
+lint_report.txt:739:  75:22  error  'err' is defined but never used                                                    
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+                                                                                       no-unused-vars
+lint_report.txt:742:  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:745:    2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                                                                                       
+                                                             no-unused-vars
+lint_report.txt:746:   12:28  error    'supportRoles' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                    no-unused-vars
+lint_report.txt:747:  265:30  error    'e' is defined but never used                                                   
+                                                                                                                       
+                                                             no-unused-vars
+lint_report.txt:749:  296:11  error    'handleExploreClick' is assigned a value but never used. Allowed unused vars 
+must match /^[A-Z_]/u                                                                                                  
+                                                                no-unused-vars
+lint_report.txt:750:  303:11  error    'pricing' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u                                                                                                             
+                                                                no-unused-vars
+lint_report.txt:753:    1:48  error    'lazy' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     
+                                                                                      no-unused-vars
+lint_report.txt:754:    2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                                                      no-unused-vars
+lint_report.txt:755:    6:10  error    'io' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       
+                                                                                      no-unused-vars
+lint_report.txt:756:   23:9   error    'isClassroomUser' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u                                                                       no-unused-vars
+lint_report.txt:758:  168:14  error    'error' is defined but never used                                               
+                                                                                      no-unused-vars
+lint_report.txt:761:   3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+       no-unused-vars
+lint_report.txt:762:  14:9   error  'navigate' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u  no-unused-vars
+lint_report.txt:765:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      
+              no-unused-vars
+lint_report.txt:766:  17:9   error  'isClassroomUser' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]/u  no-unused-vars
+lint_report.txt:767:  25:17  error  'setStdin' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]/u         no-unused-vars
+lint_report.txt:768:  44:16  error  'error' is defined but never used                                                  
+              no-unused-vars
+lint_report.txt:771:    2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   
+                                                         no-unused-vars
+lint_report.txt:773:  106:18  error    'error' is defined but never used                                               
+                                                         no-unused-vars
+lint_report.txt:780:    2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:785:  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:788:   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:794:  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+lint_report.txt:797:    2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  
+no-unused-vars
+
+

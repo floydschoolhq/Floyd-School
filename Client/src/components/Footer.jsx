@@ -11,7 +11,7 @@ import WaveText from './common/WaveText';
 import useIsMobile from '../hooks/useIsMobile';
 import { Link } from 'react-router-dom';
 
-import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
+
 
 const Footer = () => {
   const isMobile = useIsMobile();

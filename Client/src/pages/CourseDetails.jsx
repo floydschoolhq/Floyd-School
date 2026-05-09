@@ -227,7 +227,7 @@ const CourseDetails = () => {
                                         <img 
                                             src={course.image} 
                                             alt={course.title} 
-                                            className="w-full h-full object-contain rounded-[1.5rem] transition-transform duration-1000 group-hover/imgContainer:scale-[1.02] opacity-95 group-hover/imgContainer:opacity-100"
+                                            className="w-full h-full object-cover object-left rounded-[1.5rem] transition-transform duration-1000 group-hover/imgContainer:scale-[1.02] opacity-95 group-hover/imgContainer:opacity-100"
                                         />
                                     </div>
                                 </motion.div>

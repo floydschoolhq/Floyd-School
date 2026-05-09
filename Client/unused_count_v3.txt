@@ -1,0 +1,11 @@
+﻿
+
+Count    : 98
+Average  : 
+Sum      : 
+Maximum  : 
+Minimum  : 
+Property : 
+
+
+

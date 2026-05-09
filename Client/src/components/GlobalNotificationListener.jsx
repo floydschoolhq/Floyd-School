@@ -24,7 +24,7 @@ const GlobalNotificationListener = () => {
                 alert: '🚨'
             };
 
-            toast((t) => (
+            toast(() => (
                 <div className="flex flex-col gap-1 min-w-[300px]">
                     <div className="flex items-center gap-2 font-bold text-slate-800">
                         <span>{iconMap[type] || '📢'}</span>

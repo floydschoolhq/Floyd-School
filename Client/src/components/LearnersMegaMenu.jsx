@@ -62,7 +62,7 @@ const LEARNERS_DATA = [
     }
 ];
 
-const LearnersMegaMenu = ({ isDarkPage }) => {
+const LearnersMegaMenu = () => {
     const [activeDomain, setActiveDomain] = useState(LEARNERS_DATA[0]);
 
     return (

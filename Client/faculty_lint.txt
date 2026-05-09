@@ -1,0 +1,14 @@
+﻿
+> lint_report_v2.txt:49:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\CourseFacultyGrid.jsx
+  lint_report_v2.txt:50:  7:8  error  'shivamImg' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]|motion|AnimatePresence/u  no-unused-vars
+  lint_report_v2.txt:51:
+  lint_report_v2.txt:52:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\CourseOfferings.jsx
+  lint_report_v2.txt:53:   1:36  error  'useState' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]|motion|AnimatePresence/u         no-unused-vars
+  lint_report_v2.txt:54:   6:11  error  'isDark' is assigned a value but never used. Allowed unused vars must match 
+/^[A-Z_]|motion|AnimatePresence/u  no-unused-vars
+
+

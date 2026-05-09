@@ -1,0 +1,13 @@
+﻿
+> lint_report_v2.txt:68:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Footer.jsx
+  lint_report_v2.txt:69:   14:8   error  'termsPDF' is defined but never used. Allowed unused vars must match 
+/^[A-Z_]|motion|AnimatePresence/u  no-unused-vars
+  lint_report_v2.txt:70:  123:30  error  'Icon' is defined but never used. Allowed unused args must match /^_/u        
+                          no-unused-vars
+  lint_report_v2.txt:71:
+  lint_report_v2.txt:72:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\GlobalNotificationListener.jsx
+  lint_report_v2.txt:73:  27:20  error  't' is defined but never used. Allowed unused args must match /^_/u  
+no-unused-vars
+
+

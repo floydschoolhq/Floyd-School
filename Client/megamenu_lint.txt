@@ -1,0 +1,13 @@
+﻿
+> lint_report_v3.txt:85:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\LearnersMegaMenu.jsx
+  lint_report_v3.txt:86:  65:29  error  'isDarkPage' is defined but never used. Allowed unused args must match /^_/u  
+no-unused-vars
+  lint_report_v3.txt:87:
+  lint_report_v3.txt:88:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\LearningJourney.jsx
+  lint_report_v3.txt:89:  91:30  error  'idx' is defined but never used. Allowed unused args must match /^_/u  
+no-unused-vars
+  lint_report_v3.txt:90:
+
+

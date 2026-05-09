@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
  import useIsMobile from '../hooks/useIsMobile';
 
-const CourseOfferings = ({ courseId, variant = 'dark' }) => {
-    const isDark = variant === 'dark';
+const CourseOfferings = ({ courseId }) => {
     const isMobile = useIsMobile();
     const cardsRef = useRef([]);
 
@@ -51,14 +50,7 @@ const CourseOfferings = ({ courseId, variant = 'dark' }) => {
     };
 
     if (isMobile) {
-        const shapes = [
-            <svg key="triangle" viewBox="0 0 24 24" className="w-5 h-5 fill-yellow-400"><path d="M12 2L2 22h20L12 2z" /></svg>,
-            <svg key="arch" viewBox="0 0 24 24" className="w-5 h-5 fill-orange-500"><path d="M12 4C7.58 4 4 7.58 4 12v8h16v-8c0-4.42-3.58-8-8-8z" /></svg>,
-            <svg key="pentagon" viewBox="0 0 24 24" className="w-5 h-5 fill-blue-500"><path d="M12 2.5l9 6.5-3.5 10.5h-11l-3.5-10.5 9-6.5z" /></svg>,
-            <svg key="square" viewBox="0 0 24 24" className="w-5 h-5 fill-purple-500"><rect x="4" y="4" width="16" height="16" rx="2" /></svg>,
-            <svg key="hexagon" viewBox="0 0 24 24" className="w-5 h-5 fill-cyan-500"><path d="M12 2.5L20.5 7.5v10L12 22.5 3.5 17.5v-10L12 2.5z" /></svg>,
-            <svg key="diamond" viewBox="0 0 24 24" className="w-5 h-5 fill-amber-500"><path d="M12 2l9 10-9 10-9-10 9-10z" /></svg>
-        ];
+
 
         return (
             <section id="course-offerings" className={`py-8 px-5 relative overflow-hidden ${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'} w-full`}>

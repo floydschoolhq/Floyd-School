@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence, animate } from 'framer-motion';
+import { motion, useTransform, useSpring, useMotionValue, AnimatePresence, animate } from 'framer-motion';
 import { CheckCircle, ArrowRight, Terminal, Cpu, Code2, Award, Sparkles, Video, MessageSquare, Users, Zap } from 'lucide-react';
 import { useState, useRef } from 'react';
 import LeadFormModal from './LeadFormModal';
-import { PortalContext } from '../contexts/PortalProvider';
-import api from '../api/axios';
-import BrandLogo from './common/BrandLogo';
-import Magnet from './common/Magnet';
+
 
 import useIsMobile from '../hooks/useIsMobile';
 import RegistrationForm from './RegistrationForm';

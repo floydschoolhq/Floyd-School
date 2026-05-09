@@ -6,7 +6,6 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [step, setStep] = useState(0);
-  const [autoTriggered, setAutoTriggered] = useState(false);
   const [formData, setFormData] = useState({ name: '', school: '', contact: '' });
   const [formError, setFormError] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
@@ -201,7 +200,6 @@ const Chatbot = () => {
     setStep(0);
     setFormData({ name: '', school: '', contact: '' });
     setFormError('');
-    setAutoTriggered(false);
     setIsOpen(false);
   };
 

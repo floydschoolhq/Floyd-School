@@ -1,10 +1,10 @@
 import { Zap, Users, Clock, BookOpen, ShieldCheck, Target, GraduationCap, Cpu, Code, Terminal, Brain, Globe, Star, Headphones, MessageSquare, Calendar, Video, Rocket } from 'lucide-react';
-import SUMMER_IMG from '../assets/images/summerimage.png';
 
 const AI_IMG = '/images/courses/ai-course.jpg';
 const IOT_IMG = '/images/courses/iot-course.jpg';
 const WEB_IMG = '/images/courses/web-course.jpg';
 const CYBER_IMG = '/images/courses/cyber-course.jpg';
+const SUMMER_IMG = '/images/courses/ThinkSkool Summer Builder Program.png';
 
 export const FALLBACK_COURSES = [
     {

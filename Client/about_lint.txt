@@ -1,0 +1,39 @@
+﻿
+> lint_report_v2.txt:6:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\About.jsx
+  lint_report_v2.txt:7:  1:1  warning  Unused eslint-disable directive (no problems were reported from 
+'no-unused-vars')
+  lint_report_v2.txt:8:
+  lint_report_v2.txt:9:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\AdminMessages.jsx
+  lint_report_v2.txt:10:  16:9  error  Error: Calling setState synchronously within an effect can trigger cascading 
+renders
+  lint_report_v2.txt:11:
+  lint_report_v2.txt:12:Effects are intended to synchronize state between React and external systems such as manually 
+updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one 
+or both of the following:
+  lint_report_v2.txt:13:* Update external systems with the latest state from React.
+  lint_report_v2.txt:14:* Subscribe for updates from some external system, calling setState in a callback function 
+when external state changes.
+  lint_report_v2.txt:15:
+  lint_report_v2.txt:16:Calling setState synchronously within an effect body causes cascading renders that can hurt 
+performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+> lint_report_v2.txt:433:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ui\About.jsx
+  lint_report_v2.txt:434:  1:1  warning  Unused eslint-disable directive (no problems were reported from 
+'no-irregular-whitespace')
+  lint_report_v2.txt:435:  2:1  warning  Unused eslint-disable directive (no problems were reported from 
+'no-unused-vars')
+  lint_report_v2.txt:436:
+  lint_report_v2.txt:437:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\glowing-effect.jsx
+  lint_report_v2.txt:438:  10:5   error  'inactiveZone' is assigned a value but never used. Allowed unused args must 
+match /^_/u                                  no-unused-vars
+  lint_report_v2.txt:439:  13:11  error  'canvasRef' is assigned a value but never used. Allowed unused vars must 
+match /^[A-Z_]|motion|AnimatePresence/u         no-unused-vars
+  lint_report_v2.txt:440:  38:11  error  'handleMouseLeave' is assigned a value but never used. Allowed unused vars 
+must match /^[A-Z_]|motion|AnimatePresence/u  no-unused-vars
+  lint_report_v2.txt:441:
+  lint_report_v2.txt:442:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\hero-parallax.jsx
+  lint_report_v2.txt:443:  105:34  error  Error: Cannot call impure function during render
+
+

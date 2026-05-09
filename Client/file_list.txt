@@ -1,0 +1,160 @@
+﻿
+lint_report.txt:6:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\App.jsx
+lint_report.txt:10:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\AdminMessages.jsx
+lint_report.txt:43:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\BootcampExhibition.jsx
+lint_report.txt:46:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Chatbot.jsx
+lint_report.txt:49:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\CourseCurriculum.jsx
+lint_report.txt:59:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\CourseFAQ.jsx
+lint_report.txt:62:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\CourseFacultyGrid.jsx
+lint_report.txt:66:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\CourseOfferings.jsx
+lint_report.txt:72:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\CourseReviews.jsx
+lint_report.txt:81:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\CourseTestimonials.jsx
+lint_report.txt:84:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\EarlyRegistrationForm.jsx
+lint_report.txt:87:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\FinalProject.jsx
+lint_report.txt:90:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Footer.jsx
+lint_report.txt:94:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\GlobalNotificationListener.jsx
+lint_report.txt:97:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Hackathon.jsx
+lint_report.txt:101:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Hero.jsx
+lint_report.txt:112:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\HeroLeadForm.jsx
+lint_report.txt:115:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\IndustrialNetwork.jsx
+lint_report.txt:118:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\InstitutionalPartners.jsx
+lint_report.txt:121:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\InteractiveFeatures.jsx
+lint_report.txt:135:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\LeadFormModal.jsx
+lint_report.txt:138:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\LearnersMegaMenu.jsx
+lint_report.txt:142:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\LearningJourney.jsx
+lint_report.txt:146:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\LearningModel.jsx
+lint_report.txt:149:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\MaintenanceBanner.jsx
+lint_report.txt:153:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\Masterclasses.jsx
+lint_report.txt:156:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\MentorGrid.jsx
+lint_report.txt:189:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\MentorShowcase.jsx
+lint_report.txt:193:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\MessageForm.jsx
+lint_report.txt:197:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\MobileBottomNav.jsx
+lint_report.txt:214:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\NeedHelpSection.jsx
+lint_report.txt:240:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\PaymentModal.jsx
+lint_report.txt:245:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\PlatformPanels.jsx
+lint_report.txt:249:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\PremiumNavbar.jsx
+lint_report.txt:255:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\RegistrationForm.jsx
+lint_report.txt:258:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\SchoolPartnership\GroupProjects.jsx
+lint_report.txt:266:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\SchoolPartnership\NationalHackathon.jsx
+lint_report.txt:269:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\SchoolPartnership\PartnershipDomains.jsx
+lint_report.txt:273:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\SchoolPartnership\TestimonialsSection.jsx
+lint_report.txt:278:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\StickyBottomBar.jsx
+lint_report.txt:283:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\StudentEcosystem.jsx
+lint_report.txt:286:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\StudentProjects.jsx
+lint_report.txt:291:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\AssignmentSubmissionModal.jsx
+lint_report.txt:295:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\ChatSupport.jsx
+lint_report.txt:299:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\CommentSection.jsx
+lint_report.txt:303:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\CustomVideoPlayer.jsx
+lint_report.txt:311:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\LiveChatSidebar.jsx
+lint_report.txt:316:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\MainLayout.jsx
+lint_report.txt:320:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\StudentDashboard.jsx
+lint_report.txt:330:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\Student\StudentSidebar.jsx
+lint_report.txt:336:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\SuccessStories.jsx
+lint_report.txt:346:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\TechStackStats.jsx
+lint_report.txt:350:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ThinkSkoolAdvantage.jsx
+lint_report.txt:353:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ThinkSkoolAdvantageGrid.jsx
+lint_report.txt:356:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\BrandLogo.jsx
+lint_report.txt:359:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\common\Magnet.jsx
+lint_report.txt:376:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\NotificationDropdown.jsx
+lint_report.txt:414:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\SEOContentSection.jsx
+lint_report.txt:417:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\ScrollStack.jsx
+lint_report.txt:420:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\ScrollTracker.jsx
+lint_report.txt:424:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\common\SectionHeader.jsx
+lint_report.txt:427:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\common\WaveText.jsx
+lint_report.txt:430:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\CommandPalette.jsx
+lint_report.txt:433:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\DynamicGreeting.jsx
+lint_report.txt:451:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\GradientCard.jsx
+lint_report.txt:454:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\NotificationPanel.jsx
+lint_report.txt:494:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\ProgressChart.jsx
+lint_report.txt:497:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\SkeletonCard.jsx
+lint_report.txt:500:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\dashboard\StreakWidget.jsx
+lint_report.txt:503:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ide\Terminal.jsx
+lint_report.txt:506:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ui\3d-card.jsx
+lint_report.txt:546:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ui\About.jsx
+lint_report.txt:549:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\draggable-card.jsx
+lint_report.txt:552:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\glowing-effect.jsx
+lint_report.txt:557:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\hero-parallax.jsx
+lint_report.txt:604:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ui\input.jsx
+lint_report.txt:607:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\components\ui\lamp.jsx
+lint_report.txt:610:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\components\ui\text-reveal-card.jsx
+lint_report.txt:646:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\contexts\FirebaseAuthContext.jsx
+lint_report.txt:649:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\contexts\PortalProvider.jsx
+lint_report.txt:654:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\contexts\SocketProvider.jsx
+lint_report.txt:679:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\contexts\ThemeProvider.jsx
+lint_report.txt:682:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\contexts\ToastProvider.jsx
+lint_report.txt:686:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\hooks\useStreak.js
+lint_report.txt:703:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Admin\AdminCoursesPage.jsx
+lint_report.txt:706:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Admin\AdminStudentsPage.jsx
+lint_report.txt:709:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Admin\ChatbotLeadsPage.jsx
+lint_report.txt:714:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Admin\SchoolPartnershipLeadsPage.jsx
+lint_report.txt:719:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\pages\BootcampGallery.jsx
+lint_report.txt:722:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\pages\CourseDetails.jsx
+lint_report.txt:741:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\pages\FAQPage.jsx
+lint_report.txt:744:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\pages\OnlineProgram.jsx
+lint_report.txt:752:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\ClassRoomPage.jsx
+lint_report.txt:760:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\ClassroomAuthPage.jsx
+lint_report.txt:764:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\CodingLabPage.jsx
+lint_report.txt:770:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\LiveSessionView.jsx
+lint_report.txt:779:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\PerformanceReportPage.jsx
+lint_report.txt:784:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\ProgressTrackingPage.jsx
+lint_report.txt:787:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\RecordingPage.jsx
+lint_report.txt:793:C:\Users\User\OneDrive\Desktop\FULL 
+STACK\thinkskool-main\Client\src\pages\Student\StudentLoginPage.jsx
+lint_report.txt:796:C:\Users\User\OneDrive\Desktop\FULL STACK\thinkskool-main\Client\src\pages\Student\SupportPage.jsx
+
+

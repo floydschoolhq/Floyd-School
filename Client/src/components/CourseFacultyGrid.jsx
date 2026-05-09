@@ -4,7 +4,6 @@ import { FaLinkedinIn } from 'react-icons/fa';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 import shashwatImg from '../assets/tutors/shashwat.png';
-import shivamImg from '../assets/tutors/shivam.jpg';
 import ananimikaImg from '../assets/tutors/anamika.jpg';
 import ayushmanImg from '../assets/images/IMG-20260412-WA0034.jpg.jpeg';
 

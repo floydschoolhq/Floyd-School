@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
 
-import useIsMobile from '../hooks/useIsMobile';
+
 import api from '../api/axios';
 import { detailedCurriculums } from '../constants/siteData';
 
-const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegisteredCount = 45, totalSeats: initialTotalSeats = 50 }) => {
+const CourseCurriculum = ({ courseId = "1", initialRegisteredCount = 45, totalSeats: initialTotalSeats = 50 }) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
     const [isEnrolling, setIsEnrolling] = useState(false);
-    const [isSecuring, setIsSecuring] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
     const [registeredCount, setRegisteredCount] = useState(courseId === '5' ? 24 : initialRegisteredCount);
     const [totalSeats, setTotalSeats] = useState(courseId === '5' ? 50 : initialTotalSeats);
@@ -40,7 +39,7 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
                     if (res.data.price) setPrice(res.data.price);
                     if (res.data.originalPrice) setOriginalPrice(res.data.originalPrice);
                 }
-            } catch (err) {
+            } catch {
                 console.warn('Live stats fetch from public nexus failed, using fallback data');
                 setRegisteredCount(initialRegisteredCount);
                 setTotalSeats(initialTotalSeats);
@@ -71,18 +70,6 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
     ];
 
 
-    const handleSecureSpot = async () => {
-        setIsSecuring(true);
-        try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            navigate(`/course/${courseId}?openRegistration=true&source=curriculum`);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch (error) {
-            console.error('Navigation failed:', error);
-        } finally {
-            setIsSecuring(false);
-        }
-    };
 
     const handleRegistrationComplete = () => {
         setRegisteredCount(prev => Math.min(prev + 1, totalSeats));
@@ -121,9 +108,6 @@ const CourseCurriculum = ({ courseId = "1", variant = "light", initialRegistered
         setHoveredWeek(`${monthIndex}-${weekIndex}`);
     };
 
-    const handleMonthClick = (monthIndex) => {
-        setSelectedMonth(selectedMonth === monthIndex ? null : monthIndex);
-    };
 
     const isMobile = window.innerWidth < 768;
 
