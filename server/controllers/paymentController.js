@@ -61,20 +61,20 @@ const createOrder = async (req, res) => {
         
         // If courseId is a simple string like "1", "2", etc., map to actual course
         const courseMapping = {
-            '1': 'Foundation of AI and Machine Learning',
-            '2': 'Foundation of Web Development',
-            '3': 'Foundation of IoT and Robotics',
-            '4': 'Foundation of Cyber Security',
-            '5': 'ThinkSkool Summer Builder Program'
+            '1': /foundation of ai|artificial intelligence|machine learning|ai & ml/i,
+            '2': /foundation of web|web dev|full stack/i,
+            '3': /foundation of iot|robotics|internet of things/i,
+            '4': /foundation of cyber|cyber security|ethical hacking/i,
+            '5': /summer builder program|bootcamp/i
         };
         
         if (courseMapping[courseId]) {
-            course = await Course.findOne({ title: courseMapping[courseId] });
+            course = await Course.findOne({ title: { $regex: courseMapping[courseId] } });
         } else {
             try {
                 course = await Course.findById(courseId);
             } catch (error) {
-                course = await Course.findOne({ title: courseId });
+                course = await Course.findOne({ title: { $regex: new RegExp(courseId, 'i') } });
             }
         }
         

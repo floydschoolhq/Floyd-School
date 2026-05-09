@@ -341,7 +341,7 @@ exports.createAnnouncement = async (req, res) => {
 // Update course enrollment stats (admin/mentor)
 exports.updateEnrollmentStats = async (req, res) => {
     try {
-        const { totalSeats, manualEnrollmentCount } = req.body;
+        const { totalSeats, manualEnrollmentCount, price, originalPrice } = req.body;
         const course = await Course.findById(req.params.id);
 
         if (!course) {
@@ -355,6 +355,8 @@ exports.updateEnrollmentStats = async (req, res) => {
 
         if (totalSeats !== undefined) course.totalSeats = totalSeats;
         if (manualEnrollmentCount !== undefined) course.manualEnrollmentCount = manualEnrollmentCount;
+        if (price !== undefined) course.price = price;
+        if (originalPrice !== undefined) course.originalPrice = originalPrice;
 
         await course.save();
 
@@ -363,7 +365,9 @@ exports.updateEnrollmentStats = async (req, res) => {
             course: {
                 _id: course._id,
                 totalSeats: course.totalSeats,
-                manualEnrollmentCount: course.manualEnrollmentCount
+                manualEnrollmentCount: course.manualEnrollmentCount,
+                price: course.price,
+                originalPrice: course.originalPrice
             }
         });
     } catch (error) {
@@ -377,15 +381,15 @@ exports.getPublicCourseStats = async (req, res) => {
 
         // Mapping for hardcoded IDs used in marketing site
         if (id === '1') {
-            query = { title: { $regex: /foundation of ai|artificial intelligence/i } };
+            query = { title: { $regex: /foundation of ai|artificial intelligence|machine learning|ai & ml/i } };
         } else if (id === '2') {
-            query = { title: { $regex: /foundation of web/i } };
+            query = { title: { $regex: /foundation of web|web dev|full stack/i } };
         } else if (id === '3') {
-            query = { title: { $regex: /foundation of iot|robotics/i } };
+            query = { title: { $regex: /foundation of iot|robotics|internet of things/i } };
         } else if (id === '4') {
-            query = { title: { $regex: /foundation of cyber/i } };
+            query = { title: { $regex: /foundation of cyber|cyber security|ethical hacking/i } };
         } else if (id === '5') {
-            query = { title: { $regex: /summer builder program/i } };
+            query = { title: { $regex: /summer builder program|bootcamp/i } };
         } else if (id.length > 20) {
             // Assume it's a real MongoDB ID
             query = { _id: id };

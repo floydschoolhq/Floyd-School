@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, ArrowLeft, Plus, Minus, Save, UserCheck, Users, AlertCircle } from 'lucide-react';
+import { BookOpen, ArrowLeft, Plus, Minus, Save, UserCheck, Users, AlertCircle, IndianRupee } from 'lucide-react';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
 
@@ -84,11 +84,15 @@ const AdminCoursesPage = () => {
 const CourseControlCard = ({ course, onUpdate }) => {
     const [stats, setStats] = useState({
         totalSeats: course.totalSeats || 50,
-        manualEnrollmentCount: course.manualEnrollmentCount || 0
+        manualEnrollmentCount: course.manualEnrollmentCount || 0,
+        price: course.price || 0,
+        originalPrice: course.originalPrice || 0
     });
 
     const hasChanges = stats.totalSeats !== course.totalSeats || 
-                       stats.manualEnrollmentCount !== course.manualEnrollmentCount;
+                       stats.manualEnrollmentCount !== course.manualEnrollmentCount ||
+                       stats.price !== course.price ||
+                       stats.originalPrice !== course.originalPrice;
 
     return (
         <motion.div 
@@ -146,11 +150,37 @@ const CourseControlCard = ({ course, onUpdate }) => {
                     <input 
                         type="range"
                         min="1"
-                        max="200"
+                        max="500"
                         value={stats.totalSeats}
                         onChange={(e) => setStats(prev => ({ ...prev, totalSeats: parseInt(e.target.value) }))}
                         className="w-full accent-blue-500 h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer"
                     />
+                </div>
+
+                {/* Price Control */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <IndianRupee className="w-3 h-3" /> Sale Price
+                        </label>
+                        <input 
+                            type="number"
+                            value={stats.price}
+                            onChange={(e) => setStats(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-blue-500 outline-none transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <IndianRupee className="w-3 h-3" /> Original
+                        </label>
+                        <input 
+                            type="number"
+                            value={stats.originalPrice}
+                            onChange={(e) => setStats(prev => ({ ...prev, originalPrice: parseInt(e.target.value) || 0 }))}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-blue-500 outline-none transition-all"
+                        />
+                    </div>
                 </div>
 
                 {/* Seats Left Preview */}
