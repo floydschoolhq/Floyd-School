@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
 const User = require('../models/User');
+const Coupon = require('../models/Coupon');
 
 // Initialize Razorpay instance
 const razorpayKeyId = process.env.RAZORPAY_KEY_ID ? process.env.RAZORPAY_KEY_ID.trim() : '';
@@ -32,7 +33,7 @@ const createOrder = async (req, res) => {
     }
 
     try {
-        const { courseId, fullName, email, phone } = req.body;
+        const { courseId, fullName, email, phone, couponCode } = req.body;
 
         // Validate inputs
         if (!courseId || !fullName || !email || !phone) {
@@ -93,6 +94,34 @@ const createOrder = async (req, res) => {
                 message: 'Course price is not configured. Contact support.'
             });
         }
+        
+        let finalPrice = coursePrice;
+        let discount = 0;
+        let appliedCouponCode = null;
+
+        if (couponCode) {
+            const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() });
+            if (coupon && coupon.isValid()) {
+                // Check if applicable to this course
+                const isApplicable = !coupon.applicableCourses || 
+                                   coupon.applicableCourses.length === 0 || 
+                                   coupon.applicableCourses.includes(course._id);
+                
+                if (isApplicable && coursePrice >= (coupon.minPurchaseAmount || 0)) {
+                    if (coupon.discountType === 'percentage') {
+                        discount = (coursePrice * coupon.discountValue) / 100;
+                        if (coupon.maxDiscountAmount) {
+                            discount = Math.min(discount, coupon.maxDiscountAmount);
+                        }
+                    } else {
+                        discount = coupon.discountValue;
+                    }
+                    discount = Math.min(discount, coursePrice);
+                    finalPrice = coursePrice - discount;
+                    appliedCouponCode = coupon.code;
+                }
+            }
+        }
 
         // IDEMPOTENCY: Check if there's already a pending order for this email+course in last 10 minutes
         const recentPending = await Enrollment.findOne({
@@ -127,14 +156,16 @@ const createOrder = async (req, res) => {
 
         // Create Razorpay order
         const orderOptions = {
-            amount: Math.round(coursePrice * 100), // Razorpay expects amount in paise
+            amount: Math.round(finalPrice * 100), // Razorpay expects amount in paise
             currency: course.currency || 'INR',
             receipt: `course_${courseId}_${Date.now()}`,
             notes: {
                 courseId: courseId.toString(),
                 courseName: course.title,
                 studentName: sanitizedName,
-                studentEmail: sanitizedEmail
+                studentEmail: sanitizedEmail,
+                appliedCoupon: appliedCouponCode,
+                discountAmount: discount
             }
         };
 
@@ -151,7 +182,9 @@ const createOrder = async (req, res) => {
                 fullName: sanitizedName,
                 email: sanitizedEmail,
                 phone: sanitizedPhone
-            }
+            },
+            appliedCoupon: appliedCouponCode,
+            discountAmount: discount
         });
 
         res.status(200).json({
@@ -278,6 +311,14 @@ const verifyPayment = async (req, res) => {
             await Course.findByIdAndUpdate(updatedEnrollment.course._id, {
                 $addToSet: { enrolledStudents: updatedEnrollment.student }
             });
+        }
+
+        // Increment coupon usage if applicable
+        if (updatedEnrollment.appliedCoupon) {
+            await Coupon.findOneAndUpdate(
+                { code: updatedEnrollment.appliedCoupon },
+                { $inc: { usageCount: 1 } }
+            );
         }
 
         res.status(200).json({

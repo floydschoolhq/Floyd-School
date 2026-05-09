@@ -17,6 +17,10 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
     const [errors, setErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [couponCode, setCouponCode] = useState('');
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [couponLoading, setCouponLoading] = useState(false);
+    const [couponError, setCouponError] = useState('');
 
     const validateForm = () => {
         const newErrors = {};
@@ -56,6 +60,32 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
         }
     };
 
+    const handleApplyCoupon = async () => {
+        if (!couponCode) return;
+        setCouponLoading(true);
+        setCouponError('');
+        try {
+            const response = await api.post('/coupons/validate', {
+                code: couponCode,
+                courseId: courseId,
+                amount: coursePrice
+            });
+            setAppliedCoupon(response.data);
+            setCouponError('');
+        } catch (error) {
+            setCouponError(error.response?.data?.message || 'Invalid coupon code');
+            setAppliedCoupon(null);
+        } finally {
+            setCouponLoading(false);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
+        setAppliedCoupon(null);
+        setCouponCode('');
+        setCouponError('');
+    };
+
     const handleProceedToPayment = async () => {
         if (!validateForm()) return;
 
@@ -68,7 +98,8 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
                 courseId,
                 fullName: formData.fullName,
                 email: formData.email,
-                phone: formData.phone
+                phone: formData.phone,
+                couponCode: appliedCoupon ? appliedCoupon.couponCode : null
             });
 
             const { order, razorpayKeyId } = response.data;
@@ -224,6 +255,8 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
         setErrorMessage('');
         setSuccessMessage('');
         setLoading(false);
+        setCouponCode('');
+        setAppliedCoupon(null);
         onClose();
     };
 
@@ -332,18 +365,50 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
                                         )}
                                     </div>
 
+                                    {/* Coupon Section */}
+                                    <div className="space-y-2">
+                                        <label className="block text-[11px] md:text-sm font-semibold text-slate-300">
+                                            Coupon Code (Optional)
+                                        </label>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="text"
+                                                value={couponCode}
+                                                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                                placeholder="ENTER CODE"
+                                                disabled={appliedCoupon || couponLoading}
+                                                className="flex-1 px-4 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all uppercase text-sm"
+                                            />
+                                            <button
+                                                onClick={appliedCoupon ? handleRemoveCoupon : handleApplyCoupon}
+                                                disabled={!couponCode || couponLoading}
+                                                className={`px-4 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-all ${
+                                                    appliedCoupon 
+                                                    ? 'bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30' 
+                                                    : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50'
+                                                }`}
+                                            >
+                                                {couponLoading ? <Loader size={14} className="animate-spin" /> : (appliedCoupon ? 'Remove' : 'Apply')}
+                                            </button>
+                                        </div>
+                                        {couponError && <p className="text-red-400 text-[10px] mt-1">{couponError}</p>}
+                                        {appliedCoupon && <p className="text-green-400 text-[10px] mt-1 font-medium italic">Applied! You saved ₹{appliedCoupon.discount.toLocaleString('en-IN')}</p>}
+                                    </div>
+
                                     {/* Price Display */}
                                     <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg p-3.5 md:p-4 mt-4 md:mt-6">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm md:text-base text-slate-300 font-medium">Course Fee:</span>
+                                            <span className="text-sm md:text-base text-slate-300 font-medium">
+                                                {appliedCoupon ? 'Final Price:' : 'Course Fee:'}
+                                            </span>
                                             <div className="flex items-end gap-2">
-                                                {course?.originalPrice > 0 && (
+                                                {(course?.originalPrice > 0 || appliedCoupon) && (
                                                     <span className="text-xs md:text-sm font-medium text-slate-400 line-through mb-1">
-                                                        ₹{course.originalPrice.toLocaleString('en-IN')}
+                                                        ₹{(appliedCoupon ? coursePrice : course.originalPrice).toLocaleString('en-IN')}
                                                     </span>
                                                 )}
                                                 <span className="text-xl md:text-2xl font-bold text-blue-400">
-                                                    ₹{coursePrice.toLocaleString('en-IN')}
+                                                    ₹{(appliedCoupon ? appliedCoupon.finalAmount : coursePrice).toLocaleString('en-IN')}
                                                 </span>
                                             </div>
                                         </div>

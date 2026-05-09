@@ -230,6 +230,7 @@ app.use('/api/live-classes', generalLimiter, liveClassRoutes);
 app.use('/api/live-chat', generalLimiter, require('./routes/liveChatRoutes'));
 app.use('/api/doubts', generalLimiter, doubtRoutes);
 app.use('/api/scheduled-live', generalLimiter, scheduledLiveRoutes);
+app.use('/api/coupons', generalLimiter, require('./routes/couponRoutes'));
 app.use('/api/public', require('./routes/publicRoutes'));
 
 // Catch-all for /review requests

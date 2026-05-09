@@ -57,6 +57,14 @@ const enrollmentSchema = new mongoose.Schema({
         type: String,
         enum: ['active', 'completed', 'cancelled'],
         default: 'active'
+    },
+    appliedCoupon: {
+        type: String,
+        default: null
+    },
+    discountAmount: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true
