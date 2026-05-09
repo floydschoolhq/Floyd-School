@@ -66,7 +66,12 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
             
             // Extract coupons mapped to this course
             const allCoupons = couponsRes.data.coupons || couponsRes.data || [];
-            const mappedCoupons = Array.isArray(allCoupons) ? allCoupons.filter(coupon => coupon.applicableCourses?.includes(courseId)) : [];
+            const mappedCoupons = Array.isArray(allCoupons) ? allCoupons.filter(coupon => {
+                const courseIds = (coupon.applicableCourses || []).map(id => 
+                    typeof id === 'object' ? (id._id || id).toString() : id.toString()
+                );
+                return courseIds.includes(courseId.toString());
+            }) : [];
             setCoupons(mappedCoupons);
             setFormData({
                 title: c.title || '',
@@ -191,7 +196,9 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
             setNewCouponData({ code: '', discountType: 'percentage', discountValue: 10, expiryDate: '', usageLimit: 100 });
             fetchInitialData();
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Coupon deployment failed');
+            console.error('Coupon deployment failed:', err);
+            const errorMsg = err.response?.data?.message || err.response?.data?.error || 'Coupon deployment failed';
+            toast.error(errorMsg);
         }
     };
 

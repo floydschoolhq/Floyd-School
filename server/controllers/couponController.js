@@ -29,18 +29,21 @@ exports.createCoupon = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Coupon code already exists' });
         }
 
+        console.log('[CouponCreate] Request Data:', req.body);
         const coupon = await Coupon.create({
-            code,
+            code: code.trim(),
             discountType,
-            discountValue,
+            discountValue: Number(discountValue),
             expiryDate,
-            usageLimit,
-            minPurchaseAmount,
+            usageLimit: usageLimit ? Number(usageLimit) : 100,
+            minPurchaseAmount: minPurchaseAmount ? Number(minPurchaseAmount) : 0,
             applicableCourses: applicableCourses || []
         });
 
+        console.log('[CouponCreate] Success:', coupon._id);
         res.status(201).json({ success: true, coupon });
     } catch (error) {
+        console.error('[CouponCreate] Error:', error);
         res.status(500).json({ success: false, message: 'Server error', error: error.message });
     }
 };
@@ -73,7 +76,8 @@ exports.validateCoupon = async (req, res) => {
 
         // Check if course is applicable (if specified)
         if (coupon.applicableCourses && coupon.applicableCourses.length > 0) {
-            if (!courseId || !coupon.applicableCourses.includes(courseId)) {
+            const isApplicable = coupon.applicableCourses.some(id => id.toString() === courseId);
+            if (!courseId || !isApplicable) {
                 return res.status(400).json({ success: false, message: 'This coupon is not applicable to this course' });
             }
         }
