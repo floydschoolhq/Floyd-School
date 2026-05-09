@@ -41,11 +41,26 @@ exports.getCourses = async (req, res) => {
                 .populate('enrolledStudents', 'name email')
                 .select('-__v');
         } else {
-            // Admins see all courses
-            courses = await Course.find()
+            // Admins see all courses with aggregated revenue
+            const Course = require('../models/Course');
+            const Enrollment = require('../models/Enrollment');
+            
+            const rawCourses = await Course.find()
                 .populate('instructor', 'name email')
                 .populate('enrolledStudents', 'name email')
                 .select('-__v');
+
+            // Aggregate revenue for each course
+            courses = await Promise.all(rawCourses.map(async (c) => {
+                const aggregations = await Enrollment.aggregate([
+                    { $match: { course: c._id, paymentStatus: 'completed' } },
+                    { $group: { _id: null, totalRevenue: { $sum: '$amount' } } }
+                ]);
+                
+                const courseObj = c.toObject();
+                courseObj.totalRevenue = aggregations[0]?.totalRevenue || 0;
+                return courseObj;
+            }));
         }
 
         res.json(courses);

@@ -34,6 +34,12 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
         thumbnail: ''
     });
 
+    // Creation States
+    const [isCreatingBatch, setIsCreatingBatch] = useState(false);
+    const [isCreatingLive, setIsCreatingLive] = useState(false);
+    const [newBatchData, setNewBatchData] = useState({ name: '', instructor: '', startDate: '', capacity: 50 });
+    const [newLiveData, setNewLiveData] = useState({ title: '', topic: '', platform: 'google-meet', meetingLink: '' });
+
     useEffect(() => {
         if (isOpen && courseId) {
             fetchInitialData();
@@ -112,35 +118,51 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
     };
 
     const handleCreateBatch = async () => {
-        const name = window.prompt('Enter Batch Name:');
-        if (!name) return;
+        if (!newBatchData.name || !newBatchData.instructor || !newBatchData.startDate) {
+            toast.error('Please fill all batch coordinates');
+            return;
+        }
         try {
             await api.post('/batches', { 
-                name, 
-                course: courseId, 
-                instructor: formData.instructor,
-                startDate: new Date() 
+                ...newBatchData,
+                course: courseId
             });
-            toast.success('Batch deployed');
+            toast.success('Batch deployed to nexus');
+            setIsCreatingBatch(false);
+            setNewBatchData({ name: '', instructor: '', startDate: '', capacity: 50 });
             fetchInitialData();
         } catch (err) {
-            toast.error('Failed to deploy batch');
+            toast.error('Batch deployment failed');
+        }
+    };
+
+    const handleDeleteBatch = async (id) => {
+        if (!window.confirm('Purge this cohort from the system?')) return;
+        try {
+            await api.delete(`/batches/${id}`);
+            toast.success('Cohort purged');
+            fetchInitialData();
+        } catch (err) {
+            toast.error('Purge failed');
         }
     };
 
     const handleScheduleLive = async () => {
-        const title = window.prompt('Enter Session Title:');
-        if (!title) return;
+        if (!newLiveData.title || !newLiveData.topic || !newLiveData.meetingLink) {
+            toast.error('Live downlink coordinates incomplete');
+            return;
+        }
         try {
-            // This is a placeholder, usually involves more fields
             await api.post('/live-classes/start', {
-                title,
-                topic: 'Knowledge Transfer',
+                ...newLiveData,
                 mentorName: 'Admin'
             });
-            toast.success('Live Session Initialized');
+            toast.success('Live broadcast initialized');
+            setIsCreatingLive(false);
+            setNewLiveData({ title: '', topic: '', platform: 'google-meet', meetingLink: '' });
+            // Should also fetch active live classes if we want to show them
         } catch (err) {
-            toast.error('Failed to initialize live session');
+            toast.error(err.response?.data?.message || 'Broadcast initialization failed');
         }
     };
 
@@ -427,7 +449,7 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                         key="batches"
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="space-y-8"
+                                        className="space-y-8 pb-10"
                                     >
                                         <div className="flex items-center justify-between">
                                             <div>
@@ -435,39 +457,109 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Manage student batches and timelines</p>
                                             </div>
                                             <button 
-                                                onClick={handleCreateBatch}
+                                                onClick={() => setIsCreatingBatch(!isCreatingBatch)}
                                                 className="px-6 py-3 bg-white text-slate-950 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 shadow-lg shadow-white/10"
                                             >
-                                                <Plus size={16} /> Deploy New Batch
+                                                <Plus size={16} /> {isCreatingBatch ? 'Cancel' : 'Deploy New Batch'}
                                             </button>
                                         </div>
 
+                                        <AnimatePresence>
+                                            {isCreatingBatch && (
+                                                <motion.div 
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="bg-slate-950/60 border border-sky-500/30 rounded-[2.5rem] p-8 space-y-6">
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Batch Identity</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    placeholder="e.g., Summer 2024 Alpha"
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-sky-500/50"
+                                                                    value={newBatchData.name}
+                                                                    onChange={(e) => setNewBatchData({...newBatchData, name: e.target.value})}
+                                                                />
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Lead Mentor</label>
+                                                                <select 
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-sky-500/50"
+                                                                    value={newBatchData.instructor}
+                                                                    onChange={(e) => setNewBatchData({...newBatchData, instructor: e.target.value})}
+                                                                >
+                                                                    <option value="">Select Instructor...</option>
+                                                                    {mentors.map(m => <option key={m._id} value={m._id}>{m.name}</option>)}
+                                                                </select>
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Start Date</label>
+                                                                <input 
+                                                                    type="date" 
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-sky-500/50"
+                                                                    value={newBatchData.startDate}
+                                                                    onChange={(e) => setNewBatchData({...newBatchData, startDate: e.target.value})}
+                                                                />
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Student Capacity</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-sky-500/50"
+                                                                    value={newBatchData.capacity}
+                                                                    onChange={(e) => setNewBatchData({...newBatchData, capacity: Number(e.target.value)})}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <button 
+                                                            onClick={handleCreateBatch}
+                                                            className="w-full py-4 bg-sky-500 text-slate-950 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-sky-500/20"
+                                                        >
+                                                            Deploy Cohort Protocol
+                                                        </button>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             {batches.map((batch, i) => (
-                                                <div key={i} className="bg-slate-950/40 border border-slate-800 rounded-3xl p-6 hover:border-sky-500/30 transition-all group">
-                                                    <div className="flex justify-between items-start mb-4">
+                                                <div key={i} className="bg-slate-950/40 border border-slate-800 rounded-3xl p-6 hover:border-sky-500/30 transition-all group relative overflow-hidden">
+                                                    <div className="flex justify-between items-start mb-4 relative z-10">
                                                         <div>
                                                             <h4 className="text-lg font-black text-white uppercase tracking-tight group-hover:text-sky-400 transition-colors">{batch.name}</h4>
                                                             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{batch.status} • {batch.students?.length || 0} Entities</p>
                                                         </div>
-                                                        <span className="px-2 py-1 bg-sky-500/10 text-sky-500 rounded text-[8px] font-black uppercase tracking-widest">Active Batch</span>
+                                                        <div className="flex gap-2">
+                                                            <button 
+                                                                onClick={() => handleDeleteBatch(batch._id)}
+                                                                className="p-2 bg-rose-500/5 hover:bg-rose-500 text-rose-500 hover:text-white rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                                                            >
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                            <span className="px-2 py-1 bg-sky-500/10 text-sky-500 rounded text-[8px] font-black uppercase tracking-widest self-start">Active</span>
+                                                        </div>
                                                     </div>
-                                                    <div className="space-y-3 pt-4 border-t border-slate-800/50">
+                                                    <div className="space-y-3 pt-4 border-t border-slate-800/50 relative z-10">
                                                         <div className="flex items-center justify-between text-[10px]">
                                                             <span className="text-slate-500 font-bold uppercase tracking-widest">Instructor:</span>
                                                             <span className="text-white font-black">{batch.instructor?.name || 'Assigned Mentor'}</span>
                                                         </div>
                                                         <div className="flex items-center justify-between text-[10px]">
-                                                            <span className="text-slate-500 font-bold uppercase tracking-widest">Started:</span>
-                                                            <span className="text-white font-black">{new Date(batch.startDate).toLocaleDateString()}</span>
+                                                            <span className="text-slate-500 font-bold uppercase tracking-widest">Timeline:</span>
+                                                            <span className="text-white font-black">{new Date(batch.startDate).toLocaleDateString()} Start</span>
                                                         </div>
                                                     </div>
+                                                    <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-sky-500/10 transition-all"></div>
                                                 </div>
                                             ))}
-                                            {batches.length === 0 && (
+                                            {batches.length === 0 && !isCreatingBatch && (
                                                 <div className="md:col-span-2 text-center py-16 bg-slate-950/20 border-2 border-dashed border-slate-800 rounded-[2.5rem]">
                                                     <Users size={40} className="text-slate-700 mx-auto mb-4" />
-                                                    <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px]">No active cohorts detected</p>
+                                                    <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px]">No active cohorts detected in this sector</p>
                                                 </div>
                                             )}
                                         </div>
@@ -479,7 +571,7 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                         key="live"
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="space-y-8"
+                                        className="space-y-8 pb-10"
                                     >
                                         <div className="flex items-center justify-between">
                                             <div>
@@ -487,22 +579,98 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Real-time knowledge transfer protocols</p>
                                             </div>
                                             <button 
-                                                onClick={handleScheduleLive}
+                                                onClick={() => setIsCreatingLive(!isCreatingLive)}
                                                 className="px-6 py-3 bg-rose-500 text-white rounded-xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 shadow-lg shadow-rose-500/20"
                                             >
-                                                <Video size={16} /> Schedule Session
+                                                <Video size={16} /> {isCreatingLive ? 'Abort' : 'Schedule Broadcast'}
                                             </button>
                                         </div>
 
-                                        <div className="bg-slate-950/40 border border-slate-800 rounded-[2.5rem] p-10 text-center">
-                                            <div className="w-20 h-20 bg-rose-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-500/20 animate-pulse">
-                                                <Video size={32} className="text-rose-500" />
+                                        <AnimatePresence>
+                                            {isCreatingLive && (
+                                                <motion.div 
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="bg-slate-950/60 border border-rose-500/30 rounded-[2.5rem] p-8 space-y-6">
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Broadcast Title</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    placeholder="e.g., Deep Dive into Neural Networks"
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-rose-500/50"
+                                                                    value={newLiveData.title}
+                                                                    onChange={(e) => setNewLiveData({...newLiveData, title: e.target.value})}
+                                                                />
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Technical Topic</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    placeholder="e.g., Computer Vision"
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-rose-500/50"
+                                                                    value={newLiveData.topic}
+                                                                    onChange={(e) => setNewLiveData({...newLiveData, topic: e.target.value})}
+                                                                />
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Platform</label>
+                                                                <select 
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-rose-500/50"
+                                                                    value={newLiveData.platform}
+                                                                    onChange={(e) => setNewLiveData({...newLiveData, platform: e.target.value})}
+                                                                >
+                                                                    <option value="google-meet">Google Meet</option>
+                                                                    <option value="zoom">Zoom</option>
+                                                                    <option value="jitsi">Jitsi</option>
+                                                                    <option value="youtube">YouTube Live</option>
+                                                                    <option value="premiere">VOD Premiere</option>
+                                                                </select>
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Uplink URL (Meeting Link)</label>
+                                                                <input 
+                                                                    type="text" 
+                                                                    placeholder="https://meet.google.com/..."
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-2xl py-3 px-5 text-sm text-white outline-none focus:border-rose-500/50"
+                                                                    value={newLiveData.meetingLink}
+                                                                    onChange={(e) => setNewLiveData({...newLiveData, meetingLink: e.target.value})}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <button 
+                                                            onClick={handleScheduleLive}
+                                                            className="w-full py-4 bg-rose-500 text-white rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-rose-500/20"
+                                                        >
+                                                            Initiate Satellite Uplink
+                                                        </button>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        <div className="bg-slate-950/40 border border-slate-800 rounded-[2.5rem] p-10 text-center relative overflow-hidden group">
+                                            <div className="relative z-10">
+                                                <div className="w-20 h-20 bg-rose-500/10 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 border border-rose-500/20 animate-pulse group-hover:rotate-6 transition-transform">
+                                                    <Video size={32} className="text-rose-500" />
+                                                </div>
+                                                <h4 className="text-xl font-black text-white uppercase tracking-tighter">Live Control Matrix</h4>
+                                                <p className="text-slate-500 text-xs mt-3 max-w-sm mx-auto leading-relaxed font-medium">Broadcast commands are synchronized with global student nodes. All sessions are logged for historical compliance.</p>
+                                                <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-4">
+                                                    <div className="px-6 py-4 bg-slate-900/50 border border-slate-800 rounded-2xl flex items-center gap-4">
+                                                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Satellite Connection Active</span>
+                                                    </div>
+                                                    <div className="px-6 py-4 bg-slate-900/50 border border-slate-800 rounded-2xl flex items-center gap-4">
+                                                        <Shield size={14} className="text-sky-500" />
+                                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">End-to-End Encrypted</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <h4 className="text-xl font-black text-white uppercase tracking-tighter">Live Session Interface</h4>
-                                            <p className="text-slate-500 text-xs mt-3 max-w-sm mx-auto leading-relaxed">Schedule or launch live sessions for specific batches. Integration with Agora/Jitsi is active.</p>
-                                            <button className="mt-8 px-10 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-[10px] font-black text-white uppercase tracking-[0.3em] hover:bg-slate-800 transition-all">
-                                                Initialize Live Uplink
-                                            </button>
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full -mr-32 -mt-32 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
                                         </div>
                                     </motion.div>
                                 )}
@@ -607,7 +775,7 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                             {[
                                                 { label: 'Total Enrolled', value: course?.enrolledStudents?.length || 0, icon: Users, color: 'sky' },
                                                 { label: 'Completion Rate', value: '78%', icon: Zap, color: 'emerald' },
-                                                { label: 'Projected Revenue', value: `₹${(course?.enrolledStudents?.length || 0) * formData.price}`, icon: IndianRupee, color: 'indigo' },
+                                                { label: 'Total Revenue', value: `₹${course?.totalRevenue || 0}`, icon: IndianRupee, color: 'indigo' },
                                             ].map((stat, i) => (
                                                 <div key={i} className="bg-slate-950/40 border border-slate-800 p-6 rounded-3xl relative overflow-hidden group">
                                                     <div className={`absolute top-0 right-0 w-24 h-24 bg-${stat.color}-500/10 rounded-full -mr-8 -mt-8 blur-2xl group-hover:scale-150 transition-all duration-700`}></div>

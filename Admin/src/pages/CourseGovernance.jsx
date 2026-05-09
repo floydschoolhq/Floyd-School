@@ -170,10 +170,10 @@ const CourseCard = ({ course, onOpenMaster, idx }) => {
             transition={{ delay: idx * 0.05, type: 'spring', damping: 20 }}
             className="group relative bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-1 hover:border-sky-500/50 transition-all duration-500"
         >
-            <div className="bg-slate-950/40 rounded-[2.25rem] p-6 flex flex-col lg:flex-row items-center justify-between gap-8 group-hover:bg-slate-950/60 transition-all">
+            <div className="bg-slate-950/40 rounded-[2.25rem] p-6 flex flex-col xl:flex-row items-center justify-between gap-6 xl:gap-8 group-hover:bg-slate-950/60 transition-all">
                 {/* Course Main Intel */}
-                <div className="flex items-center gap-8 flex-1 w-full lg:w-auto">
-                    <div className="relative w-24 h-24 rounded-[2rem] overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform duration-700">
+                <div className="flex items-center gap-6 xl:gap-8 flex-1 min-w-0 w-full">
+                    <div className="relative w-20 h-20 xl:w-24 xl:h-24 rounded-[2rem] overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform duration-700">
                         <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 to-transparent z-10"></div>
                         {course.thumbnail ? (
                             <img src={course.thumbnail} alt="" className="w-full h-full object-cover" />
@@ -188,31 +188,36 @@ const CourseCard = ({ course, onOpenMaster, idx }) => {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-4 mb-3">
+                        <div className="flex items-center gap-4 mb-2">
                             <span className="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full text-[8px] font-black text-sky-500 uppercase tracking-widest">{course.category || 'Development'}</span>
                             <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest flex items-center gap-2">
                                 <Users size={12} /> {course.enrolledStudents?.length || 0} Registered
                             </span>
                         </div>
-                        <h3 className="text-2xl font-black text-white uppercase tracking-tight truncate group-hover:text-sky-400 transition-colors">
+                        <h3 className="text-xl xl:text-2xl font-black text-white uppercase tracking-tight truncate group-hover:text-sky-400 transition-colors">
                             {course.title}
                         </h3>
-                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2 flex items-center gap-2">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1.5 flex items-center gap-2">
                             <Target size={12} className="text-sky-500" /> Directed by {course.instructor?.name || 'Root Mentor'}
                         </p>
                     </div>
                 </div>
 
                 {/* Quick Metrics Protocol */}
-                <div className="flex items-center gap-10 bg-slate-900/50 px-8 py-5 rounded-[2rem] border border-slate-800/50 w-full lg:w-auto">
+                <div className="flex items-center gap-6 xl:gap-10 bg-slate-900/50 px-6 xl:px-8 py-4 xl:py-5 rounded-[2rem] border border-slate-800/50 w-full xl:w-auto justify-center xl:justify-start">
                     <div className="text-center">
                         <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Commercial</p>
-                        <p className="text-lg font-black text-white leading-none">₹{course.price}</p>
+                        <p className="text-base xl:text-lg font-black text-white leading-none">₹{course.price}</p>
+                    </div>
+                    <div className="w-px h-8 bg-slate-800"></div>
+                    <div className="text-center">
+                        <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Yield</p>
+                        <p className="text-base xl:text-lg font-black text-sky-500 leading-none">₹{course.totalRevenue || 0}</p>
                     </div>
                     <div className="w-px h-8 bg-slate-800"></div>
                     <div className="text-center">
                         <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Curriculum</p>
-                        <p className="text-lg font-black text-white leading-none">{course.modules?.length || 0} <span className="text-[10px] text-slate-500 uppercase tracking-tighter ml-0.5 font-bold">Nodes</span></p>
+                        <p className="text-base xl:text-lg font-black text-white leading-none">{course.modules?.length || 0} <span className="text-[10px] text-slate-500 uppercase tracking-tighter ml-0.5 font-bold">Nodes</span></p>
                     </div>
                     <div className="w-px h-8 bg-slate-800"></div>
                     <div className="text-center">
@@ -224,16 +229,16 @@ const CourseCard = ({ course, onOpenMaster, idx }) => {
                 </div>
 
                 {/* Master Entry Point */}
-                <div className="flex items-center gap-3 w-full lg:w-auto">
+                <div className="flex items-center gap-3 w-full xl:w-auto">
                     <button 
                         onClick={() => window.open(`https://thinkskool-9kaq.vercel.app/course/${course.title?.toLowerCase().replace(/ /g, '-') || '1'}`, '_blank')}
-                        className="p-5 bg-slate-900 hover:bg-slate-800 text-slate-500 hover:text-white rounded-[1.75rem] transition-all border border-slate-800 shadow-xl"
+                        className="p-4 xl:p-5 bg-slate-900 hover:bg-slate-800 text-slate-500 hover:text-white rounded-[1.75rem] transition-all border border-slate-800 shadow-xl"
                     >
                         <Eye size={20} />
                     </button>
                     <button 
                         onClick={onOpenMaster}
-                        className="flex-1 lg:flex-none px-8 py-5 bg-white text-slate-950 rounded-[1.75rem] font-black uppercase text-[11px] tracking-[0.2em] hover:bg-sky-500 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] transition-all flex items-center justify-center gap-3 active:scale-95 shadow-2xl"
+                        className="flex-1 xl:flex-none px-6 xl:px-8 py-4 xl:py-5 bg-white text-slate-950 rounded-[1.75rem] font-black uppercase text-[10px] xl:text-[11px] tracking-[0.2em] hover:bg-sky-500 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] transition-all flex items-center justify-center gap-3 active:scale-95 shadow-2xl"
                     >
                         <Settings size={18} /> Master Control
                     </button>

@@ -272,6 +272,14 @@ const verifyPayment = async (req, res) => {
             { new: true }
         ).populate('course', 'title');
 
+        // SYNC: Add student to Course enrolledSwtudents array for Admin telemetry
+        if (updatedEnrollment.student) {
+            const Course = require('../models/Course');
+            await Course.findByIdAndUpdate(updatedEnrollment.course._id, {
+                $addToSet: { enrolledStudents: updatedEnrollment.student }
+            });
+        }
+
         res.status(200).json({
             success: true,
             message: 'Payment verified successfully',
