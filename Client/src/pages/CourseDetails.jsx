@@ -72,6 +72,9 @@ const CourseDetails = () => {
                     if (res.data.price) {
                         setCourse(prev => ({ ...prev, price: res.data.price }));
                     }
+                    if (res.data.originalPrice) {
+                        setCourse(prev => ({ ...prev, originalPrice: res.data.originalPrice }));
+                    }
                 }
             } catch (err) {
                 console.warn('Live stats fetch failed, using fallback');
@@ -248,6 +251,7 @@ const CourseDetails = () => {
                             initialRegisteredCount={(stats.manualEnrollmentCount || 0) + (stats.autoEnrollmentCount || 0)}
                             totalSeats={stats.totalSeats}
                             initialPrice={course.price}
+                            initialOriginalPrice={course.originalPrice}
                         />
                     </section>
                 )}

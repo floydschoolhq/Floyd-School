@@ -15,6 +15,7 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
     const [loading, setLoading] = useState(true);
     const [course, setCourse] = useState(null);
     const [mentors, setMentors] = useState([]);
+    const [coupons, setCoupons] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
     
     // Form State
@@ -39,6 +40,9 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
     const [isCreatingLive, setIsCreatingLive] = useState(false);
     const [newBatchData, setNewBatchData] = useState({ name: '', instructor: '', startDate: '', capacity: 50 });
     const [newLiveData, setNewLiveData] = useState({ title: '', topic: '', platform: 'google-meet', meetingLink: '' });
+    
+    const [isCreatingCoupon, setIsCreatingCoupon] = useState(false);
+    const [newCouponData, setNewCouponData] = useState({ code: '', discountType: 'percentage', discountValue: 10, expiryDate: '', usageLimit: 100 });
 
     useEffect(() => {
         if (isOpen && courseId) {
@@ -49,15 +53,21 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
     const fetchInitialData = async () => {
         setLoading(true);
         try {
-            const [courseRes, mentorsRes, batchesRes] = await Promise.all([
+            const [courseRes, mentorsRes, batchesRes, couponsRes] = await Promise.all([
                 api.get(`/courses/${courseId}`),
                 api.get('/admin/users?role=mentor'),
-                api.get(`/batches?courseId=${courseId}`)
+                api.get(`/batches?courseId=${courseId}`),
+                api.get('/coupons').catch(() => ({ data: { coupons: [] } }))
             ]);
             
             const c = courseRes.data;
             setCourse(c);
             setBatches(batchesRes.data.batches || []);
+            
+            // Extract coupons mapped to this course
+            const allCoupons = couponsRes.data.coupons || couponsRes.data || [];
+            const mappedCoupons = Array.isArray(allCoupons) ? allCoupons.filter(coupon => coupon.applicableCourses?.includes(courseId)) : [];
+            setCoupons(mappedCoupons);
             setFormData({
                 title: c.title || '',
                 description: c.description || '',
@@ -163,6 +173,36 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
             // Should also fetch active live classes if we want to show them
         } catch (err) {
             toast.error(err.response?.data?.message || 'Broadcast initialization failed');
+        }
+    };
+
+    const handleCreateCoupon = async () => {
+        if (!newCouponData.code || !newCouponData.expiryDate) {
+            toast.error('Please fill all coupon coordinates');
+            return;
+        }
+        try {
+            await api.post('/coupons', {
+                ...newCouponData,
+                applicableCourses: [courseId]
+            });
+            toast.success('Discount Protocol Deployed');
+            setIsCreatingCoupon(false);
+            setNewCouponData({ code: '', discountType: 'percentage', discountValue: 10, expiryDate: '', usageLimit: 100 });
+            fetchInitialData();
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Coupon deployment failed');
+        }
+    };
+
+    const handleDeleteCoupon = async (id) => {
+        if (!window.confirm('Purge this coupon protocol?')) return;
+        try {
+            await api.delete(`/coupons/${id}`);
+            toast.success('Coupon purged');
+            fetchInitialData();
+        } catch (err) {
+            toast.error('Purge failed');
         }
     };
 
@@ -759,6 +799,112 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                                         ))}
                                                     </div>
                                                 </div>
+                                                </div>
+                                            </div>
+
+                                        {/* Coupons Section */}
+                                        <div className="bg-slate-950/40 border border-slate-800 rounded-[2.5rem] p-8 space-y-8 mt-10">
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
+                                                    <Zap size={16} className="text-amber-500" /> Discount Protocols
+                                                </h4>
+                                                <button 
+                                                    onClick={() => setIsCreatingCoupon(!isCreatingCoupon)}
+                                                    className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-black uppercase text-[9px] tracking-widest transition-all"
+                                                >
+                                                    {isCreatingCoupon ? 'Cancel' : 'Generate Code'}
+                                                </button>
+                                            </div>
+
+                                            <AnimatePresence>
+                                                {isCreatingCoupon && (
+                                                    <motion.div 
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 mb-6">
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                                                <div className="space-y-2">
+                                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Code</label>
+                                                                    <input 
+                                                                        type="text" 
+                                                                        placeholder="e.g., SUMMER50"
+                                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-bold text-white outline-none focus:border-amber-500/50 uppercase"
+                                                                        value={newCouponData.code}
+                                                                        onChange={(e) => setNewCouponData({...newCouponData, code: e.target.value.toUpperCase()})}
+                                                                    />
+                                                                </div>
+                                                                <div className="space-y-2">
+                                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Type</label>
+                                                                    <select 
+                                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-bold text-white outline-none focus:border-amber-500/50"
+                                                                        value={newCouponData.discountType}
+                                                                        onChange={(e) => setNewCouponData({...newCouponData, discountType: e.target.value})}
+                                                                    >
+                                                                        <option value="percentage">Percentage (%)</option>
+                                                                        <option value="fixed">Fixed Amount (₹)</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div className="space-y-2">
+                                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Value</label>
+                                                                    <input 
+                                                                        type="number" 
+                                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-bold text-white outline-none focus:border-amber-500/50"
+                                                                        value={newCouponData.discountValue}
+                                                                        onChange={(e) => setNewCouponData({...newCouponData, discountValue: Number(e.target.value)})}
+                                                                    />
+                                                                </div>
+                                                                <div className="space-y-2">
+                                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expiry Date</label>
+                                                                    <input 
+                                                                        type="date" 
+                                                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs font-bold text-white outline-none focus:border-amber-500/50"
+                                                                        value={newCouponData.expiryDate}
+                                                                        onChange={(e) => setNewCouponData({...newCouponData, expiryDate: e.target.value})}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <button 
+                                                                onClick={handleCreateCoupon}
+                                                                className="w-full py-3 bg-amber-500 text-slate-950 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg shadow-amber-500/20"
+                                                            >
+                                                                Deploy Coupon
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                {coupons.map((coupon, idx) => (
+                                                    <div key={coupon._id || idx} className="bg-slate-900 border border-slate-800 rounded-xl p-5 relative overflow-hidden group">
+                                                        <div className="flex justify-between items-start mb-4">
+                                                            <div>
+                                                                <h5 className="text-lg font-black text-white uppercase tracking-tight">{coupon.code}</h5>
+                                                                <p className="text-[9px] font-bold text-amber-500 uppercase tracking-widest mt-1">
+                                                                    {coupon.discountType === 'percentage' ? `${coupon.discountValue}% OFF` : `₹${coupon.discountValue} OFF`}
+                                                                </p>
+                                                            </div>
+                                                            <button 
+                                                                onClick={() => handleDeleteCoupon(coupon._id)}
+                                                                className="p-1.5 bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                                                            >
+                                                                <Trash2 size={12} />
+                                                            </button>
+                                                        </div>
+                                                        <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest space-y-1">
+                                                            <p>Used: {coupon.usageCount || 0} / {coupon.usageLimit || '∞'}</p>
+                                                            <p>Expires: {new Date(coupon.expiryDate).toLocaleDateString()}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                {coupons.length === 0 && !isCreatingCoupon && (
+                                                    <div className="col-span-full text-center py-8 border border-dashed border-slate-800 rounded-xl">
+                                                        <p className="text-slate-500 font-bold uppercase tracking-widest text-[9px]">No active discount protocols</p>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </motion.div>

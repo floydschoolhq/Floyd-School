@@ -24,6 +24,7 @@ const setCachedData = (key, data, ttl = CACHE_TTL) => {
 };
 
 const shouldCache = (url) => {
+    if (url.includes('/stats')) return false;
     return url.includes('/dashboard') || url.includes('/courses') || url.includes('/assignments');
 };
 
