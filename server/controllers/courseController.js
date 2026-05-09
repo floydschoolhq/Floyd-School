@@ -377,28 +377,42 @@ exports.updateEnrollmentStats = async (req, res) => {
 exports.getPublicCourseStats = async (req, res) => {
     try {
         const { id } = req.params;
-        let query = {};
 
-        // Mapping for hardcoded IDs used in marketing site
-        if (id === '1') {
-            query = { title: { $regex: /foundation of ai|artificial intelligence|machine learning|ai & ml/i } };
-        } else if (id === '2') {
-            query = { title: { $regex: /foundation of web|web dev|full stack/i } };
-        } else if (id === '3') {
-            query = { title: { $regex: /foundation of iot|robotics|internet of things/i } };
-        } else if (id === '4') {
-            query = { title: { $regex: /foundation of cyber|cyber security|ethical hacking/i } };
-        } else if (id === '5') {
-            query = { title: { $regex: /summer builder program|bootcamp/i } };
+        // Known MongoDB ObjectIds for hardcoded frontend course IDs
+        const courseIdMap = {
+            '1': '69ff38141cad938780ccdbeb',
+            '2': '69ff38141cad938780ccdbec',
+            '3': '69ff38141cad938780ccdbed',
+            '4': '69ff38141cad938780ccdbee',
+            '5': '69ff38141cad938780ccdbef'
+        };
+
+        const courseTitlePatterns = {
+            '1': 'foundation of ai|artificial intelligence|machine learning|ai.*ml',
+            '2': 'foundation of web|web dev|full stack|development',
+            '3': 'foundation of iot|robotics|internet of things',
+            '4': 'foundation of cyber|cyber security|ethical hacking',
+            '5': 'summer builder program|bootcamp'
+        };
+
+        let course = null;
+
+        if (courseIdMap[id]) {
+            // Try direct ObjectId first
+            try {
+                course = await Course.findById(courseIdMap[id]).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+            } catch (e) { /* fall through */ }
+            // Regex fallback
+            if (!course && courseTitlePatterns[id]) {
+                course = await Course.findOne({ title: { $regex: courseTitlePatterns[id], $options: 'i' } })
+                    .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+            }
         } else if (id.length > 20) {
-            // Assume it's a real MongoDB ID
-            query = { _id: id };
+            course = await Course.findById(id).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
         } else {
-            // Search by title fallback
-            query = { title: { $regex: new RegExp(id, 'i') } };
+            course = await Course.findOne({ title: { $regex: id, $options: 'i' } })
+                .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
         }
-
-        const course = await Course.findOne(query).select('totalSeats manualEnrollmentCount title price originalPrice');
         
         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found' });
@@ -417,3 +431,4 @@ exports.getPublicCourseStats = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 };
+

@@ -59,22 +59,40 @@ const createOrder = async (req, res) => {
         // Get course details - handle both ObjectId and string IDs
         let course;
         
-        // If courseId is a simple string like "1", "2", etc., map to actual course
-        const courseMapping = {
-            '1': /foundation of ai|artificial intelligence|machine learning|ai & ml/i,
-            '2': /foundation of web|web dev|full stack/i,
-            '3': /foundation of iot|robotics|internet of things/i,
-            '4': /foundation of cyber|cyber security|ethical hacking/i,
-            '5': /summer builder program|bootcamp/i
+        // Map simple frontend IDs to known MongoDB ObjectIds + regex fallback
+        const courseIdMap = {
+            '1': '69ff38141cad938780ccdbeb',
+            '2': '69ff38141cad938780ccdbec',
+            '3': '69ff38141cad938780ccdbed',
+            '4': '69ff38141cad938780ccdbee',
+            '5': '69ff38141cad938780ccdbef'
+        };
+
+        const courseTitlePatterns = {
+            '1': 'foundation of ai|artificial intelligence|machine learning|ai.*ml',
+            '2': 'foundation of web|web dev|full stack|development',
+            '3': 'foundation of iot|robotics|internet of things',
+            '4': 'foundation of cyber|cyber security|ethical hacking',
+            '5': 'summer builder program|bootcamp'
         };
         
-        if (courseMapping[courseId]) {
-            course = await Course.findOne({ title: { $regex: courseMapping[courseId] } });
+        if (courseIdMap[courseId]) {
+            // First try direct ObjectId lookup (fastest & most reliable)
+            const mongoose = require('mongoose');
+            try {
+                course = await Course.findById(courseIdMap[courseId]);
+            } catch (e) {
+                // ObjectId lookup failed, fall back to regex
+            }
+            // If not found by ID, try regex on title
+            if (!course && courseTitlePatterns[courseId]) {
+                course = await Course.findOne({ title: { $regex: courseTitlePatterns[courseId], $options: 'i' } });
+            }
         } else {
             try {
                 course = await Course.findById(courseId);
             } catch (error) {
-                course = await Course.findOne({ title: { $regex: new RegExp(courseId, 'i') } });
+                course = await Course.findOne({ title: { $regex: courseId, $options: 'i' } });
             }
         }
         
@@ -84,6 +102,7 @@ const createOrder = async (req, res) => {
                 message: 'Course not found'
             });
         }
+
 
         // Validate course pricing
         const coursePrice = Number(course.price ?? 0);
