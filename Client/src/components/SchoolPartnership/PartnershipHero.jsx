@@ -18,6 +18,7 @@ const PartnershipHero = () => {
     { name: 'Roadmap', action: () => scrollToSection('roadmap') },
     { name: 'Domains', action: () => scrollToSection('domains') },
     { name: 'Why Us', action: () => scrollToSection('why-us') },
+    { name: 'Host Hackathon', action: () => navigate('/hackathon') },
   ];
 
   return (
@@ -204,7 +205,7 @@ const PartnershipHero = () => {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
-              The first 7 days are completely free.
+              The first 1 days are completely free.
             </div>
 
             {/* CTA Buttons */}

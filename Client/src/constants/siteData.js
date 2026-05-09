@@ -22,6 +22,7 @@ export const FALLBACK_COURSES = [
         currency: "INR",
         tags: ["AI", "Python", "ML"],
         live: true,
+        featured: true,
         deliveryDetails: { inSchool: { bootcamp: "7-Day Deep Dive" } },
         curriculum: [
             "Neural Network Architectures",
