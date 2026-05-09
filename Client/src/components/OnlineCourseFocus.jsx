@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FALLBACK_COURSES } from '../constants/siteData';
 import useIsMobile from '../hooks/useIsMobile';
 import EarlyRegistrationForm from './EarlyRegistrationForm';
+import api from '../api/axios';
 
 const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) => {
     const isComingSoon = !!course.comingSoon;
@@ -44,7 +45,12 @@ const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) =>
                     {isComingSoon ? 'Coming Soon' : course.title}
                 </h3>
 
-                <div className="mt-auto flex items-center justify-end">
+                <div className="mt-auto flex items-center justify-between">
+                    {!isComingSoon && (
+                        <div className={`text-lg font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                            ₹{course.price}
+                        </div>
+                    )}
                     {!isComingSoon ? (
                         <button
                             onClick={(e) => { e.stopPropagation(); onRegister(course._id); }}
@@ -56,7 +62,7 @@ const CourseCard = ({ course, isDark, onRegister, onDetails, onEarlyAccess }) =>
                     ) : (
                         <button
                             onClick={(e) => { e.stopPropagation(); onEarlyAccess(course); }}
-                            className="text-xs font-bold text-purple-400 hover:text-purple-300 hover:translate-x-1 transition-all"
+                            className="text-xs font-bold text-purple-400 hover:text-purple-300 hover:translate-x-1 transition-all ml-auto"
                         >
                             Early Register →
                         </button>
@@ -111,6 +117,9 @@ const FeaturedCourseCard = ({ course, isDark, onRegister, onDetails }) => {
                         <span className={`${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                             {course.curriculum?.length} Modules
                         </span>
+                        <span className={`text-2xl font-black ${isDark ? 'text-white' : 'text-slate-900'} ml-4`}>
+                            ₹{course.price}
+                        </span>
                     </div>
 
                     <div className="flex items-center justify-center gap-4">
@@ -147,6 +156,35 @@ const OnlineCourseFocus = ({ variant }) => {
     const [activeTab, setActiveTab] = useState('live');
     const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
     const mobileScrollRef = useRef(null);
+    const [courses, setCourses] = useState(FALLBACK_COURSES);
+
+    useEffect(() => {
+        const fetchLiveCourses = async () => {
+            try {
+                const updatedCourses = await Promise.all(FALLBACK_COURSES.map(async (course) => {
+                    try {
+                        const res = await api.get(`/public/courses/${course._id}/stats`);
+                        if (res.data && res.data.success) {
+                            return { 
+                                ...course, 
+                                price: res.data.price || course.price,
+                                totalSeats: res.data.totalSeats || course.totalSeats,
+                                registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0)
+                            };
+                        }
+                    } catch (e) {
+                        console.warn(`Failed to fetch live data for course ${course._id}`);
+                    }
+                    return course;
+                }));
+                setCourses(updatedCourses);
+            } catch (err) {
+                console.error('Failed to synchronize course focus matrix', err);
+            }
+        };
+
+        fetchLiveCourses();
+    }, []);
 
     const handleRegister = (courseId) => {
         navigate(`/course/${courseId}?openRegistration=true`);
@@ -165,7 +203,7 @@ const OnlineCourseFocus = ({ variant }) => {
         { id: 'upcoming', label: 'Coming Soon' }
     ];
 
-    const filteredCourses = FALLBACK_COURSES.filter(course => {
+    const filteredCourses = courses.filter(course => {
         if (activeTab === 'live') return !course.comingSoon;
         if (activeTab === 'upcoming') return course.comingSoon;
         return true;

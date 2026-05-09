@@ -66,6 +66,7 @@ const CourseDetails = () => {
                 if (res.data && res.data.success) {
                     setStats({
                         manualEnrollmentCount: res.data.manualEnrollmentCount,
+                        autoEnrollmentCount: res.data.autoEnrollmentCount,
                         totalSeats: res.data.totalSeats
                     });
                     if (res.data.price) {
@@ -168,7 +169,7 @@ const CourseDetails = () => {
                                             </div>
                                         ))}
                                     </div>
-                                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{stats.manualEnrollmentCount}+ Enrolled Last Week</span>
+                                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{(stats.manualEnrollmentCount || 0) + (stats.autoEnrollmentCount || 0)}+ Enrolled Last Week</span>
                                  </div>
                             </div>
                         ) : (
@@ -212,7 +213,7 @@ const CourseDetails = () => {
                                                     </div>
                                                 ))}
                                             </div>
-                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stats.manualEnrollmentCount}+ Enrolled Last Week</span>
+                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{(stats.manualEnrollmentCount || 0) + (stats.autoEnrollmentCount || 0)}+ Enrolled Last Week</span>
                                          </div>
                                     </div>
                                 </motion.div>
@@ -236,8 +237,8 @@ const CourseDetails = () => {
                     </div>
                 </section>
 
-                {/* Institutional Partners Section - Only for Summer Program */}
-                {courseId === '5' && <InstitutionalPartners variant="dark" />}
+                {/* Institutional Partners Section - Removed for Summer Program as per request */}
+                {courseId !== '5' && <InstitutionalPartners variant="dark" />}
 
                 {/* Course Curriculum Section - For AI & ML and Summer Builder */}
                 {(courseId === '1' || courseId === '5') && (
@@ -245,8 +246,9 @@ const CourseDetails = () => {
                         <CourseCurriculum 
                             courseId={courseId}
                             variant="dark" 
-                            initialRegisteredCount={course.registeredCount}
-                            totalSeats={course.totalSeats}
+                            initialRegisteredCount={(stats.manualEnrollmentCount || 0) + (stats.autoEnrollmentCount || 0)}
+                            totalSeats={stats.totalSeats}
+                            initialPrice={course.price}
                         />
                     </section>
                 )}
@@ -346,40 +348,42 @@ const CourseDetails = () => {
                     </section>
                 )}
 
-                {/* Technical Excellence & Career Support Section (SEO Content) */}
-                <section className="py-24 bg-black border-t border-white/5 overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                            <div>
-                                <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-8 leading-tight">
-                                    Technical Excellence <br/><span className="text-blue-500">Industry-Standard Labs</span>
-                                </h2>
-                                <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed">
+                {/* Technical Excellence & Career Support Section (SEO Content) - Only for other courses */}
+                {(courseId !== '5' && courseId !== '1') && (
+                    <section className="py-24 bg-black border-t border-white/5 overflow-hidden">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                <div>
+                                    <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-8 leading-tight">
+                                        Technical Excellence <br/><span className="text-blue-500">Industry-Standard Labs</span>
+                                    </h2>
+                                    <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed">
+                                        <p>
+                                            At Thinkskool, we believe that mastering advanced technology requires an environment that mimics the complexity of real-world industrial systems. This program is architected to move beyond simple tutorials, immersing students in a high-intensity learning ecosystem. Every project built within this track is evaluated against production-grade benchmarks, focusing on scalability, security, and architectural integrity.
+                                        </p>
+                                        <p>
+                                            Our curriculum for this specialization is dynamic, reflecting the constant shifts in the global tech economy. We don't just teach the "how"; we dive deep into the "why," fostering a first-principles understanding of system design. Students engage with industry-standard tools and methodologies, from version control with Git to cloud-scale deployments, ensuring they are prepared for the rigors of modern engineering departments.
+                                        </p>
+                                        <p>
+                                            Beyond the technical training, we emphasize the "Soft Skills" critical for engineering leadership. Collaboration, technical documentation, and architectural defense are core components of our pedagogy. This 360-degree approach ensures that our graduates are not just job-ready, but are capable of architecting innovative solutions to complex global problems.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed lg:pt-16">
                                     <p>
-                                        At Thinkskool, we believe that mastering advanced technology requires an environment that mimics the complexity of real-world industrial systems. This program is architected to move beyond simple tutorials, immersing students in a high-intensity learning ecosystem. Every project built within this track is evaluated against production-grade benchmarks, focusing on scalability, security, and architectural integrity.
+                                        Mentorship is central to the Thinkskool experience. Our students receive 1-on-1 guidance from veterans who have built and scaled systems at top-tier tech companies. This personalized feedback loop ensures that every student can navigate the challenges of deep-tech specializations with confidence. Our mentors provide more than just technical support; they provide the career coaching and professional insights necessary for long-term success.
                                     </p>
                                     <p>
-                                        Our curriculum for this specialization is dynamic, reflecting the constant shifts in the global tech economy. We don't just teach the "how"; we dive deep into the "why," fostering a first-principles understanding of system design. Students engage with industry-standard tools and methodologies, from version control with Git to cloud-scale deployments, ensuring they are prepared for the rigors of modern engineering departments.
+                                        Our commitment to your future is measurable. With a strong focus on portfolio building and placement preparation, we bridge the gap between education and employment. Every student in this program builds a professional-grade portfolio that demonstrates their capability to potential employers. We provide the platform, the community, and the expert guidance for you to exhibit your technical mastery to the world.
                                     </p>
                                     <p>
-                                        Beyond the technical training, we emphasize the "Soft Skills" critical for engineering leadership. Collaboration, technical documentation, and architectural defense are core components of our pedagogy. This 360-degree approach ensures that our graduates are not just job-ready, but are capable of architecting innovative solutions to complex global problems.
+                                        Join the Thinkskool community of innovators and builders. By enrolling in this program, you are taking a definitive step towards a high-impact career in the global technology sector. Let's architect your future in engineering excellence together.
                                     </p>
                                 </div>
                             </div>
-                            <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed lg:pt-16">
-                                <p>
-                                    Mentorship is central to the Thinkskool experience. Our students receive 1-on-1 guidance from veterans who have built and scaled systems at top-tier tech companies. This personalized feedback loop ensures that every student can navigate the challenges of deep-tech specializations with confidence. Our mentors provide more than just technical support; they provide the career coaching and professional insights necessary for long-term success.
-                                </p>
-                                <p>
-                                    Our commitment to your future is measurable. With a strong focus on portfolio building and placement preparation, we bridge the gap between education and employment. Every student in this program builds a professional-grade portfolio that demonstrates their capability to potential employers. We provide the platform, the community, and the expert guidance for you to exhibit your technical mastery to the world.
-                                </p>
-                                <p>
-                                    Join the Thinkskool community of innovators and builders. By enrolling in this program, you are taking a definitive step towards a high-impact career in the global technology sector. Let's architect your future in engineering excellence together.
-                                </p>
-                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
                 {/* FAQ Section */}
                 <CourseFAQ />

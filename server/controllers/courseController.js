@@ -404,6 +404,7 @@ exports.getPublicCourseStats = async (req, res) => {
             success: true,
             totalSeats: course.totalSeats || 50,
             manualEnrollmentCount: course.manualEnrollmentCount || 0,
+            autoEnrollmentCount: Array.isArray(course.enrolledStudents) ? course.enrolledStudents.length : 0,
             title: course.title,
             price: course.price,
             originalPrice: course.originalPrice

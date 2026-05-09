@@ -7,16 +7,32 @@ import { ArrowRight, Download } from 'lucide-react';
 import api from '../api/axios';
 import { detailedCurriculums } from '../constants/siteData';
 
-const CourseCurriculum = ({ courseId = "1", initialRegisteredCount = 45, totalSeats: initialTotalSeats = 50 }) => {
+const CourseCurriculum = ({ 
+    courseId = "1", 
+    initialRegisteredCount = 45, 
+    totalSeats: initialTotalSeats = 50,
+    initialPrice = 3999,
+    initialOriginalPrice = 5999
+}) => {
     const navigate = useNavigate();
     const [hoveredWeek, setHoveredWeek] = useState(null);
     const [isEnrolling, setIsEnrolling] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(null);
-    const [registeredCount, setRegisteredCount] = useState(courseId === '5' ? 24 : initialRegisteredCount);
-    const [totalSeats, setTotalSeats] = useState(courseId === '5' ? 50 : initialTotalSeats);
-    const [price, setPrice] = useState(courseId === '5' ? 2499 : 3999);
-    const [originalPrice, setOriginalPrice] = useState(courseId === '5' ? 4999 : 5999);
-    const [expandedMonths, setExpandedMonths] = useState(courseId === '5' ? [0] : [0]); // Default first month open for AI & ML
+    const [registeredCount, setRegisteredCount] = useState(initialRegisteredCount);
+    const [totalSeats, setTotalSeats] = useState(initialTotalSeats);
+    const [price, setPrice] = useState(initialPrice);
+    const [originalPrice, setOriginalPrice] = useState(initialOriginalPrice);
+    const [expandedMonths, setExpandedMonths] = useState([0]); // Default first month open
+
+    useEffect(() => {
+        if (initialPrice) setPrice(initialPrice);
+        if (initialOriginalPrice) setOriginalPrice(initialOriginalPrice);
+    }, [initialPrice, initialOriginalPrice]);
+
+    useEffect(() => {
+        if (initialTotalSeats) setTotalSeats(initialTotalSeats);
+        if (initialRegisteredCount) setRegisteredCount(initialRegisteredCount);
+    }, [initialTotalSeats, initialRegisteredCount]);
     
     const toggleMonth = (index) => {
         if (isSummerProgram) return; // Don't collapse for summer program

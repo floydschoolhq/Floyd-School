@@ -36,12 +36,24 @@ exports.getPlatformStats = async (req, res) => {
             SupportTicket.countDocuments({ status: { $ne: 'resolved' } }).catch(() => 0)
         ]);
 
-        // Calculate Total Enrollments safely
-        const allCourses = await Course.find().select('enrolledStudents').catch(() => []);
-        const totalEnrollments = allCourses.reduce((sum, course) => {
-            const count = Array.isArray(course.enrolledStudents) ? course.enrolledStudents.length : 0;
-            return sum + count;
-        }, 0);
+        // Calculate Total Enrollments & Revenue safely
+        const allCourses = await Course.find().select('enrolledStudents manualEnrollmentCount price').catch(() => []);
+        
+        let totalEnrollments = 0;
+        let estimatedRevenue = 0;
+
+        allCourses.forEach(course => {
+            const autoCount = Array.isArray(course.enrolledStudents) ? course.enrolledStudents.length : 0;
+            const manualCount = course.manualEnrollmentCount || 0;
+            totalEnrollments += (autoCount + manualCount);
+            
+            // Estimated revenue based on current price
+            estimatedRevenue += ((autoCount + manualCount) * (course.price || 0));
+        });
+
+        // Actual Revenue from completed payments
+        const completedEnrollments = await Enrollment.find({ paymentStatus: 'completed' }).catch(() => []);
+        const actualRevenue = completedEnrollments.reduce((sum, enr) => sum + (enr.amount || 0), 0);
 
         // Calculate New Signups Safely
         const sevenDaysAgo = new Date();
@@ -87,6 +99,8 @@ exports.getPlatformStats = async (req, res) => {
                 totalLeads,
                 openTickets,
                 totalEnrollments,
+                totalRevenue: actualRevenue,
+                estimatedRevenue,
                 newSignups,
                 recentEvents: events
             }
