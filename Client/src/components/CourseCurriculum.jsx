@@ -130,21 +130,6 @@ const CourseCurriculum = ({
     if (isMobile) {
         return (
             <div className="pt-4 pb-0 px-0">
-                <div className="text-center mb-10 px-2 w-full">
-                    <div className="relative inline-block w-full">
-                        <p className="text-[10.5px] text-on-surface-variant font-bold leading-relaxed italic relative z-10 px-1 whitespace-nowrap">
-                            {isSummerProgram ? '"Turn your summer into a launchpad for your career."' : '"Will your child build the AI future, or just watch it?"'}
-                        </p>
-                        <motion.div 
-                            initial={{ width: 0, opacity: 0 }}
-                            whileInView={{ width: '108%', opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                            className="absolute bottom-[-3px] -left-[4%] h-[18px] bg-blue-500/15 -z-0 -rotate-1 -skew-x-12"
-                            style={{ clipPath: 'polygon(0% 15%, 98% 10%, 100% 85%, 2% 95%)' }}
-                        />
-                    </div>
-                </div>
                 
                 <div className="mb-12 w-full">
                     <div className="flex items-center justify-center gap-6 mb-6 w-full px-4">
@@ -371,21 +356,6 @@ const CourseCurriculum = ({
 
     return (
         <div className={`${courseId === '5' ? 'bg-black' : 'bg-gradient-to-br from-black via-slate-950 to-black'} w-full overflow-hidden`}>
-            <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
-                <div className="relative inline-block mx-auto text-center">
-                    <p className="max-w-4xl mx-auto text-base text-on-surface-variant font-light leading-relaxed italic relative z-10 px-6 whitespace-nowrap">
-                        {isSummerProgram ? '"Turn your summer into a launchpad for your career."' : '"Will your child build the AI future, or just watch it?"'}
-                    </p>
-                    <motion.div 
-                        initial={{ width: 0, opacity: 0 }}
-                        whileInView={{ width: '108%', opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-                        className="absolute bottom-[-5px] -left-[4%] h-[26px] bg-blue-500/15 -z-0 -rotate-1 -skew-x-12"
-                        style={{ clipPath: 'polygon(1% 20%, 99% 12%, 100% 82%, 2% 90%)' }}
-                    />
-                </div>
-            </div>
 
             {/* Premium Stats Command Center */}
             <div className={`py-12 px-6 ${courseId === '5' ? 'bg-black' : 'bg-slate-950'} relative overflow-hidden w-full border-y border-white/5`}>

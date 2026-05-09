@@ -56,6 +56,15 @@ const AdminCoursesPage = () => {
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Enrollment & Capacity Control</p>
                         </div>
                     </div>
+                    <div className="flex items-center gap-3">
+                        <button 
+                            onClick={() => navigate('/admin/coupons')}
+                            className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all"
+                        >
+                            <IndianRupee className="w-4 h-4" />
+                            Manage Coupons
+                        </button>
+                    </div>
                 </div>
             </div>
 

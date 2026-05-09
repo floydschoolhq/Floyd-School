@@ -238,7 +238,6 @@ const CourseDetails = () => {
                 </section>
 
                 {/* Institutional Partners Section - Removed for Summer Program as per request */}
-                {courseId !== '5' && <InstitutionalPartners variant="dark" />}
 
                 {/* Course Curriculum Section - For AI & ML and Summer Builder */}
                 {(courseId === '1' || courseId === '5') && (
