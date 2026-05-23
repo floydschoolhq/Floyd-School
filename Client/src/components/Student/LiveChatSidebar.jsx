@@ -104,7 +104,7 @@ const LiveChatSidebar = ({ classId }) => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-900 border-l border-slate-800 w-80 shadow-2xl">
+        <div className="flex flex-col h-full bg-slate-900 border-l border-slate-800 w-full lg:w-80 shadow-2xl">
             {/* Header */}
             <div className="p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-2">

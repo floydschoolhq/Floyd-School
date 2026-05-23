@@ -171,43 +171,43 @@ const LiveSessionView = ({ liveClass, onBack }) => {
             onContextMenu={preventContext}
         >
             {/* Top Bar */}
-            <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
-                <div className="flex items-center gap-4">
+            <div className="bg-white border-b border-slate-200 px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between sticky top-0 z-20">
+                <div className="flex items-center gap-2 sm:gap-4">
                     <button
                         onClick={onBack}
-                        className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-500"
+                        className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-500 cursor-pointer"
                     >
-                        <ArrowLeft className="w-5 h-5" />
+                        <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                     <div>
-                        <h1 className="text-xl font-black text-slate-900 leading-tight italic">
+                        <h1 className="text-base sm:text-xl font-black text-slate-900 leading-tight italic uppercase">
                             LIVE <span className="text-[#2563EB] not-italic">SESSION</span>
                         </h1>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">
+                        <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1 line-clamp-1">
                             {liveClass.title} • {liveClass.topic} {liveClass.course && `• ${liveClass.course.title}`}
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-6">
-                    <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-sky-50 rounded-xl border border-sky-100">
-                        <Users className="w-4 h-4 text-sky-500" />
-                        <span className="text-xs font-black text-sky-600 uppercase tracking-widest">{participantCount} Watching</span>
+                <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-sky-50 rounded-xl border border-sky-100">
+                        <Users className="w-3.5 h-3.5 text-sky-500" />
+                        <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest">{participantCount} Watching</span>
                     </div>
 
                     {myDoubt ? (
-                        <div className={`px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-all border-2 text-xs ${myDoubt.isResolved
+                        <div className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-bold flex items-center gap-1.5 transition-all border-2 text-[9px] sm:text-xs ${myDoubt.isResolved
                             ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
                             : 'bg-amber-50 border-amber-100 text-amber-600 animate-pulse'
                             }`}>
-                            {myDoubt.isResolved ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+                            {myDoubt.isResolved ? <CheckCircle className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                             <span className="uppercase tracking-widest">
                                 {myDoubt.isResolved ? 'Resolved' : 'Signaled'}
                             </span>
                             {myDoubt.isResolved && (
                                 <button
                                     onClick={handleTerminateDoubt}
-                                    className="ml-2 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-1 rounded-lg transition-colors"
+                                    className="ml-1 bg-blue-100/50 hover:bg-blue-100 text-blue-600 p-0.5 rounded-lg transition-colors cursor-pointer"
                                 >
                                     <Trash2 size={10} strokeWidth={3} />
                                 </button>
@@ -217,7 +217,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                         <button
                             onClick={handleRaiseHand}
                             disabled={isSignaling}
-                            className="bg-slate-900 border-2 border-slate-900 hover:bg-white hover:text-slate-900 text-white px-5 py-2 rounded-xl font-black transition-all uppercase text-[10px] tracking-widest disabled:opacity-50"
+                            className="bg-slate-900 border-2 border-slate-900 hover:bg-white hover:text-slate-900 text-white px-3 py-1.5 sm:px-5 sm:py-2 rounded-xl font-black transition-all uppercase text-[9px] sm:text-[10px] tracking-widest disabled:opacity-50 cursor-pointer"
                         >
                             {isSignaling ? 'Signaling...' : 'Raise Hand'}
                         </button>
@@ -228,7 +228,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                 {/* Stage Area */}
-                <div className="flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
+                <div className="w-full aspect-video lg:flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
                     <div className="flex-1 relative overflow-hidden">
                         {(embedUrl || liveClass.platform === 'jitsi') ? (
                             <div className="absolute inset-0 overflow-hidden bg-black">
@@ -243,7 +243,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                                         <div className="absolute inset-0 z-50 bg-transparent cursor-default pointer-events-auto" onContextMenu={(e) => e.preventDefault()}>
                                             <button
                                                 onClick={toggleFullscreen}
-                                                className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl"
+                                                className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl cursor-pointer"
                                             >
                                                 {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
                                             </button>
@@ -260,42 +260,41 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                                 )}
                             </div>
                         ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/80">
-                                <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-[2rem] border border-white/20 flex items-center justify-center mb-8 animate-pulse">
-                                    <Monitor className="text-[#2563EB] w-10 h-10" />
+                            <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 sm:p-12 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-blend-overlay bg-black/80">
+                                <div className="w-16 h-16 sm:w-24 sm:h-24 bg-white/10 backdrop-blur-xl rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 flex items-center justify-center mb-6 sm:mb-8 animate-pulse">
+                                    <Monitor className="text-[#2563EB] w-8 h-8 sm:w-10 sm:h-10" />
                                 </div>
-                                <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-4">External Link Detected</h2>
-                                <p className="text-slate-400 max-w-md mx-auto font-medium mb-10 leading-relaxed">
+                                <h2 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tight mb-2 sm:mb-4">External Link Detected</h2>
+                                <p className="text-slate-400 max-w-sm sm:max-w-md mx-auto font-medium mb-6 sm:mb-10 text-xs sm:text-base leading-relaxed">
                                     This session is using a secure external platform ({liveClass.platform?.toUpperCase() || 'EXTERNAL'}). Please bridge the connection using the satellite link below.
                                 </p>
                                 <a
                                     href={liveClass.meetingLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-[#2563EB] hover:bg-white text-slate-950 px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all transform hover:scale-105 shadow-2xl shadow-[#2563EB]/20 flex items-center gap-3"
+                                    className="bg-[#2563EB] hover:bg-white text-slate-950 px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-xs sm:text-base transition-all transform hover:scale-105 shadow-2xl shadow-[#2563EB]/20 flex items-center gap-2.5 cursor-pointer"
                                 >
-                                    Join Meeting <ExternalLink size={20} strokeWidth={3} />
+                                    Join Meeting <ExternalLink size={16} strokeWidth={3} />
                                 </a>
 
-                                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-40">
-                                    <Shield size={14} className="text-white" />
-                                    <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Secure Connection</span>
+                                <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 opacity-40">
+                                    <Shield size={12} className="text-white" />
+                                    <span className="text-[8px] sm:text-[10px] font-black text-white uppercase tracking-[0.3em]">Secure Connection</span>
                                 </div>
                             </div>
                         )}
                     </div>
-
                 </div>
 
                 {/* Terminal/Chat Area */}
-                <div className="w-full lg:w-96 bg-white border-l border-slate-200 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.02)]">
-                    <div className="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-                        <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
-                            <PlayCircle size={16} />
+                <div className="w-full lg:w-96 flex-1 min-h-0 bg-white border-l border-slate-200 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.02)]">
+                    <div className="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
+                        <div className="w-7 h-7 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+                            <PlayCircle size={14} />
                         </div>
                         <div>
-                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest leading-none">Live Chat</h3>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Chat Room</p>
+                            <h3 className="text-[10px] font-black text-slate-900 uppercase tracking-widest leading-none">Live Chat</h3>
+                            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-1">Chat Room</p>
                         </div>
                     </div>
                     <div className="flex-1 overflow-hidden">

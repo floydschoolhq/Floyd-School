@@ -14,8 +14,8 @@ export const GradientCard = ({
     return (
         <motion.div
             className={cn(
-                "relative p-8 bg-surface-base border border-surface-el overflow-hidden group transition-all duration-500",
-                isModern ? "rounded-xl shadow-sm" : "rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+                "relative p-5 sm:p-8 bg-surface-base border border-surface-el overflow-hidden group transition-all duration-500",
+                isModern ? "rounded-xl shadow-sm" : "rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
                 className
             )}
             whileHover={
@@ -61,12 +61,12 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
     }, [numericValue]);
 
     return (
-        <GradientCard gradient={gradient} className="flex items-center justify-between p-7">
+        <GradientCard gradient={gradient} className="flex items-center justify-between p-4 sm:p-7">
             <div className="flex-1">
-                <p className="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted mb-2">{title}</p>
+                <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-black text-text-muted mb-2">{title}</p>
                 <h3 className={cn(
                     "font-black text-text-main transition-colors duration-500",
-                    isModern ? "text-3xl font-semibold tracking-normal" : "text-4xl tracking-tighter"
+                    isModern ? "text-2xl sm:text-3xl font-semibold tracking-normal" : "text-3xl sm:text-4xl tracking-tighter"
                 )}>
                     {displayValue}{suffix}
                 </h3>

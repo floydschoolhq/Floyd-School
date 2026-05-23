@@ -104,7 +104,7 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface-base p-8 relative overflow-hidden transition-colors duration-500">
+    <div className="min-h-screen bg-surface-base p-4 sm:p-6 md:p-8 relative overflow-hidden transition-colors duration-500">
       {/* Background Accents */}
       {!isModern && (
         <>
@@ -114,19 +114,19 @@ const StudentDashboard = () => {
       )}
 
       {/* Header */}
-      <div className="relative z-20 flex items-end justify-between mb-12">
+      <div className="relative z-20 flex flex-col md:flex-row gap-6 md:gap-4 md:items-end justify-between mb-8 md:mb-12">
         <div className="flex flex-col">
           <DynamicGreeting name={user?.name} />
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className={isModern ? "text-3xl font-bold text-text-main mt-1" : "text-5xl font-black text-text-main tracking-tighter -mt-1"}
+            className={isModern ? "text-2xl sm:text-3xl font-bold text-text-main mt-1" : "text-3xl sm:text-4xl md:text-5xl font-black text-text-main tracking-tighter -mt-1"}
           >
             {isModern ? "Dashboard" : <>Learning <span className="text-accent-primary">Control Center</span></>}
           </motion.h1>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full md:w-auto">
           <StreakWidget />
 
           {/* Theme Switcher Widget */}
@@ -168,7 +168,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 md:mb-12">
         <StatCard
           title="Active Modules"
           value={dashboardData?.stats?.enrolledCourses || 0}
@@ -196,7 +196,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Main Content Bento Grid */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-max">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-max">
 
         {/* Mastery Analysis + 3D Badge Column */}
         <div className="lg:col-span-4 flex flex-col gap-6">
@@ -311,37 +311,37 @@ const StudentDashboard = () => {
           transition={{ delay: 0.2 }}
           className="lg:col-span-12 mt-6"
         >
-          <div className="flex items-center gap-4 mb-8">
-            <h3 className={isModern ? "text-2xl font-bold text-text-main" : "text-3xl font-black text-text-main tracking-tighter transition-colors duration-500"}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+            <h3 className={isModern ? "text-xl sm:text-2xl font-bold text-text-main" : "text-2xl sm:text-3xl font-black text-text-main tracking-tighter transition-colors duration-500"}>
               {isModern ? "Enrolled Courses" : "Learning Expeditions"}
             </h3>
             {!canAccessCourses && (
-              <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500">
+              <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500 w-fit">
                 <Lock size={12} className="text-accent-primary" /> Locked Segment
               </span>
             )}
-            <div className="h-px flex-1 bg-surface-el transition-colors duration-500" />
+            <div className="h-px flex-1 bg-surface-el transition-colors duration-500 hidden sm:block" />
           </div>
 
           <div className="relative">
             {/* Lock Overlay */}
             {!canAccessCourses && (
-              <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[3.5rem] flex flex-col items-center justify-center text-center p-12 border border-surface-el transition-all duration-500">
+              <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[2rem] sm:rounded-[3.5rem] flex flex-col items-center justify-center text-center p-6 sm:p-12 border border-surface-el transition-all duration-500">
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ repeat: Infinity, duration: 3 }}
-                  className="w-24 h-24 bg-text-main rounded-[2rem] flex items-center justify-center mb-8 shadow-2xl"
+                  className="w-16 h-16 sm:w-24 sm:h-24 bg-text-main rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mb-6 sm:mb-8 shadow-2xl"
                 >
-                  <Lock className="w-10 h-10 text-surface-base" />
+                  <Lock className="w-6 h-6 sm:w-10 sm:h-10 text-surface-base" />
                 </motion.div>
-                <h4 className="text-3xl font-black text-text-main mb-3">Access Protocol Required</h4>
-                <p className="text-text-muted max-w-md font-medium mb-10 text-lg">
+                <h4 className="text-xl sm:text-3xl font-black text-text-main mb-2 sm:mb-3">Access Protocol Required</h4>
+                <p className="text-text-muted max-w-sm sm:max-w-md font-medium mb-6 sm:mb-10 text-sm sm:text-lg">
                   This tactical segment is restricted. Initialize a request for administrative clearance to unlock the curriculum.
                 </p>
                 <button
                   onClick={handleRequestAccess}
                   disabled={requestingAccess}
-                  className="px-10 py-5 bg-accent-primary text-white text-[13px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-accent-secondary transition-all shadow-2xl shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="px-6 py-4 sm:px-10 sm:py-5 bg-accent-primary text-white text-[11px] sm:text-[13px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] rounded-2xl hover:bg-accent-secondary transition-all shadow-2xl shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
                 >
                   {requestingAccess ? 'Transmitting...' : (
                     <span className="flex items-center gap-3">
@@ -352,7 +352,7 @@ const StudentDashboard = () => {
               </div>
             )}
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 ${!canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
               {dashboardData?.courses && dashboardData.courses.length > 0 ? (
                 dashboardData.courses.map((course, idx) => (
                   <GradientCard
