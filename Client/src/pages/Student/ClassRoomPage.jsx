@@ -249,6 +249,11 @@ const ClassroomPage = () => {
       l.course?._id === activeStudyCourse._id
     );
 
+    const isLiveNow = activeLiveClass && (
+      (activeLiveClass.course?._id === activeStudyCourse._id) ||
+      (activeLiveClass.course === activeStudyCourse._id)
+    );
+
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;
 
     return (
@@ -294,6 +299,41 @@ const ClassroomPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Live Session Alert Banner */}
+        {isLiveNow && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            className="mb-8 p-0.5 rounded-3xl bg-red-500/10 border border-red-500/20 overflow-hidden shadow-sm"
+          >
+            <div className="p-4 sm:p-5 bg-surface-soft rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="relative shrink-0">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute top-0 -right-1"></div>
+                  <div className="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center text-red-500">
+                    <Video size={18} />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-text-main text-sm uppercase tracking-tight">Live Session is Active Now!</h4>
+                  <p className="text-[11px] text-text-muted font-medium mt-0.5">
+                    {activeLiveClass.title} is currently broadcasting. Join the live workspace to interact.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setGlobalActiveLiveClass(activeLiveClass);
+                  setView('LiveSession');
+                }}
+                className="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-red-500/10 shrink-0 cursor-pointer"
+              >
+                Join Live Classroom
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {/* Classroom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -1030,7 +1070,7 @@ const ClassroomPage = () => {
               <p className="text-text-main font-bold text-sm mb-1">Video Archive</p>
               <p className="text-xs text-text-muted mb-4">Watch previous sessions anytime.</p>
               <button 
-                onClick={() => window.location.href = '/student/recordings'}
+                onClick={() => setView('Recordings')}
                 className="w-full px-4 py-2 bg-text-main text-white rounded-lg font-bold text-sm transition-all"
               >
                 Browse All Videos
@@ -1053,7 +1093,7 @@ const ClassroomPage = () => {
               <p className="text-text-main font-semibold text-lg mb-1 tracking-normal">Archive Repository</p>
               <p className="text-base font-medium text-text-muted mb-6">Review previous technical deep dives and workshops.</p>
               <button 
-                onClick={() => window.location.href = '/student/recordings'}
+                onClick={() => setView('Recordings')}
                 className="px-8 py-3 bg-text-main hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10"
               >
                 Browse Archive
@@ -1075,14 +1115,14 @@ const ClassroomPage = () => {
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 z-50">
           <div className="flex gap-2">
             <button
-              onClick={() => window.location.href = '/student/recordings'}
+              onClick={() => setView('Recordings')}
               className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
             >
               <Video className="w-3 h-3" />
               All Videos
             </button>
             <button
-              onClick={() => window.location.href = '/student/dashboard'}
+              onClick={() => setView('Dashboard')}
               className="flex-1 bg-text-main text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
             >
               <BookOpen className="w-3 h-3" />
