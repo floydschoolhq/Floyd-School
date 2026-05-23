@@ -383,7 +383,7 @@ const ClassroomPage = () => {
                   )}
                 </div>
 
-                {/* 2. Interactive Placeholders or Active Modules Row */}
+                {/* 2. Study Material and Homework Columns Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Study Material / Notes */}
                   <div className="space-y-3">
@@ -423,92 +423,54 @@ const ClassroomPage = () => {
                     )}
                   </div>
 
-                  {/* Scheduled Live Class */}
+                  {/* Homework & Tasks */}
                   <div className="space-y-3">
-                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Interactive Stream</h3>
-                    {moduleLive ? (
-                      <div className="p-5 bg-white border border-slate-200 hover:border-red-200 rounded-3xl flex items-center justify-between transition-colors shadow-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-red-50 border border-red-100 text-red-505 text-red-500 rounded-xl flex items-center justify-center">
-                            <Video size={16} />
+                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Technical Assignments</h3>
+                    {moduleAssignment ? (
+                      <div className="p-5 bg-white border border-slate-200 hover:border-purple-200 rounded-3xl flex flex-col justify-between transition-colors shadow-sm min-h-[82px] space-y-3">
+                        <div className="flex justify-between items-start">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-purple-50 border border-purple-100 text-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                              <FileText size={16} />
+                            </div>
+                            <div className="min-w-0">
+                              <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight truncate">{moduleAssignment.title}</h4>
+                              <p className="text-[9px] text-purple-600 font-bold uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight">Live Interactive Class</h4>
-                            <p className="text-[9px] text-red-505 text-red-500 font-bold uppercase tracking-widest mt-0.5">
-                              {new Date(moduleLive.scheduledStart).toLocaleDateString()}
-                            </p>
-                          </div>
+                          <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${
+                            submission ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-50 text-slate-400 border-slate-200'
+                          }`}>
+                            {submission ? (submission.status === 'graded' ? 'Graded' : 'Submitted') : 'Not Submitted'}
+                          </span>
                         </div>
-                        <button
-                          onClick={() => setActiveScheduledVideo(moduleLive)}
-                          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-red-500/10"
-                        >
-                          Join
-                        </button>
+                        <p className="text-[11px] text-text-muted font-medium leading-relaxed pl-1 line-clamp-2">{moduleAssignment.description}</p>
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">
+                            Due: {new Date(moduleAssignment.dueDate).toLocaleDateString()}
+                          </span>
+                          <button
+                            onClick={() => setSelectedAssignment(moduleAssignment)}
+                            className="px-3 py-1.5 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
+                          >
+                            {submission ? 'View' : 'Submit'}
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div className="p-5 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
                         <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                          <Calendar size={16} />
+                          <FileText size={16} />
                         </div>
                         <div>
-                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Live Broadcast</h5>
+                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Homework & Tasks</h5>
                           <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
-                            Your next live session is being scheduled. Stay tuned!
+                            Homework tasks and assignments will be posted here after the lecture.
                           </p>
                         </div>
                       </div>
                     )}
                   </div>
-                </div>
-
-                {/* 3. Module-Wise Assignments / Homeworks */}
-                <div className="space-y-3">
-                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Technical Assignments</h3>
-                  {moduleAssignment ? (
-                    <div className="p-6 bg-white border border-slate-200 hover:border-purple-200 rounded-3xl space-y-4 shadow-sm transition-colors">
-                      <div className="flex justify-between items-start">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-purple-50 border border-purple-100 text-purple-600 rounded-2xl flex items-center justify-center">
-                            <FileText size={20} />
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-slate-800 uppercase text-sm tracking-tight">{moduleAssignment.title}</h4>
-                            <p className="text-[9px] text-purple-600 font-bold uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
-                          </div>
-                        </div>
-                        <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${
-                          submission ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-50 text-slate-400 border-slate-200'
-                        }`}>
-                          {submission ? (submission.status === 'graded' ? 'Graded' : 'Submitted') : 'Not Submitted'}
-                        </span>
-                      </div>
-                      <p className="text-xs text-text-muted font-medium leading-relaxed pl-1">{moduleAssignment.description}</p>
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">
-                          Due Date: {new Date(moduleAssignment.dueDate).toLocaleDateString()}
-                        </span>
-                        <button
-                          onClick={() => setSelectedAssignment(moduleAssignment)}
-                          className="px-5 py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md"
-                        >
-                          {submission ? 'View Submission' : 'Submit Specs'}
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="p-6 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-4">
-                      <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                        <FileText size={18} />
-                      </div>
-                      <div>
-                        <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Homework & Tasks</h5>
-                        <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
-                          Homework tasks and assignments will be posted here after the lecture.
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </>
             ) : (
