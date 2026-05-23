@@ -13,6 +13,7 @@ import api from '../../api/axios';
 const CodingLabPage = () => {
   const { user } = useContext(PortalContext);
   const { isConnected } = useSocket();
+  const { theme } = useTheme();
 
   const isClassroomUser = user?.isClassroomAccess === true;
   // Classroom users still need admin approval for labs
@@ -175,43 +176,43 @@ const CodingLabPage = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-950 flex flex-col relative">
+    <div className="h-screen bg-surface-base text-text-main flex flex-col relative transition-colors duration-500">
       {/* Access Lock Overlay */}
       {!canAccessLabs && (
-        <div className="absolute inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8">
-          <div className="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
+        <div className="absolute inset-0 z-[100] bg-surface-base/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8">
+          <div className="w-24 h-24 bg-accent-primary rounded-[2.5rem] flex items-center justify-center mb-8 shadow-lg shadow-accent-primary/20">
             <Lock className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-4xl font-black text-white mb-3 tracking-tighter">
-            Laboratory <span className="text-blue-500">Locked</span>
+          <h2 className="text-4xl font-black text-text-main mb-3 tracking-tighter">
+            Laboratory <span className="text-accent-primary">Locked</span>
           </h2>
-          <p className="text-slate-400 max-w-sm font-medium mb-10 text-sm leading-relaxed">
+          <p className="text-text-muted max-w-sm font-medium mb-10 text-sm leading-relaxed">
             The coding environment is currently restricted. <br />
             Please request official access to the laboratory to begin your development sessions.
           </p>
           <button
             onClick={handleRequestAccess}
             disabled={requestingAccess}
-            className="px-12 py-6 bg-blue-600 text-white text-sm font-bold uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all shadow-2xl shadow-blue-600/20 disabled:opacity-50"
+            className="px-12 py-6 bg-accent-primary text-white text-sm font-bold uppercase tracking-widest rounded-2xl hover:bg-accent-primary/80 transition-all shadow-2xl shadow-accent-primary/20 disabled:opacity-50 cursor-pointer"
           >
             {requestingAccess ? 'Submitting...' : 'Request Lab Access'}
           </button>
         </div>
       )}
       {/* Header */}
-      <div className="bg-slate-900 border-b border-slate-800 px-6 py-4">
+      <div className="bg-surface-soft border-b border-surface-el px-6 py-4 transition-colors duration-500">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-black text-white mb-1 tracking-tight">
-              Elite <span className="text-[#2563EB]">Coding Laboratory</span>
+            <h1 className="text-xl font-black text-text-main mb-1 tracking-tight">
+              Elite <span className="text-accent-primary">Coding Laboratory</span>
             </h1>
-            <p className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em]"> High-Performance Cloud Execution Environment </p>
+            <p className="text-[13px] font-black text-text-muted uppercase tracking-[0.2em]"> High-Performance Cloud Execution Environment </p>
           </div>
           <div className="flex items-center gap-4">
             {isConnected && (
               <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
                 <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
-                <span className="text-\[13px\] font-black text-emerald-500 uppercase tracking-widest">Compiler Edge</span>
+                <span className="text-[13px] font-black text-emerald-500 uppercase tracking-widest">Compiler Edge</span>
               </div>
             )}
             <LanguageSelector
@@ -223,7 +224,7 @@ const CodingLabPage = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="bg-slate-900/50 backdrop-blur-md border-b border-slate-800 px-6 py-3">
+      <div className="bg-surface-soft/50 backdrop-blur-md border-b border-surface-el px-6 py-3 transition-colors duration-500">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <motion.button
@@ -231,7 +232,7 @@ const CodingLabPage = () => {
               whileTap={{ scale: 0.98 }}
               onClick={handleRunCode}
               disabled={isRunning}
-              className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20"
+              className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-surface-el disabled:text-text-muted disabled:cursor-not-allowed text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all shadow-lg shadow-emerald-600/20 cursor-pointer"
             >
               <Play className="w-4 h-4 fill-white" />
               {isRunning ? 'Executing...' : 'Run Integration'}
@@ -239,7 +240,7 @@ const CodingLabPage = () => {
 
             <button
               onClick={handleSaveCode}
-              className="flex items-center gap-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all"
+              className="flex items-center gap-2 px-5 py-2 bg-surface-el hover:bg-surface-el/80 text-text-main rounded-xl font-bold text-base uppercase tracking-widest transition-all cursor-pointer"
             >
               <Save className="w-4 h-4" />
               Store
@@ -247,7 +248,7 @@ const CodingLabPage = () => {
 
             <button
               onClick={handleLoadCode}
-              className="flex items-center gap-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-base uppercase tracking-widest transition-all"
+              className="flex items-center gap-2 px-5 py-2 bg-surface-el hover:bg-surface-el/80 text-text-main rounded-xl font-bold text-base uppercase tracking-widest transition-all cursor-pointer"
             >
               <Upload className="w-4 h-4" />
               Restore
@@ -255,15 +256,15 @@ const CodingLabPage = () => {
 
             <button
               onClick={handleResetCode}
-              className="flex items-center gap-2 px-5 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 rounded-xl font-bold text-base uppercase tracking-widest transition-all border border-blue-500/20"
+              className="flex items-center gap-2 px-5 py-2 bg-accent-primary/10 hover:bg-accent-primary/20 text-accent-primary rounded-xl font-bold text-base uppercase tracking-widest transition-all border border-accent-primary/20 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
               Revert
             </button>
           </div>
 
-          <div className="text-\[13px\] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2">
-            Active Engine: <span className="text-[#2563EB]">{selectedLanguage.name}</span>
+          <div className="text-[13px] font-black text-text-muted uppercase tracking-[0.2em] flex items-center gap-2">
+            Active Engine: <span className="text-accent-primary">{selectedLanguage.name}</span>
           </div>
         </div>
       </div>
@@ -279,17 +280,17 @@ const CodingLabPage = () => {
           style={{ height: '100%' }}
         >
           {/* Code Editor */}
-          <div className="bg-slate-950 overflow-hidden">
+          <div className="bg-surface-base overflow-hidden h-full">
             <MonacoEditor
               value={code}
               onChange={setCode}
               language={selectedLanguage.extension}
-              theme="vs-dark"
+              theme={theme === 'modern' ? 'vs' : 'vs-dark'}
             />
           </div>
 
           {/* Terminal/Output */}
-          <div className="bg-slate-950">
+          <div className="bg-surface-base border-t border-surface-el h-full">
             <Terminal
               output={output}
               onClear={handleClearOutput}
@@ -300,16 +301,16 @@ const CodingLabPage = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-slate-900 border-t border-slate-800 px-6 py-2">
-        <div className="flex items-center justify-between text-\[13px\] font-black uppercase tracking-widest text-slate-500">
+      <div className="bg-surface-soft border-t border-surface-el px-6 py-2 transition-colors duration-500">
+        <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-widest text-text-muted">
           <div className="flex items-center gap-4">
             <span>Powered by Judge0 Core</span>
-            <span className="w-1 h-1 bg-slate-700 rounded-full" />
+            <span className="w-1 h-1 bg-surface-el rounded-full" />
             <span>Monaco Enterprise Engine</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[#2563EB]">{user?.name}</span>
-            <span className="text-slate-700">/</span>
+            <span className="text-accent-primary">{user?.name}</span>
+            <span className="text-text-muted">/</span>
             <span>{selectedLanguage.name}</span>
           </div>
         </div>
@@ -319,13 +320,14 @@ const CodingLabPage = () => {
       <style dangerouslySetInnerHTML={{
         __html: `
                 .gutter {
-                    background-color: #1e293b;
+                    background-color: var(--surface-el);
                     background-repeat: no-repeat;
                     background-position: 50%;
                 }
 
                 .gutter:hover {
-                    background-color: #334155;
+                    background-color: var(--accent-primary);
+                    opacity: 0.8;
                 }
 
                 .gutter.gutter-vertical {
