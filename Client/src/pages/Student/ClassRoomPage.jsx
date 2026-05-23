@@ -252,34 +252,34 @@ const ClassroomPage = () => {
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;
 
     return (
-      <div className={`min-h-screen bg-slate-900 text-white ${isMobile ? 'p-4' : 'p-8'} transition-all duration-500`}>
+      <div className={`bg-surface-base text-text-main ${isMobile ? 'p-4' : 'p-6'} transition-all duration-500`}>
         {/* Hub Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-surface-el">
           <div className="flex items-center gap-4">
             <button
               onClick={() => {
                 setActiveStudyCourse(null);
                 setSelectedModule(null);
               }}
-              className="p-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-2xl transition-all flex items-center justify-center"
+              className="p-3 bg-surface-soft hover:bg-slate-100 text-text-muted hover:text-text-main rounded-2xl border border-surface-el transition-all flex items-center justify-center"
               title="Back to Classroom"
             >
               <X size={20} />
             </button>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded uppercase tracking-widest">
+                <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100">
                   Course Hub
                 </span>
-                <span className="text-slate-600">•</span>
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <span className="text-slate-300">•</span>
+                <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">
                   {activeStudyCourse.difficulty || 'Beginner'}
                 </span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight italic text-white">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-text-main">
                 {activeStudyCourse.title}
               </h1>
-              <p className="text-xs font-semibold text-slate-400 mt-0.5">
+              <p className="text-xs font-medium text-text-muted mt-0.5">
                 Instructor: {activeStudyCourse.instructor?.name || 'thinkskool Mentor'}
               </p>
             </div>
@@ -287,8 +287,8 @@ const ClassroomPage = () => {
           
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Your Progress</div>
-              <div className="text-xl font-black text-blue-400">
+              <div className="text-[10px] font-black text-text-muted uppercase tracking-widest">Your Progress</div>
+              <div className="text-xl font-bold text-blue-600">
                 {Math.round((activeStudyCourse.modules?.filter(m => m.completed).length / activeStudyCourse.modules?.length * 100) || 0)}%
               </div>
             </div>
@@ -299,7 +299,7 @@ const ClassroomPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Sidebar - Curriculum Outline */}
           <div className="space-y-4">
-            <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-2 px-1">Curriculum Nodes</h2>
+            <h2 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-2 px-1">Curriculum Nodes</h2>
             <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
               {activeStudyCourse.modules?.map((mod, idx) => {
                 const isSelected = selectedModule?._id === mod._id;
@@ -312,30 +312,30 @@ const ClassroomPage = () => {
                     onClick={() => setSelectedModule(mod)}
                     className={`p-4 rounded-3xl border transition-all cursor-pointer ${
                       isSelected 
-                        ? 'bg-slate-855 bg-slate-800 border-blue-500 shadow-lg shadow-blue-500/5' 
-                        : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
+                        ? 'bg-blue-50/50 border-blue-500 shadow-sm' 
+                        : 'bg-white border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${
-                        isSelected ? 'bg-blue-500 text-white' : 'bg-slate-800 text-slate-400'
+                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${
+                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-505 text-slate-500'
                       }`}>
                         M{idx + 1}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-bold text-white truncate uppercase tracking-tight">
+                        <h4 className="text-sm font-bold text-text-main truncate uppercase tracking-tight">
                           {mod.title || 'Untitled Module'}
                         </h4>
-                        <p className="text-[10px] font-semibold text-slate-400 truncate mt-0.5">
+                        <p className="text-[10px] font-semibold text-text-muted truncate mt-0.5">
                           {mod.description || 'No description provided.'}
                         </p>
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-between border-t border-slate-800/50 pt-2">
-                      <span className={`text-[9px] font-black uppercase tracking-wider ${
-                        hasContent ? 'text-emerald-400' : 'text-slate-500'
+                    <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2">
+                      <span className={`text-[9px] font-bold uppercase tracking-wider ${
+                        hasContent ? 'text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100' : 'text-slate-400'
                       }`}>
-                        {hasContent ? 'Active Node' : 'Standby Unit'}
+                        {hasContent ? 'Content Available' : 'Upcoming'}
                       </span>
                       {mod.completed && (
                         <CheckCircle size={12} className="text-emerald-400" />
@@ -345,9 +345,9 @@ const ClassroomPage = () => {
                 );
               })}
               {(!activeStudyCourse.modules || activeStudyCourse.modules.length === 0) && (
-                <div className="text-center py-10 bg-slate-900/30 border-2 border-dashed border-slate-800 rounded-3xl opacity-50">
-                  <BookOpen className="w-10 h-10 mx-auto text-slate-700 mb-2" />
-                  <p className="text-xs font-black uppercase text-slate-500 tracking-widest">No modules linked yet</p>
+                <div className="text-center py-10 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl opacity-50">
+                  <BookOpen className="w-10 h-10 mx-auto text-slate-400 mb-2" />
+                  <p className="text-xs font-black uppercase text-slate-400 tracking-widest">No modules linked yet</p>
                 </div>
               )}
             </div>
@@ -358,36 +358,25 @@ const ClassroomPage = () => {
             {selectedModule ? (
               <>
                 {/* Active Unit Metadata */}
-                <div className="p-6 bg-slate-900/40 border border-slate-800 rounded-3xl space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded uppercase">
-                      Selected Module
-                    </span>
-                  </div>
-                  <h2 className="text-xl font-black text-white uppercase tracking-tight">{selectedModule.title}</h2>
-                  <p className="text-xs text-slate-400 font-medium leading-relaxed">{selectedModule.description || 'Objectives for this curriculum unit will be detailed during the session.'}</p>
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">{selectedModule.title}</h2>
+                  <p className="text-xs text-slate-505 text-slate-500 font-medium leading-relaxed mt-1">{selectedModule.description || 'Objectives for this curriculum unit will be detailed during the session.'}</p>
                 </div>
 
                 {/* 1. Video Player or Lock Placeholder */}
                 <div>
-                  <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
                   {selectedModule.videoUrl ? (
-                    <div className="rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-xl aspect-video relative group">
+                    <div className="rounded-[2rem] overflow-hidden bg-black border border-slate-200 shadow-md aspect-video relative group">
                       <CustomVideoPlayer videoUrl={selectedModule.videoUrl} autoPlay={false} />
                     </div>
                   ) : (
-                    <div className="bg-slate-950/40 border border-slate-800/80 rounded-[2rem] p-8 text-center flex flex-col items-center justify-center shadow-lg relative overflow-hidden group min-h-[300px]">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-30 pointer-events-none" />
-                      <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center mb-4 shadow-inner relative group-hover:scale-105 transition-transform duration-500">
-                        <Video size={24} className="text-slate-500" />
-                        <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full animate-ping absolute -top-0.5 -right-0.5" />
-                        <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full absolute -top-0.5 -right-0.5" />
+                    <div className="bg-white border border-slate-200 rounded-[2rem] p-8 text-center flex flex-col items-center justify-center shadow-sm min-h-[250px] relative overflow-hidden group">
+                      <div className="w-12 h-12 bg-slate-50 border border-slate-100 text-slate-400 rounded-2xl flex items-center justify-center mb-3">
+                        <Video size={20} />
                       </div>
-                      <p className="text-[10px] font-mono text-yellow-500 font-black tracking-widest uppercase bg-yellow-500/10 px-3 py-1 rounded-full mb-2">
-                        VIDEO_UPLINK_PENDING // UNIT_LOCKED
-                      </p>
-                      <h4 className="text-base font-black text-white uppercase tracking-tight mb-2">Curriculum Broadcast Pending</h4>
-                      <p className="text-xs text-slate-400 max-w-sm font-semibold leading-relaxed">
+                      <h4 className="text-sm font-bold text-slate-800 uppercase tracking-tight mb-1">Lecture Coming Soon</h4>
+                      <p className="text-xs text-slate-400 max-w-xs font-semibold leading-relaxed">
                         This session is currently locked. The video lecture player will activate immediately when the live class begins.
                       </p>
                     </div>
@@ -398,38 +387,36 @@ const ClassroomPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Study Material / Notes */}
                   <div className="space-y-3">
-                    <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] px-1">Study Material</h3>
+                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Study Material</h3>
                     {selectedModule.notesUrl ? (
-                      <div className="p-6 bg-slate-900/40 border border-slate-800 hover:border-emerald-500/30 rounded-3xl flex items-center justify-between transition-colors shadow-lg">
+                      <div className="p-5 bg-white border border-slate-200 hover:border-emerald-200 rounded-3xl flex items-center justify-between transition-colors shadow-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-2xl flex items-center justify-center">
-                            <FileText size={20} />
+                          <div className="w-10 h-10 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
+                            <FileText size={16} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-white uppercase text-xs tracking-tight">Study Notes Available</h4>
-                            <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest mt-0.5">PDF synced by instructor</p>
+                            <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight">Study Notes</h4>
+                            <p className="text-[9px] text-emerald-600 font-bold uppercase tracking-widest mt-0.5">PDF synced by instructor</p>
                           </div>
                         </div>
                         <a
                           href={selectedModule.notesUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/10"
+                          className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-emerald-500/10"
                         >
                           Download
                         </a>
                       </div>
                     ) : (
-                      <div className="p-6 bg-slate-950/20 border border-slate-800/60 rounded-3xl flex items-center gap-4 min-h-[92px]">
-                        <div className="w-12 h-12 bg-slate-900 border border-slate-800 text-slate-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <FileText size={20} />
+                      <div className="p-5 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
+                        <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                          <FileText size={16} />
                         </div>
                         <div>
-                          <p className="text-[9px] font-mono text-slate-500 font-black tracking-wider uppercase mb-1">
-                            PREPARING_NOTES // STANDBY
-                          </p>
-                          <p className="text-[11px] text-slate-400 font-bold leading-normal">
-                            Curriculum material will deploy immediately following the technical live session.
+                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Study Notes</h5>
+                          <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
+                            Notes will be uploaded after class.
                           </p>
                         </div>
                       </div>
@@ -438,38 +425,36 @@ const ClassroomPage = () => {
 
                   {/* Scheduled Live Class */}
                   <div className="space-y-3">
-                    <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] px-1">Interactive Stream</h3>
+                    <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Interactive Stream</h3>
                     {moduleLive ? (
-                      <div className="p-6 bg-slate-900/40 border border-slate-800 hover:border-red-500/30 rounded-3xl flex items-center justify-between transition-colors shadow-lg">
+                      <div className="p-5 bg-white border border-slate-200 hover:border-red-200 rounded-3xl flex items-center justify-between transition-colors shadow-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 text-red-400 rounded-2xl flex items-center justify-center animate-pulse">
-                            <Video size={20} />
+                          <div className="w-10 h-10 bg-red-50 border border-red-100 text-red-505 text-red-500 rounded-xl flex items-center justify-center">
+                            <Video size={16} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-white uppercase text-xs tracking-tight">Live Interactive Class</h4>
-                            <p className="text-[9px] text-red-400 font-black uppercase tracking-widest mt-0.5">
-                              {new Date(moduleLive.scheduledStart).toLocaleDateString()} at {new Date(moduleLive.scheduledStart).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                            <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight">Live Interactive Class</h4>
+                            <p className="text-[9px] text-red-505 text-red-500 font-bold uppercase tracking-widest mt-0.5">
+                              {new Date(moduleLive.scheduledStart).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
                         <button
                           onClick={() => setActiveScheduledVideo(moduleLive)}
-                          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-red-500/10"
+                          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-red-500/10"
                         >
                           Join
                         </button>
                       </div>
                     ) : (
-                      <div className="p-6 bg-slate-950/20 border border-slate-800/60 rounded-3xl flex items-center gap-4 min-h-[92px]">
-                        <div className="w-12 h-12 bg-slate-900 border border-slate-800 text-slate-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <Calendar size={20} />
+                      <div className="p-5 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
+                        <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                          <Calendar size={16} />
                         </div>
                         <div>
-                          <p className="text-[9px] font-mono text-slate-500 font-black tracking-wider uppercase mb-1">
-                            LIVE_SCHEDULING // QUEUED
-                          </p>
-                          <p className="text-[11px] text-slate-400 font-bold leading-normal">
-                            Mentor is lining up the next live broadcast block. Broadcast times sync automatically.
+                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Live Broadcast</h5>
+                          <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
+                            Next session scheduled soon.
                           </p>
                         </div>
                       </div>
@@ -479,49 +464,47 @@ const ClassroomPage = () => {
 
                 {/* 3. Module-Wise Assignments / Homeworks */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] px-1">Technical Assignments</h3>
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Technical Assignments</h3>
                   {moduleAssignment ? (
-                    <div className="p-6 bg-slate-900/40 border border-slate-800 hover:border-purple-500/30 rounded-3xl space-y-4 shadow-lg transition-colors">
+                    <div className="p-6 bg-white border border-slate-200 hover:border-purple-200 rounded-3xl space-y-4 shadow-sm transition-colors">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center">
+                          <div className="w-12 h-12 bg-purple-50 border border-purple-100 text-purple-600 rounded-2xl flex items-center justify-center">
                             <FileText size={20} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-white uppercase text-sm tracking-tight">{moduleAssignment.title}</h4>
-                            <p className="text-[9px] text-purple-400 font-black uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
+                            <h4 className="font-bold text-slate-800 uppercase text-sm tracking-tight">{moduleAssignment.title}</h4>
+                            <p className="text-[9px] text-purple-600 font-bold uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
                           </div>
                         </div>
-                        <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${
-                          submission ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400 border border-slate-700'
+                        <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${
+                          submission ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-50 text-slate-400 border-slate-200'
                         }`}>
                           {submission ? (submission.status === 'graded' ? 'Graded' : 'Submitted') : 'Not Submitted'}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400 font-semibold leading-relaxed pl-1">{moduleAssignment.description}</p>
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-800/60">
-                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">
+                      <p className="text-xs text-text-muted font-medium leading-relaxed pl-1">{moduleAssignment.description}</p>
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">
                           Due Date: {new Date(moduleAssignment.dueDate).toLocaleDateString()}
                         </span>
                         <button
                           onClick={() => setSelectedAssignment(moduleAssignment)}
-                          className="px-5 py-3 bg-white hover:bg-blue-500 text-slate-950 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg"
+                          className="px-5 py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md"
                         >
                           {submission ? 'View Submission' : 'Submit Specs'}
                         </button>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-8 bg-slate-950/20 border border-slate-800/60 rounded-3xl flex items-center gap-4">
-                      <div className="w-12 h-12 bg-slate-900 border border-slate-800 text-slate-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                        <FileText size={20} />
+                    <div className="p-6 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <FileText size={18} />
                       </div>
                       <div>
-                        <p className="text-[9px] font-mono text-slate-500 font-black tracking-wider uppercase mb-1">
-                          TECHNICAL_SPECS_OFFLINE // HW_STANDBY
-                        </p>
-                        <p className="text-[11px] text-slate-400 font-bold leading-normal">
-                          Homework task lists will deploy automatically once the corresponding lecture session has concluded.
+                        <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Homework & Tasks</h5>
+                        <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
+                          No assignments are released for this unit yet.
                         </p>
                       </div>
                     </div>
@@ -529,9 +512,9 @@ const ClassroomPage = () => {
                 </div>
               </>
             ) : (
-              <div className="text-center py-20 bg-slate-900/20 border-2 border-dashed border-slate-800 rounded-3xl opacity-50">
-                <BookOpen size={48} className="mx-auto text-slate-700 mb-4" />
-                <p className="text-xs font-black uppercase tracking-widest text-slate-500">Select a module node from the outline sidebar to begin your study session.</p>
+              <div className="text-center py-20 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl opacity-50">
+                <BookOpen size={48} className="mx-auto text-slate-400 mb-4" />
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Select a module node from the outline sidebar to begin your study session.</p>
               </div>
             )}
           </div>
