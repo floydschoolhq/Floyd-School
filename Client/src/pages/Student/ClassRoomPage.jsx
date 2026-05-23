@@ -94,16 +94,37 @@ const ClassroomPage = () => {
     });
 
     socket.on('scheduledLive:started', (scheduledLive) => {
-      setScheduledLives(prev => prev.map(live => 
-        live._id === scheduledLive._id ? { ...live, status: 'live' } : live
-      ));
-      setGlobalActiveLiveClass(scheduledLive);
+      setScheduledLives(prev => {
+        const updated = prev.map(live => 
+          live._id === scheduledLive._id ? { ...live, status: 'live' } : live
+        );
+        if (!updated.some(live => live._id === scheduledLive._id)) {
+          updated.push({ ...scheduledLive, status: 'live' });
+        }
+        return updated;
+      });
+      // Normalize and set as active live class!
+      const normalized = {
+        ...scheduledLive,
+        mentorName: scheduledLive.mentorName || scheduledLive.mentor?.name || 'Instructor',
+        topic: scheduledLive.description || scheduledLive.topic || 'Live Session',
+        startedAt: scheduledLive.actualStart || scheduledLive.scheduledStart || new Date()
+      };
+      setActiveLiveClass(normalized);
+      setGlobalActiveLiveClass(normalized);
+      if (socket) {
+        fetchMyCurrentDoubt(normalized._id);
+        socket.emit('liveClass:join', normalized._id);
+      }
     });
 
     socket.on('scheduledLive:ended', (liveId) => {
       setScheduledLives(prev => prev.map(live => 
         live._id === liveId ? { ...live, status: 'ended' } : live
       ));
+      setActiveLiveClass(prev => (prev?._id === liveId ? null : prev));
+      setGlobalActiveLiveClass(null);
+      setMyDoubt(null);
     });
 
     socket.on('doubt:resolved', (resolvedDoubt) => {
@@ -126,6 +147,8 @@ const ClassroomPage = () => {
       if (socket) {
         socket.off('liveClass:started');
         socket.off('liveClass:ended');
+        socket.off('scheduledLive:started');
+        socket.off('scheduledLive:ended');
       }
     };
   }, [socket]); // Removed isClassroomUser dependency to let it run for all students
@@ -140,7 +163,36 @@ const ClassroomPage = () => {
     return () => window.removeEventListener('contextmenu', preventContext);
   }, []);
 
-  const fetchActiveLiveClass = async () => {
+  const checkActiveScheduledLive = (livesList = []) => {
+    // Look for an active scheduled YouTube live session
+    const activeScheduled = (livesList || []).find(l => l.status === 'live');
+    if (activeScheduled) {
+      // Filter live class to only show if it matches student's granted courses
+      const courseId = activeScheduled.course?._id || activeScheduled.course || '';
+      const userGrantedCourses = user?.permissions?.grantedCourses || [];
+      const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString());
+
+      if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
+        const normalized = {
+          ...activeScheduled,
+          mentorName: activeScheduled.mentorName || activeScheduled.mentor?.name || 'Instructor',
+          topic: activeScheduled.description || activeScheduled.topic || 'Live Session',
+          startedAt: activeScheduled.actualStart || activeScheduled.scheduledStart || new Date()
+        };
+        setActiveLiveClass(normalized);
+        setGlobalActiveLiveClass(normalized);
+        if (socket) {
+          fetchMyCurrentDoubt(normalized._id);
+          socket.emit('liveClass:join', normalized._id);
+        }
+        return;
+      }
+    }
+    setActiveLiveClass(null);
+    setGlobalActiveLiveClass(null);
+  };
+
+  const fetchActiveLiveClass = async (optScheduledLives = null) => {
     try {
       const res = await api.get('/live-classes/active');
       if (res.data) {
@@ -150,8 +202,13 @@ const ClassroomPage = () => {
         const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString());
         
         if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
-          setActiveLiveClass(res.data);
-          setGlobalActiveLiveClass(res.data);
+          const normalized = {
+            ...res.data,
+            mentorName: res.data.mentorName || res.data.mentor?.name || 'Instructor',
+            startedAt: res.data.startedAt || new Date()
+          };
+          setActiveLiveClass(normalized);
+          setGlobalActiveLiveClass(normalized);
           if (socket) {
             fetchMyCurrentDoubt(res.data._id);
             socket.emit('liveClass:join', res.data._id);
@@ -159,10 +216,12 @@ const ClassroomPage = () => {
           return;
         }
       }
-      setActiveLiveClass(null);
-      setGlobalActiveLiveClass(null);
+      
+      // Fallback: check if we have any active scheduled live class
+      checkActiveScheduledLive(optScheduledLives || scheduledLives);
     } catch (error) {
       console.error('Failed to fetch active live class:', error);
+      checkActiveScheduledLive(optScheduledLives || scheduledLives);
     }
   };
 
@@ -170,6 +229,11 @@ const ClassroomPage = () => {
     try {
       const res = await api.get('/scheduled-live/upcoming');
       setScheduledLives(res.data);
+      // If there is no active Jitsi class, check if any scheduled live is active
+      const hasActiveJitsi = activeLiveClass && !activeLiveClass.videoUrl;
+      if (!hasActiveJitsi) {
+        checkActiveScheduledLive(res.data);
+      }
     } catch (error) {
       console.error('Failed to fetch scheduled lives:', error);
     }
@@ -266,11 +330,17 @@ const ClassroomPage = () => {
       (activeLiveClass.course === activeStudyCourse._id)
     );
 
-    // Find active scheduled session for current module
+    // Find active scheduled or standard live session for current module
     const activeModuleLive = scheduledLives.find(l => 
       l.course?._id === activeStudyCourse._id &&
       l.module?.toString() === selectedModule?._id?.toString() &&
       l.status === 'live'
+    ) || (
+      activeLiveClass && 
+      (activeLiveClass.course?._id === activeStudyCourse._id || activeLiveClass.course === activeStudyCourse._id) &&
+      activeLiveClass.module?.toString() === selectedModule?._id?.toString()
+        ? activeLiveClass
+        : null
     );
 
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;

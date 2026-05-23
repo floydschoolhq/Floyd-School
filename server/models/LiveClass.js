@@ -20,6 +20,10 @@ const liveClassSchema = new mongoose.Schema({
         ref: 'Course',
         required: true
     },
+    module: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false
+    },
     status: {
         type: String,
         enum: ['active', 'ended'],

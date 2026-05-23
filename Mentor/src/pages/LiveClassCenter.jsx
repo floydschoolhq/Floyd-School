@@ -46,6 +46,7 @@ const LiveClassCenter = () => {
     const [courses, setCourses] = useState([]);
     const [searchingRecordings, setSearchingRecordings] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState('');
+    const [selectedModule, setSelectedModule] = useState('');
     const [scheduleCourse, setScheduleCourse] = useState('');
     const [scheduleModule, setScheduleModule] = useState('');
 
@@ -203,7 +204,8 @@ const LiveClassCenter = () => {
                 platform,
                 meetingLink,
                 duration: (durationMin * 60) + parseInt(durationSec || 0),
-                courseId: selectedCourse
+                courseId: selectedCourse,
+                moduleId: selectedModule || undefined
             });
             setActiveClass(res.data);
             toast.success('Live broadcast node established');
@@ -211,6 +213,7 @@ const LiveClassCenter = () => {
             setTopic('');
             setMeetingLink('');
             setSelectedCourse('');
+            setSelectedModule('');
         } catch (err) {
             let msg = err.response?.data?.message || 'Failed to initiate live session';
             if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
@@ -469,20 +472,39 @@ const LiveClassCenter = () => {
                                 </div>
 
                                  <form onSubmit={handleStart} className="space-y-6">
-                                     <div className="space-y-2">
-                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Course *</label>
-                                         <select
-                                             value={selectedCourse}
-                                             onChange={(e) => setSelectedCourse(e.target.value)}
-                                             required
-                                             className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all appearance-none cursor-pointer"
-                                         >
-                                             <option value="">Choose Course...</option>
-                                             {courses.map(course => (
-                                                 <option key={course._id} value={course._id}>{course.title}</option>
-                                             ))}
-                                         </select>
-                                     </div>
+                                      <div className="space-y-2">
+                                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Course *</label>
+                                          <select
+                                              value={selectedCourse}
+                                              onChange={(e) => {
+                                                  setSelectedCourse(e.target.value);
+                                                  setSelectedModule('');
+                                              }}
+                                              required
+                                              className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                          >
+                                              <option value="">Choose Course...</option>
+                                              {courses.map(course => (
+                                                  <option key={course._id} value={course._id}>{course.title}</option>
+                                              ))}
+                                          </select>
+                                      </div>
+
+                                      {selectedCourse && (
+                                          <div className="space-y-2">
+                                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Parent Module / Unit Link</label>
+                                              <select
+                                                  value={selectedModule}
+                                                  onChange={(e) => setSelectedModule(e.target.value)}
+                                                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                              >
+                                                  <option value="">Choose Module (Optional)...</option>
+                                                  {courses.find(c => c._id === selectedCourse)?.modules?.map((m, idx) => (
+                                                      <option key={m._id || idx} value={m._id}>M{idx + 1}: {m.title}</option>
+                                                  ))}
+                                              </select>
+                                          </div>
+                                      )}
 
                                      <div className="space-y-2">
                                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Class Title *</label>
