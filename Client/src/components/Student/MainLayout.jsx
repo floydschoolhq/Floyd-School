@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
   // Command Palette Keyboard Listener (⌘K / Ctrl+K)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsCommandOpen(prev => !prev);
       }

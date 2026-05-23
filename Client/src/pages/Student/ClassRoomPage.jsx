@@ -305,20 +305,19 @@ const ClassroomPage = () => {
                 const isSelected = selectedModule?._id === mod._id;
                 const hasContent = mod.videoUrl || mod.notesUrl;
 
-                return (
-                  <motion.div
+                return (                  <motion.div
                     key={mod._id || idx}
                     whileHover={{ scale: 1.01 }}
                     onClick={() => setSelectedModule(mod)}
                     className={`p-4 rounded-3xl border transition-all cursor-pointer ${
                       isSelected 
-                        ? 'bg-blue-50/50 border-blue-500 shadow-sm' 
-                        : 'bg-white border-slate-200 hover:border-slate-300'
+                        ? 'bg-accent-primary/10 border-accent-primary shadow-sm' 
+                        : 'bg-surface-soft border-surface-el hover:border-text-muted/30'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${
-                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-505 text-slate-500'
+                        isSelected ? 'bg-accent-primary text-white' : 'bg-surface-el text-text-muted'
                       }`}>
                         M{idx + 1}
                       </div>
@@ -331,9 +330,9 @@ const ClassroomPage = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2">
+                    <div className="mt-3 flex items-center justify-between border-t border-surface-el pt-2">
                       <span className={`text-[9px] font-bold uppercase tracking-wider ${
-                        hasContent ? 'text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100' : 'text-slate-400'
+                        hasContent ? 'text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20' : 'text-text-muted'
                       }`}>
                         {hasContent ? 'Content Available' : 'Upcoming'}
                       </span>
@@ -345,9 +344,9 @@ const ClassroomPage = () => {
                 );
               })}
               {(!activeStudyCourse.modules || activeStudyCourse.modules.length === 0) && (
-                <div className="text-center py-10 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl opacity-50">
-                  <BookOpen className="w-10 h-10 mx-auto text-slate-400 mb-2" />
-                  <p className="text-xs font-black uppercase text-slate-400 tracking-widest">No modules linked yet</p>
+                <div className="text-center py-10 bg-surface-soft border-2 border-dashed border-surface-el rounded-3xl opacity-50">
+                  <BookOpen className="w-10 h-10 mx-auto text-text-muted mb-2" />
+                  <p className="text-xs font-black uppercase text-text-muted tracking-widest">No modules linked yet</p>
                 </div>
               )}
             </div>
@@ -359,24 +358,24 @@ const ClassroomPage = () => {
               <>
                 {/* Active Unit Metadata */}
                 <div className="mb-6">
-                  <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">{selectedModule.title}</h2>
-                  <p className="text-xs text-slate-505 text-slate-500 font-medium leading-relaxed mt-1">{selectedModule.description || 'Objectives for this curriculum unit will be detailed during the session.'}</p>
+                  <h2 className="text-xl font-bold text-text-main uppercase tracking-tight">{selectedModule.title}</h2>
+                  <p className="text-xs text-text-muted font-medium leading-relaxed mt-1">{selectedModule.description || 'Objectives for this curriculum unit will be detailed during the session.'}</p>
                 </div>
 
                 {/* 1. Video Player or Lock Placeholder */}
                 <div>
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
                   {selectedModule.videoUrl ? (
-                    <div className="rounded-[2rem] overflow-hidden bg-black border border-slate-200 shadow-md aspect-video relative group">
+                    <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
                       <CustomVideoPlayer videoUrl={selectedModule.videoUrl} autoPlay={false} />
                     </div>
                   ) : (
-                    <div className="bg-white border border-slate-200 rounded-[2rem] p-8 text-center flex flex-col items-center justify-center shadow-sm min-h-[250px] relative overflow-hidden group">
-                      <div className="w-12 h-12 bg-slate-50 border border-slate-100 text-slate-400 rounded-2xl flex items-center justify-center mb-3">
+                    <div className="bg-surface-soft border border-surface-el rounded-[2rem] p-8 text-center flex flex-col items-center justify-center shadow-sm min-h-[250px] relative overflow-hidden group">
+                      <div className="w-12 h-12 bg-surface-el border border-surface-el text-text-muted rounded-2xl flex items-center justify-center mb-3">
                         <Video size={20} />
                       </div>
-                      <h4 className="text-sm font-bold text-slate-800 uppercase tracking-tight mb-1">Lecture Coming Soon</h4>
-                      <p className="text-xs text-slate-400 max-w-xs font-semibold leading-relaxed">
+                      <h4 className="text-sm font-bold text-text-main uppercase tracking-tight mb-1">Lecture Coming Soon</h4>
+                      <p className="text-xs text-text-muted max-w-xs font-semibold leading-relaxed">
                         The lecture video will be available here after the live session.
                       </p>
                     </div>
@@ -389,14 +388,14 @@ const ClassroomPage = () => {
                   <div className="space-y-3">
                     <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Study Material</h3>
                     {selectedModule.notesUrl ? (
-                      <div className="p-5 bg-white border border-slate-200 hover:border-emerald-200 rounded-3xl flex items-center justify-between transition-colors shadow-sm">
+                      <div className="p-5 bg-surface-soft border border-surface-el hover:border-emerald-500/30 rounded-3xl flex items-center justify-between transition-colors shadow-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
+                          <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-xl flex items-center justify-center">
                             <FileText size={16} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight">Study Notes</h4>
-                            <p className="text-[9px] text-emerald-600 font-bold uppercase tracking-widest mt-0.5">PDF synced by instructor</p>
+                            <h4 className="font-bold text-text-main uppercase text-xs tracking-tight">Study Notes</h4>
+                            <p className="text-[9px] text-emerald-500 font-bold uppercase tracking-widest mt-0.5">PDF synced by instructor</p>
                           </div>
                         </div>
                         <a
@@ -409,13 +408,13 @@ const ClassroomPage = () => {
                         </a>
                       </div>
                     ) : (
-                      <div className="p-5 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
-                        <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <div className="p-5 bg-surface-soft/50 border border-surface-el/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
+                        <div className="w-10 h-10 bg-surface-base border border-surface-el text-text-muted rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                           <FileText size={16} />
                         </div>
                         <div>
-                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Study Notes</h5>
-                          <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
+                          <h5 className="text-xs font-bold text-text-main uppercase tracking-tight">Study Notes</h5>
+                          <p className="text-[11px] text-text-muted font-bold leading-normal mt-0.5">
                             Study notes and PDF slides will be posted here after the class.
                           </p>
                         </div>
@@ -427,44 +426,44 @@ const ClassroomPage = () => {
                   <div className="space-y-3">
                     <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Technical Assignments</h3>
                     {moduleAssignment ? (
-                      <div className="p-5 bg-white border border-slate-200 hover:border-purple-200 rounded-3xl flex flex-col justify-between transition-colors shadow-sm min-h-[82px] space-y-3">
+                      <div className="p-5 bg-surface-soft border border-surface-el hover:border-purple-500/30 rounded-3xl flex flex-col justify-between transition-colors shadow-sm min-h-[82px] space-y-3">
                         <div className="flex justify-between items-start">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-purple-50 border border-purple-100 text-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div className="w-10 h-10 bg-purple-500/10 border border-purple-500/20 text-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
                               <FileText size={16} />
                             </div>
                             <div className="min-w-0">
-                              <h4 className="font-bold text-slate-800 uppercase text-xs tracking-tight truncate">{moduleAssignment.title}</h4>
-                              <p className="text-[9px] text-purple-600 font-bold uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
+                              <h4 className="font-bold text-text-main uppercase text-xs tracking-tight truncate">{moduleAssignment.title}</h4>
+                              <p className="text-[9px] text-purple-500 font-bold uppercase tracking-widest mt-0.5">Linked Assignment Spec</p>
                             </div>
                           </div>
                           <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${
-                            submission ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-50 text-slate-400 border-slate-200'
+                            submission ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 'bg-surface-el text-text-muted border-surface-el'
                           }`}>
                             {submission ? (submission.status === 'graded' ? 'Graded' : 'Submitted') : 'Not Submitted'}
                           </span>
                         </div>
                         <p className="text-[11px] text-text-muted font-medium leading-relaxed pl-1 line-clamp-2">{moduleAssignment.description}</p>
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">
+                        <div className="flex items-center justify-between pt-2 border-t border-surface-el">
+                          <span className="text-[9px] font-bold text-text-muted uppercase tracking-widest pl-1">
                             Due: {new Date(moduleAssignment.dueDate).toLocaleDateString()}
                           </span>
                           <button
                             onClick={() => setSelectedAssignment(moduleAssignment)}
-                            className="px-3 py-1.5 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
+                            className="px-3 py-1.5 bg-text-main hover:bg-accent-primary hover:text-black text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
                           >
                             {submission ? 'View' : 'Submit'}
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div className="p-5 bg-slate-50/50 border border-slate-200/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
-                        <div className="w-10 h-10 bg-white border border-slate-200 text-slate-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <div className="p-5 bg-surface-soft/50 border border-surface-el/80 rounded-3xl flex items-center gap-3 min-h-[82px]">
+                        <div className="w-10 h-10 bg-surface-base border border-surface-el text-text-muted rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                           <FileText size={16} />
                         </div>
                         <div>
-                          <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Homework & Tasks</h5>
-                          <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
+                          <h5 className="text-xs font-bold text-text-main uppercase tracking-tight">Homework & Tasks</h5>
+                          <p className="text-[11px] text-text-muted font-bold leading-normal mt-0.5">
                             Homework tasks and assignments will be posted here after the lecture.
                           </p>
                         </div>
@@ -474,9 +473,9 @@ const ClassroomPage = () => {
                 </div>
               </>
             ) : (
-              <div className="text-center py-20 bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl opacity-50">
-                <BookOpen size={48} className="mx-auto text-slate-400 mb-4" />
-                <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Select a module node from the outline sidebar to begin your study session.</p>
+              <div className="text-center py-20 bg-surface-soft border-2 border-dashed border-surface-el rounded-3xl opacity-50">
+                <BookOpen size={48} className="mx-auto text-text-muted mb-4" />
+                <p className="text-xs font-bold uppercase tracking-widest text-text-muted">Select a module node from the outline sidebar to begin your study session.</p>
               </div>
             )}
           </div>
