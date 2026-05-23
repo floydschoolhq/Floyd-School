@@ -45,6 +45,8 @@ const LiveClassCenter = () => {
     const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
     const [courses, setCourses] = useState([]);
     const [searchingRecordings, setSearchingRecordings] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState('');
+    const [scheduleCourse, setScheduleCourse] = useState('');
 
     // Scheduled sessions state
     const [scheduledSessions, setScheduledSessions] = useState([]);
@@ -73,7 +75,18 @@ const LiveClassCenter = () => {
 
     useEffect(() => {
         fetchActiveClass();
+        fetchCourses();
     }, []);
+
+    const fetchCourses = async () => {
+        try {
+            const res = await api.get('/courses');
+            const data = Array.isArray(res.data) ? res.data : (res.data.data || []);
+            setCourses(data);
+        } catch (err) {
+            console.error('Failed to fetch courses:', err);
+        }
+    };
 
     useEffect(() => {
         if (activeClass) {
@@ -176,19 +189,27 @@ const LiveClassCenter = () => {
         setStarting(true);
         setError('');
 
+        if (!selectedCourse) {
+            setError('Please select a course for this broadcast');
+            setStarting(false);
+            return;
+        }
+
         try {
             const res = await api.post('/live-classes/start', {
                 title,
                 topic,
                 platform,
                 meetingLink,
-                duration: (durationMin * 60) + parseInt(durationSec || 0)
+                duration: (durationMin * 60) + parseInt(durationSec || 0),
+                courseId: selectedCourse
             });
             setActiveClass(res.data);
             toast.success('Live broadcast node established');
             setTitle('');
             setTopic('');
             setMeetingLink('');
+            setSelectedCourse('');
         } catch (err) {
             let msg = err.response?.data?.message || 'Failed to initiate live session';
             if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
@@ -261,8 +282,8 @@ const LiveClassCenter = () => {
 
     const handleScheduleSubmit = async (e) => {
         e.preventDefault();
-        if (!scheduleVideoUrl || !scheduleTitle || !scheduleDate || !scheduleTime) {
-            toast.error('Please fill in all required fields');
+        if (!scheduleVideoUrl || !scheduleTitle || !scheduleDate || !scheduleTime || !scheduleCourse) {
+            toast.error('Please fill in all required fields including Course');
             return;
         }
 
@@ -281,7 +302,8 @@ const LiveClassCenter = () => {
                 title: scheduleTitle,
                 description: scheduleDescription,
                 videoUrl: embedUrl,
-                scheduledStart: scheduledStart.toISOString()
+                scheduledStart: scheduledStart.toISOString(),
+                course: scheduleCourse
             });
             
             toast.success('Live session scheduled successfully');
@@ -290,6 +312,7 @@ const LiveClassCenter = () => {
             setScheduleVideoUrl('');
             setScheduleDate('');
             setScheduleTime('');
+            setScheduleCourse('');
             setShowScheduleForm(false);
             fetchScheduledSessions();
         } catch (err) {
@@ -442,9 +465,24 @@ const LiveClassCenter = () => {
                                     </div>
                                 </div>
 
-                                <form onSubmit={handleStart} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Class Title</label>
+                                 <form onSubmit={handleStart} className="space-y-6">
+                                     <div className="space-y-2">
+                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Course *</label>
+                                         <select
+                                             value={selectedCourse}
+                                             onChange={(e) => setSelectedCourse(e.target.value)}
+                                             required
+                                             className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                         >
+                                             <option value="">Choose Course...</option>
+                                             {courses.map(course => (
+                                                 <option key={course._id} value={course._id}>{course.title}</option>
+                                             ))}
+                                         </select>
+                                     </div>
+
+                                     <div className="space-y-2">
+                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Class Title *</label>
                                         <input
                                             type="text"
                                             placeholder="e.g. Masterclass on Advanced System Design"
@@ -886,6 +924,21 @@ const LiveClassCenter = () => {
                         </div>
 
                         <form onSubmit={handleScheduleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Course *</label>
+                                <select
+                                    value={scheduleCourse}
+                                    onChange={(e) => setScheduleCourse(e.target.value)}
+                                    required
+                                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                >
+                                    <option value="">Choose Course...</option>
+                                    {courses.map(course => (
+                                        <option key={course._id} value={course._id}>{course.title}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">YouTube URL *</label>
                                 <input

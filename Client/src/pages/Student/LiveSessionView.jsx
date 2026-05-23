@@ -184,7 +184,7 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                             LIVE <span className="text-[#2563EB] not-italic">SESSION</span>
                         </h1>
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">
-                            {liveClass.title} • {liveClass.topic}
+                            {liveClass.title} • {liveClass.topic} {liveClass.course && `• ${liveClass.course.title}`}
                         </p>
                     </div>
                 </div>

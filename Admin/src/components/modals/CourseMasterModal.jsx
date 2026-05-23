@@ -170,7 +170,8 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
         try {
             await api.post('/live-classes/start', {
                 ...newLiveData,
-                mentorName: 'Admin'
+                mentorName: 'Admin',
+                courseId: courseId
             });
             toast.success('Live broadcast initialized');
             setIsCreatingLive(false);

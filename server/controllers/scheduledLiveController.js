@@ -4,10 +4,10 @@ const User = require('../models/User');
 
 exports.createScheduledLive = async (req, res) => {
     try {
-        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants } = req.body;
+        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants, course } = req.body;
 
-        if (!title || !videoUrl || !scheduledStart) {
-            return res.status(400).json({ message: 'Title, video URL, and scheduled start time are required' });
+        if (!title || !videoUrl || !scheduledStart || !course) {
+            return res.status(400).json({ message: 'Title, video URL, scheduled start time, and course are required' });
         }
 
         const scheduledLive = await ScheduledLive.create({
@@ -15,6 +15,7 @@ exports.createScheduledLive = async (req, res) => {
             description: description || '',
             mentor: req.user._id,
             mentorName: req.user.name,
+            course,
             videoUrl,
             status: 'scheduled',
             scheduledStart: new Date(scheduledStart),
@@ -22,9 +23,12 @@ exports.createScheduledLive = async (req, res) => {
             maxParticipants: maxParticipants || 500
         });
 
+        const populatedScheduledLive = await ScheduledLive.findById(scheduledLive._id)
+            .populate('course', 'title');
+
         res.status(201).json({
             success: true,
-            data: scheduledLive
+            data: populatedScheduledLive
         });
     } catch (error) {
         console.error('[CreateScheduledLive] Error:', error);
@@ -34,16 +38,20 @@ exports.createScheduledLive = async (req, res) => {
 
 exports.getAllScheduledLives = async (req, res) => {
     try {
-        const { status } = req.query;
+        const { status, courseId } = req.query;
         let query = {};
 
         if (status) {
             query.status = status;
         }
+        if (courseId) {
+            query.course = courseId;
+        }
 
         const scheduledLives = await ScheduledLive.find(query)
             .sort({ scheduledStart: 1 })
-            .populate('mentor', 'name email');
+            .populate('mentor', 'name email')
+            .populate('course', 'title');
 
         res.json(scheduledLives);
     } catch (error) {
@@ -55,16 +63,27 @@ exports.getAllScheduledLives = async (req, res) => {
 exports.getUpcomingScheduledLives = async (req, res) => {
     try {
         const now = new Date();
-        
-        const scheduledLives = await ScheduledLive.find({
+        let query = {
             $or: [
                 { status: 'scheduled', scheduledStart: { $gte: now } },
                 { status: 'live' }
             ]
-        })
+        };
+
+        if (req.query.courseId) {
+            query.course = req.query.courseId;
+        } else if (req.user && req.user.role === 'student') {
+            const Course = require('../models/Course');
+            const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
+            const courseIds = enrolledCourses.map(c => c._id);
+            query.course = { $in: courseIds };
+        }
+
+        const scheduledLives = await ScheduledLive.find(query)
             .sort({ scheduledStart: 1 })
             .limit(20)
-            .populate('mentor', 'name');
+            .populate('mentor', 'name')
+            .populate('course', 'title');
 
         res.json(scheduledLives);
     } catch (error) {
@@ -163,7 +182,16 @@ exports.startLiveNow = async (req, res) => {
         if (io) {
             io.emit('scheduledLive:started', scheduledLive);
 
-            const students = await User.find({ role: 'student' });
+            const Course = require('../models/Course');
+            const course = await Course.findById(scheduledLive.course);
+
+            let students = [];
+            if (course) {
+                students = await User.find({ role: 'student', _id: { $in: course.enrolledStudents } });
+            } else {
+                students = await User.find({ role: 'student' });
+            }
+
             const notifications = students.map(student => ({
                 recipient: student._id,
                 type: 'scheduled_live_started',

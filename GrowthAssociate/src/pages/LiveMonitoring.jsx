@@ -148,6 +148,7 @@ const LiveMonitoring = () => {
                                     <h3 className="text-xs font-black text-orange-500 uppercase tracking-[0.2em] mb-4">Session Intelligence</h3>
                                     <div className="space-y-4">
                                         <NodeInfo label="Mentor" value={selectedClass.mentorName} />
+                                        {selectedClass.course && <NodeInfo label="Course" value={selectedClass.course.title} />}
                                         <NodeInfo label="Session" value={selectedClass.title} />
                                         <NodeInfo label="Focus" value={selectedClass.topic} />
                                         <NodeInfo label="Status" value="Operational" color="text-emerald-500" />
@@ -213,7 +214,9 @@ const ClassCard = ({ liveClass, onObserve }) => (
         </div>
 
         <div className="mb-8">
-            <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">{liveClass.mentorName}</p>
+            <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">
+                {liveClass.mentorName} {liveClass.course && `• ${liveClass.course.title}`}
+            </p>
             <h4 className="text-lg font-black text-slate-900 uppercase tracking-tight group-hover:text-orange-500 transition-colors line-clamp-1">{liveClass.title}</h4>
             <p className="text-slate-400 font-bold uppercase text-[9px] tracking-widest mt-1 italic">{liveClass.topic}</p>
         </div>

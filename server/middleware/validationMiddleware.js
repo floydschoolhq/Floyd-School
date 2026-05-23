@@ -58,7 +58,8 @@ const schemas = {
     liveClass: {
         title: { required: true, type: 'string', minLength: 5 },
         topic: { required: true, type: 'string', minLength: 3 },
-        meetingLink: { type: 'string' }
+        meetingLink: { type: 'string' },
+        courseId: { required: true, type: 'string' }
     },
     supportMessage: {
         text: { required: true, type: 'string', minLength: 1 }

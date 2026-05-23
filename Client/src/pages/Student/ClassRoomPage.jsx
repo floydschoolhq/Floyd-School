@@ -292,7 +292,9 @@ const ClassroomPage = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-text-main font-bold text-sm">LIVE NOW</h3>
+                      <h3 className="text-text-main font-bold text-sm">
+                        LIVE NOW {activeLiveClass.course && `• ${activeLiveClass.course.title}`}
+                      </h3>
                       <p className="text-text-main font-bold text-base">{activeLiveClass.title}</p>
                       <p className="text-text-muted text-xs">{activeLiveClass.mentorName}</p>
                     </div>
@@ -379,11 +381,13 @@ const ClassroomPage = () => {
                         <PlayCircle className="text-blue-500 w-6 h-6" />
                       </div>
                     </div>
-                    <div>
-                      <h3 className="text-text-main text-xl font-semibold tracking-normal">Live Class in Session</h3>
-                      <p className="text-base font-medium text-text-muted">{activeLiveClass.title}: {activeLiveClass.topic}</p>
-                      <p className="text-[13px] text-text-muted/70 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
-                    </div>
+                     <div>
+                       <h3 className="text-text-main text-xl font-semibold tracking-normal">
+                         Live Class in Session {activeLiveClass.course && `for ${activeLiveClass.course.title}`}
+                       </h3>
+                       <p className="text-base font-medium text-text-muted">{activeLiveClass.title}: {activeLiveClass.topic}</p>
+                       <p className="text-[13px] text-text-muted/70 font-bold uppercase mt-1">Instructor: {activeLiveClass.mentorName}</p>
+                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
@@ -456,7 +460,9 @@ const ClassroomPage = () => {
                           <p className="text-xs text-text-muted font-medium mt-1">
                             {new Date(live.scheduledStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                           </p>
-                          <p className="text-[10px] text-text-muted/70 font-bold uppercase mt-1">by {live.mentorName || live.mentor?.name}</p>
+                          <p className="text-[10px] text-text-muted/70 font-bold uppercase mt-1">
+                            by {live.mentorName || live.mentor?.name} {live.course && `• ${live.course.title}`}
+                          </p>
                         </div>
                       </div>
                     </div>

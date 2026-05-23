@@ -19,6 +19,11 @@ const scheduledLiveSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    course: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
+    },
     videoUrl: {
         type: String,
         required: true

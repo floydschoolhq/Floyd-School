@@ -7,17 +7,26 @@ const User = require('../models/User');
 // @access  Private/Mentor
 exports.startLiveClass = async (req, res) => {
     try {
-        const { title, topic, platform, meetingLink, duration } = req.body;
+        const { title, topic, platform, meetingLink, duration, courseId } = req.body;
 
         // Basic validation
         if (!title || !topic) {
             return res.status(400).json({ message: 'Please provide title and topic' });
         }
+        if (!courseId) {
+            return res.status(400).json({ message: 'Please provide a course ID' });
+        }
 
-        // Check for already active class by this mentor
-        const activeClass = await LiveClass.findOne({ mentor: req.user._id, status: 'active' });
+        const Course = require('../models/Course');
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Check for already active class for this course
+        const activeClass = await LiveClass.findOne({ course: courseId, status: 'active' });
         if (activeClass) {
-            return res.status(400).json({ message: 'You already have an active live class.' });
+            return res.status(400).json({ message: 'This course already has an active live class.' });
         }
 
         let liveClassData = {
@@ -26,6 +35,7 @@ exports.startLiveClass = async (req, res) => {
             platform: platform || 'other',
             mentor: req.user._id,
             mentorName: req.user.name,
+            course: courseId,
             status: 'active',
             duration: duration || 3600 // Default to 1 hour if not provided
         };
@@ -36,17 +46,17 @@ exports.startLiveClass = async (req, res) => {
         liveClassData.meetingLink = meetingLink;
 
         const liveClass = await LiveClass.create(liveClassData);
+        // Populate course info for real-time socket events
+        const populatedLiveClass = await LiveClass.findById(liveClass._id).populate('course', 'title');
 
         // Emit Socket.io event for real-time notification
         const io = req.app.get('io');
         if (io) {
-            io.emit('liveClass:started', liveClass);
+            io.emit('liveClass:started', populatedLiveClass);
         }
 
-        // Create notification for all students (optional: only enrolled students)
-        const students = await User.find({ role: 'student' });
-        // Use Promise.all for faster notification creation if student count is large
-        // But keep it simple for now or use Notification.insertMany for true batching
+        // Create notification only for enrolled students
+        const students = await User.find({ role: 'student', _id: { $in: course.enrolledStudents } });
 
         // Background notification task (non-blocking)
         (async () => {
@@ -54,7 +64,7 @@ exports.startLiveClass = async (req, res) => {
                 recipient: student._id,
                 type: 'live_class_started',
                 title: 'Live Class Started!',
-                message: `${req.user.name} has started a live class: ${title}`,
+                message: `${req.user.name} has started a live class for ${course.title}: ${title}`,
                 relatedId: liveClass._id,
                 relatedModel: 'LiveClass'
             }));
@@ -64,8 +74,7 @@ exports.startLiveClass = async (req, res) => {
             }
         })().catch(err => console.error('Notification Error:', err));
 
-
-        res.status(201).json(liveClass);
+        res.status(201).json(populatedLiveClass);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error', error: error.message });
@@ -109,8 +118,21 @@ exports.endLiveClass = async (req, res) => {
 // @access  Private
 exports.getActiveLiveClass = async (req, res) => {
     try {
+        let query = { status: 'active' };
+
+        if (req.query.courseId) {
+            query.course = req.query.courseId;
+        } else if (req.user && req.user.role === 'student') {
+            const Course = require('../models/Course');
+            const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
+            const courseIds = enrolledCourses.map(c => c._id);
+            query.course = { $in: courseIds };
+        }
+
         // Find if there's any active class
-        const liveClass = await LiveClass.findOne({ status: 'active' }).sort({ startedAt: -1 });
+        const liveClass = await LiveClass.findOne(query)
+            .sort({ startedAt: -1 })
+            .populate('course', 'title');
 
         if (liveClass) {
             const now = new Date();
@@ -145,7 +167,20 @@ exports.getActiveLiveClass = async (req, res) => {
 // @access  Private
 exports.getEndedLiveClasses = async (req, res) => {
     try {
-        const liveClasses = await LiveClass.find({ status: 'ended' }).sort({ endedAt: -1 });
+        let query = { status: 'ended' };
+
+        if (req.query.courseId) {
+            query.course = req.query.courseId;
+        } else if (req.user && req.user.role === 'student') {
+            const Course = require('../models/Course');
+            const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
+            const courseIds = enrolledCourses.map(c => c._id);
+            query.course = { $in: courseIds };
+        }
+
+        const liveClasses = await LiveClass.find(query)
+            .sort({ endedAt: -1 })
+            .populate('course', 'title');
         res.json(liveClasses);
     } catch (error) {
         console.error(error);
@@ -155,7 +190,9 @@ exports.getEndedLiveClasses = async (req, res) => {
 
 exports.getAllActiveLiveClasses = async (req, res) => {
     try {
-        const liveClasses = await LiveClass.find({ status: 'active' }).sort({ startedAt: -1 });
+        const liveClasses = await LiveClass.find({ status: 'active' })
+            .sort({ startedAt: -1 })
+            .populate('course', 'title');
         res.json(liveClasses);
     } catch (error) {
         console.error(error);
