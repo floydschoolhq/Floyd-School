@@ -10,7 +10,8 @@ import {
     Layout, 
     Zap,
     ChevronDown,
-    ChevronUp
+    ChevronUp,
+    FileText
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
@@ -208,12 +209,26 @@ const ModuleEditorModal = ({ isOpen, onClose, course, onUpdate }) => {
                                                             <div className="relative">
                                                                 <input 
                                                                     type="text"
-                                                                    value={mod.videoUrl}
+                                                                    value={mod.videoUrl || ''}
                                                                     onChange={(e) => handleUpdateModule(index, 'videoUrl', e.target.value)}
                                                                     className="w-full bg-slate-900 border border-slate-800 rounded-xl py-3 px-4 text-sm font-bold text-white focus:border-sky-500/50 outline-none"
                                                                     placeholder="Paste link or path..."
                                                                 />
                                                                 <Zap className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600" size={14} />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block flex items-center gap-2">
+                                                                <FileText size={12} /> Study Notes (PDF/Drive URL)
+                                                            </label>
+                                                            <div className="relative">
+                                                                <input 
+                                                                    type="text"
+                                                                    value={mod.notesUrl || ''}
+                                                                    onChange={(e) => handleUpdateModule(index, 'notesUrl', e.target.value)}
+                                                                    className="w-full bg-slate-900 border border-slate-800 rounded-xl py-3 px-4 text-sm font-bold text-white focus:border-sky-500/50 outline-none"
+                                                                    placeholder="Paste study notes URL..."
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="p-4 bg-sky-500/5 border border-sky-500/10 rounded-2xl">

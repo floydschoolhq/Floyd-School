@@ -161,7 +161,7 @@ const CourseManagement = () => {
     };
 
     const handleAddModule = () => {
-        setModules([...modules, { title: '', description: '', videoUrl: '', order: modules.length + 1 }]);
+        setModules([...modules, { title: '', description: '', videoUrl: '', notesUrl: '', order: modules.length + 1 }]);
     };
 
     const handleRemoveModule = (idx) => {
@@ -513,6 +513,12 @@ const CourseManagement = () => {
                                                         value={module.videoUrl || ''}
                                                         onChange={(e) => handleModuleChange(idx, 'videoUrl', e.target.value)}
                                                         className="w-full bg-slate-50 border-none p-3 rounded-xl font-bold text-xs outline-none focus:ring-2 ring-sky-500/20 underline-none text-sky-600"
+                                                    />
+                                                    <input
+                                                        placeholder="Study Notes URL (e.g., Google Drive or PDF link)"
+                                                        value={module.notesUrl || ''}
+                                                        onChange={(e) => handleModuleChange(idx, 'notesUrl', e.target.value)}
+                                                        className="w-full bg-slate-50 border-none p-3 rounded-xl font-bold text-xs outline-none focus:ring-2 ring-sky-500/20 underline-none text-indigo-600"
                                                     />
                                                     <textarea
                                                         placeholder="Brief overview of what students will accomplish..."

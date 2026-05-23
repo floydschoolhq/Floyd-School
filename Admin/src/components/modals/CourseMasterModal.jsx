@@ -4,7 +4,7 @@ import {
     ChevronDown, ChevronUp, Users, IndianRupee, Settings, 
     BarChart3, Shield, Globe, Clock, GraduationCap, 
     Search, Filter, ExternalLink, Image as ImageIcon, 
-    MoreVertical, Info, Terminal, Cpu
+    MoreVertical, Info, Terminal, Cpu, FileText
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
@@ -450,19 +450,29 @@ const CourseMasterModal = ({ isOpen, onClose, courseId, onUpdate }) => {
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                 <input 
                                                                     type="text"
-                                                                    value={mod.title}
+                                                                    value={mod.title || ''}
                                                                     onChange={(e) => updateModule(index, 'title', e.target.value)}
-                                                                    className="bg-slate-900 border border-slate-800 rounded-xl py-3 px-4 text-sm font-bold text-white focus:border-sky-500/30 outline-none"
+                                                                    className="bg-slate-900 border border-slate-800 rounded-xl py-3 px-4 text-sm font-bold text-white focus:border-sky-500/30 outline-none md:col-span-2"
                                                                     placeholder="Module Title"
                                                                 />
                                                                 <div className="relative">
                                                                     <Video className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" size={14} />
                                                                     <input 
                                                                         type="text"
-                                                                        value={mod.videoUrl}
+                                                                        value={mod.videoUrl || ''}
                                                                         onChange={(e) => updateModule(index, 'videoUrl', e.target.value)}
                                                                         className="w-full bg-slate-900 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm font-bold text-white focus:border-sky-500/30 outline-none"
                                                                         placeholder="Video Resource Link"
+                                                                    />
+                                                                </div>
+                                                                <div className="relative">
+                                                                    <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" size={14} />
+                                                                    <input 
+                                                                        type="text"
+                                                                        value={mod.notesUrl || ''}
+                                                                        onChange={(e) => updateModule(index, 'notesUrl', e.target.value)}
+                                                                        className="w-full bg-slate-900 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm font-bold text-white focus:border-sky-500/30 outline-none"
+                                                                        placeholder="Study Notes Link (Drive/PDF)"
                                                                     />
                                                                 </div>
                                                             </div>

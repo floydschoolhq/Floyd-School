@@ -15,6 +15,10 @@ const assignmentSchema = new mongoose.Schema({
         ref: 'Course',
         required: true
     },
+    module: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false
+    },
     dueDate: {
         type: Date,
         required: true

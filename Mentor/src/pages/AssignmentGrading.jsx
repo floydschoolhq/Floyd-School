@@ -41,6 +41,7 @@ const AssignmentGrading = () => {
         title: '',
         description: '',
         course: '',
+        module: '',
         category: 'Development',
         dueDate: '',
         maxPoints: 100,
@@ -91,6 +92,7 @@ const AssignmentGrading = () => {
             title: '',
             description: '',
             course: courses.length > 0 ? courses[0]._id : '',
+            module: '',
             category: 'Development',
             dueDate: '',
             maxPoints: 100,
@@ -107,6 +109,7 @@ const AssignmentGrading = () => {
             title: assignment.title,
             description: assignment.description,
             course: assignment.course?._id || assignment.course,
+            module: assignment.module || '',
             category: assignment.category || 'Development',
             dueDate: assignment.dueDate ? new Date(assignment.dueDate).toISOString().split('T')[0] : '',
             maxPoints: assignment.maxPoints || 100,
@@ -434,12 +437,26 @@ const AssignmentGrading = () => {
                                             <select
                                                 required
                                                 value={formData.course}
-                                                onChange={(e) => setFormData({ ...formData, course: e.target.value })}
+                                                onChange={(e) => setFormData({ ...formData, course: e.target.value, module: '' })}
                                                 className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all appearance-none"
                                             >
                                                 <option value="" disabled>Select Target Course</option>
                                                 {courses.map(c => (
                                                     <option key={c._id} value={c._id}>{c.title}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Parent Module / Unit Link</label>
+                                            <select
+                                                value={formData.module || ''}
+                                                onChange={(e) => setFormData({ ...formData, module: e.target.value })}
+                                                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all appearance-none"
+                                            >
+                                                <option value="">General Assignment (No Module Link)</option>
+                                                {courses.find(c => c._id === formData.course)?.modules?.map((m, idx) => (
+                                                    <option key={m._id || idx} value={m._id}>M{idx + 1}: {m.title}</option>
                                                 ))}
                                             </select>
                                         </div>

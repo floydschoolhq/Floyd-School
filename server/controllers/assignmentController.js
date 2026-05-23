@@ -52,7 +52,7 @@ exports.getAssignments = async (req, res) => {
 // @access  Private (Mentor)
 exports.createAssignment = async (req, res) => {
     try {
-        const { title, description, course, dueDate, maxPoints, attachments } = req.body;
+        const { title, description, course, module, dueDate, maxPoints, attachments } = req.body;
 
         if (!title || !course || !dueDate) {
             return res.status(400).json({ success: false, message: 'Missing required assignment fields' });
@@ -62,6 +62,7 @@ exports.createAssignment = async (req, res) => {
             title,
             description,
             course,
+            module,
             dueDate,
             maxPoints,
             attachments,

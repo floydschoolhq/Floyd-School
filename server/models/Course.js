@@ -19,6 +19,10 @@ const courseSchema = new mongoose.Schema({
         title: String,
         description: String,
         videoUrl: String, // YouTube Link
+        notesUrl: {       // Drive/PDF study notes URL
+            type: String,
+            default: ''
+        },
         order: Number,
         completed: {
             type: Boolean,
