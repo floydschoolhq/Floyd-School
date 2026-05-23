@@ -54,33 +54,25 @@ exports.saveSnippet = async (req, res) => {
             });
         }
 
-        const update = {
-            code
-        };
+        let snippet = await CodeSnippet.findOne({
+            user: req.user._id,
+            languageId
+        });
 
-        if (languageName) {
-            update.languageName = languageName;
-        }
-
-        const snippet = await CodeSnippet.findOneAndUpdate(
-            {
-                user: req.user._id,
-                languageId
-            },
-            {
-                $set: update,
-                $setOnInsert: {
-                    user: req.user._id,
-                    languageId,
-                    languageName: languageName || 'Unknown'
-                }
-            },
-            {
-                new: true,
-                upsert: true,
-                runValidators: true
+        if (snippet) {
+            snippet.code = code;
+            if (languageName) {
+                snippet.languageName = languageName;
             }
-        );
+            await snippet.save();
+        } else {
+            snippet = await CodeSnippet.create({
+                user: req.user._id,
+                languageId,
+                languageName: languageName || 'Unknown',
+                code
+            });
+        }
 
         res.status(200).json({
             success: true,

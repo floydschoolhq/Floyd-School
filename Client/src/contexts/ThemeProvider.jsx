@@ -5,7 +5,10 @@ const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(localStorage.getItem('thinkskool-theme') || 'modern');
+    const [theme, setTheme] = useState(() => {
+        const storedTheme = localStorage.getItem('thinkskool-theme');
+        return (storedTheme === 'studio' || !storedTheme) ? 'modern' : storedTheme;
+    });
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -13,7 +16,11 @@ export const ThemeProvider = ({ children }) => {
     }, [theme]);
 
     const toggleTheme = (newTheme) => {
-        setTheme(newTheme);
+        if (newTheme === 'studio') {
+            setTheme('modern');
+        } else {
+            setTheme(newTheme);
+        }
     };
 
     return (

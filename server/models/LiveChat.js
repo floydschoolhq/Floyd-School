@@ -20,6 +20,10 @@ const liveChatSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true
+    },
+    isDoubt: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

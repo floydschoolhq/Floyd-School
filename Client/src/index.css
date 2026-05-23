@@ -50,17 +50,6 @@
   --accent-secondary: #4F46E5;
 }
 
-/* ─── Studio (Dark) ─────────────────────────────────────────── */
-[data-theme='studio'] {
-  --surface-base: #020617;
-  --surface-soft: #0F172A;
-  --surface-el: #1E293B;
-  --text-main: #F1F5F9;
-  --text-muted: #94A3B8;
-  --accent-primary: #3B82F6;
-  --accent-secondary: #8B5CF6;
-}
-
 /* ─── Cyber (Hacker) ────────────────────────────────────────── */
 [data-theme='cyber'] {
   --surface-base: #000000;

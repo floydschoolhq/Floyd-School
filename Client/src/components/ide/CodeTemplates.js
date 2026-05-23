@@ -179,6 +179,40 @@ func greet(name: String) -> String {
 }
 
 print(greet(name: "thinkskool"))`
+    },
+    98: {
+        // HTML
+        name: 'HTML',
+        template: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ThinkSkool Web Lab</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>Welcome to your high-performance web development laboratory.</p>
+</body>
+</html>`
+    },
+    99: {
+        // CSS
+        name: 'CSS',
+        template: `/* CSS Styling */
+body {
+    background-color: var(--surface-soft, #f9fafb);
+    color: var(--text-main, #0f172a);
+    font-family: 'Outfit', sans-serif;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: var(--accent-primary, #2563eb);
+    font-weight: 900;
+}`
     }
 };
 

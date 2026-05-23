@@ -143,12 +143,24 @@ const ClassroomPage = () => {
   const fetchActiveLiveClass = async () => {
     try {
       const res = await api.get('/live-classes/active');
-      setActiveLiveClass(res.data);
-      setGlobalActiveLiveClass(res.data);
-      if (res.data && socket) {
-        fetchMyCurrentDoubt(res.data._id);
-        socket.emit('liveClass:join', res.data._id);
+      if (res.data) {
+        // Filter live class to only show if it matches student's granted courses
+        const courseId = res.data.course?._id || res.data.course || '';
+        const userGrantedCourses = user?.permissions?.grantedCourses || [];
+        const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString());
+        
+        if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
+          setActiveLiveClass(res.data);
+          setGlobalActiveLiveClass(res.data);
+          if (socket) {
+            fetchMyCurrentDoubt(res.data._id);
+            socket.emit('liveClass:join', res.data._id);
+          }
+          return;
+        }
       }
+      setActiveLiveClass(null);
+      setGlobalActiveLiveClass(null);
     } catch (error) {
       console.error('Failed to fetch active live class:', error);
     }
@@ -218,7 +230,7 @@ const ClassroomPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white p-6">
+      <div className="min-h-screen bg-surface-base p-6">
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
@@ -254,10 +266,17 @@ const ClassroomPage = () => {
       (activeLiveClass.course === activeStudyCourse._id)
     );
 
+    // Find active scheduled session for current module
+    const activeModuleLive = scheduledLives.find(l => 
+      l.course?._id === activeStudyCourse._id &&
+      l.module?.toString() === selectedModule?._id?.toString() &&
+      l.status === 'live'
+    );
+
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;
 
     return (
-      <div className={`bg-white text-text-main ${isMobile ? 'p-4' : 'p-6'} transition-all duration-500`}>
+      <div className={`bg-surface-base text-text-main ${isMobile ? 'p-4' : 'p-6'} transition-all duration-500`}>
         {/* Hub Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-surface-el">
           <div className="flex items-center gap-4">
@@ -266,14 +285,14 @@ const ClassroomPage = () => {
                 setActiveStudyCourse(null);
                 setSelectedModule(null);
               }}
-              className="p-3 bg-surface-soft hover:bg-slate-100 text-text-muted hover:text-text-main rounded-2xl border border-surface-el transition-all flex items-center justify-center"
+              className="p-3 bg-surface-soft hover:bg-surface-el text-text-muted hover:text-text-main rounded-2xl border border-surface-el transition-all flex items-center justify-center"
               title="Back to Classroom"
             >
               <X size={20} />
             </button>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100">
+                <span className="text-[10px] font-black text-accent-primary bg-accent-primary/10 px-2 py-0.5 rounded uppercase tracking-widest border border-accent-primary/20">
                   Course Hub
                 </span>
                 <span className="text-slate-300">•</span>
@@ -293,7 +312,7 @@ const ClassroomPage = () => {
           <div className="flex items-center gap-4">
             <div className="text-right">
               <div className="text-[10px] font-black text-text-muted uppercase tracking-widest">Your Progress</div>
-              <div className="text-xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-accent-primary">
                 {Math.round((activeStudyCourse.modules?.filter(m => m.completed).length / activeStudyCourse.modules?.length * 100) || 0)}%
               </div>
             </div>
@@ -405,9 +424,19 @@ const ClassroomPage = () => {
                 {/* 1. Video Player or Lock Placeholder */}
                 <div>
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
-                  {selectedModule.videoUrl ? (
+                  {(selectedModule.videoUrl || activeModuleLive) ? (
                     <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
-                      <CustomVideoPlayer videoUrl={selectedModule.videoUrl} autoPlay={false} />
+                      <CustomVideoPlayer 
+                        videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl} 
+                        autoPlay={Boolean(activeModuleLive)} 
+                        isLive={Boolean(activeModuleLive)}
+                        scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.scheduledStart}
+                      />
+                      {activeModuleLive && (
+                        <div className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest animate-pulse z-20">
+                          Live Now
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="bg-surface-soft border border-surface-el rounded-[2rem] p-8 text-center flex flex-col items-center justify-center shadow-sm min-h-[250px] relative overflow-hidden group">
@@ -490,7 +519,7 @@ const ClassroomPage = () => {
                           </span>
                           <button
                             onClick={() => setSelectedAssignment(moduleAssignment)}
-                            className="px-3 py-1.5 bg-text-main hover:bg-accent-primary hover:text-black text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
+                            className="px-3 py-1.5 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
                           >
                             {submission ? 'View' : 'Submit'}
                           </button>
@@ -529,14 +558,14 @@ const ClassroomPage = () => {
   }
 
   return (
-    <div className={`${isMobile ? 'min-h-screen bg-white transition-colors duration-500' : 'min-h-screen bg-white transition-colors duration-500 p-6'} relative`}>
+    <div className={`${isMobile ? 'min-h-screen bg-surface-base transition-colors duration-500' : 'min-h-screen bg-surface-base transition-colors duration-500 p-6'} relative`}>
       {!canAccessContent && (
-        <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
-          <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-sm">
-            <BookOpen className="w-8 h-8 text-white" />
+        <div className="absolute inset-0 z-[100] bg-surface-base/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
+          <div className="w-20 h-20 bg-accent-primary rounded-xl flex items-center justify-center mb-6 shadow-sm">
+            <BookOpen className="w-8 h-8 text-surface-base" />
           </div>
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-semibold text-text-main mb-2 tracking-normal`}>
-            Access <span className="text-blue-600">Pending</span>
+            Access <span className="text-accent-primary">Pending</span>
           </h2>
           <p className="text-text-muted max-w-md font-medium mb-8 text-sm leading-relaxed">
             Your classroom access is currently being set up. <br />
@@ -545,7 +574,7 @@ const ClassroomPage = () => {
           <button
             onClick={handleRequestAccess}
             disabled={requestingAccess}
-            className="px-10 py-5 bg-text-main text-white text-sm font-bold font-medium rounded-2xl hover:bg-blue-600 transition-all shadow-sm shadow-slate-900/10 disabled:opacity-50"
+            className="px-10 py-5 bg-text-main text-surface-base text-sm font-bold rounded-2xl hover:bg-accent-primary hover:text-surface-base transition-all shadow-sm disabled:opacity-50"
           >
             {requestingAccess ? 'Processing...' : 'Request Course Access'}
           </button>
@@ -558,7 +587,7 @@ const ClassroomPage = () => {
         className={`${isMobile ? 'px-4 py-6' : 'mb-8'}`}
       >
         <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-semibold text-text-main mb-2 tracking-normal`}>
-          My Classroom <span className="text-[#2563EB]">Resources</span>
+          My Classroom <span className="text-accent-primary">Resources</span>
         </h1>
         <p className={`${isMobile ? 'text-sm' : 'text-base'} font-medium text-text-muted`}>
           {isMobile 
@@ -575,8 +604,8 @@ const ClassroomPage = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="mb-6 mx-4"
         >
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10">
-            <div className="bg-white rounded-2xl p-4">
+          <div className="bg-surface-soft border border-surface-el rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10">
+            <div className="bg-surface-base rounded-2xl p-4">
               {activeLiveClass && (
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
@@ -620,7 +649,7 @@ const ClassroomPage = () => {
                         setGlobalActiveLiveClass(activeLiveClass);
                         setView('LiveSession');
                       }}
-                      className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider"
+                      className="flex-1 bg-accent-primary text-surface-base px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-accent-secondary transition-colors"
                     >
                       Join Live
                     </button>
@@ -663,9 +692,9 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="mb-10 bg-slate-50 border border-slate-200 rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10"
+          className="mb-10 bg-surface-soft border border-surface-el rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10"
         >
-          <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
+          <div className="bg-surface-base rounded-2xl p-6 flex flex-col gap-6">
             {activeLiveClass && (
               <>
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -709,12 +738,12 @@ const ClassroomPage = () => {
                       <button
                         onClick={handleRaiseHand}
                         disabled={isSignaling}
-                        className="bg-text-main hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest cursor-pointer disabled:opacity-50"
+                        className="bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-slate-900/10 uppercase text-base tracking-widest cursor-pointer disabled:opacity-50"
                       >
                         {isSignaling ? 'Sending Signal...' : 'Raise Hand'}
                       </button>
                     )}
-                    <div className="h-10 w-[1px] bg-slate-100 mx-1 hidden md:block"></div>
+                    <div className="h-10 w-[1px] bg-surface-el mx-1 hidden md:block"></div>
                     <div className="text-right hidden md:block mr-4">
                       <p className="text-[13px] text-text-muted/70 uppercase font-semibold tracking-widest">Started at</p>
                       <p className="text-text-main font-semibold">
@@ -726,9 +755,9 @@ const ClassroomPage = () => {
                         setGlobalActiveLiveClass(activeLiveClass);
                         setView('LiveSession');
                       }}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase text-base tracking-widest cursor-pointer"
+                      className="bg-accent-primary hover:bg-accent-secondary text-surface-base px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg uppercase text-base tracking-widest cursor-pointer"
                     >
-                      Join Meeting <span className="bg-slate-100 px-2 py-0.5 rounded text-[13px] ml-2 font-semibold text-blue-600">LIVE</span>
+                      Join Meeting <span className="bg-surface-soft px-2 py-0.5 rounded text-[13px] ml-2 font-semibold text-accent-primary border border-surface-el">LIVE</span>
                     </button>
                   </div>
                 </div>
@@ -743,12 +772,12 @@ const ClassroomPage = () => {
                   {scheduledLives.filter(l => l.status === 'scheduled').map(live => (
                     <div 
                       key={live._id} 
-                      className="bg-surface-soft rounded-xl p-4 border border-surface-el hover:border-red-300 transition-colors cursor-pointer"
+                      className="bg-surface-soft rounded-xl p-4 border border-surface-el hover:border-accent-primary transition-colors cursor-pointer"
                       onClick={() => setActiveScheduledVideo(live)}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <PlayCircle className="text-red-500 w-5 h-5" />
+                        <div className="w-10 h-10 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <PlayCircle className="w-5 h-5" />
                         </div>
                         <div className="min-w-0">
                           <h5 className="font-semibold text-text-main text-sm truncate">{live.title}</h5>
@@ -774,7 +803,7 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className={`${isMobile ? 'mb-6 mx-4' : 'mb-8'} bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200`}
+          className={`${isMobile ? 'mb-6 mx-4' : 'mb-8'} bg-surface-base rounded-2xl overflow-hidden shadow-sm border border-surface-el`}
         >
           <div className="flex items-center justify-between p-4 border-b border-surface-el">
             <div>
@@ -783,7 +812,7 @@ const ClassroomPage = () => {
             </div>
             <button
               onClick={() => setActiveScheduledVideo(null)}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
+              className="p-2 hover:bg-surface-soft rounded-xl transition-all"
             >
               <X size={20} className="text-text-muted/70" />
             </button>
@@ -792,6 +821,8 @@ const ClassroomPage = () => {
             <CustomVideoPlayer
               videoUrl={activeScheduledVideo.videoUrl}
               autoPlay={true}
+              isLive={activeScheduledVideo.status === 'live'}
+              scheduledStart={activeScheduledVideo.actualStart || activeScheduledVideo.scheduledStart}
             />
           </div>
         </motion.div>
@@ -817,7 +848,7 @@ const ClassroomPage = () => {
                   setActiveStudyCourse(course);
                   setSelectedModule(course.modules?.[0] || null);
                 }}
-                className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm cursor-pointer hover:border-blue-500/55 transition-colors"
+                className="bg-surface-soft rounded-xl p-4 border border-surface-el shadow-sm cursor-pointer hover:border-accent-primary transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -832,7 +863,7 @@ const ClassroomPage = () => {
                   </div>
                   <div className="text-right">
                     <div className="text-xs font-semibold text-text-muted/70 uppercase">Progress</div>
-                    <div className="text-sm font-semibold text-blue-600">
+                    <div className="text-sm font-semibold text-accent-primary">
                       {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                     </div>
                   </div>
@@ -872,14 +903,14 @@ const ClassroomPage = () => {
                         : 'bg-green-500'
                         }`} />
                       <div>
-                        <h3 className="font-bold text-slate-800 text-lg tracking-normal">{course.title}</h3>
+                        <h3 className="font-bold text-text-main text-lg tracking-normal">{course.title}</h3>
                         <p className="text-base font-medium text-text-muted">{course.instructor?.name}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
                         <div className="text-[13px] font-semibold tracking-widest text-text-muted/70 uppercase">Progress</div>
-                        <div className="text-lg font-semibold text-[#2563EB]">
+                        <div className="text-lg font-semibold text-accent-primary">
                           {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
                         </div>
                       </div>
@@ -888,7 +919,7 @@ const ClassroomPage = () => {
                           setActiveStudyCourse(course);
                           setSelectedModule(course.modules?.[0] || null);
                         }}
-                        className="px-4 py-2 bg-text-main hover:bg-slate-800 text-white rounded-lg text-base font-bold transition-colors"
+                        className="px-4 py-2 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-lg text-base font-bold transition-all shadow-sm active:scale-95"
                       >
                         Study Node
                       </button>
@@ -926,7 +957,7 @@ const ClassroomPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm"
+                  className="bg-surface-soft rounded-xl p-4 border border-surface-el shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
@@ -939,9 +970,9 @@ const ClassroomPage = () => {
                       <div className="mt-3 flex flex-wrap items-center gap-2">
                         <span className={`px-2 py-1 rounded text-[11px] font-black uppercase tracking-widest ${submission
                           ? submission.status === 'graded'
-                            ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                            : 'bg-blue-50 text-blue-600 border border-blue-100'
-                          : 'bg-slate-50 text-slate-500 border border-slate-100'
+                            ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                            : 'bg-accent-primary/10 text-accent-primary border border-accent-primary/20'
+                          : 'bg-surface-el text-text-muted border border-surface-el'
                           }`}>
                           {submission
                             ? submission.status === 'graded'
@@ -952,9 +983,9 @@ const ClassroomPage = () => {
 
                         <button
                           onClick={() => setSelectedAssignment(assignment)}
-                          className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-colors ${submission
+                          className={`px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all ${submission
                             ? 'bg-surface-soft text-text-main border border-surface-el'
-                            : 'bg-blue-500 text-white'
+                            : 'bg-accent-primary text-surface-base hover:bg-accent-secondary hover:text-surface-base'
                             }`}
                         >
                           {submission ? 'View Submission' : 'Submit Work'}
@@ -1002,7 +1033,7 @@ const ClassroomPage = () => {
                   <GradientCard gradient="from-[#FBEFEF] to-[#FCF8F8]">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h3 className="font-bold text-slate-800 mb-1 tracking-normal">{assignment.title}</h3>
+                        <h3 className="font-bold text-text-main mb-1 tracking-normal">{assignment.title}</h3>
                         <p className="text-base font-medium text-text-muted mb-4">{assignment.course?.title}</p>
                         <div className="flex items-center gap-2 text-[13px] font-semibold text-text-muted/70 font-medium">
                           <Clock className="w-3 h-3" />
@@ -1012,9 +1043,9 @@ const ClassroomPage = () => {
                         <div className="mt-4 flex items-center gap-3 flex-wrap">
                           <span className={`px-2 py-1 rounded text-[11px] font-black uppercase tracking-widest ${submission
                             ? submission.status === 'graded'
-                              ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                              : 'bg-blue-50 text-blue-600 border border-blue-100'
-                            : 'bg-slate-50 text-slate-500 border border-slate-100'
+                              ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                              : 'bg-accent-primary/10 text-accent-primary border border-accent-primary/20'
+                            : 'bg-surface-el text-text-muted border border-surface-el'
                             }`}>
                             {submission
                               ? submission.status === 'graded'
@@ -1025,9 +1056,9 @@ const ClassroomPage = () => {
 
                           <button
                             onClick={() => setSelectedAssignment(assignment)}
-                            className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-colors ${submission
+                            className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${submission
                               ? 'bg-surface-soft text-text-main border border-surface-el'
-                              : 'bg-blue-500 text-white'
+                              : 'bg-accent-primary text-surface-base hover:bg-accent-secondary hover:text-surface-base'
                               }`}
                           >
                             {submission ? 'View Submission' : 'Submit Work'}
@@ -1064,14 +1095,14 @@ const ClassroomPage = () => {
             </div>
             Recordings
           </h2>
-          <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+          <div className="bg-surface-soft rounded-xl p-4 border border-surface-el shadow-sm">
             <div className="text-center py-6">
-              <Video className="w-10 h-10 mx-auto mb-3 text-blue-600 opacity-50" />
+              <Video className="w-10 h-10 mx-auto mb-3 text-accent-primary opacity-50" />
               <p className="text-text-main font-bold text-sm mb-1">Video Archive</p>
               <p className="text-xs text-text-muted mb-4">Watch previous sessions anytime.</p>
               <button 
                 onClick={() => setView('Recordings')}
-                className="w-full px-4 py-2 bg-text-main text-white rounded-lg font-bold text-sm transition-all"
+                className="w-full px-4 py-2 bg-text-main text-surface-base hover:bg-accent-primary hover:text-surface-base rounded-lg font-bold text-sm transition-all"
               >
                 Browse All Videos
               </button>
@@ -1094,7 +1125,7 @@ const ClassroomPage = () => {
               <p className="text-base font-medium text-text-muted mb-6">Review previous technical deep dives and workshops.</p>
               <button 
                 onClick={() => setView('Recordings')}
-                className="px-8 py-3 bg-text-main hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10"
+                className="px-8 py-3 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10"
               >
                 Browse Archive
               </button>
@@ -1112,18 +1143,18 @@ const ClassroomPage = () => {
 
       {/* Mobile-Only: Quick Actions Footer */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-surface-base border-t border-surface-el p-4 z-50">
           <div className="flex gap-2">
             <button
               onClick={() => setView('Recordings')}
-              className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+              className="flex-1 bg-accent-primary text-surface-base px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all hover:bg-accent-secondary"
             >
               <Video className="w-3 h-3" />
               All Videos
             </button>
             <button
               onClick={() => setView('Dashboard')}
-              className="flex-1 bg-text-main text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+              className="flex-1 bg-text-main text-surface-base px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all hover:bg-accent-primary"
             >
               <BookOpen className="w-3 h-3" />
               Dashboard

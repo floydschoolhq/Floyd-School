@@ -131,7 +131,7 @@ const StudentDashboard = () => {
 
           {/* Theme Switcher Widget */}
           <div className="flex items-center gap-2 bg-surface-soft p-1 rounded-2xl border border-surface-el shadow-sm">
-            {['modern', 'studio', 'cyber'].map((t) => (
+            {['modern', 'cyber'].map((t) => (
               <button
                 key={t}
                 onClick={() => setTheme(t)}

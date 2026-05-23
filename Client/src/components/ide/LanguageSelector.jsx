@@ -4,18 +4,12 @@ import { ChevronDown } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 const LANGUAGES = [
-    { id: 63, name: 'JavaScript', icon: '🟨', extension: 'js' },
     { id: 71, name: 'Python', icon: '🐍', extension: 'py' },
-    { id: 62, name: 'Java', icon: '☕', extension: 'java' },
-    { id: 54, name: 'C++', icon: '⚙️', extension: 'cpp' },
+    { id: 63, name: 'JavaScript', icon: '🟨', extension: 'js' },
+    { id: 98, name: 'HTML', icon: '🌐', extension: 'html' },
+    { id: 99, name: 'CSS', icon: '🎨', extension: 'css' },
     { id: 50, name: 'C', icon: '🔧', extension: 'c' },
-    { id: 51, name: 'C#', icon: '💜', extension: 'cs' },
-    { id: 72, name: 'Ruby', icon: '💎', extension: 'rb' },
-    { id: 68, name: 'PHP', icon: '🐘', extension: 'php' },
-    { id: 60, name: 'Go', icon: '🔵', extension: 'go' },
-    { id: 78, name: 'Kotlin', icon: '🟣', extension: 'kt' },
-    { id: 74, name: 'TypeScript', icon: '🔷', extension: 'ts' },
-    { id: 83, name: 'Swift', icon: '🍎', extension: 'swift' },
+    { id: 54, name: 'C++', icon: '⚙️', extension: 'cpp' },
 ];
 
 export const LanguageSelector = ({ selectedLanguage, onLanguageChange, className }) => {
@@ -43,12 +37,12 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange, className
                 <button
                     ref={buttonRef}
                     onClick={handleToggle}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-surface-soft hover:bg-surface-el border border-surface-el rounded-xl text-text-main font-bold uppercase tracking-wider text-xs transition-colors cursor-pointer shadow-sm"
                 >
                     <span className="text-lg">{selected.icon}</span>
-                    <span className="font-medium">{selected.name}</span>
+                    <span className="font-bold">{selected.name}</span>
                     <ChevronDown className={cn(
-                        "w-4 h-4 transition-transform",
+                        "w-4 h-4 transition-transform text-text-muted",
                         isOpen && "rotate-180"
                     )} />
                 </button>
@@ -61,7 +55,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange, className
                         onClick={handleClose}
                     />
                     <div
-                        className="fixed bg-slate-900 border border-slate-700 rounded-lg shadow-2xl z-[9999] max-h-96 overflow-y-auto"
+                        className="fixed bg-surface-base border border-surface-el rounded-2xl shadow-2xl z-[9999] max-h-96 overflow-y-auto p-1.5 transition-colors duration-500"
                         style={{
                             top: `${buttonRect.bottom + 8}px`,
                             right: `${window.innerWidth - buttonRect.right}px`,
@@ -76,14 +70,16 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange, className
                                     handleClose();
                                 }}
                                 className={cn(
-                                    "w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-800 transition-colors text-left",
-                                    lang.id === selectedLanguage && "bg-slate-800 border-l-2 border-sky-500"
+                                    "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-left cursor-pointer hover:bg-surface-soft",
+                                    lang.id === selectedLanguage
+                                        ? "bg-accent-primary/10 text-accent-primary font-black border-l-4 border-accent-primary"
+                                        : "text-text-muted hover:text-text-main"
                                 )}
                             >
-                                <span className="text-xl">{lang.icon}</span>
+                                <span className="text-lg">{lang.icon}</span>
                                 <div>
-                                    <div className="font-medium text-white">{lang.name}</div>
-                                    <div className="text-xs text-slate-400">.{lang.extension}</div>
+                                    <div className="font-bold text-xs uppercase tracking-wider">{lang.name}</div>
+                                    <div className="text-[10px] font-medium opacity-60">.{lang.extension}</div>
                                 </div>
                             </button>
                         ))}

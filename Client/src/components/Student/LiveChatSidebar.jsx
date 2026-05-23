@@ -42,12 +42,17 @@ const LiveChatSidebar = ({ classId }) => {
                 setMessages(prev => [...prev, msg]);
             });
 
+            socket.on('liveClass:messageUpdated', (updatedMsg) => {
+                setMessages(prev => prev.map(m => m._id === updatedMsg._id ? updatedMsg : m));
+            });
+
             socket.on('liveClass:countUpdate', ({ count }) => {
                 setStudentCount(count);
             });
 
             return () => {
                 socket.off('liveClass:message');
+                socket.off('liveClass:messageUpdated');
                 socket.off('liveClass:countUpdate');
             };
         }
@@ -65,6 +70,15 @@ const LiveChatSidebar = ({ classId }) => {
             setMessages(res.data);
         } catch (error) {
             console.error('Failed to fetch messages:', error);
+        }
+    };
+
+    const handleMarkAsDoubt = async (msgId) => {
+        try {
+            await api.post(`/live-chat/${msgId}/doubt`);
+        } catch (error) {
+            console.error('Failed to mark message as doubt:', error);
+            alert(error.response?.data?.message || 'Failed to mark as doubt');
         }
     };
 
@@ -111,8 +125,8 @@ const LiveChatSidebar = ({ classId }) => {
                 className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar"
             >
                 {messages.map((msg, idx) => (
-                    <div key={idx} className="group">
-                        <div className="flex items-center gap-2 mb-1.5">
+                    <div key={idx} className="group text-left">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                             <span className={`text-[13px] font-semibold font-medium ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-amber-500' : 'text-slate-400'
                                 }`}>
                                 {msg.senderName}
@@ -120,6 +134,23 @@ const LiveChatSidebar = ({ classId }) => {
                             {(msg.role === 'mentor' || msg.role === 'admin') && (
                                 <ShieldCheck size={10} className="text-amber-500" />
                             )}
+                            {msg.isDoubt && (
+                                <span className="px-2 py-0.5 bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-black uppercase rounded-lg tracking-widest animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.2)]">
+                                    ✦ Doubt Marked
+                                </span>
+                            )}
+                            
+                            {/* Hover Action for Mentor/Admin to Mark as Doubt */}
+                            {(user?.role === 'mentor' || user?.role === 'admin') && !msg.isDoubt && msg.role !== 'mentor' && msg.role !== 'admin' && (
+                                <button
+                                    onClick={() => handleMarkAsDoubt(msg._id)}
+                                    className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-black text-red-400 hover:text-red-300 uppercase tracking-widest cursor-pointer ml-2"
+                                    type="button"
+                                >
+                                    [ Mark as Doubt ]
+                                </button>
+                            )}
+
                             <span className="text-[11px] font-bold text-slate-600 ml-auto">
                                 {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>

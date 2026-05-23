@@ -7,6 +7,7 @@ import { Terminal } from '../../components/ide/Terminal';
 import { LanguageSelector, LANGUAGES } from '../../components/ide/LanguageSelector';
 import { getTemplate } from '../../components/ide/CodeTemplates';
 import { PortalContext } from '../../contexts/PortalProvider';
+import { useTheme } from '../../contexts/ThemeProvider';
 import { useSocket } from '../../contexts/SocketProvider';
 import api from '../../api/axios';
 

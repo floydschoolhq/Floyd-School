@@ -47,6 +47,7 @@ const LiveClassCenter = () => {
     const [searchingRecordings, setSearchingRecordings] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [scheduleCourse, setScheduleCourse] = useState('');
+    const [scheduleModule, setScheduleModule] = useState('');
 
     // Scheduled sessions state
     const [scheduledSessions, setScheduledSessions] = useState([]);
@@ -303,7 +304,8 @@ const LiveClassCenter = () => {
                 description: scheduleDescription,
                 videoUrl: embedUrl,
                 scheduledStart: scheduledStart.toISOString(),
-                course: scheduleCourse
+                course: scheduleCourse,
+                module: scheduleModule || undefined
             });
             
             toast.success('Live session scheduled successfully');
@@ -313,6 +315,7 @@ const LiveClassCenter = () => {
             setScheduleDate('');
             setScheduleTime('');
             setScheduleCourse('');
+            setScheduleModule('');
             setShowScheduleForm(false);
             fetchScheduledSessions();
         } catch (err) {
@@ -928,7 +931,10 @@ const LiveClassCenter = () => {
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Select Course *</label>
                                 <select
                                     value={scheduleCourse}
-                                    onChange={(e) => setScheduleCourse(e.target.value)}
+                                    onChange={(e) => {
+                                        setScheduleCourse(e.target.value);
+                                        setScheduleModule('');
+                                    }}
                                     required
                                     className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all appearance-none cursor-pointer"
                                 >
@@ -938,6 +944,23 @@ const LiveClassCenter = () => {
                                     ))}
                                 </select>
                             </div>
+
+                            {scheduleCourse && (
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Parent Module / Unit Link *</label>
+                                    <select
+                                        value={scheduleModule}
+                                        onChange={(e) => setScheduleModule(e.target.value)}
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                    >
+                                        <option value="">Choose Module...</option>
+                                        {courses.find(c => c._id === scheduleCourse)?.modules?.map((m, idx) => (
+                                            <option key={m._id || idx} value={m._id}>M{idx + 1}: {m.title}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )}
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">YouTube URL *</label>

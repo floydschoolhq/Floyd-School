@@ -17,7 +17,6 @@ const ALL_COMMANDS = [
     { id: 'support', label: 'Get Support', icon: HeadphonesIcon, group: 'Navigate', view: 'Support' },
     // Themes
     { id: 'theme-modern', label: 'Switch to Modern Theme', icon: Sun, group: 'Theme', theme: 'modern' },
-    { id: 'theme-studio', label: 'Switch to Studio Theme', icon: Moon, group: 'Theme', theme: 'studio' },
     { id: 'theme-cyber', label: 'Switch to Cyber Theme', icon: Monitor, group: 'Theme', theme: 'cyber' },
 ];
 

@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 exports.createScheduledLive = async (req, res) => {
     try {
-        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants, course } = req.body;
+        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants, course, module } = req.body;
 
         if (!title || !videoUrl || !scheduledStart || !course) {
             return res.status(400).json({ message: 'Title, video URL, scheduled start time, and course are required' });
@@ -16,6 +16,7 @@ exports.createScheduledLive = async (req, res) => {
             mentor: req.user._id,
             mentorName: req.user.name,
             course,
+            module: module || null,
             videoUrl,
             status: 'scheduled',
             scheduledStart: new Date(scheduledStart),
@@ -73,9 +74,15 @@ exports.getUpcomingScheduledLives = async (req, res) => {
         if (req.query.courseId) {
             query.course = req.query.courseId;
         } else if (req.user && req.user.role === 'student') {
+            const User = require('../models/User');
+            const studentUser = await User.findById(req.user._id).select('permissions.grantedCourses');
+            const grantedIds = studentUser?.permissions?.grantedCourses || [];
+
             const Course = require('../models/Course');
             const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
-            const courseIds = enrolledCourses.map(c => c._id);
+            const enrolledIds = enrolledCourses.map(c => c._id);
+
+            const courseIds = [...new Set([...grantedIds.map(id => id.toString()), ...enrolledIds.map(id => id.toString())])];
             query.course = { $in: courseIds };
         }
 
@@ -174,6 +181,19 @@ exports.startLiveNow = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' });
         }
 
+        // Check if there is already an active live session for this course
+        const activeLiveForCourse = await ScheduledLive.findOne({
+            course: scheduledLive.course,
+            status: 'live',
+            _id: { $ne: scheduledLive._id }
+        });
+
+        if (activeLiveForCourse) {
+            return res.status(400).json({ 
+                message: `There is already an active live session ("${activeLiveForCourse.title}") running for this course. Please end it before starting a new one.` 
+            });
+        }
+
         scheduledLive.status = 'live';
         scheduledLive.actualStart = new Date();
         await scheduledLive.save();
@@ -231,6 +251,19 @@ exports.endLive = async (req, res) => {
         scheduledLive.status = 'ended';
         scheduledLive.actualEnd = new Date();
         await scheduledLive.save();
+
+        // Sync ending live with the module's video URL
+        if (scheduledLive.module) {
+            const Course = require('../models/Course');
+            const course = await Course.findById(scheduledLive.course);
+            if (course) {
+                const moduleIndex = course.modules.findIndex(m => m._id.toString() === scheduledLive.module.toString());
+                if (moduleIndex !== -1) {
+                    course.modules[moduleIndex].videoUrl = scheduledLive.videoUrl;
+                    await course.save();
+                }
+            }
+        }
 
         const io = req.app.get('io');
         if (io) {

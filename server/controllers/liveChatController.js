@@ -31,3 +31,38 @@ exports.sendMessage = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+exports.markMessageAsDoubt = async (req, res) => {
+    try {
+        const LiveChat = require('../models/LiveChat');
+        const Doubt = require('../models/Doubt');
+
+        const message = await LiveChat.findById(req.params.messageId);
+        if (!message) {
+            return res.status(404).json({ message: 'Chat message not found' });
+        }
+
+        message.isDoubt = true;
+        await message.save();
+
+        // Create a doubt record in MongoDB
+        const doubt = await Doubt.create({
+            student: message.sender,
+            studentName: message.senderName,
+            liveClass: message.liveClassId,
+            question: message.text
+        });
+
+        const io = req.app.get('io');
+        if (io) {
+            // Notify the room that the chat message was updated
+            io.to(`liveClass:${message.liveClassId}`).emit('liveClass:messageUpdated', message);
+            // Alert standard doubts queue
+            io.emit('doubt:new', doubt);
+        }
+
+        res.json({ success: true, doubt, message });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};

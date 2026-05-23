@@ -5,32 +5,32 @@ import { cn } from '../../lib/utils';
 
 export const Terminal = ({ output = [], onClear, isRunning }) => {
     return (
-        <div className="h-full flex flex-col bg-slate-950 border-t border-slate-800">
+        <div className="h-full flex flex-col bg-surface-base border-t border-surface-el transition-colors duration-500">
             {/* Terminal Header */}
-            <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800">
+            <div className="flex items-center justify-between px-4 py-2 bg-surface-soft border-b border-surface-el transition-colors duration-500">
                 <div className="flex items-center gap-2">
-                    <TerminalIcon className="w-4 h-4 text-green-400" />
-                    <span className="text-sm font-semibold text-slate-300">Output</span>
+                    <TerminalIcon className="w-4 h-4 text-accent-primary" />
+                    <span className="text-sm font-bold text-text-main uppercase tracking-wider">Output</span>
                     {isRunning && (
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                            <span className="text-xs text-green-400">Running...</span>
+                        <div className="flex items-center gap-2 ml-2">
+                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
+                            <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">Running...</span>
                         </div>
                     )}
                 </div>
                 <button
                     onClick={onClear}
-                    className="p-1 hover:bg-slate-800 rounded transition-colors"
+                    className="p-1.5 hover:bg-surface-el rounded-lg transition-colors cursor-pointer text-text-muted hover:text-text-main"
                     title="Clear output"
                 >
-                    <Trash2 className="w-4 h-4 text-slate-400" />
+                    <Trash2 className="w-4 h-4" />
                 </button>
             </div>
 
             {/* Terminal Content */}
-            <div className="flex-1 overflow-auto p-4 font-mono text-sm">
+            <div className="flex-1 overflow-auto p-4 font-mono text-sm bg-surface-base text-text-main transition-colors duration-500">
                 {output.length === 0 ? (
-                    <div className="text-slate-500 italic">
+                    <div className="text-text-muted italic">
                         Output will appear here...
                     </div>
                 ) : (
@@ -40,11 +40,11 @@ export const Terminal = ({ output = [], onClear, isRunning }) => {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             className={cn(
-                                "mb-1",
-                                line.type === 'error' && "text-blue-400",
-                                line.type === 'success' && "text-green-400",
-                                line.type === 'info' && "text-sky-400",
-                                line.type === 'output' && "text-slate-300"
+                                "mb-2 font-medium tracking-tight",
+                                line.type === 'error' && "text-red-500 bg-red-500/5 px-2.5 py-1 rounded-xl border border-red-500/10 w-fit block",
+                                line.type === 'success' && "text-emerald-500 bg-emerald-500/5 px-2.5 py-1 rounded-xl border border-emerald-500/10 w-fit block",
+                                line.type === 'info' && "text-accent-primary bg-accent-primary/5 px-2.5 py-1 rounded-xl border border-accent-primary/10 w-fit block",
+                                line.type === 'output' && "text-text-main pl-2 border-l-2 border-surface-el"
                             )}
                         >
                             {line.type === 'error' && '❌ '}

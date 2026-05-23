@@ -254,6 +254,8 @@ const LiveSessionView = ({ liveClass, onBack }) => {
                                     <CustomVideoPlayer
                                         videoUrl={embedUrl}
                                         autoPlay={true}
+                                        isLive={true}
+                                        scheduledStart={liveClass.actualStart || liveClass.scheduledStart || liveClass.startedAt}
                                     />
                                 )}
                             </div>

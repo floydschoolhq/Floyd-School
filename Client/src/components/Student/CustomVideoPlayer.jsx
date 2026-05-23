@@ -17,7 +17,7 @@ const QUALITY_LABELS = {
 
 const QUALITY_PRIORITY = ['highres', 'hd2160', 'hd1440', 'hd1080', 'hd720', 'large', 'medium', 'small', 'tiny'];
 
-const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
+const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false, scheduledStart = null }) => {
     const playerRef = useRef(null);
     const containerRef = useRef(null);
     const apiLoaded = useRef(false);
@@ -78,6 +78,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
 
         playerRef.current = new window.YT.Player('custom-yt-player', {
             videoId,
+            suggestedQuality: 'hd1080',
             playerVars: {
                 controls: 0,
                 modestbranding: 1,
@@ -96,12 +97,20 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
                 onPlaybackQualityChange: handleQualityChange
             }
         });
-    }, [videoId, autoPlay]);
+    }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
 
     const handlePlayerReady = useCallback((event) => {
         playerReady.current = true;
         setIsPlaying(autoPlay);
         setIsLoaded(true);
+
+        if (isLive && scheduledStart) {
+            const elapsedSeconds = Math.max(0, Math.floor((new Date().getTime() - new Date(scheduledStart).getTime()) / 1000));
+            event.target.seekTo(elapsedSeconds, true);
+        }
+
+        // Suggest HD 1080 for premium streaming experience
+        event.target.setPlaybackQuality('hd1080');
 
         const availableLevels = event.target.getAvailableQualityLevels();
         if (availableLevels && availableLevels.length > 0) {
@@ -110,7 +119,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
         }
 
         if (onReady) onReady();
-    }, [autoPlay, onReady]);
+    }, [autoPlay, onReady, isLive, scheduledStart]);
 
     const handleStateChange = useCallback((event) => {
         switch (event.data) {
@@ -146,6 +155,10 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
         if (isPlaying) {
             playerRef.current.pauseVideo();
         } else {
+            if (isLive && scheduledStart) {
+                const elapsedSeconds = Math.max(0, Math.floor((new Date().getTime() - new Date(scheduledStart).getTime()) / 1000));
+                playerRef.current.seekTo(elapsedSeconds, true);
+            }
             playerRef.current.playVideo();
         }
     };
@@ -260,6 +273,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady }) => {
                                     className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                                 />
                             </div>
+
+                            {/* Dynamic Live Indicator badge */}
+                            {isLive && (
+                                <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
+                                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
+                                    <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live Broadcast</span>
+                                </div>
+                            )}
 
                             <div className="flex-1" />
 
