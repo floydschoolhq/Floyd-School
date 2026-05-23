@@ -218,7 +218,7 @@ const ClassroomPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface-base p-6">
+      <div className="min-h-screen bg-white p-6">
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
@@ -252,7 +252,7 @@ const ClassroomPage = () => {
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;
 
     return (
-      <div className={`bg-surface-base text-text-main ${isMobile ? 'p-4' : 'p-6'} transition-all duration-500`}>
+      <div className={`bg-white text-text-main ${isMobile ? 'p-4' : 'p-6'} transition-all duration-500`}>
         {/* Hub Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-surface-el">
           <div className="flex items-center gap-4">
@@ -377,7 +377,7 @@ const ClassroomPage = () => {
                       </div>
                       <h4 className="text-sm font-bold text-slate-800 uppercase tracking-tight mb-1">Lecture Coming Soon</h4>
                       <p className="text-xs text-slate-400 max-w-xs font-semibold leading-relaxed">
-                        This session is currently locked. The video lecture player will activate immediately when the live class begins.
+                        The lecture video will be available here after the live session.
                       </p>
                     </div>
                   )}
@@ -416,7 +416,7 @@ const ClassroomPage = () => {
                         <div>
                           <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Study Notes</h5>
                           <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
-                            Notes will be uploaded after class.
+                            Study notes and PDF slides will be posted here after the class.
                           </p>
                         </div>
                       </div>
@@ -454,7 +454,7 @@ const ClassroomPage = () => {
                         <div>
                           <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Live Broadcast</h5>
                           <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
-                            Next session scheduled soon.
+                            Your next live session is being scheduled. Stay tuned!
                           </p>
                         </div>
                       </div>
@@ -504,7 +504,7 @@ const ClassroomPage = () => {
                       <div>
                         <h5 className="text-xs font-bold text-slate-700 uppercase tracking-tight">Homework & Tasks</h5>
                         <p className="text-[11px] text-slate-400 font-bold leading-normal mt-0.5">
-                          No assignments are released for this unit yet.
+                          Homework tasks and assignments will be posted here after the lecture.
                         </p>
                       </div>
                     </div>
@@ -528,9 +528,9 @@ const ClassroomPage = () => {
   }
 
   return (
-    <div className={`${isMobile ? 'min-h-screen bg-surface-base transition-colors duration-500' : 'min-h-screen bg-surface-base transition-colors duration-500 p-6'} relative`}>
+    <div className={`${isMobile ? 'min-h-screen bg-white transition-colors duration-500' : 'min-h-screen bg-white transition-colors duration-500 p-6'} relative`}>
       {!canAccessContent && (
-        <div className="absolute inset-0 z-[100] bg-surface-base/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
+        <div className="absolute inset-0 z-[100] bg-white/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
           <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-sm">
             <BookOpen className="w-8 h-8 text-white" />
           </div>
@@ -574,8 +574,8 @@ const ClassroomPage = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="mb-6 mx-4"
         >
-          <div className="bg-surface-soft border border-surface-el rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10">
-            <div className="bg-surface-base rounded-2xl p-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10">
+            <div className="bg-white rounded-2xl p-4">
               {activeLiveClass && (
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
@@ -662,9 +662,9 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="mb-10 bg-surface-soft border border-surface-el rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10"
+          className="mb-10 bg-slate-50 border border-slate-200 rounded-2xl p-0.5 shadow-sm shadow-[#2563EB]/10"
         >
-          <div className="bg-surface-base rounded-2xl p-6 flex flex-col gap-6">
+          <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
             {activeLiveClass && (
               <>
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -727,7 +727,7 @@ const ClassroomPage = () => {
                       }}
                       className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase text-base tracking-widest cursor-pointer"
                     >
-                      Join Meeting <span className="bg-surface-base/20 px-2 py-0.5 rounded text-[13px] ml-2 font-semibold">LIVE</span>
+                      Join Meeting <span className="bg-slate-100 px-2 py-0.5 rounded text-[13px] ml-2 font-semibold text-blue-600">LIVE</span>
                     </button>
                   </div>
                 </div>
@@ -773,7 +773,7 @@ const ClassroomPage = () => {
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className={`${isMobile ? 'mb-6 mx-4' : 'mb-8'} bg-surface-base rounded-2xl overflow-hidden shadow-sm border border-surface-el`}
+          className={`${isMobile ? 'mb-6 mx-4' : 'mb-8'} bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200`}
         >
           <div className="flex items-center justify-between p-4 border-b border-surface-el">
             <div>
@@ -816,7 +816,7 @@ const ClassroomPage = () => {
                   setActiveStudyCourse(course);
                   setSelectedModule(course.modules?.[0] || null);
                 }}
-                className="bg-surface-base rounded-xl p-4 border border-surface-el shadow-sm cursor-pointer hover:border-blue-500/55 transition-colors"
+                className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm cursor-pointer hover:border-blue-500/55 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -925,7 +925,7 @@ const ClassroomPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-surface-base rounded-xl p-4 border border-surface-el shadow-sm"
+                  className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
@@ -1063,7 +1063,7 @@ const ClassroomPage = () => {
             </div>
             Recordings
           </h2>
-          <div className="bg-surface-base rounded-xl p-4 border border-surface-el shadow-sm">
+          <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
             <div className="text-center py-6">
               <Video className="w-10 h-10 mx-auto mb-3 text-blue-600 opacity-50" />
               <p className="text-text-main font-bold text-sm mb-1">Video Archive</p>
@@ -1111,7 +1111,7 @@ const ClassroomPage = () => {
 
       {/* Mobile-Only: Quick Actions Footer */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-surface-base border-t border-surface-el p-4 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 z-50">
           <div className="flex gap-2">
             <button
               onClick={() => window.location.href = '/student/recordings'}
