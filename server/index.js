@@ -50,7 +50,10 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose.connection.on('disconnected', () => {
-    console.log('MongoDB disconnected');
+    console.log('MongoDB disconnected — attempting reconnect in 5s...');
+    setTimeout(() => {
+        connectDB().catch(err => console.error('Reconnect failed:', err.message));
+    }, 5000);
 });
 
 const app = express();
@@ -177,19 +180,37 @@ app.use((req, res, next) => {
     const isConnected = mongoose.connection.readyState === 1;
     req.dbConnected = isConnected;
 
-    // List of prefixes that REQUIRE database
-    const apiPrefixes = ['/api/auth', '/api/dashboard', '/api/courses', '/api/assignments', '/api/students'];
+    // Auth routes are NEVER blocked — the controller handles DB errors gracefully
+    // so that students can always attempt login (they get a proper error from Mongoose, not a 503)
+    const bypassPrefixes = ['/api/auth', '/api/public', '/api/health'];
+    const isBypass = bypassPrefixes.some(prefix => req.path.startsWith(prefix));
+    if (isBypass) return next();
+
+    // All other data routes require an active DB connection
+    const apiPrefixes = ['/api/dashboard', '/api/courses', '/api/assignments', '/api/students'];
     const isApiRequest = apiPrefixes.some(prefix => req.path.startsWith(prefix));
 
     if (isApiRequest && !isConnected) {
         return res.status(503).json({
             success: false,
-            message: 'Ecosystem Under Maintenance: Database link severed. Please try again in a few moments.',
+            message: 'Service temporarily unavailable. Please try again in a few moments.',
             dbConnected: false
         });
     }
 
     next();
+});
+
+// Health check endpoint (used by Render for uptime monitoring)
+app.get('/api/health', (req, res) => {
+    const dbState = mongoose.connection.readyState;
+    const states = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
+    res.status(dbState === 1 ? 200 : 503).json({
+        status: dbState === 1 ? 'ok' : 'degraded',
+        db: states[dbState] || 'unknown',
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString()
+    });
 });
 
 // Serve static files
