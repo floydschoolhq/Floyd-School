@@ -57,6 +57,7 @@ const CourseDetails = () => {
         const foundCourse = FALLBACK_COURSES.find(c => c._id === courseId);
         if (foundCourse) {
             setCourse(foundCourse);
+            setIsAvailable(foundCourse.status === 'published' && foundCourse.isActive !== false);
         }
         window.scrollTo(0, 0);
         
@@ -65,10 +66,14 @@ const CourseDetails = () => {
             try {
                 const res = await api.get(`/public/courses/${courseId}/stats`);
                 if (res.data && res.data.success) {
-                    if ((res.data.status && res.data.status !== 'published') || res.data.isActive === false) {
+                    const resolvedStatus = res.data.status !== undefined ? res.data.status : (foundCourse?.status || 'published');
+                    const resolvedIsActive = res.data.isActive !== undefined ? res.data.isActive : (foundCourse?.isActive !== false);
+
+                    if (resolvedStatus !== 'published' || !resolvedIsActive) {
                         setIsAvailable(false);
                         return;
                     }
+                    setIsAvailable(true);
                     setStats({
                         manualEnrollmentCount: res.data.manualEnrollmentCount,
                         autoEnrollmentCount: res.data.autoEnrollmentCount,

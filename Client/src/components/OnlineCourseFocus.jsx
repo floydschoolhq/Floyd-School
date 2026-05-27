@@ -170,8 +170,8 @@ const OnlineCourseFocus = ({ variant }) => {
                                 price: res.data.price || course.price,
                                 totalSeats: res.data.totalSeats || course.totalSeats,
                                 registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0),
-                                status: res.data.status,
-                                isActive: res.data.isActive
+                                status: res.data.status !== undefined ? res.data.status : course.status,
+                                isActive: res.data.isActive !== undefined ? res.data.isActive : course.isActive
                             };
                         }
                     } catch (e) {
