@@ -51,6 +51,7 @@ const CourseDetails = () => {
     const [course, setCourse] = useState(null);
     const [stats, setStats] = useState({ manualEnrollmentCount: 45, totalSeats: 50 });
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+    const [isAvailable, setIsAvailable] = useState(true);
 
     useEffect(() => {
         const foundCourse = FALLBACK_COURSES.find(c => c._id === courseId);
@@ -64,6 +65,10 @@ const CourseDetails = () => {
             try {
                 const res = await api.get(`/public/courses/${courseId}/stats`);
                 if (res.data && res.data.success) {
+                    if ((res.data.status && res.data.status !== 'published') || res.data.isActive === false) {
+                        setIsAvailable(false);
+                        return;
+                    }
                     setStats({
                         manualEnrollmentCount: res.data.manualEnrollmentCount,
                         autoEnrollmentCount: res.data.autoEnrollmentCount,
@@ -92,6 +97,19 @@ const CourseDetails = () => {
             }, 500); // Small delay to ensure page is loaded
         }
     }, [courseId, searchParams]);
+
+    if (!isAvailable) {
+        return (
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-center px-4 font-['Outfit'] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[80px]" />
+                <div className="relative z-10">
+                    <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">Course Protocol Offline</h1>
+                    <p className="text-slate-400 text-sm md:text-base max-w-md mb-8">This specialization track is currently set as a draft and is offline. Please check back later or explore our active programs.</p>
+                    <button onClick={() => navigate('/online-program')} className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase text-[11px] tracking-widest active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,99,235,0.2)]">Explore Programs</button>
+                </div>
+            </div>
+        );
+    }
 
     if (!course) return <div className="min-h-screen bg-white flex items-center justify-center font-black text-slate-400 uppercase tracking-widest">Loading Course Protocol...</div>;
 

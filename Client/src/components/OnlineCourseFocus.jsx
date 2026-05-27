@@ -169,7 +169,9 @@ const OnlineCourseFocus = ({ variant }) => {
                                 ...course, 
                                 price: res.data.price || course.price,
                                 totalSeats: res.data.totalSeats || course.totalSeats,
-                                registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0)
+                                registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0),
+                                status: res.data.status,
+                                isActive: res.data.isActive
                             };
                         }
                     } catch (e) {
@@ -204,6 +206,9 @@ const OnlineCourseFocus = ({ variant }) => {
     ];
 
     const filteredCourses = courses.filter(course => {
+        if (course.status && course.status !== 'published') return false;
+        if (course.isActive === false) return false;
+
         if (activeTab === 'live') return !course.comingSoon;
         if (activeTab === 'upcoming') return course.comingSoon;
         return true;

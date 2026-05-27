@@ -262,7 +262,9 @@ const OnlineProgram = () => {
                                 ...course, 
                                 price: res.data.price || course.price,
                                 totalSeats: res.data.totalSeats || course.totalSeats,
-                                registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0)
+                                registeredCount: (res.data.manualEnrollmentCount || 0) + (res.data.autoEnrollmentCount || 0),
+                                status: res.data.status,
+                                isActive: res.data.isActive
                             };
                         }
                     } catch (e) {
@@ -278,6 +280,8 @@ const OnlineProgram = () => {
 
         fetchLiveCourses();
     }, []);
+
+    const visibleCourses = courses.filter(course => (!course.status || course.status === 'published') && course.isActive !== false);
 
     React.useEffect(() => {
         const hash = window.location.hash;
@@ -357,8 +361,8 @@ const OnlineProgram = () => {
 
                         {/* Courses Grid - Mobile 2 Columns */}
                         <div className="grid grid-cols-2 gap-4 mb-16">
-                            {courses.length > 0 ? (
-                                courses.map(course => (
+                            {visibleCourses.length > 0 ? (
+                                visibleCourses.map(course => (
                                     <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
                                 ))
                             ) : (
@@ -493,8 +497,8 @@ const OnlineProgram = () => {
                         }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
-                        {courses.length > 0 ? (
-                            courses.map(course => (
+                        {visibleCourses.length > 0 ? (
+                            visibleCourses.map(course => (
                                 <CourseCard key={course._id} course={course} onClick={() => openCourseDetailModal(course)} />
                             ))
                         ) : (

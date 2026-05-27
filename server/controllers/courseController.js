@@ -400,18 +400,18 @@ exports.getPublicCourseStats = async (req, res) => {
         if (courseIdMap[id]) {
             // Try direct ObjectId first
             try {
-                course = await Course.findById(courseIdMap[id]).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+                course = await Course.findById(courseIdMap[id]).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice status isActive');
             } catch (e) { /* fall through */ }
             // Regex fallback
             if (!course && courseTitlePatterns[id]) {
                 course = await Course.findOne({ title: { $regex: courseTitlePatterns[id], $options: 'i' } })
-                    .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+                    .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice status isActive');
             }
         } else if (id.length > 20) {
-            course = await Course.findById(id).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+            course = await Course.findById(id).select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice status isActive');
         } else {
             course = await Course.findOne({ title: { $regex: id, $options: 'i' } })
-                .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice');
+                .select('totalSeats manualEnrollmentCount enrolledStudents title price originalPrice status isActive');
         }
         
         if (!course) {
@@ -425,7 +425,9 @@ exports.getPublicCourseStats = async (req, res) => {
             autoEnrollmentCount: Array.isArray(course.enrolledStudents) ? course.enrolledStudents.length : 0,
             title: course.title,
             price: course.price,
-            originalPrice: course.originalPrice
+            originalPrice: course.originalPrice,
+            status: course.status,
+            isActive: course.isActive
         });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Server error' });
