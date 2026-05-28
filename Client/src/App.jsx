@@ -40,6 +40,7 @@ import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import AdminMessages from './components/AdminMessages.jsx';
 import SchoolPartnershipLeadsPage from './pages/Admin/SchoolPartnershipLeadsPage.jsx';
+import HackathonLeadsPage from './pages/Admin/HackathonLeadsPage.jsx';
 import SchoolPartnership from "./pages/SchoolPartnership.jsx";
 import OnlineProgram from './pages/OnlineProgram.jsx';
 import BootcampGallery from './pages/BootcampGallery.jsx';
@@ -196,6 +197,7 @@ const App = () => {
                 <Route path='/admin/coupons' element={<ProtectedRoute><AdminCouponsPage /></ProtectedRoute>} />
                 <Route path='/admin/chatbot-leads' element={<ProtectedRoute><ChatbotLeadsPage /></ProtectedRoute>} />
                 <Route path='/admin/school-partnership-leads' element={<ProtectedRoute><SchoolPartnershipLeadsPage /></ProtectedRoute>} />
+                <Route path='/admin/hackathon-leads' element={<ProtectedRoute><HackathonLeadsPage /></ProtectedRoute>} />
 
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={

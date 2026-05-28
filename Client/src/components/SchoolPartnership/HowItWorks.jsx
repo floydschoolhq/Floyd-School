@@ -55,7 +55,7 @@ const HowItWorks = () => {
               </p>
               <ul className="space-y-3 relative z-10">
                 {[
-                  '7 days on-campus learning',
+                  '1 days on-campus learning',
                   'Hands-on from day one',
                   'No cost, no commitment',
                   'Students keep projects'
@@ -135,7 +135,7 @@ const HowItWorks = () => {
               </p>
               <ul className="space-y-4">
                 {[
-                  '7 days of live, on-campus sessions',
+                  '1 days of live, on-campus sessions',
                   'Hands-on projects from day one',
                   'No commitment, no cost',
                   'Students keep everything they build'

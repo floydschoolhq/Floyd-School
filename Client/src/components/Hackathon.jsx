@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import {
     BrainCircuit,
@@ -191,15 +192,16 @@ export default function Hackathon() {
                             </motion.div>
                         ))}
 
-                        <motion.a
-                            href="#enroll"
+                        <Link to="/hackathon">
+                          <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="mt-2 flex items-center justify-center gap-3 bg-slate-900 text-white p-5 rounded-2xl font-black text-[12px] uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 group"
+                            className="mt-2 flex items-center justify-center gap-3 bg-slate-900 text-white p-5 rounded-2xl font-black text-[12px] uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 group cursor-pointer"
                         >
-                            Enroll to Compete <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        </motion.a>
+                            Join the Hackathon <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          </motion.div>
+                        </Link>
                     </div>
                 </div>
             </div>

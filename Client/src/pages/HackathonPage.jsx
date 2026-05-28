@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import api from '../api/axios';
 import SEO from '../components/common/SEO';
 
 const HackathonPage = () => {
@@ -30,9 +32,51 @@ const HackathonPage = () => {
 
   const [hostSubmitted, setHostSubmitted] = useState(false);
   const [studentSubmitted, setStudentSubmitted] = useState(false);
+  const [submittingHost, setSubmittingHost] = useState(false);
+  const [submittingStudent, setSubmittingStudent] = useState(false);
 
-  const handleHostSubmit = (e) => { e.preventDefault(); setHostSubmitted(true); };
-  const handleStudentSubmit = (e) => { e.preventDefault(); setStudentSubmitted(true); };
+  const handleHostSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setSubmittingHost(true);
+      const payload = {
+        ...hostFormData,
+        whatsappNumber: hostFormData.whatsappSame ? hostFormData.phone : hostFormData.whatsappNumber
+      };
+      
+      const response = await api.post('/hackathon/school-lead', payload);
+      if (response.data.success) {
+        toast.success('Host request submitted!');
+        setHostSubmitted(true);
+      } else {
+        toast.error(response.data.message || 'Failed to submit request');
+      }
+    } catch (error) {
+      console.error('Error submitting school host form:', error);
+      toast.error(error.response?.data?.message || 'Error submitting request. Please try again.');
+    } finally {
+      setSubmittingHost(false);
+    }
+  };
+
+  const handleStudentSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setSubmittingStudent(true);
+      const response = await api.post('/hackathon/participant-lead', studentFormData);
+      if (response.data.success) {
+        toast.success('Team registered successfully!');
+        setStudentSubmitted(true);
+      } else {
+        toast.error(response.data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Error registering team:', error);
+      toast.error(error.response?.data?.message || 'Error registering team. Please try again.');
+    } finally {
+      setSubmittingStudent(false);
+    }
+  };
 
   const handleHostChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -369,7 +413,7 @@ const HackathonPage = () => {
                       <div><label className="block text-sm font-bold text-slate-700 mb-2">Projector or screen? *</label><select name="projectorAvailable" required value={hostFormData.projectorAvailable} onChange={handleHostChange} className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all hover:border-slate-300"><option value="">Select option</option>{['Yes','No','Not sure'].map(o => <option key={o} value={o}>{o}</option>)}</select></div>
                     </div>
                     <div><label className="block text-sm font-bold text-slate-700 mb-2">Anything you want to tell us (optional)</label><textarea name="additionalInfo" rows={4} value={hostFormData.additionalInfo} onChange={handleHostChange} className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all hover:border-slate-300 resize-none" /></div>
-                    <button type="submit" className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:scale-95">Submit Request</button>
+                    <button type="submit" disabled={submittingHost} className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed">{submittingHost ? 'Submitting Request...' : 'Submit Request'}</button>
                   </form>
                 )}
               </div>
@@ -596,7 +640,7 @@ const HackathonPage = () => {
 
                   <div><label className="block text-sm font-bold text-slate-700 mb-2">Anything you want to tell us (optional)</label><textarea name="additionalInfo" rows={4} value={studentFormData.additionalInfo} onChange={handleStudentChange} className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all hover:border-slate-300 resize-none" /></div>
 
-                  <button type="submit" className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:scale-95">Register My Team</button>
+                  <button type="submit" disabled={submittingStudent} className="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed">{submittingStudent ? 'Registering Team...' : 'Register My Team'}</button>
                 </form>
               )}
             </div>

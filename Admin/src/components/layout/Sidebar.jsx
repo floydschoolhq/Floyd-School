@@ -14,7 +14,8 @@ import {
     GraduationCap,
     Video,
     DollarSign,
-    MessageCircle
+    MessageCircle,
+    Award
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
@@ -32,6 +33,7 @@ const Sidebar = () => {
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <MessageCircle size={20} />, label: 'Chatbot Leads', path: '/chatbot-leads' },
         { icon: <ShieldCheck size={20} />, label: 'School Partners', path: '/school-partnership-leads' },
+        { icon: <Award size={20} />, label: 'Hackathon Leads', path: '/hackathon-leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
         { icon: <Video size={20} />, label: 'Recordings', path: '/recordings' },

@@ -86,4 +86,7 @@ router.use('/chatbot', require('./chatbotRoutes'));
 // School Partnership Leads
 router.use('/school-partnership', require('./schoolPartnershipRoutes'));
 
+// Hackathon Leads
+router.use('/hackathon', require('./hackathonRoutes'));
+
 module.exports = router;
