@@ -214,7 +214,15 @@ app.get('/api/health', (req, res) => {
 });
 
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const fs = require('fs');
+const uploadsPath = path.resolve(process.cwd(), 'uploads');
+const assignmentsPath = path.resolve(uploadsPath, 'assignments');
+if (!fs.existsSync(assignmentsPath)) {
+    fs.mkdirSync(assignmentsPath, { recursive: true });
+}
+console.log('Serving static files from:', uploadsPath);
+app.use('/uploads', express.static(uploadsPath));
+
 
 // ===== ROUTES WITH RATE LIMITERS =====
 
