@@ -2,20 +2,23 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Volume2, Volume1, VolumeX, Settings, ChevronDown, Play, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const QUALITY_LABELS = {
-    highres: '4K',
-    hd2160: '4K',
-    hd1440: '1440p',
-    hd1080: '1080p',
-    hd720: '720p',
-    large: '480p',
-    medium: '360p',
-    small: '240p',
-    tiny: '144p',
-    auto: 'Auto'
-};
+// ─── Constants (module scope – always safe) ────────────────────────────────
 
+const QUALITY_LABELS = {
+    highres: '4K', hd2160: '4K', hd1440: '1440p', hd1080: '1080p',
+    hd720: '720p', large: '480p', medium: '360p', small: '240p', tiny: '144p', auto: 'Auto'
+};
 const QUALITY_PRIORITY = ['highres', 'hd2160', 'hd1440', 'hd1080', 'hd720', 'large', 'medium', 'small', 'tiny'];
+
+// Module-level helper – NOT inside the component so it is never in TDZ
+function extractYouTubeId(url) {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+// ─── Component ─────────────────────────────────────────────────────────────
 
 const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false, scheduledStart = null }) => {
     const playerRef = useRef(null);
@@ -32,7 +35,116 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [showControls, setShowControls] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
+
+    // ─── ALL HANDLERS before any useEffect that references them ────────────
+
+    const handleQualityChange = useCallback(() => {
+        if (playerRef.current) {
+            setCurrentQuality(playerRef.current.getPlaybackQuality() || 'auto');
+        }
+    }, []);
+
+    const handleStateChange = useCallback((event) => {
+        if (!window.YT) return;
+        switch (event.data) {
+            case window.YT.PlayerState.PLAYING:  setIsPlaying(true);  break;
+            case window.YT.PlayerState.PAUSED:   setIsPlaying(false); break;
+            case window.YT.PlayerState.ENDED:    setIsPlaying(false); break;
+            default: break;
+        }
+    }, []);
+
+    const handlePlayerReady = useCallback((event) => {
+        playerReady.current = true;
+        setIsPlaying(autoPlay);
+        setIsLoaded(true);
+
+        if (isLive && scheduledStart) {
+            const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+            event.target.seekTo(elapsedSeconds, true);
+        }
+
+        event.target.setPlaybackQuality('hd1080');
+
+        const availableLevels = event.target.getAvailableQualityLevels();
+        if (availableLevels?.length > 0) {
+            setQualityLevels(availableLevels);
+            setCurrentQuality(event.target.getPlaybackQuality() || 'auto');
+        }
+
+        if (onReady) onReady();
+    }, [autoPlay, onReady, isLive, scheduledStart]);
+
+    const initializePlayer = useCallback(() => {
+        if (!videoId || playerReady.current || !window.YT?.Player) return;
+
+        playerRef.current = new window.YT.Player('custom-yt-player', {
+            videoId,
+            suggestedQuality: 'hd1080',
+            playerVars: {
+                controls: 0, modestbranding: 1, showinfo: 0,
+                iv_load_policy: 3, disablekb: 1, fs: 0, rel: 0,
+                autoplay: autoPlay ? 1 : 0, playsinline: 1,
+                origin: window.location.origin
+            },
+            events: {
+                onReady: handlePlayerReady,
+                onStateChange: handleStateChange,
+                onPlaybackQualityChange: handleQualityChange
+            }
+        });
+    }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
+
+    const togglePlay = useCallback(() => {
+        if (!playerRef.current || !playerReady.current) return;
+        if (isPlaying) {
+            playerRef.current.pauseVideo();
+        } else {
+            if (isLive && scheduledStart) {
+                const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                playerRef.current.seekTo(elapsed, true);
+            }
+            playerRef.current.playVideo();
+        }
+    }, [isPlaying, isLive, scheduledStart]);
+
+    const handleVolumeChange = useCallback((e) => {
+        const newVolume = parseInt(e.target.value);
+        setVolume(newVolume);
+        if (playerRef.current) {
+            playerRef.current.setVolume(newVolume);
+            setIsMuted(newVolume === 0);
+        }
+    }, []);
+
+    const toggleMute = useCallback(() => {
+        if (!playerRef.current) return;
+        if (isMuted) {
+            playerRef.current.unMute();
+            setIsMuted(false);
+        } else {
+            playerRef.current.mute();
+            setIsMuted(true);
+        }
+    }, [isMuted]);
+
+    const setQuality = useCallback((quality) => {
+        if (!playerRef.current || !playerReady.current) return;
+        playerRef.current.setPlaybackQuality(quality);
+        setCurrentQuality(quality);
+        setShowSettings(false);
+    }, []);
+
+    const getQualityLabel = useCallback((level) => QUALITY_LABELS[level] || level, []);
+
+    const getAvailableQualities = useCallback(() => {
+        const levels = qualityLevels.length > 0 ? qualityLevels : QUALITY_PRIORITY;
+        return ['auto', ...levels];
+    }, [qualityLevels]);
+
+    // ─── EFFECTS (all handlers already defined above) ──────────────────────
 
     useEffect(() => {
         if (!apiLoaded.current) {
@@ -42,21 +154,19 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             apiLoaded.current = true;
         }
 
-        window.onYouTubeIframeAPIReady = () => {
-            initializePlayer();
-        };
+        window.onYouTubeIframeAPIReady = () => { initializePlayer(); };
 
-        if (window.YT && window.YT.Player) {
+        if (window.YT?.Player) {
             initializePlayer();
         }
 
         return () => {
             if (playerRef.current) {
-                playerRef.current.destroy();
+                try { playerRef.current.destroy(); } catch (_) {}
                 playerRef.current = null;
             }
         };
-    }, []);
+    }, [initializePlayer]);
 
     useEffect(() => {
         if (playerReady.current && playerRef.current && videoId) {
@@ -73,137 +183,15 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         return () => clearTimeout(timeout);
     }, [isPlaying, showControls]);
 
-    const initializePlayer = useCallback(() => {
-        if (!videoId || playerReady.current) return;
+    // ─── Volume Icon helper ────────────────────────────────────────────────
 
-        playerRef.current = new window.YT.Player('custom-yt-player', {
-            videoId,
-            suggestedQuality: 'hd1080',
-            playerVars: {
-                controls: 0,
-                modestbranding: 1,
-                showinfo: 0,
-                iv_load_policy: 3,
-                disablekb: 1,
-                fs: 0,
-                rel: 0,
-                autoplay: autoPlay ? 1 : 0,
-                playsinline: 1,
-                origin: window.location.origin
-            },
-            events: {
-                onReady: handlePlayerReady,
-                onStateChange: handleStateChange,
-                onPlaybackQualityChange: handleQualityChange
-            }
-        });
-    }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
+    const VolumeIcon = isMuted || volume === 0
+        ? <VolumeX size={20} />
+        : volume < 50
+            ? <Volume1 size={20} />
+            : <Volume2 size={20} />;
 
-    const handlePlayerReady = useCallback((event) => {
-        playerReady.current = true;
-        setIsPlaying(autoPlay);
-        setIsLoaded(true);
-
-        if (isLive && scheduledStart) {
-            const elapsedSeconds = Math.max(0, Math.floor((new Date().getTime() - new Date(scheduledStart).getTime()) / 1000));
-            event.target.seekTo(elapsedSeconds, true);
-        }
-
-        // Suggest HD 1080 for premium streaming experience
-        event.target.setPlaybackQuality('hd1080');
-
-        const availableLevels = event.target.getAvailableQualityLevels();
-        if (availableLevels && availableLevels.length > 0) {
-            setQualityLevels(availableLevels);
-            setCurrentQuality(event.target.getPlaybackQuality() || 'auto');
-        }
-
-        if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart]);
-
-    const handleStateChange = useCallback((event) => {
-        switch (event.data) {
-            case window.YT.PlayerState.PLAYING:
-                setIsPlaying(true);
-                break;
-            case window.YT.PlayerState.PAUSED:
-                setIsPlaying(false);
-                break;
-            case window.YT.PlayerState.ENDED:
-                setIsPlaying(false);
-                break;
-            default:
-                break;
-        }
-    }, []);
-
-    const handleQualityChange = useCallback(() => {
-        if (playerRef.current) {
-            setCurrentQuality(playerRef.current.getPlaybackQuality() || 'auto');
-        }
-    }, []);
-
-    const extractYouTubeId = (url) => {
-        if (!url) return null;
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    };
-
-    const togglePlay = () => {
-        if (!playerRef.current || !playerReady.current) return;
-        if (isPlaying) {
-            playerRef.current.pauseVideo();
-        } else {
-            if (isLive && scheduledStart) {
-                const elapsedSeconds = Math.max(0, Math.floor((new Date().getTime() - new Date(scheduledStart).getTime()) / 1000));
-                playerRef.current.seekTo(elapsedSeconds, true);
-            }
-            playerRef.current.playVideo();
-        }
-    };
-
-    const handleVolumeChange = (e) => {
-        const newVolume = parseInt(e.target.value);
-        setVolume(newVolume);
-        if (playerRef.current) {
-            playerRef.current.setVolume(newVolume);
-            setIsMuted(newVolume === 0);
-        }
-    };
-
-    const toggleMute = () => {
-        if (!playerRef.current) return;
-        if (isMuted) {
-            playerRef.current.unMute();
-            setIsMuted(false);
-        } else {
-            playerRef.current.mute();
-            setIsMuted(true);
-        }
-    };
-
-    const setQuality = (quality) => {
-        if (!playerRef.current || !playerReady.current) return;
-        playerRef.current.setPlaybackQuality(quality);
-        setCurrentQuality(quality);
-        setShowSettings(false);
-    };
-
-    const getQualityLabel = (level) => {
-        return QUALITY_LABELS[level] || level;
-    };
-
-    const getAvailableQualities = () => {
-        const levels = qualityLevels.length > 0 ? qualityLevels : QUALITY_PRIORITY;
-        return ['auto', ...levels];
-    };
-
-    const VolumeIcon = () => {
-        if (isMuted || volume === 0) return <VolumeX size={20} />;
-        if (volume < 50) return <Volume1 size={20} />;
-        return <Volume2 size={20} />;
-    };
+    // ─── RENDER ─────────────────────────────────────────────────────────────
 
     return (
         <div
@@ -244,37 +232,25 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                         {/* Bottom Controls */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-4">
-                            {/* Play/Pause */}
-                            <button
-                                onClick={togglePlay}
-                                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                            >
-                                {isPlaying ? (
-                                    <Pause size={20} className="text-white" fill="white" />
-                                ) : (
-                                    <Play size={20} className="text-white" fill="white" />
-                                )}
+                            <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                                {isPlaying
+                                    ? <Pause size={20} className="text-white" fill="white" />
+                                    : <Play size={20} className="text-white" fill="white" />
+                                }
                             </button>
 
-                            {/* Volume */}
-                            <div className="flex items-center gap-2 group/volume">
-                                <button
-                                    onClick={toggleMute}
-                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                                >
-                                    <VolumeIcon className="text-white" />
+                            <div className="flex items-center gap-2">
+                                <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white">
+                                    {VolumeIcon}
                                 </button>
                                 <input
-                                    type="range"
-                                    min="0"
-                                    max="100"
+                                    type="range" min="0" max="100"
                                     value={isMuted ? 0 : volume}
                                     onChange={handleVolumeChange}
                                     className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                                 />
                             </div>
 
-                            {/* Dynamic Live Indicator badge */}
                             {isLive && (
                                 <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
                                     <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
@@ -284,16 +260,13 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                             <div className="flex-1" />
 
-                            {/* Quality Settings */}
                             <div className="relative">
                                 <button
-                                    onClick={() => setShowSettings(!showSettings)}
+                                    onClick={() => setShowSettings(s => !s)}
                                     className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2"
                                 >
                                     <Settings size={18} className="text-white" />
-                                    <span className="text-white text-xs font-bold">
-                                        {getQualityLabel(currentQuality)}
-                                    </span>
+                                    <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
                                     <ChevronDown size={14} className="text-white" />
                                 </button>
 
@@ -306,7 +279,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                             className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
                                         >
                                             <div className="p-2">
-                                                <p className="text-[10px] font-semibold text-slate-400 font-medium px-3 py-2">Quality</p>
+                                                <p className="text-[10px] font-semibold text-slate-400 px-3 py-2">Quality</p>
                                                 {getAvailableQualities().map((level) => (
                                                     <button
                                                         key={level}

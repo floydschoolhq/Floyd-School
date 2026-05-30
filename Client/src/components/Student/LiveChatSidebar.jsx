@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Send, Users, MessageCircle, ShieldCheck } from 'lucide-react';
 import api from '../../api/axios';
 import { PortalContext } from '../../contexts/PortalProvider';
@@ -15,11 +15,21 @@ const LiveChatSidebar = ({ classId }) => {
     const [requestingAccess, setRequestingAccess] = useState(false);
     const scrollRef = useRef(null);
 
-    const isClassroomUser = user?.isClassroomAccess === true;
-    // Classroom users still need admin approval for community
     const canAccessCommunity = user?.permissions?.canAccessCommunity;
 
-    const handleRequestAccess = async () => {
+    // ─── ALL HANDLERS BEFORE useEffect ────────────────────────────────────
+
+    const fetchMessages = useCallback(async () => {
+        if (!classId) return;
+        try {
+            const res = await api.get(`/live-chat/${classId}`);
+            setMessages(Array.isArray(res.data) ? res.data : []);
+        } catch (error) {
+            console.error('Failed to fetch messages:', error);
+        }
+    }, [classId]);
+
+    const handleRequestAccess = useCallback(async () => {
         setRequestingAccess(true);
         try {
             await api.post('/students/request-access', {
@@ -32,57 +42,17 @@ const LiveChatSidebar = ({ classId }) => {
         } finally {
             setRequestingAccess(false);
         }
-    };
-    useEffect(() => {
-        if (classId && socket) {
-            fetchMessages();
-            socket.emit('liveClass:join', classId);
+    }, []);
 
-            socket.on('liveClass:message', (msg) => {
-                setMessages(prev => [...prev, msg]);
-            });
-
-            socket.on('liveClass:messageUpdated', (updatedMsg) => {
-                setMessages(prev => prev.map(m => m._id === updatedMsg._id ? updatedMsg : m));
-            });
-
-            socket.on('liveClass:countUpdate', ({ count }) => {
-                setStudentCount(count);
-            });
-
-            return () => {
-                socket.off('liveClass:message');
-                socket.off('liveClass:messageUpdated');
-                socket.off('liveClass:countUpdate');
-            };
-        }
-    }, [classId, socket]);
-
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
-    }, [messages]);
-
-    const fetchMessages = async () => {
-        try {
-            const res = await api.get(`/live-chat/${classId}`);
-            setMessages(res.data);
-        } catch (error) {
-            console.error('Failed to fetch messages:', error);
-        }
-    };
-
-    const handleMarkAsDoubt = async (msgId) => {
+    const handleMarkAsDoubt = useCallback(async (msgId) => {
         try {
             await api.post(`/live-chat/${msgId}/doubt`);
         } catch (error) {
             console.error('Failed to mark message as doubt:', error);
-            alert(error.response?.data?.message || 'Failed to mark as doubt');
         }
-    };
+    }, []);
 
-    const handleSend = async (e) => {
+    const handleSend = useCallback(async (e) => {
         e.preventDefault();
         if (!input.trim() || isSending) return;
 
@@ -91,24 +61,54 @@ const LiveChatSidebar = ({ classId }) => {
         setInput('');
 
         try {
-            await api.post('/live-chat', {
-                classId,
-                text: messageText
-            });
+            await api.post('/live-chat', { classId, text: messageText });
         } catch (error) {
             console.error('Failed to send message:', error);
-            setInput(messageText); // Restore input on error
+            setInput(messageText);
         } finally {
             setIsSending(false);
         }
-    };
+    }, [input, isSending, classId]);
+
+    // ─── EFFECTS ───────────────────────────────────────────────────────────
+
+    useEffect(() => {
+        if (!classId || !socket) return;
+
+        fetchMessages();
+        socket.emit('liveClass:join', classId);
+
+        const onMessage = (msg) => setMessages(prev => [...prev, msg]);
+        const onMessageUpdated = (updatedMsg) =>
+            setMessages(prev => prev.map(m => m._id === updatedMsg._id ? updatedMsg : m));
+        const onCountUpdate = ({ count }) => setStudentCount(count);
+
+        socket.on('liveClass:message', onMessage);
+        socket.on('liveClass:messageUpdated', onMessageUpdated);
+        socket.on('liveClass:countUpdate', onCountUpdate);
+
+        return () => {
+            socket.off('liveClass:message', onMessage);
+            socket.off('liveClass:messageUpdated', onMessageUpdated);
+            socket.off('liveClass:countUpdate', onCountUpdate);
+        };
+    }, [classId, socket, fetchMessages]);
+
+    // Auto-scroll to bottom on new messages
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    // ─── RENDER ─────────────────────────────────────────────────────────────
 
     return (
-        <div className="flex flex-col h-full bg-slate-900 border-l border-slate-800 w-full lg:w-80 shadow-2xl">
+        <div className="relative flex flex-col h-full bg-slate-900 border-l border-slate-800 w-full shadow-2xl">
             {/* Header */}
             <div className="p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-white font-semibold text-base font-medium flex items-center gap-2">
+                    <h3 className="text-white font-semibold text-base flex items-center gap-2">
                         Class <span className="text-blue-500 font-semibold">Transmission</span>
                     </h3>
                     <div className="flex items-center gap-1.5 px-2 py-1 bg-blue-500/10 rounded-lg">
@@ -116,32 +116,29 @@ const LiveChatSidebar = ({ classId }) => {
                         <span className="text-[13px] font-semibold text-blue-500">{studentCount}</span>
                     </div>
                 </div>
-                <p className="text-[13px] font-bold text-slate-500 font-medium">Global Interaction Active</p>
+                <p className="text-[13px] font-bold text-slate-500">Global Interaction Active</p>
             </div>
 
             {/* Chat Messages */}
-            <div
-                ref={scrollRef}
-                className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar"
-            >
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6">
                 {messages.map((msg, idx) => (
-                    <div key={idx} className="group text-left">
+                    <div key={msg._id || idx} className="group text-left">
                         <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                            <span className={`text-[13px] font-semibold font-medium ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-amber-500' : 'text-slate-400'
-                                }`}>
+                            <span className={`text-[13px] font-semibold ${
+                                msg.role === 'mentor' || msg.role === 'admin' ? 'text-amber-500' : 'text-slate-400'
+                            }`}>
                                 {msg.senderName}
                             </span>
                             {(msg.role === 'mentor' || msg.role === 'admin') && (
                                 <ShieldCheck size={10} className="text-amber-500" />
                             )}
                             {msg.isDoubt && (
-                                <span className="px-2 py-0.5 bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-black uppercase rounded-lg tracking-widest animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.2)]">
+                                <span className="px-2 py-0.5 bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-black uppercase rounded-lg tracking-widest animate-pulse">
                                     ✦ Doubt Marked
                                 </span>
                             )}
-                            
-                            {/* Hover Action for Mentor/Admin to Mark as Doubt */}
-                            {(user?.role === 'mentor' || user?.role === 'admin') && !msg.isDoubt && msg.role !== 'mentor' && msg.role !== 'admin' && (
+                            {(user?.role === 'mentor' || user?.role === 'admin') && !msg.isDoubt &&
+                                msg.role !== 'mentor' && msg.role !== 'admin' && (
                                 <button
                                     onClick={() => handleMarkAsDoubt(msg._id)}
                                     className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-black text-red-400 hover:text-red-300 uppercase tracking-widest cursor-pointer ml-2"
@@ -150,13 +147,13 @@ const LiveChatSidebar = ({ classId }) => {
                                     [ Mark as Doubt ]
                                 </button>
                             )}
-
                             <span className="text-[11px] font-bold text-slate-600 ml-auto">
                                 {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                         </div>
-                        <p className={`text-base leading-relaxed font-medium transition-colors ${msg.role === 'mentor' || msg.role === 'admin' ? 'text-white' : 'text-slate-300'
-                            }`}>
+                        <p className={`text-base leading-relaxed font-medium ${
+                            msg.role === 'mentor' || msg.role === 'admin' ? 'text-white' : 'text-slate-300'
+                        }`}>
                             {msg.text}
                         </p>
                     </div>
@@ -165,7 +162,7 @@ const LiveChatSidebar = ({ classId }) => {
                 {messages.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center opacity-30 text-center space-y-4">
                         <MessageCircle size={48} className="text-slate-500" />
-                        <p className="text-[13px] font-semibold font-medium text-slate-500">Awaiting Signal...</p>
+                        <p className="text-[13px] font-semibold text-slate-500">Awaiting Signal...</p>
                     </div>
                 )}
             </div>
@@ -191,17 +188,23 @@ const LiveChatSidebar = ({ classId }) => {
                         disabled={!input.trim() || isSending}
                         className="absolute right-1.5 top-1.5 p-2 bg-blue-600 text-white rounded-lg shadow-lg shadow-blue-600/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                     >
-                        {isSending ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}><Send size={14} strokeWidth={3} /></motion.div> : <Send size={14} strokeWidth={3} />}
+                        {isSending
+                            ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}><Send size={14} strokeWidth={3} /></motion.div>
+                            : <Send size={14} strokeWidth={3} />
+                        }
                     </button>
                 </div>
             </form>
-            {/* Community Access Lock */}
+
+            {/* Community Access Lock overlay */}
             {!canAccessCommunity && (
                 <div className="absolute inset-0 z-50 bg-slate-900/98 backdrop-blur-md flex flex-col items-center justify-center text-center p-6">
                     <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
                         <MessageCircle className="w-8 h-8 text-white" />
                     </div>
-                    <h4 className="text-xl font-semibold text-white mb-2 tracking-tight">Community <span className="text-blue-500">Locked</span></h4>
+                    <h4 className="text-xl font-semibold text-white mb-2 tracking-tight">
+                        Community <span className="text-blue-500">Locked</span>
+                    </h4>
                     <p className="text-xs font-semibold text-slate-400 leading-relaxed mb-6">
                         Interact with your peers and mentors. <br />
                         Request access to enable the live community discussion module.
@@ -209,7 +212,7 @@ const LiveChatSidebar = ({ classId }) => {
                     <button
                         onClick={handleRequestAccess}
                         disabled={requestingAccess}
-                        className="w-full py-4 bg-blue-600 text-white text-[11px] font-semibold font-medium rounded-xl hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/10 disabled:opacity-50"
+                        className="w-full py-4 bg-blue-600 text-white text-[11px] font-semibold rounded-xl hover:bg-blue-500 transition-all shadow-lg disabled:opacity-50"
                     >
                         {requestingAccess ? 'Processing...' : 'Request Community Access'}
                     </button>
@@ -220,4 +223,3 @@ const LiveChatSidebar = ({ classId }) => {
 };
 
 export default LiveChatSidebar;
-
