@@ -196,7 +196,7 @@ const AssignmentGrading = () => {
         e.preventDefault();
         setSubmitting(true);
         try {
-            await api.put(`/assignments/${gradingSubmission._id}/grade`, {
+            await api.post(`/assignments/submissions/${gradingSubmission._id}/grade`, {
                 grade: Number(grade),
                 feedback
             });

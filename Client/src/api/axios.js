@@ -3,6 +3,18 @@ import { mockSettings, mockCourses, mockUser } from '../mocks/api.js';
 
 const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
+// Helper to get the backend server URL for static file access (e.g. uploaded PDFs)
+// This is distinct from the API base URL because static files don't have the /api prefix
+export const getServerUrl = () => baseURL;
+
+// Helper to build a full URL for uploaded files
+export const getFileUrl = (path) => {
+    if (!path) return '';
+    // If path is already a full URL, return as-is
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    return `${baseURL}${path}`;
+};
+
 let isBackendAvailable = true;
 
 // In-memory cache for API responses

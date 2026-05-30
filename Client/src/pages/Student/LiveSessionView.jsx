@@ -96,6 +96,21 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
         return () => window.removeEventListener('contextmenu', preventContext);
     }, []);
 
+    // IMPORTANT: fetchMyCurrentDoubt must be defined before any early returns
+    // to avoid "cannot access before initialization" errors in production builds.
+    const fetchMyCurrentDoubt = async (classId) => {
+        try {
+            const res = await api.get(`/doubts/${classId}/my`);
+            if (res.data) {
+                setMyDoubt(res.data);
+            } else {
+                setMyDoubt(null);
+            }
+        } catch (error) {
+            // No doubt exists - this is expected
+        }
+    };
+
     useEffect(() => {
         if (propLiveClass || contextLiveClass) {
             setLoading(false);
@@ -132,7 +147,8 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
 
                 // If not found or no access, try fetching upcoming scheduled lives to see if one is 'live'
                 const scheduledRes = await api.get('/scheduled-live/upcoming');
-                const activeScheduled = (scheduledRes.data || []).find(l => l.status === 'live');
+                const scheduledData = Array.isArray(scheduledRes.data) ? scheduledRes.data : [];
+                const activeScheduled = scheduledData.find(l => l.status === 'live');
                 if (activeScheduled) {
                     const courseId = activeScheduled.course?._id || activeScheduled.course || '';
                     const userGrantedCourses = user?.permissions?.grantedCourses || [];
@@ -202,18 +218,7 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
         );
     }
 
-    const fetchMyCurrentDoubt = async (classId) => {
-        try {
-            const res = await api.get(`/doubts/${classId}/my`);
-            if (res.data) {
-                setMyDoubt(res.data);
-            } else {
-                setMyDoubt(null);
-            }
-        } catch (error) {
-            // No doubt exists
-        }
-    };
+    // fetchMyCurrentDoubt is defined above the early returns to avoid production build issues
 
     const handleRaiseHand = async () => {
         if (!liveClass || myDoubt) return;

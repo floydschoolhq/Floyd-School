@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Send, FileText, CheckCircle2, Clock, AlertCircle, Award } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import api from '../../api/axios';
+import api, { getFileUrl } from '../../api/axios';
+
 
 const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, onSubmitted }) => {
     const [content, setContent] = useState('');
@@ -138,7 +139,8 @@ const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, on
                                             </span>
                                         </div>
                                         <a
-                                            href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || ''}${assignment.attachments[0].url}`}
+                                        href={getFileUrl(assignment.attachments[0].url)}
+
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="ml-4 px-3 py-1 bg-accent-primary/10 hover:bg-accent-primary/20 text-accent-primary rounded-lg text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"
@@ -183,7 +185,8 @@ const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, on
                                                     </div>
                                                 </div>
                                                 <a
-                                                    href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || ''}${submission.attachments[0].url}`}
+                                                    href={getFileUrl(submission.attachments[0].url)}
+
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="px-3 py-1.5 bg-surface-soft hover:bg-surface-el text-text-main rounded-lg text-[10px] font-black uppercase tracking-widest border border-surface-el"

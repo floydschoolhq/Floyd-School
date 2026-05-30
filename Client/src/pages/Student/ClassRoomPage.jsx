@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
-import api from '../../api/axios';
+import api, { getFileUrl } from '../../api/axios';
+
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
@@ -234,11 +235,13 @@ const ClassroomPage = () => {
   const fetchScheduledLives = async (optCourses = null) => {
     try {
       const res = await api.get('/scheduled-live/upcoming');
-      setScheduledLives(res.data);
+      // Safely normalize - the API should return an array but guard against error objects
+      const livesData = Array.isArray(res.data) ? res.data : [];
+      setScheduledLives(livesData);
       // If there is no active Jitsi class, check if any scheduled live is active
       const hasActiveJitsi = activeLiveClass && !activeLiveClass.videoUrl;
       if (!hasActiveJitsi) {
-        checkActiveScheduledLive(res.data, optCourses || courses);
+        checkActiveScheduledLive(livesData, optCourses || courses);
       }
     } catch (error) {
       console.error('Failed to fetch scheduled lives:', error);
@@ -338,22 +341,22 @@ const ClassroomPage = () => {
 
     // Find any scheduled live classes for the course
     const moduleLive = scheduledLives.find(l => 
-      l.course?._id === activeStudyCourse._id
+      (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString()
     );
 
     const isLiveNow = activeLiveClass && (
-      (activeLiveClass.course?._id === activeStudyCourse._id) ||
-      (activeLiveClass.course === activeStudyCourse._id)
+      (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString()) ||
+      (activeLiveClass.course?.toString() === activeStudyCourse._id?.toString())
     );
 
     // Find active scheduled or standard live session for current module
     const activeModuleLive = scheduledLives.find(l => 
-      l.course?._id === activeStudyCourse._id &&
+      (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString() &&
       l.module?.toString() === selectedModule?._id?.toString() &&
       l.status === 'live'
     ) || (
       activeLiveClass && 
-      (activeLiveClass.course?._id === activeStudyCourse._id || activeLiveClass.course === activeStudyCourse._id) &&
+      (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString() || activeLiveClass.course?.toString() === activeStudyCourse._id?.toString()) &&
       activeLiveClass.module?.toString() === selectedModule?._id?.toString()
         ? activeLiveClass
         : null
@@ -611,7 +614,8 @@ const ClassroomPage = () => {
                               </span>
                             </div>
                             <a
-                              href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || ''}${moduleAssignment.attachments[0].url}`}
+                              href={getFileUrl(moduleAssignment.attachments[0].url)}
+
                               target="_blank"
                               rel="noopener noreferrer"
                               className="px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"
