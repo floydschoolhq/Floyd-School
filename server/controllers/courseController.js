@@ -243,10 +243,10 @@ exports.updateModules = async (req, res) => {
             return res.status(404).json({ message: 'Course not found' });
         }
 
-        // Check if user is instructor or admin
+        // Check if user is instructor, mentor or admin
         const isInstructor = course.instructor && course.instructor.toString() === (req.user._id || req.user.id).toString();
 
-        if (!isInstructor && req.user.role !== 'admin') {
+        if (!isInstructor && req.user.role !== 'mentor' && req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Not authorized to update this course curriculum' });
         }
 

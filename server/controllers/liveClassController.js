@@ -212,10 +212,9 @@ exports.deleteLiveClass = async (req, res) => {
             return res.status(404).json({ message: 'Live class not found' });
         }
 
-        // Check ownership (mentor can only delete their own, admin can delete any)
-        if (liveClass.mentor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-            return res.status(401).json({ message: 'Not authorized to delete this class' });
-        }
+        // Both Mentors and Admins have permission to delete live classes.
+        // We've authorized ('mentor', 'admin') at the route level, so if we are here,
+        // the user has one of these roles.
 
         await liveClass.deleteOne();
         res.json({ message: 'Live class deleted successfully' });
