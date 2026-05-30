@@ -294,28 +294,80 @@ io.on('connection', (socket) => {
         io.emit('course:updated', data);
     });
 
-    // Handle student live class tracking
-    socket.on('liveClass:join', (classId) => {
-        socket.join(`liveClass:${classId}`);
-        io.to(`liveClass:${classId}`).emit('liveClass:countUpdate', {
+    // Helper to emit viewer counts & profiles dynamically
+    const sendLiveClassViewersUpdate = (classId) => {
+        if (!classId) return;
+        const roomName = `liveClass:${classId}`;
+        const socketsInRoom = io.sockets.adapter.rooms.get(roomName);
+        let count = 0;
+        const uniqueUsers = [];
+        const seenUserIds = new Set();
+
+        if (socketsInRoom) {
+            count = socketsInRoom.size;
+            for (const socketId of socketsInRoom) {
+                const clientSocket = io.sockets.sockets.get(socketId);
+                if (clientSocket && clientSocket.user) {
+                    const userId = clientSocket.user._id || clientSocket.user.id;
+                    if (userId && !seenUserIds.has(userId.toString())) {
+                        seenUserIds.add(userId.toString());
+                        uniqueUsers.push(clientSocket.user);
+                    }
+                }
+            }
+        }
+
+        io.to(roomName).emit('liveClass:countUpdate', {
             classId,
-            count: io.sockets.adapter.rooms.get(`liveClass:${classId}`)?.size || 0
+            count,
+            viewers: uniqueUsers
         });
+    };
+
+    // Handle student live class tracking
+    socket.on('liveClass:join', (data) => {
+        let classId;
+        let userData = null;
+        if (data && typeof data === 'object') {
+            classId = data.classId;
+            userData = data.user;
+        } else {
+            classId = data;
+        }
+
+        if (!classId) return;
+
+        socket.join(`liveClass:${classId}`);
+        socket.liveClassId = classId;
+        if (userData) {
+            socket.user = userData;
+        }
+
+        sendLiveClassViewersUpdate(classId);
     });
 
-    socket.on('disconnect', () => {
-        // Automatically update counts for all rooms this socket was in
+    socket.on('liveClass:leave', (classId) => {
+        if (!classId) return;
+        socket.leave(`liveClass:${classId}`);
+        if (socket.liveClassId === classId) {
+            delete socket.liveClassId;
+        }
+        sendLiveClassViewersUpdate(classId);
+    });
+
+    socket.on('disconnecting', () => {
+        // Automatically update counts for all rooms this socket was in before they are cleared
         socket.rooms.forEach(room => {
             if (room.startsWith('liveClass:')) {
                 const classId = room.split(':')[1];
                 setTimeout(() => {
-                    io.to(room).emit('liveClass:countUpdate', {
-                        classId,
-                        count: io.sockets.adapter.rooms.get(room)?.size || 0
-                    });
+                    sendLiveClassViewersUpdate(classId);
                 }, 100);
             }
         });
+    });
+
+    socket.on('disconnect', () => {
         console.log('Client disconnected', socket.id);
     });
 });

@@ -29,7 +29,8 @@ const LiveClassCenter = () => {
     const [doubts, setDoubts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [studentCount, setStudentCount] = useState(0);
-    const [activeTab, setActiveTab] = useState('doubts'); // 'doubts' or 'chat'
+    const [viewers, setViewers] = useState([]);
+    const [activeTab, setActiveTab] = useState('doubts'); // 'doubts', 'chat', or 'viewers'
     const [doubtsLoading, setDoubtsLoading] = useState(false);
     const [starting, setStarting] = useState(false);
 
@@ -108,8 +109,11 @@ const LiveClassCenter = () => {
                     ));
                 });
 
-                socket.on('liveClass:countUpdate', ({ count }) => {
+                socket.on('liveClass:countUpdate', ({ count, viewers: activeViewers }) => {
                     setStudentCount(count);
+                    if (activeViewers) {
+                        setViewers(activeViewers);
+                    }
                 });
 
                 socket.on('doubt:deleted', (deletedDoubtId) => {
@@ -779,6 +783,19 @@ const LiveClassCenter = () => {
                                 <MessageCircle size={14} />
                                 Live Chat
                             </button>
+                            <button
+                                onClick={() => setActiveTab('viewers')}
+                                className={`flex-1 py-3 px-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${activeTab === 'viewers'
+                                    ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
+                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                    }`}
+                            >
+                                <Users size={14} />
+                                Viewers
+                                {viewers.length > 0 && (
+                                    <span className="bg-sky-500/20 text-sky-400 text-[8px] px-1.5 py-0.5 rounded-full font-black">{viewers.length}</span>
+                                )}
+                            </button>
                         </div>
 
                         {activeTab === 'doubts' ? (
@@ -836,7 +853,7 @@ const LiveClassCenter = () => {
                                     </div>
                                 )}
                             </div>
-                        ) : (
+                        ) : activeTab === 'chat' ? (
                             <div className="flex-1 flex flex-col overflow-hidden">
                                 {activeClass ? (
                                     <LiveChatSidebar classId={activeClass._id} />
@@ -845,6 +862,58 @@ const LiveClassCenter = () => {
                                         <MessageCircle size={48} className="mb-4" />
                                         <p className="font-black uppercase text-[10px] tracking-widest">Chat Offline</p>
                                         <p className="text-[9px] font-bold mt-2 uppercase">Initialize session to activate terminal</p>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="flex-1 flex flex-col overflow-hidden bg-slate-50/50 p-6">
+                                {activeClass ? (
+                                    <div className="flex-1 flex flex-col overflow-hidden">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Students Watching</span>
+                                            <span className="bg-sky-500/10 text-sky-600 text-[10px] px-2.5 py-1 rounded-xl font-bold">{viewers.length} Students</span>
+                                        </div>
+                                        <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar">
+                                            {viewers.length > 0 ? (
+                                                viewers.map((student, idx) => (
+                                                    <motion.div
+                                                        key={student._id || idx}
+                                                        initial={{ opacity: 0, y: 10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: idx * 0.05 }}
+                                                        className="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-2xl shadow-sm"
+                                                    >
+                                                        <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 font-bold overflow-hidden shadow-inner uppercase">
+                                                            {student.avatar ? (
+                                                                <img src={student.avatar} alt={student.name} className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                student.name?.charAt(0) || 'S'
+                                                            )}
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <h4 className="text-xs font-black text-slate-900 truncate">{student.name}</h4>
+                                                            <p className="text-[9px] font-bold text-slate-400 truncate uppercase mt-0.5">{student.email}</p>
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                                                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                                            <span className="text-[8px] font-black text-emerald-600 uppercase tracking-wider">Watching</span>
+                                                        </div>
+                                                    </motion.div>
+                                                ))
+                                            ) : (
+                                                <div className="h-full flex flex-col items-center justify-center text-center opacity-30 select-none py-20">
+                                                    <Users size={48} className="mb-4 text-slate-400" />
+                                                    <p className="font-black uppercase text-[10px] tracking-[0.2em]">No Viewers Yet</p>
+                                                    <p className="text-[9px] font-bold mt-1 uppercase">Waiting for students to join the uplink...</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex-1 flex flex-col items-center justify-center text-center opacity-30 p-10">
+                                        <Users size={48} className="mb-4" />
+                                        <p className="font-black uppercase text-[10px] tracking-widest">Uplink Inactive</p>
+                                        <p className="text-[9px] font-bold mt-2 uppercase">Start a live session to trace active viewers</p>
                                     </div>
                                 )}
                             </div>

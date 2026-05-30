@@ -117,7 +117,15 @@ const ClassroomPage = () => {
       setGlobalActiveLiveClass(normalized);
       if (socket) {
         fetchMyCurrentDoubt(normalized._id);
-        socket.emit('liveClass:join', normalized._id);
+        socket.emit('liveClass:join', {
+          classId: normalized._id,
+          user: {
+            _id: user?._id || user?.id,
+            name: user?.name,
+            email: user?.email,
+            avatar: user?.avatar
+          }
+        });
       }
     });
 
@@ -188,7 +196,15 @@ const ClassroomPage = () => {
         setGlobalActiveLiveClass(normalized);
         if (socket) {
           fetchMyCurrentDoubt(normalized._id);
-          socket.emit('liveClass:join', normalized._id);
+          socket.emit('liveClass:join', {
+            classId: normalized._id,
+            user: {
+              _id: user?._id || user?.id,
+              name: user?.name,
+              email: user?.email,
+              avatar: user?.avatar
+            }
+          });
         }
         return;
       }
@@ -218,7 +234,15 @@ const ClassroomPage = () => {
           setGlobalActiveLiveClass(normalized);
           if (socket) {
             fetchMyCurrentDoubt(res.data._id);
-            socket.emit('liveClass:join', res.data._id);
+            socket.emit('liveClass:join', {
+              classId: res.data._id,
+              user: {
+                _id: user?._id || user?.id,
+                name: user?.name,
+                email: user?.email,
+                avatar: user?.avatar
+              }
+            });
           }
           return;
         }

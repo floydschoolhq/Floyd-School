@@ -109,7 +109,15 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
         if (!liveClass || !socket) return;
 
         fetchMyCurrentDoubt(liveClass._id);
-        socket.emit('liveClass:join', liveClass._id);
+        socket.emit('liveClass:join', {
+            classId: liveClass._id,
+            user: {
+                _id: user?._id || user?.id,
+                name: user?.name,
+                email: user?.email,
+                avatar: user?.avatar
+            }
+        });
 
         const onCountUpdate = ({ count }) => setParticipantCount(count);
         const onDoubtResolved = (resolvedDoubt) => {
@@ -138,13 +146,14 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
         socket.on('scheduledLive:ended', onScheduledLiveEnded);
 
         return () => {
+            socket.emit('liveClass:leave', liveClass._id);
             socket.off('liveClass:countUpdate', onCountUpdate);
             socket.off('doubt:resolved', onDoubtResolved);
             socket.off('doubt:deleted', onDoubtDeleted);
             socket.off('liveClass:ended', onLiveClassEnded);
             socket.off('scheduledLive:ended', onScheduledLiveEnded);
         };
-    }, [liveClass?._id, socket, fetchMyCurrentDoubt, setContextLiveClass]);
+    }, [liveClass?._id, socket, fetchMyCurrentDoubt, setContextLiveClass, user]);
 
     // Fetch active session when page loads without a prop/context live class
     useEffect(() => {

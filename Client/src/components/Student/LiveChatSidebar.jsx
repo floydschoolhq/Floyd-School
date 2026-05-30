@@ -76,7 +76,15 @@ const LiveChatSidebar = ({ classId }) => {
         if (!classId || !socket) return;
 
         fetchMessages();
-        socket.emit('liveClass:join', classId);
+        socket.emit('liveClass:join', {
+            classId,
+            user: {
+                _id: user?._id || user?.id,
+                name: user?.name,
+                email: user?.email,
+                avatar: user?.avatar
+            }
+        });
 
         const onMessage = (msg) => setMessages(prev => [...prev, msg]);
         const onMessageUpdated = (updatedMsg) =>
@@ -88,11 +96,12 @@ const LiveChatSidebar = ({ classId }) => {
         socket.on('liveClass:countUpdate', onCountUpdate);
 
         return () => {
+            socket.emit('liveClass:leave', classId);
             socket.off('liveClass:message', onMessage);
             socket.off('liveClass:messageUpdated', onMessageUpdated);
             socket.off('liveClass:countUpdate', onCountUpdate);
         };
-    }, [classId, socket, fetchMessages]);
+    }, [classId, socket, fetchMessages, user]);
 
     // Auto-scroll to bottom on new messages
     useEffect(() => {
