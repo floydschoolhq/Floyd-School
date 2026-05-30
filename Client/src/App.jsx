@@ -34,6 +34,8 @@ import ProgressTrackingPage from './pages/Student/ProgressTrackingPage';
 import RecordingsPage from './pages/Student/RecordingPage';
 import SupportPage from './pages/Student/SupportPage';
 import LiveSessionView from './pages/Student/LiveSessionView';
+import ErrorBoundary from './components/ErrorBoundary';
+
 import Contact from './components/Contact.jsx';
 import Course from './components/Course.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
@@ -221,7 +223,9 @@ const App = () => {
                 <Route path='/student/live-session' element={
                     <ProtectedRoute>
                         <MainLayout>
-                            <LiveSessionView />
+                            <ErrorBoundary>
+                                <LiveSessionView />
+                            </ErrorBoundary>
                         </MainLayout>
                     </ProtectedRoute>
                 } />
