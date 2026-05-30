@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
 // Layout Components (Always visible)
 import Footer from './components/Footer';
@@ -27,7 +27,6 @@ import StudentLoginPage from './pages/Student/StudentLoginPage.jsx';
 import ClassroomPage from './pages/Student/ClassRoomPage.jsx';
 import ClassroomAuthPage from './pages/Student/ClassroomAuthPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
-import renderPage from './pages/Student/renderPage.jsx';
 import StudentDashboard from './components/Student/StudentDashboard';
 import CodingLabPage from './pages/Student/CodingLabPage';
 import PerformanceReportPage from './pages/Student/PerformanceReportPage';
@@ -202,9 +201,7 @@ const App = () => {
                 {/* Authentication & Dashboard Routes (Hidden Layout) */}
                 <Route path='/student' element={
                     <ProtectedRoute>
-                        <MainLayout>
-                            {renderPage(portal.currentView, portal)}
-                        </MainLayout>
+                        <Navigate to="/student/dashboard" replace />
                     </ProtectedRoute>
                 } />
                 <Route path='/student/dashboard' element={

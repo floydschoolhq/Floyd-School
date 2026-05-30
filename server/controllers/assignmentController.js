@@ -62,7 +62,7 @@ exports.createAssignment = async (req, res) => {
             title,
             description,
             course,
-            module,
+            module: (module === '' || module === 'null' || !module) ? null : module,
             dueDate,
             maxPoints,
             attachments,
@@ -231,7 +231,12 @@ exports.updateAssignment = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Not authorized to update this assignment' });
         }
 
-        assignment = await Assignment.findByIdAndUpdate(req.params.id, req.body, {
+        const updateData = { ...req.body };
+        if ('module' in updateData && (updateData.module === '' || updateData.module === 'null')) {
+            updateData.module = null;
+        }
+
+        assignment = await Assignment.findByIdAndUpdate(req.params.id, updateData, {
             new: true,
             runValidators: true
         });
