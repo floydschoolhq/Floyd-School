@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Volume2, Volume1, VolumeX, Settings, ChevronDown, Play, Pause } from 'lucide-react';
+import { Volume2, Volume1, VolumeX, Settings, ChevronDown, Play, Pause, Maximize, Minimize } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ─── Constants (module scope – always safe) ────────────────────────────────
@@ -34,6 +34,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [currentQuality, setCurrentQuality] = useState('auto');
     const [showControls, setShowControls] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
@@ -144,7 +145,26 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         return ['auto', ...levels];
     }, [qualityLevels]);
 
+    const toggleFullscreen = useCallback(() => {
+        if (!containerRef.current) return;
+        if (!document.fullscreenElement) {
+            containerRef.current.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }, []);
+
     // ─── EFFECTS (all handlers already defined above) ──────────────────────
+
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            setIsFullscreen(!!document.fullscreenElement);
+        };
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    }, []);
 
     useEffect(() => {
         if (!apiLoaded.current) {
@@ -298,6 +318,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                     )}
                                 </AnimatePresence>
                             </div>
+
+                            <button
+                                onClick={toggleFullscreen}
+                                className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1"
+                                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                            >
+                                {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+                            </button>
                         </div>
                     </motion.div>
                 )}
