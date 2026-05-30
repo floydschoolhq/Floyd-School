@@ -128,6 +128,25 @@ const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, on
                                 <p className="mt-2 text-sm text-text-muted">
                                     {assignment.course?.title || 'Course'} · Due {new Date(assignment.dueDate).toLocaleDateString()}
                                 </p>
+
+                                {assignment.attachments && assignment.attachments.length > 0 && (
+                                    <div className="mt-3 p-3 bg-surface-soft border border-surface-el rounded-xl flex items-center justify-between max-w-md">
+                                        <div className="flex items-center gap-2 truncate">
+                                            <FileText size={14} className="text-accent-primary flex-shrink-0" />
+                                            <span className="text-[11px] font-bold text-text-main truncate max-w-[200px]">
+                                                {assignment.attachments[0].filename}
+                                            </span>
+                                        </div>
+                                        <a
+                                            href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || ''}${assignment.attachments[0].url}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="ml-4 px-3 py-1 bg-accent-primary/10 hover:bg-accent-primary/20 text-accent-primary rounded-lg text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"
+                                        >
+                                            View Reference Spec
+                                        </a>
+                                    </div>
+                                )}
                             </div>
 
                             <button

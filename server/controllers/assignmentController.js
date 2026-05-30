@@ -17,10 +17,22 @@ exports.getAssignments = async (req, res) => {
         }
 
         if (role === 'student') {
-            // Students see published assignments for their enrolled courses
+            // Fetch enrolled courses
             const courses = await Course.find({ enrolledStudents: _id }).select('_id');
             const courseIds = courses.map(c => c._id);
-            query.course = { $in: courseIds };
+
+            // Fetch granted courses for classroom users
+            const User = require('../models/User');
+            const studentUser = await User.findById(_id).select('permissions.grantedCourses');
+            const grantedCourseIds = studentUser?.permissions?.grantedCourses || [];
+
+            // Combine both sets of course IDs
+            const allCourseIds = [...new Set([
+                ...courseIds.map(id => id.toString()),
+                ...grantedCourseIds.map(id => id.toString())
+            ])];
+
+            query.course = { $in: allCourseIds };
             query.status = 'published';
         } else if (role === 'mentor') {
             // Mentors see assignments they created

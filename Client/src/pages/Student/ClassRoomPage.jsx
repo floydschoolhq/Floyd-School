@@ -325,11 +325,16 @@ const ClassroomPage = () => {
   const renderCourseClassroomHub = () => {
     if (!activeStudyCourse) return null;
 
-    // Find any assignment for the current module
-    const moduleAssignment = assignments.find(a => 
-      (a.module === selectedModule?._id) || 
-      (a.course?._id === activeStudyCourse._id && a.module === selectedModule?._id)
-    );
+    // Find any assignment for the current module of this specific course
+    const moduleAssignment = assignments.find(a => {
+      const assignmentModuleId = a.module?._id || a.module;
+      const assignmentCourseId = a.course?._id || a.course;
+      
+      return assignmentModuleId && selectedModule?._id && 
+        (assignmentModuleId.toString() === selectedModule._id.toString()) &&
+        assignmentCourseId && activeStudyCourse?._id &&
+        (assignmentCourseId.toString() === activeStudyCourse._id.toString());
+    });
 
     // Find any scheduled live classes for the course
     const moduleLive = scheduledLives.find(l => 
@@ -595,13 +600,34 @@ const ClassroomPage = () => {
                           </span>
                         </div>
                         <p className="text-[11px] text-text-muted font-medium leading-relaxed pl-1 line-clamp-2">{moduleAssignment.description}</p>
+                        
+                        {/* Mentor reference PDF Spec */}
+                        {moduleAssignment.attachments && moduleAssignment.attachments.length > 0 && (
+                          <div className="mt-2 p-3 bg-surface-base border border-surface-el rounded-2xl flex items-center justify-between shadow-sm">
+                            <div className="flex items-center gap-2 truncate">
+                              <FileText size={14} className="text-purple-500 flex-shrink-0" />
+                              <span className="text-[11px] font-bold text-text-main truncate max-w-[180px]">
+                                {moduleAssignment.attachments[0].filename}
+                              </span>
+                            </div>
+                            <a
+                              href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || ''}${moduleAssignment.attachments[0].url}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"
+                            >
+                              Download Spec
+                            </a>
+                          </div>
+                        )}
+
                         <div className="flex items-center justify-between pt-2 border-t border-surface-el">
                           <span className="text-[9px] font-bold text-text-muted uppercase tracking-widest pl-1">
                             Due: {new Date(moduleAssignment.dueDate).toLocaleDateString()}
                           </span>
                           <button
                             onClick={() => setSelectedAssignment(moduleAssignment)}
-                            className="px-3 py-1.5 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md"
+                            className="px-3 py-1.5 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md cursor-pointer"
                           >
                             {submission ? 'View' : 'Submit'}
                           </button>
