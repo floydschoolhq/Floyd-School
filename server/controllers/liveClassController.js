@@ -124,9 +124,15 @@ exports.getActiveLiveClass = async (req, res) => {
         if (req.query.courseId) {
             query.course = req.query.courseId;
         } else if (req.user && req.user.role === 'student') {
+            const User = require('../models/User');
+            const studentUser = await User.findById(req.user._id).select('permissions.grantedCourses');
+            const grantedIds = studentUser?.permissions?.grantedCourses || [];
+
             const Course = require('../models/Course');
             const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
-            const courseIds = enrolledCourses.map(c => c._id);
+            const enrolledIds = enrolledCourses.map(c => c._id);
+
+            const courseIds = [...new Set([...grantedIds.map(id => id.toString()), ...enrolledIds.map(id => id.toString())])];
             query.course = { $in: courseIds };
         }
 
@@ -173,9 +179,15 @@ exports.getEndedLiveClasses = async (req, res) => {
         if (req.query.courseId) {
             query.course = req.query.courseId;
         } else if (req.user && req.user.role === 'student') {
+            const User = require('../models/User');
+            const studentUser = await User.findById(req.user._id).select('permissions.grantedCourses');
+            const grantedIds = studentUser?.permissions?.grantedCourses || [];
+
             const Course = require('../models/Course');
             const enrolledCourses = await Course.find({ enrolledStudents: req.user._id }).select('_id');
-            const courseIds = enrolledCourses.map(c => c._id);
+            const enrolledIds = enrolledCourses.map(c => c._id);
+
+            const courseIds = [...new Set([...grantedIds.map(id => id.toString()), ...enrolledIds.map(id => id.toString())])];
             query.course = { $in: courseIds };
         }
 

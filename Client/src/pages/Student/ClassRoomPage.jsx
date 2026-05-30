@@ -167,10 +167,11 @@ const ClassroomPage = () => {
     // Look for an active scheduled YouTube live session
     const activeScheduled = (livesList || []).find(l => l.status === 'live');
     if (activeScheduled) {
-      // Filter live class to only show if it matches student's granted courses
+      // Filter live class to only show if it matches student's granted courses or enrolled courses
       const courseId = activeScheduled.course?._id || activeScheduled.course || '';
       const userGrantedCourses = user?.permissions?.grantedCourses || [];
-      const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString());
+      const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
+                        courses.some(c => (c._id || c).toString() === courseId.toString());
 
       if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
         const normalized = {
@@ -196,10 +197,11 @@ const ClassroomPage = () => {
     try {
       const res = await api.get('/live-classes/active');
       if (res.data) {
-        // Filter live class to only show if it matches student's granted courses
+        // Filter live class to only show if it matches student's granted courses or enrolled courses
         const courseId = res.data.course?._id || res.data.course || '';
         const userGrantedCourses = user?.permissions?.grantedCourses || [];
-        const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString());
+        const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
+                          courses.some(c => (c._id || c).toString() === courseId.toString());
         
         if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
           const normalized = {
