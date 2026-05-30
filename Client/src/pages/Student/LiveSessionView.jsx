@@ -1,18 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink, Maximize, Minimize } from 'lucide-react';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import api from '../../api/axios';
 import { useSocket } from '../../contexts/SocketProvider';
+import { PortalContext } from '../../contexts/PortalProvider';
 
-const LiveSessionView = ({ liveClass, onBack }) => {
+const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
     const { socket } = useSocket();
+    const { activeLiveClass: contextLiveClass, setActiveLiveClass: setContextLiveClass, setView, user } = useContext(PortalContext);
+    
+    const [fetchedLiveClass, setFetchedLiveClass] = useState(null);
+    const [loading, setLoading] = useState(!propLiveClass && !contextLiveClass);
     const [myDoubt, setMyDoubt] = useState(null);
     const [isSignaling, setIsSignaling] = useState(false);
     const [participantCount, setParticipantCount] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const stageRef = useRef(null);
+
+    const liveClass = propLiveClass || contextLiveClass || fetchedLiveClass;
+    const onBack = propOnBack || (() => setView('Classroom'));
 
     const toggleFullscreen = () => {
         if (!stageRef.current) return;
@@ -52,18 +60,110 @@ const LiveSessionView = ({ liveClass, onBack }) => {
             }
         });
 
+        socket.on('liveClass:ended', (classId) => {
+            if (liveClass && liveClass._id === classId) {
+                setFetchedLiveClass(null);
+                setContextLiveClass(null);
+            }
+        });
+
+        socket.on('scheduledLive:ended', (liveId) => {
+            if (liveClass && liveClass._id === liveId) {
+                setFetchedLiveClass(null);
+                setContextLiveClass(null);
+            }
+        });
+
         return () => {
             socket.off('liveClass:countUpdate');
             socket.off('doubt:resolved');
             socket.off('doubt:deleted');
+            socket.off('liveClass:ended');
+            socket.off('scheduledLive:ended');
         };
-    }, [liveClass?._id]);
+    }, [liveClass?._id, socket]);
 
     useEffect(() => {
         const preventContext = (e) => e.preventDefault();
         window.addEventListener('contextmenu', preventContext);
         return () => window.removeEventListener('contextmenu', preventContext);
     }, []);
+
+    useEffect(() => {
+        if (propLiveClass || contextLiveClass) {
+            setLoading(false);
+            return;
+        }
+
+        const fetchActiveSession = async () => {
+            try {
+                // Try fetching standard active live class
+                const res = await api.get('/live-classes/active');
+                if (res.data) {
+                    const courseId = res.data.course?._id || res.data.course || '';
+                    const userGrantedCourses = user?.permissions?.grantedCourses || [];
+                    
+                    // Fetch courses to check access
+                    const coursesRes = await api.get('/courses');
+                    const courses = Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data || [];
+                    
+                    const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
+                                      courses.some(c => (c._id || c).toString() === courseId.toString());
+
+                    if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
+                        const normalized = {
+                            ...res.data,
+                            mentorName: res.data.mentorName || res.data.mentor?.name || 'Instructor',
+                            startedAt: res.data.startedAt || new Date()
+                        };
+                        setFetchedLiveClass(normalized);
+                        setContextLiveClass(normalized);
+                        setLoading(false);
+                        return;
+                    }
+                }
+
+                // If not found or no access, try fetching upcoming scheduled lives to see if one is 'live'
+                const scheduledRes = await api.get('/scheduled-live/upcoming');
+                const activeScheduled = (scheduledRes.data || []).find(l => l.status === 'live');
+                if (activeScheduled) {
+                    const courseId = activeScheduled.course?._id || activeScheduled.course || '';
+                    const userGrantedCourses = user?.permissions?.grantedCourses || [];
+                    
+                    const coursesRes = await api.get('/courses');
+                    const courses = Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data || [];
+
+                    const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
+                                      courses.some(c => (c._id || c).toString() === courseId.toString());
+
+                    if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
+                        const normalized = {
+                            ...activeScheduled,
+                            mentorName: activeScheduled.mentorName || activeScheduled.mentor?.name || 'Instructor',
+                            topic: activeScheduled.description || activeScheduled.topic || 'Live Session',
+                            startedAt: activeScheduled.actualStart || activeScheduled.scheduledStart || new Date()
+                        };
+                        setFetchedLiveClass(normalized);
+                        setContextLiveClass(normalized);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch active session:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchActiveSession();
+    }, [propLiveClass, contextLiveClass, user]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+                <div className="w-10 h-10 border-4 border-slate-200 border-t-[#2563EB] rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     if (!liveClass) {
         return (

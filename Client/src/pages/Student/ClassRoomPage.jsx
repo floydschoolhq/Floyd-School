@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
@@ -14,6 +15,7 @@ import { useSocket } from '../../contexts/SocketProvider';
 import useIsMobile from '../../hooks/useIsMobile';
 
 const ClassroomPage = () => {
+  const navigate = useNavigate();
   const { socket } = useSocket();
   const isMobile = useIsMobile(768);
 
@@ -163,15 +165,16 @@ const ClassroomPage = () => {
     return () => window.removeEventListener('contextmenu', preventContext);
   }, []);
 
-  const checkActiveScheduledLive = (livesList = []) => {
+  const checkActiveScheduledLive = (livesList = [], optCourses = null) => {
     // Look for an active scheduled YouTube live session
     const activeScheduled = (livesList || []).find(l => l.status === 'live');
     if (activeScheduled) {
       // Filter live class to only show if it matches student's granted courses or enrolled courses
       const courseId = activeScheduled.course?._id || activeScheduled.course || '';
       const userGrantedCourses = user?.permissions?.grantedCourses || [];
+      const activeCourses = optCourses || courses || [];
       const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
-                        courses.some(c => (c._id || c).toString() === courseId.toString());
+                        activeCourses.some(c => (c._id || c).toString() === courseId.toString());
 
       if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
         const normalized = {
@@ -193,15 +196,16 @@ const ClassroomPage = () => {
     setGlobalActiveLiveClass(null);
   };
 
-  const fetchActiveLiveClass = async (optScheduledLives = null) => {
+  const fetchActiveLiveClass = async (optScheduledLives = null, optCourses = null) => {
     try {
       const res = await api.get('/live-classes/active');
       if (res.data) {
         // Filter live class to only show if it matches student's granted courses or enrolled courses
         const courseId = res.data.course?._id || res.data.course || '';
         const userGrantedCourses = user?.permissions?.grantedCourses || [];
+        const activeCourses = optCourses || courses || [];
         const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId.toString()) ||
-                          courses.some(c => (c._id || c).toString() === courseId.toString());
+                          activeCourses.some(c => (c._id || c).toString() === courseId.toString());
         
         if (hasAccess || user?.role === 'admin' || user?.role === 'mentor') {
           const normalized = {
@@ -220,21 +224,21 @@ const ClassroomPage = () => {
       }
       
       // Fallback: check if we have any active scheduled live class
-      checkActiveScheduledLive(optScheduledLives || scheduledLives);
+      checkActiveScheduledLive(optScheduledLives || scheduledLives, optCourses);
     } catch (error) {
       console.error('Failed to fetch active live class:', error);
-      checkActiveScheduledLive(optScheduledLives || scheduledLives);
+      checkActiveScheduledLive(optScheduledLives || scheduledLives, optCourses);
     }
   };
 
-  const fetchScheduledLives = async () => {
+  const fetchScheduledLives = async (optCourses = null) => {
     try {
       const res = await api.get('/scheduled-live/upcoming');
       setScheduledLives(res.data);
       // If there is no active Jitsi class, check if any scheduled live is active
       const hasActiveJitsi = activeLiveClass && !activeLiveClass.videoUrl;
       if (!hasActiveJitsi) {
-        checkActiveScheduledLive(res.data);
+        checkActiveScheduledLive(res.data, optCourses || courses);
       }
     } catch (error) {
       console.error('Failed to fetch scheduled lives:', error);
@@ -284,9 +288,14 @@ const ClassroomPage = () => {
         api.get('/assignments'),
         api.get('/dashboard/student').catch(() => null)
       ]);
-      setCourses(Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data);
+      const loadedCourses = Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data;
+      setCourses(loadedCourses);
       setAssignments(Array.isArray(assignmentsRes.data) ? assignmentsRes.data : assignmentsRes.data.data);
       setSubmissions(dashboardRes?.data?.submissions || []);
+      
+      // Proactively load active and scheduled lives with the fresh courses array to bypass state staleness
+      fetchActiveLiveClass(null, loadedCourses);
+      fetchScheduledLives(loadedCourses);
     } catch (error) {
       console.error('Failed to fetch classroom data:', error);
     } finally {
@@ -417,6 +426,7 @@ const ClassroomPage = () => {
                 onClick={() => {
                   setGlobalActiveLiveClass(activeLiveClass);
                   setView('LiveSession');
+                  navigate('/student/live-session');
                 }}
                 className="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-red-500/10 shrink-0 cursor-pointer"
               >
@@ -499,7 +509,7 @@ const ClassroomPage = () => {
                   {(selectedModule.videoUrl || activeModuleLive) ? (
                     <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
                       <CustomVideoPlayer 
-                        videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl} 
+                        videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl || activeModuleLive.meetingLink} 
                         autoPlay={Boolean(activeModuleLive)} 
                         isLive={Boolean(activeModuleLive)}
                         scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.scheduledStart}
@@ -720,6 +730,7 @@ const ClassroomPage = () => {
                       onClick={() => {
                         setGlobalActiveLiveClass(activeLiveClass);
                         setView('LiveSession');
+                        navigate('/student/live-session');
                       }}
                       className="flex-1 bg-accent-primary text-surface-base px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-accent-secondary transition-colors"
                     >
@@ -826,6 +837,7 @@ const ClassroomPage = () => {
                       onClick={() => {
                         setGlobalActiveLiveClass(activeLiveClass);
                         setView('LiveSession');
+                        navigate('/student/live-session');
                       }}
                       className="bg-accent-primary hover:bg-accent-secondary text-surface-base px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg uppercase text-base tracking-widest cursor-pointer"
                     >
