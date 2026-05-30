@@ -40,7 +40,7 @@ router.post('/submissions/:id/grade', protect, authorize('mentor', 'admin'), gra
 router.get('/course/:courseId', checkPermission('canAccessCourses'), getAssignmentsByCourse);
 
 // File upload for assignment attachments
-router.post('/upload', protect, authorize('mentor', 'admin'), upload.single('file'), (req, res) => {
+router.post('/upload', protect, authorize('student', 'mentor', 'admin'), upload.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
