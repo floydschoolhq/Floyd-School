@@ -7,6 +7,13 @@ import api from '../../api/axios';
 import { useSocket } from '../../contexts/SocketProvider';
 import { PortalContext } from '../../contexts/PortalProvider';
 
+const getYouTubeId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+};
+
 const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
     const { socket } = useSocket();
     const { activeLiveClass: contextLiveClass, setActiveLiveClass: setContextLiveClass, setView, user } = useContext(PortalContext);
@@ -333,23 +340,12 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                         {(embedUrl || liveClass.platform === 'jitsi') ? (
                             <div className="absolute inset-0 overflow-hidden bg-black">
                                 {liveClass.platform === 'jitsi' ? (
-                                    <>
-                                        <iframe
-                                            className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-0 pointer-events-none select-none"
-                                            src={embedUrl}
-                                            allow="camera; microphone; fullscreen; display-capture; autoplay"
-                                            title="Live Stream"
-                                        ></iframe>
-                                        <div className="absolute inset-0 z-50 bg-transparent cursor-default pointer-events-auto" onContextMenu={(e) => e.preventDefault()}>
-                                            <button
-                                                onClick={toggleFullscreen}
-                                                className="absolute bottom-6 right-6 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white transition-all shadow-xl cursor-pointer"
-                                            >
-                                                {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-                                            </button>
-                                            <div className="absolute inset-0 border-[20px] border-slate-900/10 pointer-events-none"></div>
-                                        </div>
-                                    </>
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full border-0"
+                                        src={embedUrl}
+                                        allow="camera; microphone; fullscreen; display-capture; autoplay"
+                                        title="Live Stream"
+                                    ></iframe>
                                 ) : (
                                     <CustomVideoPlayer
                                         videoUrl={embedUrl}
