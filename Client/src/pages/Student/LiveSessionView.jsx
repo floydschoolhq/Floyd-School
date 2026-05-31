@@ -15,6 +15,18 @@ const getYouTubeId = (url) => {
     return (match && match[2].length === 11) ? match[2] : null;
 };
 
+const getGoogleDriveFileId = (url) => {
+    if (!url) return null;
+    const matchD = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})[/?]?/);
+    if (matchD && matchD[1]) return matchD[1];
+    
+    const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{25,})/);
+    if (matchId && matchId[1]) return matchId[1];
+    
+    if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
+    return null;
+};
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
@@ -92,6 +104,14 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
             return videoId
                 ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&showinfo=0&autohide=1&start=${startSeconds}`
                 : meetingLink;
+        }
+        if (platform === 'google-drive-iframe') {
+            const fileId = getGoogleDriveFileId(meetingLink);
+            return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : meetingLink;
+        }
+        if (platform === 'google-drive-direct') {
+            const fileId = getGoogleDriveFileId(meetingLink);
+            return fileId ? `https://drive.google.com/uc?id=${fileId}` : meetingLink;
         }
         return null;
     }, [liveClass]);
@@ -344,6 +364,24 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                                         allow="camera; microphone; fullscreen; display-capture; autoplay"
                                         title="Live Stream"
                                     />
+                                ) : liveClass.platform === 'google-drive-iframe' ? (
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full border-0"
+                                        src={embedUrl}
+                                        allow="autoplay; fullscreen"
+                                        title="Google Drive IFrame Embed"
+                                    />
+                                ) : liveClass.platform === 'google-drive-direct' ? (
+                                    <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
+                                        <video
+                                            src={embedUrl}
+                                            controls
+                                            autoPlay
+                                            playsInline
+                                            controlsList="nodownload"
+                                            className="w-full h-full object-contain focus:outline-none"
+                                        />
+                                    </div>
                                 ) : (
                                     <CustomVideoPlayer
                                         videoUrl={embedUrl}

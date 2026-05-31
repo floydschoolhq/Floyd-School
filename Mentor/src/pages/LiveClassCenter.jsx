@@ -536,11 +536,13 @@ const LiveClassCenter = () => {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Streaming Platform</label>
-                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                             {[
                                                 { id: 'premiere', label: 'Simulated Live' },
                                                 { id: 'youtube', label: 'YouTube' },
                                                 { id: 'jitsi', label: 'Jitsi Meet' },
+                                                { id: 'google-drive-iframe', label: 'GDrive IFrame' },
+                                                { id: 'google-drive-direct', label: 'GDrive Direct' },
                                                 { id: 'google-meet', label: 'Google Meet' },
                                                 { id: 'zoom', label: 'Zoom' }
                                             ].map(p => (
