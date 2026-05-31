@@ -143,15 +143,14 @@ const ClassroomPage = () => {
     });
 
     socket.on('doubt:new', (newDoubt) => {
-      if (newDoubt.student === socket.userId) {
+      const studentId = user?._id || user?.id;
+      if (studentId && newDoubt.student === studentId) {
         setMyDoubt(newDoubt);
       }
     });
 
     socket.on('doubt:deleted', (deletedDoubtId) => {
-      if (myDoubt && myDoubt._id === deletedDoubtId) {
-        setMyDoubt(null);
-      }
+      setMyDoubt(prev => (prev?._id === deletedDoubtId ? null : prev));
     });
 
     return () => {
@@ -160,9 +159,12 @@ const ClassroomPage = () => {
         socket.off('liveClass:ended');
         socket.off('scheduledLive:started');
         socket.off('scheduledLive:ended');
+        socket.off('doubt:resolved');
+        socket.off('doubt:new');
+        socket.off('doubt:deleted');
       }
     };
-  }, [socket]); // Removed isClassroomUser dependency to let it run for all students
+  }, [socket, user]);
 
   useEffect(() => {
     fetchClassroomData();
