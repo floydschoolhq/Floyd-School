@@ -25,6 +25,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const containerRef = useRef(null);
     const apiLoaded = useRef(false);
     const playerReady = useRef(false);
+    const videoRef = useRef(null);
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(100);
@@ -41,6 +42,24 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const videoId = extractYouTubeId(videoUrl);
 
     // ─── ALL HANDLERS before any useEffect that references them ────────────
+
+    const handleVideoLoadedMetadata = useCallback(() => {
+        setIsLoaded(true);
+        if (videoRef.current) {
+            videoRef.current.volume = volume / 100;
+            videoRef.current.muted = isMuted;
+
+            if (isLive && scheduledStart) {
+                const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                videoRef.current.currentTime = elapsedSeconds;
+            }
+
+            if (autoPlay) {
+                videoRef.current.play().catch(() => {});
+            }
+        }
+        if (onReady) onReady();
+    }, [autoPlay, onReady, isLive, scheduledStart, volume, isMuted]);
 
     const handleQualityChange = useCallback(() => {
         if (playerRef.current) {
@@ -103,38 +122,64 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
 
     const togglePlay = useCallback(() => {
-        if (!playerRef.current || !playerReady.current) return;
-        if (isPlaying) {
-            playerRef.current.pauseVideo();
-        } else {
-            if (isLive && scheduledStart) {
-                const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
-                playerRef.current.seekTo(elapsed, true);
+        if (videoId) {
+            if (!playerRef.current || !playerReady.current) return;
+            if (isPlaying) {
+                playerRef.current.pauseVideo();
+            } else {
+                if (isLive && scheduledStart) {
+                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                    playerRef.current.seekTo(elapsed, true);
+                }
+                playerRef.current.playVideo();
             }
-            playerRef.current.playVideo();
+        } else {
+            if (!videoRef.current) return;
+            if (isPlaying) {
+                videoRef.current.pause();
+            } else {
+                if (isLive && scheduledStart) {
+                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                    videoRef.current.currentTime = elapsed;
+                }
+                videoRef.current.play().catch(() => {});
+            }
         }
-    }, [isPlaying, isLive, scheduledStart]);
+    }, [videoId, isPlaying, isLive, scheduledStart]);
 
     const handleVolumeChange = useCallback((e) => {
         const newVolume = parseInt(e.target.value);
         setVolume(newVolume);
-        if (playerRef.current) {
-            playerRef.current.setVolume(newVolume);
-            setIsMuted(newVolume === 0);
+        setIsMuted(newVolume === 0);
+        if (videoId) {
+            if (playerRef.current) {
+                playerRef.current.setVolume(newVolume);
+            }
+        } else {
+            if (videoRef.current) {
+                videoRef.current.volume = newVolume / 100;
+                videoRef.current.muted = newVolume === 0;
+            }
         }
-    }, []);
+    }, [videoId]);
 
     const toggleMute = useCallback(() => {
-        if (!playerRef.current) return;
-        if (isMuted) {
-            playerRef.current.unMute();
-            setIsMuted(false);
+        const newMute = !isMuted;
+        setIsMuted(newMute);
+        if (videoId) {
+            if (playerRef.current) {
+                if (newMute) {
+                    playerRef.current.mute();
+                } else {
+                    playerRef.current.unMute();
+                }
+            }
         } else {
-            playerRef.current.mute();
-            setIsMuted(true);
+            if (videoRef.current) {
+                videoRef.current.muted = newMute;
+            }
         }
-    }, [isMuted]);
-
+    }, [videoId, isMuted]);
     const setQuality = useCallback((quality) => {
         if (!playerRef.current || !playerReady.current) return;
         playerRef.current.setPlaybackQuality(quality);
@@ -171,6 +216,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     }, []);
 
     useEffect(() => {
+        if (!videoId) return;
         if (!apiLoaded.current) {
             const tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
@@ -190,7 +236,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                 playerRef.current = null;
             }
         };
-    }, [initializePlayer]);
+    }, [initializePlayer, videoId]);
 
     useEffect(() => {
         if (playerReady.current && playerRef.current && videoId) {
@@ -225,11 +271,27 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && setShowControls(false)}
         >
-            {/* YouTube Player */}
-            <div
-                id="custom-yt-player"
-                className="w-full h-full pointer-events-none"
-            />
+            {/* Player Element */}
+            {videoId ? (
+                <div
+                    id="custom-yt-player"
+                    className="w-full h-full pointer-events-none"
+                />
+            ) : (
+                <video
+                    ref={videoRef}
+                    src={videoUrl}
+                    playsInline
+                    className="w-full h-full object-contain pointer-events-none"
+                    onLoadedMetadata={handleVideoLoadedMetadata}
+                    onPlay={() => {
+                        setIsPlaying(true);
+                        setHasStartedPlaying(true);
+                    }}
+                    onPause={() => setIsPlaying(false)}
+                    onEnded={() => setIsPlaying(false)}
+                />
+            )}
 
             {/* Overlay Controls */}
             <AnimatePresence>
@@ -284,44 +346,46 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                             <div className="flex-1" />
 
-                            <div className="relative">
-                                <button
-                                    onClick={() => setShowSettings(s => !s)}
-                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2"
-                                >
-                                    <Settings size={18} className="text-white" />
-                                    <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
-                                    <ChevronDown size={14} className="text-white" />
-                                </button>
+                            {videoId && (
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setShowSettings(s => !s)}
+                                        className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2"
+                                    >
+                                        <Settings size={18} className="text-white" />
+                                        <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
+                                        <ChevronDown size={14} className="text-white" />
+                                    </button>
 
-                                <AnimatePresence>
-                                    {showSettings && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 10 }}
-                                            className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
-                                        >
-                                            <div className="p-2">
-                                                <p className="text-[10px] font-semibold text-slate-400 px-3 py-2">Quality</p>
-                                                {getAvailableQualities().map((level) => (
-                                                    <button
-                                                        key={level}
-                                                        onClick={() => setQuality(level)}
-                                                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                                            currentQuality === level
-                                                                ? 'bg-sky-500/20 text-sky-400'
-                                                                : 'text-white hover:bg-white/10'
-                                                        }`}
-                                                    >
-                                                        {getQualityLabel(level)}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
+                                    <AnimatePresence>
+                                        {showSettings && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: 10 }}
+                                                className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
+                                            >
+                                                <div className="p-2">
+                                                    <p className="text-[10px] font-semibold text-slate-400 px-3 py-2">Quality</p>
+                                                    {getAvailableQualities().map((level) => (
+                                                        <button
+                                                            key={level}
+                                                            onClick={() => setQuality(level)}
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                                currentQuality === level
+                                                                    ? 'bg-sky-500/20 text-sky-400'
+                                                                    : 'text-white hover:bg-white/10'
+                                                            }`}
+                                                        >
+                                                            {getQualityLabel(level)}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            )}
 
                             <button
                                 onClick={toggleFullscreen}

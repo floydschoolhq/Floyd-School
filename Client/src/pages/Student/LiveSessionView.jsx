@@ -371,17 +371,6 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                                         allow="autoplay; fullscreen"
                                         title="Google Drive IFrame Embed"
                                     />
-                                ) : liveClass.platform === 'google-drive-direct' ? (
-                                    <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
-                                        <video
-                                            src={embedUrl}
-                                            controls
-                                            autoPlay
-                                            playsInline
-                                            controlsList="nodownload"
-                                            className="w-full h-full object-contain focus:outline-none"
-                                        />
-                                    </div>
                                 ) : (
                                     <CustomVideoPlayer
                                         videoUrl={embedUrl}
