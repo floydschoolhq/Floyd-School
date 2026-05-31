@@ -574,7 +574,7 @@ exports.processSystemCommand = async (req, res) => {
  */
 exports.broadcastNotification = async (req, res) => {
     try {
-        const { title, message, type, targetGroup } = req.body;
+        const { title, message, type, targetGroup, pdfUrl } = req.body;
         console.log(`[Admin] Initiating broadcast: ${title} to ${targetGroup}`);
 
         let query = {};
@@ -597,6 +597,7 @@ exports.broadcastNotification = async (req, res) => {
             title,
             message,
             type: ['info', 'success', 'warning', 'broadcast'].includes(type) ? type : 'broadcast',
+            pdfUrl: pdfUrl || null,
             isRead: false
         }));
 
@@ -605,7 +606,7 @@ exports.broadcastNotification = async (req, res) => {
         // Real-time emit
         const io = req.app.get('io');
         if (io) {
-            io.emit('notification:broadcast', { title, message, type: type || 'info' });
+            io.emit('notification:broadcast', { title, message, type: type || 'info', pdfUrl: pdfUrl || null });
         }
 
         res.status(200).json({

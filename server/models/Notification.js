@@ -43,6 +43,10 @@ const notificationSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    pdfUrl: {
+        type: String,
+        default: null
+    },
     readAt: {
         type: Date
     }

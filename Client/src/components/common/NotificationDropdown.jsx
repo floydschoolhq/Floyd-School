@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Check, Trash2, Info, AlertTriangle, CheckCircle, Ticket } from 'lucide-react';
+import { Bell, Check, Trash2, Info, AlertTriangle, CheckCircle, Ticket, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
 
@@ -122,6 +122,20 @@ const NotificationDropdown = () => {
                                                 <p className="text-[10px] font-medium text-slate-500 mt-0.5 line-clamp-2">
                                                     {notification.message}
                                                 </p>
+                                                {notification.pdfUrl && (
+                                                    <div className="mt-2">
+                                                        <a
+                                                            href={notification.pdfUrl}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-fit cursor-pointer border border-rose-500/20"
+                                                        >
+                                                            <FileText size={10} />
+                                                            View Attachment
+                                                        </a>
+                                                    </div>
+                                                )}
                                                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2">
                                                     {new Date(notification.createdAt).toLocaleDateString()}
                                                 </p>

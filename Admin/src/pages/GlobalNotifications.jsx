@@ -7,7 +7,10 @@ import {
     Users,
     Shield,
     GraduationCap,
-    CheckCircle2
+    CheckCircle2,
+    FileText,
+    X,
+    UploadCloud
 } from 'lucide-react';
 import api from '../api/axios';
 
@@ -20,6 +23,10 @@ const GlobalNotifications = () => {
         type: 'info'
     });
 
+    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfUrl, setPdfUrl] = useState('');
+    const [uploadingPdf, setUploadingPdf] = useState(false);
+
     useEffect(() => {
         if (location.state) {
             setFormData(prev => ({
@@ -28,16 +35,58 @@ const GlobalNotifications = () => {
             }));
         }
     }, [location.state]);
+
     const [sending, setSending] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    const handlePdfChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.type !== 'application/pdf') {
+            toast.error('Only PDF files are supported.');
+            return;
+        }
+
+        setPdfFile(file);
+        setUploadingPdf(true);
+
+        const uploadData = new FormData();
+        uploadData.append('file', file);
+
+        try {
+            const res = await api.post('/assignments/upload', uploadData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            setPdfUrl(res.data.fileUrl);
+            toast.success('PDF uploaded and linked successfully!');
+        } catch (err) {
+            console.error('PDF upload failed:', err);
+            toast.error('Failed to upload PDF.');
+            setPdfFile(null);
+            setPdfUrl('');
+        } finally {
+            setUploadingPdf(false);
+        }
+    };
+
+    const removePdf = () => {
+        setPdfFile(null);
+        setPdfUrl('');
+    };
 
     const handleSend = async (e) => {
         e.preventDefault();
         setSending(true);
         try {
-            await api.post('/admin/broadcast', formData);
+            await api.post('/admin/broadcast', {
+                ...formData,
+                pdfUrl: pdfUrl || null
+            });
             setSuccess(true);
             setFormData({ title: '', message: '', targetGroup: 'all', type: 'info' });
+            setPdfFile(null);
+            setPdfUrl('');
             setTimeout(() => setSuccess(false), 3000);
         } catch (err) {
             alert('Failed to send broadcast');
@@ -137,10 +186,48 @@ const GlobalNotifications = () => {
                         />
                     </div>
 
+                    <div className="space-y-3">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Attachment Spec (Optional PDF)</label>
+                        
+                        {!pdfFile ? (
+                            <div className="relative border border-dashed border-slate-850 rounded-xl p-6 hover:border-sky-500/50 transition-colors bg-slate-950/20 group cursor-pointer flex flex-col items-center justify-center text-center">
+                                <input
+                                    type="file"
+                                    accept="application/pdf"
+                                    onChange={handlePdfChange}
+                                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                    disabled={uploadingPdf}
+                                />
+                                <UploadCloud className="w-10 h-10 text-slate-500 group-hover:text-sky-400 transition-colors mb-2" />
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    {uploadingPdf ? 'Uploading attached file...' : 'Choose PDF attachment'}
+                                </span>
+                                <span className="text-[9px] text-slate-600 uppercase tracking-widest mt-1">Supports PDF documents up to 10MB</span>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3 p-4 bg-sky-500/5 border border-sky-500/10 rounded-xl shadow-inner">
+                                <div className="w-10 h-10 bg-sky-500/10 border border-sky-500/20 rounded-lg flex items-center justify-center text-sky-400">
+                                    <FileText size={20} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-bold text-white truncate">{pdfFile.name}</p>
+                                    <p className="text-[9px] font-black text-sky-400 uppercase tracking-widest mt-0.5">Linked successfully</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={removePdf}
+                                    className="p-2 bg-slate-950 hover:bg-rose-500/10 hover:text-rose-500 text-slate-400 rounded-lg transition-all"
+                                >
+                                    <X size={16} />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     <button
                         type="submit"
-                        disabled={sending}
-                        className="w-full py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-sky-500/20 flex items-center justify-center gap-3"
+                        disabled={sending || uploadingPdf}
+                        className="w-full py-5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-sky-500/20 flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                         {sending ? (
                             <div className="w-5 h-5 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin" />
