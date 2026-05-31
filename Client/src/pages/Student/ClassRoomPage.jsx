@@ -639,7 +639,7 @@ const ClassroomPage = () => {
                             </div>
                             <a
                               href={getFileUrl(moduleAssignment.attachments[0].url)}
-
+                              download
                               target="_blank"
                               rel="noopener noreferrer"
                               className="px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"

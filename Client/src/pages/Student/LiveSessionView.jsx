@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext, useCallback } from 'react';
-import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Users, Monitor, Shield, ExternalLink } from 'lucide-react';
+import { PlayCircle, CheckCircle, Clock, Trash2, ArrowLeft, Monitor, Shield, ExternalLink } from 'lucide-react';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
 import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 import api from '../../api/axios';
@@ -25,6 +25,7 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
     const [loading, setLoading] = useState(!propLiveClass && !contextLiveClass);
     const [myDoubt, setMyDoubt] = useState(null);
     const [isSignaling, setIsSignaling] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [participantCount, setParticipantCount] = useState(0);
     const stageRef = useRef(null);
 
@@ -299,11 +300,6 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                 </div>
 
                 <div className="flex items-center gap-2 sm:gap-4">
-                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-sky-50 rounded-xl border border-sky-100">
-                        <Users className="w-3.5 h-3.5 text-sky-500" />
-                        <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest">{participantCount} Watching</span>
-                    </div>
-
                     {myDoubt ? (
                         <div className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-bold flex items-center gap-1.5 transition-all border-2 text-[9px] sm:text-xs ${myDoubt.isResolved
                             ? 'bg-emerald-50 border-emerald-100 text-emerald-600'

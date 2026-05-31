@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Users, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Send, MessageCircle, ShieldCheck } from 'lucide-react';
 import api from '../../api/axios';
 import { PortalContext } from '../../contexts/PortalProvider';
 import { useSocket } from '../../contexts/SocketProvider';
@@ -10,6 +10,7 @@ const LiveChatSidebar = ({ classId }) => {
     const { user } = React.useContext(PortalContext);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    // eslint-disable-next-line no-unused-vars
     const [studentCount, setStudentCount] = useState(0);
     const [isSending, setIsSending] = useState(false);
     const [requestingAccess, setRequestingAccess] = useState(false);
@@ -120,10 +121,6 @@ const LiveChatSidebar = ({ classId }) => {
                     <h3 className="text-white font-semibold text-base flex items-center gap-2">
                         Class <span className="text-blue-500 font-semibold">Transmission</span>
                     </h3>
-                    <div className="flex items-center gap-1.5 px-2 py-1 bg-blue-500/10 rounded-lg">
-                        <Users size={12} className="text-blue-500" />
-                        <span className="text-[13px] font-semibold text-blue-500">{studentCount}</span>
-                    </div>
                 </div>
                 <p className="text-[13px] font-bold text-slate-500">Global Interaction Active</p>
             </div>

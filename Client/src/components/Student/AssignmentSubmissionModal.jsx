@@ -139,13 +139,13 @@ const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, on
                                             </span>
                                         </div>
                                         <a
-                                        href={getFileUrl(assignment.attachments[0].url)}
-
+                                            href={getFileUrl(assignment.attachments[0].url)}
+                                            download
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="ml-4 px-3 py-1 bg-accent-primary/10 hover:bg-accent-primary/20 text-accent-primary rounded-lg text-[9px] font-black uppercase tracking-widest transition-all cursor-pointer"
                                         >
-                                            View Reference Spec
+                                            Download Spec
                                         </a>
                                     </div>
                                 )}
@@ -186,12 +186,12 @@ const AssignmentSubmissionModal = ({ isOpen, assignment, submission, onClose, on
                                                 </div>
                                                 <a
                                                     href={getFileUrl(submission.attachments[0].url)}
-
+                                                    download
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="px-3 py-1.5 bg-surface-soft hover:bg-surface-el text-text-main rounded-lg text-[10px] font-black uppercase tracking-widest border border-surface-el"
                                                 >
-                                                    View PDF
+                                                    Download PDF
                                                 </a>
                                             </div>
                                         )}
