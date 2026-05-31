@@ -35,6 +35,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [showControls, setShowControls] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
 
     // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
@@ -50,7 +51,10 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const handleStateChange = useCallback((event) => {
         if (!window.YT) return;
         switch (event.data) {
-            case window.YT.PlayerState.PLAYING:  setIsPlaying(true);  break;
+            case window.YT.PlayerState.PLAYING:
+                setIsPlaying(true);
+                setHasStartedPlaying(true);
+                break;
             case window.YT.PlayerState.PAUSED:   setIsPlaying(false); break;
             case window.YT.PlayerState.ENDED:    setIsPlaying(false); break;
             default: break;
@@ -190,6 +194,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     useEffect(() => {
         if (playerReady.current && playerRef.current && videoId) {
+            setHasStartedPlaying(false);
             playerRef.current.loadVideoById(videoId);
             setIsLoaded(true);
         }
@@ -331,8 +336,8 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             </AnimatePresence>
 
             {/* Loading State */}
-            {!isLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+            {(!isLoaded || (autoPlay && !hasStartedPlaying)) && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-950 z-30 transition-all duration-500">
                     <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
                 </div>
             )}
