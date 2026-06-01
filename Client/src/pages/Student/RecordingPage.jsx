@@ -5,6 +5,7 @@ import { GradientCard } from '../../components/dashboard/GradientCard';
 import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonCard';
 import api from '../../api/axios';
 import CommentSection from '../../components/Student/CommentSection';
+import CustomVideoPlayer from '../../components/Student/CustomVideoPlayer';
 
 const getYouTubeId = (url) => {
     if (!url) return null;
@@ -184,23 +185,11 @@ if (loading) {
                             className="relative w-full max-w-5xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
                         >
                             <div className="aspect-video bg-black relative">
-                                {getGoogleDriveFileId(selectedVideo.videoUrl) ? (
-                                    <iframe
-                                        className="absolute inset-0 w-full h-full border-0 bg-black"
-                                        src={`https://drive.google.com/file/d/${getGoogleDriveFileId(selectedVideo.videoUrl)}/preview`}
-                                        title={selectedVideo.title}
-                                        allow="autoplay; fullscreen"
-                                    ></iframe>
-                                ) : (
-                                    <iframe
-                                        className="absolute inset-0 w-full h-full"
-                                        src={`https://www.youtube.com/embed/${getYouTubeId(selectedVideo.videoUrl)}?autoplay=1&rel=0`}
-                                        title={selectedVideo.title}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowFullScreen
-                                    ></iframe>
-                                )}
+                                <CustomVideoPlayer
+                                    videoUrl={selectedVideo.videoUrl}
+                                    autoPlay={true}
+                                    isLive={false}
+                                />
                             </div>
                             <div className="p-8 flex items-center justify-between gap-8">
                                 <div>

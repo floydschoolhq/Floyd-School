@@ -637,21 +637,13 @@ const ClassroomPage = () => {
                 <div>
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
                   {(selectedModule.videoUrl || activeModuleLive) ? (
-                    <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">                       {getGoogleDriveFileId(selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink) && !activeModuleLive ? (
-                        <iframe
-                          className="w-full h-full border-0 bg-black"
-                          src={`https://drive.google.com/file/d/${getGoogleDriveFileId(selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink)}/preview`}
-                          allow="autoplay; fullscreen"
-                          title="Google Drive Lecture"
-                        ></iframe>
-                      ) : (
-                        <CustomVideoPlayer 
-                          videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl || activeModuleLive.meetingLink} 
-                          autoPlay={Boolean(activeModuleLive)} 
-                          isLive={Boolean(activeModuleLive)}
-                          scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.startedAt || activeModuleLive?.scheduledStart}
-                        />
-                      )}
+                    <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
+                      <CustomVideoPlayer 
+                        videoUrl={selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink} 
+                        autoPlay={Boolean(activeModuleLive)} 
+                        isLive={Boolean(activeModuleLive)}
+                        scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.startedAt || activeModuleLive?.scheduledStart}
+                      />
                       {activeModuleLive && (
                         <div className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest animate-pulse z-20">
                           Live Now

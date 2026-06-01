@@ -49,6 +49,8 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [isLoaded, setIsLoaded] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
@@ -56,6 +58,9 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     // Google Drive direct streaming resolution
     const fileId = getGoogleDriveFileId(videoUrl);
     const directVideoUrl = fileId ? `https://docs.google.com/uc?export=download&id=${fileId}` : videoUrl;
+
+    // Local storage key for recorded video playback resumption
+    const progressKey = videoUrl ? `thinkskool_playback_${encodeURIComponent(videoUrl)}` : null;
 
     // ─── ALL HANDLERS before any useEffect that references them ────────────
 
@@ -68,6 +73,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             if (isLive && scheduledStart) {
                 const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
                 videoRef.current.currentTime = elapsedSeconds;
+            } else if (!isLive && progressKey) {
+                const savedTime = localStorage.getItem(progressKey);
+                if (savedTime) {
+                    videoRef.current.currentTime = parseFloat(savedTime);
+                }
             }
 
             if (autoPlay) {
@@ -75,7 +85,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             }
         }
         if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart, volume, isMuted]);
+    }, [autoPlay, onReady, isLive, scheduledStart, volume, isMuted, progressKey]);
 
     const handleQualityChange = useCallback(() => {
         if (playerRef.current) {
@@ -104,6 +114,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         if (isLive && scheduledStart) {
             const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
             event.target.seekTo(elapsedSeconds, true);
+        } else if (!isLive && progressKey) {
+            const savedTime = localStorage.getItem(progressKey);
+            if (savedTime) {
+                event.target.seekTo(parseFloat(savedTime), true);
+            }
         }
 
         event.target.setPlaybackQuality('hd1080');
@@ -125,7 +140,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         }
 
         if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart, isMuted]);
+    }, [autoPlay, onReady, isLive, scheduledStart, isMuted, progressKey]);
 
     const initializePlayer = useCallback(() => {
         if (!videoId || playerReady.current || !window.YT?.Player) return;
@@ -216,6 +231,27 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     const getQualityLabel = useCallback((level) => QUALITY_LABELS[level] || level, []);
 
+    const formatTime = useCallback((timeInSeconds) => {
+        if (isNaN(timeInSeconds)) return '0:00';
+        const mins = Math.floor(timeInSeconds / 60);
+        const secs = Math.floor(timeInSeconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }, []);
+
+    const handleSeekChange = useCallback((e) => {
+        const time = parseFloat(e.target.value);
+        setCurrentTime(time);
+        if (videoId) {
+            if (playerRef.current && playerReady.current) {
+                playerRef.current.seekTo(time, true);
+            }
+        } else {
+            if (videoRef.current) {
+                videoRef.current.currentTime = time;
+            }
+        }
+    }, [videoId]);
+
     const getAvailableQualities = useCallback(() => {
         const levels = qualityLevels.length > 0 ? qualityLevels : QUALITY_PRIORITY;
         return ['auto', ...levels];
@@ -231,6 +267,35 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             document.exitFullscreen();
         }
     }, []);
+
+    const syncLiveTime = useCallback(() => {
+        if (!isLive || !scheduledStart) return;
+        let elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+        
+        if (videoId) {
+            if (playerRef.current && playerReady.current && typeof playerRef.current.seekTo === 'function') {
+                const duration = playerRef.current.getDuration() || 0;
+                if (duration > 0 && elapsedSeconds > duration) {
+                    elapsedSeconds = duration;
+                }
+                const currentYTTime = playerRef.current.getCurrentTime() || 0;
+                if (Math.abs(currentYTTime - elapsedSeconds) > 3) {
+                    playerRef.current.seekTo(elapsedSeconds, true);
+                }
+            }
+        } else {
+            if (videoRef.current) {
+                const duration = videoRef.current.duration || 0;
+                if (duration > 0 && elapsedSeconds > duration) {
+                    elapsedSeconds = duration;
+                }
+                const currentVideoTime = videoRef.current.currentTime || 0;
+                if (Math.abs(currentVideoTime - elapsedSeconds) > 3) {
+                    videoRef.current.currentTime = elapsedSeconds;
+                }
+            }
+        }
+    }, [isLive, scheduledStart, videoId]);
 
     // ─── EFFECTS (all handlers already defined above) ──────────────────────
 
@@ -281,6 +346,36 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         return () => clearTimeout(timeout);
     }, [isPlaying, showControls]);
 
+    useEffect(() => {
+        let interval;
+        if (isPlaying && videoId && !isLive && playerReady.current && playerRef.current) {
+            interval = setInterval(() => {
+                if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+                    const t = playerRef.current.getCurrentTime();
+                    setCurrentTime(t);
+                    setDuration(playerRef.current.getDuration() || 0);
+                    if (progressKey && t > 0) {
+                        localStorage.setItem(progressKey, t.toString());
+                    }
+                }
+            }, 500);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, videoId, isLive, progressKey]);
+
+    useEffect(() => {
+        let interval;
+        if (isPlaying && isLive && scheduledStart) {
+            // Sync immediately on play/resume
+            syncLiveTime();
+            // Periodically check and align time drift every 2 seconds
+            interval = setInterval(() => {
+                syncLiveTime();
+            }, 2000);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, isLive, scheduledStart, syncLiveTime]);
+
     // ─── Volume Icon helper ────────────────────────────────────────────────
 
     const VolumeIcon = isMuted || volume === 0
@@ -313,7 +408,21 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     muted={isMuted}
                     autoPlay={autoPlay || isLive}
                     className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                    onLoadedMetadata={handleVideoLoadedMetadata}
+                    onTimeUpdate={() => {
+                        if (videoRef.current) {
+                            const t = videoRef.current.currentTime;
+                            setCurrentTime(t);
+                            if (!isLive && progressKey && t > 0) {
+                                localStorage.setItem(progressKey, t.toString());
+                            }
+                        }
+                    }}
+                    onLoadedMetadata={() => {
+                        handleVideoLoadedMetadata();
+                        if (videoRef.current) {
+                            setDuration(videoRef.current.duration || 0);
+                        }
+                    }}
                     onPlay={() => {
                         setIsPlaying(true);
                         setHasStartedPlaying(true);
@@ -364,6 +473,23 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                     <Play size={40} className="text-white ml-1" fill="white" />
                                 </div>
                             </motion.button>
+                        )}
+
+                        {/* Custom Timeline Progress Bar (Recorded sessions only) */}
+                        {!isLive && duration > 0 && (
+                            <div className="absolute bottom-16 left-4 right-4 flex items-center gap-3">
+                                <span className="text-white text-xs font-semibold select-none">{formatTime(currentTime)}</span>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max={duration}
+                                    step="0.1"
+                                    value={currentTime}
+                                    onChange={handleSeekChange}
+                                    className="flex-1 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer focus:outline-none"
+                                />
+                                <span className="text-white text-xs font-semibold select-none">{formatTime(duration)}</span>
+                            </div>
                         )}
 
                         {/* Bottom Controls */}
