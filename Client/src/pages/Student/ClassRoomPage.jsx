@@ -550,11 +550,64 @@ const ClassroomPage = () => {
                     {/* Sub-classes nesting */}
                     {isExpanded && (
                       <div className="pl-4 border-l-2 border-surface-el/80 space-y-2 ml-4 mb-3">
-                        {[
-                          { num: 1, title: 'Conceptual Foundation' },
-                          { num: 2, title: 'Hands-on Implementation' },
-                          { num: 3, title: 'Live Mentorship & Q&A' }
-                        ].map((cls) => {
+                        {(
+                          // Full 36-class schedule from thinkskool TTS PDF (3 per module/week)
+                          [
+                            // Week 1
+                            ['What is Python & Why It Matters; Setting Up Environment; Variables & Data Types',
+                             'User Input; If/Else Conditions; Writing Your First Working Program',
+                             'Recap & Hands-On Practice'],
+                            // Week 2
+                            ['For Loops & While Loops',
+                             'Functions with Parameters and Return Values',
+                             'Lists & Dictionaries; Organising and Working with Data'],
+                            // Week 3
+                            ['Reading and Writing Files Permanently',
+                             'Installing and Using Python Libraries',
+                             'Combining All Concepts into One Real Build'],
+                            // Week 4
+                            ['Error Handling with Try and Except',
+                             'Introduction to Classes and Objects (OOP)',
+                             'Month 1 Consolidation & Free Build Session'],
+                            // Week 5
+                            ['Using ChatGPT as a Coding Partner; Prompt Engineering Basics',
+                             'Connecting to the OpenAI API',
+                             'Building a Chatbot with a Custom Personality'],
+                            // Week 6
+                            ['What is an API; JSON Data Handling',
+                             'Fetching Live Weather and News Data from Real External Services',
+                             'Build & Deploy the Live Data App'],
+                            // Week 7
+                            ['How Computers Learn from Data; Supervised vs Unsupervised Learning',
+                             'Loading Real Datasets with Pandas',
+                             'Training First ML Model with Scikit-learn'],
+                            // Week 8
+                            ['Classification Models and Decision Trees',
+                             'Training, Testing and Accuracy Scoring',
+                             'Saving and Reusing a Trained Model with Pickle'],
+                            // Week 9
+                            ['Intro to Computer Vision; How OpenCV Works; Loading Images',
+                             'Applying Filters, Detecting Edges with OpenCV',
+                             'Live Webcam Feed & Real-Time Face Detection'],
+                            // Week 10
+                            ['What Flask Is; How Web Apps Work; Routes, Templates & Local Server',
+                             'Forms, User Input; Connecting Trained ML Model to Web Interface',
+                             'Finalize and Test Flask ML Prediction Web App'],
+                            // Week 11
+                            ['Capstone: Face Recognition Engine on Live Webcam; Auto-Log Attendance with Name & Time',
+                             'Capstone: Save Records to CSV Spreadsheet; Build Flask Attendance Live Dashboard',
+                             'Full System Integration, Testing & End-to-End Walkthrough'],
+                            // Week 12
+                            ['Final Testing & Presentation Prep',
+                             'Rehearsal with Mentor Feedback; Polish Presentation',
+                             'LIVE DEMO DAY — Present AI Face Recognition Attendance System'],
+                          ][idx] || [
+                            'Class 1',
+                            'Class 2',
+                            'Class 3'
+                          ]
+                        ).map((classTitle, classIdx) => {
+                          const cls = { num: classIdx + 1, title: classTitle };
                           const isSelectedClass = selectedModule?._id === mod._id && selectedClassNumber === cls.num;
                           
                           // Check if this class is live
