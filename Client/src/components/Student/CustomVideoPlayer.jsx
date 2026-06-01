@@ -191,8 +191,15 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     const getAvailableQualities = useCallback(() => {
         const levels = qualityLevels.length > 0 ? qualityLevels : QUALITY_PRIORITY;
-        return ['auto', ...levels];
-    }, [qualityLevels]);
+        const all = ['auto', ...levels];
+        const seenLabels = new Set();
+        return all.filter((level) => {
+            const label = getQualityLabel(level);
+            if (seenLabels.has(label)) return false;
+            seenLabels.add(label);
+            return true;
+        });
+    }, [qualityLevels, getQualityLabel]);
 
     const toggleFullscreen = useCallback(() => {
         if (!containerRef.current) return;
