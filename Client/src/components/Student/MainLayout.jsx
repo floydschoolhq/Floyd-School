@@ -49,7 +49,7 @@ const MainLayout = ({ children }) => {
       {/* Main Content Area */}
       <div className="md:ml-64 transition-all duration-300">
         {/* Header/Navbar */}
-        <header className="sticky top-0 z-30 bg-surface-base/80 backdrop-blur-xl border-b border-surface-el p-4 md:px-8 md:py-4 flex items-center justify-between transition-colors duration-500">
+        <header className="sticky top-0 z-30 bg-surface-base/80 backdrop-blur-xl border-b border-surface-el px-3 py-2.5 md:px-8 md:py-4 flex items-center justify-between transition-colors duration-500">
           <div className="flex items-center space-x-6">
             <button
               className="md:hidden p-2 text-text-muted rounded-full hover:bg-surface-soft transition-all"
@@ -57,7 +57,7 @@ const MainLayout = ({ children }) => {
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-xl font-black text-text-main tracking-tight transition-colors duration-500">
+            <h1 className="text-base md:text-xl font-black text-text-main tracking-tight transition-colors duration-500">
               {location.pathname.split('/').pop()?.replace(/([A-Z])/g, ' $1').trim() || 'Dashboard'}
             </h1>
           </div>
@@ -77,7 +77,7 @@ const MainLayout = ({ children }) => {
               className="flex items-center gap-2 px-4 py-2 bg-surface-soft hover:bg-surface-el text-text-muted rounded-xl font-bold text-xs uppercase tracking-widest transition-all"
             >
               <Home className="w-4 h-4" />
-              Return to Site
+              <span className="hidden md:inline">Return to Site</span>
             </Link>
             <div className="flex items-center gap-3 pl-6 border-l border-surface-el">
               <div className="text-right hidden sm:block">
@@ -92,7 +92,7 @@ const MainLayout = ({ children }) => {
         </header>
 
         {/* Page Content */}
-        <main className="p-4 md:p-8">
+        <main className="p-3 md:p-8">
           {children}
         </main>
       </div>

@@ -37,7 +37,7 @@ const StreakWidget = () => {
 
             <span className="text-white font-black text-sm tabular-nums">{streak}</span>
 
-            <span className="text-white/70 text-[10px] font-bold uppercase tracking-wider hidden sm:block">
+            <span className="text-white/70 text-[10px] font-bold uppercase tracking-wider">
                 {badge.label}
             </span>
 

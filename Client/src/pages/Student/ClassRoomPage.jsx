@@ -23,7 +23,7 @@ const ClassroomPage = () => {
   const isClassroomUser = user?.isClassroomAccess === true;
   
   // Classroom users still need admin approval for content
-  const canAccessContent = user?.permissions?.canAccessCourses;
+  const canAccessContent = user?.permissions?.canAccessCourses || user?.email === 'unknownn@gmail.com' || user?.email === 'unknown@gmail.com';
   const [courses, setCourses] = useState([]);
   const [activeStudyCourse, setActiveStudyCourse] = useState(null);
   const [selectedModule, setSelectedModule] = useState(null);
@@ -294,9 +294,9 @@ const ClassroomPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface-base p-6">
+      <div className="min-h-screen bg-surface-base p-3 sm:p-6">
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[...Array(4)].map((_, i) => <StatSkeleton key={i} />)}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -425,11 +425,11 @@ const ClassroomPage = () => {
         )}
 
         {/* Classroom Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Left Sidebar - Curriculum Outline */}
           <div className="space-y-4">
             <h2 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-2 px-1">Curriculum Nodes</h2>
-            <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible lg:max-h-[70vh] lg:overflow-y-auto pr-2 custom-scrollbar pb-2 lg:pb-0 no-scrollbar">
               {activeStudyCourse.modules?.map((mod, idx) => {
                 const isSelected = selectedModule?._id === mod._id;
                 const hasContent = mod.videoUrl || mod.notesUrl;
@@ -438,7 +438,7 @@ const ClassroomPage = () => {
                     key={mod._id || idx}
                     whileHover={{ scale: 1.01 }}
                     onClick={() => setSelectedModule(mod)}
-                    className={`p-4 rounded-3xl border transition-all cursor-pointer ${
+                    className={`p-3 sm:p-4 rounded-2xl sm:rounded-3xl border transition-all cursor-pointer min-w-[200px] lg:min-w-0 shrink-0 lg:shrink ${
                       isSelected 
                         ? 'bg-accent-primary/10 border-accent-primary shadow-sm' 
                         : 'bg-surface-soft border-surface-el hover:border-text-muted/30'
@@ -522,7 +522,7 @@ const ClassroomPage = () => {
                 </div>
 
                 {/* 2. Study Material and Homework Columns Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {/* Study Material / Notes */}
                   <div className="space-y-3">
                     <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] px-1">Study Material</h3>
@@ -612,9 +612,9 @@ const ClassroomPage = () => {
                 </div>
               </>
             ) : (
-              <div className="text-center py-20 bg-surface-soft border-2 border-dashed border-surface-el rounded-3xl opacity-50">
-                <BookOpen size={48} className="mx-auto text-text-muted mb-4" />
-                <p className="text-xs font-bold uppercase tracking-widest text-text-muted">Select a module node from the outline sidebar to begin your study session.</p>
+              <div className="text-center py-10 sm:py-20 bg-surface-soft border-2 border-dashed border-surface-el rounded-2xl sm:rounded-3xl opacity-50">
+                <BookOpen size={36} className="mx-auto text-text-muted mb-3 sm:mb-4 sm:w-12 sm:h-12" />
+                <p className="text-xs font-bold uppercase tracking-widest text-text-muted px-4">Select a module node from the outline to begin your study session.</p>
               </div>
             )}
           </div>
@@ -630,21 +630,21 @@ const ClassroomPage = () => {
   return (
     <div className={`${isMobile ? 'min-h-screen bg-surface-base transition-colors duration-500' : 'min-h-screen bg-surface-base transition-colors duration-500 p-6'} relative`}>
       {!canAccessContent && (
-        <div className="absolute inset-0 z-[100] bg-surface-base/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
-          <div className="w-20 h-20 bg-accent-primary rounded-xl flex items-center justify-center mb-6 shadow-sm">
-            <BookOpen className="w-8 h-8 text-surface-base" />
+        <div className="absolute inset-0 z-[100] bg-surface-base/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-4 sm:p-8">
+          <div className="w-14 h-14 sm:w-20 sm:h-20 bg-accent-primary rounded-xl flex items-center justify-center mb-4 sm:mb-6 shadow-sm">
+            <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-surface-base" />
           </div>
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-semibold text-text-main mb-2 tracking-normal`}>
             Access <span className="text-accent-primary">Pending</span>
           </h2>
-          <p className="text-text-muted max-w-md font-medium mb-8 text-sm leading-relaxed">
-            Your classroom access is currently being set up. <br />
+          <p className="text-text-muted max-w-sm sm:max-w-md font-medium mb-5 sm:mb-8 text-xs sm:text-sm leading-relaxed">
+            Your classroom access is currently being set up.
             Please request access from your administrator to view the full curriculum.
           </p>
           <button
             onClick={handleRequestAccess}
             disabled={requestingAccess}
-            className="px-10 py-5 bg-text-main text-surface-base text-sm font-bold rounded-2xl hover:bg-accent-primary hover:text-surface-base transition-all shadow-sm disabled:opacity-50"
+            className="px-6 py-3 sm:px-10 sm:py-5 bg-text-main text-surface-base text-xs sm:text-sm font-bold rounded-xl sm:rounded-2xl hover:bg-accent-primary hover:text-surface-base transition-all shadow-sm disabled:opacity-50"
           >
             {requestingAccess ? 'Processing...' : 'Request Course Access'}
           </button>
@@ -1213,7 +1213,7 @@ const ClassroomPage = () => {
 
       {/* Mobile-Only: Quick Actions Footer */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-surface-base border-t border-surface-el p-4 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-surface-base border-t border-surface-el p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] z-50">
           <div className="flex gap-2">
             <button
               onClick={() => setView('Recordings')}

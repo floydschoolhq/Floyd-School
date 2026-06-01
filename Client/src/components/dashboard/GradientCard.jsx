@@ -81,9 +81,9 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
             </div>
             {Icon && (
                 <div className={cn(
-                    "p-5 rounded-2xl bg-surface-soft text-text-main border border-surface-el group-hover:bg-text-main group-hover:text-surface-base transition-all duration-500 group-hover:scale-110 shadow-sm"
+                    "p-3 sm:p-5 rounded-2xl bg-surface-soft text-text-main border border-surface-el group-hover:bg-text-main group-hover:text-surface-base transition-all duration-500 group-hover:scale-110 shadow-sm"
                 )}>
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
             )}
         </GradientCard>

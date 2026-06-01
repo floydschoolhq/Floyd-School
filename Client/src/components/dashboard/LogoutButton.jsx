@@ -15,10 +15,11 @@ export const LogoutButton = ({ className = '' }) => {
     return (
         <button
             onClick={handleLogout}
-            className={`flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-xs uppercase tracking-widest transition-all ${className}`}
+            className={`flex items-center gap-2 px-3 py-2.5 md:px-4 md:py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-xs uppercase tracking-widest transition-all ${className}`}
+            title="Sign Out"
         >
             <LogOut className="w-4 h-4" />
-            Sign Out
+            <span className="hidden md:inline">Sign Out</span>
         </button>
     );
 };

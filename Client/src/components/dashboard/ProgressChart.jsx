@@ -12,7 +12,7 @@ export const ProgressChart = ({ progress, title, subtitle, color = "var(--accent
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            <div className={`w-40 h-40 mb-6 ${isModern ? '' : 'drop-shadow-2xl'}`}>
+            <div className={`w-28 h-28 sm:w-40 sm:h-40 mb-4 sm:mb-6 ${isModern ? '' : 'drop-shadow-2xl'}`}>
                 <CircularProgressbar
                     value={progress}
                     text={`${progress}%`}

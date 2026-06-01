@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const User = require('./models/User');
 const connectDB = require('./config/db');
+const bcrypt = require('bcryptjs');
 
 dotenv.config({ path: path.join(__dirname, '.env') });
 
@@ -20,6 +21,12 @@ const users = [
         role: "mentor"
     },
     {
+        name: "ThinkSkool Admin",
+        email: "mentor@thinkskool.in",
+        password: "shan",
+        role: "admin"
+    },
+    {
         name: "Abhay Associate",
         email: "associate@thinkskool.com",
         password: "abhay",
@@ -35,10 +42,21 @@ const seedUsers = async () => {
         for (const userData of users) {
             const userExists = await User.findOne({ email: userData.email });
             if (userExists) {
-                console.log(`User ${userData.email} already exists, skipping...`);
+                // Reset the mentor@thinkskool.in account if it already exists, to ensure the password is correct.
+                if (userData.email === 'mentor@thinkskool.in') {
+                    userExists.name = userData.name;
+                    userExists.role = userData.role;
+                    userExists.provider = userData.provider || 'local';
+                    userExists.password = userData.password;
+                    await userExists.save();
+                    console.log(`User ${userData.email} exists; password reset to seed value.`);
+                } else {
+                    console.log(`User ${userData.email} already exists, skipping...`);
+                }
                 continue;
             }
-            await User.create(userData);
+
+            await User.create({ ...userData, provider: userData.provider || 'local' });
             console.log(`User created: ${userData.email} (Role: ${userData.role})`);
         }
 

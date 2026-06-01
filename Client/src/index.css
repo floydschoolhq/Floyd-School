@@ -191,7 +191,18 @@ body {
         position: relative; 
     }
 
-    /* Stable mode: Disable animations on mobile */
+    /* Disable heavy marketing animations on mobile (scoped — excludes student portal) */
+    .animate-float-orb,
+    .animate-scan,
+    .animate-marquee,
+    .animate-text-shimmer {
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+    }
+}
+
+/* Full animation kill only for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0s !important;
         animation-delay: 0s !important;
@@ -207,6 +218,14 @@ body {
     .hero-text-container { max-width: 90vw !important; }
     .advantage-card-container { display: flex !important; flex-direction: row !important; overflow-x: auto !important; position: relative !important; height: auto !important; transform: none !important; gap: 1rem !important; padding: 1rem !important; }
     .advantage-card { position: relative !important; left: auto !important; transform: none !important; width: 220px !important; height: 320px !important; flex-shrink: 0 !important; }
+}
+
+/* Safe area insets for notched phones */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 @keyframes shimmer { 100% { transform: translateX(100%); } }

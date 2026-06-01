@@ -77,11 +77,11 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 15, scale: 0.95 }}
                         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                        className="absolute right-0 mt-4 w-96 bg-surface-base border border-surface-el rounded-3xl shadow-2xl z-50 max-h-[500px] overflow-hidden flex flex-col backdrop-blur-xl"
+                        className="fixed inset-x-0 bottom-0 md:absolute md:right-0 md:bottom-auto md:left-auto md:inset-x-auto mt-0 md:mt-4 w-full md:w-96 bg-surface-base border border-surface-el rounded-t-3xl md:rounded-3xl shadow-2xl z-50 max-h-[70vh] md:max-h-[500px] overflow-hidden flex flex-col backdrop-blur-xl"
                     >
                         {/* Header */}
-                        <div className="p-6 border-b border-surface-el flex items-center justify-between">
-                            <h3 className="text-xl font-black text-text-main tracking-tight">Alert Center</h3>
+                        <div className="p-4 md:p-6 border-b border-surface-el flex items-center justify-between">
+                            <h3 className="text-lg md:text-xl font-black text-text-main tracking-tight">Alert Center</h3>
                             <div className="flex items-center gap-3">
                                 {unreadCount > 0 && (
                                     <button
@@ -103,7 +103,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                         {/* Notifications List */}
                         <div className="overflow-y-auto flex-1 custom-scrollbar">
                             {notifications.length === 0 ? (
-                                <div className="p-12 text-center text-text-muted text-xs font-black uppercase tracking-[0.2em] italic">
+                                <div className="p-8 md:p-12 text-center text-text-muted text-xs font-black uppercase tracking-[0.2em] italic">
                                     Strategic Calm: No Alerts
                                 </div>
                             ) : (
@@ -113,7 +113,7 @@ export const NotificationPanel = ({ notifications: socketNotifications = [] }) =
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         className={cn(
-                                            "p-6 border-b border-surface-el hover:bg-surface-soft cursor-pointer transition-all duration-300",
+                                            "p-4 md:p-6 border-b border-surface-el hover:bg-surface-soft cursor-pointer transition-all duration-300",
                                             !notification.isRead && "bg-accent-primary/5"
                                         )}
                                         onClick={() => !notification.isRead && markAsRead(notification._id)}
