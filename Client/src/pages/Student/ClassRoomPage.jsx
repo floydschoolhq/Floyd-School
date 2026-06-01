@@ -908,7 +908,7 @@ const ClassroomPage = () => {
             My Courses
           </h2>
           <div className="space-y-3">
-            {courses.slice(0, 3).map((course, index) => (
+            {courses.map((course, index) => (
               <motion.div
                 key={course._id}
                 initial={{ opacity: 0, x: -20 }}
