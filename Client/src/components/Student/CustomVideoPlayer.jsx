@@ -35,6 +35,7 @@ function getGoogleDriveFileId(url) {
 const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false, scheduledStart = null }) => {
     const playerRef = useRef(null);
     const containerRef = useRef(null);
+    const ytContainerRef = useRef(null);
     const apiLoaded = useRef(false);
     const playerReady = useRef(false);
     const videoRef = useRef(null);
@@ -52,7 +53,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
+    // Derive videoId safely
     const videoId = extractYouTubeId(videoUrl);
     
     // Google Drive direct streaming resolution
@@ -62,140 +63,98 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     // Local storage key for recorded video playback resumption
     const progressKey = videoUrl ? `thinkskool_playback_${encodeURIComponent(videoUrl)}` : null;
 
-    // ─── ALL HANDLERS before any useEffect that references them ────────────
+    // ─── Stable Refs for Asynchronous Actions (Latest Ref Pattern) ────────────────────
+    const latestRef = useRef({
+        autoPlay,
+        isLive,
+        scheduledStart,
+        onReady,
+        isMuted,
+        volume,
+        isPlaying,
+        progressKey,
+    });
+    useEffect(() => {
+        latestRef.current = {
+            autoPlay,
+            isLive,
+            scheduledStart,
+            onReady,
+            isMuted,
+            volume,
+            isPlaying,
+            progressKey,
+        };
+    });
+
+    // ─── Direct Video Event Handlers ───────────────────────────────────────────
 
     const handleVideoLoadedMetadata = useCallback(() => {
         setIsLoaded(true);
         if (videoRef.current) {
-            videoRef.current.volume = volume / 100;
-            videoRef.current.muted = isMuted;
+            videoRef.current.volume = latestRef.current.volume / 100;
+            videoRef.current.muted = latestRef.current.isMuted;
 
-            if (isLive && scheduledStart) {
-                const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+            if (latestRef.current.isLive && latestRef.current.scheduledStart) {
+                const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(latestRef.current.scheduledStart).getTime()) / 1000));
                 videoRef.current.currentTime = elapsedSeconds;
-            } else if (!isLive && progressKey) {
-                const savedTime = localStorage.getItem(progressKey);
+            } else if (!latestRef.current.isLive && latestRef.current.progressKey) {
+                const savedTime = localStorage.getItem(latestRef.current.progressKey);
                 if (savedTime) {
                     videoRef.current.currentTime = parseFloat(savedTime);
                 }
             }
 
-            if (autoPlay) {
+            if (latestRef.current.autoPlay) {
                 videoRef.current.play().catch(() => {});
             }
         }
-        if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart, volume, isMuted, progressKey]);
-
-    const handleQualityChange = useCallback(() => {
-        if (playerRef.current) {
-            setCurrentQuality(playerRef.current.getPlaybackQuality() || 'auto');
-        }
+        if (latestRef.current.onReady) latestRef.current.onReady();
     }, []);
 
-    const handleStateChange = useCallback((event) => {
-        if (!window.YT) return;
-        switch (event.data) {
-            case window.YT.PlayerState.PLAYING:
-                setIsPlaying(true);
-                setHasStartedPlaying(true);
-                break;
-            case window.YT.PlayerState.PAUSED:   setIsPlaying(false); break;
-            case window.YT.PlayerState.ENDED:    setIsPlaying(false); break;
-            default: break;
-        }
-    }, []);
-
-    const handlePlayerReady = useCallback((event) => {
-        playerReady.current = true;
-        setIsPlaying(autoPlay || isLive);
-        setIsLoaded(true);
-
-        if (isLive && scheduledStart) {
-            const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
-            event.target.seekTo(elapsedSeconds, true);
-        } else if (!isLive && progressKey) {
-            const savedTime = localStorage.getItem(progressKey);
-            if (savedTime) {
-                event.target.seekTo(parseFloat(savedTime), true);
-            }
-        }
-
-        event.target.setPlaybackQuality('hd1080');
-
-        if (isMuted) {
-            event.target.mute();
-        } else {
-            event.target.unMute();
-        }
-
-        if (autoPlay || isLive) {
-            event.target.playVideo();
-        }
-
-        const availableLevels = event.target.getAvailableQualityLevels();
-        if (availableLevels?.length > 0) {
-            setQualityLevels(availableLevels);
-            setCurrentQuality(event.target.getPlaybackQuality() || 'auto');
-        }
-
-        if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart, isMuted, progressKey]);
-
-    const initializePlayer = useCallback(() => {
-        if (!videoId || playerReady.current || !window.YT?.Player) return;
-
-        playerRef.current = new window.YT.Player('custom-yt-player', {
-            videoId,
-            suggestedQuality: 'hd1080',
-            playerVars: {
-                controls: 0, modestbranding: 1, showinfo: 0,
-                iv_load_policy: 3, disablekb: 1, fs: 0, rel: 0,
-                autoplay: autoPlay ? 1 : 0, playsinline: 1,
-                origin: window.location.origin
-            },
-            events: {
-                onReady: handlePlayerReady,
-                onStateChange: handleStateChange,
-                onPlaybackQualityChange: handleQualityChange
-            }
-        });
-    }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
+    // ─── Control Action Callbacks ──────────────────────────────────────────────
 
     const togglePlay = useCallback(() => {
-        if (isLive && isPlaying) return; // Disallow pausing during active live broadcasts!
+        if (latestRef.current.isLive && latestRef.current.isPlaying) return; // Disallow pausing during active live broadcasts!
         if (videoId) {
             if (!playerRef.current || !playerReady.current) return;
-            if (isPlaying) {
+            if (latestRef.current.isPlaying) {
                 playerRef.current.pauseVideo();
+                setIsPlaying(false);
             } else {
-                if (isLive && scheduledStart) {
-                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                if (latestRef.current.isLive && latestRef.current.scheduledStart) {
+                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(latestRef.current.scheduledStart).getTime()) / 1000));
                     playerRef.current.seekTo(elapsed, true);
                 }
                 playerRef.current.playVideo();
+                setIsPlaying(true);
             }
         } else {
             if (!videoRef.current) return;
-            if (isPlaying) {
+            if (latestRef.current.isPlaying) {
                 videoRef.current.pause();
+                setIsPlaying(false);
             } else {
-                if (isLive && scheduledStart) {
-                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+                if (latestRef.current.isLive && latestRef.current.scheduledStart) {
+                    const elapsed = Math.max(0, Math.floor((Date.now() - new Date(latestRef.current.scheduledStart).getTime()) / 1000));
                     videoRef.current.currentTime = elapsed;
                 }
                 videoRef.current.play().catch(() => {});
+                setIsPlaying(true);
             }
         }
-    }, [videoId, isPlaying, isLive, scheduledStart]);
+    }, [videoId]);
 
     const handleVolumeChange = useCallback((e) => {
         const newVolume = parseInt(e.target.value);
         setVolume(newVolume);
         setIsMuted(newVolume === 0);
         if (videoId) {
-            if (playerRef.current) {
+            if (playerRef.current && playerReady.current) {
                 playerRef.current.setVolume(newVolume);
+                if (newVolume > 0 && playerRef.current.isMuted()) {
+                    playerRef.current.unMute();
+                }
             }
         } else {
             if (videoRef.current) {
@@ -206,22 +165,27 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     }, [videoId]);
 
     const toggleMute = useCallback(() => {
-        const newMute = !isMuted;
+        const newMute = !latestRef.current.isMuted;
         setIsMuted(newMute);
         if (videoId) {
-            if (playerRef.current) {
+            if (playerRef.current && playerReady.current) {
                 if (newMute) {
                     playerRef.current.mute();
                 } else {
                     playerRef.current.unMute();
+                    playerRef.current.setVolume(latestRef.current.volume || 50);
                 }
             }
         } else {
             if (videoRef.current) {
                 videoRef.current.muted = newMute;
+                if (!newMute) {
+                    videoRef.current.volume = latestRef.current.volume / 100;
+                }
             }
         }
-    }, [videoId, isMuted]);
+    }, [videoId]);
+
     const setQuality = useCallback((quality) => {
         if (!playerRef.current || !playerReady.current) return;
         playerRef.current.setPlaybackQuality(quality);
@@ -269,14 +233,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     }, []);
 
     const syncLiveTime = useCallback(() => {
-        if (!isLive || !scheduledStart) return;
-        let elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
+        if (!latestRef.current.isLive || !latestRef.current.scheduledStart) return;
+        let elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(latestRef.current.scheduledStart).getTime()) / 1000));
         
         if (videoId) {
             if (playerRef.current && playerReady.current && typeof playerRef.current.seekTo === 'function') {
-                const duration = playerRef.current.getDuration() || 0;
-                if (duration > 0 && elapsedSeconds > duration) {
-                    elapsedSeconds = duration;
+                const durationVal = playerRef.current.getDuration() || 0;
+                if (durationVal > 0 && elapsedSeconds > durationVal) {
+                    elapsedSeconds = durationVal;
                 }
                 const currentYTTime = playerRef.current.getCurrentTime() || 0;
                 if (Math.abs(currentYTTime - elapsedSeconds) > 3) {
@@ -285,9 +249,9 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             }
         } else {
             if (videoRef.current) {
-                const duration = videoRef.current.duration || 0;
-                if (duration > 0 && elapsedSeconds > duration) {
-                    elapsedSeconds = duration;
+                const durationVal = videoRef.current.duration || 0;
+                if (durationVal > 0 && elapsedSeconds > durationVal) {
+                    elapsedSeconds = durationVal;
                 }
                 const currentVideoTime = videoRef.current.currentTime || 0;
                 if (Math.abs(currentVideoTime - elapsedSeconds) > 3) {
@@ -295,9 +259,139 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                 }
             }
         }
-    }, [isLive, scheduledStart, videoId]);
+    }, [videoId]);
 
-    // ─── EFFECTS (all handlers already defined above) ──────────────────────
+    // ─── YouTube Setup Effect (Strictly Single Run per videoId) ──────────────────
+
+    useEffect(() => {
+        if (!videoId) return;
+
+        // 1. Create a clean child element inside the stable ref container to bypass React Virtual DOM conflicts
+        const targetDiv = document.createElement('div');
+        targetDiv.className = 'w-full h-full';
+        if (ytContainerRef.current) {
+            ytContainerRef.current.innerHTML = '';
+            ytContainerRef.current.appendChild(targetDiv);
+        }
+
+        let ytPlayer = null;
+        playerReady.current = false;
+
+        const onPlayerReady = (event) => {
+            playerReady.current = true;
+            playerRef.current = event.target; // STABLE FIX: Use event.target instead of parent scoped ytPlayer!
+
+            // Initial sound setup - start muted to prevent aggressive browser autoplay blocking
+            if (latestRef.current.isMuted) {
+                event.target.mute();
+            } else {
+                event.target.unMute();
+                event.target.setVolume(latestRef.current.volume);
+            }
+
+            // Precise seek resumption
+            if (latestRef.current.isLive && latestRef.current.scheduledStart) {
+                const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(latestRef.current.scheduledStart).getTime()) / 1000));
+                event.target.seekTo(elapsedSeconds, true);
+            } else if (!latestRef.current.isLive && latestRef.current.progressKey) {
+                const savedTime = localStorage.getItem(latestRef.current.progressKey);
+                if (savedTime) {
+                    event.target.seekTo(parseFloat(savedTime), true);
+                }
+            }
+
+            event.target.setPlaybackQuality('hd1080');
+
+            if (latestRef.current.autoPlay || latestRef.current.isLive) {
+                event.target.playVideo();
+                setIsPlaying(true);
+            }
+
+            // Sync quality levels
+            const availableLevels = event.target.getAvailableQualityLevels();
+            if (availableLevels && availableLevels.length > 0) {
+                setQualityLevels(availableLevels);
+                setCurrentQuality(event.target.getPlaybackQuality() || 'auto');
+            }
+
+            setIsLoaded(true);
+            if (latestRef.current.onReady) latestRef.current.onReady();
+        };
+
+        const onPlayerStateChange = (event) => {
+            if (!window.YT) return;
+            switch (event.data) {
+                case window.YT.PlayerState.PLAYING:
+                    setIsPlaying(true);
+                    setHasStartedPlaying(true);
+                    break;
+                case window.YT.PlayerState.PAUSED:
+                    setIsPlaying(false);
+                    break;
+                case window.YT.PlayerState.ENDED:
+                    setIsPlaying(false);
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        const onPlayerQualityChange = (event) => {
+            setCurrentQuality(event.target.getPlaybackQuality() || 'auto');
+        };
+
+        const init = () => {
+            if (!window.YT?.Player) return;
+            // STABLE FIX: Pass explicit width/height: '100%' so YouTube iframe scales properly inside absolute bounds!
+            ytPlayer = new window.YT.Player(targetDiv, {
+                width: '100%',
+                height: '100%',
+                videoId,
+                suggestedQuality: 'hd1080',
+                playerVars: {
+                    controls: 0, modestbranding: 1, showinfo: 0,
+                    iv_load_policy: 3, disablekb: 1, fs: 0, rel: 0,
+                    autoplay: latestRef.current.autoPlay ? 1 : 0, playsinline: 1,
+                    origin: window.location.origin
+                },
+                events: {
+                    onReady: onPlayerReady,
+                    onStateChange: onPlayerStateChange,
+                    onPlaybackQualityChange: onPlayerQualityChange
+                }
+            });
+        };
+
+        if (!apiLoaded.current) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+            apiLoaded.current = true;
+        }
+
+        if (window.YT?.Player) {
+            init();
+        } else {
+            const prevCallback = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = () => {
+                if (prevCallback) prevCallback();
+                init();
+            };
+        }
+
+        return () => {
+            playerReady.current = false;
+            if (ytPlayer) {
+                try { ytPlayer.destroy(); } catch (_) {}
+            }
+            if (ytContainerRef.current) {
+                ytContainerRef.current.innerHTML = '';
+            }
+            playerRef.current = null;
+        };
+    }, [videoId]);
+
+    // ─── Peripheral Control Effects ──────────────────────────────────────────
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -306,37 +400,6 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         document.addEventListener('fullscreenchange', handleFullscreenChange);
         return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
     }, []);
-
-    useEffect(() => {
-        if (!videoId) return;
-        if (!apiLoaded.current) {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            document.head.appendChild(tag);
-            apiLoaded.current = true;
-        }
-
-        window.onYouTubeIframeAPIReady = () => { initializePlayer(); };
-
-        if (window.YT?.Player) {
-            initializePlayer();
-        }
-
-        return () => {
-            if (playerRef.current) {
-                try { playerRef.current.destroy(); } catch (_) {}
-                playerRef.current = null;
-            }
-        };
-    }, [initializePlayer, videoId]);
-
-    useEffect(() => {
-        if (playerReady.current && playerRef.current && videoId) {
-            setHasStartedPlaying(false);
-            playerRef.current.loadVideoById(videoId);
-            setIsLoaded(true);
-        }
-    }, [videoId]);
 
     useEffect(() => {
         let timeout;
@@ -366,9 +429,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     useEffect(() => {
         let interval;
         if (isPlaying && isLive && scheduledStart) {
-            // Sync immediately on play/resume
             syncLiveTime();
-            // Periodically check and align time drift every 2 seconds
             interval = setInterval(() => {
                 syncLiveTime();
             }, 2000);
@@ -376,7 +437,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         return () => clearInterval(interval);
     }, [isPlaying, isLive, scheduledStart, syncLiveTime]);
 
-    // ─── Volume Icon helper ────────────────────────────────────────────────
+    // ─── Volume Icon Helper ────────────────────────────────────────────────
 
     const VolumeIcon = isMuted || volume === 0
         ? <VolumeX size={20} />
@@ -393,10 +454,10 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && setShowControls(false)}
         >
-            {/* Player Element */}
+            {/* Player Element wrapper */}
             {videoId ? (
                 <div
-                    id="custom-yt-player"
+                    ref={ytContainerRef}
                     className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 />
             ) : (
@@ -433,7 +494,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                 />
             )}
 
-            {/* Premium Click & Pointer Blocker */}
+            {/* Click Blocker Layer (Triggers play/pause on empty areas) */}
             <div 
                 onClick={() => {
                     togglePlay();
@@ -442,13 +503,16 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                 className="absolute inset-0 bg-transparent z-10 pointer-events-auto cursor-pointer"
             />
 
-            {/* Pulsing Mute Alert Indicator */}
+            {/* Pulsing Mute Alert Indicator (Elevated to z-30 to stack on top of controls layout) */}
             {isLive && isPlaying && isMuted && (
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    onClick={toggleMute}
-                    className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse z-20 cursor-pointer shadow-md flex items-center gap-1.5"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleMute();
+                    }}
+                    className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse z-30 cursor-pointer shadow-md flex items-center gap-1.5"
                 >
                     <VolumeX size={12} /> Tap to Unmute
                 </motion.div>
@@ -473,8 +537,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                             <motion.button
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
-                                onClick={togglePlay}
-                                className="absolute inset-0 flex items-center justify-center"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    togglePlay();
+                                }}
+                                className="absolute inset-0 flex items-center justify-center cursor-pointer"
                             >
                                 <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
                                     <Play size={40} className="text-white ml-1" fill="white" />
@@ -493,6 +560,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                     step="0.1"
                                     value={currentTime}
                                     onChange={handleSeekChange}
+                                    onClick={(e) => e.stopPropagation()}
                                     className="flex-1 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer focus:outline-none"
                                 />
                                 <span className="text-white text-xs font-semibold select-none">{formatTime(duration)}</span>
@@ -502,7 +570,13 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                         {/* Bottom Controls */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-4">
                             {!isLive && (
-                                <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        togglePlay();
+                                    }} 
+                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
+                                >
                                     {isPlaying
                                         ? <Pause size={20} className="text-white" fill="white" />
                                         : <Play size={20} className="text-white" fill="white" />
@@ -511,13 +585,20 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                             )}
 
                             <div className="flex items-center gap-2">
-                                <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white">
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleMute();
+                                    }} 
+                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white cursor-pointer"
+                                >
                                     {VolumeIcon}
                                 </button>
                                 <input
                                     type="range" min="0" max="100"
                                     value={isMuted ? 0 : volume}
                                     onChange={handleVolumeChange}
+                                    onClick={(e) => e.stopPropagation()}
                                     className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                                 />
                             </div>
@@ -534,8 +615,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                             {videoId && (
                                 <div className="relative">
                                     <button
-                                        onClick={() => setShowSettings(s => !s)}
-                                        className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowSettings(s => !s);
+                                        }}
+                                        className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
                                     >
                                         <Settings size={18} className="text-white" />
                                         <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
@@ -555,8 +639,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                                     {getAvailableQualities().map((level) => (
                                                         <button
                                                             key={level}
-                                                            onClick={() => setQuality(level)}
-                                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setQuality(level);
+                                                            }}
+                                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                                                                 currentQuality === level
                                                                     ? 'bg-sky-500/20 text-sky-400'
                                                                     : 'text-white hover:bg-white/10'
@@ -573,8 +660,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                             )}
 
                             <button
-                                onClick={toggleFullscreen}
-                                className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleFullscreen();
+                                }}
+                                className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1 cursor-pointer"
                                 title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
                             >
                                 {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
