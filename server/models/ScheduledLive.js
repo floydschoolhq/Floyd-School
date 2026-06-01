@@ -28,6 +28,12 @@ const scheduledLiveSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: false
     },
+    classNumber: {
+        type: Number,
+        default: 1,
+        min: 1,
+        max: 3
+    },
     videoUrl: {
         type: String,
         required: true

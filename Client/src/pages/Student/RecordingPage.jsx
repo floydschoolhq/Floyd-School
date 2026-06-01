@@ -13,6 +13,18 @@ const getYouTubeId = (url) => {
     return (match && match[2].length === 11) ? match[2] : null;
 };
 
+const getGoogleDriveFileId = (url) => {
+    if (!url) return null;
+    const matchD = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})[/?]?/);
+    if (matchD && matchD[1]) return matchD[1];
+    
+    const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{25,})/);
+    if (matchId && matchId[1]) return matchId[1];
+    
+    if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
+    return null;
+};
+
 const RecordingsPage = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -172,14 +184,23 @@ if (loading) {
                             className="relative w-full max-w-5xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
                         >
                             <div className="aspect-video bg-black relative">
-                                <iframe
-                                    className="absolute inset-0 w-full h-full"
-                                    src={`https://www.youtube.com/embed/${getYouTubeId(selectedVideo.videoUrl)}?autoplay=1&rel=0`}
-                                    title={selectedVideo.title}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                ></iframe>
+                                {getGoogleDriveFileId(selectedVideo.videoUrl) ? (
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full border-0 bg-black"
+                                        src={`https://drive.google.com/file/d/${getGoogleDriveFileId(selectedVideo.videoUrl)}/preview`}
+                                        title={selectedVideo.title}
+                                        allow="autoplay; fullscreen"
+                                    ></iframe>
+                                ) : (
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full"
+                                        src={`https://www.youtube.com/embed/${getYouTubeId(selectedVideo.videoUrl)}?autoplay=1&rel=0`}
+                                        title={selectedVideo.title}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                    ></iframe>
+                                )}
                             </div>
                             <div className="p-8 flex items-center justify-between gap-8">
                                 <div>

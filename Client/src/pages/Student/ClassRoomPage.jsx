@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api, { getFileUrl } from '../../api/axios';
 
@@ -14,6 +14,18 @@ import { CardSkeleton, StatSkeleton } from '../../components/dashboard/SkeletonC
 import { PortalContext } from '../../contexts/PortalProvider';
 import { useSocket } from '../../contexts/SocketProvider';
 import useIsMobile from '../../hooks/useIsMobile';
+
+const getGoogleDriveFileId = (url) => {
+  if (!url) return null;
+  const matchD = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})[/?]?/);
+  if (matchD && matchD[1]) return matchD[1];
+  
+  const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{25,})/);
+  if (matchId && matchId[1]) return matchId[1];
+  
+  if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
+  return null;
+};
 
 const ClassroomPage = () => {
   const navigate = useNavigate();
@@ -30,6 +42,8 @@ const ClassroomPage = () => {
   const [courses, setCourses] = useState([]);
   const [activeStudyCourse, setActiveStudyCourse] = useState(null);
   const [selectedModule, setSelectedModule] = useState(null);
+  const [selectedClassNumber, setSelectedClassNumber] = useState(1);
+  const [expandedWeeks, setExpandedWeeks] = useState({});
   const [assignments, setAssignments] = useState([]);
   const [submissions, setSubmissions] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
@@ -371,19 +385,22 @@ const ClassroomPage = () => {
     );
 
     const isLiveNow = activeLiveClass && (
-      (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString()) ||
-      (activeLiveClass.course?.toString() === activeStudyCourse._id?.toString())
+      (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString() || activeLiveClass.course?.toString() === activeStudyCourse._id?.toString()) &&
+      activeLiveClass.module?.toString() === selectedModule?._id?.toString() &&
+      Number(activeLiveClass.classNumber || 1) === Number(selectedClassNumber)
     );
 
-    // Find active scheduled or standard live session for current module
+    // Find active scheduled or standard live session for current module and class number
     const activeModuleLive = scheduledLives.find(l => 
       (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString() &&
       l.module?.toString() === selectedModule?._id?.toString() &&
+      Number(l.classNumber || 1) === Number(selectedClassNumber) &&
       l.status === 'live'
     ) || (
       activeLiveClass && 
       (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString() || activeLiveClass.course?.toString() === activeStudyCourse._id?.toString()) &&
-      activeLiveClass.module?.toString() === selectedModule?._id?.toString()
+      activeLiveClass.module?.toString() === selectedModule?._id?.toString() &&
+      Number(activeLiveClass.classNumber || 1) === Number(selectedClassNumber)
         ? activeLiveClass
         : null
     );
@@ -479,43 +496,122 @@ const ClassroomPage = () => {
               {activeStudyCourse.modules?.map((mod, idx) => {
                 const isSelected = selectedModule?._id === mod._id;
                 const hasContent = mod.videoUrl || mod.notesUrl;
+                const isExpanded = !!expandedWeeks[mod._id];
 
-                return (                  <motion.div
-                    key={mod._id || idx}
-                    whileHover={{ scale: 1.01 }}
-                    onClick={() => setSelectedModule(mod)}
-                    className={`p-4 rounded-3xl border transition-all cursor-pointer ${
-                      isSelected 
-                        ? 'bg-accent-primary/10 border-accent-primary shadow-sm' 
-                        : 'bg-surface-soft border-surface-el hover:border-text-muted/30'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${
-                        isSelected ? 'bg-accent-primary text-white' : 'bg-surface-el text-text-muted'
-                      }`}>
-                        M{idx + 1}
+                return (
+                  <div key={mod._id || idx} className="space-y-2">
+                    <motion.div
+                      whileHover={{ scale: 1.01 }}
+                      onClick={() => {
+                        setExpandedWeeks(prev => ({
+                          ...prev,
+                          [mod._id]: !prev[mod._id]
+                        }));
+                        setSelectedModule(mod);
+                        setSelectedClassNumber(1);
+                      }}
+                      className={`p-4 rounded-3xl border transition-all cursor-pointer ${
+                        isSelected 
+                          ? 'bg-accent-primary/10 border-accent-primary shadow-sm' 
+                          : 'bg-surface-soft border-surface-el hover:border-text-muted/30'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${
+                          isSelected ? 'bg-accent-primary text-white' : 'bg-surface-el text-text-muted'
+                        }`}>
+                          W{idx + 1}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-bold text-text-main truncate uppercase tracking-tight">
+                            {mod.title || 'Untitled Module'}
+                          </h4>
+                          <p className="text-[10px] font-semibold text-text-muted truncate mt-0.5">
+                            {mod.description || 'No description provided.'}
+                          </p>
+                        </div>
+                        <div className="text-text-muted shrink-0 pl-1">
+                          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-bold text-text-main truncate uppercase tracking-tight">
-                          {mod.title || 'Untitled Module'}
-                        </h4>
-                        <p className="text-[10px] font-semibold text-text-muted truncate mt-0.5">
-                          {mod.description || 'No description provided.'}
-                        </p>
+                      <div className="mt-3 flex items-center justify-between border-t border-surface-el pt-2">
+                        <span className={`text-[9px] font-bold uppercase tracking-wider ${
+                          hasContent ? 'text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20' : 'text-text-muted'
+                        }`}>
+                          {hasContent ? 'Content Available' : 'Upcoming'}
+                        </span>
+                        {mod.completed && (
+                          <CheckCircle size={12} className="text-emerald-400" />
+                        )}
                       </div>
-                    </div>
-                    <div className="mt-3 flex items-center justify-between border-t border-surface-el pt-2">
-                      <span className={`text-[9px] font-bold uppercase tracking-wider ${
-                        hasContent ? 'text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20' : 'text-text-muted'
-                      }`}>
-                        {hasContent ? 'Content Available' : 'Upcoming'}
-                      </span>
-                      {mod.completed && (
-                        <CheckCircle size={12} className="text-emerald-400" />
-                      )}
-                    </div>
-                  </motion.div>
+                    </motion.div>
+
+                    {/* Sub-classes nesting */}
+                    {isExpanded && (
+                      <div className="pl-4 border-l-2 border-surface-el/80 space-y-2 ml-4 mb-3">
+                        {[
+                          { num: 1, title: 'Conceptual Foundation' },
+                          { num: 2, title: 'Hands-on Implementation' },
+                          { num: 3, title: 'Live Mentorship & Q&A' }
+                        ].map((cls) => {
+                          const isSelectedClass = selectedModule?._id === mod._id && selectedClassNumber === cls.num;
+                          
+                          // Check if this class is live
+                          const isClassLive = activeLiveClass &&
+                              (activeLiveClass.course?._id?.toString() === activeStudyCourse._id?.toString() || activeLiveClass.course?.toString() === activeStudyCourse._id?.toString()) &&
+                              activeLiveClass.module?.toString() === mod._id?.toString() &&
+                              Number(activeLiveClass.classNumber || 1) === cls.num;
+                              
+                          const isScheduledClassLive = scheduledLives.some(l => 
+                              (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString() &&
+                              l.module?.toString() === mod._id?.toString() &&
+                              Number(l.classNumber || 1) === cls.num &&
+                              l.status === 'live'
+                          );
+                          
+                          const isLive = isClassLive || isScheduledClassLive;
+
+                          return (
+                            <motion.div
+                              key={cls.num}
+                              whileHover={{ scale: 1.01 }}
+                              onClick={() => {
+                                setSelectedModule(mod);
+                                setSelectedClassNumber(cls.num);
+                              }}
+                              className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                                isSelectedClass
+                                  ? 'bg-accent-primary/10 border-accent-primary/40 text-text-main shadow-sm'
+                                  : 'bg-surface-base border-surface-el hover:border-text-muted/30 text-text-muted'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <div className={`w-5 h-5 rounded-lg flex items-center justify-center font-bold text-[10px] ${
+                                  isSelectedClass ? 'bg-accent-primary text-white' : 'bg-surface-el text-text-muted'
+                                }`}>
+                                  C{cls.num}
+                                </div>
+                                <span className="text-xs font-bold uppercase tracking-tight truncate max-w-[150px]">
+                                  {cls.title}
+                                </span>
+                              </div>
+                              
+                              {isLive ? (
+                                <div className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full animate-pulse shrink-0">
+                                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+                                  <span className="text-red-500 text-[8px] font-black uppercase tracking-wider">Live</span>
+                                </div>
+                              ) : (
+                                mod.completed && cls.num === 3 && (
+                                  <CheckCircle size={10} className="text-emerald-400 shrink-0" />
+                                )
+                              )}
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
               {(!activeStudyCourse.modules || activeStudyCourse.modules.length === 0) && (
@@ -541,13 +637,21 @@ const ClassroomPage = () => {
                 <div>
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
                   {(selectedModule.videoUrl || activeModuleLive) ? (
-                    <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
-                      <CustomVideoPlayer 
-                        videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl || activeModuleLive.meetingLink} 
-                        autoPlay={Boolean(activeModuleLive)} 
-                        isLive={Boolean(activeModuleLive)}
-                        scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.scheduledStart}
-                      />
+                    <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">                       {getGoogleDriveFileId(selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink) && !activeModuleLive ? (
+                        <iframe
+                          className="w-full h-full border-0 bg-black"
+                          src={`https://drive.google.com/file/d/${getGoogleDriveFileId(selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink)}/preview`}
+                          allow="autoplay; fullscreen"
+                          title="Google Drive Lecture"
+                        ></iframe>
+                      ) : (
+                        <CustomVideoPlayer 
+                          videoUrl={selectedModule.videoUrl || activeModuleLive.videoUrl || activeModuleLive.meetingLink} 
+                          autoPlay={Boolean(activeModuleLive)} 
+                          isLive={Boolean(activeModuleLive)}
+                          scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.startedAt || activeModuleLive?.scheduledStart}
+                        />
+                      )}
                       {activeModuleLive && (
                         <div className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest animate-pulse z-20">
                           Live Now
@@ -584,7 +688,7 @@ const ClassroomPage = () => {
                           </div>
                         </div>
                         <a
-                          href={selectedModule.notesUrl}
+                          href={getFileUrl(selectedModule.notesUrl)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md shadow-emerald-500/10"

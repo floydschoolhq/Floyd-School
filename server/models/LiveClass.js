@@ -24,6 +24,12 @@ const liveClassSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: false
     },
+    classNumber: {
+        type: Number,
+        default: 1,
+        min: 1,
+        max: 3
+    },
     status: {
         type: String,
         enum: ['active', 'ended'],

@@ -7,7 +7,7 @@ const User = require('../models/User');
 // @access  Private/Mentor
 exports.startLiveClass = async (req, res) => {
     try {
-        const { title, topic, platform, meetingLink, duration, courseId, moduleId } = req.body;
+        const { title, topic, platform, meetingLink, duration, courseId, moduleId, classNumber } = req.body;
 
         // Basic validation
         if (!title || !topic) {
@@ -37,6 +37,7 @@ exports.startLiveClass = async (req, res) => {
             mentorName: req.user.name,
             course: courseId,
             module: moduleId || undefined,
+            classNumber: Number(classNumber) || 1,
             status: 'active',
             duration: duration || 3600 // Default to 1 hour if not provided
         };

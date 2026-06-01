@@ -10,7 +10,8 @@ const {
     updateModules,
     getMentorRoster,
     createAnnouncement,
-    updateEnrollmentStats
+    updateEnrollmentStats,
+    toggleModuleComplete
 } = require('../controllers/courseController');
 const { protect, authorize, checkPermission, classroomProtect } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validationMiddleware');
@@ -33,7 +34,8 @@ router.get('/mentor/roster', protect, authorize('mentor'), getMentorRoster);
 router.post('/:id/announce', protect, authorize('mentor', 'admin'), validate(schemas.announcement), createAnnouncement);
 
 
-// Student enrollment
+// Student enrollment & progress tracking
 router.post('/:id/enroll', classroomProtect, authorize('student'), checkPermission('canAccessCourses'), enrollStudent);
+router.post('/:id/modules/:moduleId/toggle-complete', classroomProtect, authorize('student'), checkPermission('canAccessCourses'), toggleModuleComplete);
 
 module.exports = router;

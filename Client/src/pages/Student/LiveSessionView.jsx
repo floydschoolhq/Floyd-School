@@ -98,20 +98,20 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                 ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&showinfo=0&autohide=1&start=${startSeconds}`
                 : null;
         }
-        if (platform === 'jitsi') return meetingLink;
+        if (platform === 'jitsi') {
+            // Force Full HD 1080p resolution stream constraints and video fitting
+            const hqConfig = 'config.resolution=1080&config.constraints.video.height=1080&config.constraints.video.width=1920&config.disableDeepLinking=true&interfaceConfig.VIDEO_LAYOUT_FIT=true&config.channelLastN=20';
+            return meetingLink.includes('#') ? `${meetingLink}&${hqConfig}` : `${meetingLink}#${hqConfig}`;
+        }
         if (platform === 'premiere') {
             const videoId = getYouTubeId(meetingLink);
             return videoId
                 ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&showinfo=0&autohide=1&start=${startSeconds}`
                 : meetingLink;
         }
-        if (platform === 'google-drive-iframe') {
+        if (platform === 'google-drive-iframe' || platform === 'google-drive-direct') {
             const fileId = getGoogleDriveFileId(meetingLink);
             return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : meetingLink;
-        }
-        if (platform === 'google-drive-direct') {
-            const fileId = getGoogleDriveFileId(meetingLink);
-            return fileId ? `https://drive.google.com/uc?id=${fileId}` : meetingLink;
         }
         return null;
     }, [liveClass]);
@@ -364,12 +364,12 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                                         allow="camera; microphone; fullscreen; display-capture; autoplay"
                                         title="Live Stream"
                                     />
-                                ) : liveClass.platform === 'google-drive-iframe' ? (
+                                ) : (liveClass.platform === 'google-drive-iframe' || liveClass.platform === 'google-drive-direct') ? (
                                     <iframe
-                                        className="absolute inset-0 w-full h-full border-0"
+                                        className="absolute inset-0 w-full h-full border-0 bg-black"
                                         src={embedUrl}
                                         allow="autoplay; fullscreen"
-                                        title="Google Drive IFrame Embed"
+                                        title="Google Drive Stream"
                                     />
                                 ) : (
                                     <CustomVideoPlayer

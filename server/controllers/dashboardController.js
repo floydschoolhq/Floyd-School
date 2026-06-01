@@ -12,7 +12,7 @@ exports.getStudentDashboard = async (req, res) => {
         const studentId = req.user._id;
 
         // Step 1: Fetch core data concurrently
-        const [courses, allSubmissions, notifications] = await Promise.all([
+        const [rawCourses, allSubmissions, notifications] = await Promise.all([
             Course.find({
                 enrolledStudents: studentId,
                 status: 'published'
@@ -31,6 +31,28 @@ exports.getStudentDashboard = async (req, res) => {
                 .sort({ createdAt: -1 })
                 .limit(10)
         ]);
+
+        // Fetch and inject personalized student progress
+        const UserProgress = require('../models/UserProgress');
+        const progresses = await UserProgress.find({ student: studentId, course: { $in: rawCourses.map(c => c._id) } });
+        const progressMap = new Map();
+        progresses.forEach(p => {
+            if (p && p.course) {
+                progressMap.set(p.course.toString(), (p.completedModules || []).map(m => m.toString()));
+            }
+        });
+
+        const courses = rawCourses.map(c => {
+            const courseObj = c.toObject();
+            const completedList = progressMap.get(courseObj._id.toString()) || [];
+            if (courseObj.modules && Array.isArray(courseObj.modules)) {
+                courseObj.modules = courseObj.modules.map(m => ({
+                    ...m,
+                    completed: completedList.includes(m._id.toString())
+                }));
+            }
+            return courseObj;
+        });
 
         // Step 2: Calculate overall progress from courses
         let totalModules = 0;

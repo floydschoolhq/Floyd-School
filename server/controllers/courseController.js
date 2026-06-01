@@ -28,13 +28,35 @@ exports.getCourses = async (req, res) => {
             }
 
             // Only return the explicitly granted courses
-            courses = await Course.find({
+            const rawCourses = await Course.find({
                 _id: { $in: grantedIds },
                 isActive: true,
                 status: 'published'
             })
                 .populate('instructor', 'name email')
                 .select('-__v');
+
+            // Fetch and inject personalized student progress
+            const UserProgress = require('../models/UserProgress');
+            const progresses = await UserProgress.find({ student: _id, course: { $in: grantedIds } });
+            const progressMap = new Map();
+            progresses.forEach(p => {
+                if (p && p.course) {
+                    progressMap.set(p.course.toString(), (p.completedModules || []).map(m => m.toString()));
+                }
+            });
+
+            courses = rawCourses.map(c => {
+                const courseObj = c.toObject();
+                const completedList = progressMap.get(courseObj._id.toString()) || [];
+                if (courseObj.modules && Array.isArray(courseObj.modules)) {
+                    courseObj.modules = courseObj.modules.map(m => ({
+                        ...m,
+                        completed: completedList.includes(m._id.toString())
+                    }));
+                }
+                return courseObj;
+            });
         } else if (role === 'mentor') {
             // Mentors see their own courses
             courses = await Course.find({ instructor: _id })
@@ -80,7 +102,22 @@ exports.getCourseById = async (req, res) => {
             return res.status(404).json({ message: 'Course not found' });
         }
 
-        res.json(course);
+        const courseObj = course.toObject();
+
+        // Inject personalized progress for students
+        if (req.user && req.user.role === 'student') {
+            const UserProgress = require('../models/UserProgress');
+            const progress = await UserProgress.findOne({ student: req.user._id, course: course._id });
+            const completedList = progress ? (progress.completedModules || []).map(m => m.toString()) : [];
+            if (courseObj.modules && Array.isArray(courseObj.modules)) {
+                courseObj.modules = courseObj.modules.map(m => ({
+                    ...m,
+                    completed: completedList.includes(m._id.toString())
+                }));
+            }
+        }
+
+        res.json(courseObj);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -433,4 +470,58 @@ exports.getPublicCourseStats = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 };
+
+
+// Toggle student course module completion state
+exports.toggleModuleComplete = async (req, res) => {
+    try {
+        const { id: courseId, moduleId } = req.params;
+        const studentId = req.user._id;
+
+        // Check if student has access to course
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Verify module exists in course
+        const moduleExists = course.modules.some(m => m._id.toString() === moduleId.toString());
+        if (!moduleExists) {
+            return res.status(404).json({ message: 'Module not found in this course' });
+        }
+
+        const UserProgress = require('../models/UserProgress');
+        let progress = await UserProgress.findOne({ student: studentId, course: courseId });
+
+        if (!progress) {
+            progress = new UserProgress({
+                student: studentId,
+                course: courseId,
+                completedModules: []
+            });
+        }
+
+        const index = progress.completedModules.indexOf(moduleId);
+        if (index > -1) {
+            // Toggle off: remove completed module
+            progress.completedModules.splice(index, 1);
+        } else {
+            // Toggle on: add completed module
+            progress.completedModules.push(moduleId);
+        }
+
+        await progress.save();
+
+        res.json({
+            message: 'Module completion state synchronized',
+            completedModules: progress.completedModules
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server failed to toggle module completion',
+            error: error.message
+        });
+    }
+};
+
 

@@ -18,6 +18,18 @@ function extractYouTubeId(url) {
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
+function getGoogleDriveFileId(url) {
+    if (!url) return null;
+    const matchD = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})[/?]?/);
+    if (matchD && matchD[1]) return matchD[1];
+    
+    const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{25,})/);
+    if (matchId && matchId[1]) return matchId[1];
+    
+    if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
+    return null;
+}
+
 // ─── Component ─────────────────────────────────────────────────────────────
 
 const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false, scheduledStart = null }) => {
@@ -29,7 +41,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(100);
-    const [isMuted, setIsMuted] = useState(false);
+    const [isMuted, setIsMuted] = useState(autoPlay || isLive);
     const [showSettings, setShowSettings] = useState(false);
     const [qualityLevels, setQualityLevels] = useState([]);
     const [currentQuality, setCurrentQuality] = useState('auto');
@@ -40,6 +52,10 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
+    
+    // Google Drive direct streaming resolution
+    const fileId = getGoogleDriveFileId(videoUrl);
+    const directVideoUrl = fileId ? `https://docs.google.com/uc?export=download&id=${fileId}` : videoUrl;
 
     // ─── ALL HANDLERS before any useEffect that references them ────────────
 
@@ -275,14 +291,16 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             {videoId ? (
                 <div
                     id="custom-yt-player"
-                    className="w-full h-full pointer-events-none"
+                    className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 />
             ) : (
                 <video
                     ref={videoRef}
-                    src={videoUrl}
+                    src={directVideoUrl}
                     playsInline
-                    className="w-full h-full object-contain pointer-events-none"
+                    preload="auto"
+                    muted={isMuted}
+                    className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                     onLoadedMetadata={handleVideoLoadedMetadata}
                     onPlay={() => {
                         setIsPlaying(true);
@@ -290,6 +308,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     }}
                     onPause={() => setIsPlaying(false)}
                     onEnded={() => setIsPlaying(false)}
+                />
+            )}
+
+            {/* Premium YouTube White-Label Click & Pointer Blocker */}
+            {videoId && (
+                <div 
+                    onClick={togglePlay}
+                    className="absolute inset-0 bg-transparent z-10 pointer-events-auto cursor-pointer"
                 />
             )}
 
@@ -303,7 +329,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                         className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"
                     >
                         {/* Center Play Button */}
-                        {!isPlaying && (
+                        {!isPlaying && !isLive && (
                             <motion.button
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -318,12 +344,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                         {/* Bottom Controls */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-4">
-                            <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                                {isPlaying
-                                    ? <Pause size={20} className="text-white" fill="white" />
-                                    : <Play size={20} className="text-white" fill="white" />
-                                }
-                            </button>
+                            {!isLive && (
+                                <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                                    {isPlaying
+                                        ? <Pause size={20} className="text-white" fill="white" />
+                                        : <Play size={20} className="text-white" fill="white" />
+                                    }
+                                </button>
+                            )}
 
                             <div className="flex items-center gap-2">
                                 <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white">
@@ -340,7 +368,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                             {isLive && (
                                 <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
                                     <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
-                                    <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live Broadcast</span>
+                                    <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live</span>
                                 </div>
                             )}
 
@@ -401,8 +429,21 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
             {/* Loading State */}
             {(!isLoaded || (autoPlay && !hasStartedPlaying)) && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-950 z-30 transition-all duration-500">
-                    <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
+                <div 
+                    onClick={togglePlay}
+                    className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/95 z-30 transition-all duration-500 cursor-pointer text-center select-none"
+                >
+                    <div className="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-4" />
+                    {isLoaded && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="space-y-1.5"
+                        >
+                            <p className="text-white text-[10px] font-black uppercase tracking-[0.25em] animate-pulse">Click to Start Stream</p>
+                            <p className="text-slate-400 text-[9px] uppercase tracking-widest leading-none font-medium">Bypass browser autoplay restriction</p>
+                        </motion.div>
+                    )}
                 </div>
             )}
         </div>

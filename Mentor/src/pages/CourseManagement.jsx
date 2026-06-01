@@ -48,6 +48,7 @@ const CourseManagement = () => {
     // Curriculum State
     const [modules, setModules] = useState([]);
     const [formLoading, setFormLoading] = useState(false);
+    const [uploadingIdx, setUploadingIdx] = useState(null);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -172,6 +173,35 @@ const CourseManagement = () => {
         const newModules = [...modules];
         newModules[idx][field] = value;
         setModules(newModules);
+    };
+
+    const handleStudyNotesUpload = async (e, idx) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 20 * 1024 * 1024) {
+            toast.error('File size exceeds 20MB limit');
+            return;
+        }
+
+        setUploadingIdx(idx);
+        const uploadData = new FormData();
+        uploadData.append('file', file);
+
+        try {
+            const res = await api.post('/assignments/upload', uploadData);
+            if (res.data && res.data.file && res.data.file.url) {
+                handleModuleChange(idx, 'notesUrl', res.data.file.url);
+                toast.success('Study notes uploaded and synced successfully!');
+            } else {
+                toast.error('Failed to parse uploaded file response');
+            }
+        } catch (err) {
+            console.error('Upload error:', err);
+            toast.error('Failed to upload study notes');
+        } finally {
+            setUploadingIdx(null);
+        }
     };
 
     const handleDelete = async (id) => {
@@ -514,12 +544,24 @@ const CourseManagement = () => {
                                                         onChange={(e) => handleModuleChange(idx, 'videoUrl', e.target.value)}
                                                         className="w-full bg-slate-50 border-none p-3 rounded-xl font-bold text-xs outline-none focus:ring-2 ring-sky-500/20 underline-none text-sky-600"
                                                     />
-                                                    <input
-                                                        placeholder="Study Notes URL (e.g., Google Drive or PDF link)"
-                                                        value={module.notesUrl || ''}
-                                                        onChange={(e) => handleModuleChange(idx, 'notesUrl', e.target.value)}
-                                                        className="w-full bg-slate-50 border-none p-3 rounded-xl font-bold text-xs outline-none focus:ring-2 ring-sky-500/20 underline-none text-indigo-600"
-                                                    />
+                                                    <div className="flex gap-2 items-center">
+                                                        <input
+                                                            placeholder="Study Notes URL (e.g., Google Drive or PDF link)"
+                                                            value={module.notesUrl || ''}
+                                                            onChange={(e) => handleModuleChange(idx, 'notesUrl', e.target.value)}
+                                                            className="flex-1 bg-slate-50 border-none p-3 rounded-xl font-bold text-xs outline-none focus:ring-2 ring-sky-500/20 underline-none text-indigo-600"
+                                                        />
+                                                        <label className="shrink-0 cursor-pointer bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all border border-indigo-200">
+                                                            {uploadingIdx === idx ? 'Uploading...' : 'Upload File'}
+                                                            <input
+                                                                type="file"
+                                                                className="hidden"
+                                                                accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
+                                                                onChange={(e) => handleStudyNotesUpload(e, idx)}
+                                                                disabled={uploadingIdx !== null}
+                                                            />
+                                                        </label>
+                                                    </div>
                                                     <textarea
                                                         placeholder="Brief overview of what students will accomplish..."
                                                         rows="2"

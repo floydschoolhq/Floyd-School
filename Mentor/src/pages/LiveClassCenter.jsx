@@ -48,8 +48,48 @@ const LiveClassCenter = () => {
     const [searchingRecordings, setSearchingRecordings] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [selectedModule, setSelectedModule] = useState('');
+    const [classNumber, setClassNumber] = useState(1);
     const [scheduleCourse, setScheduleCourse] = useState('');
     const [scheduleModule, setScheduleModule] = useState('');
+    const [scheduleClassNumber, setScheduleClassNumber] = useState(1);
+
+    useEffect(() => {
+        if (!meetingLink) return;
+        
+        const detectDuration = async () => {
+            const fileId = getGoogleDriveFileId(meetingLink);
+            let detectUrl = meetingLink;
+            if (fileId) {
+                detectUrl = `https://docs.google.com/uc?export=download&id=${fileId}`;
+            }
+            
+            const isDrive = !!fileId;
+            const isMp4 = detectUrl.toLowerCase().endsWith('.mp4') || detectUrl.includes('/uploads/');
+            
+            if (isDrive || isMp4 || detectUrl.startsWith('http')) {
+                try {
+                    const tempVideo = document.createElement('video');
+                    tempVideo.src = detectUrl;
+                    tempVideo.preload = 'metadata';
+                    tempVideo.onloadedmetadata = () => {
+                        const dur = tempVideo.duration;
+                        if (dur && !isNaN(dur) && dur > 0) {
+                            setDurationMin(Math.floor(dur / 60));
+                            setDurationSec(Math.round(dur % 60));
+                            toast.success(`Automatically detected video length: ${Math.floor(dur / 60)}m ${Math.round(dur % 60)}s`);
+                        }
+                    };
+                    tempVideo.onerror = () => {
+                        // Silent ignore for non-HTML5 streams
+                    };
+                } catch (e) {
+                    console.error('Failed to auto-detect video duration:', e);
+                }
+            }
+        };
+        
+        detectDuration();
+    }, [meetingLink]);
 
     // Scheduled sessions state
     const [scheduledSessions, setScheduledSessions] = useState([]);
@@ -74,6 +114,19 @@ const LiveClassCenter = () => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = url?.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    // Google Drive Helper
+    const getGoogleDriveFileId = (url) => {
+        if (!url) return null;
+        const matchD = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})[/?]?/);
+        if (matchD && matchD[1]) return matchD[1];
+        
+        const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{25,})/);
+        if (matchId && matchId[1]) return matchId[1];
+        
+        if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
+        return null;
     };
 
     useEffect(() => {
@@ -209,7 +262,8 @@ const LiveClassCenter = () => {
                 meetingLink,
                 duration: (durationMin * 60) + parseInt(durationSec || 0),
                 courseId: selectedCourse,
-                moduleId: selectedModule || undefined
+                moduleId: selectedModule || undefined,
+                classNumber: Number(classNumber) || 1
             });
             setActiveClass(res.data);
             toast.success('Live broadcast node established');
@@ -218,6 +272,7 @@ const LiveClassCenter = () => {
             setMeetingLink('');
             setSelectedCourse('');
             setSelectedModule('');
+            setClassNumber(1);
         } catch (err) {
             let msg = err.response?.data?.message || 'Failed to initiate live session';
             if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
@@ -312,7 +367,8 @@ const LiveClassCenter = () => {
                 videoUrl: embedUrl,
                 scheduledStart: scheduledStart.toISOString(),
                 course: scheduleCourse,
-                module: scheduleModule || undefined
+                module: scheduleModule || undefined,
+                classNumber: Number(scheduleClassNumber) || 1
             });
             
             toast.success('Live session scheduled successfully');
@@ -323,6 +379,7 @@ const LiveClassCenter = () => {
             setScheduleTime('');
             setScheduleCourse('');
             setScheduleModule('');
+            setScheduleClassNumber(1);
             setShowScheduleForm(false);
             fetchScheduledSessions();
         } catch (err) {
@@ -506,6 +563,22 @@ const LiveClassCenter = () => {
                                                   {courses.find(c => c._id === selectedCourse)?.modules?.map((m, idx) => (
                                                       <option key={m._id || idx} value={m._id}>M{idx + 1}: {m.title}</option>
                                                   ))}
+                                              </select>
+                                          </div>
+                                      )}
+
+                                      {selectedCourse && selectedModule && (
+                                          <div className="space-y-2">
+                                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Class Number *</label>
+                                              <select
+                                                  value={classNumber}
+                                                  onChange={(e) => setClassNumber(Number(e.target.value))}
+                                                  required
+                                                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                              >
+                                                  <option value={1}>Class 1: Conceptual Foundation</option>
+                                                  <option value={2}>Class 2: Hands-on Implementation</option>
+                                                  <option value={3}>Class 3: Live Mentorship & Q&A</option>
                                               </select>
                                           </div>
                                       )}
@@ -709,6 +782,33 @@ const LiveClassCenter = () => {
 
                                                 <div className="absolute top-4 right-4 z-30 bg-rose-500 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest animate-pulse">
                                                     Live Broadcast
+                                                </div>
+                                            </div>
+                                        ) : (activeClass.platform === 'google-drive-iframe' || activeClass.platform === 'google-drive-direct') && getGoogleDriveFileId(activeClass.meetingLink) ? (
+                                            <div className="aspect-video bg-black rounded-[2rem] overflow-hidden border border-slate-700 shadow-2xl relative group/preview">
+                                                <iframe
+                                                    width="100%"
+                                                    height="100%"
+                                                    src={`https://drive.google.com/file/d/${getGoogleDriveFileId(activeClass.meetingLink)}/preview`}
+                                                    title="Google Drive Stream Preview"
+                                                    frameBorder="0"
+                                                    allow="autoplay; fullscreen"
+                                                    className="relative z-10 pointer-events-none"
+                                                ></iframe>
+
+                                                {/* Secure Intercept Overlay for Mentor */}
+                                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-transparent pointer-events-auto">
+                                                    <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/80 to-transparent pointer-events-none flex items-start justify-between px-6 pt-3">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 bg-sky-500 rounded-full animate-pulse"></div>
+                                                            <span className="text-[8px] font-black text-sky-400 uppercase tracking-[0.3em] font-mono">PREVIEW_SECURE // MONITOR_ONLY</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute inset-0 border-[10px] border-slate-900/50 pointer-events-none"></div>
+                                                </div>
+
+                                                <div className="absolute top-4 right-4 z-30 bg-rose-500 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest animate-pulse">
+                                                    GDrive Stream
                                                 </div>
                                             </div>
                                         ) : (
@@ -1051,6 +1151,22 @@ const LiveClassCenter = () => {
                                         {courses.find(c => c._id === scheduleCourse)?.modules?.map((m, idx) => (
                                             <option key={m._id || idx} value={m._id}>M{idx + 1}: {m.title}</option>
                                         ))}
+                                    </select>
+                                </div>
+                            )}
+
+                            {scheduleCourse && scheduleModule && (
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Class Number *</label>
+                                    <select
+                                        value={scheduleClassNumber}
+                                        onChange={(e) => setScheduleClassNumber(Number(e.target.value))}
+                                        required
+                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-red-500 focus:bg-white transition-all appearance-none cursor-pointer"
+                                    >
+                                        <option value={1}>Class 1: Conceptual Foundation</option>
+                                        <option value={2}>Class 2: Hands-on Implementation</option>
+                                        <option value={3}>Class 3: Live Mentorship & Q&A</option>
                                     </select>
                                 </div>
                             )}

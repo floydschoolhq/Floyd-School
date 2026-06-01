@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 exports.createScheduledLive = async (req, res) => {
     try {
-        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants, course, module } = req.body;
+        const { title, description, videoUrl, scheduledStart, scheduledEnd, maxParticipants, course, module, classNumber } = req.body;
 
         if (!title || !videoUrl || !scheduledStart || !course) {
             return res.status(400).json({ message: 'Title, video URL, scheduled start time, and course are required' });
@@ -17,6 +17,7 @@ exports.createScheduledLive = async (req, res) => {
             mentorName: req.user.name,
             course,
             module: module || null,
+            classNumber: Number(classNumber) || 1,
             videoUrl,
             status: 'scheduled',
             scheduledStart: new Date(scheduledStart),

@@ -59,7 +59,8 @@ const schemas = {
         title: { required: true, type: 'string', minLength: 5 },
         topic: { required: true, type: 'string', minLength: 3 },
         meetingLink: { type: 'string' },
-        courseId: { required: true, type: 'string' }
+        courseId: { required: true, type: 'string' },
+        classNumber: { type: 'number' }
     },
     supportMessage: {
         text: { required: true, type: 'string', minLength: 1 }
