@@ -55,11 +55,14 @@ const GlobalNotifications = () => {
         uploadData.append('file', file);
 
         try {
-            const res = await api.post('/assignments/upload', uploadData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            setPdfUrl(res.data.fileUrl);
-            toast.success('PDF uploaded and linked successfully!');
+            const res = await api.post('/assignments/upload', uploadData);
+            const url = res.data.file?.url || res.data.fileUrl;
+            if (url) {
+                setPdfUrl(url);
+                toast.success('PDF uploaded and linked successfully!');
+            } else {
+                throw new Error('Response did not contain file URL');
+            }
         } catch (err) {
             console.error('PDF upload failed:', err);
             toast.error('Failed to upload PDF.');
