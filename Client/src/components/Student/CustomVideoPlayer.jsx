@@ -433,13 +433,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                 />
             )}
 
-            {/* Premium YouTube White-Label Click & Pointer Blocker */}
-            {videoId && (
-                <div 
-                    onClick={togglePlay}
-                    className="absolute inset-0 bg-transparent z-10 pointer-events-auto cursor-pointer"
-                />
-            )}
+            {/* Premium Click & Pointer Blocker */}
+            <div 
+                onClick={() => {
+                    togglePlay();
+                    setShowControls(true);
+                }}
+                className="absolute inset-0 bg-transparent z-10 pointer-events-auto cursor-pointer"
+            />
 
             {/* Pulsing Mute Alert Indicator */}
             {isLive && isPlaying && isMuted && (
@@ -460,7 +461,12 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-20"
+                        onClick={(e) => {
+                            if (e.target === e.currentTarget) {
+                                togglePlay();
+                            }
+                        }}
                     >
                         {/* Center Play Button */}
                         {!isPlaying && !isLive && (
