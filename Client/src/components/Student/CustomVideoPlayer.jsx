@@ -318,12 +318,14 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                         {/* Bottom Controls */}
                         <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-4">
-                            <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                                {isPlaying
-                                    ? <Pause size={20} className="text-white" fill="white" />
-                                    : <Play size={20} className="text-white" fill="white" />
-                                }
-                            </button>
+                            {!isLive && (
+                                <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                                    {isPlaying
+                                        ? <Pause size={20} className="text-white" fill="white" />
+                                        : <Play size={20} className="text-white" fill="white" />
+                                    }
+                                </button>
+                            )}
 
                             <div className="flex items-center gap-2">
                                 <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white">
