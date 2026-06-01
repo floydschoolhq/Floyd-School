@@ -429,6 +429,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     }}
                     onPause={() => setIsPlaying(false)}
                     onEnded={() => setIsPlaying(false)}
+                    onError={() => setIsLoaded(true)}
                 />
             )}
 
@@ -578,22 +579,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             </AnimatePresence>
 
             {/* Loading State */}
-            {(!isLoaded || (autoPlay && !hasStartedPlaying)) && (
+            {!isLoaded && (
                 <div 
-                    onClick={togglePlay}
-                    className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/95 z-30 transition-all duration-500 cursor-pointer text-center select-none"
+                    className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/95 z-30 transition-all duration-500 text-center select-none"
                 >
-                    <div className="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-4" />
-                    {isLoaded && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="space-y-1.5"
-                        >
-                            <p className="text-white text-[10px] font-black uppercase tracking-[0.25em] animate-pulse">Click to Start Stream</p>
-                            <p className="text-slate-400 text-[9px] uppercase tracking-widest leading-none font-medium">Bypass browser autoplay restriction</p>
-                        </motion.div>
-                    )}
+                    <div className="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin" />
                 </div>
             )}
         </div>
