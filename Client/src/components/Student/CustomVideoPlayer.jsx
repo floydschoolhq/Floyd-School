@@ -274,7 +274,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     return (
         <div
             ref={containerRef}
-            className="relative w-full aspect-video bg-black group overflow-hidden rounded-xl"
+            className="relative w-full h-full bg-black group overflow-hidden rounded-xl"
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && setShowControls(false)}
         >
