@@ -353,7 +353,7 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                 {/* Stage */}
-                <div className="w-full aspect-video lg:flex-1 bg-slate-900 relative flex flex-col" ref={stageRef}>
+                <div className="w-full aspect-video lg:aspect-auto lg:flex-1 bg-slate-950 relative flex flex-col" ref={stageRef}>
                     <div className="flex-1 relative overflow-hidden">
                         {embedUrl ? (
                             <div className="absolute inset-0 overflow-hidden bg-black">
@@ -399,8 +399,8 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                     </div>
                 </div>
 
-                {/* Chat */}
-                <div className="w-full lg:w-96 flex-1 min-h-0 bg-white border-l border-slate-200 flex flex-col">
+                {/* Chat (Desktop: strictly locked to a space-saving 300px width, Mobile: full layout flow) */}
+                <div className="w-full lg:flex-none lg:w-[300px] min-h-0 bg-white border-l border-slate-200/80 flex flex-col">
                     <div className="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
                         <div className="w-7 h-7 bg-slate-900 rounded-lg flex items-center justify-center text-white">
                             <PlayCircle size={14} />
