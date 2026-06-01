@@ -364,13 +364,6 @@ const LiveSessionView = ({ liveClass: propLiveClass, onBack: propOnBack }) => {
                                         allow="camera; microphone; fullscreen; display-capture; autoplay"
                                         title="Live Stream"
                                     />
-                                ) : (liveClass.platform === 'google-drive-iframe' || liveClass.platform === 'google-drive-direct') ? (
-                                    <iframe
-                                        className="absolute inset-0 w-full h-full border-0 bg-black"
-                                        src={embedUrl}
-                                        allow="autoplay; fullscreen"
-                                        title="Google Drive Stream"
-                                    />
                                 ) : (
                                     <CustomVideoPlayer
                                         videoUrl={embedUrl}

@@ -98,7 +98,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
     const handlePlayerReady = useCallback((event) => {
         playerReady.current = true;
-        setIsPlaying(autoPlay);
+        setIsPlaying(autoPlay || isLive);
         setIsLoaded(true);
 
         if (isLive && scheduledStart) {
@@ -108,6 +108,16 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
         event.target.setPlaybackQuality('hd1080');
 
+        if (isMuted) {
+            event.target.mute();
+        } else {
+            event.target.unMute();
+        }
+
+        if (autoPlay || isLive) {
+            event.target.playVideo();
+        }
+
         const availableLevels = event.target.getAvailableQualityLevels();
         if (availableLevels?.length > 0) {
             setQualityLevels(availableLevels);
@@ -115,7 +125,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         }
 
         if (onReady) onReady();
-    }, [autoPlay, onReady, isLive, scheduledStart]);
+    }, [autoPlay, onReady, isLive, scheduledStart, isMuted]);
 
     const initializePlayer = useCallback(() => {
         if (!videoId || playerReady.current || !window.YT?.Player) return;
@@ -138,6 +148,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     }, [videoId, autoPlay, handlePlayerReady, handleStateChange, handleQualityChange]);
 
     const togglePlay = useCallback(() => {
+        if (isLive && isPlaying) return; // Disallow pausing during active live broadcasts!
         if (videoId) {
             if (!playerRef.current || !playerReady.current) return;
             if (isPlaying) {
@@ -300,6 +311,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     playsInline
                     preload="auto"
                     muted={isMuted}
+                    autoPlay={autoPlay || isLive}
                     className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                     onLoadedMetadata={handleVideoLoadedMetadata}
                     onPlay={() => {
@@ -317,6 +329,18 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     onClick={togglePlay}
                     className="absolute inset-0 bg-transparent z-10 pointer-events-auto cursor-pointer"
                 />
+            )}
+
+            {/* Pulsing Mute Alert Indicator */}
+            {isLive && isPlaying && isMuted && (
+                <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={toggleMute}
+                    className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse z-20 cursor-pointer shadow-md flex items-center gap-1.5"
+                >
+                    <VolumeX size={12} /> Tap to Unmute
+                </motion.div>
             )}
 
             {/* Overlay Controls */}
