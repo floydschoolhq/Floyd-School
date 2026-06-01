@@ -101,18 +101,9 @@ const App = () => {
 
     }
 
-    // 2. Define the paths where Navbar/Footer should be hidden
+    // 2. Define the paths where Navbar/Footer should be hidden.
+    // All /student/* routes are covered by startsWith so new pages never leak the marketing navbar.
     const hideLayoutOnPaths = [
-        '/student/login',
-        '/student',
-        '/student/dashboard',
-        '/student/classroom',
-        '/student/coding-lab',
-        '/student/recordings',
-        '/student/live-session',
-        '/student/progress',
-        '/student/reports',
-        '/student/support',
         '/downloads',
         '/contact',
         '/online-program',
@@ -123,9 +114,10 @@ const App = () => {
         '/hackathon'
     ];
 
-    // 3. Check if the current path is in the hidden list
-    // This returns true if the current path matches any path in the hideLayoutOnPaths array
-    const shouldHideLayout = hideLayoutOnPaths.includes(location.pathname);
+    // 3. Hide the public marketing navbar on all student portal routes AND the explicitly listed paths.
+    const shouldHideLayout =
+        location.pathname.startsWith('/student') ||
+        hideLayoutOnPaths.includes(location.pathname);
     
     // Footer shows on all public marketing pages
     const publicPaths = [
