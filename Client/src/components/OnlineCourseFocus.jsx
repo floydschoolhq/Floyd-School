@@ -206,7 +206,7 @@ const OnlineCourseFocus = ({ variant }) => {
     ];
 
     const filteredCourses = courses.filter(course => {
-        if (course.status && course.status !== 'published') return false;
+        if (!course.comingSoon && course.status && course.status !== 'published') return false;
         if (course.isActive === false) return false;
 
         if (activeTab === 'live') return !course.comingSoon;

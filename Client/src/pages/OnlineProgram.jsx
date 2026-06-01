@@ -281,7 +281,7 @@ const OnlineProgram = () => {
         fetchLiveCourses();
     }, []);
 
-    const visibleCourses = courses.filter(course => (!course.status || course.status === 'published') && course.isActive !== false);
+    const visibleCourses = courses.filter(course => (course.comingSoon || !course.status || course.status === 'published') && course.isActive !== false);
 
     React.useEffect(() => {
         const hash = window.location.hash;
