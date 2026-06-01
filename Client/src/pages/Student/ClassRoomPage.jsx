@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Suspense, lazy, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users, ChevronDown, ChevronUp } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api, { getFileUrl } from '../../api/axios';
+import schedulePdf from '../../assets/pdf/thinkskool_TTS_schedule.pdf';
 
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
@@ -621,6 +622,37 @@ const ClassroomPage = () => {
                 </div>
               )}
             </div>
+
+            {/* Class Schedule Time Table Section */}
+            <div className="pt-4 border-t border-surface-el">
+              <h2 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Class Schedule</h2>
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                className="p-5 rounded-3xl bg-gradient-to-br from-surface-soft via-surface-base to-surface-soft border border-surface-el shadow-sm relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-primary/5 blur-2xl rounded-full -mr-8 -mt-8 group-hover:bg-accent-primary/10 transition-colors" />
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-accent-primary/10 border border-accent-primary/20 text-accent-primary rounded-2xl flex items-center justify-center shrink-0">
+                    <Calendar size={18} strokeWidth={2.5} />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-black text-text-main uppercase tracking-tight mb-1">Time Table Schedule</h4>
+                    <p className="text-[11px] text-text-muted font-medium leading-relaxed mb-4">
+                      Access the complete weekly lecture time table and class slots mapping.
+                    </p>
+                    <a
+                      href={schedulePdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-accent-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-accent-primary/95 transition-all shadow-md shadow-accent-primary/10 cursor-pointer"
+                    >
+                      <Download size={12} strokeWidth={3} /> View Time Table (PDF)
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
           </div>
 
           {/* Main Focus Detail Area */}
