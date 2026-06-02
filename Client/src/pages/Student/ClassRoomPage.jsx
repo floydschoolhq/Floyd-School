@@ -28,6 +28,20 @@ const getGoogleDriveFileId = (url) => {
   return null;
 };
 
+const calculateCourseProgress = (course) => {
+  if (!course || !course.modules || course.modules.length === 0) return 0;
+  const totalClasses = course.modules.length * 3;
+  let completedClassesCount = 0;
+  course.modules.forEach(m => {
+    if (m.completedClasses && Array.isArray(m.completedClasses)) {
+      completedClassesCount += m.completedClasses.filter(Boolean).length;
+    } else if (m.completed) {
+      completedClassesCount += 3;
+    }
+  });
+  return Math.round((completedClassesCount / totalClasses) * 100) || 0;
+};
+
 const ClassroomPage = () => {
   const navigate = useNavigate();
   const { socket } = useSocket();
@@ -558,7 +572,7 @@ const ClassroomPage = () => {
             <div className="text-right">
               <div className="text-[10px] font-black text-text-muted uppercase tracking-widest">Your Progress</div>
               <div className="text-xl font-bold text-accent-primary">
-                {Math.round((activeStudyCourse.modules?.filter(m => m.completed).length / activeStudyCourse.modules?.length * 100) || 0)}%
+                {calculateCourseProgress(activeStudyCourse)}%
               </div>
             </div>
           </div>
@@ -1334,7 +1348,7 @@ const ClassroomPage = () => {
                   <div className="text-right">
                     <div className="text-xs font-semibold text-text-muted/70 uppercase">Progress</div>
                     <div className="text-sm font-semibold text-accent-primary">
-                      {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                      {calculateCourseProgress(course)}%
                     </div>
                   </div>
                 </div>
@@ -1381,7 +1395,7 @@ const ClassroomPage = () => {
                       <div className="text-right">
                         <div className="text-[13px] font-semibold tracking-widest text-text-muted/70 uppercase">Progress</div>
                         <div className="text-lg font-semibold text-accent-primary">
-                          {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                          {calculateCourseProgress(course)}%
                         </div>
                       </div>
                       <button
@@ -1391,7 +1405,7 @@ const ClassroomPage = () => {
                         }}
                         className="px-4 py-2 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-lg text-base font-bold transition-all shadow-sm active:scale-95"
                       >
-                        Study Node
+                        Study Course
                       </button>
                     </div>
                   </div>
