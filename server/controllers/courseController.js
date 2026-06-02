@@ -558,7 +558,16 @@ exports.toggleModuleComplete = async (req, res) => {
                 const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
                 const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
 
-                const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
+                // Check if there is an ended live class recording in the archive for this slot
+                const LiveClass = require('../models/LiveClass');
+                const hasRecording = await LiveClass.findOne({
+                    course: courseId,
+                    module: moduleId,
+                    classNumber: Number(classNumber || 1),
+                    status: 'ended'
+                });
+
+                const hasVideo = (targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '') || !!hasRecording;
                 const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
                 const hasAssignment = !!linkedAssignment;
 
@@ -585,7 +594,15 @@ exports.toggleModuleComplete = async (req, res) => {
                 const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
                 const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
                 
-                const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
+                // Check if there is any ended live class recording in the archive for this module
+                const LiveClass = require('../models/LiveClass');
+                const hasRecording = await LiveClass.findOne({
+                    course: courseId,
+                    module: moduleId,
+                    status: 'ended'
+                });
+
+                const hasVideo = (targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '') || !!hasRecording;
                 const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
                 const hasAssignment = !!linkedAssignment;
 
