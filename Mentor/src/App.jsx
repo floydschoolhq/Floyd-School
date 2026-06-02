@@ -11,9 +11,7 @@ import CourseManagement from './pages/CourseManagement';
 import LiveClassCenter from './pages/LiveClassCenter';
 import StudentLeads from './pages/StudentLeads';
 import AssignmentGrading from './pages/AssignmentGrading';
-import StudentRoster from './pages/StudentRoster';
 import SupportTickets from './pages/SupportTickets';
-import MasterclassManagement from './pages/MasterclassManagement';
 import RecordingsManagement from './pages/RecordingsManagement';
 import GlobalNotificationListener from './components/GlobalNotificationListener';
 
@@ -47,9 +45,7 @@ function App() {
               <Route path="assignments" element={<AssignmentGrading />} />
               <Route path="live" element={<LiveClassCenter />} />
               <Route path="leads" element={<StudentLeads />} />
-              <Route path="roster" element={<StudentRoster />} />
               <Route path="support" element={<SupportTickets />} />
-              <Route path="masterclasses" element={<MasterclassManagement />} />
               <Route path="recordings" element={<RecordingsManagement />} />
             </Route>
 

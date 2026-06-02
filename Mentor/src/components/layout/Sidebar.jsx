@@ -6,11 +6,9 @@ import {
     FileText,
     Video,
     Users,
-    GraduationCap,
     LifeBuoy,
     Settings,
-    LogOut,
-    Presentation
+    LogOut
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
@@ -21,10 +19,8 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/' },
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
-        { icon: <GraduationCap size={20} />, label: 'Student Roster', path: '/roster' },
         { icon: <FileText size={20} />, label: 'Assignments', path: '/assignments' },
         { icon: <Video size={20} />, label: 'Live Classes', path: '/live' },
-        { icon: <Presentation size={20} />, label: 'Masterclasses', path: '/masterclasses' },
         { icon: <Video size={20} />, label: 'Recordings', path: '/recordings' },
         { icon: <Users size={20} />, label: 'Student Leads', path: '/leads' },
         { icon: <LifeBuoy size={20} />, label: 'Support Ticket', path: '/support' },
