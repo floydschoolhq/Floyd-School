@@ -170,19 +170,19 @@ if (loading) {
             {/* Video Player Portal */}
             <AnimatePresence>
                 {selectedVideo && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+                    <div className="fixed inset-0 z-[100] overflow-y-auto flex items-start justify-center p-4 md:p-8 py-8 md:py-12">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedVideo(null)}
-                            className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl"
+                            className="fixed inset-0 bg-slate-950/90 backdrop-blur-2xl"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="relative w-full max-w-3xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+                            className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden my-auto"
                         >
                             <div className="aspect-video bg-black relative shrink-0">
                                 <CustomVideoPlayer
@@ -214,8 +214,8 @@ if (loading) {
                                 </button>
                             </div>
 
-                            {/* Scrollable Discussion Area */}
-                            <div className="px-8 py-6 overflow-y-auto custom-scrollbar flex-1">
+                            {/* Discussion Area */}
+                            <div className="px-8 py-6">
                                 <CommentSection moduleId={selectedVideo._id} moduleTitle={selectedVideo.title} />
                             </div>
                         </motion.div>
