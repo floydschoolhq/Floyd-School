@@ -5,7 +5,7 @@ import {
   Lock, Users, FileText, Shield, Radio, Calendar,
   CheckCircle, AlertCircle
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PortalContext } from '../../contexts/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
 import { NotificationPanel } from '../dashboard/NotificationPanel';
@@ -21,8 +21,9 @@ import { DashboardSkeleton } from '../dashboard/SkeletonCard';
 import StreakWidget from '../dashboard/StreakWidget';
 
 const StudentDashboard = () => {
+  const navigate = useNavigate();
   const usePortal = () => useContext(PortalContext);
-  const { user, setView, activeLiveClass, setActiveLiveClass } = usePortal();
+  const { user, activeLiveClass, setActiveLiveClass } = usePortal();
   const { theme, setTheme } = useTheme();
   const isModern = theme === 'modern';
   const toast = useToast();
@@ -234,7 +235,7 @@ const StudentDashboard = () => {
             </div>
           </div>
           <button
-            onClick={() => setView('Live')}
+            onClick={() => navigate('/student/live-session')}
             className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
           >
             Join Now →
@@ -264,7 +265,7 @@ const StudentDashboard = () => {
         {/* Live Status — real */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          onClick={() => activeLiveClass && setView('Live')}
+          onClick={() => activeLiveClass && navigate('/student/live-session')}
           className={`p-5 rounded-3xl border bg-surface-soft transition-all ${activeLiveClass ? 'border-red-200 cursor-pointer' : 'border-surface-el'}`}
         >
           <p className="text-[10px] font-black uppercase tracking-widest text-text-muted mb-2">Live Class</p>
@@ -297,7 +298,7 @@ const StudentDashboard = () => {
                 My Courses
               </h3>
               <button
-                onClick={() => setView('Schedule')}
+                onClick={() => navigate('/student/schedule')}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-soft border border-surface-el text-text-muted rounded-xl text-[11px] font-bold uppercase tracking-wider hover:border-accent-primary/40 transition-all cursor-pointer"
               >
                 <Calendar className="w-3.5 h-3.5" /> Schedule
@@ -323,13 +324,13 @@ const StudentDashboard = () => {
                   
                   <div className="flex flex-col gap-2 mt-auto">
                     <button
-                      onClick={() => setView('Classroom')}
+                      onClick={() => navigate('/student/classroom')}
                       className="w-full py-3 bg-accent-primary hover:bg-accent-secondary text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:shadow-lg hover:shadow-accent-primary/10"
                     >
                       <BookOpen className="w-3.5 h-3.5" /> Enter Classroom
                     </button>
                     <button
-                      onClick={() => setView('Live')}
+                      onClick={() => navigate('/student/live-session')}
                       className="w-full py-3 bg-surface-soft hover:bg-surface-el border border-surface-el text-text-main rounded-xl font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Radio className="w-3.5 h-3.5 text-accent-primary" /> Mentor Room
@@ -343,7 +344,7 @@ const StudentDashboard = () => {
                     <motion.div
                       key={course._id}
                       whileHover={{ y: -4, border: '1px solid var(--accent-primary)' }}
-                      onClick={() => setView('Classroom')}
+                      onClick={() => navigate('/student/classroom')}
                       className="p-5 bg-surface-base border border-surface-el rounded-3xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all cursor-pointer flex flex-col justify-between group"
                     >
                       <div>

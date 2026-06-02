@@ -90,43 +90,7 @@ const LiveClassCenter = () => {
         if (autoTitle) setScheduleTitle(autoTitle);
     }, [scheduleCourse, scheduleModule, scheduleClassNumber, courses]);
 
-    useEffect(() => {
-        if (!meetingLink) return;
-        
-        const detectDuration = async () => {
-            const fileId = getGoogleDriveFileId(meetingLink);
-            let detectUrl = meetingLink;
-            if (fileId) {
-                detectUrl = `https://docs.google.com/uc?export=download&id=${fileId}`;
-            }
-            
-            const isDrive = !!fileId;
-            const isMp4 = detectUrl.toLowerCase().endsWith('.mp4') || detectUrl.includes('/uploads/');
-            
-            if (isDrive || isMp4 || detectUrl.startsWith('http')) {
-                try {
-                    const tempVideo = document.createElement('video');
-                    tempVideo.src = detectUrl;
-                    tempVideo.preload = 'metadata';
-                    tempVideo.onloadedmetadata = () => {
-                        const dur = tempVideo.duration;
-                        if (dur && !isNaN(dur) && dur > 0) {
-                            setDurationMin(Math.floor(dur / 60));
-                            setDurationSec(Math.round(dur % 60));
-                            toast.success(`Automatically detected video length: ${Math.floor(dur / 60)}m ${Math.round(dur % 60)}s`);
-                        }
-                    };
-                    tempVideo.onerror = () => {
-                        // Silent ignore for non-HTML5 streams
-                    };
-                } catch (e) {
-                    console.error('Failed to auto-detect video duration:', e);
-                }
-            }
-        };
-        
-        detectDuration();
-    }, [meetingLink]);
+    // Auto duration detection handled below helpers
 
     // Scheduled sessions state
     const [scheduledSessions, setScheduledSessions] = useState([]);
@@ -165,6 +129,101 @@ const LiveClassCenter = () => {
         if (url.match(/^[a-zA-Z0-9_-]{25,}$/)) return url;
         return null;
     };
+
+    // Auto duration detection for YouTube, Google Drive, and MP4 links
+    useEffect(() => {
+        if (!meetingLink) return;
+        
+        const detectDuration = async () => {
+            const ytId = getYouTubeId(meetingLink);
+            if (ytId) {
+                // Fetch YouTube video length using a hidden temporary player
+                if (!window.YT) {
+                    const tag = document.createElement('script');
+                    tag.src = 'https://www.youtube.com/iframe_api';
+                    const firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                }
+                
+                const getYtDuration = () => {
+                    const tempContainer = document.createElement('div');
+                    tempContainer.style.position = 'absolute';
+                    tempContainer.style.width = '0';
+                    tempContainer.style.height = '0';
+                    tempContainer.style.opacity = '0';
+                    tempContainer.style.pointerEvents = 'none';
+                    document.body.appendChild(tempContainer);
+                    
+                    let tempPlayer;
+                    tempPlayer = new window.YT.Player(tempContainer, {
+                        videoId: ytId,
+                        playerVars: { autoplay: 0, controls: 0 },
+                        events: {
+                            onReady: (event) => {
+                                const dur = event.target.getDuration();
+                                if (dur && !isNaN(dur) && dur > 0) {
+                                    setDurationMin(Math.floor(dur / 60));
+                                    setDurationSec(Math.round(dur % 60));
+                                    toast.success(`Automatically detected YouTube video length: ${Math.floor(dur / 60)}m ${Math.round(dur % 60)}s`);
+                                }
+                                tempPlayer.destroy();
+                                tempContainer.remove();
+                            },
+                            onError: () => {
+                                tempPlayer.destroy();
+                                tempContainer.remove();
+                            }
+                        }
+                    });
+                };
+
+                if (window.YT && window.YT.Player) {
+                    getYtDuration();
+                } else {
+                    const checkYtLoaded = setInterval(() => {
+                        if (window.YT && window.YT.Player) {
+                            clearInterval(checkYtLoaded);
+                            getYtDuration();
+                        }
+                    }, 500);
+                    setTimeout(() => clearInterval(checkYtLoaded), 10000);
+                }
+                return;
+            }
+
+            const fileId = getGoogleDriveFileId(meetingLink);
+            let detectUrl = meetingLink;
+            if (fileId) {
+                detectUrl = `https://docs.google.com/uc?export=download&id=${fileId}`;
+            }
+            
+            const isDrive = !!fileId;
+            const isMp4 = detectUrl.toLowerCase().endsWith('.mp4') || detectUrl.includes('/uploads/');
+            
+            if (isDrive || isMp4 || detectUrl.startsWith('http')) {
+                try {
+                    const tempVideo = document.createElement('video');
+                    tempVideo.src = detectUrl;
+                    tempVideo.preload = 'metadata';
+                    tempVideo.onloadedmetadata = () => {
+                        const dur = tempVideo.duration;
+                        if (dur && !isNaN(dur) && dur > 0) {
+                            setDurationMin(Math.floor(dur / 60));
+                            setDurationSec(Math.round(dur % 60));
+                            toast.success(`Automatically detected video length: ${Math.floor(dur / 60)}m ${Math.round(dur % 60)}s`);
+                        }
+                    };
+                    tempVideo.onerror = () => {
+                        // Silent ignore for non-HTML5 streams
+                    };
+                } catch (e) {
+                    console.error('Failed to auto-detect video duration:', e);
+                }
+            }
+        };
+        
+        detectDuration();
+    }, [meetingLink]);
 
     useEffect(() => {
         fetchActiveClass();
@@ -721,46 +780,28 @@ const LiveClassCenter = () => {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between items-center ml-1">
-                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                                Session Duration (Manual Input)
-                                            </label>
-                                            <span className="text-[10px] font-black text-sky-500 uppercase tracking-widest">
-                                                Precision Timing
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex-1 flex items-center gap-2">
-                                                <div className="relative flex-1">
-                                                    <input
-                                                        type="number"
-                                                        min="0"
-                                                        placeholder="Min"
-                                                        value={durationMin}
-                                                        onChange={(e) => setDurationMin(parseInt(e.target.value) || 0)}
-                                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all shadow-inner"
-                                                    />
-                                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400 uppercase">Min</span>
+                                    {meetingLink && (
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center ml-1">
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                                    Live Broadcast Duration
+                                                </label>
+                                                <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest animate-pulse flex items-center gap-1.5">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                                    Auto-Synced to Stream
+                                                </span>
+                                            </div>
+                                            <div className="p-4 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between gap-4 shadow-lg">
+                                                <div className="flex flex-col gap-0.5">
+                                                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">Detected Duration</span>
+                                                    <span className="text-xs text-slate-400 font-medium">Broadcast will terminate automatically when the video completes one full run.</span>
                                                 </div>
-                                                <div className="relative flex-1">
-                                                    <input
-                                                        type="number"
-                                                        min="0"
-                                                        max="59"
-                                                        placeholder="Sec"
-                                                        value={durationSec}
-                                                        onChange={(e) => setDurationSec(parseInt(e.target.value) || 0)}
-                                                        className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl font-bold text-slate-900 outline-none focus:border-sky-500 focus:bg-white transition-all shadow-inner"
-                                                    />
-                                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400 uppercase">Sec</span>
+                                                <div className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-black text-sky-400 min-w-[100px] text-center shadow-inner">
+                                                    {Math.floor(durationMin / 60) > 0 ? `${Math.floor(durationMin / 60)}h ` : ''}{durationMin % 60}m {durationSec}s
                                                 </div>
                                             </div>
-                                            <div className="bg-slate-950 border border-slate-800 px-4 py-4 rounded-2xl text-xs font-black text-sky-400 min-w-[100px] text-center shadow-lg">
-                                                {Math.floor(durationMin / 60)}h {durationMin % 60}m {durationSec}s
-                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     {error && (
                                         <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3 text-rose-500 text-xs font-black uppercase">
