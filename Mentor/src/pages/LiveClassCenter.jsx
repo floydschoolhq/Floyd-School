@@ -890,7 +890,7 @@ const LiveClassCenter = () => {
                                                 <iframe
                                                     width="100%"
                                                     height="100%"
-                                                    src={`https://www.youtube.com/embed/${getYouTubeId(activeClass.meetingLink)}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0`}
+                                                    src={`https://www.youtube.com/embed/${getYouTubeId(activeClass.meetingLink)}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=0&disablekb=1&iv_load_policy=3&fs=0&start=${Math.max(0, Math.floor((Date.now() - new Date(activeClass.startedAt || activeClass.createdAt || new Date()).getTime()) / 1000))}`}
                                                     title="YouTube Live Session"
                                                     frameBorder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
