@@ -197,17 +197,6 @@ const StudentDashboard = () => {
             ))}
           </div>
 
-          {isConnected && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-2 px-4 py-2 bg-text-main border border-surface-el rounded-2xl shadow-lg"
-            >
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              <span className="text-[13px] font-black uppercase tracking-widest text-surface-base">Live</span>
-            </motion.div>
-          )}
-
           <NotificationPanel notifications={notifications} />
           <Link
             to="/"
