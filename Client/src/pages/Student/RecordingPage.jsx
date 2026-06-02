@@ -182,40 +182,40 @@ if (loading) {
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="relative w-full max-w-5xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+                            className="relative w-full max-w-3xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
                         >
-                            <div className="aspect-video bg-black relative">
+                            <div className="aspect-video bg-black relative shrink-0">
                                 <CustomVideoPlayer
                                     videoUrl={selectedVideo.videoUrl}
                                     autoPlay={true}
                                     isLive={false}
                                 />
                             </div>
-                            <div className="p-8 flex items-center justify-between gap-8">
+                            <div className="p-6 flex items-center justify-between gap-8 shrink-0 border-b border-slate-50">
                                 <div>
                                     <div className="flex items-center gap-3 mb-2">
-                                        <span className="bg-sky-50 text-sky-500 px-3 py-1 rounded-full text-\[13px\] font-black uppercase tracking-widest">
+                                        <span className="bg-sky-50 text-sky-500 px-3 py-1 rounded-full text-[13px] font-black uppercase tracking-widest">
                                             {selectedVideo.courseTitle}
                                         </span>
                                         <span className="text-slate-300">•</span>
-                                        <span className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
+                                        <span className="text-[13px] font-black text-slate-400 uppercase tracking-widest">
                                             {selectedVideo.instructor}
                                         </span>
                                     </div>
-                                    <h2 className="text-2xl font-black text-slate-900 tracking-tight italic">
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight italic">
                                         {selectedVideo.title}
                                     </h2>
                                 </div>
                                 <button
                                     onClick={() => setSelectedVideo(null)}
-                                    className="p-4 bg-slate-50 hover:bg-slate-100 rounded-2xl text-slate-900 transition-all"
+                                    className="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-2xl text-slate-900 transition-all shrink-0"
                                 >
-                                    <X size={24} />
+                                    <X size={20} />
                                 </button>
                             </div>
 
                             {/* Scrollable Discussion Area */}
-                            <div className="px-8 pb-12 max-h-[400px] overflow-y-auto custom-scrollbar">
+                            <div className="px-8 py-6 overflow-y-auto custom-scrollbar flex-1">
                                 <CommentSection moduleId={selectedVideo._id} moduleTitle={selectedVideo.title} />
                             </div>
                         </motion.div>
