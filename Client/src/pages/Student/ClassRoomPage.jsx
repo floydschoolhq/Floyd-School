@@ -1556,53 +1556,7 @@ const ClassroomPage = () => {
         </div>
       )}
 
-      {/* Mobile-Optimized Class Recordings */}
-      {isMobile ? (
-        <div className="mb-6 mx-4">
-          <h2 className="text-lg font-semibold text-text-main mb-4 flex items-center gap-3">
-            <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
-              <Video className="w-4 h-4" />
-            </div>
-            Class Recordings
-          </h2>
-          <div className="bg-surface-soft rounded-xl p-4 border border-surface-el shadow-sm">
-            <div className="text-center py-6">
-              <Video className="w-10 h-10 mx-auto mb-3 text-accent-primary opacity-50" />
-              <p className="text-text-main font-bold text-sm mb-1">Recorded Lectures</p>
-              <p className="text-xs text-text-muted mb-4">Watch recordings of past classes.</p>
-              <button 
-                onClick={() => setView('Recordings')}
-                className="w-full px-4 py-2 bg-text-main text-surface-base hover:bg-accent-primary hover:text-surface-base rounded-lg font-bold text-sm transition-all"
-              >
-                View Recorded Lectures
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Desktop Class Recordings */
-        <div className="mb-10">
-          <h2 className="text-xl font-semibold text-text-main mb-6 flex items-center gap-3">
-            <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
-              <PlayCircle className="w-5 h-5" />
-            </div>
-            Class Recordings
-          </h2>
-          <div className="bg-surface-soft rounded-2xl p-8 border border-surface-el hover:border-accent-primary/20 hover:shadow-md transition-all">
-            <div className="text-center py-8">
-              <PlayCircle className="w-12 h-12 mx-auto mb-4 text-accent-primary opacity-60" />
-              <p className="text-text-main font-bold text-lg mb-1 tracking-normal">Recorded Lectures</p>
-              <p className="text-base font-medium text-text-muted mb-6">Watch recordings of past classes and review lessons at your own pace.</p>
-              <button 
-                onClick={() => setView('Recordings')}
-                className="px-8 py-3 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl font-bold transition-all shadow-sm cursor-pointer"
-              >
-                Browse Recordings
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Masterclasses Integration */}
       {!isMobile && canAccessContent && (
