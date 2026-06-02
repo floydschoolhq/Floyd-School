@@ -169,7 +169,7 @@ const RecordingsPage = () => {
             {/* Video Player Portal */}
             <AnimatePresence>
                 {selectedVideo && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-8">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-y-auto md:overflow-hidden">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -181,42 +181,46 @@ const RecordingsPage = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="relative w-full max-w-4xl bg-surface-soft border border-surface-el rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                            className="relative w-full max-w-5xl bg-surface-soft border border-surface-el rounded-2xl md:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto h-auto md:h-[80vh]"
                         >
-                            <div className="aspect-video bg-black relative shrink-0">
+                            {/* Left Column: Video Player Container */}
+                            <div className="w-full md:w-2/3 bg-black flex items-center justify-center relative aspect-video md:aspect-auto md:h-full shrink-0">
                                 <CustomVideoPlayer
                                     videoUrl={selectedVideo.videoUrl}
                                     autoPlay={true}
                                     isLive={false}
                                 />
                             </div>
-                            
-                            <div className="p-4 sm:p-6 md:p-8 flex items-center justify-between gap-4 border-b border-surface-el">
-                                <div className="min-w-0">
-                                    <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2 flex-wrap">
-                                        <span className="bg-accent-primary/10 text-accent-primary px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-widest border border-accent-primary/20">
-                                            {selectedVideo.courseTitle}
-                                        </span>
-                                        <span className="text-text-muted hidden sm:inline">•</span>
-                                        <span className="text-[10px] sm:text-[11px] font-black text-text-muted uppercase tracking-widest truncate">
-                                            {selectedVideo.instructor}
-                                        </span>
-                                    </div>
-                                    <h2 className="text-lg sm:text-2xl font-black text-text-main tracking-tight leading-snug truncate">
-                                        {selectedVideo.title}
-                                    </h2>
-                                </div>
-                                <button
-                                    onClick={() => setSelectedVideo(null)}
-                                    className="p-2.5 sm:p-4 bg-surface-base hover:bg-surface-el rounded-xl sm:rounded-2xl text-text-main transition-all shrink-0 cursor-pointer border-none"
-                                >
-                                    <X size={18} className="sm:w-6 sm:h-6" />
-                                </button>
-                            </div>
 
-                            {/* Scrollable Discussion Area */}
-                            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto custom-scrollbar flex-1 max-h-[300px] sm:max-h-[400px]">
-                                <CommentSection moduleId={selectedVideo._id} moduleTitle={selectedVideo.title} />
+                            {/* Right Column: Title & Discussion Area */}
+                            <div className="w-full md:w-1/3 flex flex-col flex-1 min-h-0 bg-surface-soft md:border-l md:border-surface-el h-auto md:h-full">
+                                {/* Header */}
+                                <div className="p-4 sm:p-6 flex items-center justify-between gap-4 border-b border-surface-el shrink-0">
+                                    <div className="min-w-0">
+                                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                            <span className="bg-accent-primary/10 text-accent-primary px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-widest border border-accent-primary/20">
+                                                {selectedVideo.courseTitle}
+                                            </span>
+                                            <span className="text-[10px] sm:text-[11px] font-black text-text-muted uppercase tracking-widest truncate">
+                                                {selectedVideo.instructor}
+                                            </span>
+                                        </div>
+                                        <h2 className="text-sm sm:text-base font-black text-text-main tracking-tight leading-snug truncate">
+                                            {selectedVideo.title}
+                                        </h2>
+                                    </div>
+                                    <button
+                                        onClick={() => setSelectedVideo(null)}
+                                        className="p-2 bg-surface-base hover:bg-surface-el rounded-xl text-text-main transition-all shrink-0 cursor-pointer border-none"
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                </div>
+
+                                {/* Scrollable Discussion Area */}
+                                <div className="p-4 sm:p-6 overflow-y-visible md:overflow-y-auto custom-scrollbar flex-1 min-h-0 [&>div]:mt-0">
+                                    <CommentSection moduleId={selectedVideo._id} moduleTitle={selectedVideo.title} />
+                                </div>
                             </div>
                         </motion.div>
                     </div>

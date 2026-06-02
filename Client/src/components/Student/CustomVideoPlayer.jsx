@@ -37,6 +37,8 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
     const [isLoaded, setIsLoaded] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     // Derive videoId safely — extractYouTubeId is a module-level function, never in TDZ
     const videoId = extractYouTubeId(videoUrl);
@@ -52,6 +54,8 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
             if (isLive && scheduledStart) {
                 const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
                 videoRef.current.currentTime = elapsedSeconds;
+            } else if (!isLive) {
+                setDuration(videoRef.current.duration);
             }
 
             if (autoPlay) {
@@ -88,6 +92,9 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         if (isLive && scheduledStart) {
             const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(scheduledStart).getTime()) / 1000));
             event.target.seekTo(elapsedSeconds, true);
+        } else if (!isLive) {
+            const dur = event.target.getDuration();
+            if (dur) setDuration(dur);
         }
 
         event.target.setPlaybackQuality('hd1080');
@@ -261,6 +268,54 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
         return () => clearTimeout(timeout);
     }, [isPlaying, showControls]);
 
+    const formatTime = useCallback((timeInSeconds) => {
+        if (isNaN(timeInSeconds) || timeInSeconds === null) return '00:00';
+        const hours = Math.floor(timeInSeconds / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = Math.floor(timeInSeconds % 60);
+
+        const pad = (num) => String(num).padStart(2, '0');
+
+        if (hours > 0) {
+            return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+        }
+        return `${pad(minutes)}:${pad(seconds)}`;
+    }, []);
+
+    const handleSeek = useCallback((e) => {
+        const time = parseFloat(e.target.value);
+        if (videoId) {
+            if (playerRef.current && typeof playerRef.current.seekTo === 'function') {
+                playerRef.current.seekTo(time, true);
+                setCurrentTime(time);
+            }
+        } else {
+            if (videoRef.current) {
+                videoRef.current.currentTime = time;
+                setCurrentTime(time);
+            }
+        }
+    }, [videoId]);
+
+    useEffect(() => {
+        let interval;
+        if (videoId && isPlaying && playerRef.current && playerReady.current) {
+            if (duration === 0) {
+                const dur = playerRef.current.getDuration();
+                if (dur) setDuration(dur);
+            }
+
+            interval = setInterval(() => {
+                if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+                    setCurrentTime(playerRef.current.getCurrentTime());
+                    const dur = playerRef.current.getDuration();
+                    if (dur) setDuration(dur);
+                }
+            }, 500);
+        }
+        return () => clearInterval(interval);
+    }, [videoId, isPlaying, duration]);
+
     // ─── Volume Icon helper ────────────────────────────────────────────────
 
     const VolumeIcon = isMuted || volume === 0
@@ -290,7 +345,22 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                     src={videoUrl}
                     playsInline
                     className="w-full h-full object-contain pointer-events-none"
-                    onLoadedMetadata={handleVideoLoadedMetadata}
+                    onLoadedMetadata={(e) => {
+                        handleVideoLoadedMetadata();
+                        if (videoRef.current) {
+                            setDuration(videoRef.current.duration);
+                        }
+                    }}
+                    onTimeUpdate={() => {
+                        if (videoRef.current) {
+                            setCurrentTime(videoRef.current.currentTime);
+                        }
+                    }}
+                    onDurationChange={() => {
+                        if (videoRef.current) {
+                            setDuration(videoRef.current.duration);
+                        }
+                    }}
                     onPlay={() => {
                         setIsPlaying(true);
                         setHasStartedPlaying(true);
@@ -324,85 +394,115 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                         )}
 
                         {/* Bottom Controls */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-4">
-                            {!isLive && (
-                                <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                                    {isPlaying
-                                        ? <Pause size={20} className="text-white" fill="white" />
-                                        : <Play size={20} className="text-white" fill="white" />
-                                    }
-                                </button>
-                            )}
+                        <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-2 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            {/* Timeline Slider (only for non-live recordings) */}
+                            {!isLive && duration > 0 && (
+                                <div className="flex items-center gap-3 w-full group/timeline">
+                                    <span className="text-white text-xs font-bold select-none min-w-[40px] text-right">
+                                        {formatTime(currentTime)}
+                                    </span>
+                                    
+                                    <div className="relative flex-1 flex items-center h-4 cursor-pointer select-none">
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max={duration}
+                                            step="0.1"
+                                            value={currentTime}
+                                            onChange={handleSeek}
+                                            className="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer outline-none transition-all [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-accent-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:transition-transform hover:[&::-webkit-slider-thumb]:scale-125 focus:[&::-webkit-slider-thumb]:scale-125"
+                                            style={{
+                                                background: `linear-gradient(to right, var(--accent-primary) 0%, var(--accent-primary) ${(currentTime / duration) * 100}%, rgba(255,255,255,0.2) ${(currentTime / duration) * 100}%, rgba(255,255,255,0.2) 100%)`
+                                            }}
+                                        />
+                                    </div>
 
-                            <div className="flex items-center gap-2">
-                                <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white">
-                                    {VolumeIcon}
-                                </button>
-                                <input
-                                    type="range" min="0" max="100"
-                                    value={isMuted ? 0 : volume}
-                                    onChange={handleVolumeChange}
-                                    className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
-                                />
-                            </div>
-
-                            {isLive && (
-                                <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
-                                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
-                                    <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live Broadcast</span>
+                                    <span className="text-white/70 text-xs font-bold select-none min-w-[40px]">
+                                        {formatTime(duration)}
+                                    </span>
                                 </div>
                             )}
 
-                            <div className="flex-1" />
-
-                            {videoId && (
-                                <div className="relative">
-                                    <button
-                                        onClick={() => setShowSettings(s => !s)}
-                                        className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2"
-                                    >
-                                        <Settings size={18} className="text-white" />
-                                        <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
-                                        <ChevronDown size={14} className="text-white" />
+                            <div className="flex items-center gap-4 w-full">
+                                {!isLive && (
+                                    <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer border-none bg-transparent">
+                                        {isPlaying
+                                            ? <Pause size={20} className="text-white" fill="white" />
+                                            : <Play size={20} className="text-white" fill="white" />
+                                        }
                                     </button>
+                                )}
 
-                                    <AnimatePresence>
-                                        {showSettings && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: 10 }}
-                                                className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
-                                            >
-                                                <div className="p-2">
-                                                    <p className="text-[10px] font-semibold text-slate-400 px-3 py-2">Quality</p>
-                                                    {getAvailableQualities().map((level) => (
-                                                        <button
-                                                            key={level}
-                                                            onClick={() => setQuality(level)}
-                                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                                                currentQuality === level
-                                                                    ? 'bg-sky-500/20 text-sky-400'
-                                                                    : 'text-white hover:bg-white/10'
-                                                            }`}
-                                                        >
-                                                            {getQualityLabel(level)}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                <div className="flex items-center gap-2">
+                                    <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white cursor-pointer border-none bg-transparent">
+                                        {VolumeIcon}
+                                    </button>
+                                    <input
+                                        type="range" min="0" max="100"
+                                        value={isMuted ? 0 : volume}
+                                        onChange={handleVolumeChange}
+                                        className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                                    />
                                 </div>
-                            )}
 
-                            <button
-                                onClick={toggleFullscreen}
-                                className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1"
-                                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-                            >
-                                {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
-                            </button>
+                                {isLive && (
+                                    <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
+                                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
+                                        <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live Broadcast</span>
+                                    </div>
+                                )}
+
+                                <div className="flex-1" />
+
+                                {videoId && (
+                                    <div className="relative">
+                                        <button
+                                            onClick={() => setShowSettings(s => !s)}
+                                            className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2 cursor-pointer border-none bg-transparent"
+                                        >
+                                            <Settings size={18} className="text-white" />
+                                            <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
+                                            <ChevronDown size={14} className="text-white" />
+                                        </button>
+
+                                        <AnimatePresence>
+                                            {showSettings && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: 10 }}
+                                                    className="absolute bottom-full right-0 mb-2 bg-slate-900/95 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 min-w-[140px]"
+                                                >
+                                                    <div className="p-2">
+                                                        <p className="text-[10px] font-semibold text-slate-400 px-3 py-2">Quality</p>
+                                                        {getAvailableQualities().map((level) => (
+                                                            <button
+                                                                key={level}
+                                                                onClick={() => setQuality(level)}
+                                                                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                                    currentQuality === level
+                                                                        ? 'bg-sky-500/20 text-sky-400'
+                                                                        : 'text-white hover:bg-white/10'
+                                                                } border-none bg-transparent cursor-pointer`}
+                                                            >
+                                                                {getQualityLabel(level)}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={toggleFullscreen}
+                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1 cursor-pointer border-none bg-transparent"
+                                    title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                                >
+                                    {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+                                </button>
+                            </div>
                         </div>
                     </motion.div>
                 )}
