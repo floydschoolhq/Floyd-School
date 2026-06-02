@@ -506,7 +506,21 @@ exports.toggleModuleComplete = async (req, res) => {
             // Toggle off: remove completed module
             progress.completedModules.splice(index, 1);
         } else {
-            // Toggle on: add completed module
+            // Toggle on: check if module has any video, study notes, or assignments
+            const Assignment = require('../models/Assignment');
+            const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
+            const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
+            
+            const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
+            const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
+            const hasAssignment = !!linkedAssignment;
+
+            if (!hasVideo && !hasNotes && !hasAssignment) {
+                return res.status(400).json({ 
+                    message: 'Cannot mark as complete: This module has no videos, study notes, or assignments yet.' 
+                });
+            }
+
             progress.completedModules.push(moduleId);
         }
 

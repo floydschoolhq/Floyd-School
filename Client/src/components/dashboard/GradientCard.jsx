@@ -48,8 +48,13 @@ export const StatCard = ({ title, value, icon: Icon, gradient, change }) => {
     const { theme } = useTheme();
     const isModern = theme === 'modern';
     const [displayValue, setDisplayValue] = React.useState(0);
-    const numericValue = typeof value === 'string' ? parseFloat(value.replace(/[^\d.-]/g, '')) : value;
-    const suffix = typeof value === 'string' ? value.replace(/[\d.-]/g, '') : '';
+    const hasSlash = typeof value === 'string' && value.includes('/');
+    const numericValue = hasSlash 
+        ? parseFloat(value.split('/')[0].replace(/[^\d.-]/g, '')) 
+        : (typeof value === 'string' ? parseFloat(value.replace(/[^\d.-]/g, '')) : value);
+    const suffix = hasSlash
+        ? ` / ${value.split('/')[1].trim()}`
+        : (typeof value === 'string' ? value.replace(/[\d.-]/g, '') : '');
 
     React.useEffect(() => {
         const controls = animate(0, numericValue, {

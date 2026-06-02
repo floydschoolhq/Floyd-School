@@ -60,6 +60,28 @@ const ClassroomPage = () => {
   // Toggle a module complete / incomplete — updates server + local state
   const handleToggleModuleComplete = async (courseId, moduleId) => {
     if (togglingComplete) return;
+
+    // Content check: block marking as complete if there are no videos, notes, or assignments
+    if (selectedModule && selectedModule._id.toString() === moduleId.toString()) {
+      const hasVideo = selectedModule.videoUrl && selectedModule.videoUrl.trim() !== '';
+      const hasNotes = selectedModule.notesUrl && selectedModule.notesUrl.trim() !== '';
+      
+      const moduleAssignment = assignments.find(a => {
+        const assignmentModuleId = a.module?._id || a.module;
+        const assignmentCourseId = a.course?._id || a.course;
+        return assignmentModuleId && selectedModule._id && 
+          (assignmentModuleId.toString() === selectedModule._id.toString()) &&
+          assignmentCourseId && courseId &&
+          (assignmentCourseId.toString() === courseId.toString());
+      });
+
+      const isCompleted = selectedModule.completed;
+      if (!isCompleted && !hasVideo && !hasNotes && !moduleAssignment) {
+        alert("Cannot mark complete: This module has no videos, study notes, or assignments yet.");
+        return;
+      }
+    }
+
     setTogglingComplete(true);
     try {
       const res = await api.post(`/courses/${courseId}/modules/${moduleId}/toggle-complete`);
@@ -786,25 +808,34 @@ const ClassroomPage = () => {
                 </div>
 
                 {/* ── Mark as Complete Button ── */}
-                {selectedModule && activeStudyCourse && (
-                  <div className="flex items-center justify-between px-1">
-                    <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
-                      {selectedModule.completed ? '✓ This module is marked complete' : 'Mark this module as done to track your progress'}
-                    </p>
-                    <button
-                      onClick={() => handleToggleModuleComplete(activeStudyCourse._id, selectedModule._id)}
-                      disabled={togglingComplete}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm cursor-pointer disabled:opacity-50 ${
-                        selectedModule.completed
-                          ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500'
-                          : 'bg-surface-soft border border-surface-el text-text-muted hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-600'
-                      }`}
-                    >
-                      <CheckCircle size={13} />
-                      {togglingComplete ? 'Saving…' : selectedModule.completed ? 'Completed ✓' : 'Mark Complete'}
-                    </button>
-                  </div>
-                )}
+                {selectedModule && activeStudyCourse && (() => {
+                  const hasNoContent = !selectedModule.videoUrl && !selectedModule.notesUrl && !moduleAssignment;
+                  return (
+                    <div className="flex items-center justify-between px-1">
+                      <p className={`text-[10px] font-bold uppercase tracking-widest ${hasNoContent && !selectedModule.completed ? 'text-rose-500' : 'text-text-muted'}`}>
+                        {hasNoContent && !selectedModule.completed
+                          ? '⚠ Cannot mark as complete: No videos or materials available'
+                          : selectedModule.completed
+                            ? '✓ This module is marked complete'
+                            : 'Mark this module as done to track your progress'}
+                      </p>
+                      <button
+                        onClick={() => handleToggleModuleComplete(activeStudyCourse._id, selectedModule._id)}
+                        disabled={togglingComplete || (hasNoContent && !selectedModule.completed)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
+                          hasNoContent && !selectedModule.completed
+                            ? 'bg-slate-100 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-800/60 cursor-not-allowed'
+                            : selectedModule.completed
+                              ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 cursor-pointer'
+                              : 'bg-surface-soft border border-surface-el text-text-muted hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-600 cursor-pointer'
+                        }`}
+                      >
+                        <CheckCircle size={13} />
+                        {togglingComplete ? 'Saving…' : selectedModule.completed ? 'Completed ✓' : 'Mark Complete'}
+                      </button>
+                    </div>
+                  );
+                })()}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Study Material / Notes */}
                   <div className="space-y-3">
