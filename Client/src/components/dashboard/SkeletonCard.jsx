@@ -65,7 +65,7 @@ export const DashboardSkeleton = () => (
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="p-6 space-y-8"
+        className="p-4 sm:p-6 space-y-8"
     >
         <GreetingSkeleton />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

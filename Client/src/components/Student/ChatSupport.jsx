@@ -133,17 +133,17 @@ const ChatSupport = () => {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0)' }}>
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, y: 20, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="bg-slate-950 border border-slate-800 w-80 md:w-96 rounded-[2rem] shadow-2xl overflow-hidden mb-4 flex flex-col"
+                        className="bg-slate-950 border border-slate-800 w-[calc(100vw-2rem)] sm:w-80 md:w-96 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl overflow-hidden mb-3 sm:mb-4 flex flex-col max-h-[80vh] sm:max-h-none"
                     >
                         {/* Header */}
-                        <div className="bg-[#2563EB] p-6 flex justify-between items-center">
+                        <div className="bg-[#2563EB] p-4 sm:p-6 flex justify-between items-center">
                             <div className="flex items-center gap-4">
                                 <div className="bg-slate-950/10 p-2.5 rounded-2xl backdrop-blur-md border border-slate-950/10">
                                     <MessageSquare className="text-slate-950 w-5 h-5" />
@@ -178,7 +178,7 @@ const ChatSupport = () => {
                         {/* Chat Area */}
                         <div
                             ref={scrollRef}
-                            className="h-[400px] bg-slate-950 p-6 overflow-y-auto space-y-4 custom-scrollbar"
+                            className="h-[50vh] sm:h-[400px] bg-slate-950 p-4 sm:p-6 overflow-y-auto space-y-3 sm:space-y-4 custom-scrollbar"
                         >
                             {loading && (
                                 <div className="flex flex-col items-center justify-center h-full text-slate-500 gap-2">
@@ -200,7 +200,7 @@ const ChatSupport = () => {
                         </div>
 
                         {/* Input Area */}
-                        <div className="p-4 bg-slate-900 border-t border-slate-800 flex gap-3">
+                        <div className="p-3 sm:p-4 bg-slate-900 border-t border-slate-800 flex gap-2 sm:gap-3">
                             <input
                                 type="text"
                                 value={input}
@@ -231,9 +231,9 @@ const ChatSupport = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="bg-[#2563EB] hover:bg-[#2563EB]/90 text-slate-950 w-16 h-16 rounded-[1.5rem] shadow-2xl shadow-[#2563EB]/30 flex items-center justify-center transition-all group"
+                className="bg-[#2563EB] hover:bg-[#2563EB]/90 text-slate-950 w-12 h-12 sm:w-16 sm:h-16 rounded-[1.25rem] sm:rounded-[1.5rem] shadow-2xl shadow-[#2563EB]/30 flex items-center justify-center transition-all group"
             >
-                {isOpen ? <X size={28} /> : <MessageSquare size={28} className="group-hover:rotate-12 transition-transform" />}
+                {isOpen ? <X size={22} className="sm:w-7 sm:h-7" /> : <MessageSquare size={22} className="group-hover:rotate-12 transition-transform sm:w-7 sm:h-7" />}
             </motion.button>
         </div>
     );

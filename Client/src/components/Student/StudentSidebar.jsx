@@ -44,7 +44,7 @@ const StudentSidebar = () => {
                 <span style={{ color: 'var(--accent-primary)' }}>skool</span>
               </Link>
               <button
-                className="md:hidden p-2 text-text-muted hover:text-text-main rounded-full hover:bg-surface-soft transition-all"
+                className="md:hidden p-2.5 text-text-muted hover:text-text-main rounded-full hover:bg-surface-soft transition-all"
                 onClick={() => setIsSidebarOpen(false)}
               >
                 <X className="w-6 h-6" />
@@ -104,7 +104,7 @@ const StudentSidebar = () => {
           </div>
 
           {/* Footer branding */}
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-text-muted/40 text-center pb-2 transition-colors duration-500">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-text-muted/40 text-center pb-2 transition-colors duration-500 safe-area-bottom">
             Student Portal v2.0 ✦
           </p>
         </motion.div>

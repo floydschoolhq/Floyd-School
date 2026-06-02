@@ -52,7 +52,7 @@ const Badge = ({ color, name }) => {
 
 const Achievement3D = ({ title = "Excellence Badge", color = "#2563EB" }) => {
     return (
-        <div className="w-full h-full min-h-[250px] relative">
+        <div className="w-full h-full min-h-[180px] sm:min-h-[250px] relative">
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1} />
