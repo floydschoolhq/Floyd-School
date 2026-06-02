@@ -73,7 +73,7 @@ const RecordingsPage = () => {
         (course.modules || []).map(module => ({
             ...module,
             courseTitle: course.title,
-            instructor: course.instructor?.name || 'thinkskool Master',
+            instructor: course.instructor?.name || 'thinkskool Instructor',
             isLiveArchive: false
         }))
     );
@@ -82,7 +82,7 @@ const RecordingsPage = () => {
         ...lc,
         title: lc.title,
         videoUrl: lc.meetingLink, // In 'premiere' and 'youtube' modes, this is the video URL
-        courseTitle: 'Live Session Archive',
+        courseTitle: 'Live Class Recording',
         instructor: lc.mentorName || 'thinkskool Mentor',
         isLiveArchive: true,
         createdAt: lc.startedAt
@@ -99,9 +99,9 @@ const RecordingsPage = () => {
                 className="mb-6 sm:mb-8 p-3"
             >
                 <h1 className="text-2xl sm:text-4xl font-black text-text-main mb-2 tracking-tight">
-                    Session <span className="text-accent-primary">Archive</span>
+                    Class <span className="text-accent-primary">Recordings</span>
                 </h1>
-                <p className="text-xs sm:text-base font-medium text-text-muted">Review proprietary sessions and technical deep dives at your convenience.</p>
+                <p className="text-xs sm:text-base font-medium text-text-muted">Review previous class recordings and video playbacks at your convenience.</p>
             </motion.div>
 
             {/* Recordings Grid */}
@@ -110,59 +110,61 @@ const RecordingsPage = () => {
                     {allModules.map((module, index) => (
                         <motion.div
                             key={module._id || index}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }}
+                            className="bg-surface-soft border border-surface-el hover:border-accent-primary/20 rounded-2xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-5 cursor-pointer transition-all flex flex-col justify-between group"
+                            onClick={() => setSelectedVideo(module)}
                         >
-                            <GradientCard
-                                gradient="from-accent-primary to-accent-secondary"
-                                className="hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
-                            >
+                            <div>
                                 {/* Thumbnail Placeholder */}
-                                <div className="bg-surface-base h-40 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden border border-surface-el">
+                                <div className="bg-surface-base h-40 rounded-xl flex items-center justify-center mb-4 relative overflow-hidden border border-surface-el/80">
                                     {getYouTubeId(module.videoUrl) ? (
                                         <img
                                             src={`https://img.youtube.com/vi/${getYouTubeId(module.videoUrl)}/mqdefault.jpg`}
                                             alt={module.title}
-                                            className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                                            className="w-full h-full object-cover opacity-80 group-hover:scale-[1.02] transition-transform duration-500"
                                         />
                                     ) : (
-                                        <Video className="w-10 h-10 sm:w-12 sm:h-12 text-text-muted/30" />
+                                        <Video className="w-10 h-10 text-text-muted/30" />
                                     )}
-                                    <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
-                                        <p className="text-[10px] sm:text-xs font-black text-white/80 uppercase tracking-widest truncate">{module.courseTitle}</p>
+                                    <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                        <p className="text-[10px] font-bold text-white/95 uppercase tracking-wider truncate">{module.courseTitle}</p>
                                     </div>
-                                    <div className="absolute inset-0 bg-accent-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent-primary/20 backdrop-blur-md rounded-full flex items-center justify-center">
-                                            <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-white ml-0.5 sm:ml-1" />
+                                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <div className="w-12 h-12 bg-white/25 backdrop-blur-md rounded-full flex items-center justify-center">
+                                            <Play className="w-5 h-5 text-white fill-white ml-0.5" />
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Info */}
-                                <div className="space-y-1.5">
-                                    <h3 className="font-bold text-text-main text-sm sm:text-lg tracking-tight line-clamp-1">{module.title}</h3>
-                                    <p className="text-[10px] sm:text-[13px] font-black uppercase tracking-widest text-accent-primary/90">{module.instructor}</p>
+                                <div className="space-y-1">
+                                    <h3 className="font-bold text-text-main text-base tracking-tight line-clamp-1 group-hover:text-accent-primary transition-colors">{module.title}</h3>
+                                    <p className="text-[10px] font-bold uppercase tracking-wider text-text-muted">{module.instructor}</p>
                                 </div>
+                            </div>
 
-                                <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 sm:gap-4">
-                                    <button
-                                        onClick={() => setSelectedVideo(module)}
-                                        className="flex-1 py-2.5 sm:py-3 bg-text-main hover:bg-accent-primary text-surface-base hover:text-white rounded-xl font-bold text-xs sm:text-sm uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border-none"
-                                    >
-                                        <Play className="w-3.5 h-3.5 fill-current" />
-                                        Watch
-                                    </button>
-                                </div>
-                            </GradientCard>
+                            <div className="mt-4 flex items-center justify-between gap-3">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedVideo(module);
+                                    }}
+                                    className="flex-1 py-2.5 bg-surface-base hover:bg-accent-primary border border-surface-el hover:border-accent-primary text-text-main hover:text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer"
+                                >
+                                    <Play className="w-3 h-3 fill-current" />
+                                    Watch Lecture
+                                </button>
+                            </div>
                         </motion.div>
                     ))}
                 </div>
             ) : (
                 <div className="py-12 sm:py-20 text-center bg-surface-soft rounded-2xl sm:rounded-[3rem] border-2 sm:border-4 border-dashed border-surface-el">
                     <BookOpen size={48} className="mx-auto text-text-muted mb-4 sm:mb-6 opacity-30" />
-                    <p className="text-text-muted font-black uppercase tracking-widest text-xs sm:text-base">No synchronized recordings found</p>
-                    <p className="text-text-muted/60 text-xs sm:text-base font-bold mt-2 italic">Waiting for mentor to link curriculum modules...</p>
+                    <p className="text-text-muted font-black uppercase tracking-wider text-xs sm:text-base">No class recordings found</p>
+                    <p className="text-text-muted/60 text-xs sm:text-base font-bold mt-2 italic">Recordings will appear here after the class ends.</p>
                 </div>
             )}
 
@@ -232,9 +234,9 @@ const RecordingsPage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-center text-[10px] sm:text-xs font-black text-text-muted uppercase tracking-widest mt-8 sm:mt-12"
+                className="text-center text-[10px] sm:text-xs font-black text-text-muted uppercase tracking-wider mt-8 sm:mt-12"
             >
-                Archive availability: Synchronized with Mentor Curriculum Nodes.
+                Recordings are updated automatically after each class.
             </motion.p>
         </div>
     );

@@ -161,16 +161,16 @@ const SupportPage = () => {
                     className="font-['Inter']"
                 >
                     <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight italic">
-                        Technical <span className="text-sky-500">Concierge</span>
+                        Mentor <span className="text-sky-500">Support</span>
                     </h1>
-                    <p className="text-base font-medium text-slate-500">Direct integration with growth architects for proprietary support.</p>
+                    <p className="text-base font-medium text-slate-500">Get direct help from our mentors for any questions or issues.</p>
                 </motion.div>
 
                 <button
                     onClick={() => setShowNewTicketModal(true)}
                     className="bg-slate-900 text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-\[13px\] flex items-center gap-2 hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
                 >
-                    <Plus size={16} /> Raise Ticket
+                    <Plus size={16} /> Ask for Help
                 </button>
             </div>
 
@@ -201,7 +201,7 @@ const SupportPage = () => {
                                 <h3 className="font-bold text-slate-900 mb-2 truncate">{ticket.subject}</h3>
                                 <div className="flex items-center gap-2 text-\[13px\] font-black text-slate-400 uppercase tracking-widest">
                                     <MessageSquare size={12} />
-                                    {ticket.messages.length} Correspondence
+                                    {ticket.messages.length} Messages
                                 </div>
                             </motion.div>
                         ))
@@ -227,7 +227,7 @@ const SupportPage = () => {
                                         <h2 className="text-xl font-black text-slate-900">{selectedTicket.subject}</h2>
                                         <div className="flex items-center gap-2 text-\[13px\] font-bold text-slate-400 uppercase tracking-widest">
                                             <div className={`w-2 h-2 rounded-full ${selectedTicket.assignedTo ? 'bg-emerald-500' : 'bg-yellow-500 animate-pulse'}`} />
-                                            {selectedTicket.assignedTo ? 'Connected with Architect' : 'Awaiting Assignment'}
+                                            {selectedTicket.assignedTo ? 'Connected with Mentor' : 'Awaiting Assignment'}
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +243,7 @@ const SupportPage = () => {
                             {/* Messages */}
                             <div className="flex-1 overflow-y-auto p-8 space-y-6 custom-scrollbar">
                                 <div className="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100">
-                                    <p className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest mb-2">Original Inquiry</p>
+                                    <p className="text-\[13px\] font-black text-slate-400 uppercase tracking-widest mb-2">Original Question</p>
                                     <p className="text-base font-medium text-slate-700 leading-relaxed">{selectedTicket.issue}</p>
                                 </div>
 
@@ -298,8 +298,8 @@ const SupportPage = () => {
                             <div className="w-24 h-24 bg-slate-50 rounded-[2rem] flex items-center justify-center text-slate-300 mb-6">
                                 <MessageCircle size={40} />
                             </div>
-                            <h2 className="text-2xl font-black text-slate-900 mb-2">Select a channel</h2>
-                            <p className="text-base text-slate-400 font-medium max-w-xs">Initialize a correspondence to resolve technical roadblocks.</p>
+                            <h2 className="text-2xl font-black text-slate-900 mb-2">Select a request</h2>
+                            <p className="text-base text-slate-400 font-medium max-w-xs">Start a conversation to get help with your learning.</p>
                         </div>
                     )}
                 </div>
@@ -322,14 +322,14 @@ const SupportPage = () => {
                             exit={{ scale: 0.9, opacity: 0 }}
                             className="relative w-full max-w-lg bg-white rounded-[3rem] p-10 shadow-2xl"
                         >
-                            <h2 className="text-3xl font-black text-slate-900 mb-8 italic">New <span className="text-sky-500">Inquiry</span></h2>
+                            <h2 className="text-3xl font-black text-slate-900 mb-8 italic">New <span className="text-sky-500">Request</span></h2>
 
                             <form onSubmit={handleCreateTicket} className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Subject Matter</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Subject</label>
                                     <input
                                         required
-                                        placeholder="e.g. Authentication Node Error"
+                                        placeholder="e.g. Help with React assignment"
                                         className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all"
                                         value={newTicketData.subject}
                                         onChange={(e) => setNewTicketData({ ...newTicketData, subject: e.target.value })}
@@ -337,11 +337,11 @@ const SupportPage = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Technical Details</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Description</label>
                                     <textarea
                                         required
                                         rows={4}
-                                        placeholder="Describe the roadblock in detail..."
+                                        placeholder="Describe your question or issue in detail..."
                                         className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl font-bold outline-none focus:border-sky-500 transition-all resize-none"
                                         value={newTicketData.issue}
                                         onChange={(e) => setNewTicketData({ ...newTicketData, issue: e.target.value })}
@@ -349,7 +349,7 @@ const SupportPage = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Priority Protocol</label>
+                                    <label className="text-\[13px\] font-black text-slate-400 uppercase ml-1">Priority Level</label>
                                     <div className="grid grid-cols-2 gap-3">
                                         {['medium', 'urgent'].map((p) => (
                                             <button
@@ -371,7 +371,7 @@ const SupportPage = () => {
                                     type="submit"
                                     className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-\[13px\] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all mt-4"
                                 >
-                                    Initialize Inquiry
+                                    Submit Request
                                 </button>
                             </form>
 

@@ -119,10 +119,10 @@ const LiveChatSidebar = ({ classId }) => {
             <div className="p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-2">
                     <h3 className="text-white font-semibold text-base flex items-center gap-2">
-                        Class <span className="text-blue-500 font-semibold">Transmission</span>
+                        Live <span className="text-blue-500 font-semibold">Chat</span>
                     </h3>
                 </div>
-                <p className="text-[13px] font-bold text-slate-500">Global Interaction Active</p>
+                <p className="text-[13px] font-bold text-slate-500">Chat with mentors and classmates.</p>
             </div>
 
             {/* Chat Messages */}
@@ -168,7 +168,7 @@ const LiveChatSidebar = ({ classId }) => {
                 {messages.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center opacity-30 text-center space-y-4">
                         <MessageCircle size={48} className="text-slate-500" />
-                        <p className="text-[13px] font-semibold text-slate-500">Awaiting Signal...</p>
+                        <p className="text-[13px] font-semibold text-slate-500">No messages yet.</p>
                     </div>
                 )}
             </div>
@@ -186,7 +186,7 @@ const LiveChatSidebar = ({ classId }) => {
                                 handleSend(e);
                             }
                         }}
-                        placeholder="Broadcast message..."
+                        placeholder="Type a message..."
                         className="w-full bg-slate-950 text-white text-[14px] font-bold rounded-xl pl-4 pr-12 py-3 border-2 border-slate-800 focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-700"
                     />
                     <button

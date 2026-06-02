@@ -1060,7 +1060,7 @@ const ClassroomPage = () => {
         <p className={`${isMobile ? 'text-sm' : 'text-base'} font-medium text-text-muted`}>
           {isMobile 
             ? 'Access lessons, recordings & assignments on the go.'
-            : 'Access your lessons, assignments, and recordings through our elite framework.'
+            : 'Access your lessons, assignments, and recordings through your student portal.'
           }
         </p>
       </motion.div>
@@ -1563,18 +1563,18 @@ const ClassroomPage = () => {
             <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
               <Video className="w-4 h-4" />
             </div>
-            Recordings
+            Class Recordings
           </h2>
           <div className="bg-surface-soft rounded-xl p-4 border border-surface-el shadow-sm">
             <div className="text-center py-6">
               <Video className="w-10 h-10 mx-auto mb-3 text-accent-primary opacity-50" />
-              <p className="text-text-main font-bold text-sm mb-1">Video Archive</p>
-              <p className="text-xs text-text-muted mb-4">Watch previous sessions anytime.</p>
+              <p className="text-text-main font-bold text-sm mb-1">Recorded Lectures</p>
+              <p className="text-xs text-text-muted mb-4">Watch recordings of past classes.</p>
               <button 
                 onClick={() => setView('Recordings')}
                 className="w-full px-4 py-2 bg-text-main text-surface-base hover:bg-accent-primary hover:text-surface-base rounded-lg font-bold text-sm transition-all"
               >
-                Browse All Videos
+                View Recorded Lectures
               </button>
             </div>
           </div>
@@ -1586,21 +1586,21 @@ const ClassroomPage = () => {
             <div className="p-2 bg-emerald-50 rounded-lg text-emerald-500">
               <PlayCircle className="w-5 h-5" />
             </div>
-            Integration Sessions
+            Class Recordings
           </h2>
-          <GradientCard gradient="from-[#2D2D2D] to-[#1A1A1A]">
+          <div className="bg-surface-soft rounded-2xl p-8 border border-surface-el hover:border-accent-primary/20 hover:shadow-md transition-all">
             <div className="text-center py-8">
-              <PlayCircle className="w-12 h-12 mx-auto mb-4 text-[#2563EB] opacity-50" />
-              <p className="text-text-main font-semibold text-lg mb-1 tracking-normal">Archive Repository</p>
-              <p className="text-base font-medium text-text-muted mb-6">Review previous technical deep dives and workshops.</p>
+              <PlayCircle className="w-12 h-12 mx-auto mb-4 text-accent-primary opacity-60" />
+              <p className="text-text-main font-bold text-lg mb-1 tracking-normal">Recorded Lectures</p>
+              <p className="text-base font-medium text-text-muted mb-6">Watch recordings of past classes and review lessons at your own pace.</p>
               <button 
                 onClick={() => setView('Recordings')}
-                className="px-8 py-3 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl font-bold transition-all shadow-lg shadow-slate-900/10"
+                className="px-8 py-3 bg-text-main hover:bg-accent-primary text-surface-base hover:text-surface-base rounded-xl font-bold transition-all shadow-sm cursor-pointer"
               >
-                Browse Archive
+                Browse Recordings
               </button>
             </div>
-          </GradientCard>
+          </div>
         </div>
       )}
 

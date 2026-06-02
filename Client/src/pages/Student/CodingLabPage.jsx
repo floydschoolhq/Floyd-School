@@ -205,15 +205,15 @@ const CodingLabPage = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-black text-text-main mb-1 tracking-tight">
-              Elite <span className="text-accent-primary">Coding Laboratory</span>
+              Student <span className="text-accent-primary">Coding Lab</span>
             </h1>
-            <p className="text-[13px] font-black text-text-muted uppercase tracking-[0.2em]"> High-Performance Cloud Execution Environment </p>
+            <p className="text-[13px] font-black text-text-muted uppercase tracking-[0.2em]"> Write, compile, and run your code online </p>
           </div>
           <div className="flex items-center gap-4">
             {isConnected && (
               <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
                 <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
-                <span className="text-[13px] font-black text-emerald-500 uppercase tracking-widest">Compiler Edge</span>
+                <span className="text-[13px] font-black text-emerald-500 uppercase tracking-widest">Compiler Connected</span>
               </div>
             )}
             <LanguageSelector

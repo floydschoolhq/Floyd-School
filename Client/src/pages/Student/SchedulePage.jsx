@@ -14,18 +14,18 @@ const SchedulePage = () => {
       >
         <div className="flex items-center gap-3 mb-2">
           <span className="text-[10px] font-black text-accent-primary bg-accent-primary/10 px-3 py-1 rounded uppercase tracking-wider border border-accent-primary/20">
-            Timing Matrix
+            Class Schedule
           </span>
           <span className="text-slate-300">•</span>
           <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">
-            Weekly slots
+            Weekly Schedule
           </span>
         </div>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-text-main">
-          Lecture <span style={{ color: 'var(--accent-primary)' }}>Schedule</span>
+          Class <span style={{ color: 'var(--accent-primary)' }}>Schedule</span>
         </h1>
         <p className="text-sm font-medium text-text-muted mt-1 leading-relaxed">
-          Access the official thinkskool academic lecture timetable, slot maps, and schedule details below.
+          Access the official thinkskool class timetable and schedule details below.
         </p>
       </motion.div>
 
@@ -46,9 +46,9 @@ const SchedulePage = () => {
               <Calendar size={22} strokeWidth={2.5} />
             </div>
 
-            <h3 className="text-base font-black text-text-main uppercase tracking-tight mb-2">Weekly slots</h3>
+            <h3 className="text-base font-black text-text-main uppercase tracking-tight mb-2">Weekly Schedule</h3>
             <p className="text-xs text-text-muted font-medium leading-relaxed mb-6">
-              Download the complete weekly lecture time table in high-definition PDF format for offline planning.
+              Download the complete weekly class timetable in PDF format for offline viewing.
             </p>
 
             <div className="space-y-3">
@@ -73,9 +73,9 @@ const SchedulePage = () => {
               <div className="flex items-start gap-3">
                 <ShieldCheck size={16} className="text-accent-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-[10px] font-black uppercase text-text-main tracking-wider">Official Matrix</p>
+                  <p className="text-[10px] font-black uppercase text-text-main tracking-wider">Official Timetable</p>
                   <p className="text-[10px] text-text-muted font-medium mt-0.5 leading-normal">
-                    Verified and synchronized by the academic committee.
+                    Verified and synchronized by the academic team.
                   </p>
                 </div>
               </div>

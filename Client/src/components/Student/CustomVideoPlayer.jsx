@@ -394,11 +394,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                         )}
 
                         {/* Bottom Controls */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-2 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 flex flex-col gap-2 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
                             {/* Timeline Slider (only for non-live recordings) */}
                             {!isLive && duration > 0 && (
-                                <div className="flex items-center gap-3 w-full group/timeline">
-                                    <span className="text-white text-xs font-bold select-none min-w-[40px] text-right">
+                                <div className="flex items-center gap-1.5 sm:gap-3 w-full group/timeline">
+                                    <span className="text-white text-xs font-bold select-none min-w-[32px] sm:min-w-[40px] text-right">
                                         {formatTime(currentTime)}
                                     </span>
                                     
@@ -417,15 +417,15 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                         />
                                     </div>
 
-                                    <span className="text-white/70 text-xs font-bold select-none min-w-[40px]">
+                                    <span className="text-white/70 text-xs font-bold select-none min-w-[32px] sm:min-w-[40px]">
                                         {formatTime(duration)}
                                     </span>
                                 </div>
                             )}
 
-                            <div className="flex items-center gap-4 w-full">
+                            <div className="flex items-center gap-2 sm:gap-4 w-full">
                                 {!isLive && (
-                                    <button onClick={togglePlay} className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer border-none bg-transparent">
+                                    <button onClick={togglePlay} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer border-none bg-transparent">
                                         {isPlaying
                                             ? <Pause size={20} className="text-white" fill="white" />
                                             : <Play size={20} className="text-white" fill="white" />
@@ -433,22 +433,25 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                     </button>
                                 )}
 
-                                <div className="flex items-center gap-2">
-                                    <button onClick={toggleMute} className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white cursor-pointer border-none bg-transparent">
+                                <div className="flex items-center gap-1.5 sm:gap-2">
+                                    <button onClick={toggleMute} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors text-white cursor-pointer border-none bg-transparent">
                                         {VolumeIcon}
                                     </button>
                                     <input
                                         type="range" min="0" max="100"
                                         value={isMuted ? 0 : volume}
                                         onChange={handleVolumeChange}
-                                        className="w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                                        className="hidden sm:block w-20 md:w-24 h-1 bg-white/30 rounded-full appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                                     />
                                 </div>
 
                                 {isLive && (
-                                    <div className="flex items-center gap-2 bg-red-600/10 border border-red-600/20 px-3 py-1.5 rounded-full select-none ml-2">
-                                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
-                                        <span className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Live Broadcast</span>
+                                    <div className="flex items-center gap-1 sm:gap-2 bg-red-600/10 border border-red-600/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full select-none ml-1 sm:ml-2">
+                                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#EF4444]" />
+                                        <span className="text-red-500 text-[9px] sm:text-[10px] font-black uppercase tracking-wider sm:tracking-[0.2em] leading-none">
+                                            <span className="inline sm:hidden">LIVE</span>
+                                            <span className="hidden sm:inline">Live Broadcast</span>
+                                        </span>
                                     </div>
                                 )}
 
@@ -458,11 +461,11 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
                                     <div className="relative">
                                         <button
                                             onClick={() => setShowSettings(s => !s)}
-                                            className="p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-2 cursor-pointer border-none bg-transparent"
+                                            className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors flex items-center gap-1 sm:gap-2 cursor-pointer border-none bg-transparent"
                                         >
                                             <Settings size={18} className="text-white" />
-                                            <span className="text-white text-xs font-bold">{getQualityLabel(currentQuality)}</span>
-                                            <ChevronDown size={14} className="text-white" />
+                                            <span className="text-white text-xs font-bold hidden sm:inline">{getQualityLabel(currentQuality)}</span>
+                                            <ChevronDown size={14} className="text-white hidden sm:inline" />
                                         </button>
 
                                         <AnimatePresence>
@@ -497,7 +500,7 @@ const CustomVideoPlayer = ({ videoUrl, autoPlay = false, onReady, isLive = false
 
                                 <button
                                     onClick={toggleFullscreen}
-                                    className="p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-1 cursor-pointer border-none bg-transparent"
+                                    className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors text-white flex items-center justify-center ml-0.5 sm:ml-1 cursor-pointer border-none bg-transparent"
                                     title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
                                 >
                                     {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}

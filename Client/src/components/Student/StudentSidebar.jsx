@@ -58,7 +58,7 @@ const StudentSidebar = () => {
               transition={{ delay: 0.1 }}
               className="mb-8 p-4 bg-surface-soft rounded-2xl border border-surface-el transition-colors duration-500"
             >
-              <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-1">Authenticated As</p>
+              <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-1">Logged In As</p>
               <p className="text-base font-black text-text-main truncate transition-colors duration-500">{user?.name}</p>
               <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent-primary/10 text-accent-primary text-[11px] font-black uppercase rounded-lg tracking-tighter">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse" />
