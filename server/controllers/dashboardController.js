@@ -11,10 +11,18 @@ exports.getStudentDashboard = async (req, res) => {
     try {
         const studentId = req.user._id;
 
+        // Fetch the student's granted courses to support both enrollment models
+        const User = require('../models/User');
+        const studentUser = await User.findById(studentId).select('permissions.grantedCourses');
+        const grantedIds = studentUser?.permissions?.grantedCourses || [];
+
         // Step 1: Fetch core data concurrently
         const [rawCourses, allSubmissions, notifications] = await Promise.all([
             Course.find({
-                enrolledStudents: studentId,
+                $or: [
+                    { enrolledStudents: studentId },
+                    { _id: { $in: grantedIds } }
+                ],
                 status: 'published'
             })
                 .populate('instructor', 'name email')

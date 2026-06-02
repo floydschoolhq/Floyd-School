@@ -34,7 +34,7 @@ const TTS_SCHEDULE = [
   ['Classification Models and Decision Trees','Training, Testing and Accuracy Scoring','Saving and Reusing a Trained Model with Pickle'],
   ['Intro to Computer Vision; How OpenCV Works; Loading Images','Applying Filters, Detecting Edges with OpenCV','Live Webcam Feed & Real-Time Face Detection'],
   ['What Flask Is; How Web Apps Work; Routes, Templates & Local Server','Forms, User Input; Connecting Trained ML Model to Web Interface','Finalize and Test Flask ML Prediction Web App'],
-  ['Capstone: Face Recognition Engine on Live Webcam; Auto-Log Attendance with Name & Time','Capstone: Save Records to CSV; Build Flask Attendance Live Dashboard','Full System Integration, Testing & End-to-End Walkthrough'],
+  ['Capstone: Face Recognition Engine on Live Webcam; Auto-Log Attendance with Name & Time','Capstone: Save Records to CSV Spreadsheet; Build Flask Attendance Live Dashboard','Full System Integration, Testing & End-to-End Walkthrough'],
   ['Final Testing & Presentation Prep','Rehearsal with Mentor Feedback; Polish Presentation','LIVE DEMO DAY — Present AI Face Recognition Attendance System'],
 ];
 
@@ -605,20 +605,6 @@ const LiveClassCenter = () => {
                                       )}
 
                                       {selectedCourse && selectedModule && (() => {
-                                          const TTS_SCHEDULE = [
-                                            ['What is Python & Why It Matters; Setting Up Environment; Variables & Data Types','User Input; If/Else Conditions; Writing Your First Working Program','Recap & Hands-On Practice'],
-                                            ['For Loops & While Loops','Functions with Parameters and Return Values','Lists & Dictionaries; Organising and Working with Data'],
-                                            ['Reading and Writing Files Permanently','Installing and Using Python Libraries','Combining All Concepts into One Real Build'],
-                                            ['Error Handling with Try and Except','Introduction to Classes and Objects (OOP)','Month 1 Consolidation & Free Build Session'],
-                                            ['Using ChatGPT as a Coding Partner; Prompt Engineering Basics','Connecting to the OpenAI API','Building a Chatbot with a Custom Personality'],
-                                            ['What is an API; JSON Data Handling','Fetching Live Weather and News Data from Real External Services','Build & Deploy the Live Data App'],
-                                            ['How Computers Learn from Data; Supervised vs Unsupervised Learning','Loading Real Datasets with Pandas','Training First ML Model with Scikit-learn'],
-                                            ['Classification Models and Decision Trees','Training, Testing and Accuracy Scoring','Saving and Reusing a Trained Model with Pickle'],
-                                            ['Intro to Computer Vision; How OpenCV Works; Loading Images','Applying Filters, Detecting Edges with OpenCV','Live Webcam Feed & Real-Time Face Detection'],
-                                            ['What Flask Is; How Web Apps Work; Routes, Templates & Local Server','Forms, User Input; Connecting Trained ML Model to Web Interface','Finalize and Test Flask ML Prediction Web App'],
-                                            ['Capstone: Face Recognition Engine on Live Webcam; Auto-Log Attendance with Name & Time','Capstone: Save Records to CSV; Build Flask Attendance Live Dashboard','Full System Integration, Testing & End-to-End Walkthrough'],
-                                            ['Final Testing & Presentation Prep','Rehearsal with Mentor Feedback; Polish Presentation','LIVE DEMO DAY — Present AI Face Recognition Attendance System'],
-                                          ];
                                           const modIdx = courses.find(c => c._id === selectedCourse)?.modules?.findIndex(m => m._id === selectedModule) ?? -1;
                                           const classNames = (modIdx >= 0 && TTS_SCHEDULE[modIdx]) ? TTS_SCHEDULE[modIdx] : ['Class 1','Class 2','Class 3'];
                                           return (
@@ -636,7 +622,7 @@ const LiveClassCenter = () => {
                                                   </select>
                                               </div>
                                           );
-                                      })()}
+                                       })()}
 
                                      <div className="space-y-2">
                                          <div className="flex items-center justify-between ml-1 mb-1">
@@ -1235,7 +1221,7 @@ const LiveClassCenter = () => {
                                         </select>
                                     </div>
                                 );
-                            })()
+                            })()}
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">YouTube URL *</label>
