@@ -240,6 +240,34 @@ const LiveClassCenter = () => {
         }
     };
 
+    // Local timer to automatically terminate active class on duration expiry
+    useEffect(() => {
+        if (!activeClass) return;
+
+        const checkExpiration = () => {
+            const startedTime = new Date(activeClass.startedAt || new Date()).getTime();
+            const durationMs = (activeClass.duration || 3600) * 1000;
+            const endTime = startedTime + durationMs;
+            const remaining = endTime - Date.now();
+
+            if (remaining <= 0) {
+                setActiveClass(null);
+                setDoubts([]);
+                toast.info('The live broadcast has completed and terminated automatically.');
+            } else {
+                const timer = setTimeout(() => {
+                    setActiveClass(null);
+                    setDoubts([]);
+                    toast.info('The live broadcast has completed and terminated automatically.');
+                }, remaining);
+
+                return () => clearTimeout(timer);
+            }
+        };
+
+        checkExpiration();
+    }, [activeClass]);
+
     useEffect(() => {
         if (activeClass) {
             fetchDoubts();
@@ -270,6 +298,14 @@ const LiveClassCenter = () => {
                     toast.info('Doubt terminated by student');
                 });
 
+                socket.on('liveClass:ended', (endedClassId) => {
+                    if (endedClassId === activeClass._id) {
+                        setActiveClass(null);
+                        setDoubts([]);
+                        toast.info('The live broadcast has ended.');
+                    }
+                });
+
                 socket.emit('liveClass:join', activeClass._id);
             }
 
@@ -277,6 +313,9 @@ const LiveClassCenter = () => {
                 if (socket) {
                     socket.off('doubt:new');
                     socket.off('doubt:resolved');
+                    socket.off('liveClass:countUpdate');
+                    socket.off('doubt:deleted');
+                    socket.off('liveClass:ended');
                 }
             };
         }
