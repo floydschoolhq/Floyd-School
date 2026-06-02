@@ -305,37 +305,96 @@ const StudentDashboard = () => {
             </div>
 
             {courses.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {courses.slice(0, 4).map((course) => {
-                  const done = course.modules?.filter(m => m.completed).length ?? 0;
-                  const total = course.modules?.length ?? 0;
-                  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-                  return (
+              <div className="flex flex-col lg:flex-row gap-6 items-stretch">
+                {/* Learning Stats / Call to Action Column */}
+                <div className="lg:w-1/3 flex flex-col justify-between p-6 bg-gradient-to-br from-surface-soft to-surface-el/40 border border-surface-el rounded-3xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-accent-primary/5 rounded-full blur-2xl pointer-events-none group-hover:bg-accent-primary/10 transition-colors" />
+                  <div className="relative z-10">
+                    <span className="px-2.5 py-1 bg-accent-primary/10 text-accent-primary rounded-xl text-[10px] font-black uppercase tracking-widest border border-accent-primary/20">
+                      Learning Hub
+                    </span>
+                    <h4 className="text-xl font-black text-text-main mt-4 mb-2 tracking-tight italic">
+                      Welcome Back, {user?.name?.split(' ')[0]}!
+                    </h4>
+                    <p className="text-xs text-text-muted leading-relaxed mb-6 font-medium">
+                      You are currently enrolled in <span className="text-text-main font-bold">{courses.length} core {courses.length === 1 ? 'program' : 'programs'}</span>. Jump straight into your classroom or sync with your mentor.
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col gap-2 mt-auto">
+                    <button
+                      onClick={() => setView('Classroom')}
+                      className="w-full py-3 bg-accent-primary hover:bg-accent-secondary text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:shadow-lg hover:shadow-accent-primary/10"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" /> Enter Classroom
+                    </button>
+                    <button
+                      onClick={() => setView('Live')}
+                      className="w-full py-3 bg-surface-soft hover:bg-surface-el border border-surface-el text-text-main rounded-xl font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <Radio className="w-3.5 h-3.5 text-accent-primary" /> Mentor Room
+                    </button>
+                  </div>
+                </div>
+
+                {/* Courses List Column */}
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {courses.slice(0, 4).map((course) => (
                     <motion.div
                       key={course._id}
-                      whileHover={{ scale: 1.01 }}
-                      className="p-4 bg-surface-base border border-surface-el rounded-2xl hover:border-accent-primary/30 transition-all"
+                      whileHover={{ y: -4, border: '1px solid var(--accent-primary)' }}
+                      onClick={() => setView('Classroom')}
+                      className="p-5 bg-surface-base border border-surface-el rounded-3xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all cursor-pointer flex flex-col justify-between group"
                     >
-                      <h4 className="text-sm font-bold text-text-main mb-1 line-clamp-1">{course.title}</h4>
-                      <p className="text-[11px] text-text-muted mb-3 flex items-center gap-1">
-                        <Users className="w-3 h-3" /> {course.instructor?.name || 'Instructor'}
-                      </p>
-                      <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
-                        <span>Progress</span>
-                        <span className="text-accent-primary">{pct}%</span>
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="px-2.5 py-0.5 bg-surface-soft text-text-muted rounded-lg text-[9px] font-black uppercase tracking-widest border border-surface-el">
+                            {course.category || 'Technology'}
+                          </span>
+                          <div className="p-2 bg-accent-primary/5 rounded-xl text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-colors duration-500">
+                            <BookOpen className="w-4 h-4" />
+                          </div>
+                        </div>
+                        <h4 className="text-base font-black text-text-main group-hover:text-accent-primary transition-colors mb-1 line-clamp-2 tracking-tight">
+                          {course.title}
+                        </h4>
+                        <p className="text-[11px] text-text-muted flex items-center gap-1 font-medium">
+                          <Users className="w-3 h-3 text-accent-primary" /> {course.instructor?.name || 'thinkskool Mentor'}
+                        </p>
                       </div>
-                      <div className="w-full bg-surface-el rounded-full h-2 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${pct}%` }}
-                          transition={{ duration: 1.5, ease: 'circOut' }}
-                          className="bg-gradient-to-r from-accent-primary to-accent-secondary h-full rounded-full"
-                        />
+
+                      <div className="mt-6 pt-4 border-t border-surface-el flex items-center justify-between">
+                        <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Active Access</span>
+                        <span className="text-[10px] font-black text-accent-primary uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                          Learn Now →
+                        </span>
                       </div>
-                      <p className="text-[10px] text-text-muted mt-2">{done} / {total} modules</p>
                     </motion.div>
-                  );
-                })}
+                  ))}
+                  
+                  {/* Complementary resource card if only 1 course enrolled to balance layout column spacing */}
+                  {courses.length === 1 && (
+                    <div className="p-5 bg-gradient-to-br from-surface-soft to-surface-el/40 border border-dashed border-surface-el rounded-3xl flex flex-col items-center justify-center text-center group hover:border-accent-primary/30 transition-colors">
+                      <div className="p-3 bg-surface-base border border-surface-el rounded-2xl text-text-muted mb-3 group-hover:scale-110 transition-transform">
+                        <Users className="w-5 h-5 text-accent-primary" />
+                      </div>
+                      <h4 className="text-sm font-bold text-text-main tracking-tight mb-1">Looking for more?</h4>
+                      <p className="text-[11px] text-text-muted max-w-[200px] leading-relaxed mb-4">
+                        Discover other leading tracks in our Course Library below.
+                      </p>
+                      <a
+                        href="#course-library"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById('course-library')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="text-[10px] font-black text-accent-primary uppercase tracking-widest hover:underline cursor-pointer"
+                      >
+                        Explore Library ↓
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="text-center py-16 bg-surface-soft rounded-2xl border border-dashed border-surface-el">
@@ -349,6 +408,7 @@ const StudentDashboard = () => {
 
         {/* Enrolled Courses full bleed — with lock overlay */}
         <motion.div
+          id="course-library"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -417,23 +477,7 @@ const StudentDashboard = () => {
                         {course.category}
                       </span>
                     </div>
-                    <p className="text-sm text-text-muted mb-6 line-clamp-2 leading-relaxed">{course.description}</p>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-black uppercase tracking-wider">
-                        <span className="text-text-muted">Module Progress</span>
-                        <span className="text-text-main">
-                          {Math.round((course.modules?.filter(m => m.completed).length / (course.modules?.length || 1)) * 100)}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-surface-el rounded-full h-2.5 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${(course.modules?.filter(m => m.completed).length / (course.modules?.length || 1)) * 100 || 0}%` }}
-                          transition={{ duration: 2, ease: 'circOut' }}
-                          className="bg-gradient-to-r from-accent-primary to-accent-secondary h-full rounded-full"
-                        />
-                      </div>
-                    </div>
+                    <p className="text-sm text-text-muted line-clamp-2 leading-relaxed">{course.description}</p>
                   </GradientCard>
                 ))
               ) : (
