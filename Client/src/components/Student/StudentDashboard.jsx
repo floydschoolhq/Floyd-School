@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import {
-  BookOpen, Clock, TrendingUp, Home, Sparkles,
+  BookOpen, Clock, Home, Sparkles,
   Lock, Users, FileText, Shield, Radio, Calendar,
   CheckCircle, AlertCircle
 } from 'lucide-react';
@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { PortalContext } from '../../contexts/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
 import { NotificationPanel } from '../dashboard/NotificationPanel';
-import { ProgressChart } from '../dashboard/ProgressChart';
 import { LogoutButton } from '../dashboard/LogoutButton';
 import { useSocket } from '../../contexts/SocketProvider';
 import api from '../../api/axios';
@@ -153,7 +152,6 @@ const StudentDashboard = () => {
   const enrolledCount   = dashboardData?.stats?.enrolledCourses ?? 0;
   const completedMods   = dashboardData?.completedModules ?? 0;
   const totalMods       = dashboardData?.totalModules ?? 0;
-  const overallProgress = dashboardData?.overallProgress ?? 0;
   const courses         = dashboardData?.courses ?? [];
 
   return (
@@ -265,14 +263,6 @@ const StudentDashboard = () => {
           gradient="from-text-main to-text-muted"
         />
 
-        {/* Overall Progress — real */}
-        <StatCard
-          title="Overall Progress"
-          value={`${overallProgress}%`}
-          icon={TrendingUp}
-          gradient="from-accent-primary to-accent-primary"
-        />
-
         {/* Live Status — real */}
         <motion.div
           whileHover={{ scale: 1.02 }}
@@ -295,31 +285,8 @@ const StudentDashboard = () => {
       {/* ── Main Grid ── */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-max">
 
-        {/* Progress Chart + Achievement */}
+        {/* Achievement */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            <GradientCard className="h-full" gradient="from-accent-primary to-accent-secondary">
-              <h3 className={isModern ? "text-lg font-semibold text-text-main mb-6" : "text-xl font-black text-text-main mb-6 tracking-tight"}>
-                Overall Progress
-              </h3>
-              <div className={isModern
-                ? "flex justify-center p-6 bg-surface-soft rounded-xl border border-surface-el"
-                : "flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm"}>
-                <ProgressChart
-                  progress={overallProgress}
-                  subtitle={`${completedMods} / ${totalMods} Modules`}
-                  color="var(--accent-primary)"
-                  isModern={isModern}
-                />
-              </div>
-            </GradientCard>
-          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

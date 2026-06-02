@@ -30,7 +30,6 @@ import MainLayout from './components/Student/MainLayout.jsx';
 import StudentDashboard from './components/Student/StudentDashboard';
 import CodingLabPage from './pages/Student/CodingLabPage';
 
-import ProgressTrackingPage from './pages/Student/ProgressTrackingPage';
 import RecordingsPage from './pages/Student/RecordingPage';
 import SupportPage from './pages/Student/SupportPage';
 import LiveSessionView from './pages/Student/LiveSessionView';
@@ -236,13 +235,7 @@ const App = () => {
                         </MainLayout>
                     </ProtectedRoute>
                 } />
-                <Route path='/student/progress' element={
-                    <ProtectedRoute>
-                        <MainLayout>
-                            <ProgressTrackingPage />
-                        </MainLayout>
-                    </ProtectedRoute>
-                } />
+
 
                 <Route path='/student/support' element={
                     <ProtectedRoute>

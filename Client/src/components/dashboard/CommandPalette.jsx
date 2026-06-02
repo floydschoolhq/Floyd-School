@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Search, Home, BookOpen, Code, BarChart2,
+    Search, Home, BookOpen, Code,
     PlayCircle, HeadphonesIcon, X,
     ArrowRight, Sun, Monitor, Command
 } from 'lucide-react';
@@ -12,7 +12,6 @@ const ALL_COMMANDS = [
     { id: 'classroom', label: 'Go to Classroom', icon: BookOpen, group: 'Navigate', view: 'Classroom' },
     { id: 'coding', label: 'Open Coding Lab', icon: Code, group: 'Navigate', view: 'CodingLab' },
     { id: 'recordings', label: 'Browse Recordings', icon: PlayCircle, group: 'Navigate', view: 'Recordings' },
-    { id: 'progress', label: 'View Progress Tracking', icon: BarChart2, group: 'Navigate', view: 'ProgressTracking' },
     { id: 'support', label: 'Get Support', icon: HeadphonesIcon, group: 'Navigate', view: 'Support' },
     // Themes
     { id: 'theme-modern', label: 'Switch to Modern Theme', icon: Sun, group: 'Theme', theme: 'modern' },
