@@ -49,6 +49,7 @@ const ClassroomPage = () => {
   const [submissions, setSubmissions] = useState([]);
   const [activeLiveClass, setActiveLiveClass] = useState(null);
   const [scheduledLives, setScheduledLives] = useState([]);
+  const [endedLiveClasses, setEndedLiveClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myDoubt, setMyDoubt] = useState(null);
   const [isSignaling, setIsSignaling] = useState(false);
@@ -63,7 +64,13 @@ const ClassroomPage = () => {
 
     // Content check: block marking as complete if there are no videos, notes, or assignments
     if (selectedModule && selectedModule._id.toString() === moduleId.toString()) {
-      const hasVideo = selectedModule.videoUrl && selectedModule.videoUrl.trim() !== '';
+      const hasRecording = endedLiveClasses.some(l => 
+        (l.course?._id || l.course)?.toString() === courseId.toString() &&
+        l.module?.toString() === selectedModule._id.toString() &&
+        Number(l.classNumber || 1) === Number(selectedClassNumber) &&
+        l.status === 'ended'
+      );
+      const hasVideo = (selectedModule.videoUrl && selectedModule.videoUrl.trim() !== '') || hasRecording;
       const hasNotes = selectedModule.notesUrl && selectedModule.notesUrl.trim() !== '';
       
       const moduleAssignment = assignments.find(a => {
@@ -422,14 +429,16 @@ const ClassroomPage = () => {
 
   const fetchClassroomData = async () => {
     try {
-      const [coursesRes, assignmentsRes, dashboardRes] = await Promise.all([
+      const [coursesRes, assignmentsRes, archiveRes, dashboardRes] = await Promise.all([
         api.get('/courses'),
         api.get('/assignments'),
+        api.get('/live-classes/archive').catch(() => ({ data: [] })),
         api.get('/dashboard/student').catch(() => null)
       ]);
       const loadedCourses = Array.isArray(coursesRes.data) ? coursesRes.data : coursesRes.data.data;
       setCourses(loadedCourses);
       setAssignments(Array.isArray(assignmentsRes.data) ? assignmentsRes.data : assignmentsRes.data.data);
+      setEndedLiveClasses(archiveRes?.data || []);
       setSubmissions(dashboardRes?.data?.submissions || []);
       
       // Proactively load active and scheduled lives with the fresh courses array to bypass state staleness
@@ -499,6 +508,14 @@ const ClassroomPage = () => {
       Number(activeLiveClass.classNumber || 1) === Number(selectedClassNumber)
         ? activeLiveClass
         : null
+    );
+
+    // Find ended live session for current module and class number
+    const moduleRecording = endedLiveClasses.find(l => 
+      (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString() &&
+      l.module?.toString() === selectedModule?._id?.toString() &&
+      Number(l.classNumber || 1) === Number(selectedClassNumber) &&
+      l.status === 'ended'
     );
 
     const submission = moduleAssignment ? getAssignmentSubmission(moduleAssignment._id) : null;
@@ -816,10 +833,10 @@ const ClassroomPage = () => {
                 {/* 1. Video Player or Lock Placeholder */}
                 <div>
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-[0.2em] mb-3 px-1">Unit Lecture</h3>
-                  {(selectedModule.videoUrl || activeModuleLive) ? (
+                  {(selectedModule.videoUrl || activeModuleLive || moduleRecording) ? (
                     <div className="rounded-[2rem] overflow-hidden bg-black border border-surface-el shadow-md aspect-video relative group">
                       <CustomVideoPlayer 
-                        videoUrl={selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink} 
+                        videoUrl={selectedModule.videoUrl || activeModuleLive?.videoUrl || activeModuleLive?.meetingLink || moduleRecording?.meetingLink || moduleRecording?.videoUrl} 
                         autoPlay={Boolean(activeModuleLive)} 
                         isLive={Boolean(activeModuleLive)}
                         scheduledStart={activeModuleLive?.actualStart || activeModuleLive?.startedAt || activeModuleLive?.scheduledStart}
@@ -845,7 +862,13 @@ const ClassroomPage = () => {
 
                 {/* ── Mark as Complete Button ── */}
                 {selectedModule && activeStudyCourse && (() => {
-                  const hasNoContent = !selectedModule.videoUrl && !selectedModule.notesUrl && !moduleAssignment;
+                  const hasRecording = endedLiveClasses.some(l => 
+                    (l.course?._id || l.course)?.toString() === activeStudyCourse._id?.toString() &&
+                    l.module?.toString() === selectedModule._id.toString() &&
+                    Number(l.classNumber || 1) === Number(selectedClassNumber) &&
+                    l.status === 'ended'
+                  );
+                  const hasNoContent = !selectedModule.videoUrl && !hasRecording && !selectedModule.notesUrl && !moduleAssignment;
                   const isClassCompleted = selectedModule.completedClasses 
                     ? selectedModule.completedClasses[selectedClassNumber - 1] 
                     : selectedModule.completed;
