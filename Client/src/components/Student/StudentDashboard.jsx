@@ -25,7 +25,7 @@ const Achievement3D = lazy(() => import('../dashboard/Achievement3D'));
 
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
-  const { user, setView } = usePortal();
+  const { user, setView, activeLiveClass, setActiveLiveClass } = usePortal();
   const { theme, setTheme } = useTheme();
   const isModern = theme === 'modern';
   const toast = useToast();
@@ -35,14 +35,66 @@ const StudentDashboard = () => {
   const canAccessCourses = user?.permissions?.canAccessCourses;
 
   const [dashboardData, setDashboardData] = useState(null);
-  const [liveClass, setLiveClass] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
-  const { isConnected, notifications } = useSocket();
+  const { socket, isConnected, notifications } = useSocket();
 
   useEffect(() => {
     Promise.all([fetchDashboardData(), fetchLiveStatus()]);
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleLiveClassStarted = (data) => {
+      const userGrantedCourses = user?.permissions?.grantedCourses || [];
+      const courseId = data.course?._id || data.course;
+      const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId?.toString());
+      
+      if (hasAccess) {
+        setActiveLiveClass(data);
+        toast.info('Live Class Started', `A live mentorship session is now ON AIR!`);
+      }
+    };
+
+    const handleLiveClassEnded = () => {
+      setActiveLiveClass(null);
+      toast.info('Live Class Ended', 'The live mentorship session has ended.');
+    };
+
+    const handleScheduledLiveStarted = (data) => {
+      const userGrantedCourses = user?.permissions?.grantedCourses || [];
+      const courseId = data.course?._id || data.course;
+      const hasAccess = userGrantedCourses.some(gc => (gc._id || gc).toString() === courseId?.toString());
+      
+      if (hasAccess) {
+        const normalized = {
+          ...data,
+          mentorName: data.mentorName || data.mentor?.name || 'Instructor',
+          topic: data.description || data.topic || 'Live Session',
+          startedAt: data.actualStart || data.scheduledStart || new Date()
+        };
+        setActiveLiveClass(normalized);
+        toast.info('Live Class Started', `A live scheduled session is now ON AIR!`);
+      }
+    };
+
+    const handleScheduledLiveEnded = () => {
+      setActiveLiveClass(null);
+    };
+
+    socket.on('liveClass:started', handleLiveClassStarted);
+    socket.on('liveClass:ended', handleLiveClassEnded);
+    socket.on('scheduledLive:started', handleScheduledLiveStarted);
+    socket.on('scheduledLive:ended', handleScheduledLiveEnded);
+
+    return () => {
+      socket.off('liveClass:started', handleLiveClassStarted);
+      socket.off('liveClass:ended', handleLiveClassEnded);
+      socket.off('scheduledLive:started', handleScheduledLiveStarted);
+      socket.off('scheduledLive:ended', handleScheduledLiveEnded);
+    };
+  }, [socket, user]);
 
   const fetchDashboardData = async () => {
     try {
@@ -62,7 +114,7 @@ const StudentDashboard = () => {
   const fetchLiveStatus = async () => {
     try {
       const res = await api.get('/live-classes/active');
-      if (res.data) setLiveClass(res.data);
+      if (res.data) setActiveLiveClass(res.data);
     } catch (_) {
       // No active class is fine
     }
@@ -172,7 +224,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* ── Live Class Banner (only when a class is live) ── */}
-      {liveClass && (
+      {activeLiveClass && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -182,7 +234,7 @@ const StudentDashboard = () => {
             <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
             <div>
               <p className="text-sm font-bold text-red-700">Live Class in Progress</p>
-              <p className="text-xs text-red-500">{liveClass.title || 'Session started'}</p>
+              <p className="text-xs text-red-500">{activeLiveClass.title || 'Session started'}</p>
             </div>
           </div>
           <button
@@ -224,18 +276,18 @@ const StudentDashboard = () => {
         {/* Live Status — real */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          onClick={() => liveClass && setView('Live')}
-          className={`p-5 rounded-3xl border bg-surface-soft transition-all ${liveClass ? 'border-red-200 cursor-pointer' : 'border-surface-el'}`}
+          onClick={() => activeLiveClass && setView('Live')}
+          className={`p-5 rounded-3xl border bg-surface-soft transition-all ${activeLiveClass ? 'border-red-200 cursor-pointer' : 'border-surface-el'}`}
         >
           <p className="text-[10px] font-black uppercase tracking-widest text-text-muted mb-2">Live Class</p>
           <div className="flex items-center gap-2 mb-4">
-            {liveClass
+            {activeLiveClass
               ? <><span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" /><span className="text-base font-black text-red-600">ON AIR</span></>
               : <><span className="w-2.5 h-2.5 rounded-full bg-slate-300" /><span className="text-base font-black text-text-muted">Offline</span></>
             }
           </div>
           <div className="p-3 rounded-2xl bg-surface-el w-fit">
-            <Radio className={`w-5 h-5 ${liveClass ? 'text-red-500' : 'text-text-muted'}`} />
+            <Radio className={`w-5 h-5 ${activeLiveClass ? 'text-red-500' : 'text-text-muted'}`} />
           </div>
         </motion.div>
       </div>
