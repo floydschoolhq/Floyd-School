@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import {
-  BookOpen, Clock, Home, Sparkles,
+  BookOpen, Clock, Home,
   Lock, Users, FileText, Shield, Radio, Calendar,
   CheckCircle, AlertCircle
 } from 'lucide-react';
@@ -19,8 +19,6 @@ import { useStreak } from '../../hooks/useStreak';
 import { useConfetti } from '../../hooks/useConfetti';
 import { DashboardSkeleton } from '../dashboard/SkeletonCard';
 import StreakWidget from '../dashboard/StreakWidget';
-
-const Achievement3D = lazy(() => import('../dashboard/Achievement3D'));
 
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
@@ -285,40 +283,13 @@ const StudentDashboard = () => {
       {/* ── Main Grid ── */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-max">
 
-        {/* Achievement */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="flex-1"
-          >
-            <GradientCard className="h-full overflow-hidden" gradient="from-accent-secondary to-accent-primary">
-              <div className="flex items-center gap-3 mb-4">
-                <div className={isModern ? "p-2 bg-surface-soft rounded-lg text-text-muted" : "p-2.5 bg-surface-soft border border-surface-el rounded-xl"}>
-                  <Sparkles className={isModern ? "w-4 h-4" : "w-5 h-5 text-accent-primary"} />
-                </div>
-                <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-xl font-black text-text-main tracking-tight"}>Achievement</h3>
-              </div>
-              <Suspense fallback={<div className="h-56 flex items-center justify-center"><div className="w-10 h-10 border-4 border-surface-el border-t-accent-primary rounded-full animate-spin" /></div>}>
-                <Achievement3D
-                  title={completedMods >= 6 ? 'Master' : completedMods >= 3 ? 'Rising Star' : 'Beginner'}
-                  color="var(--accent-primary)"
-                />
-              </Suspense>
-            </GradientCard>
-          </motion.div>
-        </div>
-
         {/* Enrolled Courses */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="lg:col-span-8"
+          className="lg:col-span-12"
         >
           <GradientCard className="h-full" gradient="from-text-main to-text-muted">
             <div className="flex items-center justify-between mb-6">
@@ -334,7 +305,7 @@ const StudentDashboard = () => {
             </div>
 
             {courses.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {courses.slice(0, 4).map((course) => {
                   const done = course.modules?.filter(m => m.completed).length ?? 0;
                   const total = course.modules?.length ?? 0;
