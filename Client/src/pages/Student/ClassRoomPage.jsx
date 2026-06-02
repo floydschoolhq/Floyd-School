@@ -75,7 +75,10 @@ const ClassroomPage = () => {
           (assignmentCourseId.toString() === courseId.toString());
       });
 
-      const isCompleted = selectedModule.completed;
+      const isCompleted = selectedModule.completedClasses 
+        ? selectedModule.completedClasses[selectedClassNumber - 1] 
+        : selectedModule.completed;
+
       if (!isCompleted && !hasVideo && !hasNotes && !moduleAssignment) {
         alert("Cannot mark complete: This module has no videos, study notes, or assignments yet.");
         return;
@@ -84,28 +87,61 @@ const ClassroomPage = () => {
 
     setTogglingComplete(true);
     try {
-      const res = await api.post(`/courses/${courseId}/modules/${moduleId}/toggle-complete`);
+      const res = await api.post(`/courses/${courseId}/modules/${moduleId}/toggle-complete?classNumber=${selectedClassNumber}`);
       const completedIds = res.data.completedModules.map(id => id.toString());
+      const completedClassesList = res.data.completedClasses || [];
+
       // Update courses state so header progress % re-renders immediately
       setCourses(prev => prev.map(c => {
         if (c._id.toString() !== courseId.toString()) return c;
         return {
           ...c,
-          modules: c.modules.map(m => ({
-            ...m,
-            completed: completedIds.includes(m._id.toString())
-          }))
+          modules: c.modules.map(m => {
+            const mId = m._id.toString();
+            return {
+              ...m,
+              completed: completedIds.includes(mId),
+              completedClasses: [
+                completedClassesList.includes(`${mId}-1`),
+                completedClassesList.includes(`${mId}-2`),
+                completedClassesList.includes(`${mId}-3`)
+              ]
+            };
+          })
         };
       }));
+
       // Also update activeStudyCourse so the sidebar checkmark updates
       setActiveStudyCourse(prev => {
         if (!prev || prev._id.toString() !== courseId.toString()) return prev;
         return {
           ...prev,
-          modules: prev.modules.map(m => ({
-            ...m,
-            completed: completedIds.includes(m._id.toString())
-          }))
+          modules: prev.modules.map(m => {
+            const mId = m._id.toString();
+            return {
+              ...m,
+              completed: completedIds.includes(mId),
+              completedClasses: [
+                completedClassesList.includes(`${mId}-1`),
+                completedClassesList.includes(`${mId}-2`),
+                completedClassesList.includes(`${mId}-3`)
+              ]
+            };
+          })
+        };
+      });
+
+      // Synchronize selectedModule completedClasses immediately
+      setSelectedModule(prev => {
+        if (!prev || prev._id.toString() !== moduleId.toString()) return prev;
+        return {
+          ...prev,
+          completed: completedIds.includes(moduleId.toString()),
+          completedClasses: [
+            completedClassesList.includes(`${moduleId}-1`),
+            completedClassesList.includes(`${moduleId}-2`),
+            completedClassesList.includes(`${moduleId}-3`)
+          ]
         };
       });
     } catch (err) {
@@ -715,7 +751,7 @@ const ClassroomPage = () => {
                                   <span className="text-red-500 text-[8px] font-black uppercase tracking-wider">Live</span>
                                 </div>
                               ) : (
-                                mod.completed && cls.num === 3 && (
+                                ((mod.completedClasses && mod.completedClasses[cls.num - 1]) || (mod.completed && cls.num === 3)) && (
                                   <CheckCircle size={10} className="text-emerald-400 shrink-0" />
                                 )
                               )}
@@ -810,28 +846,31 @@ const ClassroomPage = () => {
                 {/* ── Mark as Complete Button ── */}
                 {selectedModule && activeStudyCourse && (() => {
                   const hasNoContent = !selectedModule.videoUrl && !selectedModule.notesUrl && !moduleAssignment;
+                  const isClassCompleted = selectedModule.completedClasses 
+                    ? selectedModule.completedClasses[selectedClassNumber - 1] 
+                    : selectedModule.completed;
                   return (
                     <div className="flex items-center justify-between px-1">
-                      <p className={`text-[10px] font-bold uppercase tracking-widest ${hasNoContent && !selectedModule.completed ? 'text-rose-500' : 'text-text-muted'}`}>
-                        {hasNoContent && !selectedModule.completed
+                      <p className={`text-[10px] font-bold uppercase tracking-widest ${hasNoContent && !isClassCompleted ? 'text-rose-500' : 'text-text-muted'}`}>
+                        {hasNoContent && !isClassCompleted
                           ? '⚠ Cannot mark as complete: No videos or materials available'
-                          : selectedModule.completed
-                            ? '✓ This module is marked complete'
-                            : 'Mark this module as done to track your progress'}
+                          : isClassCompleted
+                            ? '✓ This class is marked complete'
+                            : 'Mark this class as done to track your progress'}
                       </p>
                       <button
                         onClick={() => handleToggleModuleComplete(activeStudyCourse._id, selectedModule._id)}
-                        disabled={togglingComplete || (hasNoContent && !selectedModule.completed)}
+                        disabled={togglingComplete || (hasNoContent && !isClassCompleted)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
-                          hasNoContent && !selectedModule.completed
+                          hasNoContent && !isClassCompleted
                             ? 'bg-slate-100 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-800/60 cursor-not-allowed'
-                            : selectedModule.completed
+                            : isClassCompleted
                               ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 cursor-pointer'
                               : 'bg-surface-soft border border-surface-el text-text-muted hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-600 cursor-pointer'
                         }`}
                       >
                         <CheckCircle size={13} />
-                        {togglingComplete ? 'Saving…' : selectedModule.completed ? 'Completed ✓' : 'Mark Complete'}
+                        {togglingComplete ? 'Saving…' : isClassCompleted ? 'Completed ✓' : 'Mark Complete'}
                       </button>
                     </div>
                   );

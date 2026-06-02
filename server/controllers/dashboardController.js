@@ -44,32 +44,57 @@ exports.getStudentDashboard = async (req, res) => {
         const UserProgress = require('../models/UserProgress');
         const progresses = await UserProgress.find({ student: studentId, course: { $in: rawCourses.map(c => c._id) } });
         const progressMap = new Map();
+        const classProgressMap = new Map();
         progresses.forEach(p => {
             if (p && p.course) {
                 progressMap.set(p.course.toString(), (p.completedModules || []).map(m => m.toString()));
+                classProgressMap.set(p.course.toString(), (p.completedClasses || []));
             }
         });
 
         const courses = rawCourses.map(c => {
             const courseObj = c.toObject();
             const completedList = progressMap.get(courseObj._id.toString()) || [];
+            const completedClassesList = classProgressMap.get(courseObj._id.toString()) || [];
+
             if (courseObj.modules && Array.isArray(courseObj.modules)) {
-                courseObj.modules = courseObj.modules.map(m => ({
-                    ...m,
-                    completed: completedList.includes(m._id.toString())
-                }));
+                courseObj.modules = courseObj.modules.map(m => {
+                    const moduleIdStr = m._id.toString();
+                    
+                    // A module/week is fully completed if all 3 classes are completed, OR if it's in the legacy list
+                    const class1Completed = completedClassesList.includes(`${moduleIdStr}-1`);
+                    const class2Completed = completedClassesList.includes(`${moduleIdStr}-2`);
+                    const class3Completed = completedClassesList.includes(`${moduleIdStr}-3`);
+                    
+                    const isLegacyCompleted = completedList.includes(moduleIdStr);
+                    const isCompleted = isLegacyCompleted || (class1Completed && class2Completed && class3Completed);
+
+                    return {
+                        ...m,
+                        completed: isCompleted,
+                        completedClasses: [
+                            class1Completed || isLegacyCompleted,
+                            class2Completed || isLegacyCompleted,
+                            class3Completed || isLegacyCompleted
+                        ]
+                    };
+                });
             }
             return courseObj;
         });
 
-        // Step 2: Calculate overall progress from courses
-        let totalModules = 0;
-        let completedModules = 0;
+        // Step 2: Calculate overall progress from courses (3 classes per week/module)
+        let totalModules = 0; // Total classes
+        let completedModules = 0; // Completed classes
         if (courses && Array.isArray(courses)) {
             courses.forEach(course => {
                 if (course.modules && Array.isArray(course.modules)) {
-                    totalModules += course.modules.length;
-                    completedModules += course.modules.filter(m => m && m.completed).length;
+                    totalModules += course.modules.length * 3;
+                    course.modules.forEach(m => {
+                        if (m && m.completedClasses) {
+                            completedModules += m.completedClasses.filter(Boolean).length;
+                        }
+                    });
                 }
             });
         }

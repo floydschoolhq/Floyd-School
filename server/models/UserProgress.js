@@ -13,6 +13,9 @@ const userProgressSchema = new mongoose.Schema({
     },
     completedModules: [{
         type: mongoose.Schema.Types.ObjectId
+    }],
+    completedClasses: [{
+        type: String // Format: "moduleId-classNumber"
     }]
 }, {
     timestamps: true

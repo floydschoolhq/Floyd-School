@@ -40,20 +40,40 @@ exports.getCourses = async (req, res) => {
             const UserProgress = require('../models/UserProgress');
             const progresses = await UserProgress.find({ student: _id, course: { $in: grantedIds } });
             const progressMap = new Map();
+            const classProgressMap = new Map();
             progresses.forEach(p => {
                 if (p && p.course) {
                     progressMap.set(p.course.toString(), (p.completedModules || []).map(m => m.toString()));
+                    classProgressMap.set(p.course.toString(), (p.completedClasses || []));
                 }
             });
 
             courses = rawCourses.map(c => {
                 const courseObj = c.toObject();
                 const completedList = progressMap.get(courseObj._id.toString()) || [];
+                const completedClassesList = classProgressMap.get(courseObj._id.toString()) || [];
+
                 if (courseObj.modules && Array.isArray(courseObj.modules)) {
-                    courseObj.modules = courseObj.modules.map(m => ({
-                        ...m,
-                        completed: completedList.includes(m._id.toString())
-                    }));
+                    courseObj.modules = courseObj.modules.map(m => {
+                        const moduleIdStr = m._id.toString();
+                        
+                        const class1Completed = completedClassesList.includes(`${moduleIdStr}-1`);
+                        const class2Completed = completedClassesList.includes(`${moduleIdStr}-2`);
+                        const class3Completed = completedClassesList.includes(`${moduleIdStr}-3`);
+                        
+                        const isLegacyCompleted = completedList.includes(moduleIdStr);
+                        const isCompleted = isLegacyCompleted || (class1Completed && class2Completed && class3Completed);
+
+                        return {
+                            ...m,
+                            completed: isCompleted,
+                            completedClasses: [
+                                class1Completed || isLegacyCompleted,
+                                class2Completed || isLegacyCompleted,
+                                class3Completed || isLegacyCompleted
+                            ]
+                        };
+                    });
                 }
                 return courseObj;
             });
@@ -109,11 +129,29 @@ exports.getCourseById = async (req, res) => {
             const UserProgress = require('../models/UserProgress');
             const progress = await UserProgress.findOne({ student: req.user._id, course: course._id });
             const completedList = progress ? (progress.completedModules || []).map(m => m.toString()) : [];
+            const completedClassesList = progress ? (progress.completedClasses || []) : [];
+
             if (courseObj.modules && Array.isArray(courseObj.modules)) {
-                courseObj.modules = courseObj.modules.map(m => ({
-                    ...m,
-                    completed: completedList.includes(m._id.toString())
-                }));
+                courseObj.modules = courseObj.modules.map(m => {
+                    const moduleIdStr = m._id.toString();
+                    
+                    const class1Completed = completedClassesList.includes(`${moduleIdStr}-1`);
+                    const class2Completed = completedClassesList.includes(`${moduleIdStr}-2`);
+                    const class3Completed = completedClassesList.includes(`${moduleIdStr}-3`);
+                    
+                    const isLegacyCompleted = completedList.includes(moduleIdStr);
+                    const isCompleted = isLegacyCompleted || (class1Completed && class2Completed && class3Completed);
+
+                    return {
+                        ...m,
+                        completed: isCompleted,
+                        completedClasses: [
+                            class1Completed || isLegacyCompleted,
+                            class2Completed || isLegacyCompleted,
+                            class3Completed || isLegacyCompleted
+                        ]
+                    };
+                });
             }
         }
 
@@ -497,38 +535,76 @@ exports.toggleModuleComplete = async (req, res) => {
             progress = new UserProgress({
                 student: studentId,
                 course: courseId,
-                completedModules: []
+                completedModules: [],
+                completedClasses: []
             });
         }
 
-        const index = progress.completedModules.indexOf(moduleId);
-        if (index > -1) {
-            // Toggle off: remove completed module
-            progress.completedModules.splice(index, 1);
-        } else {
-            // Toggle on: check if module has any video, study notes, or assignments
-            const Assignment = require('../models/Assignment');
-            const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
-            const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
-            
-            const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
-            const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
-            const hasAssignment = !!linkedAssignment;
+        const classNumber = req.query.classNumber;
 
-            if (!hasVideo && !hasNotes && !hasAssignment) {
-                return res.status(400).json({ 
-                    message: 'Cannot mark as complete: This module has no videos, study notes, or assignments yet.' 
-                });
+        if (classNumber) {
+            const classKey = `${moduleId}-${classNumber}`;
+            if (!progress.completedClasses) {
+                progress.completedClasses = [];
             }
+            const index = progress.completedClasses.indexOf(classKey);
 
-            progress.completedModules.push(moduleId);
+            if (index > -1) {
+                // Toggle off
+                progress.completedClasses.splice(index, 1);
+            } else {
+                // Toggle on: check if module has any video, study notes, or assignments
+                const Assignment = require('../models/Assignment');
+                const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
+                const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
+
+                const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
+                const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
+                const hasAssignment = !!linkedAssignment;
+
+                if (!hasVideo && !hasNotes && !hasAssignment) {
+                    return res.status(400).json({
+                        message: 'Cannot mark as complete: This module has no videos, study notes, or assignments yet.'
+                    });
+                }
+
+                progress.completedClasses.push(classKey);
+            }
+        } else {
+            // Backward-compatible module-level complete toggle
+            if (!progress.completedModules) {
+                progress.completedModules = [];
+            }
+            const index = progress.completedModules.indexOf(moduleId);
+            if (index > -1) {
+                // Toggle off: remove completed module
+                progress.completedModules.splice(index, 1);
+            } else {
+                // Toggle on: check if module has any video, study notes, or assignments
+                const Assignment = require('../models/Assignment');
+                const linkedAssignment = await Assignment.findOne({ course: courseId, module: moduleId });
+                const targetModule = course.modules.find(m => m._id.toString() === moduleId.toString());
+                
+                const hasVideo = targetModule && targetModule.videoUrl && targetModule.videoUrl.trim() !== '';
+                const hasNotes = targetModule && targetModule.notesUrl && targetModule.notesUrl.trim() !== '';
+                const hasAssignment = !!linkedAssignment;
+
+                if (!hasVideo && !hasNotes && !hasAssignment) {
+                    return res.status(400).json({ 
+                        message: 'Cannot mark as complete: This module has no videos, study notes, or assignments yet.' 
+                    });
+                }
+
+                progress.completedModules.push(moduleId);
+            }
         }
 
         await progress.save();
 
         res.json({
             message: 'Module completion state synchronized',
-            completedModules: progress.completedModules
+            completedModules: progress.completedModules || [],
+            completedClasses: progress.completedClasses || []
         });
     } catch (error) {
         res.status(500).json({
