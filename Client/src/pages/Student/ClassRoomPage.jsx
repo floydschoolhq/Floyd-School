@@ -55,6 +55,43 @@ const ClassroomPage = () => {
   const [requestingAccess, setRequestingAccess] = useState(false);
   const [activeScheduledVideo, setActiveScheduledVideo] = useState(null);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [togglingComplete, setTogglingComplete] = useState(false);
+
+  // Toggle a module complete / incomplete — updates server + local state
+  const handleToggleModuleComplete = async (courseId, moduleId) => {
+    if (togglingComplete) return;
+    setTogglingComplete(true);
+    try {
+      const res = await api.post(`/courses/${courseId}/modules/${moduleId}/toggle-complete`);
+      const completedIds = res.data.completedModules.map(id => id.toString());
+      // Update courses state so header progress % re-renders immediately
+      setCourses(prev => prev.map(c => {
+        if (c._id.toString() !== courseId.toString()) return c;
+        return {
+          ...c,
+          modules: c.modules.map(m => ({
+            ...m,
+            completed: completedIds.includes(m._id.toString())
+          }))
+        };
+      }));
+      // Also update activeStudyCourse so the sidebar checkmark updates
+      setActiveStudyCourse(prev => {
+        if (!prev || prev._id.toString() !== courseId.toString()) return prev;
+        return {
+          ...prev,
+          modules: prev.modules.map(m => ({
+            ...m,
+            completed: completedIds.includes(m._id.toString())
+          }))
+        };
+      });
+    } catch (err) {
+      console.error('Failed to toggle module complete:', err);
+    } finally {
+      setTogglingComplete(false);
+    }
+  };
 
   const handleRequestAccess = async () => {
     setRequestingAccess(true);
@@ -748,7 +785,26 @@ const ClassroomPage = () => {
                   )}
                 </div>
 
-                {/* 2. Study Material and Homework Columns Row */}
+                {/* ── Mark as Complete Button ── */}
+                {selectedModule && activeStudyCourse && (
+                  <div className="flex items-center justify-between px-1">
+                    <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
+                      {selectedModule.completed ? '✓ This module is marked complete' : 'Mark this module as done to track your progress'}
+                    </p>
+                    <button
+                      onClick={() => handleToggleModuleComplete(activeStudyCourse._id, selectedModule._id)}
+                      disabled={togglingComplete}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm cursor-pointer disabled:opacity-50 ${
+                        selectedModule.completed
+                          ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500'
+                          : 'bg-surface-soft border border-surface-el text-text-muted hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-600'
+                      }`}
+                    >
+                      <CheckCircle size={13} />
+                      {togglingComplete ? 'Saving…' : selectedModule.completed ? 'Completed ✓' : 'Mark Complete'}
+                    </button>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Study Material / Notes */}
                   <div className="space-y-3">

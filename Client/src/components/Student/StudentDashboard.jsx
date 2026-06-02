@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Award, TrendingUp, Calendar, FileText, Lock, Users, FileCheck, Shield, Home, Sparkles } from 'lucide-react';
+import {
+  BookOpen, Clock, TrendingUp, Home, Sparkles,
+  Lock, Users, FileText, Shield, Radio, Calendar,
+  CheckCircle, AlertCircle
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PortalContext } from '../../contexts/PortalProvider';
 import { GradientCard, StatCard } from '../dashboard/GradientCard';
@@ -9,7 +13,6 @@ import { ProgressChart } from '../dashboard/ProgressChart';
 import { LogoutButton } from '../dashboard/LogoutButton';
 import { useSocket } from '../../contexts/SocketProvider';
 import api from '../../api/axios';
-
 import DynamicGreeting from '../dashboard/DynamicGreeting';
 import { useTheme } from '../../contexts/ThemeProvider';
 import { useToast } from '../../contexts/ToastProvider';
@@ -22,41 +25,29 @@ const Achievement3D = lazy(() => import('../dashboard/Achievement3D'));
 
 const StudentDashboard = () => {
   const usePortal = () => useContext(PortalContext);
-  const { user, updateUser, setView } = usePortal();
+  const { user, setView } = usePortal();
   const { theme, setTheme } = useTheme();
   const isModern = theme === 'modern';
   const toast = useToast();
   const { streak } = useStreak();
   const { celebrateSide } = useConfetti();
 
-  const isClassroomUser = user?.isClassroomAccess === true;
-  // Classroom users still need admin approval for courses
   const canAccessCourses = user?.permissions?.canAccessCourses;
 
   const [dashboardData, setDashboardData] = useState(null);
+  const [liveClass, setLiveClass] = useState(null);
   const [loading, setLoading] = useState(true);
   const [requestingAccess, setRequestingAccess] = useState(false);
   const { isConnected, notifications } = useSocket();
 
-  const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
-
   useEffect(() => {
-    fetchDashboardData();
-
-    // Show warning if still loading after 7s
-    const timer = setTimeout(() => {
-      if (loading) setShowTimeoutWarning(true);
-    }, 7000);
-
-    return () => clearTimeout(timer);
+    Promise.all([fetchDashboardData(), fetchLiveStatus()]);
   }, []);
 
   const fetchDashboardData = async () => {
     try {
       const response = await api.get('/dashboard/student');
       setDashboardData(response.data);
-
-      // Feature: Celebrate achievement on load if they have completed more than 5 assignments
       if (response.data?.stats?.completedAssignments > 5) {
         setTimeout(() => celebrateSide(), 1000);
       }
@@ -65,6 +56,15 @@ const StudentDashboard = () => {
       toast.error('Connection Error', 'Failed to synchronize dashboard metrics.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchLiveStatus = async () => {
+    try {
+      const res = await api.get('/live-classes/active');
+      if (res.data) setLiveClass(res.data);
+    } catch (_) {
+      // No active class is fine
     }
   };
 
@@ -77,24 +77,19 @@ const StudentDashboard = () => {
       });
       toast.success('Request Transmitted', 'An administrator will review your clearance shortly.');
     } catch (error) {
-      console.error('Failed to request access:', error);
       toast.error('Submission Failed', error.response?.data?.message || 'Failed to transmit request.');
     } finally {
       setRequestingAccess(false);
     }
   };
 
-  if (loading) {
-    return <DashboardSkeleton />;
-  }
+  if (loading) return <DashboardSkeleton />;
 
-  // Safety check: If user is not loaded, redirect or show error
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-surface-base transition-colors duration-500">
+      <div className="flex items-center justify-center min-h-screen bg-surface-base">
         <div className="text-center">
-          <h2 className="text-2xl font-black text-text-main mb-4 tracking-tight">Authentication Required</h2>
-          <p className="text-text-muted mb-6">Please log in to access your dashboard.</p>
+          <h2 className="text-2xl font-black text-text-main mb-4">Authentication Required</h2>
           <a href="/student/login" className="px-6 py-3 bg-accent-primary text-white rounded-xl font-bold shadow-lg hover:bg-accent-secondary transition-all">
             Go to Login
           </a>
@@ -103,13 +98,19 @@ const StudentDashboard = () => {
     );
   }
 
+  const enrolledCount   = dashboardData?.stats?.enrolledCourses ?? 0;
+  const completedMods   = dashboardData?.completedModules ?? 0;
+  const totalMods       = dashboardData?.totalModules ?? 0;
+  const overallProgress = dashboardData?.overallProgress ?? 0;
+  const courses         = dashboardData?.courses ?? [];
+
   return (
     <div className="min-h-screen bg-surface-base p-4 sm:p-6 md:p-8 relative overflow-hidden transition-colors duration-500">
-      {/* Background Accents */}
+      {/* Background accents */}
       {!isModern && (
         <>
-          <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-accent-secondary/5 rounded-full blur-[120px] pointer-events-none" />
         </>
       )}
 
@@ -121,15 +122,18 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className={isModern ? "text-2xl sm:text-3xl font-bold text-text-main mt-1" : "text-3xl sm:text-4xl md:text-5xl font-black text-text-main tracking-tighter -mt-1"}
+            className={isModern
+              ? "text-2xl sm:text-3xl font-bold text-text-main mt-1"
+              : "text-3xl sm:text-4xl md:text-5xl font-black text-text-main tracking-tighter -mt-1"}
           >
-            {isModern ? "Dashboard" : <>Learning <span className="text-accent-primary">Control Center</span></>}
+            {isModern ? 'Dashboard' : <><span className="text-accent-primary">Learning</span> Dashboard</>}
           </motion.h1>
         </div>
+
         <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full md:w-auto">
           <StreakWidget />
 
-          {/* Theme Switcher Widget */}
+          {/* Theme switcher */}
           <div className="flex items-center gap-2 bg-surface-soft p-1 rounded-2xl border border-surface-el shadow-sm">
             {['modern', 'cyber'].map((t) => (
               <button
@@ -137,8 +141,7 @@ const StudentDashboard = () => {
                 onClick={() => setTheme(t)}
                 className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${theme === t
                   ? 'bg-accent-primary text-white shadow-lg shadow-accent-primary/20 scale-105'
-                  : 'text-text-muted hover:bg-surface-el hover:text-text-main'
-                  }`}
+                  : 'text-text-muted hover:bg-surface-el hover:text-text-main'}`}
               >
                 {t}
               </button>
@@ -155,6 +158,7 @@ const StudentDashboard = () => {
               <span className="text-[13px] font-black uppercase tracking-widest text-surface-base">Live</span>
             </motion.div>
           )}
+
           <NotificationPanel notifications={notifications} />
           <Link
             to="/"
@@ -167,40 +171,81 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 md:mb-12">
+      {/* ── Live Class Banner (only when a class is live) ── */}
+      {liveClass && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-10 mb-6 p-4 rounded-2xl border border-red-200 bg-red-50 flex items-center justify-between gap-4"
+        >
+          <div className="flex items-center gap-3">
+            <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
+            <div>
+              <p className="text-sm font-bold text-red-700">Live Class in Progress</p>
+              <p className="text-xs text-red-500">{liveClass.title || 'Session started'}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setView('Live')}
+            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
+          >
+            Join Now →
+          </button>
+        </motion.div>
+      )}
+
+      {/* ── Stats Row ── */}
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 md:mb-12">
+
+        {/* Enrolled Courses — real */}
         <StatCard
-          title="Active Modules"
-          value={dashboardData?.stats?.enrolledCourses || 0}
+          title="Enrolled Courses"
+          value={enrolledCount}
           icon={BookOpen}
           gradient="from-accent-primary to-accent-primary"
         />
+
+        {/* Modules Completed — real */}
         <StatCard
-          title="Pending Deliverables"
-          value={dashboardData?.stats?.pendingAssignments || 0}
-          icon={Clock}
+          title="Modules Completed"
+          value={`${completedMods} / ${totalMods}`}
+          icon={CheckCircle}
           gradient="from-text-main to-text-muted"
         />
+
+        {/* Overall Progress — real */}
         <StatCard
-          title="Milestones Reached"
-          value={dashboardData?.stats?.completedAssignments || 0}
-          icon={Award}
+          title="Overall Progress"
+          value={`${overallProgress}%`}
+          icon={TrendingUp}
           gradient="from-accent-primary to-accent-primary"
         />
-        <StatCard
-          title="Capability Level"
-          value={`${dashboardData?.overallProgress || 0}%`}
-          icon={TrendingUp}
-          gradient="from-text-main to-text-muted"
-        />
+
+        {/* Live Status — real */}
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          onClick={() => liveClass && setView('Live')}
+          className={`p-5 rounded-3xl border bg-surface-soft transition-all ${liveClass ? 'border-red-200 cursor-pointer' : 'border-surface-el'}`}
+        >
+          <p className="text-[10px] font-black uppercase tracking-widest text-text-muted mb-2">Live Class</p>
+          <div className="flex items-center gap-2 mb-4">
+            {liveClass
+              ? <><span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" /><span className="text-base font-black text-red-600">ON AIR</span></>
+              : <><span className="w-2.5 h-2.5 rounded-full bg-slate-300" /><span className="text-base font-black text-text-muted">Offline</span></>
+            }
+          </div>
+          <div className="p-3 rounded-2xl bg-surface-el w-fit">
+            <Radio className={`w-5 h-5 ${liveClass ? 'text-red-500' : 'text-text-muted'}`} />
+          </div>
+        </motion.div>
       </div>
 
-      {/* Main Content Bento Grid */}
+      {/* ── Main Grid ── */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 auto-rows-max">
 
-        {/* Mastery Analysis + 3D Badge Column */}
+        {/* Progress Chart + Achievement */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-          {/* Course Progress - Bento Item 1 */}
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -208,13 +253,15 @@ const StudentDashboard = () => {
             className="flex-1"
           >
             <GradientCard className="h-full" gradient="from-accent-primary to-accent-secondary">
-              <h3 className={isModern ? "text-lg font-semibold text-text-main mb-6" : "text-xl font-black text-text-main mb-6 tracking-tight transition-colors duration-500"}>
-                {isModern ? "Overall Progress" : "Mastery Analysis"}
+              <h3 className={isModern ? "text-lg font-semibold text-text-main mb-6" : "text-xl font-black text-text-main mb-6 tracking-tight"}>
+                Overall Progress
               </h3>
-              <div className={isModern ? "flex justify-center p-6 bg-surface-soft rounded-xl border border-surface-el transition-colors duration-500" : "flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm transition-colors duration-500"}>
+              <div className={isModern
+                ? "flex justify-center p-6 bg-surface-soft rounded-xl border border-surface-el"
+                : "flex justify-center p-6 bg-surface-soft/50 rounded-[2rem] border border-surface-el shadow-inner backdrop-blur-sm"}>
                 <ProgressChart
-                  progress={dashboardData?.overallProgress || 0}
-                  subtitle={`${dashboardData?.completedModules || 0} / ${dashboardData?.totalModules || 0} Units`}
+                  progress={overallProgress}
+                  subtitle={`${completedMods} / ${totalMods} Modules`}
                   color="var(--accent-primary)"
                   isModern={isModern}
                 />
@@ -222,7 +269,6 @@ const StudentDashboard = () => {
             </GradientCard>
           </motion.div>
 
-          {/* 3D Achievement Badge - Bento Item 1b */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -235,15 +281,11 @@ const StudentDashboard = () => {
                 <div className={isModern ? "p-2 bg-surface-soft rounded-lg text-text-muted" : "p-2.5 bg-surface-soft border border-surface-el rounded-xl"}>
                   <Sparkles className={isModern ? "w-4 h-4" : "w-5 h-5 text-accent-primary"} />
                 </div>
-                <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-xl font-black text-text-main tracking-tight transition-colors duration-500"}>Achievement</h3>
+                <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-xl font-black text-text-main tracking-tight"}>Achievement</h3>
               </div>
-              <Suspense fallback={
-                <div className="h-56 flex items-center justify-center">
-                  <div className="w-10 h-10 border-4 border-surface-el border-t-accent-primary rounded-full animate-spin" />
-                </div>
-              }>
+              <Suspense fallback={<div className="h-56 flex items-center justify-center"><div className="w-10 h-10 border-4 border-surface-el border-t-accent-primary rounded-full animate-spin" /></div>}>
                 <Achievement3D
-                  title={dashboardData?.stats?.completedAssignments > 5 ? "Master" : "Rising Star"}
+                  title={completedMods >= 6 ? 'Master' : completedMods >= 3 ? 'Rising Star' : 'Beginner'}
                   color="var(--accent-primary)"
                 />
               </Suspense>
@@ -251,7 +293,7 @@ const StudentDashboard = () => {
           </motion.div>
         </div>
 
-        {/* Latest Assignments - Bento Item 2 */}
+        {/* Enrolled Courses */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -260,50 +302,62 @@ const StudentDashboard = () => {
           className="lg:col-span-8"
         >
           <GradientCard className="h-full" gradient="from-text-main to-text-muted">
-            <div className={isModern ? "flex items-center justify-between mb-6" : "flex items-center justify-between mb-10"}>
-              <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-2xl font-black text-text-main tracking-tight transition-colors duration-500"}>
-                 {isModern ? "Recent Assignments" : "Mission Objectives"}
+            <div className="flex items-center justify-between mb-6">
+              <h3 className={isModern ? "text-lg font-semibold text-text-main" : "text-2xl font-black text-text-main tracking-tight"}>
+                My Courses
               </h3>
-              <div className={isModern ? "hidden" : "p-4 bg-surface-soft border border-surface-el rounded-2xl transition-colors duration-500"}>
-                <Calendar className="w-6 h-6 text-text-main" />
-              </div>
+              <button
+                onClick={() => setView('Schedule')}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-soft border border-surface-el text-text-muted rounded-xl text-[11px] font-bold uppercase tracking-wider hover:border-accent-primary/40 transition-all cursor-pointer"
+              >
+                <Calendar className="w-3.5 h-3.5" /> Schedule
+              </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {dashboardData?.assignments && dashboardData.assignments.length > 0 ? (
-                dashboardData.assignments.slice(0, 4).map((assignment, idx) => (
-                  <motion.div
-                    key={assignment._id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + (idx * 0.1) }}
-                    className={isModern ? "p-4 sm:p-5 bg-surface-base border border-surface-el shadow-sm rounded-xl hover:border-accent-primary/20 transition-all duration-300 flex flex-col justify-between" : "p-6 bg-surface-base border border-surface-el rounded-[2rem] hover:border-accent-primary/50 transition-all duration-300 shadow-sm flex flex-col justify-between"}
-                  >
-                    <div>
-                      <h4 className={isModern ? "text-base font-semibold text-text-main mb-1 line-clamp-1" : "text-lg font-black text-text-main mb-1 tracking-tight line-clamp-1"}>{assignment.title}</h4>
-                      <p className={isModern ? "text-xs text-text-muted mb-4" : "text-[11px] font-black text-text-muted uppercase tracking-widest mb-4"}>{assignment.course?.title}</p>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <div className={isModern ? "flex items-center gap-2 text-xs text-text-muted" : "flex items-center gap-2 text-[12px] font-black text-text-muted uppercase tracking-widest"}>
-                        <Clock className={isModern ? "w-3 h-3 text-text-muted" : "w-3.5 h-3.5 text-accent-primary"} />
-                        {new Date(assignment.dueDate).toLocaleDateString()}
+
+            {courses.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {courses.slice(0, 4).map((course) => {
+                  const done = course.modules?.filter(m => m.completed).length ?? 0;
+                  const total = course.modules?.length ?? 0;
+                  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+                  return (
+                    <motion.div
+                      key={course._id}
+                      whileHover={{ scale: 1.01 }}
+                      className="p-4 bg-surface-base border border-surface-el rounded-2xl hover:border-accent-primary/30 transition-all"
+                    >
+                      <h4 className="text-sm font-bold text-text-main mb-1 line-clamp-1">{course.title}</h4>
+                      <p className="text-[11px] text-text-muted mb-3 flex items-center gap-1">
+                        <Users className="w-3 h-3" /> {course.instructor?.name || 'Instructor'}
+                      </p>
+                      <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
+                        <span>Progress</span>
+                        <span className="text-accent-primary">{pct}%</span>
                       </div>
-                      <button className={isModern ? "px-4 py-2 bg-text-main text-surface-base text-xs font-semibold rounded-lg hover:bg-text-muted transition-colors" : "px-5 py-2.5 bg-text-main text-surface-base text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-accent-primary transition-all shadow-lg active:scale-95"}>
-                        {isModern ? "View" : "Initiate"}
-                      </button>
-                    </div>
-                  </motion.div>
-                ))
-              ) : (
-                <div className="col-span-full text-center py-16 bg-surface-soft rounded-[2.5rem] border border-dashed border-surface-el">
-                  <FileText className="w-16 h-16 mx-auto mb-4 text-surface-el" />
-                  <p className="text-sm font-black uppercase tracking-[0.3em] text-text-muted">Directives Fulfilled</p>
-                </div>
-              )}
-            </div>
+                      <div className="w-full bg-surface-el rounded-full h-2 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${pct}%` }}
+                          transition={{ duration: 1.5, ease: 'circOut' }}
+                          className="bg-gradient-to-r from-accent-primary to-accent-secondary h-full rounded-full"
+                        />
+                      </div>
+                      <p className="text-[10px] text-text-muted mt-2">{done} / {total} modules</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-16 bg-surface-soft rounded-2xl border border-dashed border-surface-el">
+                <BookOpen className="w-12 h-12 mx-auto mb-3 text-surface-el" />
+                <p className="text-sm font-semibold text-text-muted mb-1">No courses enrolled yet</p>
+                <p className="text-xs text-text-muted">Your mentor will add you once setup is complete.</p>
+              </div>
+            )}
           </GradientCard>
         </motion.div>
 
-        {/* Enrolled Courses - Bento Item 3 (Full Width Below) */}
+        {/* Enrolled Courses full bleed — with lock overlay */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -312,83 +366,80 @@ const StudentDashboard = () => {
           className="lg:col-span-12 mt-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
-            <h3 className={isModern ? "text-xl sm:text-2xl font-bold text-text-main" : "text-2xl sm:text-3xl font-black text-text-main tracking-tighter transition-colors duration-500"}>
-              {isModern ? "Enrolled Courses" : "Learning Expeditions"}
+            <h3 className={isModern
+              ? "text-xl sm:text-2xl font-bold text-text-main"
+              : "text-2xl sm:text-3xl font-black text-text-main tracking-tighter"}>
+              Course Library
             </h3>
             {!canAccessCourses && (
-              <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el transition-colors duration-500 w-fit">
-                <Lock size={12} className="text-accent-primary" /> Locked Segment
+              <span className="px-4 py-1.5 bg-surface-soft text-text-muted rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-surface-el w-fit">
+                <Lock size={12} className="text-accent-primary" /> Access Pending
               </span>
             )}
-            <div className="h-px flex-1 bg-surface-el transition-colors duration-500 hidden sm:block" />
+            <div className="h-px flex-1 bg-surface-el hidden sm:block" />
           </div>
 
           <div className="relative">
-            {/* Lock Overlay */}
             {!canAccessCourses && (
-              <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[2rem] sm:rounded-[3.5rem] flex flex-col items-center justify-center text-center p-6 sm:p-12 border border-surface-el transition-all duration-500">
+              <div className="absolute inset-0 z-50 bg-surface-base/40 backdrop-blur-xl rounded-[2rem] flex flex-col items-center justify-center text-center p-8 border border-surface-el">
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ repeat: Infinity, duration: 3 }}
-                  className="w-16 h-16 sm:w-24 sm:h-24 bg-text-main rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mb-6 sm:mb-8 shadow-2xl"
+                  className="w-16 h-16 bg-text-main rounded-[1.5rem] flex items-center justify-center mb-6 shadow-2xl"
                 >
-                  <Lock className="w-6 h-6 sm:w-10 sm:h-10 text-surface-base" />
+                  <Lock className="w-6 h-6 text-surface-base" />
                 </motion.div>
-                <h4 className="text-xl sm:text-3xl font-black text-text-main mb-2 sm:mb-3">Access Protocol Required</h4>
-                <p className="text-text-muted max-w-sm sm:max-w-md font-medium mb-6 sm:mb-10 text-sm sm:text-lg">
-                  This tactical segment is restricted. Initialize a request for administrative clearance to unlock the curriculum.
+                <h4 className="text-xl font-black text-text-main mb-2">Access Required</h4>
+                <p className="text-text-muted max-w-sm font-medium mb-8 text-sm">
+                  Your course access is pending admin approval. Click below to request access.
                 </p>
                 <button
                   onClick={handleRequestAccess}
                   disabled={requestingAccess}
-                  className="px-6 py-4 sm:px-10 sm:py-5 bg-accent-primary text-white text-[11px] sm:text-[13px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] rounded-2xl hover:bg-accent-secondary transition-all shadow-2xl shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
+                  className="px-8 py-4 bg-accent-primary text-white text-[12px] font-black uppercase tracking-widest rounded-2xl hover:bg-accent-secondary transition-all shadow-xl disabled:opacity-50 cursor-pointer flex items-center gap-3"
                 >
-                  {requestingAccess ? 'Transmitting...' : (
-                    <span className="flex items-center gap-3">
-                      Request Clearance <Shield className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                    </span>
-                  )}
+                  {requestingAccess ? 'Sending…' : <><Shield className="w-4 h-4" /> Request Access</>}
                 </button>
               </div>
             )}
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 ${!canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : ''}`}>
-              {dashboardData?.courses && dashboardData.courses.length > 0 ? (
-                dashboardData.courses.map((course, idx) => (
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${!canAccessCourses ? 'blur-md pointer-events-none select-none opacity-40' : ''}`}>
+              {courses.length > 0 ? (
+                courses.map((course) => (
                   <GradientCard
                     key={course._id}
                     gradient="from-accent-primary to-accent-secondary"
-                    className="hover:scale-[1.03] transition-all duration-500 cursor-pointer"
+                    className="hover:scale-[1.02] transition-all duration-300 cursor-pointer"
                   >
-                    <div className="flex items-start justify-between mb-8">
-                      <div className="flex-1 pr-6">
-                        <h4 className={isModern ? "text-xl font-semibold text-text-main mb-3" : "text-2xl font-black text-text-main mb-3 tracking-tight leading-[1.1] transition-colors duration-500"}>{course.title}</h4>
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex-1 pr-4">
+                        <h4 className="text-lg font-black text-text-main mb-2 tracking-tight leading-tight">{course.title}</h4>
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-surface-soft border border-surface-el flex items-center justify-center overflow-hidden">
-                            <Users className="w-4 h-4 text-accent-primary" />
+                          <div className="w-7 h-7 rounded-full bg-surface-soft border border-surface-el flex items-center justify-center">
+                            <Users className="w-3.5 h-3.5 text-accent-primary" />
                           </div>
-                          <p className={isModern ? "text-sm text-text-muted transition-colors duration-500" : "text-[12px] font-black text-accent-primary uppercase tracking-widest"}>
+                          <p className="text-[11px] font-bold text-accent-primary uppercase tracking-widest">
                             {course.instructor?.name}
                           </p>
                         </div>
                       </div>
-                      <span className={isModern ? "px-3 py-1 bg-surface-soft border border-surface-el text-text-muted rounded-md text-xs font-medium" : "px-4 py-2 bg-text-main text-surface-base rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg"}>
+                      <span className="px-3 py-1 bg-text-main text-surface-base rounded-xl text-[10px] font-black uppercase tracking-widest">
                         {course.category}
                       </span>
                     </div>
-                    <p className="text-base font-medium text-text-muted mb-10 line-clamp-2 leading-relaxed transition-colors duration-500">{course.description}</p>
-                    <div className="space-y-4">
-                      <div className={isModern ? "flex items-center justify-between text-xs font-semibold text-text-muted" : "flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em]"}>
-                        <span className="text-text-muted">{isModern ? "Progress" : "Mastery Index"}</span>
+                    <p className="text-sm text-text-muted mb-6 line-clamp-2 leading-relaxed">{course.description}</p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-black uppercase tracking-wider">
+                        <span className="text-text-muted">Module Progress</span>
                         <span className="text-text-main">
-                          {Math.round((course.modules?.filter(m => m.completed).length / course.modules?.length * 100) || 0)}%
+                          {Math.round((course.modules?.filter(m => m.completed).length / (course.modules?.length || 1)) * 100)}%
                         </span>
                       </div>
-                      <div className="w-full bg-surface-el rounded-full h-2.5 overflow-hidden shadow-inner transition-colors duration-500">
+                      <div className="w-full bg-surface-el rounded-full h-2.5 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
-                          whileInView={{ width: `${course.modules?.filter(m => m.completed).length / course.modules?.length * 100 || 0}%` }}
-                          transition={{ duration: 2, ease: "circOut" }}
+                          whileInView={{ width: `${(course.modules?.filter(m => m.completed).length / (course.modules?.length || 1)) * 100 || 0}%` }}
+                          transition={{ duration: 2, ease: 'circOut' }}
                           className="bg-gradient-to-r from-accent-primary to-accent-secondary h-full rounded-full"
                         />
                       </div>
@@ -396,12 +447,9 @@ const StudentDashboard = () => {
                   </GradientCard>
                 ))
               ) : (
-                <div className={isModern ? "col-span-full text-center py-16 bg-surface-base rounded-xl border border-surface-el transition-colors" : "col-span-full text-center py-24 bg-surface-soft rounded-[3.5rem] border border-dashed border-surface-el transition-colors duration-500"}>
-                  <BookOpen className={isModern ? "w-12 h-12 mx-auto mb-4 text-text-muted/50" : "w-24 h-24 mx-auto mb-8 text-surface-el"} />
-                  <p className={isModern ? "text-base font-semibold text-text-muted mb-6" : "text-lg font-black uppercase tracking-[0.4em] text-text-muted mb-10"}>{isModern ? "You are not enrolled in any courses yet." : "Historical Context Missing: No Courses"}</p>
-                  <button className={isModern ? "px-6 py-2.5 bg-accent-primary hover:bg-accent-secondary text-white rounded-lg transition-colors font-medium text-sm" : "px-12 py-6 bg-text-main hover:bg-accent-primary text-surface-base text-[14px] font-black uppercase tracking-[0.4em] rounded-2xl transition-all shadow-2xl scale-100 hover:scale-105"}>
-                    {isModern ? "Explore Courses" : "Refresh Feed"}
-                  </button>
+                <div className="col-span-full text-center py-20 bg-surface-soft rounded-3xl border border-dashed border-surface-el">
+                  <BookOpen className="w-16 h-16 mx-auto mb-4 text-surface-el" />
+                  <p className="text-base font-semibold text-text-muted">No courses available yet</p>
                 </div>
               )}
             </div>
@@ -413,4 +461,3 @@ const StudentDashboard = () => {
 };
 
 export default StudentDashboard;
-
