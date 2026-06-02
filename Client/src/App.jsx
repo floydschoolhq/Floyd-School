@@ -29,7 +29,7 @@ import ClassroomAuthPage from './pages/Student/ClassroomAuthPage.jsx';
 import MainLayout from './components/Student/MainLayout.jsx';
 import StudentDashboard from './components/Student/StudentDashboard';
 import CodingLabPage from './pages/Student/CodingLabPage';
-import PerformanceReportPage from './pages/Student/PerformanceReportPage';
+
 import ProgressTrackingPage from './pages/Student/ProgressTrackingPage';
 import RecordingsPage from './pages/Student/RecordingPage';
 import SupportPage from './pages/Student/SupportPage';
@@ -243,13 +243,7 @@ const App = () => {
                         </MainLayout>
                     </ProtectedRoute>
                 } />
-                <Route path='/student/reports' element={
-                    <ProtectedRoute>
-                        <MainLayout>
-                            <PerformanceReportPage />
-                        </MainLayout>
-                    </ProtectedRoute>
-                } />
+
                 <Route path='/student/support' element={
                     <ProtectedRoute>
                         <MainLayout>
