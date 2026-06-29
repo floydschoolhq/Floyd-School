@@ -17,13 +17,13 @@ const ADVANTAGES = [
     {
         id: 1,
         title: "We teach you to think like a builder",
-        description: "Anyone can follow a tutorial. At thinkskool, you learn to break problems down, experiment, and build real projects. You’ll apply your skills in our upcoming hackathon! The ability to think, build, and solve stays with you forever.",
+        description: "Anyone can follow a tutorial. At Floyd School, you learn to break problems down, experiment, and build real projects. You’ll apply your skills in our upcoming hackathon! The ability to think, build, and solve stays with you forever.",
         image: "/images/ecosystem/cloud_ide.jpg",
         icon: Zap,
         details: [
             "Action over Observation",
             "Builder Mindset first",
-            "thinkskool hackathon"
+            "Floyd School hackathon"
         ]
     },
     {
@@ -41,7 +41,7 @@ const ADVANTAGES = [
     {
         id: 3,
         title: "Your mentors work in tech right now",
-        description: "Every thinkskool mentor is an active technology professional. They bring the kind of real world context no textbook ever could.",
+        description: "Every Floyd School mentor is an active technology professional. They bring the kind of real world context no textbook ever could.",
         image: "/images/ecosystem/mentorship.jpg",
         icon: Users,
         details: [
@@ -77,7 +77,7 @@ const ADVANTAGES = [
     {
         id: 6,
         title: "We teach you to think like a builder",
-        description: "Anyone can follow a tutorial. thinkskool teaches you to break problems down, experiment and figure things out yourself. That skill stays with you forever.",
+        description: "Anyone can follow a tutorial. Floyd School teaches you to break problems down, experiment and figure things out yourself. That skill stays with you forever.",
         image: "/images/ecosystem/security.jpg",
         icon: Hammer,
         details: [
@@ -123,13 +123,13 @@ const AdvantageCard = ({ card, onOpen }) => {
                 </h3>
                 <p className="text-slate-500 text-[14px] font-medium leading-relaxed mb-6">
                     {card.id === 1 && (
-                        <>Anyone can follow a tutorial. At thinkskool, you learn to break problems down, experiment, and build real projects. You’ll apply your skills in our upcoming <span className="text-orange-600 font-bold">hackathon!</span> The ability to think, build, and solve stays with you forever. </>
+                        <>Anyone can follow a tutorial. At Floyd School, you learn to break problems down, experiment, and build real projects. You’ll apply your skills in our upcoming <span className="text-orange-600 font-bold">hackathon!</span> The ability to think, build, and solve stays with you forever. </>
                     )}
                     {card.id === 2 && (
                         <>By the end you will have built <span className="text-slate-950 font-bold border-b border-slate-950/20">real projects</span> you can show anyone. An AI chatbot, a working app, an IoT device. Things that prove what you can do.</>
                     )}
                     {card.id === 3 && (
-                        <>Every thinkskool mentor is an <span className="text-slate-950 font-bold border-b border-slate-950/20">active technology professional.</span> They bring the kind of real world context no textbook ever could.</>
+                        <>Every Floyd School mentor is an <span className="text-slate-950 font-bold border-b border-slate-950/20">active technology professional.</span> They bring the kind of real world context no textbook ever could.</>
                     )}
                     {card.id === 4 && (
                         <>AI, machine learning, cybersecurity, robotics, IoT. Technologies reshaping every industry that most <span className="text-slate-950 font-bold border-b border-slate-950/20">skills schools completely skip.</span></>
@@ -138,7 +138,7 @@ const AdvantageCard = ({ card, onOpen }) => {
                         <>Fast enough to keep things exciting. Never so fast anyone gets left behind. Built specifically for <span className="text-slate-950 font-bold border-b border-slate-950/20">students aged 12 to 20.</span></>
                     )}
                     {card.id === 6 && (
-                        <>Anyone can follow a tutorial. thinkskool teaches you to break problems down, experiment and <span className="text-slate-950 font-bold border-b border-slate-950/20">figure things out yourself.</span> That skill stays with you forever.</>
+                        <>Anyone can follow a tutorial. Floyd School teaches you to break problems down, experiment and <span className="text-slate-950 font-bold border-b border-slate-950/20">figure things out yourself.</span> That skill stays with you forever.</>
                     )}
                 </p>
                 
@@ -158,7 +158,7 @@ const AdvantageCard = ({ card, onOpen }) => {
 
 import useIsMobile from '../hooks/useIsMobile';
 
-const ThinkskoolAdvantageGrid = () => {
+const Floyd SchoolAdvantageGrid = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const isMobile = useIsMobile();
 
@@ -237,7 +237,7 @@ const ThinkskoolAdvantageGrid = () => {
             {/* Optimized Background Title - Faded/Subtle */}
             <div className="absolute top-10 left-0 right-0 overflow-hidden pointer-events-none select-none z-0 opacity-[0.02]">
                 <h2 className="text-[100px] md:text-[150px] font-bold text-slate-950 tracking-tighter text-center whitespace-nowrap leading-none">
-                    thinkskool
+                    Floyd School
                 </h2>
             </div>
 
@@ -268,7 +268,7 @@ const ThinkskoolAdvantageGrid = () => {
                         transition={{ duration: 0.8, delay: 0.1 }}
                         className="text-base md:text-lg text-slate-500 font-medium leading-relaxed"
                     >
-                        Every skill at thinkskool is mastered by action. Not watching or reading, but <span className="text-slate-900 border-b-2 border-slate-100">building from day one.</span>
+                        Every skill at Floyd School is mastered by action. Not watching or reading, but <span className="text-slate-900 border-b-2 border-slate-100">building from day one.</span>
                     </motion.p>
                 </div>
 
@@ -352,4 +352,4 @@ const ThinkskoolAdvantageGrid = () => {
 };
 
 
-export default ThinkskoolAdvantageGrid;
+export default Floyd SchoolAdvantageGrid;

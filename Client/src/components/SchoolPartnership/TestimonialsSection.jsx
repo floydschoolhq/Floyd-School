@@ -19,7 +19,7 @@ const TESTIMONIALS = [
         avatar: boy1,
         rating: 5,
         highlight: "Outstanding Learning Journey",
-        content: "Before thinkskool I thought AI was something only PhDs could understand. Now I have a chatbot I built sitting on my laptop.",
+        content: "Before Floyd School I thought AI was something only PhDs could understand. Now I have a chatbot I built sitting on my laptop.",
         tags: ["AI", "ML", "Chatbot"],
         achievement: "Built personal AI chatbot",
         color: "blue",

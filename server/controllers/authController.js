@@ -21,11 +21,13 @@ const generateToken = (id, sessionToken) => {
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
-    // Restriction: Only allow @thinkskool.com domain
+    // Restriction: Only allow Floyd School or ThinkSkool domains
     /*
-    if (!email.toLowerCase().endsWith('@thinkskool.com')) {
+    const allowedDomains = ['@floydschool.com', '@floydschool.in', '@thinkskool.com', '@thinkskool.in'];
+    const hasAllowedDomain = allowedDomains.some(domain => email.toLowerCase().endsWith(domain));
+    if (!hasAllowedDomain) {
         return res.status(400).json({
-            message: 'Registration restricted: Please use your @thinkskool.com email address.'
+            message: 'Registration restricted: Please use an authorized email address (e.g. @floydschool.com).'
         });
     }
     */

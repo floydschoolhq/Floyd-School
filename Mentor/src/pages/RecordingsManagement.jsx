@@ -48,7 +48,7 @@ const RecordingsManagement = () => {
                     ...module,
                     courseId: course._id,
                     courseTitle: course.title,
-                    instructor: course.instructor?.name || 'thinkskool Mentor',
+                    instructor: course.instructor?.name || 'Floyd School Mentor',
                     isLiveArchive: false,
                     fullCourseObj: course
                 }))
@@ -59,7 +59,7 @@ const RecordingsManagement = () => {
                 title: lc.title,
                 videoUrl: lc.meetingLink,
                 courseTitle: 'Live Session Archive',
-                instructor: lc.mentorName || 'thinkskool Mentor',
+                instructor: lc.mentorName || 'Floyd School Mentor',
                 isLiveArchive: true,
                 createdAt: lc.startedAt
             }));

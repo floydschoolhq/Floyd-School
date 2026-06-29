@@ -76,7 +76,7 @@ const Login = () => {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="mentor@thinkskool.edu"
+                                    placeholder="mentor@floydschool.edu"
                                     className="w-full bg-slate-800/50 border border-slate-700 p-4 pl-12 rounded-2xl text-white font-medium outline-none focus:border-sky-500 focus:bg-slate-800 transition-all placeholder:text-slate-600"
                                     required
                                 />
@@ -116,7 +116,7 @@ const Login = () => {
                 </div>
 
                 <p className="text-center mt-8 text-slate-500 text-sm font-bold uppercase tracking-tighter">
-                    &copy; 2025 THINKSKOOL INFRASTRUCTURE v2.4
+                    &copy; 2025 FLOYD SCHOOL INFRASTRUCTURE v2.4
                 </p>
             </motion.div>
         </div>

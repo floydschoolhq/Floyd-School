@@ -6,6 +6,12 @@
     {
       "id": "69ff38141cad938780ccdbeb",
       "title": "AI & Machine Learning",
+      "moduleCount": 11,
+      "hasVideos": false
+    },
+    {
+      "id": "69ff38141cad938780ccdbed",
+      "title": "IoT & Robotics",
       "moduleCount": 0,
       "hasVideos": false
     },
@@ -16,20 +22,14 @@
       "hasVideos": false
     },
     {
-      "id": "69ff38141cad938780ccdbed",
-      "title": "IoT & Robotics",
-      "moduleCount": 0,
+      "id": "69ff38141cad938780ccdbef",
+      "title": "ThinkSkool Summer Builder Program",
+      "moduleCount": 30,
       "hasVideos": false
     },
     {
       "id": "69ff38141cad938780ccdbee",
       "title": "Development (Web/App)",
-      "moduleCount": 0,
-      "hasVideos": false
-    },
-    {
-      "id": "69ff38141cad938780ccdbef",
-      "title": "ThinkSkool Summer Builder Program",
       "moduleCount": 0,
       "hasVideos": false
     }

@@ -16,7 +16,7 @@ import SEOContentSection from './components/common/SEOContentSection';
 import SuccessStories from './components/SuccessStories';
 import TechStackStats from './components/TechStackStats';
 import OnlineCourseFocus from './components/OnlineCourseFocus.jsx';
-import ThinkskoolAdvantage from './components/ThinkSkoolAdvantage.jsx';
+import FloydSchoolAdvantage from './components/FloydSchoolAdvantage.jsx';
 import Hackathon from './components/Hackathon.jsx';
 
 import GlobalNotificationListener from './components/GlobalNotificationListener';
@@ -69,14 +69,14 @@ const HomePage = () => {
     return (
         <MotionConfig transition={isMobile ? { duration: 0 } : undefined}>
             <SEO 
-                title="Industrial Tech Training & Mentorship" 
-                description="Thinkskool offers industrial-grade tech training, 1-on-1 mentorship, and real-world project experience in AI, Robotics, Web Dev, and more."
+                title="FLOYD SCHOOL" 
+                description="Floyd School offers industrial-grade tech training, 1-on-1 mentorship, and real-world project experience in AI, Robotics, Web Dev, and more."
             />
             <div className='relative'>
                 <GlobalNotificationListener />
                 <div>
                     <Hero />
-                    <ThinkskoolAdvantage />
+                    <FloydSchoolAdvantage />
                     <TechStackStats />
                     <OnlineCourseFocus variant="dark" />
                     <MentorGrid />

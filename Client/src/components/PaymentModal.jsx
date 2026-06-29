@@ -109,7 +109,7 @@ const PaymentModal = ({ isOpen, onClose, course }) => {
                 key: razorpayKeyId,
                 amount: order.amount,
                 currency: order.currency,
-                name: 'ThinkSkool',
+                name: 'Floyd School',
                 description: courseTitle,
                 order_id: order.id,
                 handler: async (response) => {

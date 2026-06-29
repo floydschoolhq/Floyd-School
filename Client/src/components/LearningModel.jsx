@@ -212,7 +212,7 @@ const LearningModel = () => {
                         transition={isMobile ? { duration: 0 } : { delay: 0.2 }}
                         className="text-slate-500 font-bold text-base md:text-lg mt-4 mx-auto max-w-xl"
                     >
-                        Schools teach outdated theory. thinkskool teaches the future through a high-intensity industrial model.
+                        Schools teach outdated theory. Floyd School teaches the future through a high-intensity industrial model.
                     </motion.p>
                 </div>
 

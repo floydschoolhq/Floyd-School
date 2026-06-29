@@ -65,7 +65,7 @@ const WhyPartnerWithUs = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
             Three Reasons Schools Choose
             <br />
-            <span className="text-blue-400">thinkskool.</span>
+            <span className="text-blue-400">Floyd School.</span>
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
             We bridge the gap between traditional schooling and industry reality.

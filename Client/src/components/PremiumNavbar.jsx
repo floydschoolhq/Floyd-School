@@ -182,7 +182,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         >
                             <BrandLogo
                                 size="md"
-                                theme="dark"
+                                theme={isCoursesPage ? 'dark' : 'light'}
                                 shine={true}
                                 showTagline={!isScrolled}
                                 scrolled={isScrolled}
@@ -287,7 +287,7 @@ const PremiumNavbar = memo(({ variant }) => {
                                     <div className="flex items-center justify-between mb-4">
                                         <div className={isCoursesPage ? 'text-white' : 'text-slate-800'}>
                                             <h3 className="text-xl font-semibold mb-1">Menu</h3>
-                                            <p className="text-sm opacity-60">Navigate through thinkskool</p>
+                                            <p className="text-sm opacity-60">Navigate through Floyd School</p>
                                         </div>
                                         <motion.button
                                             onClick={() => setIsMobileMenuOpen(false)}

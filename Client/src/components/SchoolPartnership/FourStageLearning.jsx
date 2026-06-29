@@ -82,7 +82,7 @@ const FourStageLearning = () => {
             <span className="text-purple-400">Confidence in Four Steps.</span>
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
-            Every thinkskool program follows the same proven framework — from curiosity to creation.
+            Every Floyd School program follows the same proven framework — from curiosity to creation.
           </p>
         </div>
 

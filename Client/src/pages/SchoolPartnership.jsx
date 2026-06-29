@@ -22,7 +22,7 @@ const SchoolPartnership = () => {
     <div className="bg-white text-slate-900 font-inter selection:bg-blue-500 selection:text-white">
       <SEO 
         title="School Partnerships & Tech Bootcamps" 
-        description="Partner with Thinkskool to bring industrial-grade tech education to your school. We offer free trial bootcamps, specialized tracks, and national hackathons."
+        description="Partner with Floyd School to bring industrial-grade tech education to your school. We offer free trial bootcamps, specialized tracks, and national hackathons."
       />
       <PartnershipHero />
       <BootcampGallery />
@@ -37,13 +37,13 @@ const SchoolPartnership = () => {
               <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-8">Architecting Future Leaders through School Partnerships</h2>
               <div className="space-y-6 text-lg text-slate-600 font-medium leading-relaxed">
                 <p>
-                  In today's rapidly evolving digital economy, the traditional academic curriculum often struggles to keep pace with industrial demands. Thinkskool's School Partnership program is designed to bridge this critical gap, transforming schools into hubs of technical excellence and innovation. By integrating industrial-grade tech education directly into the school ecosystem, we empower students with the skills required for the 21st-century workforce.
+                  In today's rapidly evolving digital economy, the traditional academic curriculum often struggles to keep pace with industrial demands. Floyd School's School Partnership program is designed to bridge this critical gap, transforming schools into hubs of technical excellence and innovation. By integrating industrial-grade tech education directly into the school ecosystem, we empower students with the skills required for the 21st-century workforce.
                 </p>
                 <p>
                   Our partnership model is built on the foundation of "Industrial Immersion." We don't just teach coding; we teach students how to think like engineers. From AI and Machine Learning to Robotics and Cybersecurity, our programs provide students with hands-on experience using the same tools and methodologies used by global tech leaders. This exposure at an early age is transformative, fostering a mindset of problem-solving and critical thinking that extends beyond the computer lab.
                 </p>
                 <p>
-                  Schools that partner with Thinkskool benefit from a comprehensive support system. We provide highly trained mentors, specialized hardware kits, and a robust curriculum that is updated quarterly to reflect industry shifts. Our 7-day free trial bootcamp allows schools and students to experience our high-impact teaching methodology without any initial commitment, ensuring a perfect fit for every institution.
+                  Schools that partner with Floyd School benefit from a comprehensive support system. We provide highly trained mentors, specialized hardware kits, and a robust curriculum that is updated quarterly to reflect industry shifts. Our 7-day free trial bootcamp allows schools and students to experience our high-impact teaching methodology without any initial commitment, ensuring a perfect fit for every institution.
                 </p>
               </div>
             </div>
@@ -55,7 +55,7 @@ const SchoolPartnership = () => {
                 We believe that every school has the potential to produce the next generation of tech innovators. By providing the right ecosystem, mentorship, and resources, we help schools unlock this potential. Our partnership program is not just an extracurricular activity; it's a commitment to the future success of your students.
               </p>
               <p>
-                Join the growing network of forward-thinking educational institutions that are redefining what's possible in school-level technical education. Partner with Thinkskool today and let's architect the future of engineering excellence together.
+                Join the growing network of forward-thinking educational institutions that are redefining what's possible in school-level technical education. Partner with Floyd School today and let's architect the future of engineering excellence together.
               </p>
             </div>
           </div>

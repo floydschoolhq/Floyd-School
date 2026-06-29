@@ -87,7 +87,7 @@ const DownloadPage = () => {
     <div className="min-h-screen bg-gray-50 p-4 sm:p-8 font-sans">
       <SEO 
         title="Downloads & Resources" 
-        description="Access and download Thinkskool's official brochures, technical specifications, and industrial program details."
+        description="Access and download Floyd School's official brochures, technical specifications, and industrial program details."
       />
       <Logo/>
       <script src="https://cdn.tailwindcss.com"></script>

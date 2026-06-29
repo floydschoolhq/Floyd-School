@@ -28,7 +28,7 @@ const PartnershipRoadmap = () => {
       number: "05",
       title: "Certification",
       subtitle: "Graduation",
-      description: "Official thinkskool Certificate of Completion — awarded for demonstrated skills and completed projects, not just attendance. Carries weight on college applications."
+      description: "Official Floyd School Certificate of Completion — awarded for demonstrated skills and completed projects, not just attendance. Carries weight on college applications."
     }
   ];
 

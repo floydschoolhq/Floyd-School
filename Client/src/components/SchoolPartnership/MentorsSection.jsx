@@ -3,42 +3,42 @@ const MentorsSection = () => {
     {
       name: 'Shivam Mishra',
       experience: '3+ Years Experience',
-      description: 'An international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.',
+      description: 'An international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads Floyd School, shaping its vision and impact.',
       image: '/assets/shivam-DQpqvpJJ.jpg',
       linkedin: 'https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in'
     },
     {
       name: 'Raghav Sharma',
       experience: '4+ Years Experience',
-      description: 'A B.Tech CSE student specializing in web application security and advanced vulnerability assessment. Certified CRTA and CNSP, with hands-on expertise in offensive security tools and real-world attack simulations. Applies practical cybersecurity skills and enhances hands-on learning at ThinkSkool.',
+      description: 'A B.Tech CSE student specializing in web application security and advanced vulnerability assessment. Certified CRTA and CNSP, with hands-on expertise in offensive security tools and real-world attack simulations. Applies practical cybersecurity skills and enhances hands-on learning at Floyd School.',
       image: '/assets/raghav-BBcpNXPV.jpg',
       linkedin: 'https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android'
     },
     {
       name: 'Abhay Singh Chauhan',
       experience: '3+ Years Experience',
-      description: 'A developer skilled in building modern, scalable web solutions. Combines AI with practical development for real-world applications. Leads web development and training at ThinkSkool.',
+      description: 'A developer skilled in building modern, scalable web solutions. Combines AI with practical development for real-world applications. Leads web development and training at Floyd School.',
       image: '/assets/abhay-Cbr3t6XX.jpg',
       linkedin: 'https://www.linkedin.com/in/abhay-singh-chauhan-485706310'
     },
     {
       name: 'Anamika Vashisth',
       experience: '2+ Years Experience',
-      description: 'A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.',
+      description: 'A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at Floyd School.',
       image: '/assets/anamika-TXK6mu_Q.jpg',
       linkedin: 'https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android'
     },
     {
       name: 'Shashwat Vashishth',
       experience: '2+ Years Experience',
-      description: 'A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.',
+      description: 'A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at Floyd School.',
       image: '/assets/shashwat-DoHWMwD_.png',
       linkedin: 'https://www.linkedin.com/in/shashwat-vashishth'
     },
     {
       name: 'Shan Sharma',
       experience: '3+ Years Experience',
-      description: 'A tech professional working in an MNC with international project experience. Strong in problem-solving and structured execution. Supported and mentored 3000+ students at ThinkSkool.',
+      description: 'A tech professional working in an MNC with international project experience. Strong in problem-solving and structured execution. Supported and mentored 3000+ students at Floyd School.',
       image: '/assets/sshan-DMMv2ave.png',
       linkedin: 'https://www.linkedin.com/in/shan-sharma-726706292'
     }

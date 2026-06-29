@@ -10,13 +10,22 @@ import React, { useEffect } from 'react';
 const SEO = ({ title, description, canonical }) => {
     useEffect(() => {
         // Update Title
-        const fullTitle = title ? `${title} | thinkskool` : 'thinkskool | Master Tech with Real-World Skills';
+        let fullTitle = '';
+        if (title) {
+            if (title.toUpperCase().includes('FLOYD SCHOOL')) {
+                fullTitle = title;
+            } else {
+                fullTitle = `${title} | FLOYD SCHOOL`;
+            }
+        } else {
+            fullTitle = 'FLOYD SCHOOL';
+        }
         document.title = fullTitle;
 
         // Update Description
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-            metaDescription.setAttribute('content', description || 'Master tech with live projects, 1-on-1 mentorship, and real-world skills at thinkskool.');
+            metaDescription.setAttribute('content', description || 'Master tech with live projects, 1-on-1 mentorship, and real-world skills at FLOYD SCHOOL.');
         }
 
         // Handle Canonical Link

@@ -563,7 +563,7 @@ const ClassroomPage = () => {
                 {activeStudyCourse.title}
               </h1>
               <p className="text-xs font-medium text-text-muted mt-0.5">
-                Instructor: {activeStudyCourse.instructor?.name || 'thinkskool Mentor'}
+                Instructor: {activeStudyCourse.instructor?.name || 'Floyd School Mentor'}
               </p>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 import useIsMobile from '../hooks/useIsMobile';
+import BrandLogo from './common/BrandLogo';
 
 import boy1 from '../assets/avatars/boy1.jpg';
 import boy2 from '../assets/avatars/boy2.jpg';
@@ -192,9 +193,9 @@ const SuccessStories = ({ variant }) => {
         return (
             <section className="pt-16 pb-20 bg-[#0A0A0A] overflow-hidden border-t border-white/5 relative">
                 <div className="px-6 flex flex-col justify-center mb-14 mt-4">
-                    <h2 className="text-[32px] font-extrabold text-white leading-[1.1] text-center tracking-tight">
-                        Transformed by <br/>
-                        <span><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white flex flex-col items-center gap-3 text-center tracking-[0.2em] uppercase">
+                        <span>Transformed by</span>
+                        <BrandLogo size="lg" theme="dark" showTagline={false} />
                     </h2>
                 </div>
 
@@ -206,7 +207,7 @@ const SuccessStories = ({ variant }) => {
                     {ALL_REVIEWS.map((review, i) => {
                         const parts = review.role.split(',');
                         const origin = 'Student';
-                        const dest = parts[1]?.trim() || "ThinkSkool";
+                        const dest = parts[1]?.trim() || "Floyd School";
 
                         return (
                             <div key={i} className="shrink-0 w-[calc(100vw-60px)] snap-center mr-4 relative mt-12">
@@ -292,10 +293,11 @@ const SuccessStories = ({ variant }) => {
             </div>
 
             <div className="w-full relative z-10 px-0">
-                <div className="text-center mb-12">
-                    <ScrollDarkenHeading sizeClass="text-5xl md:text-7xl" variant={variant} uppercase={false}>
-                        transformed by <span className="font-black tracking-tighter"><span className="text-[#2563EB]">think</span><span className="text-[#F97316]">skool</span></span>
-                    </ScrollDarkenHeading>
+                <div className="text-center mb-12 flex flex-col md:flex-row items-center justify-center gap-x-6 gap-y-4">
+                    <span className="text-4xl md:text-6xl font-extrabold text-white tracking-[0.25em] uppercase">
+                        transformed by
+                    </span>
+                    <BrandLogo size="xl" theme="dark" showTagline={false} className="!items-center md:mt-1" />
                 </div>
 
                 <div className="flex flex-col gap-8">

@@ -32,7 +32,7 @@ const ADVANTAGES = [
     {
         id: 4,
         title: "We teach you to think like a builder",
-        description: "Anyone can follow a tutorial. ThinkSkool teaches you to break problems down, experiment and figure things out yourself. That skill stays with you forever.",
+        description: "Anyone can follow a tutorial. Floyd School teaches you to break problems down, experiment and figure things out yourself. That skill stays with you forever.",
         image: "/images/ecosystem/adaptive_learning.jpg",
         icon: Clock
     },
@@ -114,7 +114,7 @@ const AdvantageCard = ({ advantage, index, isActive }) => {
     );
 };
 
-const ThinkskoolAdvantage = () => {
+const FloydSchoolAdvantage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
     const isMobile = useIsMobile();
@@ -405,4 +405,4 @@ const ThinkskoolAdvantage = () => {
     );
 };
 
-export default ThinkskoolAdvantage;
+export default FloydSchoolAdvantage;

@@ -131,7 +131,7 @@ const PartnershipHero = () => {
 
             {/* Subtext */}
             <p className="text-sm text-slate-600 max-w-xl leading-relaxed px-4">
-              thinkskool delivers live technology education directly on your campus. Our mentors handle everything.
+              Floyd School delivers live technology education directly on your campus. Our mentors handle everything.
             </p>
 
             {/* Free Trial Banner */}
@@ -197,7 +197,7 @@ const PartnershipHero = () => {
 
             {/* Subtext */}
             <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed">
-              thinkskool delivers live technology education directly on your campus. Our mentors plan, manage and run everything. Your school provides space. Your students get real skills.
+              Floyd School delivers live technology education directly on your campus. Our mentors plan, manage and run everything. Your school provides space. Your students get real skills.
             </p>
 
             {/* Highlight Line */}

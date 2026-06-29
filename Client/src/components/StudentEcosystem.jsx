@@ -104,7 +104,7 @@ const StudentEcosystem = () => {
                 <div className="relative z-10 text-center">
                     <div className="mb-14 px-4">
                         <h2 className="text-3xl font-extrabold text-[#0F172A] tracking-tighter uppercase leading-[1.1]">
-                            THE thinkskool ADVANTAGE
+                            THE Floyd School ADVANTAGE
                         </h2>
                     </div>
 

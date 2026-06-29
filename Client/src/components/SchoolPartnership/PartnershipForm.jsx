@@ -69,7 +69,7 @@ const PartnershipForm = () => {
             Start Your Institutional Journey
           </h2>
           <p className="text-sm text-slate-400 max-w-2xl mx-auto">
-            Bring thinkskool to your campus. Fill out the form, and our regional head will contact you within 24 hours.
+            Bring Floyd School to your campus. Fill out the form, and our regional head will contact you within 24 hours.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ const PartnershipForm = () => {
             <span className="text-blue-400">Start Here.</span>
           </h2>
           <p className="text-base text-slate-400 max-w-2xl mx-auto">
-            Bring thinkskool to your campus. Fill out the form, and our regional head will contact you within 24 hours.
+            Bring Floyd School to your campus. Fill out the form, and our regional head will contact you within 24 hours.
           </p>
         </div>
 
@@ -119,11 +119,11 @@ const PartnershipForm = () => {
                       </svg>
                       <span className="font-medium">+91-8368801220</span>
                     </a>
-                    <a href="mailto:thinkskool.office@gmail.com" className="flex items-start gap-3 text-white hover:text-blue-200 transition-colors">
+                    <a href="mailto:floydschoolhq@gmail.com" className="flex items-start gap-3 text-white hover:text-blue-200 transition-colors">
                       <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="font-medium text-sm break-all">thinkskool.office@gmail.com</span>
+                      <span className="font-medium text-sm break-all">floydschoolhq@gmail.com</span>
                     </a>
                     <a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white hover:text-blue-200 transition-colors">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

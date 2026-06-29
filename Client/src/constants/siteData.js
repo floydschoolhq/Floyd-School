@@ -4,7 +4,7 @@ const AI_IMG = '/images/courses/ai-course.jpg';
 const IOT_IMG = '/images/courses/iot-course.jpg';
 const WEB_IMG = '/images/courses/web-course.jpg';
 const CYBER_IMG = '/images/courses/cyber-course.jpg';
-const SUMMER_IMG = '/images/courses/ThinkSkool Summer Builder Program.png';
+const SUMMER_IMG = '/images/courses/Floyd School Summer Builder Program.png';
 
 export const FALLBACK_COURSES = [
     {
@@ -134,7 +134,7 @@ export const FALLBACK_COURSES = [
     },
     {
         _id: '5',
-        title: "ThinkSkool Summer Builder Program",
+        title: "Floyd School Summer Builder Program",
         image: SUMMER_IMG,
         icon: 'Rocket',
         status: 'published',
@@ -181,7 +181,7 @@ export const studentBenefits = [
     { title: "Production Portal", desc: "Build in real-world IDEs." },
     { title: "Direct Mentorship", desc: "1-on-1 support from architects." },
     { title: "Independent Portfolio", desc: "Graduate with active GitHub apps." },
-    { title: "thinkskool Online Batches", desc: "High-octane online curriculum." }
+    { title: "Floyd School Online Batches", desc: "High-octane online curriculum." }
 ];
 
 export const supportRoles = [

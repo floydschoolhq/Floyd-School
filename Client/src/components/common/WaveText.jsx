@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import useIsMobile from '../../hooks/useIsMobile';
 
 const WaveText = ({ text, className = '' }) => {
-    // Split text into arrays of letters
-    const letters = text.split("");
     const isMobile = useIsMobile();
     
     // Animation variants for the "shine" effect
@@ -24,29 +22,45 @@ const WaveText = ({ text, className = '' }) => {
         })
     };
 
+    const fontSizeStyle = {
+        fontSize: 'clamp(2.5rem, 12vw, 10rem)',
+    };
+
     return (
-        <div className={`flex items-center justify-center font-black lowercase tracking-tighter w-full py-0 select-none ${className}`}>
-            <div className="flex flex-nowrap shrink-0">
-                {letters.map((char, i) => {
-                    // Determine color: 'think' (first 5) is blue, 'skool' (next 5) is orange
-                    const isBlue = i < 5;
-                    const colorClass = isBlue ? 'text-[#2563EB]' : 'text-[#F97316]';
-                    
-                    return (
-                        <motion.span
-                            key={i}
-                            variants={shineVariants}
-                            animate="animate"
-                            custom={i}
-                            className={`${colorClass} inline-block leading-none`}
-                            style={{ 
-                                fontSize: 'clamp(2.5rem, 12vw, 10rem)', // More balanced responsive scale
-                            }}
-                        >
-                            {char}
-                        </motion.span>
-                    );
-                })}
+        <div className={`flex items-center justify-center font-extrabold uppercase tracking-widest w-full py-0 select-none ${className}`}>
+            <div className="flex flex-nowrap shrink-0 items-center text-white" style={fontSizeStyle}>
+                {/* FLOYD */}
+                <motion.span variants={shineVariants} animate="animate" custom={0} className="leading-none">
+                    FLOYD
+                </motion.span>
+                
+                {/* SPACE */}
+                <span className="mx-[0.2em]">&nbsp;</span>
+                
+                {/* SCH */}
+                <motion.span variants={shineVariants} animate="animate" custom={1} className="leading-none">
+                    SCH
+                </motion.span>
+                
+                {/* Connected OO */}
+                <span className="relative inline-flex items-center mx-[0.01em]">
+                    <motion.span variants={shineVariants} animate="animate" custom={2} className="leading-none">
+                        O
+                    </motion.span>
+                    <motion.span variants={shineVariants} animate="animate" custom={3} className="leading-none">
+                        O
+                    </motion.span>
+                    {/* The red bridge line connecting the centers of the two Os, scaled with em */}
+                    <span 
+                        className="absolute left-[20%] right-[20%] rounded-full z-10 bg-red-600 h-[0.08em]"
+                        style={{ top: '55%', transform: 'translateY(-50%)' }}
+                    ></span>
+                </span>
+                
+                {/* L */}
+                <motion.span variants={shineVariants} animate="animate" custom={4} className="leading-none">
+                    L
+                </motion.span>
             </div>
         </div>
     );

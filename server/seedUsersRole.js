@@ -21,7 +21,7 @@ const users = [
         role: "mentor"
     },
     {
-        name: "ThinkSkool Admin",
+        name: "Floyd School Admin",
         email: "mentor@thinkskool.in",
         password: "shan",
         role: "admin"

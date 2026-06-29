@@ -349,7 +349,7 @@ const StudentDashboard = () => {
                           {course.title}
                         </h4>
                         <p className="text-[11px] text-text-muted flex items-center gap-1 font-medium">
-                          <Users className="w-3 h-3 text-accent-primary" /> {course.instructor?.name || 'thinkskool Mentor'}
+                          <Users className="w-3 h-3 text-accent-primary" /> {course.instructor?.name || 'Floyd School Mentor'}
                         </p>
                       </div>
 

@@ -22,7 +22,7 @@ const TestChatbotPage = () => {
           marginBottom: '16px',
           color: '#333' 
         }}>
-          Thinkskool Website Test Page
+          Floyd School Website Test Page
         </h1>
         <p style={{ fontSize: '16px', color: '#666', marginBottom: '32px' }}>
           This is a test page to verify the chatbot is working properly.

@@ -24,7 +24,7 @@ const TheProblem = () => {
             AI, ML, and IoT reshape industries—yet schools use 20-year-old curricula, skipping today's essential tech skills.
           </p>
           <p className="text-xs sm:text-sm text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium text-balance">
-            thinkskool fills the gap, swapping lectures for building real apps, AI, and hardware guided by professional engineers.
+            Floyd School fills the gap, swapping lectures for building real apps, AI, and hardware guided by professional engineers.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ const TheProblem = () => {
             AI, ML, and IoT reshape industries—yet schools use 20-year-old curricula, skipping today's essential tech skills.
           </p>
           <p className="text-base md:text-lg text-slate-300 max-w-4xl mx-auto leading-relaxed mt-2 font-medium text-balance">
-            thinkskool fills the gap, swapping lectures for building real apps, AI, and hardware guided by professional engineers.
+            Floyd School fills the gap, swapping lectures for building real apps, AI, and hardware guided by professional engineers.
           </p>
         </div>
 
@@ -81,12 +81,12 @@ const TheProblem = () => {
             <div className="flex-1 h-px bg-white/10" />
           </div>
 
-          {/* With thinkskool */}
+          {/* With Floyd School */}
           <CardContainer className="w-full">
             <CardBody className="relative bg-gradient-to-br from-blue-900/20 to-orange-900/20 border-2 border-blue-500/30 rounded-2xl p-5 shadow-lg shadow-blue-500/10 w-full h-auto">
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-orange-500/20 rounded-full blur-2xl" />
               <CardItem translateZ="50" className="flex items-center gap-4 mb-4 relative z-10">
-                <h3 className="text-lg font-bold text-white">With thinkskool</h3>
+                <h3 className="text-lg font-bold text-white">With Floyd School</h3>
               </CardItem>
               <CardItem translateZ="60" as="ul" className="space-y-3 relative z-10">
                 {[
@@ -137,12 +137,12 @@ const TheProblem = () => {
             </CardBody>
           </CardContainer>
 
-          {/* With thinkskool Card */}
+          {/* With Floyd School Card */}
           <CardContainer className="w-full">
             <CardBody className="relative bg-gradient-to-br from-blue-900/20 to-orange-900/20 border-2 border-blue-500/30 rounded-3xl p-6 md:p-8 shadow-xl shadow-blue-500/10 w-full h-auto">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-orange-500/20 rounded-full blur-3xl"></div>
               <CardItem translateZ="50" className="flex items-center gap-5 mb-4 relative z-10">
-                <h3 className="text-xl font-bold text-white">With thinkskool</h3>
+                <h3 className="text-xl font-bold text-white">With Floyd School</h3>
               </CardItem>
               <CardItem translateZ="100" as="ul" className="space-y-3 relative z-10">
                 {[

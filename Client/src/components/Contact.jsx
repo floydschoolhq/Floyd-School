@@ -166,7 +166,7 @@ const Contact = () => {
         <LampContainer className="pt-32 md:pt-48" id="contact">
             <SEO 
                 title="Contact Us & Book a Demo" 
-                description="Get in touch with Thinkskool. Book a demo call to learn how our industrial tech programs can accelerate your engineering career."
+                description="Get in touch with Floyd School. Book a demo call to learn how our industrial tech programs can accelerate your engineering career."
             />
             <motion.div
                 initial={{ opacity: 0.5, y: 100 }}
@@ -214,7 +214,7 @@ const Contact = () => {
                             className="text-base md:text-lg text-slate-600 mb-16 max-w-2xl mx-auto font-medium leading-relaxed"
                             variants={itemVariants}
                         >
-                            Join the <span className="text-blue-600">thinkskool</span> ecosystem. Let's discuss how we can accelerate your engineering journey to industry mastery.
+                            Join the <span className="text-blue-600">Floyd School</span> ecosystem. Let's discuss how we can accelerate your engineering journey to industry mastery.
                         </motion.p>
 
                         {/* Contact Details Grid */}
@@ -228,10 +228,10 @@ const Contact = () => {
                                     <FiMail className="text-2xl" />
                                 </div>
                                 <a
-                                    href="mailto:thinkskool.office@gmail.com"
+                                    href="mailto:floydschoolhq@gmail.com"
                                     className="text-lg font-black text-blue-600 hover:text-slate-900 transition tracking-tight"
                                 >
-                                    <span className="text-blue-600">thinkskool</span>.office@gmail.com
+                                    <span className="text-blue-600">floydschoolhq</span>@gmail.com
                                 </a>
                             </motion.div>
 

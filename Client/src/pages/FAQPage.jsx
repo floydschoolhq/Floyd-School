@@ -24,7 +24,7 @@ const FAQPage = () => {
 
   const faqs = [
     {
-      question: "What does thinkskool need from our school to get started?",
+      question: "What does Floyd School need from our school to get started?",
       answer: "We only need a classroom or lab space with basic infrastructure like electricity and internet. We bring our own mentors, equipment, and curriculum. No additional staff or technical setup is required from your side.",
       category: 'schools'
     },
@@ -50,7 +50,7 @@ const FAQPage = () => {
     },
     {
       question: "What certification do students receive upon completion?",
-      answer: "Students receive an industry-recognized thinkskool certification that is verified by our tech partners. This certification includes their project portfolio, skill assessments, and can be showcased on LinkedIn and resumes.",
+      answer: "Students receive an industry-recognized Floyd School certification that is verified by our tech partners. This certification includes their project portfolio, skill assessments, and can be showcased on LinkedIn and resumes.",
       category: 'students'
     },
     {
@@ -149,7 +149,7 @@ const FAQPage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       <SEO 
           title="Frequently Asked Questions" 
-          description="Find answers to common questions about Thinkskool's industrial tech programs, school partnerships, student portal, and more."
+          description="Find answers to common questions about Floyd School's industrial tech programs, school partnerships, student portal, and more."
       />
       <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">

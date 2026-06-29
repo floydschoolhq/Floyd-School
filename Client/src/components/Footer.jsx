@@ -87,7 +87,7 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="pt-10 border-t border-white/5 w-full text-center">
              <p className="text-slate-700 text-[8px] font-black uppercase tracking-[0.3em]">
-                © 2026 THINKSKOOL. <br className="mt-2" />
+                © 2026 FLOYD SCHOOL. <br className="mt-2" />
                 ENGINEERED FOR EXCELLENCE.
              </p>
           </div>
@@ -108,7 +108,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="mb-10">
-              <BrandLogo size="lg" className="items-start" />
+              <BrandLogo size="lg" theme="dark" className="items-start" />
             </div>
             <p className="text-slate-500 text-[15px] font-medium tracking-tight mb-12 leading-relaxed max-w-sm">
               Architecting the next generation of global engineering excellence through industrial immersion.
@@ -170,7 +170,7 @@ const Footer = () => {
         {/* Digital Signature: The Large Wave Logo */}
         <div className="w-full relative border-t border-white/5 pt-16">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <WaveText text="thinkskool" />
+            <WaveText text="floyd school" />
         </div>
       </div>
     </footer>

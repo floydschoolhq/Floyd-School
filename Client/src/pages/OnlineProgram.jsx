@@ -391,7 +391,7 @@ const OnlineProgram = () => {
                             <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-6">Industrial Learning Philosophy</h3>
                             <div className="space-y-4 text-[10px] text-slate-400 font-medium leading-relaxed">
                                 <p>
-                                    At Thinkskool, we believe that engineering excellence isn't just about learning syntax; it's about mastering the architecture of complex systems. Our online programs are meticulously architected to bridge the gap between academic theory and industrial reality. Each track, from AI & Machine Learning to IoT & Robotics, is designed by industry veterans with decades of experience in production-scale deployments.
+                                    At Floyd School, we believe that engineering excellence isn't just about learning syntax; it's about mastering the architecture of complex systems. Our online programs are meticulously architected to bridge the gap between academic theory and industrial reality. Each track, from AI & Machine Learning to IoT & Robotics, is designed by industry veterans with decades of experience in production-scale deployments.
                                 </p>
                                 <p>
                                     Our curriculum focuses on "Production-First" thinking. This means every line of code you write is evaluated against industrial standards—scalability, security, and maintainability. Unlike traditional online courses, we don't just provide video lectures. We provide an ecosystem where you work on real-world problems using the same tools used by top-tier engineering teams globally.

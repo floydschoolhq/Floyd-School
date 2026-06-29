@@ -179,7 +179,7 @@ const CourseDetails = () => {
                                             Apply Now <ArrowRight size={16} />
                                         </button>
                                         <button 
-                                            onClick={() => window.open('/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
+                                            onClick={() => window.open('/assets/pdf/Floyd School_curriculum1.pdf', '_blank')}
                                             className="w-full py-4 bg-white/5 border border-white/10 text-white rounded-xl font-bold uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 active:scale-95 transition-transform"
                                         >
                                             <Download size={16} /> Download Curriculum
@@ -226,7 +226,7 @@ const CourseDetails = () => {
                                             Apply Now <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                         </button>
                                         <button 
-                                            onClick={() => window.open(courseId === '5' ? summerPdf : '/assets/pdf/thinkskool_curriculum1.pdf', '_blank')}
+                                            onClick={() => window.open(courseId === '5' ? summerPdf : '/assets/pdf/Floyd School_curriculum1.pdf', '_blank')}
                                             className="px-12 py-5 bg-gradient-to-r from-[#10B981] to-[#059669] text-white rounded-xl font-black uppercase text-[13px] tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(16,185,129,0.25)] flex items-center gap-3 group"
                                         >
                                             <Download size={18} /> Download Curriculum
@@ -352,7 +352,7 @@ const CourseDetails = () => {
                                     <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-1 border border-slate-700/50">
                                         <img 
                                             src={sampleCertificate} 
-                                            alt="ThinkSkool AI & ML Certificate" 
+                                            alt="Floyd School AI & ML Certificate" 
                                             className="w-full h-auto rounded-[22px] shadow-2xl"
                                         />
                                     </div>
@@ -364,7 +364,7 @@ const CourseDetails = () => {
                                     <div className="relative bg-slate-900 rounded-2xl p-1 border border-slate-800">
                                         <img 
                                             src={sampleCertificate} 
-                                            alt="ThinkSkool AI & ML Certificate" 
+                                            alt="Floyd School AI & ML Certificate" 
                                             className="w-[120%] h-auto -ml-[10%] rounded-xl shadow-xl"
                                         />
                                     </div>
@@ -385,7 +385,7 @@ const CourseDetails = () => {
                                     </h2>
                                     <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed">
                                         <p>
-                                            At Thinkskool, we believe that mastering advanced technology requires an environment that mimics the complexity of real-world industrial systems. This program is architected to move beyond simple tutorials, immersing students in a high-intensity learning ecosystem. Every project built within this track is evaluated against production-grade benchmarks, focusing on scalability, security, and architectural integrity.
+                                            At Floyd School, we believe that mastering advanced technology requires an environment that mimics the complexity of real-world industrial systems. This program is architected to move beyond simple tutorials, immersing students in a high-intensity learning ecosystem. Every project built within this track is evaluated against production-grade benchmarks, focusing on scalability, security, and architectural integrity.
                                         </p>
                                         <p>
                                             Our curriculum for this specialization is dynamic, reflecting the constant shifts in the global tech economy. We don't just teach the "how"; we dive deep into the "why," fostering a first-principles understanding of system design. Students engage with industry-standard tools and methodologies, from version control with Git to cloud-scale deployments, ensuring they are prepared for the rigors of modern engineering departments.
@@ -397,13 +397,13 @@ const CourseDetails = () => {
                                 </div>
                                 <div className="space-y-6 text-sm md:text-lg text-slate-400 font-medium leading-relaxed lg:pt-16">
                                     <p>
-                                        Mentorship is central to the Thinkskool experience. Our students receive 1-on-1 guidance from veterans who have built and scaled systems at top-tier tech companies. This personalized feedback loop ensures that every student can navigate the challenges of deep-tech specializations with confidence. Our mentors provide more than just technical support; they provide the career coaching and professional insights necessary for long-term success.
+                                        Mentorship is central to the Floyd School experience. Our students receive 1-on-1 guidance from veterans who have built and scaled systems at top-tier tech companies. This personalized feedback loop ensures that every student can navigate the challenges of deep-tech specializations with confidence. Our mentors provide more than just technical support; they provide the career coaching and professional insights necessary for long-term success.
                                     </p>
                                     <p>
                                         Our commitment to your future is measurable. With a strong focus on portfolio building and placement preparation, we bridge the gap between education and employment. Every student in this program builds a professional-grade portfolio that demonstrates their capability to potential employers. We provide the platform, the community, and the expert guidance for you to exhibit your technical mastery to the world.
                                     </p>
                                     <p>
-                                        Join the Thinkskool community of innovators and builders. By enrolling in this program, you are taking a definitive step towards a high-impact career in the global technology sector. Let's architect your future in engineering excellence together.
+                                        Join the Floyd School community of innovators and builders. By enrolling in this program, you are taking a definitive step towards a high-impact career in the global technology sector. Let's architect your future in engineering excellence together.
                                     </p>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import SEO from '../components/common/SEO';
+import BrandLogo from '../components/common/BrandLogo';
 
 const HackathonPage = () => {
   const [searchParams] = useSearchParams();
@@ -99,16 +100,14 @@ const HackathonPage = () => {
   if (!activeView) {
     return (
       <div className="bg-white text-slate-900 font-inter selection:bg-blue-500 selection:text-white min-h-screen">
-        <SEO title="Student Idea Hackathon - ThinkSkool" description="Where school students stop consuming technology and start building with it." />
+        <SEO title="Student Idea Hackathon - Floyd School" description="Where school students stop consuming technology and start building with it." />
 
         {/* Navbar */}
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
             <div className="flex items-center h-20">
               <div className="flex-1 flex justify-start pl-2">
-                <Link to="/school-partnerships" className="text-2xl md:text-3xl font-black tracking-tight">
-                  <span className="text-blue-600">think</span><span className="text-orange-500">skool</span>
-                </Link>
+                <BrandLogo size="sm" showTagline={false} theme="light" />
               </div>
               <div className="flex-1 flex justify-end pr-2">
                 <Link to="/school-partnerships" className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm">
@@ -131,7 +130,7 @@ const HackathonPage = () => {
           <div className="max-w-5xl mx-auto w-full relative z-10 text-center">
             {/* Animated Badge */}
             <div className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-xs md:text-sm font-bold mb-6 animate-bounce" style={{ animationDuration: '2s' }}>
-              ThinkSkool Student Idea Hackathon
+              Floyd School Student Idea Hackathon
             </div>
 
             {/* Title with Gradient Text */}
@@ -141,7 +140,7 @@ const HackathonPage = () => {
             </h1>
 
             <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-12 font-medium">
-              A one-day inter-school innovation challenge. Conducted on campus. Fully managed by ThinkSkool. Free for every school involved.
+              A one-day inter-school innovation challenge. Conducted on campus. Fully managed by Floyd School. Free for every school involved.
             </p>
 
             {/* Selection Prompt */}
@@ -169,7 +168,7 @@ const HackathonPage = () => {
 
                   <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">School</h3>
                   <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
-                    Host the hackathon at your school. ThinkSkool manages everything — you provide the space and students.
+                    Host the hackathon at your school. Floyd School manages everything — you provide the space and students.
                   </p>
 
                   <div className="flex items-center text-blue-600 font-bold text-sm sm:text-base gap-2 group-hover:gap-3 transition-all">
@@ -216,7 +215,7 @@ const HackathonPage = () => {
   if (activeView === 'school') {
     return (
       <div className="bg-white text-slate-900 font-inter selection:bg-blue-500 selection:text-white">
-        <SEO title="Host the Hackathon - ThinkSkool" description="Put your school at the centre of something real. Host the ThinkSkool Student Idea Hackathon." />
+        <SEO title="Host the Hackathon - Floyd School" description="Put your school at the centre of something real. Host the Floyd School Student Idea Hackathon." />
 
         {/* Navbar */}
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
@@ -266,12 +265,12 @@ const HackathonPage = () => {
                 <button onClick={() => selectView('participant')} className="px-5 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-700 transition-all">Participant</button>
               </div>
 
-              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-xs md:text-sm font-bold animate-bounce" style={{ animationDuration: '2s' }}>ThinkSkool Presents</div>
+              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-xs md:text-sm font-bold animate-bounce" style={{ animationDuration: '2s' }}>Floyd School Presents</div>
               <h1 className="text-[1.75rem] sm:text-[2.5rem] md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.2] tracking-tight max-w-5xl">
                 Where school students stop consuming technology<br/><span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">and start building with it.</span>
               </h1>
               <p className="text-sm md:text-lg text-slate-600 max-w-3xl leading-relaxed px-4 font-medium">
-                A one-day inter-school innovation challenge. Conducted on campus. Fully managed by ThinkSkool. Free for every school involved.
+                A one-day inter-school innovation challenge. Conducted on campus. Fully managed by Floyd School. Free for every school involved.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-8 w-full max-w-4xl px-4">
                 {['Schools Participated', 'Students Competed', 'Cities', 'Events Conducted'].map((stat, idx) => (
@@ -292,7 +291,7 @@ const HackathonPage = () => {
               <div className="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-bold mb-4">Host the Hackathon</div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-6">Put your school at the centre of something real.</h2>
               <p className="text-lg text-slate-600 max-w-4xl mx-auto leading-relaxed">
-                The ThinkSkool Student Idea Hackathon is a structured, high-energy, one-day innovation event for students of Classes 7 to 12. It runs entirely on your school premises. ThinkSkool manages everything from coordination to judging to prizes to certificates. Your school provides the space and the students. That is it.
+                The Floyd School Student Idea Hackathon is a structured, high-energy, one-day innovation event for students of Classes 7 to 12. It runs entirely on your school premises. Floyd School manages everything from coordination to judging to prizes to certificates. Your school provides the space and the students. That is it.
               </p>
             </div>
 
@@ -329,7 +328,7 @@ const HackathonPage = () => {
               <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-8">What Your School Receives</h3>
               <div className="space-y-6">
                 {[
-                  { icon: '🏫', title: 'Brand Visibility', desc: 'Your school is featured as the official host institution across all ThinkSkool platforms, social media channels and partner networks. Your name appears on every certificate, banner and communication issued for the event.' },
+                  { icon: '🏫', title: 'Brand Visibility', desc: 'Your school is featured as the official host institution across all Floyd School platforms, social media channels and partner networks. Your name appears on every certificate, banner and communication issued for the event.' },
                   { icon: '🎯', title: 'Student Excellence', desc: 'Students from nearby schools participate under your roof. You witness your students solve real problems, present with confidence and compete at a level most schools never give them access to.' },
                   { icon: '🏆', title: 'National Recognition', desc: 'Top teams from your school are supported to represent you at regional, national and international competitions. Every achievement they earn carries your school\'s name forward.' }
                 ].map((item, idx) => (
@@ -348,7 +347,7 @@ const HackathonPage = () => {
             <div className="max-w-4xl mx-auto mb-16">
               <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-8">The Series</h3>
               <div className="p-6 md:p-8 bg-gradient-to-br from-blue-50 to-orange-50 rounded-2xl border border-slate-200">
-                <p className="text-lg text-slate-700 leading-relaxed font-medium">This hackathon is part of a growing series ThinkSkool is building across school campuses, residential communities, corporate offices and eventually at a national level. Schools that become host partners early are part of every edition that follows. The series is building toward a national inter-school innovation championship. Your school can be part of that from day one.</p>
+                <p className="text-lg text-slate-700 leading-relaxed font-medium">This hackathon is part of a growing series Floyd School is building across school campuses, residential communities, corporate offices and eventually at a national level. Schools that become host partners early are part of every edition that follows. The series is building toward a national inter-school innovation championship. Your school can be part of that from day one.</p>
               </div>
             </div>
 
@@ -367,7 +366,7 @@ const HackathonPage = () => {
                   </div>
                 ))}
               </div>
-              <p className="text-lg text-slate-600 leading-relaxed mt-6 text-center font-medium">Everything else is on ThinkSkool. Logistics. Coordination. Judging panel. Prizes. Certificates. Materials. All of it.</p>
+              <p className="text-lg text-slate-600 leading-relaxed mt-6 text-center font-medium">Everything else is on Floyd School. Logistics. Coordination. Judging panel. Prizes. Certificates. Materials. All of it.</p>
             </div>
 
             {/* Host Form */}
@@ -427,7 +426,7 @@ const HackathonPage = () => {
   // ─── PARTICIPANT VIEW ───────────────────────────────────────────
   return (
     <div className="bg-white text-slate-900 font-inter selection:bg-blue-500 selection:text-white">
-      <SEO title="Participate in the Hackathon - ThinkSkool" description="You have ideas. This is where they get tested. Register your team for the ThinkSkool Student Idea Hackathon." />
+      <SEO title="Participate in the Hackathon - Floyd School" description="You have ideas. This is where they get tested. Register your team for the Floyd School Student Idea Hackathon." />
 
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
@@ -481,7 +480,7 @@ const HackathonPage = () => {
             <h1 className="text-[1.75rem] sm:text-[2.5rem] md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.2] tracking-tight max-w-5xl">
               You have ideas.<br/><span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">This is where they get tested.</span>
             </h1>
-            <p className="text-sm md:text-lg text-slate-600 max-w-4xl leading-relaxed px-4 font-medium">The ThinkSkool Student Idea Hackathon is open to students of Classes 7 to 12. You do not need to know how to code. You do not need a tech background. You need a real problem you care about and a team willing to work on it.</p>
+            <p className="text-sm md:text-lg text-slate-600 max-w-4xl leading-relaxed px-4 font-medium">The Floyd School Student Idea Hackathon is open to students of Classes 7 to 12. You do not need to know how to code. You do not need a tech background. You need a real problem you care about and a team willing to work on it.</p>
           </div>
         </div>
       </section>
@@ -526,9 +525,9 @@ const HackathonPage = () => {
             <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-8">Prizes and Recognition</h3>
             <div className="space-y-4">
               {[
-                { icon: '🥇', title: 'First Place', desc: 'Cash Prize + Medal + Certificate of Excellence + ThinkSkool Goodies + Entry to next level', color: 'from-yellow-50 to-yellow-100', border: 'border-yellow-200' },
-                { icon: '🥈', title: 'Second Place', desc: 'Cash Prize + Medal + Certificate of Excellence + ThinkSkool Goodies + Entry to next level', color: 'from-slate-50 to-slate-100', border: 'border-slate-200' },
-                { icon: '🥉', title: 'Third Place', desc: 'Cash Prize + Medal + Certificate of Excellence + ThinkSkool Goodies + Entry to next level', color: 'from-orange-50 to-orange-100', border: 'border-orange-200' },
+                { icon: '🥇', title: 'First Place', desc: 'Cash Prize + Medal + Certificate of Excellence + Floyd School Goodies + Entry to next level', color: 'from-yellow-50 to-yellow-100', border: 'border-yellow-200' },
+                { icon: '🥈', title: 'Second Place', desc: 'Cash Prize + Medal + Certificate of Excellence + Floyd School Goodies + Entry to next level', color: 'from-slate-50 to-slate-100', border: 'border-slate-200' },
+                { icon: '🥉', title: 'Third Place', desc: 'Cash Prize + Medal + Certificate of Excellence + Floyd School Goodies + Entry to next level', color: 'from-orange-50 to-orange-100', border: 'border-orange-200' },
                 { icon: '📜', title: 'All Participants', desc: 'Certificate of Participation', color: 'from-blue-50 to-blue-100', border: 'border-blue-200' }
               ].map((prize, idx) => (
                 <div key={idx} className={`flex items-start gap-4 p-5 md:p-6 bg-gradient-to-r ${prize.color} rounded-xl border ${prize.border} hover:shadow-lg transition-all duration-300`}>
@@ -550,7 +549,7 @@ const HackathonPage = () => {
                 { q: 'Can students from different schools form a team?', a: 'When the event is hosted at a school, teams must be from the schools invited to that edition. For independent editions, teams can be from anywhere.' },
                 { q: 'Is there a registration fee?', a: 'No. Participation is completely free.' },
                 { q: 'What should we bring on the day?', a: 'Your school ID, a laptop if you have one, and your idea. Everything else is provided.' },
-                { q: 'What happens to the best ideas after the event?', a: 'Top teams are mentored by the ThinkSkool team and given opportunities to present at regional, national and international competitions.' }
+                { q: 'What happens to the best ideas after the event?', a: 'Top teams are mentored by the Floyd School team and given opportunities to present at regional, national and international competitions.' }
               ].map((item, idx) => (
                 <div key={idx} className="bg-gradient-to-r from-slate-50 to-white rounded-xl p-5 md:p-6 border border-slate-100 hover:border-blue-200 hover:shadow-md transition-all duration-300">
                   <h4 className="font-bold text-slate-900 text-lg mb-2">{item.q}</h4>
@@ -572,7 +571,7 @@ const HackathonPage = () => {
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                   </div>
                   <h4 className="text-2xl font-bold text-green-800 mb-2">You are registered</h4>
-                  <p className="text-green-700">We will send event details, venue and timing to your WhatsApp number at least 48 hours before the event. If you have any questions reach us at info@thinkskool.in or +91 83688 01220.</p>
+                  <p className="text-green-700">We will send event details, venue and timing to your WhatsApp number at least 48 hours before the event. If you have any questions reach us at info@Floyd School.in or +91 83688 01220.</p>
                 </div>
               ) : (
                 <form onSubmit={handleStudentSubmit} className="space-y-5">

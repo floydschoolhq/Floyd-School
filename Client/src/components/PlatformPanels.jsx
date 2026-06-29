@@ -8,7 +8,7 @@ const PANELS = [
         id: 'admin',
         title: "Admin Panel",
         subtitle: "CONTROL & MANAGEMENT",
-        description: "the central nervous system of thinkskool. Manage global permissions, architect course structures, and monitor system health.",
+        description: "the central nervous system of Floyd School. Manage global permissions, architect course structures, and monitor system health.",
         icon: Shield,
         color: "orange",
         features: [

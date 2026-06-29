@@ -53,7 +53,7 @@ const Chatbot = () => {
     if (step === 0) {
       setStep(1);
       botReply(
-        'Hello \ud83d\udc4b Welcome to ThinkSkool\n\nWe help students build real technology projects like AI systems, apps, and smart devices \u2014 not just learn theory.\n\nWhat are you looking for today?',
+        'Hello \ud83d\udc4b Welcome to Floyd School\n\nWe help students build real technology projects like AI systems, apps, and smart devices \u2014 not just learn theory.\n\nWhat are you looking for today?',
         [
           { label: '\ud83e\udd16 AI & Machine Learning (Live)', val: 'ai' },
           { label: '\ud83c\udf10 Web Development', val: 'web' },
@@ -190,7 +190,7 @@ const Chatbot = () => {
       pushUser(formData.contact);
       setStep(7);
       botReply(
-        'Perfect \ud83d\udc4d\n\nWe will send full details along with demo access shortly.\n\nOur team may also guide you personally.\n\n\u2728 Thank you for choosing ThinkSkool!'
+        'Perfect \ud83d\udc4d\n\nWe will send full details along with demo access shortly.\n\nOur team may also guide you personally.\n\n\u2728 Thank you for choosing Floyd School!'
       );
     }
   };
@@ -251,7 +251,7 @@ const Chatbot = () => {
               <span className={`${isMobile ? 'text-xs' : 'text-lg'} text-white font-bold`}>{'\ud83e\udd16'}</span>
             </div>
             <div>
-              <div className={`font-bold tracking-tight ${isMobile ? 'text-xs' : 'text-base'}`}>ThinkSkool AI</div>
+              <div className={`font-bold tracking-tight ${isMobile ? 'text-xs' : 'text-base'}`}>Floyd School AI</div>
               <div className={`text-[10px] ${isMobile ? 'text-sky-100' : 'text-sky-100'} flex items-center gap-1 uppercase font-black tracking-widest`}>
                 <span className={`w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.5)]`}></span>
                 <span>Active Presence</span>
@@ -381,7 +381,7 @@ const Chatbot = () => {
             >
               Start over
             </button>
-            <div className={`text-gray-400 text-xs ${isMobile ? 'text-[10px]' : ''}`}>ThinkSkool</div>
+            <div className={`text-gray-400 text-xs ${isMobile ? 'text-[10px]' : ''}`}>Floyd School</div>
           </div>
         </div>
       </div>

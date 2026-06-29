@@ -81,7 +81,7 @@ const About = () => {
                 <h3 className="text-2xl lg:text-3xl font-black text-slate-900 mb-8 tracking-tight uppercase">Skills for <span className="text-blue-600">Students</span></h3>
 
                 <p className="text-[12px] text-slate-400 mb-10 leading-relaxed font-bold uppercase tracking-widest">
-                  Build professional skills with <span className="text-blue-400">thinkskool</span>—a comprehensive learning platform for modern engineering.
+                  Build professional skills with <span className="text-blue-400">Floyd School</span>—a comprehensive learning platform for modern engineering.
                   <span className="block mt-8 text-blue-400 font-bold uppercase tracking-[0.4em] text-[10px]">Practical Projects.</span>
                 </p>
 

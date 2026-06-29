@@ -23,7 +23,7 @@ const LEADERS = [
         image: shivamImg,
         imageScale: 1.9,
         experience: "3+ Years",
-        bio: "An international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads ThinkSkool, shaping its vision and impact.",
+        bio: "An international hackathon winner with experience leading multiple startups. Builds innovative tech solutions with a strong entrepreneurial mindset. Leads Floyd School, shaping its vision and impact.",
         linkedin: "https://www.linkedin.com/in/shivammishra0809/?originalSubdomain=in",
         tags: ["AI/ML", "Founder"]
     },
@@ -33,7 +33,7 @@ const LEADERS = [
         image: raghavImg,
         imageScale: 1.9,
         experience: "4+ Years",
-        bio: "A B.Tech CSE student specializing in web application security and advanced vulnerability assessment. Certified CRTA and CNSP, with hands-on expertise in offensive security tools and real-world attack simulations. Applies practical cybersecurity skills and enhances hands-on learning at ThinkSkool.",
+        bio: "A B.Tech CSE student specializing in web application security and advanced vulnerability assessment. Certified CRTA and CNSP, with hands-on expertise in offensive security tools and real-world attack simulations. Applies practical cybersecurity skills and enhances hands-on learning at Floyd School.",
         linkedin: "https://www.linkedin.com/in/heyraghav?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["Architect", "CyberSecurity"]
     },
@@ -43,7 +43,7 @@ const LEADERS = [
         image: abhayImg,
         imageScale: 1.8,
         experience: "3+ Years",
-        bio: "A developer skilled in building modern, scalable web solutions. Combines AI with practical development for real-world applications. Leads web development and training at ThinkSkool.",
+        bio: "A developer skilled in building modern, scalable web solutions. Combines AI with practical development for real-world applications. Leads web development and training at Floyd School.",
         linkedin: "https://www.linkedin.com/in/abhay-singh-chauhan-485706310",
         tags: ["Web Developer", "Manager"]
     },
@@ -53,7 +53,7 @@ const LEADERS = [
         image: ananimikaImg,
         imageScale: 1.15,
         experience: "2+ Years",
-        bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at ThinkSkool.",
+        bio: "A growth-focused professional with expertise in data analytics and AI. Known for combining technical skills with strong student engagement. Drives student growth and strategy at Floyd School.",
         linkedin: "https://www.linkedin.com/in/anamika-vashisth-28232b328?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         tags: ["UI/UX", "Design"]
     },
@@ -64,7 +64,7 @@ const LEADERS = [
         imageScale: 1.0,
         imagePosition: "object-[center_65%]",
         experience: "2+ Years",
-        bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at ThinkSkool.",
+        bio: "A skilled professional with expertise in artificial intelligence and machine learning. Focused on practical, industry-relevant learning and mentorship. Guides students as a Tutor at Floyd School.",
         linkedin: "https://www.linkedin.com/in/shashwat-vashishth",
         tags: ["AI/ML", "Algorithm"]
     },
@@ -74,7 +74,7 @@ const LEADERS = [
         image: shanImg,
         imageScale: 1.0,
         experience: "3+ Years",
-        bio: "A tech professional working in an MNC with international project experience. Strong in problem-solving and structured execution. Supported and mentored 3000+ students at ThinkSkool.",
+        bio: "A tech professional working in an MNC with international project experience. Strong in problem-solving and structured execution. Supported and mentored 3000+ students at Floyd School.",
         linkedin: "https://www.linkedin.com/in/shan-sharma-726706292",
         tags: ["System Design", "Architecture"]
     },

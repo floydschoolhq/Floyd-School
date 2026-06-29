@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const settingsSchema = new mongoose.Schema({
     platformName: {
         type: String,
-        default: 'ThinkSkool'
+        default: 'Floyd School'
     },
     maintenanceMode: {
         isActive: {
@@ -29,7 +29,7 @@ const settingsSchema = new mongoose.Schema({
         scheduledLive: { type: Boolean, default: false }
     },
     globalConfig: {
-        supportEmail: { type: String, default: 'support@thinkskool.in' },
+        supportEmail: { type: String, default: 'support@floydschool.in' },
         contactNumbers: [{ type: String }],
         socialLinks: {
             linkedin: String,

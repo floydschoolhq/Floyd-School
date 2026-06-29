@@ -189,7 +189,7 @@ const HackathonLeadsPage = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
           <div>
             <div className="flex items-center gap-2 text-sky-400 font-bold uppercase tracking-widest text-xs mb-1">
-              <Sparkles size={14} /> ThinkSkool Academics
+              <Sparkles size={14} /> Floyd School Academics
             </div>
             <h1 className="text-3xl font-black text-white tracking-tight">Hackathon Intelligence Hub</h1>
             <p className="text-slate-400 text-sm mt-0.5">Governance panel for school host requests and student teams</p>

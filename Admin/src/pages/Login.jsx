@@ -81,7 +81,7 @@ const Login = () => {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="master.admin@thinkskool.infra"
+                                    placeholder="master.admin@floydschool.infra"
                                     className="w-full bg-slate-950/50 border border-slate-800 p-5 pl-14 rounded-[1.5rem] text-white font-bold outline-none focus:border-sky-500/50 focus:bg-slate-950 transition-all placeholder:text-slate-700"
                                     required
                                 />
