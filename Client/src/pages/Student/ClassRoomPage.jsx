@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, Clock, PlayCircle, FileText, Trash2, X, Video, Calendar, Users, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import { GradientCard } from '../../components/dashboard/GradientCard';
 import api, { getFileUrl } from '../../api/axios';
-import schedulePdf from '../../assets/pdf/thinkskool_TTS_schedule.pdf';
+import schedulePdf from '../../assets/pdf/floydschool_schedule.pdf';
 
 import { io } from 'socket.io-client';
 import LiveChatSidebar from '../../components/Student/LiveChatSidebar';
@@ -677,7 +677,7 @@ const ClassroomPage = () => {
                     {isExpanded && (
                       <div className="pl-4 border-l-2 border-surface-el/80 space-y-2 ml-4 mb-3">
                         {(
-                          // Full 36-class schedule from thinkskool TTS PDF (3 per module/week)
+                          // Full 36-class schedule from Floyd School schedule PDF (3 per module/week)
                           [
                             // Week 1
                             ['What is Python & Why It Matters; Setting Up Environment; Variables & Data Types',

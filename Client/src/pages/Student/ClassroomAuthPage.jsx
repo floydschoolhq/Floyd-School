@@ -6,7 +6,7 @@ import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
 import BrandLogo from '../../components/common/BrandLogo';
-import termsPDF from '../../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
+import termsPDF from '../../assets/pdf/floydschool_terms_and_conditions.pdf';
 
 const ClassroomAuthPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -85,7 +85,7 @@ const ClassroomAuthPage = () => {
             </div>
             
             <h1 className="text-4xl font-black text-slate-900 mb-4">
-              ThinkSkool <span className="text-[#2563EB]">Classroom</span>
+              Floyd School <span className="text-[#2563EB]">Classroom</span>
             </h1>
             <p className="text-lg text-slate-600 mb-8">
               Access your personalized learning environment with live classes, recorded lectures, and interactive assignments.

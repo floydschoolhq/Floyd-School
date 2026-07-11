@@ -7,7 +7,7 @@ import ScrollDarkenHeading from './common/ScrollDarkenHeading';
 
 // --- Visual Components ---
 
-const thinkskoolMedia = [
+const floydschoolMedia = [
   { type: 'image', url: '/images/interactive/lab_1.jpg', tags: ["Modern Labs", "Hands-on Tech"] },
   { type: 'image', url: '/images/interactive/lab_2.jpg', tags: ["Expert Mentorship", "Skill Building"] },
   { type: 'image', url: '/images/interactive/lab_3.jpg', tags: ["Studio Learning", "Interactive IDE"] },
@@ -133,7 +133,7 @@ const Feature = () => {
             transition={{ duration: 0.8 }}
           >
             <MediaSlideshow
-              media={thinkskoolMedia}
+              media={floydschoolMedia}
               title="Interactive Mastery"
               isTraditional={false}
             />

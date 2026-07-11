@@ -73,7 +73,7 @@ const RecordingsPage = () => {
         (course.modules || []).map(module => ({
             ...module,
             courseTitle: course.title,
-            instructor: course.instructor?.name || 'thinkskool Instructor',
+            instructor: course.instructor?.name || 'Floyd School Instructor',
             isLiveArchive: false
         }))
     );
@@ -83,7 +83,7 @@ const RecordingsPage = () => {
         title: lc.title,
         videoUrl: lc.meetingLink, // In 'premiere' and 'youtube' modes, this is the video URL
         courseTitle: 'Live Class Recording',
-        instructor: lc.mentorName || 'thinkskool Mentor',
+        instructor: lc.mentorName || 'Floyd School Mentor',
         isLiveArchive: true,
         createdAt: lc.startedAt
     }));

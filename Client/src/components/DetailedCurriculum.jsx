@@ -1,5 +1,5 @@
 import React from 'react';
-import termsPDF from '../assets/pdf/finalthinkskoolTerms and Conditions.pdf';
+import termsPDF from '../assets/pdf/floydschool_terms_and_conditions.pdf';
 
 const DetailedCurriculum = () => {
     return (

@@ -43,7 +43,7 @@ const PartnershipFooter = () => {
             <h4 className="font-bold mb-3 text-white text-sm">Connect</h4>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><a href="https://floydschool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">floydschool.in</a></li>
-              <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="https://instagram.com/floydschool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
               <li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
               <li><a href="mailto:floydschoolhq@gmail.com" className="hover:text-white transition-colors break-all">floydschoolhq@gmail.com</a></li>
             </ul>
@@ -90,7 +90,7 @@ const PartnershipFooter = () => {
             <h4 className="font-bold mb-4">Connect</h4>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><a href="https://floydschool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">floydschool.in</a></li>
-              <li><a href="https://instagram.com/thinkskool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="https://instagram.com/floydschool.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
               <li><a href="mailto:floydschoolhq@gmail.com" className="hover:text-white transition-colors">Email Us</a></li>
               <li><a href="tel:+91-8368801220" className="hover:text-white transition-colors">+91-8368801220</a></li>
             </ul>

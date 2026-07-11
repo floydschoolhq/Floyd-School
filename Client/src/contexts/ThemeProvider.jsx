@@ -6,13 +6,13 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(() => {
-        const storedTheme = localStorage.getItem('thinkskool-theme');
+        const storedTheme = localStorage.getItem('floydschool-theme');
         return (storedTheme === 'studio' || !storedTheme) ? 'modern' : storedTheme;
     });
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('thinkskool-theme', theme);
+        localStorage.setItem('floydschool-theme', theme);
     }, [theme]);
 
     const toggleTheme = (newTheme) => {

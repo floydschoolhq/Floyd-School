@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const STREAK_KEY = 'thinkskool_streak';
+const STREAK_KEY = 'floydschool_streak';
 
 export const useStreak = () => {
     const [streak, setStreak] = useState(0);

@@ -35,6 +35,6 @@ export const mockCourses = [
 export const mockUser = {
     _id: "mock-user",
     name: "Demo User",
-    email: "demo@thinkskool.com",
+    email: "demo@floydschool.com",
     role: "student"
 };

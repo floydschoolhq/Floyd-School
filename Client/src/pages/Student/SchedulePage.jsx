@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Download, Eye, ShieldCheck, FileText, ArrowUpRight } from 'lucide-react';
-import schedulePdf from '../../assets/pdf/thinkskool_TTS_schedule.pdf';
+import schedulePdf from '../../assets/pdf/floydschool_schedule.pdf';
 
 const SchedulePage = () => {
   return (
@@ -25,7 +25,7 @@ const SchedulePage = () => {
           Class <span style={{ color: 'var(--accent-primary)' }}>Schedule</span>
         </h1>
         <p className="text-sm font-medium text-text-muted mt-1 leading-relaxed">
-          Access the official thinkskool class timetable and schedule details below.
+          Access the official Floyd School class timetable and schedule details below.
         </p>
       </motion.div>
 
@@ -54,7 +54,7 @@ const SchedulePage = () => {
             <div className="space-y-3">
               <a
                 href={schedulePdf}
-                download="thinkskool_TTS_schedule.pdf"
+                download="floydschool_schedule.pdf"
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-accent-primary text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-accent-primary/95 transition-all shadow-md shadow-accent-primary/10 cursor-pointer"
               >
                 <Download size={14} strokeWidth={3} /> Download Timetable

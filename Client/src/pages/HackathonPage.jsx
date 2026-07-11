@@ -222,9 +222,7 @@ const HackathonPage = () => {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
             <div className="flex items-center h-20">
               <div className="flex-1 flex justify-start pl-2">
-                <Link to="/school-partnerships" className="text-2xl md:text-3xl font-black tracking-tight">
-                  <span className="text-blue-600">think</span><span className="text-orange-500">skool</span>
-                </Link>
+                <BrandLogo size="sm" theme="light" variant="image" showTagline={false} />
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="hidden sm:flex items-center bg-slate-100 rounded-xl p-1">
@@ -433,9 +431,7 @@ const HackathonPage = () => {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex items-center h-20">
             <div className="flex-1 flex justify-start pl-2">
-              <Link to="/school-partnerships" className="text-2xl md:text-3xl font-black tracking-tight">
-                <span className="text-blue-600">think</span><span className="text-orange-500">skool</span>
-              </Link>
+              <BrandLogo size="sm" theme="light" variant="image" showTagline={false} />
             </div>
             <div className="flex-1 flex justify-center">
               <div className="hidden sm:flex items-center bg-slate-100 rounded-xl p-1">

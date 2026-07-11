@@ -23,7 +23,7 @@ const Footer = () => {
         { name: 'School Partnerships', href: '/school-partnerships' },
         { name: 'Online Programs', href: '/online-program' },
         { name: 'Contact Us', href: '/contact' },
-        { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
+        { name: 'Terms & Conditions', href: '/floydschool_terms_and_conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
       ],
     },
     {
@@ -59,7 +59,7 @@ const Footer = () => {
                 { name: 'Home', href: '/' },
                 { name: 'Courses', href: '/course' },
                 { name: 'Partner with Us', href: '/school-partnerships' },
-                { name: 'Terms & Conditions', href: '/finalthinkskoolTerms and Conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
+                { name: 'Terms & Conditions', href: '/floydschool_terms_and_conditions.pdf', target: '_blank', rel: 'noopener noreferrer' },
               ].map((link, i) => (
                 <li key={i}>
                   {link.href.startsWith('/') && !link.target ? (
@@ -116,10 +116,10 @@ const Footer = () => {
 
             <div className="flex space-x-4">
               {[
-                { icon: FaFacebookF, href: 'https://www.facebook.com/thinkskool.in' },
-                { icon: FaTwitter, href: 'https://x.com/thinkskool' },
-                { icon: FaLinkedinIn, href: 'https://www.linkedin.com/company/thinkskool/' },
-                { icon: FaInstagram, href: 'https://www.instagram.com/thinkskool.in?igsh=MWlhOWlpc2ZuOGd6&utm_source=qr' }
+                { icon: FaFacebookF, href: 'https://www.facebook.com/floydschool.in' },
+                { icon: FaTwitter, href: 'https://x.com/floydschool' },
+                { icon: FaLinkedinIn, href: 'https://www.linkedin.com/company/floydschool/' },
+                { icon: FaInstagram, href: 'https://www.instagram.com/floydschool.in?igsh=MWlhOWlpc2ZuOGd6&utm_source=qr' }
               ].map(({ icon: Icon, href }, index) => (
                 <a
                   key={index}
