@@ -17,23 +17,14 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false,
         xl: 'text-6xl tracking-[0.25em]',
     };
 
-    const lineHeights = {
-        xs: 'h-[1.5px]',
-        sm: 'h-[2px]',
-        md: scrolled ? 'h-[2px]' : 'h-[3px]',
-        lg: 'h-[4px]',
-        xl: 'h-[6px]',
-    };
-
     const themeStyles = {
-        dark: { text: 'text-white', line: 'bg-red-600' },
-        light: { text: 'text-slate-900', line: 'bg-red-600' },
-        brand: { text: 'text-white', line: 'bg-red-600' },
-        auto: { text: 'text-slate-900 dark:text-white', line: 'bg-red-600' }
+        dark: { text: 'text-white' },
+        light: { text: 'text-slate-900' },
+        brand: { text: 'text-white' },
+        auto: { text: 'text-slate-900 dark:text-white' }
     };
 
     const style = themeStyles[theme] || themeStyles.dark;
-    const lineHeight = lineHeights[size] || lineHeights.md;
 
     const shineVariants = {
         animate: (i) => ({
@@ -57,37 +48,8 @@ const BrandLogo = ({ className = '', size = 'md', theme = 'auto', shine = false,
                 onClick={handleLogoClick}
                 className={`flex items-center font-extrabold uppercase tracking-widest transition-all duration-300 cursor-pointer hover:opacity-90 ${sizeClasses[size] || sizeClasses.md} ${style.text}`}
             >
-                {/* FLOYD */}
                 <motion.span variants={shineVariants} animate={shine ? "animate" : ""} custom={0}>
-                    FLOYD
-                </motion.span>
-                
-                {/* SPACE */}
-                <span className="mx-1.5">&nbsp;</span>
-                
-                {/* SCH */}
-                <motion.span variants={shineVariants} animate={shine ? "animate" : ""} custom={1}>
-                    SCH
-                </motion.span>
-                
-                {/* Connected OO */}
-                <span className="relative inline-flex items-center mx-[0.5px]">
-                    <motion.span variants={shineVariants} animate={shine ? "animate" : ""} custom={2}>
-                        O
-                    </motion.span>
-                    <motion.span variants={shineVariants} animate={shine ? "animate" : ""} custom={3}>
-                        O
-                    </motion.span>
-                    {/* The red bridge line connecting the centers of the two Os */}
-                    <span 
-                        className={`absolute left-[20%] right-[20%] rounded-full z-10 ${style.line} ${lineHeight}`}
-                        style={{ top: '50%', transform: 'translateY(-50%)' }}
-                    ></span>
-                </span>
-                
-                {/* L */}
-                <motion.span variants={shineVariants} animate={shine ? "animate" : ""} custom={4}>
-                    L
+                    FLOYD SCHOOL
                 </motion.span>
             </div>
             {showTagline && (
