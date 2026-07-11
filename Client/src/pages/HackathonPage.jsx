@@ -107,7 +107,7 @@ const HackathonPage = () => {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
             <div className="flex items-center h-20">
               <div className="flex-1 flex justify-start pl-2">
-                <BrandLogo size="sm" showTagline={false} theme="light" />
+                <BrandLogo size="sm" showTagline={false} theme="light" variant="image" />
               </div>
               <div className="flex-1 flex justify-end pr-2">
                 <Link to="/school-partnerships" className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 text-sm">

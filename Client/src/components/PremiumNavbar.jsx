@@ -183,8 +183,9 @@ const PremiumNavbar = memo(({ variant }) => {
                             <BrandLogo
                                 size="md"
                                 theme={isCoursesPage ? 'dark' : 'light'}
+                                variant="image"
                                 shine={true}
-                                showTagline={!isScrolled}
+                                showTagline={false}
                                 scrolled={isScrolled}
                             />
                         </div>

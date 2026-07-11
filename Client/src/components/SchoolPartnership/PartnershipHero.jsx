@@ -29,7 +29,7 @@ const PartnershipHero = () => {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex items-center h-20 relative">
             <div className="flex-1 flex justify-start pl-2">
-              <BrandLogo size="sm" theme="light" showTagline={true} className="!items-start" />
+              <BrandLogo size="sm" theme="light" variant="image" showTagline={false} className="!items-start" />
             </div>
 
             {/* Centered Desktop Nav */}
