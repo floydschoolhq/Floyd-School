@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import BrandLogo from '../common/BrandLogo';
 
 const PartnershipHero = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,19 +28,8 @@ const PartnershipHero = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex items-center h-20 relative">
-            {/* Logo Group */}
             <div className="flex-1 flex justify-start pl-2">
-              <div className="flex flex-col items-start">
-                <Link 
-                  to="/" 
-                  onClick={() => window.scrollTo(0, 0)}
-                  className="text-2xl md:text-3xl font-black tracking-tight"
-                >
-                  <span className="text-blue-600">think</span>
-                  <span className="text-orange-500">skool</span>
-                </Link>
-                <span className="text-[10px] md:text-xs text-slate-500 font-medium tracking-wide">Learn Beyond Classroom</span>
-              </div>
+              <BrandLogo size="sm" theme="light" showTagline={true} className="!items-start" />
             </div>
 
             {/* Centered Desktop Nav */}
