@@ -10,7 +10,7 @@ const PartnershipDomains = () => {
     {
       id: 1,
       title: "Foundation of AI and Machine Learning",
-      image: "/images/courses/ai-course.jpg",
+      image: "/images/courses/AI&ML.png",
       rating: 4.9,
       status: "live",
       duration: "3 month",
@@ -21,7 +21,7 @@ const PartnershipDomains = () => {
     {
       id: 2,
       title: "Foundations of Web Development",
-      image: "/images/courses/web-course.jpg",
+      image: "/images/courses/WEB DEV.png",
       rating: 4.8,
       status: "live",
       duration: "4 month",
@@ -32,7 +32,7 @@ const PartnershipDomains = () => {
     {
       id: 3,
       title: "Cybersecurity Essentials",
-      image: "/images/courses/cyber-course.jpg",
+      image: "/images/courses/CYBER.png",
       rating: 4.7,
       status: "coming-soon",
       duration: "4 month",
@@ -43,7 +43,7 @@ const PartnershipDomains = () => {
     {
       id: 4,
       title: "IoT & Robotics",
-      image: "/images/courses/iot-course.jpg",
+      image: "/images/courses/IOT.png",
       rating: 4.9,
       status: "coming-soon",
       duration: "4 month",
