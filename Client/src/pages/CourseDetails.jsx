@@ -31,7 +31,7 @@ import PaymentModal from '../components/PaymentModal';
 import CourseOfferings from '../components/CourseOfferings';
 import CourseCurriculum from '../components/CourseCurriculum';
 import FinalProject from '../components/FinalProject';
-import sampleCertificate from '../assets/images/sample2Certificate.png';
+import sampleCertificate from '../assets/images/course_certificate.png';
 import api from '../api/axios';
 import SEO from '../components/common/SEO';
 import InstitutionalPartners from '../components/InstitutionalPartners';
