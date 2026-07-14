@@ -7,7 +7,7 @@ dotenv.config({ path: path.join(__dirname, '..', '.env') });
 const Course = require('../models/Course');
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  ThinkSkool Summer Builder Bootcamp — 30-Day Full Roadmap
+//  Floyd School Summer Builder Program — 30-Day Full Roadmap
 //  Course ID: 69ff38141cad938780ccdbef
 // ─────────────────────────────────────────────────────────────────────────────
 const builderBootcampModules = [
@@ -271,7 +271,7 @@ async function seedBuilderBootcampModules() {
 
         const course = await Course.findById('69ff38141cad938780ccdbef');
         if (!course) {
-            console.error('❌ ThinkSkool Summer Builder Bootcamp course not found!');
+            console.error('❌ Floyd School Summer Builder Program course not found!');
             process.exit(1);
         }
 

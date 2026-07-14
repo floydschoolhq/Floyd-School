@@ -9,7 +9,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
 
 const summerProgram = {
-    title: "ThinkSkool Summer Builder Program",
+    title: "Floyd School Summer Builder Program",
     description: "A high-octane 30-day summer internship. From foundations of software development to building real AI-powered applications with industry mentors.",
     category: "Software Development",
     icon: "Rocket",

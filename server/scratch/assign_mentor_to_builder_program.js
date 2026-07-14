@@ -15,7 +15,7 @@ async function reassignCourse() {
         // Shashwat Vashishth's ID
         const targetMentorId = '69929b7a63a7a52ef6ad4396';
         
-        // Find course "ThinkSkool Summer Builder Program"
+        // Find course "Floyd School Summer Builder Program"
         const courseId = '69ff38141cad938780ccdbef';
         
         const updatedCourse = await Course.findByIdAndUpdate(
