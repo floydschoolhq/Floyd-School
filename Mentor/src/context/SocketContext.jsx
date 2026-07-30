@@ -7,7 +7,7 @@ const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const { user } = useAuth();
-    const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
+    const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'https://floyd-school.onrender.com';
 
     useEffect(() => {
         if (user) {

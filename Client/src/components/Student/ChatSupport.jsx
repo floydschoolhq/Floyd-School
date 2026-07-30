@@ -5,7 +5,7 @@ import api from '../../api/axios';
 import { io } from 'socket.io-client';
 import { PortalContext } from '../../contexts/PortalProvider';
 
-const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
+const socket = io(import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'https://floyd-school.onrender.com', {
     withCredentials: true,
     transports: ['websocket']
 });

@@ -242,6 +242,7 @@ app.use('/api/payments', paymentLimiter, paymentRoutes);
 app.use('/api/contact', formLimiter, contactRoutes);
 app.use('/api/leads', formLimiter, leadRoutes);
 app.use('/api/chatbot', formLimiter, chatbotRoutes);
+app.use('/api/guest', require('./routes/guest'));
 app.use('/api/school-partnership', formLimiter, require('./routes/schoolPartnershipRoutes'));
 app.use('/api/hackathon', formLimiter, require('./routes/hackathonRoutes'));
 

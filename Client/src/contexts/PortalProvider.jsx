@@ -86,6 +86,12 @@ export const PortalProvider = ({ children }) => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
       if (token) {
+        // Guest users don't have a /auth/me profile — their data lives in GuestDetail collection
+        // Skip server fetch and rely on stored localStorage data
+        const storedUser = getStoredUser();
+        if (storedUser?.isGuest) {
+          return;
+        }
         try {
           const res = await api.get('/auth/me');
           updateUser(res.data.user || res.data);

@@ -12,7 +12,7 @@ export const SocketProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   
   const { user } = useContext(PortalContext);
-  const apiURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
+  const apiURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'https://floyd-school.onrender.com';
 
   useEffect(() => {
     if (user) {

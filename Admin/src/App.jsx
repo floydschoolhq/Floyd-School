@@ -24,6 +24,7 @@ import LiveMonitoring from './pages/LiveMonitoring';
 import StudentRegistrations from './pages/StudentRegistrations';
 import RecordingsManagement from './pages/RecordingsManagement';
 import PaymentTracking from './pages/PaymentTracking';
+import GuestDetailsPage from './pages/GuestDetailsPage';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
               <Route path="users" element={<UserGovernance />} />
               <Route path="requests" element={<AccessRequests />} />
               <Route path="student-registrations" element={<StudentRegistrations />} />
+              <Route path="guest-details" element={<GuestDetailsPage />} />
 
               <Route path="courses" element={<CourseGovernance />} />
               <Route path="leads" element={<LeadIntelligence />} />

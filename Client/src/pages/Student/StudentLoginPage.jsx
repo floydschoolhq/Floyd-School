@@ -1,4 +1,4 @@
-import { LogOutIcon, CheckCircle } from 'lucide-react';
+import { LogOutIcon, CheckCircle, UserPlus } from 'lucide-react';
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,6 +7,7 @@ import { PortalContext } from '../../contexts/PortalProvider';
 import BrandLogo from '../../components/common/BrandLogo';
 import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import toast from 'react-hot-toast';
+import GuestLoginModal from '../../components/auth/GuestLoginModal';
 
 const StudentLoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +16,7 @@ const StudentLoginPage = () => {
   const [showMobileForm, setShowMobileForm] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [firebaseUserData, setFirebaseUserData] = useState(null);
+  const [showGuestModal, setShowGuestModal] = useState(false);
   const navigate = useNavigate();
   const { updateUser } = useContext(PortalContext);
   const { loginWithGoogle } = useFirebaseAuth();
@@ -144,6 +146,22 @@ const StudentLoginPage = () => {
                     </svg>
                     {isSubmitting ? 'Signing in...' : 'Sign in with Google'}
                   </button>
+
+                  {/* Divider */}
+                  <div className="flex items-center gap-3 my-4">
+                    <div className="flex-1 h-px bg-slate-200" />
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Or</span>
+                    <div className="flex-1 h-px bg-slate-200" />
+                  </div>
+
+                  {/* Guest Login Button */}
+                  <button
+                    onClick={() => setShowGuestModal(true)}
+                    className="w-full flex items-center justify-center gap-3 bg-white border-2 border-dashed border-slate-200 text-slate-600 py-4 rounded-xl font-medium hover:bg-blue-50 hover:border-[#2563EB]/30 hover:text-[#2563EB] transition-all duration-300 group"
+                  >
+                    <UserPlus size={18} className="text-slate-400 group-hover:text-[#2563EB] transition-colors" />
+                    Guest Login
+                  </button>
                 </div>
               </motion.div>
             ) : !showSuccessPopup ? (
@@ -260,6 +278,12 @@ const StudentLoginPage = () => {
           )}
         </div>
       </motion.div>
+
+      {/* Guest Login Modal */}
+      <GuestLoginModal 
+        isOpen={showGuestModal} 
+        onClose={() => setShowGuestModal(false)} 
+      />
     </div>
   );
 };

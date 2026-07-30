@@ -17,6 +17,7 @@ import {
     MessageCircle,
     Award
 } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 import { useAuth } from '../../context/AuthContext';
 
@@ -28,6 +29,7 @@ const Sidebar = () => {
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
         { icon: <ShieldCheck size={20} />, label: 'Access Requests', path: '/requests' },
         { icon: <GraduationCap size={20} />, label: 'Student Registrations', path: '/student-registrations' },
+        { icon: <UserPlus size={20} />, label: 'Guest Details', path: '/guest-details' },
 
         { icon: <BookOpen size={20} />, label: 'Courses', path: '/courses' },
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
