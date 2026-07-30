@@ -64,20 +64,25 @@ const server = http.createServer(app);
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
-    'http://localhost:5173', // Client
-    'http://localhost:5174', // Admin
-    'http://localhost:5175', // Mentor
-    'http://localhost:5176', // GrowthAssociate
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+    'http://localhost:5176',
     'http://localhost:5177',
     'http://localhost:3000',
-    'https://thinkskool-mxyc.vercel.app', // Direct Vercel Origin
-    'https://thinkskool-wb9u.vercel.app', // Mentor Panel Vercel Origin
-    'https://thinkskool-9kaq.vercel.app', // Growth Associate Panel Vercel Origin
-    'https://thinkskool-admin.vercel.app', // Admin Panel Vercel Origin
-    'https://www.thinkskool.in', // Custom domain
-    'https://thinkskool.in' // Custom domain without www
-];
 
+    // Vercel
+    'https://floyd-school-admin.vercel.app',
+
+    // Website
+    'https://floydschool.in',
+    'https://www.floydschool.in',
+
+    // If you're still using ThinkSkool
+    'https://thinkskool-admin.vercel.app',
+    'https://thinkskool.in',
+    'https://www.thinkskool.in'
+];
 const corsOptions = {
     origin: (origin, callback) => {
         // Allow requests with no origin (mobile apps, Postman, etc.)
