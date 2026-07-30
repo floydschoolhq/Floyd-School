@@ -87,8 +87,8 @@ const corsOptions = {
         const cleanOrigin = origin.replace(/\/$/, "");
         const cleanAllowed = allowedOrigins.map(o => o.replace(/\/$/, ""));
 
-        // SECURITY FIX: Only allow exact match origins (removed .vercel.app/.onrender.com wildcards)
-        if (cleanAllowed.includes(cleanOrigin)) {
+        // Allow exact matches or any Vercel/Render deployment origins
+        if (cleanAllowed.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app') || cleanOrigin.endsWith('.onrender.com')) {
             callback(null, true);
         } else {
             console.error('[CORS ERROR] Blocked Origin:', origin);
