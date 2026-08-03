@@ -93,9 +93,9 @@ const PremiumNavbar = memo(({ variant }) => {
                 ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 px-6 py-0 h-14'
                 : 'w-full rounded-none bg-gradient-to-r from-slate-900/80 to-slate-800/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-white/20'
             : isScrolled
-                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/80 backdrop-blur-md border border-pink-200/60 px-6 py-0 h-14'
-                : 'w-full rounded-none bg-gradient-to-r from-pink-50/80 to-pink-100/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-pink-200/60',
-        navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black',
+                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-white/90 backdrop-blur-md border border-gray-200/60 px-6 py-0 h-14 shadow-sm'
+                : 'w-full rounded-none bg-white/95 backdrop-blur-md px-6 py-0 h-[68px] border-b border-gray-100',
+        navItem: isCoursesPage ? 'text-white/80 hover:text-white' : 'text-slate-700 hover:text-black',
         underline: isCoursesPage ? 'bg-white' : 'bg-black',
         mobileMenu: isCoursesPage ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-black/70 hover:text-black hover:bg-black/5'
     };
@@ -170,8 +170,8 @@ const PremiumNavbar = memo(({ variant }) => {
                                 ? 'w-full md:w-[90%] lg:w-[85%] md:rounded-full rounded-none bg-slate-900/80 backdrop-blur-md border-b md:border border-white/20 px-6 py-0 h-14'
                                 : 'w-full rounded-none bg-gradient-to-r from-slate-900/80 to-slate-800/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-white/20'
                             : isScrolled
-                                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-pink-50/80 backdrop-blur-md border border-pink-200/60 px-6 py-0 h-14'
-                                : 'w-full rounded-none bg-gradient-to-r from-pink-50/80 to-pink-100/70 backdrop-blur-md px-6 py-0 h-[68px] border-b border-pink-200/60'}`}
+                                ? 'w-full md:w-[90%] lg:w-[85%] rounded-full bg-white/90 backdrop-blur-md border border-gray-200/60 px-6 py-0 h-14 shadow-sm'
+                                : 'w-full rounded-none bg-white/95 backdrop-blur-md px-6 py-0 h-[68px] border-b border-gray-100'}`}
                 >
                     <div className="w-full max-w-7xl flex items-center justify-between">
 
@@ -225,15 +225,15 @@ const PremiumNavbar = memo(({ variant }) => {
                         <div className="hidden md:flex items-center">
                             <Link
                                 to="/student/login"
-                                className="group relative px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 border border-white/10"
+                                className="group relative px-7 py-2.5 bg-[#111111] text-white font-semibold rounded-full hover:bg-[#222222] transition-all duration-300 hover:scale-105"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
                                     </svg>
                                     Sign In
                                 </span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                             </Link>
                         </div>
 
