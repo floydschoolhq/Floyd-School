@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { Clock, Award, Headphones } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -38,82 +38,146 @@ const ADVANTAGES = [
     },
 ];
 
+/* ───── Desktop Card ───── */
 const AdvantageCard = ({ advantage, index, isActive }) => {
     const isImageLeft = index % 2 === 0;
-    
-    // Updated color scheme: 2nd white, 3rd black, 4th white
-    const cardColors = [
-        { bg: 'from-orange-400 via-orange-500 to-red-500', border: 'border-orange-200', text: 'text-white', innerBg: 'from-orange-500 via-orange-600 to-red-600' },
-        { bg: 'from-white to-gray-50', border: 'border-gray-200', text: 'text-gray-900', innerBg: 'from-white to-gray-50' },
-        { bg: 'from-gray-900 via-black to-gray-800', border: 'border-gray-700', text: 'text-white', innerBg: 'from-gray-900 via-black to-gray-800' },
-        { bg: 'from-white to-gray-50', border: 'border-gray-200', text: 'text-gray-900', innerBg: 'from-white to-gray-50' }
-    ];
-    
-    const currentColor = cardColors[index % 4];
-    const isDarkBg = index === 0 || index === 2; // Only orange and black cards are dark
+    const cardRef = useRef(null);
+
+    // Subtle mouse-follow tilt
+    const mouseX = useMotionValue(0.5);
+    const mouseY = useMotionValue(0.5);
+    const rotateX = useSpring(useTransform(mouseY, [0, 1], [2, -2]), { stiffness: 200, damping: 30 });
+    const rotateY = useSpring(useTransform(mouseX, [0, 1], [-2, 2]), { stiffness: 200, damping: 30 });
+
+    const handleMouseMove = (e) => {
+        const rect = cardRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        mouseX.set((e.clientX - rect.left) / rect.width);
+        mouseY.set((e.clientY - rect.top) / rect.height);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0.5);
+        mouseY.set(0.5);
+    };
+
+    const num = String(index + 1).padStart(2, '0');
 
     return (
-        <div 
-            className="w-full max-w-7xl mx-auto mb-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{
-                filter: isActive ? 'blur(0px)' : 'blur(1.5px)',
-                opacity: isActive ? 1 : 0.65,
-                transform: isActive
-                    ? 'scale(1) translateY(0px)'
-                    : 'scale(0.97) translateY(12px)',
-                willChange: 'transform, filter, opacity',
-            }}
+        <motion.div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ rotateX, rotateY, perspective: 1200 }}
+            className="w-full max-w-7xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
         >
-            <div className={`bg-gradient-to-br ${currentColor.bg} rounded-3xl p-1 shadow-2xl hover:shadow-3xl transition-shadow duration-300`}>
-                <div className={`bg-gradient-to-br ${currentColor.innerBg} rounded-3xl overflow-hidden relative`}>
-                    {/* Animated Background Pattern */}
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute inset-0 animate-pulse" style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                        }} />
+            <div
+                className={`
+                    relative rounded-[2rem] overflow-hidden
+                    bg-white border border-gray-200/60
+                    shadow-[0_8px_40px_-12px_rgba(0,0,0,0.08)]
+                    hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)]
+                    transition-shadow duration-700
+                    group
+                `}
+            >
+                <div className={`relative flex flex-col lg:flex-row items-stretch min-h-[420px] ${isImageLeft ? '' : 'lg:flex-row-reverse'}`}>
+                    {/* ── Image Half ── */}
+                    <div className="flex-1 relative lg:min-w-[420px] overflow-hidden">
+                        <img
+                            src={advantage.image}
+                            alt={advantage.title}
+                            className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
+                            style={{ minHeight: '420px' }}
+                        />
+                        {/* Gradient veil over image */}
+                        <div className={`absolute inset-0 bg-gradient-to-${isImageLeft ? 'r' : 'l'} from-transparent via-transparent to-white/30 pointer-events-none`} />
+                        {/* Bottom fade on mobile */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none lg:hidden" />
+
+                        {/* Number badge */}
+                        <div className="absolute top-6 left-6 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm border border-white/60">
+                            <span className="text-sm font-black text-slate-900 tracking-tight">{num}</span>
+                        </div>
                     </div>
 
-                    <div className="relative z-10 flex flex-col lg:flex-row items-stretch min-h-[450px]">
-                        {/* Image Section */}
-                        <div className={`flex-1 relative lg:min-w-[400px] ${isImageLeft ? 'order-1' : 'order-2'}`}>
-                            <div className={`absolute inset-0 bg-gradient-to-r from-transparent ${isDarkBg ? 'to-black/30' : 'to-black/20'} z-10`} />
-                            <img
-                                src={advantage.image}
-                                alt={advantage.title}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                                style={{ minHeight: '450px' }}
-                            />
-                            
+                    {/* ── Content Half ── */}
+                    <div className="flex-1 p-10 lg:p-14 flex flex-col justify-center relative">
+                        {/* Faint watermark number */}
+                        <span className="absolute top-6 right-8 text-[120px] font-black text-slate-50 leading-none select-none pointer-events-none hidden lg:block">
+                            {num}
+                        </span>
 
-                            
-                            {/* Floating 3D Decorative Elements */}
-                            <div className={`absolute top-8 right-8 w-20 h-20 ${index === 1 ? 'bg-blue-400/30' : index === 2 ? 'bg-pink-400/30' : index === 3 ? 'bg-purple-400/30' : 'bg-orange-400/30'} rounded-full blur-xl animate-bounce`} />
-                            <div className={`absolute bottom-8 left-8 w-16 h-16 ${index === 1 ? 'bg-blue-400/30' : index === 2 ? 'bg-rose-400/30' : index === 3 ? 'bg-gray-400/30' : 'bg-red-400/30'} rounded-full blur-lg animate-bounce`} style={{ animationDelay: '0.5s' }} />
-                        </div>
+                        <div className="relative z-10 flex flex-col items-start text-left max-w-lg">
+                            {/* Category tag */}
+                            <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-5 border border-slate-200 rounded-full px-4 py-1.5">
+                                Advantage {num}
+                            </span>
 
-                        {/* Content Section */}
-                        <div className={`flex-1 p-8 lg:p-14 flex flex-col items-center text-center justify-center ${isImageLeft ? 'order-2' : 'order-1'}`}>
-                            <div className="flex flex-col items-center">
-                                {/* Title */}
-                                <h1 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-6 leading-tight ${isDarkBg ? 'text-white' : 'text-gray-900'} transition-all duration-500`}>
-                                    {advantage.title}
-                                </h1>
+                            <h3 className="text-2xl md:text-3xl lg:text-[2.1rem] font-black text-slate-900 leading-[1.15] tracking-tight mb-5">
+                                {advantage.title}
+                            </h3>
 
-                                {/* Description */}
-                                <p className={`text-lg mb-10 leading-relaxed max-w-xl ${isDarkBg ? 'text-white/90' : 'text-gray-700'} transition-all duration-500`}>
-                                    {advantage.description}
-                                </p>
+                            <p className="text-[15px] md:text-base text-slate-500 font-medium leading-relaxed mb-8">
+                                {advantage.description}
+                            </p>
 
-
+                            {/* Decorative line */}
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-[2px] bg-slate-900 rounded-full group-hover:w-16 transition-all duration-500" />
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Floyd School</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
+/* ───── Mobile Card ───── */
+const MobileAdvantageCard = ({ advantage, index }) => {
+    const num = String(index + 1).padStart(2, '0');
+
+    return (
+        <motion.div
+            className="flex-shrink-0 w-[82vw] snap-center first:ml-0"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-30px" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+            <div className="bg-white rounded-[1.75rem] overflow-hidden border border-gray-200/60 shadow-[0_4px_24px_-6px_rgba(0,0,0,0.07)] h-full flex flex-col">
+                {/* Image */}
+                <div className="h-52 relative overflow-hidden">
+                    <img
+                        src={advantage.image}
+                        className="w-full h-full object-cover"
+                        alt={advantage.title}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
+                    {/* Number */}
+                    <div className="absolute top-4 left-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+                        <span className="text-xs font-black text-slate-900">{num}</span>
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-3">Advantage {num}</span>
+                    <h3 className="text-lg font-black text-slate-900 leading-snug mb-3 tracking-tight">
+                        {advantage.title}
+                    </h3>
+                    <p className="text-[13px] text-slate-500 font-medium leading-relaxed">
+                        {advantage.description}
+                    </p>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+/* ───── Section Root ───── */
 const FloydSchoolAdvantage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
@@ -133,15 +197,15 @@ const FloydSchoolAdvantage = () => {
             gsap.fromTo(card, 
                 {
                     opacity: 0,
-                    y: 100,
-                    scale: 0.8
+                    y: 80,
+                    scale: 0.92
                 },
                 {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1.5,
-                    delay: index * 0.3,
+                    duration: 1.2,
+                    delay: index * 0.15,
                     ease: "power3.out"
                 }
             );
@@ -164,9 +228,9 @@ const FloydSchoolAdvantage = () => {
                 },
                 onLeave: () => {
                     gsap.to(card, {
-                        scale: 0.95,
-                        y: 20,
-                        opacity: 0.7,
+                        scale: 0.97,
+                        y: 10,
+                        opacity: 0.85,
                         duration: 0.6,
                         ease: "power2.in"
                     });
@@ -183,9 +247,9 @@ const FloydSchoolAdvantage = () => {
                 },
                 onLeaveBack: () => {
                     gsap.to(card, {
-                        scale: 0.95,
-                        y: 20,
-                        opacity: 0.7,
+                        scale: 0.97,
+                        y: 10,
+                        opacity: 0.85,
                         duration: 0.6,
                         ease: "power2.in"
                     });
@@ -241,8 +305,7 @@ const FloydSchoolAdvantage = () => {
                 const container = mobileScrollRef.current;
                 const nextIndex = (mobileActiveIndex + 1) % ADVANTAGES.length;
                 
-                // On mobile, the first card has no left margin, others have space-x-5 (20px)
-                const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.85);
+                const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.82);
                 const gap = 20;
                 
                 container.scrollTo({
@@ -250,7 +313,7 @@ const FloydSchoolAdvantage = () => {
                     behavior: 'smooth'
                 });
             }
-        }, 3000);
+        }, 3500);
 
         return () => clearInterval(autoScrollTimer);
     }, [isMobile, mobileActiveIndex]);
@@ -259,7 +322,7 @@ const FloydSchoolAdvantage = () => {
         if (mobileScrollRef.current) {
             const container = mobileScrollRef.current;
             const scrollLeft = container.scrollLeft;
-            const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.85);
+            const cardWidth = container.querySelector('.snap-center')?.offsetWidth || (window.innerWidth * 0.82);
             const gap = 20;
             const newIndex = Math.round(scrollLeft / (cardWidth + gap));
             
@@ -269,95 +332,53 @@ const FloydSchoolAdvantage = () => {
         }
     };
 
-    // Mobile-specific rendering
+    /* ─── Mobile Layout ─── */
     if (isMobile) {
         return (
-            <section className="py-20 bg-[#F8FAFC] relative w-full overflow-hidden">
-                {/* Background Decor */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-50 -mr-32 -mt-32" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-[100px] opacity-50 -ml-32 -mb-32" />
-
-                {/* Mobile Header */}
-                <div className="px-6 mb-12 relative z-10">
+            <section className="py-20 bg-white relative w-full overflow-hidden">
+                {/* Header */}
+                <div className="px-6 mb-10 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="text-left"
                     >
-                        <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">
+                        <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight tracking-tight">
                             Schools teach concepts.
                         </h2>
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700 leading-tight">
+                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-500 leading-tight">
                             We teach you to build.
                         </h2>
                     </motion.div>
                 </div>
 
-                {/* Mobile Advantage Cards - Horizontal Scroll */}
+                {/* Horizontal scroll cards */}
                 <div className="relative z-10">
-                    <div 
+                    <div
                         ref={mobileScrollRef}
                         onScroll={handleMobileScroll}
-                        className="flex overflow-x-auto space-x-5 px-6 pb-12 snap-x snap-mandatory no-scrollbar"
+                        className="flex overflow-x-auto space-x-5 px-6 pb-10 snap-x snap-mandatory no-scrollbar"
                     >
-                        {ADVANTAGES.map((advantage, index) => {
-                            const cardColors = [
-                                { bg: 'from-orange-400 to-red-500', innerBg: 'from-orange-500 to-red-600', text: 'text-white', isDark: true },
-                                { bg: 'from-white to-gray-50', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false },
-                                { bg: 'from-gray-900 to-black', innerBg: 'from-gray-900 to-black', text: 'text-white', isDark: true },
-                                { bg: 'from-white to-gray-100', innerBg: 'from-white to-gray-50', text: 'text-gray-900', isDark: false }
-                            ];
-                            const cur = cardColors[index % 4];
-                            
-                            return (
-                                <motion.div
-                                    key={advantage.id}
-                                    className="flex-shrink-0 w-[85vw] snap-center first:ml-0"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true, margin: "-20px" }}
-                                    transition={{ duration: 0.5, ease: "easeOut" }}
-                                >
-                                    <div className={`bg-gradient-to-br ${cur.bg} rounded-[2rem] p-[1px] shadow-2xl h-full transform transition-transform`}>
-                                        <div className={`bg-gradient-to-br ${cur.innerBg} rounded-[2rem] overflow-hidden h-full flex flex-col relative`}>
-                                            {/* Pattern overlay */}
-                                            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-                                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                                            }} />
-
-                                            {/* Image Section */}
-                                            <div className="h-56 relative overflow-hidden">
-                                                <img 
-                                                    src={advantage.image} 
-                                                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" 
-                                                    alt={advantage.title} 
-                                                />
-                                                <div className={`absolute inset-0 bg-gradient-to-t ${cur.isDark ? 'from-black/40 to-transparent' : 'from-black/20 to-transparent'}`} />
-                                            </div>
-                                            
-                                            {/* Content Section */}
-                                            <div className="p-7 flex-grow flex flex-col items-center justify-center text-center">
-                                                <h3 className={`text-xl font-bold leading-snug ${cur.isDark ? 'text-white' : 'text-gray-900'}`}>
-                                                    {advantage.title}
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
+                        {ADVANTAGES.map((advantage, index) => (
+                            <MobileAdvantageCard key={advantage.id} advantage={advantage} index={index} />
+                        ))}
                     </div>
-                    
-                    {/* Progress Dots / Swipe Indicator */}
+
+                    {/* Progress dots */}
                     <div className="flex flex-col items-center gap-3">
                         <div className="flex gap-2">
                             {ADVANTAGES.map((_, i) => (
-                                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === mobileActiveIndex ? 'w-8 bg-blue-600' : 'w-2 bg-slate-300'}`} />
+                                <div
+                                    key={i}
+                                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                                        i === mobileActiveIndex ? 'w-8 bg-slate-900' : 'w-2 bg-slate-200'
+                                    }`}
+                                />
                             ))}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
-                            EXPLORE
+                        <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+                            Swipe to explore
                         </span>
                     </div>
                 </div>
@@ -365,22 +386,41 @@ const FloydSchoolAdvantage = () => {
         );
     }
 
-
+    /* ─── Desktop Layout ─── */
     return (
-        <section id="advantage" className="py-24 pb-32 bg-slate-50 relative w-full">
-            {/* Heading */}
-            <div className="flex flex-col items-center text-center leading-tight mb-16 md:mb-20 lg:mb-24">
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-black tracking-tight">
-                    Schools teach concepts.
-                </h2>
+        <section id="advantage" className="py-28 pb-36 bg-white relative w-full">
+            {/* Subtle dot pattern */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.018]" style={{ backgroundImage: 'radial-gradient(#0f172a 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-orange-500 mt-3 tracking-tight">
-                    We teach students to build real things.
-                </h2>
+            {/* Heading */}
+            <div className="flex flex-col items-center text-center leading-tight mb-20 md:mb-24 lg:mb-28 relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7 }}
+                >
+                    <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 tracking-tight">
+                        Schools teach concepts.
+                    </h2>
+                    <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-slate-600 to-slate-400 bg-clip-text text-transparent">
+                        We teach students to build real things.
+                    </h2>
+                </motion.div>
+
+                <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.15 }}
+                    className="mt-6 text-base md:text-lg text-slate-400 font-medium max-w-xl"
+                >
+                    Every skill at Floyd School is mastered by action — building from day one.
+                </motion.p>
             </div>
 
-            {/* Advantage Cards */}
-            <div className="max-w-7xl mx-auto w-full relative z-10 px-4">
+            {/* Stacking Cards */}
+            <div className="max-w-7xl mx-auto w-full relative z-10 px-4 lg:px-6">
                 {ADVANTAGES.map((advantage, index) => (
                     <div
                         key={advantage.id}
@@ -388,14 +428,14 @@ const FloydSchoolAdvantage = () => {
                         className="advantage-card"
                         style={{
                             position: 'sticky',
-                            top: `${60 + index * 16}px`,
+                            top: `${80 + index * 20}px`,
                             zIndex: index + 1,
-                            marginBottom: '1rem',
+                            marginBottom: '2rem',
                         }}
                     >
-                        <AdvantageCard 
-                            advantage={advantage} 
-                            index={index} 
+                        <AdvantageCard
+                            advantage={advantage}
+                            index={index}
                             isActive={index === activeIndex}
                         />
                     </div>
