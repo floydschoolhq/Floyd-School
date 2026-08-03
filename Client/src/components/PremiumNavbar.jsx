@@ -176,22 +176,24 @@ const PremiumNavbar = memo(({ variant }) => {
                     <div className="w-full max-w-7xl flex items-center justify-between">
 
                         {/* Logo */}
-                        <div
-                            className="flex items-center cursor-pointer group"
-                            onClick={() => isCourseDetailsPage ? navigate('/') : window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        >
-                            <BrandLogo
-                                size="md"
-                                theme={isCoursesPage ? 'dark' : 'light'}
-                                variant="image"
-                                shine={true}
-                                showTagline={false}
-                                scrolled={isScrolled}
-                            />
+                        <div className="flex-1 flex items-center justify-start">
+                            <div
+                                className="flex items-center cursor-pointer group"
+                                onClick={() => isCourseDetailsPage ? navigate('/') : window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            >
+                                <BrandLogo
+                                    size="sm"
+                                    theme={isCoursesPage ? 'dark' : 'light'}
+                                    variant="image"
+                                    shine={true}
+                                    showTagline={false}
+                                    scrolled={isScrolled}
+                                />
+                            </div>
                         </div>
 
                         {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-2 relative h-full">
+                        <div className="hidden md:flex items-center justify-center gap-2 relative h-full">
                             {navItems.map((item) => (
                                 <div key={item.name} className="relative group cursor-pointer flex items-center">
                                     {item.link ? (
@@ -222,7 +224,7 @@ const PremiumNavbar = memo(({ variant }) => {
                         </div>
 
                         {/* Right CTA */}
-                        <div className="hidden md:flex items-center">
+                        <div className="flex-1 hidden md:flex items-center justify-end">
                             <Link
                                 to="/student/login"
                                 className="group relative px-7 py-2.5 bg-[#111111] text-white font-semibold rounded-full hover:bg-[#222222] transition-all duration-300 hover:scale-105"
