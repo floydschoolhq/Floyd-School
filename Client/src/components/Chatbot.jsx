@@ -222,8 +222,8 @@ const Chatbot = () => {
       }}
         className={`fixed z-50 shadow-lg flex items-center justify-center hover:scale-110 transition-all duration-300 group ${
           isMobile 
-            ? 'bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full' 
-            : 'bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full'
+            ? 'bottom-4 right-4 w-12 h-12 bg-black rounded-full' 
+            : 'bottom-6 right-6 w-14 h-14 bg-black rounded-full'
         }`}
       >
         {isOpen ? (
