@@ -158,7 +158,7 @@ const AdvantageCard = ({ card, onOpen }) => {
 
 import useIsMobile from '../hooks/useIsMobile';
 
-const Floyd SchoolAdvantageGrid = () => {
+const FloydSchoolAdvantageGrid = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const isMobile = useIsMobile();
 
@@ -352,4 +352,4 @@ const Floyd SchoolAdvantageGrid = () => {
 };
 
 
-export default Floyd SchoolAdvantageGrid;
+export default FloydSchoolAdvantageGrid;
