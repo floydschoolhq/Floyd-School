@@ -10,7 +10,8 @@ import {
     LogOut,
     Heart,
     MessageSquare,
-    Monitor
+    Monitor,
+    School
 } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
 
@@ -20,6 +21,7 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <BarChart3 size={20} />, label: 'Engagement', path: '/' },
         { icon: <MessageCircle size={20} />, label: 'Support Hub', path: '/support' },
+        { icon: <School size={20} />, label: 'School Partnerships', path: '/school-partnerships' },
         { icon: <MessageSquare size={20} />, label: 'Discussions', path: '/discussions' },
         { icon: <Users size={20} />, label: 'Student List', path: '/students' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },

@@ -25,6 +25,35 @@ const SchoolPartnership = () => {
         description="Partner with Floyd School to bring industrial-grade tech education to your school. We offer free trial bootcamps, specialized tracks, and national hackathons."
       />
       <PartnershipHero />
+
+      {/* Direct Portal Switcher Banner */}
+      <section className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-y border-slate-800 py-6 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <span className="text-xs font-black uppercase tracking-widest text-indigo-400">Offline Collaboration Hub</span>
+            <h3 className="text-xl font-bold text-white">Direct Access to Institutional & Student Dashboards</h3>
+          </div>
+          <div className="flex items-center space-x-3">
+            <a
+              href="http://localhost:5178"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all"
+            >
+              🏫 Partner School Dashboard
+            </a>
+            <a
+              href="http://localhost:5179"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all"
+            >
+              🎓 Offline Student Portal
+            </a>
+          </div>
+        </div>
+      </section>
+
       <BootcampGallery />
       <TheProblem />
       <HowItWorks />

@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
 import {
-    Users,
-    ShieldCheck,
-    UserX,
-    Search,
-    Filter,
-    MoreVertical,
-    Mail,
-    Calendar,
-    MoreHorizontal,
-    CheckCircle2,
-    XCircle,
-    Menu,
-    ShieldAlert,
-    Trash2,
-    Lock,
-    Unlock,
-    Shield,
-    RefreshCw,
-    BookOpen,
-    ChevronDown,
-    ChevronUp
+  Users,
+  Search,
+  Plus,
+  Trash2,
+  Lock,
+  Unlock,
+  Shield,
+  XCircle,
+  Mail,
+  Calendar,
+  CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 
 const UserGovernance = () => {
     const [users, setUsers] = useState([]);
-    const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('student');
     const [searchTerm, setSearchTerm] = useState('');
-    const [updatingPermission, setUpdatingPermission] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -45,26 +32,16 @@ const UserGovernance = () => {
     const fetchUsers = async () => {
         try {
             const res = await api.get('/admin/users');
-            setUsers(res.data.users);
+            setUsers(res.data.users || []);
         } catch (err) {
-            console.error('Governance failure', err);
+            console.error('Failed to fetch users:', err);
         } finally {
             setLoading(false);
         }
     };
 
-    const fetchCourses = async () => {
-        try {
-            const res = await api.get('/admin/courses');
-            setCourses(res.data.courses || []);
-        } catch (err) {
-            console.error('Failed to fetch courses', err);
-        }
-    };
-
     useEffect(() => {
         fetchUsers();
-        fetchCourses();
     }, []);
 
     const toggleUserStatus = async (id, currentStatus) => {
@@ -72,18 +49,18 @@ const UserGovernance = () => {
             await api.patch(`/admin/users/${id}/status`, { isActive: !currentStatus });
             fetchUsers();
         } catch (err) {
-            console.error('Status override failed', err);
+            console.error('Status update failed:', err);
         }
     };
 
     const handleDeleteUser = async (id) => {
-        if (!window.confirm('PROTOCOL WARNING: This will permanently terminate the ecosystem node. Proceed?')) return;
+        if (!window.confirm('Warning: This action will permanently delete this user account. Do you wish to proceed?')) return;
         try {
             await api.delete(`/admin/users/${id}`);
             fetchUsers();
         } catch (err) {
-            console.error('Termination sequence failed', err);
-            alert('Failed to delete node.');
+            console.error('Deletion failed:', err);
+            alert('Failed to delete user account.');
         }
     };
 
@@ -94,53 +71,36 @@ const UserGovernance = () => {
             setShowModal(false);
             setFormData({ name: '', email: '', password: '', role: 'student' });
             fetchUsers();
-            alert('Node created successfully.');
+            alert('User account created successfully.');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to create node');
+            alert(error.response?.data?.message || 'Failed to create user account');
         }
     };
 
-    const togglePermission = async (userId, permissionKey, currentValue) => {
-        setUpdatingPermission(`${userId}-${permissionKey}`);
-        try {
-            await api.patch(`/admin/users/${userId}/permissions`, {
-                permissions: { [permissionKey]: !currentValue }
-            });
-
-            // Optimistic Update
-            setUsers(prev => prev.map(u =>
-                u._id === userId ? {
-                    ...u,
-                    permissions: {
-                        ...(u.permissions || {}),
-                        [permissionKey]: !currentValue
-                    }
-                } : u
-            ));
-        } catch (err) {
-            console.error('Permission override failed', err);
-            alert('Failed to update permission protocol.');
-            fetchUsers(); // Revert
-        } finally {
-            setUpdatingPermission(null);
-        }
+    const tabLabels = {
+      student: 'Online Students',
+      mentor: 'Mentors & Teachers',
+      growth_associate: 'Growth Associates',
+      school_partner: 'Partner Schools',
+      school_student: 'School Students',
+      admin: 'Administrators'
     };
 
     const filteredUsers = users.filter(user =>
         user.role === activeTab &&
-        (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+        (user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email?.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     if (loading) return (
-        <div className="flex items-center justify-center h-full">
-            <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+        <div className="flex items-center justify-center h-64">
+            <div className="w-8 h-8 border-4 border-slate-600 border-t-blue-500 rounded-full animate-spin"></div>
         </div>
     );
 
     return (
-        <div className="space-y-10 relative">
-            {/* Modal Overlay */}
+        <div className="space-y-8 relative">
+            {/* Create Account Modal */}
             <AnimatePresence>
                 {showModal && (
                     <motion.div
@@ -153,72 +113,77 @@ const UserGovernance = () => {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-md shadow-2xl relative"
+                            className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl w-full max-w-md shadow-2xl relative"
                         >
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
+                                className="absolute top-4 right-4 text-slate-400 hover:text-white"
                             >
-                                <XCircle size={24} />
+                                <XCircle size={22} />
                             </button>
 
-                            <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tight">
-                                Initialize New <span className="text-sky-500">Node</span>
+                            <h3 className="text-xl font-bold text-white mb-4">
+                                Register New User Account
                             </h3>
 
                             <form onSubmit={handleCreateUser} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Identity Name</label>
+                                    <label className="block text-xs font-bold text-slate-400 mb-1">Full Name</label>
                                     <input
                                         type="text"
                                         required
                                         value={formData.name}
                                         onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
-                                        placeholder="Dr. Strange"
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
+                                        placeholder="e.g. Professor Rajesh Sharma"
                                     />
                                 </div>
+
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email Protocol</label>
+                                    <label className="block text-xs font-bold text-slate-400 mb-1">Email Address</label>
                                     <input
                                         type="email"
                                         required
                                         value={formData.email}
                                         onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
-                                        placeholder="strange@multiverse.io"
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
+                                        placeholder="user@school.edu"
                                     />
                                 </div>
+
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Secure Key</label>
+                                    <label className="block text-xs font-bold text-slate-400 mb-1">Password</label>
                                     <input
                                         type="password"
                                         required
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors"
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
                                         placeholder="••••••••"
                                     />
                                 </div>
+
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Role Assignment</label>
+                                    <label className="block text-xs font-bold text-slate-400 mb-1">Assign System Role</label>
                                     <select
                                         value={formData.role}
                                         onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-sky-500/50 outline-none transition-colors appearance-none"
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
                                     >
-                                        <option value="student">Student</option>
-                                        <option value="mentor">Mentor</option>
+                                        <option value="student">Online Student</option>
+                                        <option value="mentor">Teacher / Mentor</option>
                                         <option value="growth_associate">Growth Associate</option>
-                                        <option value="admin">Admin</option>
+                                        <option value="school_partner">Partner School Admin</option>
+                                        <option value="school_student">School Student</option>
+                                        <option value="admin">System Administrator</option>
                                     </select>
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-sky-500/20 mt-6"
+                                    className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 mt-4 text-xs uppercase tracking-wider"
                                 >
-                                    Initialize Node
+                                    Create User Account
                                 </button>
                             </form>
                         </motion.div>
@@ -226,276 +191,152 @@ const UserGovernance = () => {
                 )}
             </AnimatePresence>
 
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            {/* Page Header */}
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
-                        User <span className="text-sky-500 not-italic">Governance</span>
-                    </h2>
-                    <p className="text-slate-500 font-black mt-2 uppercase tracking-[0.3em] text-[10px]">
-                        Manage high-level access and lifecycle of ecosystem nodes.
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+                        <Users className="text-blue-400" />
+                        User Account Management
+                    </h1>
+                    <p className="text-slate-400 text-xs mt-1">
+                        Manage logins, staff permissions, partner school coordinators, and student accounts.
                     </p>
                 </div>
-                <div className="flex gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl">
-                    {['student', 'mentor', 'growth_associate', 'admin'].map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab
-                                ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
-                                : 'text-slate-500 hover:text-white'
-                                }`}
-                        >
-                            {tab.replace('_', ' ')}
-                        </button>
-                    ))}
-                </div>
-            </header>
 
-            {/* Toolbar */}
-            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-[2.5rem] flex flex-col md:flex-row gap-6 items-center">
-                <div className="relative flex-1 group">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-sky-400" size={18} />
-                    <input
-                        type="text"
-                        placeholder="Search by name, email or neural hash..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 p-4 pl-14 rounded-2xl text-sm font-bold text-white outline-none focus:border-sky-500/30 transition-all placeholder:text-slate-700"
-                    />
-                </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="px-8 py-4 bg-white text-slate-950 font-black uppercase tracking-widest rounded-2xl hover:bg-sky-500 transition-all flex items-center gap-3 shadow-xl"
+                    className="py-2.5 px-4 bg-white text-slate-900 hover:bg-slate-100 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs flex items-center space-x-2 transition-all self-start md:self-auto"
                 >
-                    <Users size={20} />
-                    Add Node
+                    <Plus size={16} />
+                    <span>Register New Account</span>
                 </button>
-            </div>
+            </header>
 
-            {/* User List */}
-            <div className="space-y-4">
-                {filteredUsers.length === 0 ? (
-                    <div className="text-center py-20 bg-slate-900/10 border border-dashed border-slate-800 rounded-[3rem]">
-                        <Users size={48} className="text-slate-700 mx-auto mb-4" />
-                        <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">No nodes detected in this sector.</p>
-                    </div>
-                ) : (
-                    filteredUsers.map((user, idx) => (
-                        <UserNode
-                            key={user._id}
-                            user={user}
-                            idx={idx}
-                            activeTab={activeTab}
-                            courses={courses}
-                            updatingPermission={updatingPermission}
-                            onTogglePermission={togglePermission}
-                            onToggleStatus={toggleUserStatus}
-                            onDelete={handleDeleteUser}
-                            onRefresh={fetchUsers}
-                        />
-                    ))
-                )}
-            </div>
-        </div>
-    );
-};
-
-// ─── Per-User Node Component ────────────────────────────────────────────────
-const UserNode = ({ user, idx, activeTab, courses, updatingPermission, onTogglePermission, onToggleStatus, onDelete, onRefresh }) => {
-    const [showCoursePanel, setShowCoursePanel] = useState(false);
-    const [savingCourses, setSavingCourses] = useState(false);
-    const [localGranted, setLocalGranted] = useState(
-        (user.permissions?.grantedCourses || []).map(c => (typeof c === 'object' ? c._id : c).toString())
-    );
-
-    const toggleCourse = (courseId) => {
-        const id = courseId.toString();
-        setLocalGranted(prev =>
-            prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-        );
-    };
-
-    const saveCourseAccess = async () => {
-        setSavingCourses(true);
-        try {
-            await api.patch(`/admin/users/${user._id}/course-access`, { grantedCourses: localGranted });
-            toast.success(`Course access updated for ${user.name}`);
-            onRefresh();
-        } catch (err) {
-            toast.error('Failed to update course access');
-        } finally {
-            setSavingCourses(false);
-        }
-    };
-
-    const grantedCount = localGranted.length;
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.04 }}
-            className="bg-slate-900/20 border border-slate-800 rounded-3xl overflow-hidden hover:border-sky-500/20 transition-all"
-        >
-            {/* Main Row */}
-            <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 p-6">
-                {/* Identity */}
-                <div className="flex items-center gap-4 min-w-[200px] flex-1">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border font-black shadow-xl flex-shrink-0 ${user.isActive === false
-                        ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
-                        : 'bg-slate-900 border-slate-800 text-sky-500'}`}
+            {/* Role Selection Tabs */}
+            <div className="flex flex-wrap gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl">
+                {['student', 'mentor', 'growth_associate', 'school_partner', 'school_student', 'admin'].map(tab => (
+                    <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                            activeTab === tab
+                                ? 'bg-slate-800 text-white border border-slate-700'
+                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                        }`}
                     >
-                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
-                    </div>
-                    <div>
-                        <p className="text-base font-black text-white tracking-tight uppercase">{user.name}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                            <Mail size={11} className="text-slate-600" />
-                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">{user.email}</span>
-                        </div>
-                    </div>
-                </div>
+                        {tabLabels[tab]}
+                    </button>
+                ))}
+            </div>
 
-                {activeTab === 'student' ? (
-                    <>
-                        {/* Permission Toggles */}
-                        <div className="flex items-center gap-6">
-                            {[
-                                { key: 'canAccessCourses', label: 'Course Sync' },
-                                { key: 'canAccessLabs', label: 'Lab Access' },
-                                { key: 'canAccessCommunity', label: 'Net Comms' }
-                            ].map(({ key, label }) => (
-                                <div key={key} className="flex flex-col items-center gap-2">
-                                    <span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">{label}</span>
-                                    <button
-                                        onClick={() => onTogglePermission(user._id, key, user.permissions?.[key])}
-                                        disabled={updatingPermission === `${user._id}-${key}`}
-                                        className={`relative w-12 h-6 rounded-full transition-all duration-300 ${user.permissions?.[key] ? 'bg-sky-500' : 'bg-slate-800'
-                                            } ${updatingPermission === `${user._id}-${key}` ? 'opacity-50 cursor-wait' : 'cursor-pointer'} border border-slate-700`}
-                                    >
-                                        <div className={`absolute top-0.5 bottom-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-all duration-300 ${user.permissions?.[key] ? 'left-[calc(100%-1.4rem)]' : 'left-0.5'
-                                            } flex items-center justify-center`}>
-                                            {updatingPermission === `${user._id}-${key}` ? (
-                                                <RefreshCw size={10} className="text-sky-500 animate-spin" />
-                                            ) : user.permissions?.[key] ? (
-                                                <Unlock size={10} className="text-sky-500" />
+            {/* Search Input */}
+            <div className="relative w-full max-w-md">
+                <Search className="absolute left-3.5 top-2.5 text-slate-500" size={16} />
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                    placeholder="Search by user name or email..."
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-600"
+                />
+            </div>
+
+            {/* Users Directory Table */}
+            {filteredUsers.length === 0 ? (
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center text-slate-500 text-xs">
+                    No registered user accounts found for this role category.
+                </div>
+            ) : (
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-xs">
+                            <thead className="bg-slate-950 border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                                <tr>
+                                    <th className="px-6 py-4">User Name</th>
+                                    <th className="px-6 py-4">Email / Login ID</th>
+                                    {activeTab === 'school_student' && (
+                                        <>
+                                            <th className="px-6 py-4">Roll No / Class</th>
+                                            <th className="px-6 py-4">Parent & Contacts</th>
+                                        </>
+                                    )}
+                                    <th className="px-6 py-4">Assigned Role</th>
+                                    <th className="px-6 py-4">Account Status</th>
+                                    <th className="px-6 py-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-800/60 text-slate-300 font-medium">
+                                {filteredUsers.map(user => (
+                                    <tr key={user._id} className="hover:bg-slate-800/40 transition-colors">
+                                        <td className="px-6 py-4 font-bold text-white">
+                                            {user.name}
+                                        </td>
+                                        <td className="px-6 py-4 text-slate-400">
+                                            <div className="flex items-center space-x-1.5">
+                                                <Mail size={13} className="text-slate-500" />
+                                                <span>{user.email}</span>
+                                            </div>
+                                        </td>
+                                        {activeTab === 'school_student' && (
+                                            <>
+                                                <td className="px-6 py-4">
+                                                    <p className="font-mono text-cyan-400 font-bold text-xs">{user.offlineRollNo || 'Pending Allotment'}</p>
+                                                    <p className="text-[11px] text-slate-400">{user.grade || 'Grade 10'} (Sec {user.section || 'A'})</p>
+                                                </td>
+                                                <td className="px-6 py-4 text-[11px]">
+                                                    <p className="text-slate-200 font-semibold">Father: {user.fatherName || 'N/A'}</p>
+                                                    <p className="text-slate-400">Student Mob: {user.studentMobile || 'N/A'} • Father: {user.fatherMobile || 'N/A'}</p>
+                                                </td>
+                                            </>
+                                        )}
+                                        <td className="px-6 py-4">
+                                            <span className="bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700/60 font-semibold text-[11px]">
+                                                {tabLabels[user.role] || user.role}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {user.approvalStatus === 'Pending_Approval' ? (
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                                    Pending Batch
+                                                </span>
+                                            ) : user.isActive !== false ? (
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                    Active
+                                                </span>
                                             ) : (
-                                                <Lock size={10} className="text-slate-400" />
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                                                    Disabled
+                                                </span>
                                             )}
-                                        </div>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Course Access Button */}
-                        <button
-                            onClick={() => setShowCoursePanel(v => !v)}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl border font-black text-[10px] uppercase tracking-widest transition-all ${grantedCount > 0
-                                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-                                : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-sky-500/40 hover:text-sky-400'
-                                }`}
-                        >
-                            <BookOpen size={14} />
-                            {grantedCount > 0 ? `${grantedCount} Course${grantedCount > 1 ? 's' : ''} Granted` : 'Grant Courses'}
-                            {showCoursePanel ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
-                        </button>
-                    </>
-                ) : (
-                    <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-3">
-                            <div className={`w-2 h-2 rounded-full ${user.isActive !== false ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500'}`}></div>
-                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${user.isActive !== false ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                {user.isActive !== false ? 'ACTIVE_LINK' : 'TERMINATED'}
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar size={14} className="text-slate-600" />
-                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                {new Date(user.createdAt).toLocaleDateString()}
-                            </span>
-                        </div>
-                    </div>
-                )}
-
-                {/* Override buttons */}
-                <div className="flex items-center gap-3 flex-shrink-0">
-                    <button
-                        onClick={() => onToggleStatus(user._id, user.isActive !== false)}
-                        className={`p-3 rounded-xl border transition-all ${user.isActive === false
-                            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950'
-                            : 'bg-rose-500/10 border-rose-500/30 text-rose-500 hover:bg-rose-500 hover:text-white'}`}
-                        title={user.isActive !== false ? 'Suspend Node' : 'Activate Node'}
-                    >
-                        {user.isActive === false ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
-                    </button>
-                    <button
-                        onClick={() => onDelete(user._id)}
-                        className="p-3 bg-slate-800 rounded-xl text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-transparent hover:border-rose-500/30"
-                        title="Terminate Node Permanently"
-                    >
-                        <Trash2 size={18} />
-                    </button>
-                </div>
-            </div>
-
-            {/* Course Access Panel */}
-            <AnimatePresence>
-                {showCoursePanel && activeTab === 'student' && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden border-t border-slate-800/60"
-                    >
-                        <div className="p-6 bg-slate-950/40">
-                            <div className="flex items-center justify-between mb-4">
-                                <div>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Course Access Control</p>
-                                    <p className="text-[9px] text-slate-600 font-bold mt-0.5">Only selected courses will appear in this student's classroom.</p>
-                                </div>
-                                <button
-                                    onClick={saveCourseAccess}
-                                    disabled={savingCourses}
-                                    className="flex items-center gap-2 px-5 py-2.5 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 text-slate-950 font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
-                                >
-                                    {savingCourses ? <RefreshCw size={12} className="animate-spin" /> : <CheckCircle2 size={12} />}
-                                    Save Access
-                                </button>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {courses.map(course => {
-                                    const isGranted = localGranted.includes(course._id.toString());
-                                    return (
-                                        <button
-                                            key={course._id}
-                                            onClick={() => toggleCourse(course._id)}
-                                            className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all ${isGranted
-                                                ? 'bg-sky-500/10 border-sky-500/40 text-sky-300'
-                                                : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:border-slate-600'
+                                        </td>
+                                        <td className="px-6 py-4 text-right space-x-2">
+                                            <button
+                                                onClick={() => toggleUserStatus(user._id, user.isActive !== false)}
+                                                className={`p-1.5 rounded-lg border transition-colors ${
+                                                    user.isActive !== false
+                                                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
+                                                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
                                                 }`}
-                                        >
-                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center flex-shrink-0 transition-all ${isGranted
-                                                ? 'bg-sky-500 border-sky-400'
-                                                : 'bg-slate-800 border-slate-700'
-                                                }`}>
-                                                {isGranted && <CheckCircle2 size={12} className="text-white" />}
-                                            </div>
-                                            <div className="min-w-0">
-                                                <p className="text-[11px] font-black uppercase tracking-tight truncate">{course.title}</p>
-                                                <p className="text-[9px] font-bold text-slate-600 mt-0.5 uppercase tracking-widest">{course.status}</p>
-                                            </div>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
+                                                title={user.isActive !== false ? 'Deactivate Account' : 'Activate Account'}
+                                            >
+                                                {user.isActive !== false ? <Lock size={14} /> : <Unlock size={14} />}
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteUser(user._id)}
+                                                className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
+                                                title="Delete Account"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 

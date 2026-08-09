@@ -17,12 +17,18 @@ const Enrollment = require('../models/Enrollment');
  */
 exports.getPlatformStats = async (req, res) => {
     try {
-        // Use Promise.allSettled or safe defaults for maximum resilience
+        const PartnerSchool = require('../models/PartnerSchool');
+        const OfflineBatch = require('../models/OfflineBatch');
+
         const [
             totalUsers,
             totalStudents,
             totalMentors,
             totalAssociates,
+            totalSchoolPartners,
+            totalSchoolStudents,
+            totalPartnerSchools,
+            totalOfflineBatches,
             activeCourses,
             totalLeads,
             openTickets
@@ -31,6 +37,10 @@ exports.getPlatformStats = async (req, res) => {
             User.countDocuments({ role: 'student' }).catch(() => 0),
             User.countDocuments({ role: 'mentor' }).catch(() => 0),
             User.countDocuments({ role: 'growth_associate' }).catch(() => 0),
+            User.countDocuments({ role: 'school_partner' }).catch(() => 0),
+            User.countDocuments({ role: 'school_student' }).catch(() => 0),
+            PartnerSchool.countDocuments().catch(() => 0),
+            OfflineBatch.countDocuments().catch(() => 0),
             Course.countDocuments({ isActive: true }).catch(() => 0),
             Lead.countDocuments().catch(() => 0),
             SupportTicket.countDocuments({ status: { $ne: 'resolved' } }).catch(() => 0)
@@ -95,6 +105,10 @@ exports.getPlatformStats = async (req, res) => {
                 totalStudents,
                 totalMentors,
                 totalAssociates,
+                totalSchoolPartners,
+                totalSchoolStudents,
+                totalPartnerSchools,
+                totalOfflineBatches,
                 activeCourses,
                 totalLeads,
                 openTickets,

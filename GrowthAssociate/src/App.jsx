@@ -12,6 +12,7 @@ import DiscussionModeration from './pages/DiscussionModeration';
 import StudentList from './pages/StudentList';
 import Escalations from './pages/Escalations';
 import LiveMonitoring from './pages/LiveMonitoring';
+import SchoolPartnerships from './pages/SchoolPartnerships';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             }>
               <Route index element={<Dashboard />} />
               <Route path="support" element={<SupportHub />} />
+              <Route path="school-partnerships" element={<SchoolPartnerships />} />
               <Route path="discussions" element={<DiscussionModeration />} />
               <Route path="students" element={<StudentList />} />
               <Route path="escalations" element={<Escalations />} />

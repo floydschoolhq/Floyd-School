@@ -69,6 +69,8 @@ const allowedOrigins = [
     'http://localhost:5175',
     'http://localhost:5176',
     'http://localhost:5177',
+    'http://localhost:5178',
+    'http://localhost:5179',
     'http://localhost:3000',
 
     // Vercel
@@ -259,6 +261,9 @@ app.use('/api/masterclasses', generalLimiter, require('./routes/masterclassRoute
 app.use('/api/batches', generalLimiter, require('./routes/batchRoutes'));
 app.use('/api/admin', generalLimiter, require('./routes/adminRoutes'));
 app.use('/api/growth', generalLimiter, require('./routes/growthRoutes'));
+app.use('/api/partner-school', generalLimiter, require('./routes/partnerSchoolRoutes'));
+app.use('/api/school-student', generalLimiter, require('./routes/schoolStudentRoutes'));
+app.use('/api/mentor/offline', generalLimiter, require('./routes/offlineMentorRoutes'));
 app.use('/api/support', generalLimiter, require('./routes/supportRoutes'));
 app.use('/api/comments', generalLimiter, require('./routes/commentRoutes'));
 app.use('/api/why-us', generalLimiter, require('./routes/whyUsRoutes'));

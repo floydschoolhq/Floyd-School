@@ -13,18 +13,9 @@ import StudentLeads from './pages/StudentLeads';
 import AssignmentGrading from './pages/AssignmentGrading';
 import SupportTickets from './pages/SupportTickets';
 import RecordingsManagement from './pages/RecordingsManagement';
+import OfflineAttendance from './pages/OfflineAttendance';
+import AttendanceMonitoringSoftware from './pages/AttendanceMonitoringSoftware';
 import GlobalNotificationListener from './components/GlobalNotificationListener';
-
-// Placeholder for other pages
-const Placeholder = ({ title }) => (
-  <div className="flex flex-col items-center justify-center h-full space-y-4">
-    <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">{title}</h2>
-    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Node initialization in progress...</p>
-    <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden">
-      <div className="w-1/3 h-full bg-sky-500 animate-[loading_2s_ease-in-out_infinite]"></div>
-    </div>
-  </div>
-);
 
 function App() {
   return (
@@ -44,6 +35,8 @@ function App() {
               <Route path="courses" element={<CourseManagement />} />
               <Route path="assignments" element={<AssignmentGrading />} />
               <Route path="live" element={<LiveClassCenter />} />
+              <Route path="offline-attendance" element={<OfflineAttendance />} />
+              <Route path="attendance-monitoring" element={<AttendanceMonitoringSoftware />} />
               <Route path="leads" element={<StudentLeads />} />
               <Route path="support" element={<SupportTickets />} />
               <Route path="recordings" element={<RecordingsManagement />} />

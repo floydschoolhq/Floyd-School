@@ -19,8 +19,47 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['student', 'mentor', 'admin', 'growth_associate'],
+        enum: ['student', 'mentor', 'admin', 'growth_associate', 'school_partner', 'school_student'],
         default: 'student',
+    },
+    schoolId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PartnerSchool',
+        default: null
+    },
+    batchId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'OfflineBatch',
+        default: null
+    },
+    offlineRollNo: {
+        type: String,
+        default: null
+    },
+    grade: {
+        type: String,
+        default: null
+    },
+    section: {
+        type: String,
+        default: null
+    },
+    fatherName: {
+        type: String,
+        default: null
+    },
+    studentMobile: {
+        type: String,
+        default: null
+    },
+    fatherMobile: {
+        type: String,
+        default: null
+    },
+    approvalStatus: {
+        type: String,
+        enum: ['Pending_Approval', 'Approved', 'Rejected'],
+        default: 'Approved'
     },
     permissions: {
         canAccessCourses: { type: Boolean, default: false },

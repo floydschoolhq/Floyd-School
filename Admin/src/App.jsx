@@ -25,7 +25,8 @@ import StudentRegistrations from './pages/StudentRegistrations';
 import RecordingsManagement from './pages/RecordingsManagement';
 import PaymentTracking from './pages/PaymentTracking';
 import GuestDetailsPage from './pages/GuestDetailsPage';
-
+import OfflineSchools from './pages/OfflineSchools';
+import AttendanceMonitoringSoftware from '../../Mentor/src/pages/AttendanceMonitoringSoftware';
 
 function App() {
   return (
@@ -41,9 +42,10 @@ function App() {
                 <MainLayout />
               </ProtectedRoute>
             }>
-              <Route index element={<PlatformAnalytics />} /> {/* Keep index for default, or change to analytics */}
+              <Route index element={<PlatformAnalytics />} />
               <Route path="analytics" element={<PlatformAnalytics />} />
               <Route path="users" element={<UserGovernance />} />
+              <Route path="attendance-monitoring" element={<AttendanceMonitoringSoftware />} />
               <Route path="requests" element={<AccessRequests />} />
               <Route path="student-registrations" element={<StudentRegistrations />} />
               <Route path="guest-details" element={<GuestDetailsPage />} />
@@ -52,6 +54,7 @@ function App() {
               <Route path="leads" element={<LeadIntelligence />} />
               <Route path="chatbot-leads" element={<ChatbotLeadsPage />} />
               <Route path="school-partnership-leads" element={<SchoolPartnershipLeadsPage />} />
+              <Route path="offline-schools" element={<OfflineSchools />} />
               <Route path="hackathon-leads" element={<HackathonLeadsPage />} />
               <Route path="broadcast" element={<GlobalNotifications />} />
               <Route path="success-engine" element={<SuccessEngine />} />

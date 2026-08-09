@@ -15,7 +15,9 @@ import {
     Video,
     DollarSign,
     MessageCircle,
-    Award
+    Award,
+    School,
+    BarChart3
 } from 'lucide-react';
 import { UserPlus } from 'lucide-react';
 import BrandLogo from '../common/BrandLogo';
@@ -27,6 +29,7 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <Activity size={20} />, label: 'Analytics', path: '/' },
         { icon: <Users size={20} />, label: 'User Governance', path: '/users' },
+        { icon: <BarChart3 size={20} />, label: 'Attendance Software', path: '/attendance-monitoring' },
         { icon: <ShieldCheck size={20} />, label: 'Access Requests', path: '/requests' },
         { icon: <GraduationCap size={20} />, label: 'Student Registrations', path: '/student-registrations' },
         { icon: <UserPlus size={20} />, label: 'Guest Details', path: '/guest-details' },
@@ -35,6 +38,7 @@ const Sidebar = () => {
         { icon: <Target size={20} />, label: 'Lead Intel', path: '/leads' },
         { icon: <MessageCircle size={20} />, label: 'Chatbot Leads', path: '/chatbot-leads' },
         { icon: <ShieldCheck size={20} />, label: 'School Partners', path: '/school-partnership-leads' },
+        { icon: <School size={20} />, label: 'Offline Schools', path: '/offline-schools' },
         { icon: <Award size={20} />, label: 'Hackathon Leads', path: '/hackathon-leads' },
         { icon: <TrendingUp size={20} />, label: 'Success Engine', path: '/success-engine' },
         { icon: <Monitor size={20} />, label: 'Live Monitor', path: '/monitoring' },
@@ -45,21 +49,21 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="w-64 h-screen bg-[#0f172a] text-slate-400 flex flex-col border-r border-slate-800">
-            <div className="p-8">
+        <div className="w-64 h-screen bg-slate-900 text-slate-400 flex flex-col border-r border-slate-800 shrink-0">
+            <div className="p-6">
                 <BrandLogo size="md" suffix="Admin" />
-                <p className="text-[10px] font-black text-sky-500/60 uppercase tracking-[0.3em] mt-3 ml-1">Root Authority</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Root Controller Authority</p>
             </div>
 
-            <nav className="flex-1 px-4 py-6 space-y-2">
+            <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
                 {menuItems.map((item) => (
                     <NavLink
                         key={item.path}
                         to={item.path}
                         className={({ isActive }) =>
-                            `flex items-center gap-3 px-4 py-3 rounded-2xl font-bold transition-all text-sm uppercase tracking-widest ${isActive
-                                ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20 shadow-[0_0_20px_rgba(56,189,248,0.1)]'
-                                : 'hover:bg-slate-800 hover:text-white'
+                            `flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all text-xs uppercase tracking-wider ${isActive
+                                ? 'bg-slate-800 text-white border border-slate-700'
+                                : 'hover:bg-slate-800/60 hover:text-white'
                             }`
                         }
                     >
@@ -69,13 +73,13 @@ const Sidebar = () => {
                 ))}
             </nav>
 
-            <div className="p-6 border-t border-slate-800">
+            <div className="p-4 border-t border-slate-800">
                 <button
                     onClick={logout}
-                    className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl font-black text-xs uppercase tracking-widest text-rose-500 hover:bg-rose-500/10 transition-all border border-transparent hover:border-rose-500/20"
+                    className="flex items-center gap-3 w-full px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-slate-400 hover:bg-slate-800 hover:text-white transition-all"
                 >
                     <LogOut size={18} />
-                    Safe Terminate
+                    Logout
                 </button>
             </div>
         </div>
