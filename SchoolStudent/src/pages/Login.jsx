@@ -13,6 +13,8 @@ const Login = () => {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
 
+  const [isManualSchool, setIsManualSchool] = useState(false);
+
   // Sign Up Form State
   const [signUpData, setSignUpData] = useState({
     name: '',
@@ -40,10 +42,12 @@ const Login = () => {
         if (res.data.data?.length > 0) {
           setSignUpData(prev => ({ ...prev, schoolId: res.data.data[0]._id }));
         } else {
+          setIsManualSchool(true);
           setSignUpData(prev => ({ ...prev, schoolId: 'other' }));
         }
       } catch (error) {
         console.error('Error fetching public schools:', error);
+        setIsManualSchool(true);
         setSignUpData(prev => ({ ...prev, schoolId: 'other' }));
       }
     };
@@ -77,18 +81,21 @@ const Login = () => {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    if (!signUpData.schoolId) {
+    if (!isManualSchool && !signUpData.schoolId) {
       addToast('Please select your school or enter school name manually', 'error');
       return;
     }
-    if (signUpData.schoolId === 'other' && !signUpData.schoolNameManual.trim()) {
-      addToast('Please enter your school name manually', 'error');
+    if (isManualSchool && !signUpData.schoolNameManual.trim()) {
+      addToast('Please type your school name in the input box', 'error');
       return;
     }
 
     setLoading(true);
     try {
-      const res = await api.post('/school-student/register', signUpData);
+      const res = await api.post('/school-student/register', {
+        ...signUpData,
+        schoolId: isManualSchool ? 'other' : signUpData.schoolId
+      });
       login(res.data.data, res.data.token);
       addToast('Registration submitted! Awaiting mentor batch allotment.', 'success');
       navigate('/');
@@ -178,35 +185,61 @@ const Login = () => {
           /* New Student Registration Form */
           <form onSubmit={handleSignUpSubmit} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">Select School Name</label>
-              <div className="relative">
-                <Building2 className="absolute left-3 top-2 text-slate-400" size={14} />
-                <select
-                  value={signUpData.schoolId}
-                  onChange={(e) => setSignUpData({ ...signUpData, schoolId: e.target.value })}
-                  className="w-full bg-white border border-slate-300 rounded pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-medium"
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                  {isManualSchool ? 'Type School Name Manually' : 'Select School Name'}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isManualSchool) {
+                      setIsManualSchool(false);
+                      setSignUpData(prev => ({ ...prev, schoolId: schools[0]?._id || '' }));
+                    } else {
+                      setIsManualSchool(true);
+                      setSignUpData(prev => ({ ...prev, schoolId: 'other' }));
+                    }
+                  }}
+                  className="text-[11px] font-semibold text-slate-600 hover:text-slate-900 underline"
                 >
-                  {schools.map(s => (
-                    <option key={s._id} value={s._id}>{s.name} ({s.city})</option>
-                  ))}
-                  <option value="other">✏️ Other / Enter School Name Manually...</option>
-                </select>
+                  {isManualSchool ? '← Choose from Partner Schools list' : '✏️ Type School Name Manually'}
+                </button>
+              </div>
+
+              <div className="relative">
+                <Building2 className="absolute left-3 top-2.5 text-slate-400" size={14} />
+                {isManualSchool ? (
+                  <input
+                    type="text"
+                    required
+                    autoFocus
+                    value={signUpData.schoolNameManual}
+                    onChange={(e) => setSignUpData({ ...signUpData, schoolNameManual: e.target.value })}
+                    placeholder="Type your school name here (e.g. St. Xavier's High School)..."
+                    className="w-full bg-white border border-slate-300 rounded pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-semibold"
+                  />
+                ) : (
+                  <select
+                    value={signUpData.schoolId}
+                    onChange={(e) => {
+                      if (e.target.value === 'other') {
+                        setIsManualSchool(true);
+                        setSignUpData({ ...signUpData, schoolId: 'other' });
+                      } else {
+                        setIsManualSchool(false);
+                        setSignUpData({ ...signUpData, schoolId: e.target.value });
+                      }
+                    }}
+                    className="w-full bg-white border border-slate-300 rounded pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-medium"
+                  >
+                    {schools.map(s => (
+                      <option key={s._id} value={s._id}>{s.name} ({s.city})</option>
+                    ))}
+                    <option value="other">✏️ Other / Type School Name Manually...</option>
+                  </select>
+                )}
               </div>
             </div>
-
-            {signUpData.schoolId === 'other' && (
-              <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">Enter Your School Name</label>
-                <input
-                  type="text"
-                  required
-                  value={signUpData.schoolNameManual}
-                  onChange={(e) => setSignUpData({ ...signUpData, schoolNameManual: e.target.value })}
-                  placeholder="e.g. St. Xavier's High School, Delhi"
-                  className="w-full bg-white border border-slate-300 rounded px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-semibold"
-                />
-              </div>
-            )}
 
             <div>
               <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">Student Full Name</label>
