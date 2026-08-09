@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
         ref: 'PartnerSchool',
         default: null
     },
+    schoolNameManual: {
+        type: String,
+        default: null
+    },
     batchId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'OfflineBatch',

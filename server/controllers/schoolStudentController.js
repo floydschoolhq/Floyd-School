@@ -33,7 +33,8 @@ const registerSchoolStudent = async (req, res) => {
             fatherName,
             studentMobile,
             fatherMobile,
-            schoolId
+            schoolId,
+            schoolNameManual
         } = req.body;
 
         const userExists = await User.findOne({ email: email.toLowerCase().trim() });
@@ -41,12 +42,15 @@ const registerSchoolStudent = async (req, res) => {
             return res.status(400).json({ success: false, message: 'An account with this email address already exists.' });
         }
 
+        const effectiveSchoolId = (schoolId && schoolId !== 'other') ? schoolId : null;
+
         const student = await User.create({
             name,
             email: email.toLowerCase().trim(),
             password: password || 'password123',
             role: 'school_student',
-            schoolId,
+            schoolId: effectiveSchoolId,
+            schoolNameManual: schoolNameManual || null,
             batchId: null,
             offlineRollNo: null,
             grade: grade || 'Grade 10',

@@ -23,7 +23,8 @@ const Login = () => {
     fatherName: '',
     studentMobile: '',
     fatherMobile: '',
-    schoolId: ''
+    schoolId: '',
+    schoolNameManual: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -38,9 +39,12 @@ const Login = () => {
         setSchools(res.data.data || []);
         if (res.data.data?.length > 0) {
           setSignUpData(prev => ({ ...prev, schoolId: res.data.data[0]._id }));
+        } else {
+          setSignUpData(prev => ({ ...prev, schoolId: 'other' }));
         }
       } catch (error) {
         console.error('Error fetching public schools:', error);
+        setSignUpData(prev => ({ ...prev, schoolId: 'other' }));
       }
     };
     fetchSchools();
@@ -74,7 +78,11 @@ const Login = () => {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     if (!signUpData.schoolId) {
-      addToast('Please select your partner school from the dropdown', 'error');
+      addToast('Please select your school or enter school name manually', 'error');
+      return;
+    }
+    if (signUpData.schoolId === 'other' && !signUpData.schoolNameManual.trim()) {
+      addToast('Please enter your school name manually', 'error');
       return;
     }
 
@@ -176,14 +184,29 @@ const Login = () => {
                 <select
                   value={signUpData.schoolId}
                   onChange={(e) => setSignUpData({ ...signUpData, schoolId: e.target.value })}
-                  className="w-full bg-white border border-slate-300 rounded pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800"
+                  className="w-full bg-white border border-slate-300 rounded pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-medium"
                 >
                   {schools.map(s => (
                     <option key={s._id} value={s._id}>{s.name} ({s.city})</option>
                   ))}
+                  <option value="other">✏️ Other / Enter School Name Manually...</option>
                 </select>
               </div>
             </div>
+
+            {signUpData.schoolId === 'other' && (
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">Enter Your School Name</label>
+                <input
+                  type="text"
+                  required
+                  value={signUpData.schoolNameManual}
+                  onChange={(e) => setSignUpData({ ...signUpData, schoolNameManual: e.target.value })}
+                  placeholder="e.g. St. Xavier's High School, Delhi"
+                  className="w-full bg-white border border-slate-300 rounded px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-slate-800 font-semibold"
+                />
+              </div>
+            )}
 
             <div>
               <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">Student Full Name</label>

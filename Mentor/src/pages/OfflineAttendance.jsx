@@ -261,7 +261,7 @@ const OfflineAttendance = () => {
                 <div className="space-y-0.5">
                   <p className="font-bold text-slate-900">{pStudent.name}</p>
                   <p className="text-slate-600">
-                    School: <strong className="text-slate-900">{pStudent.schoolId?.name || 'Partner School'}</strong> • {pStudent.grade} (Sec {pStudent.section || 'A'})
+                    School: <strong className="text-slate-900">{pStudent.schoolId?.name || pStudent.schoolNameManual || 'Partner School'}</strong> • {pStudent.grade} (Sec {pStudent.section || 'A'})
                   </p>
                   <p className="text-[11px] text-slate-500">
                     Email: {pStudent.email} • Student Mob: {pStudent.studentMobile || 'N/A'} • Father: {pStudent.fatherName || 'N/A'} ({pStudent.fatherMobile || 'N/A'})
