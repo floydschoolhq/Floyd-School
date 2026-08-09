@@ -3,7 +3,7 @@ import api from '../api/axios';
 import io from 'socket.io-client';
 import { Clock, MapPin, Calendar, ShieldCheck } from 'lucide-react';
 
-const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', { autoConnect: false });
+const socket = io(import.meta.env.VITE_SOCKET_URL || 'https://thinkskool-c0v0.onrender.com', { autoConnect: false });
 
 const BatchSchedule = () => {
   const [data, setData] = useState(null);
