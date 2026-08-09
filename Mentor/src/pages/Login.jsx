@@ -31,93 +31,79 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden font-['Outfit']">
-            {/* Background Orbs */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"></div>
-            </div>
-
+        <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex items-center justify-center p-4">
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-md"
+                className="w-full max-w-md bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-xs space-y-6"
             >
-                <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-sky-500 to-indigo-600 p-0.5 mb-6 shadow-2xl shadow-sky-500/20">
-                        <div className="w-full h-full bg-slate-950 rounded-[inherit] flex items-center justify-center">
-                            <LayoutDashboard size={40} className="text-sky-500" />
+                <div className="text-center space-y-1.5 border-b border-slate-100 pb-4">
+                    <div className="w-12 h-12 rounded-lg bg-slate-900 text-white flex items-center justify-center mx-auto mb-2 font-bold shadow-2xs">
+                        <LayoutDashboard size={24} />
+                    </div>
+                    <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+                        Mentor Portal
+                    </h1>
+                    <p className="text-xs text-slate-500 font-medium">Access your educator command center</p>
+                </div>
+
+                {error && (
+                    <div className="p-3 bg-slate-100 border border-slate-200 rounded-lg flex items-center gap-2 text-slate-800 text-xs font-semibold">
+                        <AlertCircle size={16} className="text-slate-700 shrink-0" />
+                        <span>{error}</span>
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1">Email Terminal</label>
+                        <div className="relative">
+                            <Mail className="absolute left-3 top-2.5 text-slate-400" size={16} />
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="mentor@floydschool.edu"
+                                className="w-full bg-white border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 transition-all font-medium"
+                                required
+                            />
                         </div>
                     </div>
-                    <h1 className="text-4xl font-black text-white tracking-tight mb-2">
-                        Mentor <span className="text-sky-500 font-medium tracking-normal text-2xl align-middle ml-1">Portal</span>
-                    </h1>
-                    <p className="text-slate-400 font-medium">Access your educator command center</p>
-                </div>
 
-                <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl">
-                    {error && (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3 text-rose-500 text-sm font-bold"
-                        >
-                            <AlertCircle size={18} />
-                            {error}
-                        </motion.div>
-                    )}
-
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="space-y-2">
-                            <label className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Email Terminal</label>
-                            <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-sky-500 transition-colors" size={20} />
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="mentor@floydschool.edu"
-                                    className="w-full bg-slate-800/50 border border-slate-700 p-4 pl-12 rounded-2xl text-white font-medium outline-none focus:border-sky-500 focus:bg-slate-800 transition-all placeholder:text-slate-600"
-                                    required
-                                />
-                            </div>
+                    <div>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1">Access Key</label>
+                        <div className="relative">
+                            <Lock className="absolute left-3 top-2.5 text-slate-400" size={16} />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                className="w-full bg-white border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 transition-all font-medium"
+                                required
+                            />
                         </div>
+                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">Access Key</label>
-                            <div className="relative group">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-sky-500 transition-colors" size={20} />
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    className="w-full bg-slate-800/50 border border-slate-700 p-4 pl-12 rounded-2xl text-white font-medium outline-none focus:border-sky-500 focus:bg-slate-800 transition-all placeholder:text-slate-600"
-                                    required
-                                />
-                            </div>
-                        </div>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center justify-center gap-2 transition-all disabled:opacity-50 mt-2"
+                    >
+                        {loading ? (
+                            <span>Authenticating...</span>
+                        ) : (
+                            <>
+                                <span>Sign In to Portal</span>
+                                <ArrowRight size={15} />
+                            </>
+                        )}
+                    </button>
+                </form>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-gradient-to-r from-sky-500 to-indigo-600 text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-sky-500/20 hover:shadow-sky-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:translate-y-0"
-                        >
-                            {loading ? (
-                                <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
-                            ) : (
-                                <>
-                                    Initialize Access
-                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                </>
-                            )}
-                        </button>
-                    </form>
+                <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100 font-mono">
+                    &copy; 2026 FLOYD SCHOOL INFRASTRUCTURE
                 </div>
-
-                <p className="text-center mt-8 text-slate-500 text-sm font-bold uppercase tracking-tighter">
-                    &copy; 2025 FLOYD SCHOOL INFRASTRUCTURE v2.4
-                </p>
             </motion.div>
         </div>
     );
