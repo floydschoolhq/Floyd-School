@@ -26,7 +26,7 @@ import RecordingsManagement from './pages/RecordingsManagement';
 import PaymentTracking from './pages/PaymentTracking';
 import GuestDetailsPage from './pages/GuestDetailsPage';
 import OfflineSchools from './pages/OfflineSchools';
-import AttendanceMonitoringSoftware from '../../Mentor/src/pages/AttendanceMonitoringSoftware';
+import AttendanceMonitoringSoftware from './pages/AttendanceMonitoringSoftware';
 
 function App() {
   return (
