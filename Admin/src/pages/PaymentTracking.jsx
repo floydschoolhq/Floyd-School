@@ -284,7 +284,7 @@ const PaymentTracking = () => {
         <div className="space-y-6">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase font-['Outfit']">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                         Payment <span className="text-blue-600">Tracking</span>
                     </h2>
                     <p className="text-slate-500 font-medium mt-2 text-sm">

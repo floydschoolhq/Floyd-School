@@ -68,7 +68,7 @@ const AccessRequests = () => {
         <div className="space-y-6">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-['Outfit']">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                         Access <span className="text-blue-600">Requests</span>
                     </h2>
                     <p className="text-slate-500 font-medium text-xs mt-1">
