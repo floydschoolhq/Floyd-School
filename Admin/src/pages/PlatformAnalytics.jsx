@@ -3,12 +3,9 @@ import {
     Users,
     TrendingUp,
     DollarSign,
-    Monitor,
-    Globe,
     Zap,
-    ArrowUpRight,
-    ChevronRight,
-    Activity
+    Activity,
+    Radio
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../api/axios';
@@ -55,18 +52,18 @@ const PlatformAnalytics = () => {
     };
 
     const statConfig = [
-        { key: 'totalUsers', label: 'Total Users', growth: '+12%', icon: <Users size={24} />, color: 'sky' },
-        { key: 'totalEnrollments', label: 'Total Enrollments', growth: '+8%', icon: <DollarSign size={24} />, color: 'emerald', prefix: '' },
-        { key: 'totalStudents', label: 'Active Students', growth: '+24%', icon: <Activity size={24} />, color: 'amber' },
-        { key: 'openTickets', label: 'Pending Support', growth: '-5%', icon: <Zap size={24} />, color: 'indigo' },
+        { key: 'totalUsers', label: 'Total Users', growth: '+12%', icon: <Users size={22} />, color: 'blue' },
+        { key: 'totalEnrollments', label: 'Total Enrollments', growth: '+8%', icon: <DollarSign size={22} />, color: 'emerald', prefix: '' },
+        { key: 'totalStudents', label: 'Active Students', growth: '+24%', icon: <Activity size={22} />, color: 'amber' },
+        { key: 'openTickets', label: 'Pending Support', growth: '-5%', icon: <Zap size={22} />, color: 'indigo' },
     ];
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="w-16 h-16 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
-                    <p className="text-slate-500 font-black uppercase tracking-[0.3em] animate-pulse">Synchronizing Core Metrics...</p>
+            <div className="min-h-[70vh] flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
+                    <p className="text-slate-400 font-bold uppercase text-xs tracking-widest animate-pulse">Synchronizing Core Metrics...</p>
                 </div>
             </div>
         );
@@ -74,15 +71,15 @@ const PlatformAnalytics = () => {
 
     if (error || !stats) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950">
-                <div className="bg-slate-900/50 border border-rose-500/30 p-12 rounded-[3rem] text-center max-w-md backdrop-blur-xl">
-                    <Activity size={48} className="text-rose-500 mx-auto mb-6" />
-                    <h2 className="text-2xl font-black text-white uppercase mb-2">Telemetry Failure</h2>
-                    <p className="text-rose-500 font-bold mb-2 uppercase text-[10px] tracking-widest">{error}</p>
-                    <p className="text-slate-400 font-bold mb-8">System encountered a critical error while synchronizing platform diagnostics.</p>
+            <div className="min-h-[70vh] flex items-center justify-center">
+                <div className="bg-white border border-rose-200 p-8 rounded-3xl text-center max-w-md shadow-sm">
+                    <Activity size={40} className="text-rose-500 mx-auto mb-4" />
+                    <h2 className="text-xl font-bold text-slate-900 mb-1">Telemetry Failure</h2>
+                    <p className="text-rose-600 font-bold mb-2 uppercase text-[10px] tracking-widest">{error}</p>
+                    <p className="text-slate-500 text-sm font-medium mb-6">System encountered an error while synchronizing platform diagnostics.</p>
                     <button
                         onClick={fetchStats}
-                        className="w-full bg-white text-slate-950 p-4 rounded-2xl font-black uppercase tracking-widest hover:bg-sky-500 hover:text-white transition-all"
+                        className="w-full bg-slate-900 text-white p-3.5 rounded-2xl font-bold uppercase tracking-wider text-xs hover:bg-blue-600 transition-all cursor-pointer"
                     >
                         Force Re-Sync
                     </button>
@@ -92,95 +89,101 @@ const PlatformAnalytics = () => {
     }
 
     return (
-        <div className="space-y-12 pb-20">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-8 pb-12">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tight italic uppercase">Platform <span className="text-sky-500">Analytics</span></h2>
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-xs mt-1">Global System Performance & User Growth Matrix</p>
+                    <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Platform <span className="text-blue-600">Analytics</span></h2>
+                    <p className="text-slate-500 font-bold text-xs uppercase tracking-wider mt-1">Global System Performance & User Growth Matrix</p>
                 </div>
-                <div className="flex items-center gap-4 bg-slate-900/50 p-2 rounded-2xl border border-slate-800">
-                    <div className="px-4 py-2 bg-slate-800 rounded-xl text-[10px] font-black text-sky-400 uppercase tracking-widest">Live Feed</div>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-2"></div>
+                <div className="flex items-center gap-3 bg-white px-3.5 py-2 rounded-2xl border border-slate-200 shadow-xs">
+                    <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                    <span className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Live Platform Feed</span>
                 </div>
             </header>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {statConfig.map((stat, idx) => (
                     <motion.div
                         key={stat.label}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 p-8 rounded-[2.5rem] relative overflow-hidden group hover:border-sky-500/30 transition-all"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.08 }}
+                        className="bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs hover:border-slate-300 hover:shadow-md transition-all group"
                     >
-                        <div className={
-                            stat.color === 'sky' ? 'w-14 h-14 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center mb-6 border border-sky-500/20' :
-                                stat.color === 'emerald' ? 'w-14 h-14 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20' :
-                                    stat.color === 'amber' ? 'w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mb-6 border border-amber-500/20' :
-                                        'w-14 h-14 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20'
-                        }>
-                            {stat.icon}
-                        </div>
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{stat.label}</p>
-                        <div className="flex items-end gap-3 mt-1">
-                            <p className="text-3xl font-black text-white tracking-tighter">
-                                {stat.prefix}{stats?.[stat.key]?.toLocaleString() || '0'}
-                            </p>
-                            <span className={`text-[10px] font-black ${stat.growth?.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'} mb-1`}>
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={
+                                stat.color === 'blue' ? 'w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 group-hover:scale-105 transition-transform' :
+                                    stat.color === 'emerald' ? 'w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center border border-emerald-100 group-hover:scale-105 transition-transform' :
+                                        stat.color === 'amber' ? 'w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center border border-amber-100 group-hover:scale-105 transition-transform' :
+                                            'w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center border border-indigo-100 group-hover:scale-105 transition-transform'
+                            }>
+                                {stat.icon}
+                            </div>
+                            <span className={`text-[10px] font-black px-2.5 py-1 rounded-full ${stat.growth?.startsWith('+') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-rose-50 text-rose-700 border border-rose-100'}`}>
                                 {stat.growth}
                             </span>
                         </div>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                        <p className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+                            {stat.prefix}{stats?.[stat.key]?.toLocaleString() || '0'}
+                        </p>
                     </motion.div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div className="lg:col-span-8 bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-[3rem] p-10 relative overflow-hidden">
-                    <div className="flex items-center justify-between mb-10">
-                        <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-3">
-                            <TrendingUp className="text-sky-400" />
-                            New Signups (7d): <span className="text-white">{stats?.newSignups || 0}</span>
+            {/* Graphs & Live Stream */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+                    <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+                        <h3 className="text-base font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                            <TrendingUp className="text-blue-600" size={20} />
+                            New Signups (Last 7 Days)
                         </h3>
+                        <span className="text-xs font-black text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-100">
+                            {stats?.newSignups || 0} Total
+                        </span>
                     </div>
 
-                    <div className="h-64 flex items-end justify-between gap-4 px-4 pb-4">
+                    <div className="h-64 flex items-end justify-between gap-3 px-2 pb-2">
                         {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
-                            <div key={i} className="flex-1 flex flex-col items-center gap-3 group">
-                                <div className="w-full relative">
+                            <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
+                                <div className="w-full bg-slate-100 rounded-xl h-48 flex items-end p-1">
                                     <motion.div
                                         initial={{ height: 0 }}
                                         animate={{ height: `${h}%` }}
-                                        className="w-full bg-gradient-to-t from-sky-600/20 to-sky-500 rounded-t-xl group-hover:from-sky-500 group-hover:to-sky-400 transition-all"
+                                        transition={{ duration: 0.6, delay: i * 0.05 }}
+                                        className="w-full bg-gradient-to-t from-blue-600 to-indigo-500 rounded-lg group-hover:from-blue-700 group-hover:to-indigo-600 transition-all shadow-xs"
                                     ></motion.div>
                                 </div>
-                                <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Day {i + 1}</span>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Day {i + 1}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8">
-                        <h3 className="text-sm font-black text-white uppercase tracking-[0.2em] mb-8 flex items-center justify-between">
-                            Live Terminal
-                            <span className="w-2 h-2 bg-sky-500 rounded-full animate-ping"></span>
+                <div className="lg:col-span-4 space-y-6">
+                    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs">
+                        <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-6 flex items-center justify-between pb-3 border-b border-slate-100">
+                            Live Activity Stream
+                            <Radio size={14} className="text-blue-600 animate-pulse" />
                         </h3>
-                        <div className="space-y-6">
+                        <div className="space-y-4 max-h-[280px] overflow-y-auto pr-1">
                             {stats?.recentEvents?.length > 0 ? stats.recentEvents.map((ev, i) => (
-                                <div key={i} className="flex gap-4">
-                                    <div className={`mt-1 w-1.5 h-1.5 rounded-full shrink-0 ${ev.severity === 'High' ? 'bg-rose-500' : ev.severity === 'Info' ? 'bg-sky-500' : 'bg-slate-600'
+                                <div key={i} className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors">
+                                    <div className={`mt-1 w-2 h-2 rounded-full shrink-0 ${ev.severity === 'High' ? 'bg-rose-500' : ev.severity === 'Info' ? 'bg-blue-500' : 'bg-slate-400'
                                         }`}></div>
-                                    <div className="space-y-1">
-                                        <p className="text-xs font-bold text-slate-300 leading-tight">{ev.event}</p>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">{ev.type}</span>
-                                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">• {formatTimeAgo(ev.time)}</span>
+                                    <div className="space-y-0.5 flex-1 min-w-0">
+                                        <p className="text-xs font-bold text-slate-800 leading-tight truncate">{ev.event}</p>
+                                        <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-wider">
+                                            <span>{ev.type}</span>
+                                            <span>•</span>
+                                            <span>{formatTimeAgo(ev.time)}</span>
                                         </div>
                                     </div>
                                 </div>
                             )) : (
-                                <p className="text-xs text-slate-500 font-bold">No recent telemetry available.</p>
+                                <p className="text-xs text-slate-400 font-medium text-center py-8">No recent telemetry available.</p>
                             )}
                         </div>
                     </div>

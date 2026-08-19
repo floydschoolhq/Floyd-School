@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
 import {
-    Settings as SettingsIcon,
-    Lock,
-    Unlock,
     Power,
     ShieldAlert,
     Globe,
     Mail,
-    Phone,
-    Share2,
-    Save,
+    Lock,
+    Unlock,
     Activity,
     ShieldCheck
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
 
 const SystemSettings = () => {
@@ -75,67 +69,69 @@ const SystemSettings = () => {
     };
 
     if (loading) return (
-        <div className="flex items-center justify-center h-full">
-            <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+        <div className="flex items-center justify-center h-64">
+            <div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
     );
 
     if (!settings) return (
         <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-4">
             <ShieldAlert size={48} className="text-rose-500 opacity-20" />
-            <h2 className="text-xl font-black text-white uppercase italic">Nexus Link Severed</h2>
-            <p className="text-slate-500 text-sm max-w-xs uppercase tracking-widest font-bold">Failed to synchronize with system core.</p>
-            <button onClick={fetchSettings} className="px-6 py-2 bg-sky-500 text-white rounded-xl font-bold uppercase text-[10px] tracking-widest">Retry Sync</button>
+            <h2 className="text-xl font-bold text-slate-900">System Link Error</h2>
+            <p className="text-slate-500 text-xs">Failed to synchronize with system settings.</p>
+            <button onClick={fetchSettings} className="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-xs cursor-pointer">Retry Sync</button>
         </div>
     );
 
     return (
-        <div className="space-y-12 pb-20">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-6 pb-12">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tight italic uppercase">System <span className="text-sky-500">Settings</span></h2>
-                    <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-xs mt-1">Core Architecture & Governance Control</p>
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        System <span className="text-blue-600">Settings</span>
+                    </h2>
+                    <p className="text-slate-500 font-medium text-xs mt-1">Core Architecture & Governance Control</p>
                 </div>
                 {saving && (
-                    <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                        <Activity size={14} className="text-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Syncing...</span>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+                        <Activity size={14} className="text-emerald-600 animate-pulse" />
+                        <span className="text-xs font-bold text-emerald-700">Syncing changes...</span>
                     </div>
                 )}
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Maintenance Mode & Module Locks */}
-                <div className="lg:col-span-8 space-y-8">
+                <div className="lg:col-span-8 space-y-6">
                     {/* Maintenance Mode Card */}
-                    <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 p-8 rounded-[2.5rem] relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8">
+                    <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs relative overflow-hidden">
+                        <div className="absolute top-6 right-6">
                             <button
                                 onClick={() => handleUpdate({
                                     maintenanceMode: { isActive: !settings.maintenanceMode.isActive }
                                 })}
-                                className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${settings.maintenanceMode.isActive
-                                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
-                                    : 'bg-slate-800 text-slate-500 hover:text-white'
+                                className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all cursor-pointer ${settings.maintenanceMode.isActive
+                                    ? 'bg-rose-600 text-white shadow-md shadow-rose-500/20'
+                                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                                     }`}
                             >
-                                <Power size={24} />
+                                <Power size={20} />
                             </button>
                         </div>
 
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 bg-rose-500/10 text-rose-500 rounded-2xl flex items-center justify-center border border-rose-500/20">
-                                <ShieldAlert size={24} />
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center border border-rose-100">
+                                <ShieldAlert size={20} />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-white uppercase italic">Critical Shutdown</h3>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Platform-wide Maintenance Control</p>
+                                <h3 className="text-base font-bold text-slate-900">Maintenance Mode</h3>
+                                <p className="text-xs text-slate-500 font-medium">Platform-wide Maintenance Access Gate</p>
                             </div>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                             <div>
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Transmission Pulse (Message)</label>
+                                <label className="block text-xs font-bold text-slate-600 mb-1.5">Maintenance Notice Message</label>
                                 <textarea
                                     value={settings.maintenanceMode.message}
                                     onChange={(e) => setSettings({
@@ -143,7 +139,7 @@ const SystemSettings = () => {
                                         maintenanceMode: { ...settings.maintenanceMode, message: e.target.value }
                                     })}
                                     onBlur={() => handleUpdate({ maintenanceMode: { message: settings.maintenanceMode.message } })}
-                                    className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl p-6 text-slate-300 font-medium focus:border-rose-500/30 outline-none transition-all resize-none"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 font-medium focus:bg-white focus:border-blue-500 outline-none transition-all resize-none"
                                     rows="3"
                                 />
                             </div>
@@ -151,36 +147,36 @@ const SystemSettings = () => {
                     </div>
 
                     {/* Module Lifecycle Grid */}
-                    <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 p-8 rounded-[2.5rem]">
-                        <div className="flex items-center gap-4 mb-10">
-                            <div className="w-12 h-12 bg-sky-500/10 text-sky-500 rounded-2xl flex items-center justify-center border border-sky-500/20">
-                                <Lock size={24} />
+                    <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100">
+                                <Lock size={20} />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-white uppercase italic">Modular Locks</h3>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Fine-grained Sector Access Control</p>
+                                <h3 className="text-base font-bold text-slate-900">Modular Access Locks</h3>
+                                <p className="text-xs text-slate-500 font-medium">Fine-grained Sector Access Control</p>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {Object.entries(settings.moduleLocks).map(([key, isLocked]) => (
-                                <div key={key} className="bg-slate-950/50 border border-slate-800 p-6 rounded-3xl flex items-center justify-between group hover:border-sky-500/30 transition-all">
-                                    <div className="flex items-center gap-4">
-                                        <div className={`p-3 rounded-xl ${isLocked ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
-                                            {isLocked ? <Lock size={18} /> : <Unlock size={18} />}
+                                <div key={key} className="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`p-2 rounded-lg ${isLocked ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                                            {isLocked ? <Lock size={16} /> : <Unlock size={16} />}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black text-white uppercase tracking-wider">{key.replace(/([A-Z])/g, ' $1')}</p>
-                                            <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${isLocked ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                            <p className="text-xs font-bold text-slate-900">{key.replace(/([A-Z])/g, ' $1')}</p>
+                                            <p className={`text-[10px] font-bold uppercase tracking-wider mt-0.5 ${isLocked ? 'text-amber-700' : 'text-emerald-700'}`}>
                                                 {isLocked ? 'OFFLINE' : 'OPERATIONAL'}
                                             </p>
                                         </div>
                                     </div>
                                     <button
                                         onClick={() => handleUpdate({ moduleLocks: { [key]: !isLocked } })}
-                                        className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${isLocked
-                                            ? 'bg-emerald-500 text-slate-950'
-                                            : 'bg-slate-800 text-slate-400 hover:text-white'
+                                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${isLocked
+                                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                                             }`}
                                     >
                                         {isLocked ? 'Activate' : 'Halt'}
@@ -190,39 +186,39 @@ const SystemSettings = () => {
                         </div>
                     </div>
 
-                    {/* Virtual Control Terminal (VCT) */}
-                    <div className="bg-[#0b0f19] border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
-                        <div className="bg-slate-900/80 px-8 py-4 border-b border-slate-800 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="flex gap-1.5">
-                                    <div className="w-3 h-3 rounded-full bg-rose-500/50" />
-                                    <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                                    <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
-                                </div>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Secure Terminal Context: vct-01</span>
-                            </div>
+                    {/* Virtual Control Terminal */}
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xs">
+                        <div className="bg-slate-950 px-6 py-3 border-b border-slate-800 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <Activity size={12} className="text-sky-500 animate-pulse" />
-                                <span className="text-[9px] font-black text-sky-500 uppercase tracking-widest">Network Active</span>
+                                <div className="flex gap-1.5">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                                </div>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-2">Diagnostic Terminal</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Activity size={11} className="text-emerald-400 animate-pulse" />
+                                <span className="text-[9px] font-bold text-emerald-400 uppercase">Live</span>
                             </div>
                         </div>
 
-                        <div className="p-8 h-80 overflow-y-auto font-mono text-sm space-y-2 bg-slate-950/50 custom-scrollbar">
-                            <div className="text-emerald-500/80">[SYSTEM] Connection established. Authorization: ROOT_ACCESS</div>
+                        <div className="p-6 h-64 overflow-y-auto font-mono text-xs space-y-1.5 bg-slate-900 text-slate-200">
+                            <div className="text-emerald-400">[SYSTEM] Connection established. Floyd School Admin Shell.</div>
                             <div className="text-slate-500">Type 'help' for available system commands.</div>
                             {terminalOutput.map((line, idx) => (
-                                <div key={idx} className={line.startsWith('>') ? 'text-sky-400' : 'text-slate-300'}>
+                                <div key={idx} className={line.startsWith('>') ? 'text-blue-400' : 'text-slate-300'}>
                                     {line}
                                 </div>
                             ))}
-                            <div className="flex items-center gap-2 pt-2">
-                                <span className="text-sky-500">vct@floydos:~$</span>
+                            <div className="flex items-center gap-2 pt-1">
+                                <span className="text-blue-400">admin@floydschool:~$</span>
                                 <input
                                     type="text"
                                     value={terminalInput}
                                     onChange={(e) => setTerminalInput(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && handleTerminalCommand()}
-                                    className="bg-transparent border-none outline-none text-white w-full"
+                                    className="bg-transparent border-none outline-none text-white w-full font-mono text-xs"
                                     autoFocus
                                 />
                             </div>
@@ -231,34 +227,34 @@ const SystemSettings = () => {
                 </div>
 
                 {/* Platform Identity & Global Metadata */}
-                <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] sticky top-28">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 bg-indigo-500/10 text-indigo-500 rounded-2xl flex items-center justify-center border border-indigo-500/20">
-                                <Globe size={24} />
+                <div className="lg:col-span-4 space-y-6">
+                    <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs sticky top-24">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center border border-indigo-100">
+                                <Globe size={20} />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-white uppercase italic">Metadata</h3>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Sync Site Identity</p>
+                                <h3 className="text-base font-bold text-slate-900">Platform Identity</h3>
+                                <p className="text-xs text-slate-500 font-medium">Sync Site Metadata</p>
                             </div>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                             <div>
-                                <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2">Platform Designation</label>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Platform Designation</label>
                                 <input
                                     type="text"
                                     value={settings.platformName}
                                     onChange={(e) => setSettings({ ...settings, platformName: e.target.value })}
                                     onBlur={() => handleUpdate({ platformName: settings.platformName })}
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs font-bold text-white focus:border-sky-500/30 outline-none transition-all"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-500 outline-none transition-all"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-[9px] font-black text-slate-600 uppercase tracking-widest mb-2">Support Axis (Email)</label>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Support Email</label>
                                 <div className="relative">
-                                    <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" />
+                                    <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
                                         type="email"
                                         value={settings.globalConfig.supportEmail}
@@ -267,17 +263,17 @@ const SystemSettings = () => {
                                             globalConfig: { ...settings.globalConfig, supportEmail: e.target.value }
                                         })}
                                         onBlur={() => handleUpdate({ globalConfig: { supportEmail: settings.globalConfig.supportEmail } })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 pl-10 text-xs font-bold text-white focus:border-sky-500/30 outline-none transition-all"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 pl-9 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-500 outline-none transition-all"
                                     />
                                 </div>
                             </div>
 
-                            <div className="pt-8 border-t border-slate-800">
-                                <div className="flex items-center gap-4 p-4 bg-sky-500/5 border border-sky-500/10 rounded-2xl">
-                                    <ShieldCheck size={20} className="text-sky-400" />
+                            <div className="pt-4 border-t border-slate-100">
+                                <div className="flex items-center gap-3 p-3 bg-blue-50 border border-blue-100 rounded-xl">
+                                    <ShieldCheck size={18} className="text-blue-600" />
                                     <div>
-                                        <p className="text-[10px] font-black text-sky-400 uppercase tracking-widest leading-none">Status Level: Admin</p>
-                                        <p className="text-[9px] font-bold text-slate-600 mt-1 uppercase">Root Authorization Active</p>
+                                        <p className="text-xs font-bold text-blue-700 leading-none">Authority: Admin</p>
+                                        <p className="text-[10px] text-slate-500 mt-0.5">Root Permissions Active</p>
                                     </div>
                                 </div>
                             </div>

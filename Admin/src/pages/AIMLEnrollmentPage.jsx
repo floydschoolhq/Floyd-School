@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
     Cpu, 
-    Users, 
     Save, 
     AlertCircle, 
-    TrendingUp, 
-    ShieldCheck,
     ArrowRight,
     Zap
 } from 'lucide-react';
@@ -40,7 +37,7 @@ const AIMLEnrollmentPage = () => {
                     });
                 }
             } catch (err) {
-                toast.error('Failed to initialize AI & ML Matrix');
+                toast.error('Failed to load AI & ML course');
             } finally {
                 setLoading(false);
             }
@@ -57,159 +54,133 @@ const AIMLEnrollmentPage = () => {
             toast.success('AI & ML Enrollment Matrix Updated');
             setCourse({ ...course, ...stats });
         } catch (err) {
-            toast.error('Failed to sync changes with Nexus');
+            toast.error('Failed to sync changes');
         } finally {
             setIsSaving(false);
         }
     };
 
     if (loading) return (
-        <div className="flex items-center justify-center h-full bg-[#0b0f1a]">
-            <div className="relative">
-                <div className="w-20 h-20 border-4 border-sky-500/10 border-t-sky-500 rounded-full animate-spin"></div>
-                <Cpu className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sky-500 animate-pulse" size={24} />
-            </div>
+        <div className="flex items-center justify-center h-64">
+            <div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
     );
 
     if (!course) return (
-        <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
-            <div className="p-6 bg-rose-500/10 rounded-full">
-                <AlertCircle size={48} className="text-rose-500" />
-            </div>
-            <h2 className="text-2xl font-black text-white uppercase tracking-tighter italic">Course ID Missing</h2>
-            <p className="text-slate-500 font-bold max-w-md">No AI & ML course detected in the curriculum database.</p>
+        <div className="flex flex-col items-center justify-center h-64 text-center space-y-3">
+            <AlertCircle size={40} className="text-rose-500" />
+            <h2 className="text-xl font-bold text-slate-900">Course Not Found</h2>
+            <p className="text-slate-500 text-xs">No AI & ML course detected in curriculum.</p>
         </div>
     );
 
     const seatsLeft = stats.totalSeats - stats.manualEnrollmentCount;
 
     return (
-        <div className="max-w-6xl mx-auto space-y-12">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                        <div className="p-3 bg-sky-500/10 rounded-2xl border border-sky-500/20">
-                            <Cpu className="text-sky-400" size={32} />
-                        </div>
-                        <h1 className="text-5xl font-black text-white tracking-tighter uppercase italic">
-                            AI & ML <span className="text-sky-500 not-italic">Matrix</span>
+        <div className="space-y-6">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div className="flex items-center gap-2.5">
+                        <Cpu className="text-blue-600" size={28} />
+                        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                            AI & ML <span className="text-blue-600">Matrix</span>
                         </h1>
                     </div>
-                    <p className="text-slate-500 font-black uppercase tracking-[0.4em] text-[10px] ml-1">
-                        Dynamic Enrollment & Capacity Protocol
+                    <p className="text-slate-500 text-xs font-medium mt-1">
+                        Dynamic Enrollment & Capacity Protocol Management
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 bg-slate-900/50 p-2 rounded-[2rem] border border-slate-800">
-                    <div className="px-6 py-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                        <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Live Sync Enabled</span>
-                    </div>
+                <div className="px-3.5 py-1.5 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span className="text-xs font-bold text-emerald-700">Live Sync Enabled</span>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-8">
-                    <motion.div 
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="bg-[#0f172a] border border-slate-800 rounded-[3rem] p-10 relative overflow-hidden group"
-                    >
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-[80px] -mr-32 -mt-32"></div>
-                        <div className="relative z-10 space-y-12">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-xl font-black text-white uppercase tracking-tight italic">Enrollment Management</h3>
-                                <Zap className="text-sky-500" size={24} />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-6">
+                    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-8">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                            <h3 className="text-base font-bold text-slate-900">Enrollment Controls</h3>
+                            <Zap className="text-blue-600" size={20} />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-4">
+                                <label className="text-xs font-bold text-slate-600 block">Students Enrolled (Badge Number)</label>
+                                <div className="flex items-center gap-4">
+                                    <button 
+                                        onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: Math.max(0, s.manualEnrollmentCount - 1) }))}
+                                        className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-xl font-black text-slate-700 hover:bg-slate-200 transition-all cursor-pointer"
+                                    >
+                                        -
+                                    </button>
+                                    <div className="flex-1 text-center font-black text-5xl text-slate-900">
+                                        {String(stats.manualEnrollmentCount).padStart(2, '0')}
+                                    </div>
+                                    <button 
+                                        onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: s.manualEnrollmentCount + 1 }))}
+                                        className="w-12 h-12 rounded-xl bg-blue-600 border border-blue-600 flex items-center justify-center text-xl font-black text-white hover:bg-blue-700 transition-all cursor-pointer"
+                                    >
+                                        +
+                                    </button>
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                <div className="space-y-6">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">Students Enrolled Last Week</label>
-                                    <div className="flex items-center gap-6">
-                                        <button 
-                                            onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: Math.max(0, s.manualEnrollmentCount - 1) }))}
-                                            className="w-16 h-16 rounded-[2rem] bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl font-black text-slate-400 hover:text-white transition-all"
-                                        >
-                                            -
-                                        </button>
-                                        <div className="flex-1 text-center font-black text-7xl text-white italic">
-                                            {String(stats.manualEnrollmentCount).padStart(2, '0')}
-                                        </div>
-                                        <button 
-                                            onClick={() => setStats(s => ({ ...s, manualEnrollmentCount: s.manualEnrollmentCount + 1 }))}
-                                            className="w-16 h-16 rounded-[2rem] bg-sky-500 border border-sky-400 flex items-center justify-center text-2xl font-black text-slate-950 hover:bg-sky-400 transition-all"
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">Total Seating Capacity</label>
-                                    <div className="space-y-8">
-                                        <div className="text-5xl font-black text-white tracking-tighter italic">{stats.totalSeats}</div>
-                                        <input 
-                                            type="range" 
-                                            min="1" 
-                                            max="150" 
-                                            value={stats.totalSeats}
-                                            onChange={(e) => setStats(s => ({ ...s, totalSeats: parseInt(e.target.value) }))}
-                                            className="w-full h-2 bg-slate-800 rounded-full appearance-none accent-sky-500"
-                                        />
-                                    </div>
+                            <div className="space-y-4">
+                                <label className="text-xs font-bold text-slate-600 block">Total Seating Capacity</label>
+                                <div className="space-y-4">
+                                    <div className="text-4xl font-black text-slate-900">{stats.totalSeats} Seats</div>
+                                    <input 
+                                        type="range" 
+                                        min="1" 
+                                        max="150" 
+                                        value={stats.totalSeats}
+                                        onChange={(e) => setStats(s => ({ ...s, totalSeats: parseInt(e.target.value) }))}
+                                        className="w-full h-2 bg-slate-200 rounded-full appearance-none accent-blue-600 cursor-pointer"
+                                    />
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-slate-900/30 border border-slate-800/80 p-8 rounded-[2.5rem] flex items-center justify-between">
-                            <div className="space-y-1">
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Active Seats Left</p>
-                                <p className={`text-3xl font-black italic ${seatsLeft < 10 ? 'text-rose-500' : 'text-emerald-500'}`}>
-                                    {seatsLeft} Units
-                                </p>
-                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Seats Left</p>
+                            <p className={`text-2xl font-black mt-1 ${seatsLeft < 10 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                                {seatsLeft} Seats Remaining
+                            </p>
                         </div>
-                        <div className="bg-slate-900/30 border border-slate-800/80 p-8 rounded-[2.5rem] flex items-center justify-between">
-                            <div className="space-y-1">
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Occupancy Rate</p>
-                                <p className="text-3xl font-black text-sky-500 italic">
-                                    {Math.round((stats.manualEnrollmentCount / stats.totalSeats) * 100)}%
-                                </p>
-                            </div>
+                        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Occupancy Rate</p>
+                            <p className="text-2xl font-black text-blue-600 mt-1">
+                                {Math.round((stats.manualEnrollmentCount / stats.totalSeats) * 100)}% Full
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div className="space-y-8">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-sky-500/5 border border-sky-500/10 rounded-[2.5rem] p-8 space-y-8"
-                    >
-                        <h4 className="text-lg font-black text-white uppercase tracking-tight italic">Action Matrix</h4>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 p-4 bg-white/[0.03] border border-white/5 rounded-2xl text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                                <ArrowRight size={16} className="text-sky-500" />
+                <div className="space-y-6">
+                    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-6">
+                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Configuration Details</h4>
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700">
+                                <ArrowRight size={14} className="text-blue-600" />
                                 <span>Label: Last Week Enrolled</span>
                             </div>
-                            <div className="flex items-center gap-3 p-4 bg-white/[0.03] border border-white/5 rounded-2xl text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                                <ArrowRight size={16} className="text-rose-500" />
+                            <div className="flex items-center gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700">
+                                <ArrowRight size={14} className="text-rose-500" />
                                 <span>Alert Threshold: 10 Seats</span>
                             </div>
                         </div>
                         <button
                             onClick={handleSave}
                             disabled={isSaving}
-                            className={`w-full py-5 rounded-3xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all ${
-                                isSaving ? 'bg-slate-800 text-slate-500' : 'bg-white text-slate-950 hover:bg-sky-400 active:scale-95'
-                            }`}
+                            className="w-full py-3.5 bg-slate-900 hover:bg-blue-600 text-white rounded-xl font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 shadow-xs"
                         >
-                            {isSaving ? <div className="w-5 h-5 border-2 border-slate-950/20 border-t-slate-950 rounded-full animate-spin"></div> : <><Save size={20} /> Sync to Production</>}
+                            {isSaving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : <><Save size={16} /> Save to Production</>}
                         </button>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </div>

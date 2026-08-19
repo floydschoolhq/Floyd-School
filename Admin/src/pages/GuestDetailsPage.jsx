@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Users, UserPlus, Calendar, TrendingUp, Search, Filter, Download,
+    Users, UserPlus, Calendar, TrendingUp, Search, Download,
     Eye, Edit3, Trash2, ChevronLeft, ChevronRight, RefreshCw, X, FileSpreadsheet
 } from 'lucide-react';
 import api from '../api/axios';
@@ -12,10 +12,10 @@ const CLASS_OPTIONS = ['6', '7', '8', '9', '10', '11', '12', 'College', 'Other']
 const STATUS_OPTIONS = ['New', 'Active', 'Contacted', 'Converted'];
 
 const statusColors = {
-    'New': 'bg-sky-500/10 text-sky-400 border-sky-500/20',
-    'Active': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    'Contacted': 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    'Converted': 'bg-violet-500/10 text-violet-400 border-violet-500/20'
+    'New': 'bg-blue-50 text-blue-700 border-blue-200',
+    'Active': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    'Contacted': 'bg-amber-50 text-amber-700 border-amber-200',
+    'Converted': 'bg-purple-50 text-purple-700 border-purple-200'
 };
 
 const GuestDetailsPage = () => {
@@ -44,9 +44,9 @@ const GuestDetailsPage = () => {
                 ...(statusFilter && { status: statusFilter })
             });
             const res = await api.get(`/guest?${params}`);
-            setGuests(res.data.guests);
-            setTotalPages(res.data.totalPages);
-            setTotal(res.data.total);
+            setGuests(res.data.guests || []);
+            setTotalPages(res.data.totalPages || 1);
+            setTotal(res.data.total || 0);
         } catch (err) {
             toast.error('Failed to fetch guest data');
         } finally {
@@ -57,7 +57,7 @@ const GuestDetailsPage = () => {
     const fetchStats = async () => {
         try {
             const res = await api.get('/guest/stats');
-            setStats(res.data);
+            setStats(res.data || { total: 0, today: 0, thisWeek: 0, thisMonth: 0 });
         } catch (err) {
             console.error('Stats fetch error:', err);
         }
@@ -129,25 +129,6 @@ const GuestDetailsPage = () => {
         }
     };
 
-    const handleExportExcel = async () => {
-        // Excel export using CSV format with .xlsx extension hint
-        // For true xlsx, the xlsx npm package would be needed
-        try {
-            const response = await api.get('/guest/export', { responseType: 'blob' });
-            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/vnd.ms-excel' }));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `guest-details-${Date.now()}.xls`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
-            toast.success('Excel exported successfully');
-        } catch (err) {
-            toast.error('Export failed');
-        }
-    };
-
     const handleRefresh = () => {
         fetchGuests();
         fetchStats();
@@ -155,78 +136,77 @@ const GuestDetailsPage = () => {
     };
 
     const statCards = [
-        { label: 'Total Guests', value: stats.total, icon: <Users size={20} />, color: 'sky' },
-        { label: "Today's Guests", value: stats.today, icon: <UserPlus size={20} />, color: 'emerald' },
-        { label: 'This Week', value: stats.thisWeek, icon: <Calendar size={20} />, color: 'violet' },
-        { label: 'This Month', value: stats.thisMonth, icon: <TrendingUp size={20} />, color: 'amber' }
+        { label: 'Total Guests', value: stats.total, icon: <Users size={18} />, color: 'blue' },
+        { label: "Today's Guests", value: stats.today, icon: <UserPlus size={18} />, color: 'emerald' },
+        { label: 'This Week', value: stats.thisWeek, icon: <Calendar size={18} />, color: 'purple' },
+        { label: 'This Month', value: stats.thisMonth, icon: <TrendingUp size={18} />, color: 'amber' }
     ];
 
-    const colorMap = {
-        sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/20', text: 'text-sky-400', shadow: 'shadow-sky-500/5' },
-        emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', text: 'text-emerald-400', shadow: 'shadow-emerald-500/5' },
-        violet: { bg: 'bg-violet-500/10', border: 'border-violet-500/20', text: 'text-violet-400', shadow: 'shadow-violet-500/5' },
-        amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-400', shadow: 'shadow-amber-500/5' }
-    };
-
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             {/* Header */}
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
-                        Guest <span className="text-sky-500 not-italic">Details</span>
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        Guest <span className="text-blue-600">Registrations</span>
                     </h2>
-                    <p className="text-slate-500 font-black mt-2 uppercase tracking-[0.3em] text-[10px]">
-                        Monitor and manage guest login registrations
+                    <p className="text-slate-500 font-medium text-xs mt-1">
+                        Monitor and manage guest logins and lead conversions
                     </p>
                 </div>
-                <button
-                    onClick={handleRefresh}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white hover:border-sky-500/20 transition-all"
-                >
-                    <RefreshCw size={14} />
-                    Refresh
-                </button>
+                <div className="flex items-center gap-2.5">
+                    <button
+                        onClick={handleExportCSV}
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-xs cursor-pointer"
+                    >
+                        <Download size={14} />
+                        Export CSV
+                    </button>
+                    <button
+                        onClick={handleRefresh}
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-blue-600 transition-all shadow-xs cursor-pointer"
+                    >
+                        <RefreshCw size={14} />
+                        Refresh
+                    </button>
+                </div>
             </header>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {statCards.map((card, i) => {
-                    const colors = colorMap[card.color];
-                    return (
-                        <motion.div
-                            key={card.label}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: i * 0.1 }}
-                            className={`${colors.bg} border ${colors.border} rounded-[2rem] p-6 backdrop-blur-md ${colors.shadow} shadow-lg`}
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <span className={`${colors.text}`}>{card.icon}</span>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                                    {card.label}
-                                </span>
-                            </div>
-                            <p className={`text-4xl font-black ${colors.text}`}>
-                                {card.value}
-                            </p>
-                        </motion.div>
-                    );
-                })}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {statCards.map((card, i) => (
+                    <motion.div
+                        key={card.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: i * 0.05 }}
+                        className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs"
+                    >
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                {card.label}
+                            </span>
+                            <span className="text-slate-400">{card.icon}</span>
+                        </div>
+                        <p className="text-2xl sm:text-3xl font-black text-slate-900">
+                            {card.value}
+                        </p>
+                    </motion.div>
+                ))}
             </div>
 
             {/* Toolbar */}
-            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-                <div className="flex flex-col sm:flex-row gap-3 flex-1 w-full">
+            <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <div className="flex flex-col sm:flex-row gap-2.5 flex-1 w-full">
                     {/* Search */}
                     <div className="relative flex-1 max-w-md">
-                        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={handleSearch}
                             placeholder="Search by name, mobile, class..."
-                            className="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:border-sky-500/50 text-sm transition-colors"
+                            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 text-xs font-medium shadow-xs"
                         />
                     </div>
 
@@ -234,11 +214,11 @@ const GuestDetailsPage = () => {
                     <select
                         value={classFilter}
                         onChange={(e) => { setClassFilter(e.target.value); setPage(1); }}
-                        className="px-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-white text-sm focus:outline-none focus:border-sky-500/50 cursor-pointer appearance-none min-w-[120px] transition-colors"
+                        className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-700 text-xs font-bold focus:outline-none focus:border-blue-500 cursor-pointer shadow-xs min-w-[110px]"
                     >
-                        <option value="" className="bg-slate-900">All Classes</option>
+                        <option value="">All Classes</option>
                         {CLASS_OPTIONS.map(c => (
-                            <option key={c} value={c} className="bg-slate-900">Class {c}</option>
+                            <option key={c} value={c}>Class {c}</option>
                         ))}
                     </select>
 
@@ -246,125 +226,91 @@ const GuestDetailsPage = () => {
                     <select
                         value={statusFilter}
                         onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-                        className="px-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-white text-sm focus:outline-none focus:border-sky-500/50 cursor-pointer appearance-none min-w-[130px] transition-colors"
+                        className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-700 text-xs font-bold focus:outline-none focus:border-blue-500 cursor-pointer shadow-xs min-w-[120px]"
                     >
-                        <option value="" className="bg-slate-900">All Status</option>
+                        <option value="">All Statuses</option>
                         {STATUS_OPTIONS.map(s => (
-                            <option key={s} value={s} className="bg-slate-900">{s}</option>
+                            <option key={s} value={s}>{s}</option>
                         ))}
                     </select>
                 </div>
-
-                {/* Export Buttons */}
-                <div className="flex gap-2">
-                    <button
-                        onClick={handleExportCSV}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:bg-emerald-500/20 transition-all"
-                    >
-                        <Download size={14} />
-                        CSV
-                    </button>
-                    <button
-                        onClick={handleExportExcel}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-violet-500/10 border border-violet-500/20 rounded-2xl text-[10px] font-black uppercase tracking-widest text-violet-400 hover:bg-violet-500/20 transition-all"
-                    >
-                        <FileSpreadsheet size={14} />
-                        Excel
-                    </button>
-                </div>
             </div>
 
-            {/* Table */}
-            <div className="bg-slate-900/40 border border-slate-800 rounded-[2rem] overflow-hidden backdrop-blur-md">
+            {/* Guest Table */}
+            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
                 <div className="overflow-x-auto">
-                    <table className="w-full">
+                    <table className="w-full text-xs">
                         <thead>
-                            <tr className="border-b border-slate-800">
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Name</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Mobile</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Class</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Section</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest hidden lg:table-cell">School</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest hidden lg:table-cell">City</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Date</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
-                                <th className="text-left px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Actions</th>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="text-left py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Guest</th>
+                                <th className="text-left py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Mobile</th>
+                                <th className="text-left py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Class</th>
+                                <th className="text-left py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Status</th>
+                                <th className="text-left py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Date</th>
+                                <th className="text-right py-3.5 px-6 text-slate-500 font-bold uppercase tracking-wider text-[11px]">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-slate-100 font-medium">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={9} className="text-center py-16">
-                                        <div className="flex items-center justify-center">
-                                            <div className="w-8 h-8 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
-                                        </div>
+                                    <td colSpan={6} className="py-12 text-center text-slate-400">
+                                        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                                        Loading guests...
                                     </td>
                                 </tr>
                             ) : guests.length === 0 ? (
                                 <tr>
-                                    <td colSpan={9} className="text-center py-16 text-slate-500 text-sm">
-                                        No guest records found
+                                    <td colSpan={6} className="py-12 text-center text-slate-400">
+                                        No guests found matching criteria.
                                     </td>
                                 </tr>
                             ) : (
-                                <AnimatePresence>
-                                    {guests.map((guest, i) => (
-                                        <motion.tr
-                                            key={guest._id}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0 }}
-                                            transition={{ duration: 0.2, delay: i * 0.03 }}
-                                            className="border-b border-slate-800/50 hover:bg-sky-500/5 transition-colors"
-                                        >
-                                            <td className="px-6 py-4 text-sm text-white font-bold">{guest.name}</td>
-                                            <td className="px-6 py-4 text-sm text-slate-300 font-mono">{guest.mobile}</td>
-                                            <td className="px-6 py-4">
-                                                <span className="px-2.5 py-1 bg-slate-800/50 border border-slate-700 rounded-lg text-xs text-slate-300 font-bold">
-                                                    {guest.class}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-slate-300">{guest.section}</td>
-                                            <td className="px-6 py-4 text-sm text-slate-400 hidden lg:table-cell">{guest.school || '—'}</td>
-                                            <td className="px-6 py-4 text-sm text-slate-400 hidden lg:table-cell">{guest.city || '—'}</td>
-                                            <td className="px-6 py-4 text-xs text-slate-400">
-                                                {new Date(guest.createdAt).toLocaleDateString('en-IN', {
-                                                    day: '2-digit', month: 'short', year: 'numeric'
-                                                })}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${statusColors[guest.status] || statusColors['New']}`}>
-                                                    {guest.status}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-1.5">
-                                                    <button
-                                                        onClick={() => handleViewGuest(guest)}
-                                                        className="p-2 rounded-xl hover:bg-sky-500/10 text-slate-500 hover:text-sky-400 transition-all"
-                                                        title="View Details"
-                                                    >
-                                                        <Eye size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleViewGuest(guest)}
-                                                        className="p-2 rounded-xl hover:bg-amber-500/10 text-slate-500 hover:text-amber-400 transition-all"
-                                                        title="Edit"
-                                                    >
-                                                        <Edit3 size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setDeleteConfirm(guest._id)}
-                                                        className="p-2 rounded-xl hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 transition-all"
-                                                        title="Delete"
-                                                    >
-                                                        <Trash2 size={16} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </motion.tr>
-                                    ))}
-                                </AnimatePresence>
+                                guests.map((guest) => (
+                                    <tr key={guest._id} className="hover:bg-slate-50/70 transition-colors">
+                                        <td className="py-4 px-6">
+                                            <p className="text-slate-900 font-bold">{guest.name || 'Anonymous Guest'}</p>
+                                            <p className="text-[11px] text-slate-400">{guest.email || 'No email'}</p>
+                                        </td>
+                                        <td className="py-4 px-6 text-slate-700 font-medium">
+                                            {guest.mobileNumber || 'N/A'}
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md text-[10px] font-bold">
+                                                Class {guest.studentClass || 'N/A'}
+                                            </span>
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <select
+                                                value={guest.status || 'New'}
+                                                onChange={(e) => handleStatusUpdate(guest._id, e.target.value)}
+                                                className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border cursor-pointer ${statusColors[guest.status] || statusColors['New']}`}
+                                            >
+                                                {STATUS_OPTIONS.map(opt => (
+                                                    <option key={opt} value={opt}>{opt}</option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                        <td className="py-4 px-6 text-slate-500 text-[11px]">
+                                            {new Date(guest.createdAt).toLocaleDateString()}
+                                        </td>
+                                        <td className="py-4 px-6 text-right space-x-1.5">
+                                            <button
+                                                onClick={() => handleViewGuest(guest)}
+                                                className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
+                                                title="View Details"
+                                            >
+                                                <Eye size={14} />
+                                            </button>
+                                            <button
+                                                onClick={() => setDeleteConfirm(guest._id)}
+                                                className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                                                title="Delete"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
                             )}
                         </tbody>
                     </table>
@@ -372,103 +318,66 @@ const GuestDetailsPage = () => {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800">
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                            Showing {((page - 1) * 10) + 1}–{Math.min(page * 10, total)} of {total}
-                        </p>
-                        <div className="flex items-center gap-2">
+                    <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+                        <span className="text-xs text-slate-500 font-bold">
+                            Showing {(page - 1) * 10 + 1} to {Math.min(page * 10, total)} of {total} guests
+                        </span>
+                        <div className="flex items-center gap-1.5">
                             <button
                                 onClick={() => setPage(p => Math.max(1, p - 1))}
                                 disabled={page === 1}
-                                className="p-2 rounded-xl bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 disabled:opacity-40 cursor-pointer"
                             >
-                                <ChevronLeft size={16} />
+                                <ChevronLeft size={14} />
                             </button>
-                            {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                                let pageNum;
-                                if (totalPages <= 5) {
-                                    pageNum = i + 1;
-                                } else if (page <= 3) {
-                                    pageNum = i + 1;
-                                } else if (page >= totalPages - 2) {
-                                    pageNum = totalPages - 4 + i;
-                                } else {
-                                    pageNum = page - 2 + i;
-                                }
-                                return (
-                                    <button
-                                        key={pageNum}
-                                        onClick={() => setPage(pageNum)}
-                                        className={`w-9 h-9 rounded-xl text-xs font-black transition-all ${
-                                            page === pageNum
-                                                ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
-                                                : 'bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white'
-                                        }`}
-                                    >
-                                        {pageNum}
-                                    </button>
-                                );
-                            })}
+                            <span className="text-xs font-bold px-2 text-slate-700">
+                                {page} / {totalPages}
+                            </span>
                             <button
                                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                 disabled={page === totalPages}
-                                className="p-2 rounded-xl bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 disabled:opacity-40 cursor-pointer"
                             >
-                                <ChevronRight size={16} />
+                                <ChevronRight size={14} />
                             </button>
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* Delete Confirmation Modal */}
-            <AnimatePresence>
-                {deleteConfirm && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-                        onClick={() => setDeleteConfirm(null)}
-                    >
-                        <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-sm w-full"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-6 mx-auto">
-                                <Trash2 size={24} className="text-rose-400" />
-                            </div>
-                            <h3 className="text-xl font-black text-white text-center mb-2">Delete Guest?</h3>
-                            <p className="text-slate-500 text-sm text-center mb-6">This action cannot be undone. The guest record will be permanently removed.</p>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => setDeleteConfirm(null)}
-                                    className="flex-1 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-slate-300 font-bold text-sm hover:bg-slate-800 transition-all"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(deleteConfirm)}
-                                    className="flex-1 py-3 bg-rose-500 hover:bg-rose-400 rounded-xl text-white font-black text-sm uppercase tracking-widest transition-all"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Guest Drawer */}
+            {selectedGuest && (
+                <GuestDetailDrawer
+                    isOpen={drawerOpen}
+                    onClose={() => setDrawerOpen(false)}
+                    guest={selectedGuest}
+                    onStatusUpdate={handleStatusUpdate}
+                />
+            )}
 
-            {/* Guest Detail Drawer */}
-            <GuestDetailDrawer
-                isOpen={drawerOpen}
-                onClose={() => { setDrawerOpen(false); setSelectedGuest(null); }}
-                guest={selectedGuest}
-                onStatusUpdate={handleStatusUpdate}
-            />
+            {/* Delete Modal */}
+            {deleteConfirm && (
+                <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white border border-slate-200 p-6 rounded-2xl max-w-sm w-full shadow-2xl space-y-4">
+                        <h4 className="text-base font-bold text-slate-900">Delete Guest Record</h4>
+                        <p className="text-xs text-slate-500">Are you sure you want to permanently delete this guest registration?</p>
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button
+                                onClick={() => setDeleteConfirm(null)}
+                                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={() => handleDelete(deleteConfirm)}
+                                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs cursor-pointer"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

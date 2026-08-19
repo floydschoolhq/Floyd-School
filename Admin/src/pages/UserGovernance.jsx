@@ -6,11 +6,8 @@ import {
   Trash2,
   Lock,
   Unlock,
-  Shield,
   XCircle,
-  Mail,
-  Calendar,
-  CheckCircle2
+  Mail
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
@@ -94,12 +91,12 @@ const UserGovernance = () => {
 
     if (loading) return (
         <div className="flex items-center justify-center h-64">
-            <div className="w-8 h-8 border-4 border-slate-600 border-t-blue-500 rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
     );
 
     return (
-        <div className="space-y-8 relative">
+        <div className="space-y-6 relative">
             {/* Create Account Modal */}
             <AnimatePresence>
                 {showModal && (
@@ -107,68 +104,68 @@ const UserGovernance = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+                        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                     >
                         <motion.div
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl w-full max-w-md shadow-2xl relative"
+                            className="bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl w-full max-w-md shadow-2xl relative"
                         >
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="absolute top-4 right-4 text-slate-400 hover:text-white"
+                                className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 cursor-pointer"
                             >
                                 <XCircle size={22} />
                             </button>
 
-                            <h3 className="text-xl font-bold text-white mb-4">
+                            <h3 className="text-xl font-bold text-slate-900 mb-4">
                                 Register New User Account
                             </h3>
 
                             <form onSubmit={handleCreateUser} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-1">Full Name</label>
+                                    <label className="block text-xs font-bold text-slate-600 mb-1">Full Name</label>
                                     <input
                                         type="text"
                                         required
                                         value={formData.name}
                                         onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
                                         placeholder="e.g. Professor Rajesh Sharma"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-1">Email Address</label>
+                                    <label className="block text-xs font-bold text-slate-600 mb-1">Email Address</label>
                                     <input
                                         type="email"
                                         required
                                         value={formData.email}
                                         onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
-                                        placeholder="user@school.edu"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
+                                        placeholder="user@floydschool.in"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-1">Password</label>
+                                    <label className="block text-xs font-bold text-slate-600 mb-1">Password</label>
                                     <input
                                         type="password"
                                         required
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
                                         placeholder="••••••••"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-1">Assign System Role</label>
+                                    <label className="block text-xs font-bold text-slate-600 mb-1">Assign System Role</label>
                                     <select
                                         value={formData.role}
                                         onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
                                     >
                                         <option value="student">Online Student</option>
                                         <option value="mentor">Teacher / Mentor</option>
@@ -181,7 +178,7 @@ const UserGovernance = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 mt-4 text-xs uppercase tracking-wider"
+                                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md shadow-blue-500/20 mt-4 text-xs uppercase tracking-wider cursor-pointer"
                                 >
                                     Create User Account
                                 </button>
@@ -192,20 +189,20 @@ const UserGovernance = () => {
             </AnimatePresence>
 
             {/* Page Header */}
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
-                        <Users className="text-blue-400" />
+                    <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                        <Users className="text-blue-600" />
                         User Account Management
                     </h1>
-                    <p className="text-slate-400 text-xs mt-1">
+                    <p className="text-slate-500 text-xs font-medium mt-1">
                         Manage logins, staff permissions, partner school coordinators, and student accounts.
                     </p>
                 </div>
 
                 <button
                     onClick={() => setShowModal(true)}
-                    className="py-2.5 px-4 bg-white text-slate-900 hover:bg-slate-100 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs flex items-center space-x-2 transition-all self-start md:self-auto"
+                    className="py-2.5 px-4 bg-slate-900 text-white hover:bg-blue-600 text-xs font-bold rounded-xl shadow-xs flex items-center space-x-2 transition-all self-start md:self-auto cursor-pointer"
                 >
                     <Plus size={16} />
                     <span>Register New Account</span>
@@ -213,15 +210,15 @@ const UserGovernance = () => {
             </header>
 
             {/* Role Selection Tabs */}
-            <div className="flex flex-wrap gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl">
+            <div className="flex flex-wrap gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
                 {['student', 'mentor', 'growth_associate', 'school_partner', 'school_student', 'admin'].map(tab => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             activeTab === tab
-                                ? 'bg-slate-800 text-white border border-slate-700'
-                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                                ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
+                                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
                         }`}
                     >
                         {tabLabels[tab]}
@@ -231,80 +228,80 @@ const UserGovernance = () => {
 
             {/* Search Input */}
             <div className="relative w-full max-w-md">
-                <Search className="absolute left-3.5 top-2.5 text-slate-500" size={16} />
+                <Search className="absolute left-3.5 top-2.5 text-slate-400" size={16} />
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                     placeholder="Search by user name or email..."
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-600"
+                    className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 shadow-xs"
                 />
             </div>
 
             {/* Users Directory Table */}
             {filteredUsers.length === 0 ? (
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center text-slate-500 text-xs">
+                <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400 text-xs font-medium shadow-xs">
                     No registered user accounts found for this role category.
                 </div>
             ) : (
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-xs">
-                            <thead className="bg-slate-950 border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
                                 <tr>
-                                    <th className="px-6 py-4">User Name</th>
-                                    <th className="px-6 py-4">Email / Login ID</th>
+                                    <th className="px-6 py-3.5">User Name</th>
+                                    <th className="px-6 py-3.5">Email / Login ID</th>
                                     {activeTab === 'school_student' && (
                                         <>
-                                            <th className="px-6 py-4">Roll No / Class</th>
-                                            <th className="px-6 py-4">Parent & Contacts</th>
+                                            <th className="px-6 py-3.5">Roll No / Class</th>
+                                            <th className="px-6 py-3.5">Parent & Contacts</th>
                                         </>
                                     )}
-                                    <th className="px-6 py-4">Assigned Role</th>
-                                    <th className="px-6 py-4">Account Status</th>
-                                    <th className="px-6 py-4 text-right">Actions</th>
+                                    <th className="px-6 py-3.5">Assigned Role</th>
+                                    <th className="px-6 py-3.5">Account Status</th>
+                                    <th className="px-6 py-3.5 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-800/60 text-slate-300 font-medium">
+                            <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
                                 {filteredUsers.map(user => (
-                                    <tr key={user._id} className="hover:bg-slate-800/40 transition-colors">
-                                        <td className="px-6 py-4 font-bold text-white">
+                                    <tr key={user._id} className="hover:bg-slate-50/70 transition-colors">
+                                        <td className="px-6 py-4 font-bold text-slate-900">
                                             {user.name}
                                         </td>
-                                        <td className="px-6 py-4 text-slate-400">
+                                        <td className="px-6 py-4 text-slate-500">
                                             <div className="flex items-center space-x-1.5">
-                                                <Mail size={13} className="text-slate-500" />
+                                                <Mail size={13} className="text-slate-400" />
                                                 <span>{user.email}</span>
                                             </div>
                                         </td>
                                         {activeTab === 'school_student' && (
                                             <>
                                                 <td className="px-6 py-4">
-                                                    <p className="font-mono text-cyan-400 font-bold text-xs">{user.offlineRollNo || 'Pending Allotment'}</p>
-                                                    <p className="text-[11px] text-slate-400">{user.grade || 'Grade 10'} (Sec {user.section || 'A'})</p>
+                                                    <p className="font-mono text-blue-600 font-bold text-xs">{user.offlineRollNo || 'Pending Allotment'}</p>
+                                                    <p className="text-[11px] text-slate-500">{user.grade || 'Grade 10'} (Sec {user.section || 'A'})</p>
                                                 </td>
                                                 <td className="px-6 py-4 text-[11px]">
-                                                    <p className="text-slate-200 font-semibold">Father: {user.fatherName || 'N/A'}</p>
-                                                    <p className="text-slate-400">Student Mob: {user.studentMobile || 'N/A'} • Father: {user.fatherMobile || 'N/A'}</p>
+                                                    <p className="text-slate-900 font-semibold">Father: {user.fatherName || 'N/A'}</p>
+                                                    <p className="text-slate-500">Student Mob: {user.studentMobile || 'N/A'} • Father: {user.fatherMobile || 'N/A'}</p>
                                                 </td>
                                             </>
                                         )}
                                         <td className="px-6 py-4">
-                                            <span className="bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700/60 font-semibold text-[11px]">
+                                            <span className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 font-semibold text-[11px]">
                                                 {tabLabels[user.role] || user.role}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
                                             {user.approvalStatus === 'Pending_Approval' ? (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
                                                     Pending Batch
                                                 </span>
                                             ) : user.isActive !== false ? (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                                     Active
                                                 </span>
                                             ) : (
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
                                                     Disabled
                                                 </span>
                                             )}
@@ -312,10 +309,10 @@ const UserGovernance = () => {
                                         <td className="px-6 py-4 text-right space-x-2">
                                             <button
                                                 onClick={() => toggleUserStatus(user._id, user.isActive !== false)}
-                                                className={`p-1.5 rounded-lg border transition-colors ${
+                                                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
                                                     user.isActive !== false
-                                                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
-                                                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
+                                                        ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+                                                        : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
                                                 }`}
                                                 title={user.isActive !== false ? 'Deactivate Account' : 'Activate Account'}
                                             >
@@ -323,7 +320,7 @@ const UserGovernance = () => {
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteUser(user._id)}
-                                                className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
+                                                className="p-1.5 rounded-lg bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 transition-colors cursor-pointer"
                                                 title="Delete Account"
                                             >
                                                 <Trash2 size={14} />

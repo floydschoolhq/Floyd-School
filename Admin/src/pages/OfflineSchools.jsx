@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
 import { useToast } from '../context/ToastContext';
-import { School, Plus, Search, Building2, Users, CheckCircle, Shield, X, MapPin } from 'lucide-react';
+import { School, Plus, CheckCircle, X, MapPin } from 'lucide-react';
 
 const OfflineSchools = () => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const { addToast } = useToast();
 
@@ -23,9 +23,6 @@ const OfflineSchools = () => {
 
   const fetchSchools = async () => {
     try {
-      // Using admin endpoint or partner school endpoint
-      const res = await api.get('/partner-school/batches');
-      // If fetching partner school list
       const statsRes = await api.get('/partner-school/stats');
       if (statsRes.data.data) {
         setSchools([{
@@ -71,16 +68,16 @@ const OfflineSchools = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <School className="text-indigo-400" />
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <School className="text-blue-600" />
             Partner School Governance
           </h1>
-          <p className="text-slate-400 text-xs mt-1">Manage offline school collaborations, student quotas, and lab partnerships.</p>
+          <p className="text-slate-500 text-xs font-medium mt-1">Manage offline school collaborations, student quotas, and lab partnerships.</p>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="py-2.5 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-500/20 flex items-center space-x-2 transition-all"
+          className="py-2.5 px-4 bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-xs flex items-center space-x-2 transition-all cursor-pointer"
         >
           <Plus size={16} />
           <span>Onboard Partner School</span>
@@ -89,39 +86,39 @@ const OfflineSchools = () => {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((school) => (
-            <div key={school._id} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between">
+            <div key={school._id} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs relative flex flex-col justify-between hover:shadow-md transition-all">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-100 px-2.5 py-1 rounded-lg">
                     {school.code}
                   </span>
-                  <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                  <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
                     <CheckCircle size={12} /> {school.partnershipStatus}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white leading-tight mb-1">{school.name}</h3>
+                <h3 className="text-base font-bold text-slate-900 leading-tight mb-1">{school.name}</h3>
                 <p className="text-xs text-slate-400 flex items-center gap-1 mb-4">
-                  <MapPin size={12} className="text-slate-500" /> {school.city}
+                  <MapPin size={12} className="text-slate-400" /> {school.city}
                 </p>
 
-                <div className="space-y-2 text-xs text-slate-300 border-t border-slate-800 pt-4">
+                <div className="space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-4 font-medium">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-400">Active Offline Batches:</span>
-                    <span className="font-bold text-white">{school.activeBatchesCount || 1}</span>
+                    <span className="font-bold text-slate-900">{school.activeBatchesCount || 1}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-slate-400">Enrolled Students / Quota:</span>
-                    <span className="font-bold text-indigo-400">{school.enrolledCount || 3} / {school.studentQuota || 300}</span>
+                    <span className="font-bold text-blue-600">{school.enrolledCount || 3} / {school.studentQuota || 300}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-slate-400">Contact Email:</span>
-                    <span className="font-mono text-slate-300">{school.contactEmail}</span>
+                    <span className="font-mono text-slate-600 text-[11px]">{school.contactEmail}</span>
                   </div>
                 </div>
               </div>
@@ -132,80 +129,71 @@ const OfflineSchools = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-lg relative shadow-2xl">
-            <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-              <h3 className="text-lg font-bold text-white">Onboard New Partner School</h3>
-              <button onClick={() => setShowModal(false)} className="text-slate-500 hover:text-white">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 w-full max-w-lg relative shadow-2xl">
+            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+              <h3 className="text-lg font-bold text-slate-900">Onboard New Partner School</h3>
+              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-700 cursor-pointer">
                 <X size={20} />
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-400 mb-1">Institution Name</label>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Institution Name</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g. St. Xavier Science Academy"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
+                  placeholder="e.g. Modern International Public School"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1">School Code</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">School Code</label>
                   <input
                     type="text"
                     required
                     value={formData.code}
-                    onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                    placeholder="e.g. STX-OFFLINE"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    onChange={e => setFormData({ ...formData, code: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none uppercase"
+                    placeholder="MIPS-01"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1">City</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">City / State</label>
                   <input
                     type="text"
                     required
                     value={formData.city}
-                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    onChange={e => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
                     placeholder="New Delhi"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-400 mb-1">Contact Email</label>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Coordinator / Principal Email</label>
                 <input
                   type="email"
                   required
                   value={formData.contactEmail}
-                  onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-                  placeholder="coordinator@partnerschool.edu"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  onChange={e => setFormData({ ...formData, contactEmail: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:bg-white focus:border-blue-600 outline-none"
+                  placeholder="principal@school.edu"
                 />
               </div>
 
-              <div className="pt-2 flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-500/20"
-                >
-                  Onboard Institution
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md shadow-blue-500/20 text-xs uppercase tracking-wider cursor-pointer mt-2"
+              >
+                Register Partner School
+              </button>
             </form>
           </div>
         </div>

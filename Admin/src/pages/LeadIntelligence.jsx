@@ -3,8 +3,6 @@ import {
     Target,
     Phone,
     Mail,
-    Calendar,
-    Filter,
     CheckCircle2,
     XCircle,
     Trash2,
@@ -23,7 +21,7 @@ const LeadIntelligence = () => {
     const fetchLeads = async () => {
         try {
             const res = await api.get('/admin/leads');
-            setLeads(res.data.leads);
+            setLeads(res.data.leads || []);
         } catch (err) {
             console.error('Failed to fetch leads', err);
             toast.error('Failed to sync lead intelligence');
@@ -63,150 +61,150 @@ const LeadIntelligence = () => {
     });
 
     if (loading) return (
-        <div className="flex items-center justify-center h-full">
-            <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin"></div>
+        <div className="flex items-center justify-center h-64">
+            <div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
     );
 
     return (
-        <div className="space-y-10">
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-6">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-4xl font-black text-white tracking-tighter uppercase italic">
-                        Lead <span className="text-sky-500 not-italic">Intelligence</span>
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        Lead <span className="text-blue-600">Intelligence</span>
                     </h2>
-                    <p className="text-slate-500 font-black mt-2 uppercase tracking-[0.3em] text-[10px]">
+                    <p className="text-slate-500 font-medium text-xs mt-1">
                         Pipeline Monitoring & Conversion Analytics
                     </p>
                 </div>
 
-                <div className="flex bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/50 backdrop-blur-xl">
+                <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
                     <button
                         onClick={() => setActiveTab('pending')}
-                        className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${activeTab === 'pending'
-                            ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/20'
-                            : 'text-slate-500 hover:text-slate-300'
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${activeTab === 'pending'
+                            ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
+                            : 'text-slate-500 hover:text-slate-900'
                             }`}
                     >
-                        <Clock size={14} /> Pending Inquiry
+                        <Clock size={13} /> Pending Inquiries
                     </button>
                     <button
                         onClick={() => setActiveTab('done')}
-                        className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${activeTab === 'done'
-                            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
-                            : 'text-slate-500 hover:text-slate-300'
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${activeTab === 'done'
+                            ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
+                            : 'text-slate-500 hover:text-slate-900'
                             }`}
                     >
-                        <CheckCircle2 size={14} /> Done
+                        <CheckCircle2 size={13} /> Completed
                     </button>
                 </div>
             </header>
 
-            <div className="bg-slate-900/40 border border-slate-800 rounded-[2.5rem] overflow-hidden backdrop-blur-md">
-                <table className="w-full text-left border-collapse">
-                    <thead>
-                        <tr className="bg-slate-900/50 border-b border-slate-800">
-                            <th className="p-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Prospect</th>
-                            <th className="p-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Contact Info</th>
-                            <th className="p-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Interest</th>
-                            <th className="p-6 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
-                            <th className="p-6 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right whitespace-nowrap">Tactical Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800/30">
-                        <AnimatePresence mode='popLayout'>
-                            {filteredLeads.map((lead, idx) => (
-                                <motion.tr
-                                    key={lead._id}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className="group hover:bg-sky-500/5 transition-all duration-300"
-                                >
-                                    <td className="p-6">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform">
-                                                <Target size={18} />
-                                            </div>
-                                            <div>
-                                                <p className="font-bold text-white group-hover:text-sky-400 transition-colors">{lead.name}</p>
-                                                <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-0.5">
-                                                    Source: {lead.source?.replace('_', ' ') || 'Unknown'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="p-6">
-                                        <div className="space-y-1.5">
-                                            <div className="flex items-center gap-2 text-xs text-slate-400">
-                                                <Mail size={12} className="text-sky-500/50" /> {lead.email}
-                                            </div>
-                                            <div className="flex items-center gap-2 text-xs text-slate-400">
-                                                <Phone size={12} className="text-sky-500/50" /> {lead.phone}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="p-6">
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-sky-300 bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
-                                            {lead.source === 'school_partnership' ? 'Partnership' : (lead.topic || lead.courseInterest || 'Inquiry')}
-                                        </span>
-                                    </td>
-                                    <td className="p-6">
-                                        <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${lead.status === 'converted' ? 'bg-emerald-500/20 text-emerald-500 border-emerald-500/20' :
-                                            lead.status === 'contacted' ? 'bg-sky-500/20 text-sky-500 border-sky-500/20' :
-                                                lead.status === 'closed' ? 'bg-red-500/20 text-red-400 border-red-500/20' :
-                                                    'bg-slate-800 text-slate-400 border-slate-700'
-                                            }`}>
-                                            {lead.status}
-                                        </span>
-                                    </td>
-                                    <td className="p-6">
-                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
-                                            {activeTab === 'pending' ? (
-                                                <>
-                                                    <button
-                                                        onClick={() => handleUpdateStatus(lead._id, 'converted')}
-                                                        className="p-2 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-lg transition-all"
-                                                        title="Mark as Converted"
-                                                    >
-                                                        <Check size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleUpdateStatus(lead._id, 'closed')}
-                                                        className="p-2 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
-                                                        title="Move to Done (Closed)"
-                                                    >
-                                                        <XCircle size={16} />
-                                                    </button>
-                                                </>
-                                            ) : null}
-                                            <button
-                                                onClick={() => handleTerminate(lead._id)}
-                                                className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
-                                                title="Safe Terminate (Delete)"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </motion.tr>
-                            ))}
-                        </AnimatePresence>
-                        {filteredLeads.length === 0 && (
-                            <tr>
-                                <td colSpan="5" className="p-20 text-center">
-                                    <div className="flex flex-col items-center gap-3">
-                                        <Clock size={48} className="text-slate-800" />
-                                        <p className="text-slate-500 font-black uppercase tracking-widest text-xs">
-                                            No {activeTab} inquiries in buffer
-                                        </p>
-                                    </div>
-                                </td>
+            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Prospect</th>
+                                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Contact Info</th>
+                                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Interest</th>
+                                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right whitespace-nowrap">Actions</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 font-medium">
+                            <AnimatePresence mode='popLayout'>
+                                {filteredLeads.map((lead, idx) => (
+                                    <motion.tr
+                                        key={lead._id}
+                                        initial={{ opacity: 0, y: 5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ delay: idx * 0.02 }}
+                                        className="hover:bg-slate-50/70 transition-colors group"
+                                    >
+                                        <td className="py-4 px-6">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 font-bold">
+                                                    <Target size={16} />
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-slate-900">{lead.name}</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase mt-0.5">
+                                                        Source: {lead.source?.replace('_', ' ') || 'Unknown'}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <div className="space-y-1">
+                                                <div className="flex items-center gap-1.5 text-slate-600">
+                                                    <Mail size={12} className="text-slate-400" /> {lead.email}
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-slate-600">
+                                                    <Phone size={12} className="text-slate-400" /> {lead.phone}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">
+                                                {lead.source === 'school_partnership' ? 'Partnership' : (lead.topic || lead.courseInterest || 'Inquiry')}
+                                            </span>
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${lead.status === 'converted' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                                lead.status === 'contacted' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                                    lead.status === 'closed' ? 'bg-rose-50 text-rose-700 border-rose-200' :
+                                                        'bg-slate-100 text-slate-700 border-slate-200'
+                                                }`}>
+                                                {lead.status}
+                                            </span>
+                                        </td>
+                                        <td className="py-4 px-6">
+                                            <div className="flex items-center justify-end gap-1.5">
+                                                {activeTab === 'pending' ? (
+                                                    <>
+                                                        <button
+                                                            onClick={() => handleUpdateStatus(lead._id, 'converted')}
+                                                            className="p-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg transition-colors border border-emerald-200 cursor-pointer"
+                                                            title="Mark as Converted"
+                                                        >
+                                                            <Check size={14} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleUpdateStatus(lead._id, 'closed')}
+                                                            className="p-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg transition-colors border border-slate-200 cursor-pointer"
+                                                            title="Close Inquiry"
+                                                        >
+                                                            <XCircle size={14} />
+                                                        </button>
+                                                    </>
+                                                ) : null}
+                                                <button
+                                                    onClick={() => handleTerminate(lead._id)}
+                                                    className="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg transition-colors border border-rose-200 cursor-pointer"
+                                                    title="Delete Lead"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </motion.tr>
+                                ))}
+                            </AnimatePresence>
+                            {filteredLeads.length === 0 && (
+                                <tr>
+                                    <td colSpan="5" className="py-16 text-center text-slate-400">
+                                        <Clock size={36} className="mx-auto mb-2 text-slate-300" />
+                                        <p className="font-medium text-xs">
+                                            No {activeTab} inquiries found
+                                        </p>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
