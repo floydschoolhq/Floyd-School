@@ -12,25 +12,25 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const users = [
     {
         name: "Abhay Admin",
-        email: "admin@thinkskool.com",
+        email: "admin@floydschool.in",
         password: "abhay",
         role: "admin"
     },
     {
         name: "Shashwat Vashishth",
-        email: "mentor@thinkskool.com",
+        email: "mentor@floydschool.in",
         password: "abhay",
         role: "mentor"
     },
     {
         name: "Floyd School Admin",
-        email: "mentor@thinkskool.in",
+        email: "admin@floydschool.com",
         password: "shan",
         role: "admin"
     },
     {
         name: "Abhay Associate",
-        email: "associate@thinkskool.com",
+        email: "associate@floydschool.com",
         password: "abhay",
         role: "growth_associate"
     }
@@ -44,8 +44,8 @@ const seedUsers = async () => {
         for (const userData of users) {
             const userExists = await User.findOne({ email: userData.email });
             if (userExists) {
-                // Reset the mentor@thinkskool.in account if it already exists, to ensure the password is correct.
-                if (userData.email === 'mentor@thinkskool.in') {
+                // Reset the mentor@floydschool.in account if it already exists, to ensure the password is correct.
+                if (userData.email === 'mentor@floydschool.in') {
                     userExists.name = userData.name;
                     userExists.role = userData.role;
                     userExists.provider = userData.provider || 'local';

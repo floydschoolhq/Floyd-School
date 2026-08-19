@@ -160,8 +160,8 @@ const FAQPage = () => {
             <span className="text-base">← Back</span>
           </button>
           <div className="font-bold text-lg">
-            <span className="text-blue-500">think</span>
-            <span className="text-orange-500">skool</span>
+            <span className="text-blue-500">floyd</span>
+            <span className="text-orange-500">school</span>
           </div>
         </div>
       </nav>

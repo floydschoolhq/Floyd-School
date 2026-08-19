@@ -222,7 +222,7 @@ const seedWhyUs = {
         url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
         thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
         speakerName: "Our Mentors",
-        speakerRole: "ThinkSkool Visionary",
+        speakerRole: "Floyd School Visionary",
         caption: "Join the revolution in student learning and tech empowerment."
     },
     features: [
@@ -250,7 +250,7 @@ const seedDB = async () => {
             // Let's see if we can create a dummy user.
             instructor = await User.create({
                 name: "Instructor Bot",
-                email: "instructor@thinkskool.com",
+                email: "instructor@floydschool.com",
                 password: "password123",
                 role: "mentor" // Validate if 'role' field exists in User schema, otherwise this might fail silently or error
             });

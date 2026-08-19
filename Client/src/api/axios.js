@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { mockSettings, mockCourses, mockUser } from '../mocks/api.js';
 
-const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'https://thinkskool-c0v0.onrender.com';
+const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL || 'https://floyd-school.onrender.com';
 
 // Helper to get the backend server URL for static file access (e.g. uploaded PDFs)
 // This is distinct from the API base URL because static files don't have the /api prefix

@@ -40,8 +40,8 @@ const StudentSidebar = () => {
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-8">
               <Link to="/" className="text-2xl font-black flex items-center tracking-tighter hover:opacity-80 transition-opacity">
-                <span className='text-text-main transition-colors duration-500'>think</span>
-                <span style={{ color: 'var(--accent-primary)' }}>skool</span>
+                <span className='text-text-main transition-colors duration-500'>floyd</span>
+                <span style={{ color: 'var(--accent-primary)' }}>school</span>
               </Link>
               <button
                 className="md:hidden p-2.5 text-text-muted hover:text-text-main rounded-full hover:bg-surface-soft transition-all"

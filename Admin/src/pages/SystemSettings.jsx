@@ -216,7 +216,7 @@ const SystemSettings = () => {
                                 </div>
                             ))}
                             <div className="flex items-center gap-2 pt-2">
-                                <span className="text-sky-500">vct@thinkos:~$</span>
+                                <span className="text-sky-500">vct@floydos:~$</span>
                                 <input
                                     type="text"
                                     value={terminalInput}

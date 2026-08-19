@@ -231,7 +231,7 @@ const CourseCard = ({ course, onOpenMaster, idx }) => {
                 {/* Master Entry Point */}
                 <div className="flex items-center gap-3 w-full xl:w-auto">
                     <button 
-                        onClick={() => window.open(`https://thinkskool-9kaq.vercel.app/course/${course.title?.toLowerCase().replace(/ /g, '-') || '1'}`, '_blank')}
+                        onClick={() => window.open(`https://floydschool.in/course/${course.title?.toLowerCase().replace(/ /g, '-') || '1'}`, '_blank')}
                         className="p-4 xl:p-5 bg-slate-900 hover:bg-slate-800 text-slate-500 hover:text-white rounded-[1.75rem] transition-all border border-slate-800 shadow-xl"
                     >
                         <Eye size={20} />

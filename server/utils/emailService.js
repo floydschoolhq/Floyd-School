@@ -49,7 +49,7 @@ const sendDemoBookingEmail = async (bookingDetails) => {
 
     try {
         await sendEmail({
-            email: process.env.ADMIN_EMAIL || 'admin@thinkskool.com',
+            email: process.env.ADMIN_EMAIL || 'admin@floydschool.in',
             subject: 'New Demo Class Booking',
             html: message,
         });

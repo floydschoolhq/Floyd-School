@@ -29,9 +29,9 @@ const Logo = () => {
             <div className="max-w-7xl mx-auto flex items-center justify-between space-x-4">
                 {/* Logo (Left Side) */}
                 <div className="text-xl sm:text-2xl font-extrabold text-gray-800 flex items-center">
-                    <span className='text-slate-900 font-["Outfit"] tracking-tighter'>think</span>
+                    <span className='text-slate-900 font-["Outfit"] tracking-tighter'>floyd</span>
                     <span className='inline-block w-1'></span>
-                    <span className='text-[#2563EB] font-["Outfit"] tracking-tighter'>skool</span>
+                    <span className='text-[#2563EB] font-["Outfit"] tracking-tighter'>school</span>
                 </div>
 
                 {/* Login Button (Right Side) */}
