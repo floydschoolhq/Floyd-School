@@ -24,6 +24,10 @@ const schoolPartnershipLeadSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    classes: {
+        type: String,
+        trim: true
+    },
     domain: {
         type: String,
         trim: true

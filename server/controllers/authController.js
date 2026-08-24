@@ -19,7 +19,7 @@ const generateToken = (id, sessionToken) => {
 // @route   POST /api/auth/signup
 // @access  Public
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, phone } = req.body;
 
     // Restriction: Only allow Floyd School or Floyd School domains
     /*
@@ -44,6 +44,7 @@ const registerUser = async (req, res) => {
             email,
             password,
             role: 'student',
+            mobileNumber: phone || null,
         });
 
         if (user) {

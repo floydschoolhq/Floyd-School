@@ -74,6 +74,7 @@ const SignupPage = () => {
         name: name.trim(),
         email: email.trim(),
         password,
+        phone: phone.trim() || undefined,
       });
 
       if (response.data?.token) {

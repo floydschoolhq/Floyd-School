@@ -3,7 +3,7 @@ const SchoolPartnershipLead = require('../models/SchoolPartnershipLead');
 // Save school partnership lead
 exports.saveSchoolPartnershipLead = async (req, res) => {
   try {
-    const { schoolName, contactPerson, designation, phone, city, domain, students, requirements } = req.body;
+    const { schoolName, contactPerson, designation, phone, city, classes, domain, students, requirements } = req.body;
     
     const newLead = new SchoolPartnershipLead({
       schoolName,
@@ -11,6 +11,7 @@ exports.saveSchoolPartnershipLead = async (req, res) => {
       designation,
       phone,
       city,
+      classes,
       domain,
       approxStudents: students ? parseInt(students) : 0,
       requirements

@@ -28,6 +28,8 @@ const FOOTER_LINKS = [
       { name: 'Learning Journey', href: '#roadmap' },
       { name: 'Certification', href: '#roadmap' },
       { name: 'Hackathons', href: '/hackathon' },
+      { name: 'Student Login', href: '/login' },
+      { name: 'Register', href: '/signup' },
     ],
   },
   {
