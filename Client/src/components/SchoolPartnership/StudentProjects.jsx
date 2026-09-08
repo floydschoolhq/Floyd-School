@@ -39,11 +39,11 @@ const PROJECTS_DATA = [
   },
   {
     id: 2,
-    title: 'AI Crop Disease Detector',
+    title: 'AI Expense Coach',
     category: 'AI',
-    description: 'A machine learning vision model trained on plant leaf datasets to detect agricultural diseases in real time with high accuracy.',
+    description: 'An AI-powered financial coach providing smart budgeting, spending analysis, and real-time expense guidance.',
     image: '/projects/E_commerce.png',
-    tech: ['Python', 'TensorFlow', 'Computer Vision', 'CNN'],
+    tech: ['React', 'Python', 'AI & NLP', 'Analytics'],
     stats: { stars: 245, views: '2.1k' },
     featured: true,
     color: '#3B82F6',
@@ -52,7 +52,7 @@ const PROJECTS_DATA = [
       avatar: boy2,
       course: 'AI & Machine Learning'
     },
-    liveUrl: '#'
+    liveUrl: 'https://ai-expense-coach.vercel.app/'
   },
   {
     id: 3,
@@ -73,20 +73,20 @@ const PROJECTS_DATA = [
   },
   {
     id: 4,
-    title: 'Cyber Intrusion Analyzer',
+    title: 'Netflix Clone Platform',
     category: 'CYBERSECURITY',
-    description: 'Network packet inspector and vulnerability scanner detecting unauthorized port activities, anomalous packets, and malicious traffic.',
+    description: 'A full-featured video streaming web application replicating the Netflix experience with real-time catalogs and media playback.',
     image: '/projects/netflix_clone.png',
-    tech: ['Cybersecurity', 'Python', 'Network Protocols', 'Zero Trust'],
+    tech: ['React', 'Firebase', 'TMDB API', 'Tailwind'],
     stats: { stars: 210, views: '1.8k' },
     featured: true,
     color: '#EF4444',
     author: {
       name: 'Vikram Singh',
       avatar: boy3,
-      course: 'Cybersecurity Track'
+      course: 'Full Stack Track'
     },
-    liveUrl: '#'
+    liveUrl: 'https://netfixcopy9.vercel.app/'
   },
   {
     id: 5,
@@ -107,20 +107,20 @@ const PROJECTS_DATA = [
   },
   {
     id: 6,
-    title: 'Adaptive Traffic Signal Controller',
+    title: 'Retro Arcade Snake Game',
     category: 'CODING',
-    description: 'AI-powered computer vision model adjusting signal timings dynamically based on real-time intersection vehicle density.',
+    description: 'Classic retro arcade Snake game built with responsive controls, smooth collision physics, and real-time score tracking.',
     image: '/projects/snake_game.png',
-    tech: ['Python', 'OpenCV', 'Algorithms', 'Logic'],
+    tech: ['JavaScript', 'HTML5 Canvas', 'CSS3', 'Game Logic'],
     stats: { stars: 230, views: '1.9k' },
     featured: false,
     color: '#06B6D4',
     author: {
       name: 'Ananya Gupta & Team',
       avatar: girl3,
-      course: 'Coding & Applied Logic'
+      course: 'Coding & Game Dev'
     },
-    liveUrl: '#'
+    liveUrl: 'https://snakegame1-nine.vercel.app/'
   }
 ];
 
@@ -191,8 +191,8 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* ── Always-visible Summary Row ── */}
-      <div className="px-7 pt-5 pb-4 flex items-start justify-between gap-3 shrink-0 border-b border-slate-100">
-        <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight leading-tight">
+      <div className="px-7 pt-5 pb-4 flex items-center justify-between gap-3 shrink-0 border-b border-slate-100 min-h-[4.5rem]">
+        <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight leading-tight line-clamp-1">
           {project.title}
         </h3>
         <div
@@ -307,8 +307,8 @@ const MobileProjectCard = ({ project }) => {
       </div>
 
       {/* Summary */}
-      <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-2 border-b border-slate-100 shrink-0">
-        <h3 className="text-base font-black text-slate-900 uppercase tracking-tight leading-tight">
+      <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-2 border-b border-slate-100 shrink-0 min-h-[3.75rem]">
+        <h3 className="text-base font-black text-slate-900 uppercase tracking-tight leading-tight line-clamp-1">
           {project.title}
         </h3>
         <div

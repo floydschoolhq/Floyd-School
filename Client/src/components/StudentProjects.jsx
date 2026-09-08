@@ -41,11 +41,11 @@ const PROJECTS_DATA = [
   },
   {
     id: 2,
-    title: "AI Crop Disease Detector",
-    category: "AI & Machine Learning",
-    description: "A machine learning vision model trained on plant leaf datasets to detect agricultural diseases in real time with high accuracy.",
+    title: "AI Expense Coach",
+    category: "AI & FinTech",
+    description: "An AI-powered financial coach providing smart budgeting, spending analysis, and real-time expense guidance.",
     image: "/projects/E_commerce.png",
-    tech: ["Python", "TensorFlow", "Computer Vision"],
+    tech: ["React", "Python", "AI & NLP", "Analytics"],
     stats: { stars: 245, forks: 52, views: "2.1k" },
     featured: true,
     color: "blue",
@@ -54,7 +54,7 @@ const PROJECTS_DATA = [
       avatar: boy2,
       course: "AI & Machine Learning"
     },
-    liveUrl: "#"
+    liveUrl: "https://ai-expense-coach.vercel.app/"
   },
   {
     id: 3,
@@ -75,20 +75,20 @@ const PROJECTS_DATA = [
   },
   {
     id: 4,
-    title: "Cyber Intrusion Analyzer",
-    category: "Cybersecurity",
-    description: "Network packet inspector and vulnerability scanner detecting unauthorized port activities and malicious traffic.",
+    title: "Netflix Clone Platform",
+    category: "Full Stack & Web",
+    description: "A full-featured video streaming web application replicating the Netflix experience with real-time catalogs and media playback.",
     image: "/projects/netflix_clone.png",
-    tech: ["Cybersecurity", "Python", "Network Protocols"],
+    tech: ["React", "Firebase", "TMDB API", "Tailwind"],
     stats: { stars: 210, forks: 41, views: "1.8k" },
     featured: true,
     color: "red",
     author: {
       name: "Vikram Singh",
       avatar: boy3,
-      course: "Cybersecurity Track"
+      course: "Full Stack Track"
     },
-    liveUrl: "#"
+    liveUrl: "https://netfixcopy9.vercel.app/"
   },
   {
     id: 5,
@@ -109,20 +109,20 @@ const PROJECTS_DATA = [
   },
   {
     id: 6,
-    title: "Adaptive Traffic Signal Controller",
-    category: "Coding & Applied AI",
-    description: "AI-powered vision model adjusting signal timings dynamically based on intersection vehicle density.",
+    title: "Retro Arcade Snake Game",
+    category: "Game Dev & Logic",
+    description: "Classic retro arcade Snake game built with responsive controls, smooth collision physics, and real-time score tracking.",
     image: "/projects/snake_game.png",
-    tech: ["AI", "OpenCV", "Automation"],
+    tech: ["JavaScript", "HTML5 Canvas", "CSS3", "Game Logic"],
     stats: { stars: 230, forks: 48, views: "1.9k" },
     featured: false,
     color: "cyan",
     author: {
       name: "Ananya Gupta & Team",
       avatar: girl3,
-      course: "Coding & Applied AI"
+      course: "Coding & Game Dev"
     },
-    liveUrl: "#"
+    liveUrl: "https://snakegame1-nine.vercel.app/"
   }
 ];
 
@@ -163,197 +163,96 @@ const TechIcon = ({ tech }) => {
   );
 };
 
-const ProjectCard = ({ project, index, isFeatured }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const isMobile = useIsMobile();
-
-  const colorGradients = {
-    purple: 'from-purple-500/20 to-purple-600/20 border-purple-500/30',
-    blue: 'from-blue-500/20 to-blue-600/20 border-blue-500/30',
-    orange: 'from-orange-500/20 to-orange-600/20 border-orange-500/30',
-    green: 'from-green-500/20 to-green-600/20 border-green-500/30',
-    red: 'from-red-500/20 to-red-600/20 border-red-500/30',
-    cyan: 'from-cyan-500/20 to-cyan-600/20 border-cyan-500/30'
-  };
-
-  if (isMobile) {
-    return (
-      <div
-        className={`relative bg-white rounded-lg border overflow-hidden transition-all duration-300 ${
-          isFeatured 
-            ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-md` 
-            : 'border-slate-200/60 shadow-sm'
-        }`}
-      >
-        <div className="relative h-24 overflow-hidden bg-slate-100">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-          <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-white/90 backdrop-blur-sm rounded-full text-[6px] font-bold text-slate-800">
-            {project.category}
-          </div>
-        </div>
-
-        <div className="p-4 flex flex-col items-center text-center">
-          <h3 className="text-sm font-bold text-slate-900 mb-1.5">
-            {project.title}
-          </h3>
-
-          <p className="text-slate-600 text-[10px] leading-relaxed mb-3">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-1 mb-3">
-            {project.tech.slice(0, 2).map((tech, i) => (
-              <TechIcon key={i} tech={tech} />
-            ))}
-            {project.tech.length > 2 && (
-              <span className="text-[7px] text-slate-500 font-bold">+{project.tech.length - 2}</span>
-            )}
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-8 h-8 rounded-full border border-white shadow-sm overflow-hidden bg-slate-100">
-                <img
-                  src={project.author.avatar}
-                  alt={project.author.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <p className="text-[8px] font-bold text-slate-800">{project.author.name}</p>
-            </div>
-
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="flex items-center gap-1">
-                <Star size={10} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-[8px] font-bold">{project.stats.stars}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Eye size={10} />
-                <span className="text-[8px] font-bold">{project.stats.views}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    );
-  }
-
+const ProjectCard = ({ project }) => {
   return (
-    <a
-      href={project.liveUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`relative group cursor-pointer will-change-transform hover:-translate-y-1 transition-transform duration-300 block ${
-        isFeatured 
-          ? 'lg:col-span-2 lg:row-span-2 md:col-span-1 md:row-span-2' 
-          : 'lg:col-span-1 md:row-span-1'
-      }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div
-        className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out rounded-2xl"
-        style={{
-          background: `linear-gradient(135deg, ${project.color}-500/10 0%, ${project.color}-600/10 50%, ${project.color}-500/10 100%)`
-        }}
-      />
-
-      {isHovered && (
-        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center z-20">
-          <Star size={16} className="text-yellow-500 fill-yellow-500" />
-        </div>
-      )}
-      {project.featured && isHovered && (
-        <div className="absolute top-4 right-4 text-xs font-bold text-white bg-black/80 px-2 py-1 rounded z-20">
-          FEATURED
-        </div>
-      )}
-
-      <div className={`relative bg-white rounded-2xl border overflow-hidden transition-all duration-300 ease-out ${
-        isFeatured 
-          ? `bg-gradient-to-br ${colorGradients[project.color]} border-2 shadow-2xl` 
-          : 'border-slate-200/60 shadow-lg group-hover:shadow-xl'
-      }`}>
+    <div className="group h-full flex flex-col bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-blue-400/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden relative">
+      {/* Image Banner */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-100 shrink-0">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
         
-        <div className="relative h-48 md:h-56 overflow-hidden bg-slate-100">
-          <div
-            className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-            style={{ backgroundImage: `url(${project.image})` }}
-          />
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-          
-          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-slate-800">
-            {project.category}
-          </div>
+        {/* Category Badge */}
+        <div className="absolute top-3.5 left-3.5 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-slate-800 shadow-sm border border-white/40">
+          {project.category}
         </div>
 
-        <div className="p-8 flex flex-col items-center text-center">
-          <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">
-            {project.title}
-          </h3>
-
-          <p className="text-slate-600 text-base leading-relaxed mb-6 max-w-sm">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {project.tech.slice(0, 3).map((tech, i) => (
-              <TechIcon key={i} tech={tech} />
-            ))}
-            {project.tech.length > 3 && (
-              <span className="text-xs text-slate-500 font-bold">+{project.tech.length - 3} more</span>
-            )}
-          </div>
-
-          <div className="flex flex-col items-center gap-4 w-full">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full border-2 border-white shadow-md hover:scale-110 transition-transform overflow-hidden bg-slate-100">
-                <img
-                  src={project.author.avatar}
-                  alt={project.author.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-center">
-                <p className="text-base font-bold text-slate-900">{project.author.name}</p>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{project.author.course}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="flex items-center gap-1 hover:scale-105 transition-transform">
-                <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-medium">{project.stats.stars}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Eye size={14} />
-                <span className="text-xs font-medium">{project.stats.views}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {isHovered && (
-          <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-30">
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 px-3 py-2 bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform"
-            >
-              <ExternalLink size={12} />
-              Live
-            </a>
+        {/* Featured Badge */}
+        {project.featured && (
+          <div className="absolute top-3.5 right-3.5 px-2.5 py-1 bg-amber-500 text-white rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+            <Star size={11} className="fill-white" />
+            <span>Featured</span>
           </div>
         )}
       </div>
-    </a>
+
+      {/* Card Content Body */}
+      <div className="p-6 flex flex-col flex-1">
+        {/* Title */}
+        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase tracking-tight line-clamp-1 group-hover:text-blue-600 transition-colors">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-slate-500 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2 min-h-[2.5rem] font-medium">
+          {project.description}
+        </p>
+
+        {/* Tech Stack Chips */}
+        <div className="flex flex-wrap gap-1.5 mb-5 min-h-[1.75rem]">
+          {project.tech.slice(0, 3).map((tech, i) => (
+            <TechIcon key={i} tech={tech} />
+          ))}
+          {project.tech.length > 3 && (
+            <span className="px-2 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-semibold">
+              +{project.tech.length - 3}
+            </span>
+          )}
+        </div>
+
+        {/* Bottom Pinned Meta (Author + Stats) */}
+        <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-full border border-slate-200 overflow-hidden bg-slate-100 shadow-sm shrink-0">
+              <img
+                src={project.author.avatar}
+                alt={project.author.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-slate-900 truncate">{project.author.name}</p>
+              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider truncate">{project.author.course}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 text-slate-500 shrink-0 ml-2">
+            <div className="flex items-center gap-1">
+              <Star size={12} className="text-amber-500 fill-amber-500" />
+              <span className="text-xs font-bold text-slate-700">{project.stats.stars}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Eye size={12} />
+              <span className="text-xs font-bold text-slate-700">{project.stats.views}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Launch / View Button */}
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 w-full py-2.5 px-4 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm hover:shadow-md active:scale-95"
+        >
+          <ExternalLink size={13} />
+          <span>View Project</span>
+        </a>
+      </div>
+    </div>
   );
 };
 
@@ -362,7 +261,6 @@ const StudentProjects = () => {
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
   const isMobile = useIsMobile();
   const mobileScrollRef = useRef(null);
-  const scrollRef = useRef(null);
 
   const featuredProjects = PROJECTS_DATA.filter(p => p.featured);
   const allProjects = PROJECTS_DATA;
@@ -384,7 +282,7 @@ const StudentProjects = () => {
         behavior: 'smooth'
       });
       setMobileActiveIndex(nextIndex);
-    }, 3000);
+    }, 3500);
 
     return () => clearInterval(interval);
   }, [isMobile, mobileActiveIndex, filteredProjects.length]);
@@ -396,18 +294,6 @@ const StudentProjects = () => {
     const newIndex = Math.round(scrollLeft / cardWidth);
     if (newIndex !== mobileActiveIndex) {
       setMobileActiveIndex(newIndex);
-    }
-  };
-
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-        const { current } = scrollRef;
-        const scrollAmount = isMobile ? window.innerWidth * 0.85 : 640;
-        if (direction === 'left') {
-            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else {
-            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
     }
   };
 
@@ -423,15 +309,15 @@ const StudentProjects = () => {
             </h2>
           </div>
 
-          <div className="flex justify-center gap-3 mb-12">
+          <div className="flex justify-center gap-3 mb-10">
             {['all', 'featured'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setFilter(tab)}
-                className={`px-6 py-2.5 rounded-xl font-bold text-[9px] uppercase tracking-widest transition-all ${
+                className={`px-6 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ${
                   filter === tab
-                    ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20'
-                    : 'bg-white text-slate-400 border border-slate-200/50'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                    : 'bg-white text-slate-400 border border-slate-200/80 shadow-sm'
                 }`}
               >
                 {tab === 'all' ? 'All Projects' : 'Featured Only'}
@@ -442,51 +328,20 @@ const StudentProjects = () => {
           <div 
             ref={mobileScrollRef}
             onScroll={handleMobileScroll}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide"
+            className="flex gap-5 overflow-x-auto snap-x snap-mandatory py-4 -mx-6 px-6 scrollbar-hide items-stretch"
           >
              {filteredProjects.map((project) => (
                 <div 
                   key={project.id} 
-                  className="snap-center shrink-0 w-[85vw] bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-sm flex flex-col hover:scale-[0.98] transition-all duration-300"
+                  className="snap-center shrink-0 w-[85vw] sm:w-[340px] flex flex-col"
                 >
-                  <div className="aspect-[16/10] overflow-hidden relative border-b border-slate-100/30">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2] transition-all duration-500" />
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest text-slate-900 border border-white/20 shadow-sm">
-                        {project.category}
-                    </div>
-                  </div>
-                  
-                  <div className="p-8">
-                    <h3 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tight leading-tight">{project.title}</h3>
-                    <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-8 line-clamp-2">{project.description}</p>
-                    
-                    <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100/30">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full border border-slate-100 overflow-hidden bg-slate-100">
-                                <img src={project.author.avatar} alt={project.author.name} className="w-full h-full object-cover" />
-                            </div>
-                            <div>
-                               <p className="text-[11px] font-black text-slate-900 uppercase leading-none mb-1">{project.author.name}</p>
-                               <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{project.author.course}</p>
-                           </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-1">
-                            <Star size={12} className="text-orange-500 fill-orange-500" />
-                            <span className="text-[10px] font-black text-slate-900">{project.stats.stars}</span>
-                        </div>
-                    </div>
-                    
-                    <div className="flex gap-3">
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-lg shadow-blue-500/20 active:scale-95 transition-all">Launch</a>
-                    </div>
-                  </div>
+                  <ProjectCard project={project} />
                 </div>
              ))}
           </div>
 
           {/* Progress Dots */}
-          <div className="flex justify-center gap-2 mt-2 mb-8">
+          <div className="flex justify-center gap-2 mt-4 mb-4">
             {filteredProjects.map((_, idx) => (
               <div 
                 key={idx}
@@ -495,12 +350,6 @@ const StudentProjects = () => {
                 }`}
               />
             ))}
-          </div>
-
-          <div className="flex justify-center mt-6">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-50">
-                  EXPLORE
-              </span>
           </div>
         </div>
       </section>
@@ -526,10 +375,10 @@ const StudentProjects = () => {
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer ${
                 filter === tab
                   ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
-                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 shadow-sm'
               }`}
             >
               {tab === 'all' ? 'All Projects' : 'Featured Only'}
@@ -537,13 +386,11 @@ const StudentProjects = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16 auto-rows-auto">
-          {filteredProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 items-stretch">
+          {filteredProjects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
-              index={index}
-              isFeatured={project.featured}
             />
           ))}
         </div>
