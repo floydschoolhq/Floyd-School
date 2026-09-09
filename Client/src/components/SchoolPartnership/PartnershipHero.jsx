@@ -150,6 +150,11 @@ const PartnershipHero = () => {
   const nextDesign = () => setDesignIndex((prev) => (prev + 1) % DYNAMIC_DESIGNS.length);
   const prevDesign = () => setDesignIndex((prev) => (prev - 1 + DYNAMIC_DESIGNS.length) % DYNAMIC_DESIGNS.length);
 
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
   const handleNavClick = (link) => {
     if (link.href) {
       window.location.href = link.href;
@@ -329,13 +334,6 @@ const PartnershipHero = () => {
               strokeWidth="2"
               strokeDasharray="8 8"
             />
-            <g opacity="0.4" stroke="#ffffff" strokeWidth="1.5" fill="none">
-              <path d="M 40 280 L 25 295 L 40 310 M 70 280 L 85 295 L 70 310 M 60 275 L 50 315" />
-              <rect x="20" y="240" width="80" height="22" rx="4" />
-              <rect x="1360" y="320" width="50" height="40" rx="8" />
-              <circle cx="1375" cy="336" r="4" fill="#fff" />
-              <circle cx="1395" cy="336" r="4" fill="#fff" />
-            </g>
           </svg>
         </div>
 
@@ -352,15 +350,11 @@ const PartnershipHero = () => {
           >
             {/* Eyebrow badge */}
             <div>
-              <span
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest text-white shadow-sm"
-                style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  border: `1px solid ${currentDesign.eyebrowBorder}`,
-                }}
-              >
-                <Sparkles size={12} style={{ color: currentDesign.accentColor }} />
-                {currentDesign.eyebrow}
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300 bg-white/[0.05] border border-white/10 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="font-semibold text-white">NEP 2020 & CBSE Curriculum</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-400">Classes 6 to 12</span>
               </span>
             </div>
 
@@ -369,28 +363,14 @@ const PartnershipHero = () => {
               className="font-black text-white tracking-tight uppercase"
               style={{
                 fontFamily: "'Outfit', sans-serif",
-                lineHeight: 1.15,
+                lineHeight: 1.1,
+                fontSize: 'clamp(2.1rem, 3.8vw, 3.5rem)',
               }}
             >
-              {/* Line 1 */}
-              <span className="flex flex-wrap items-center gap-x-3 gap-y-1" style={{ fontSize: 'clamp(1.6rem, 3.2vw, 3rem)' }}>
-                <span>Every Student Has</span>
-                <motion.span
-                  key={currentDesign.accentColor}
-                  initial={{ scale: 0.9 }}
-                  animate={{ scale: 1 }}
-                  className="inline-block px-3 py-1 font-black rounded-md tracking-wider shadow-lg shrink-0"
-                  style={{
-                    background: currentDesign.accentColor,
-                    color: currentDesign.accentTextColor,
-                    fontSize: 'clamp(0.75rem, 1.2vw, 1rem)',
-                  }}
-                >
-                  A DESTINATION.
-                </motion.span>
+              <span className="block text-white">
+                Every Student Has A Destination.
               </span>
-              {/* Line 2 */}
-              <span className="block" style={{ fontSize: 'clamp(1.6rem, 3.2vw, 3rem)' }}>
+              <span className="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
                 We Find The Shortest Path.
               </span>
             </h1>
@@ -400,38 +380,32 @@ const PartnershipHero = () => {
               Hands on technology education delivered directly on campus, where students learn with expert mentors, explore emerging technologies and build real projects.
             </p>
 
-            {/* Dynamic Domain Pills */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            {/* Monotone Domain Pills */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
               {currentDesign.pills.map((pill) => (
-                <motion.span
+                <span
                   key={pill.text}
-                  whileHover={{ scale: 1.05 }}
-                  className="px-5 py-2.5 rounded-full text-xs font-bold text-white shadow-md transition-transform"
-                  style={{ background: pill.bg }}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300 bg-white/[0.04] border border-white/10 hover:border-white/20 hover:text-white transition-colors"
                 >
                   {pill.text}
-                </motion.span>
+                </span>
               ))}
             </div>
 
-            {/* Dynamic CTA Button & Style controls */}
+            {/* CTA Buttons & Style controls */}
             <div className="pt-3 space-y-3">
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => scrollTo('partner-form')}
-                  className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl"
-                  style={{
-                    background: currentDesign.btnGradient,
-                    boxShadow: `0 10px 30px ${currentDesign.btnGlow}`,
-                  }}
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-slate-950 bg-white hover:bg-slate-200 transition-all duration-200 cursor-pointer shadow-md"
                 >
-                  <Calendar size={17} />
+                  <Calendar size={16} />
                   Book a Discovery Session
                 </button>
 
                 <button
                   onClick={() => scrollTo('online-focus')}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300 hover:scale-105 cursor-pointer backdrop-blur-md"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 border border-white/15 transition-all duration-200 cursor-pointer backdrop-blur-md"
                 >
                   Explore Programs
                 </button>
@@ -445,7 +419,7 @@ const PartnershipHero = () => {
                       className="h-2 rounded-full transition-all duration-300"
                       style={{
                         width: i === designIndex ? '20px' : '8px',
-                        background: i === designIndex ? currentDesign.accentColor : 'rgba(255,255,255,0.3)',
+                        background: i === designIndex ? '#ffffff' : 'rgba(255,255,255,0.3)',
                       }}
                     />
                   ))}
@@ -453,8 +427,9 @@ const PartnershipHero = () => {
               </div>
 
               {/* Small subtext */}
-              <p className="text-xs text-slate-400 font-medium">
-                Begin with a complimentary 1 day technology immersion.
+              <p className="text-xs text-slate-400 font-medium flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Begin with a complimentary 1 day technology immersion on campus.
               </p>
             </div>
           </motion.div>
