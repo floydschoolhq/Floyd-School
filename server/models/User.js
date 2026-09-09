@@ -19,8 +19,69 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['student', 'mentor', 'admin', 'growth_associate'],
+        enum: ['student', 'mentor', 'admin', 'growth_associate', 'school_student', 'school_coordinator'],
         default: 'student',
+    },
+    // Offline School Portal Fields
+    offlineRollNo: {
+        type: String,
+        unique: true,
+        sparse: true,
+        trim: true
+    },
+    grade: {
+        type: String,
+        trim: true
+    },
+    section: {
+        type: String,
+        trim: true
+    },
+    fatherName: {
+        type: String,
+        trim: true
+    },
+    fatherMobile: {
+        type: String,
+        trim: true
+    },
+    studentMobile: {
+        type: String,
+        trim: true
+    },
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School'
+    },
+    schoolNameManual: {
+        type: String,
+        trim: true
+    },
+    batch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Batch'
+    },
+    approvalStatus: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
+    },
+    approvedAt: {
+        type: Date
+    },
+    approvedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    academicYear: {
+        type: String,
+        default: '2025-2026'
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpire: {
+        type: Date
     },
     permissions: {
         canAccessCourses: { type: Boolean, default: false },

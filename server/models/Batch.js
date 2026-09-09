@@ -9,12 +9,12 @@ const batchSchema = new mongoose.Schema({
     course: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
-        required: true
+        required: false
     },
     instructor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: false
     },
     students: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +22,8 @@ const batchSchema = new mongoose.Schema({
     }],
     startDate: {
         type: Date,
-        required: true
+        required: false,
+        default: Date.now
     },
     endDate: {
         type: Date
@@ -30,7 +31,7 @@ const batchSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['upcoming', 'active', 'completed', 'on-hold'],
-        default: 'upcoming'
+        default: 'active'
     },
     capacity: {
         type: Number,
@@ -39,6 +40,34 @@ const batchSchema = new mongoose.Schema({
     meetingLink: {
         type: String,
         description: "Default meeting link for this batch"
+    },
+    // Offline Partner School Fields
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School'
+    },
+    code: {
+        type: String,
+        trim: true
+    },
+    subject: {
+        type: String,
+        default: 'Robotics & STEM Lab'
+    },
+    scheduleDays: [{
+        type: String
+    }],
+    scheduleTime: {
+        type: String,
+        default: '10:00 AM - 11:30 AM'
+    },
+    roomVenue: {
+        type: String,
+        default: 'Lab 101'
+    },
+    academicYear: {
+        type: String,
+        default: '2025-2026'
     }
 }, {
     timestamps: true

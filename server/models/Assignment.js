@@ -13,7 +13,15 @@ const assignmentSchema = new mongoose.Schema({
     course: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
-        required: true
+        required: false
+    },
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School'
+    },
+    batch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Batch'
     },
     module: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +32,10 @@ const assignmentSchema = new mongoose.Schema({
         required: true
     },
     maxPoints: {
+        type: Number,
+        default: 100
+    },
+    maxMarks: {
         type: Number,
         default: 100
     },

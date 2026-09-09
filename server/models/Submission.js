@@ -13,7 +13,12 @@ const submissionSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true
+        required: false,
+        default: ''
+    },
+    fileUrl: {
+        type: String,
+        default: null
     },
     attachments: [{
         filename: String,
@@ -21,10 +26,15 @@ const submissionSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        enum: ['submitted', 'graded', 'returned'],
+        enum: ['submitted', 'graded', 'returned', 'Graded'],
         default: 'submitted'
     },
     grade: {
+        type: Number,
+        min: 0,
+        max: 100
+    },
+    marksObtained: {
         type: Number,
         min: 0,
         max: 100

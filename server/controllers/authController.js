@@ -130,12 +130,19 @@ const loginUser = async (req, res) => {
                 io.emit('user-login', { name: user.name, role: user.role });
             }
 
-            res.json({
+            const userPayload = {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
                 permissions: user.permissions,
+                mobileNumber: user.mobileNumber,
+                approvalStatus: user.approvalStatus,
+            };
+
+            res.json({
+                ...userPayload,
+                user: userPayload,
                 token: generateToken(user._id, sessionToken),
             });
         } else {
@@ -450,6 +457,86 @@ const firebaseAuthCallback = async (req, res) => {
     }
 };
 
+// @desc    Request password reset token
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ success: false, message: 'Please provide a registered email' });
+    }
+
+    try {
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
+        if (!user) {
+            // Do not reveal email existence to prevent user enumeration
+            return res.json({
+                success: true,
+                message: 'If an account exists with that email, a password reset link has been dispatched.'
+            });
+        }
+
+        const rawToken = crypto.randomBytes(32).toString('hex');
+        const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+
+        user.resetPasswordToken = hashedToken;
+        user.resetPasswordExpire = Date.now() + 60 * 60 * 1000; // 1 hour expiry
+        await user.save();
+
+        const resetUrl = `${req.protocol}://${req.get('host')}/reset-password/${rawToken}`;
+        console.log(`[Password Reset] Dispatched token for ${user.email}. Link: ${resetUrl}`);
+
+        res.json({
+            success: true,
+            message: 'If an account exists with that email, a password reset link has been dispatched.',
+            ...(process.env.NODE_ENV !== 'production' ? { devResetToken: rawToken } : {})
+        });
+    } catch (error) {
+        console.error('[forgotPassword] Error:', error);
+        res.status(500).json({ success: false, message: 'Password reset request failed' });
+    }
+};
+
+// @desc    Reset password using token
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+const resetPassword = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!password || password.length < 6) {
+        return res.status(400).json({ success: false, message: 'Password must be at least 6 characters long' });
+    }
+
+    try {
+        const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+        const user = await User.findOne({
+            resetPasswordToken: hashedToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Invalid or expired password reset token' });
+        }
+
+        user.password = password; // pre-save bcrypt hash hook will hash this
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        user.sessionToken = crypto.randomBytes(16).toString('hex');
+        await user.save();
+
+        res.json({
+            success: true,
+            message: 'Password reset successful! You can now sign in with your new password.'
+        });
+    } catch (error) {
+        console.error('[resetPassword] Error:', error);
+        res.status(500).json({ success: false, message: 'Password reset failed' });
+    }
+};
+
 // @desc    Get all students
 // @route   GET /api/auth/students
 // @access  Private (any authenticated user can view)
@@ -469,4 +556,15 @@ const getAllStudents = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, getMe, googleAuthCallback, completeGoogleProfile, debugGoogleConfig, firebaseAuthCallback, getAllStudents };
+module.exports = { 
+    registerUser, 
+    loginUser, 
+    getMe, 
+    googleAuthCallback, 
+    completeGoogleProfile, 
+    debugGoogleConfig, 
+    firebaseAuthCallback, 
+    getAllStudents,
+    forgotPassword,
+    resetPassword
+};
