@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Users, User, ChevronLeft, ChevronRight, Calendar, Sparkles, Zap, Brain, Rocket, Award } from 'lucide-react';
 
 const NAV_LINKS = [
-  { name: 'Programs', id: 'programs' },
-  { name: 'Roadmap', id: 'timeline' },
-  { name: 'Domains', id: 'online-focus' },
-  { name: 'Why Us', id: 'why-us' },
-  { name: 'Host a Session', id: 'partner-form' },
+  { name: 'Programs', id: 'online-focus' },
+  { name: 'Learning Journey', id: 'roadmap' },
+  { name: 'Technology Domains', id: 'ecosystem' },
+  { name: 'Why Floyd', id: 'why-us' },
+  { name: 'Student Projects', id: 'student-projects' },
+  { name: 'Hackathons', href: '/hackathon' },
 ];
 
 const useScrolledPast = (threshold = 60) => {
@@ -28,21 +29,21 @@ const DYNAMIC_DESIGNS = [
     accentColor: '#facc15', // Yellow badge
     accentTextColor: '#07092b',
     taglineGradient: 'linear-gradient(90deg, #38BDF8, #FACC15, #ff7d1a)',
-    tagline: 'EVERY STUDENT HAS A DESTINATION. WE FIND THE SHORTEST PATH.',
-    eyebrow: 'COMPOSITE SKILL LABS FOR CBSE SCHOOLS',
+    eyebrow: 'FUTURE READY TECHNOLOGY EDUCATION FOR CLASSES 6 TO 12',
     eyebrowBorder: '#38BDF8',
     pills: [
-      { text: 'Artificial Intelligence', bg: '#ff7d1a' },
-      { text: 'Coding', bg: '#10cb6a' },
-      { text: 'Robotics', bg: '#ff4b93' },
+      { text: 'AI & Machine Learning', bg: '#ff7d1a' },
+      { text: 'Coding & Web Development', bg: '#10cb6a' },
+      { text: 'Cybersecurity', bg: '#38bdf8' },
+      { text: 'IoT & Robotics', bg: '#ff4b93' },
     ],
     btnGradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
     btnGlow: 'rgba(139,92,246,0.4)',
     photos: [
-      { src: '/startup_media/photo_3.jpg', title: 'Hands-on Robotics Lab' },
-      { src: '/startup_media/photo_12.jpg', title: 'National Hackathons' },
-      { src: '/startup_media/photo_1.jpg', title: 'AI & GenAI Modules' },
-      { src: '/startup_media/photo_7.jpg', title: 'Future Innovators' },
+      { src: '/startup_media/photo_3.jpg', title: 'HANDS ON LEARNING', desc: 'Students explore, experiment and build alongside Floyd mentors.' },
+      { src: '/startup_media/photo_12.jpg', title: 'MENTOR LED LEARNING', desc: 'Practical technology education delivered directly on campus.' },
+      { src: '/startup_media/photo_1.jpg', title: 'REAL PROJECTS', desc: 'Students turn ideas into working technology projects.' },
+      { src: '/startup_media/photo_7.jpg', title: 'FUTURE INNOVATORS', desc: 'Hands on technology education for Classes 6 to 12.' },
     ],
     frameStyle: 'flower',
     doodleColor: '#6C63FF',
@@ -53,21 +54,21 @@ const DYNAMIC_DESIGNS = [
     accentColor: '#00D4FF', // Cyan badge
     accentTextColor: '#0c041a',
     taglineGradient: 'linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8)',
-    tagline: 'TRANSFORMING CLASSROOMS INTO HIGH-TECH INNOVATION HUBS.',
-    eyebrow: 'NEP 2020 & CBSE EXPERIENTIAL LEARNING',
+    eyebrow: 'FUTURE READY TECHNOLOGY EDUCATION FOR CLASSES 6 TO 12',
     eyebrowBorder: '#f472b6',
     pills: [
-      { text: 'GenAI Chatbots', bg: '#a78bfa' },
-      { text: 'IoT & Sensors', bg: '#38bdf8' },
-      { text: 'Web App Dev', bg: '#f472b6' },
+      { text: 'AI & Machine Learning', bg: '#a78bfa' },
+      { text: 'Coding & Web Development', bg: '#38bdf8' },
+      { text: 'Cybersecurity', bg: '#f472b6' },
+      { text: 'IoT & Robotics', bg: '#10b981' },
     ],
     btnGradient: 'linear-gradient(135deg, #ec4899, #d946ef)',
     btnGlow: 'rgba(236,72,153,0.4)',
     photos: [
-      { src: '/startup_media/photo_1.jpg', title: 'AI & GenAI Modules' },
-      { src: '/startup_media/photo_4.jpg', title: '3D Modeling & Design' },
-      { src: '/startup_media/photo_8.jpg', title: 'App Dev Training' },
-      { src: '/startup_media/photo_2.jpg', title: 'Mentored Coding' },
+      { src: '/startup_media/photo_1.jpg', title: 'HANDS ON LEARNING', desc: 'Students explore, experiment and build alongside Floyd mentors.' },
+      { src: '/startup_media/photo_4.jpg', title: 'MENTOR LED LEARNING', desc: 'Practical technology education delivered directly on campus.' },
+      { src: '/startup_media/photo_8.jpg', title: 'REAL PROJECTS', desc: 'Students turn ideas into working technology projects.' },
+      { src: '/startup_media/photo_2.jpg', title: 'FUTURE INNOVATORS', desc: 'Hands on technology education for Classes 6 to 12.' },
     ],
     frameStyle: 'arch',
     doodleColor: '#ec4899',
@@ -78,21 +79,21 @@ const DYNAMIC_DESIGNS = [
     accentColor: '#fb923c', // Orange badge
     accentTextColor: '#031c18',
     taglineGradient: 'linear-gradient(90deg, #34d399, #fb923c, #facc15)',
-    tagline: 'REAL CODE. REAL PROJECTS. REAL OUTCOMES.',
-    eyebrow: 'RUN ON CAMPUS. MANAGED ENTIRELY BY FLOYD',
+    eyebrow: 'FUTURE READY TECHNOLOGY EDUCATION FOR CLASSES 6 TO 12',
     eyebrowBorder: '#34d399',
     pills: [
-      { text: 'AI and Machine Learning', bg: '#fb923c' },
-      { text: 'Cybersecurity', bg: '#34d399' },
-      { text: 'IoT and Robotics', bg: '#facc15' },
+      { text: 'AI & Machine Learning', bg: '#fb923c' },
+      { text: 'Coding & Web Development', bg: '#34d399' },
+      { text: 'Cybersecurity', bg: '#facc15' },
+      { text: 'IoT & Robotics', bg: '#38bdf8' },
     ],
     btnGradient: 'linear-gradient(135deg, #10b981, #059669)',
     btnGlow: 'rgba(16,185,129,0.4)',
     photos: [
-      { src: '/startup_media/photo_12.jpg', title: 'Student Certificates' },
-      { src: '/startup_media/photo_7.jpg', title: 'Hackathon Pitching' },
-      { src: '/startup_media/photo_5.jpg', title: 'Hardware Labs' },
-      { src: '/startup_media/photo_9.jpg', title: 'Mentored Sessions' },
+      { src: '/startup_media/photo_12.jpg', title: 'HANDS ON LEARNING', desc: 'Students explore, experiment and build alongside Floyd mentors.' },
+      { src: '/startup_media/photo_7.jpg', title: 'MENTOR LED LEARNING', desc: 'Practical technology education delivered directly on campus.' },
+      { src: '/startup_media/photo_5.jpg', title: 'REAL PROJECTS', desc: 'Students turn ideas into working technology projects.' },
+      { src: '/startup_media/photo_9.jpg', title: 'FUTURE INNOVATORS', desc: 'Hands on technology education for Classes 6 to 12.' },
     ],
     frameStyle: 'quad',
     doodleColor: '#10b981',
@@ -103,21 +104,21 @@ const DYNAMIC_DESIGNS = [
     accentColor: '#38bdf8', // Blue badge
     accentTextColor: '#1a040f',
     taglineGradient: 'linear-gradient(90deg, #f43f5e, #fb923c, #a855f7)',
-    tagline: 'ON-CAMPUS LABS MANAGED 100% BY FLOYD SCHOOL MENTORS.',
-    eyebrow: 'FUTURE-READY SKILL CERTIFICATIONS FOR STUDENTS',
+    eyebrow: 'FUTURE READY TECHNOLOGY EDUCATION FOR CLASSES 6 TO 12',
     eyebrowBorder: '#f43f5e',
     pills: [
-      { text: 'Robotics Competitions', bg: '#f43f5e' },
-      { text: 'AI Agents', bg: '#a855f7' },
-      { text: 'Career Readiness', bg: '#38bdf8' },
+      { text: 'AI & Machine Learning', bg: '#f43f5e' },
+      { text: 'Coding & Web Development', bg: '#a855f7' },
+      { text: 'Cybersecurity', bg: '#38bdf8' },
+      { text: 'IoT & Robotics', bg: '#10b981' },
     ],
     btnGradient: 'linear-gradient(135deg, #f43f5e, #e11d48)',
     btnGlow: 'rgba(244,63,94,0.4)',
     photos: [
-      { src: '/startup_media/photo_6.jpg', title: 'Team Collaboration' },
-      { src: '/startup_media/photo_10.jpg', title: 'On-site Mentors' },
-      { src: '/startup_media/photo_11.jpg', title: 'Campus Setup' },
-      { src: '/startup_media/photo_3.jpg', title: 'Robotics Testing' },
+      { src: '/startup_media/photo_6.jpg', title: 'HANDS ON LEARNING', desc: 'Students explore, experiment and build alongside Floyd mentors.' },
+      { src: '/startup_media/photo_10.jpg', title: 'MENTOR LED LEARNING', desc: 'Practical technology education delivered directly on campus.' },
+      { src: '/startup_media/photo_11.jpg', title: 'REAL PROJECTS', desc: 'Students turn ideas into working technology projects.' },
+      { src: '/startup_media/photo_3.jpg', title: 'FUTURE INNOVATORS', desc: 'Hands on technology education for Classes 6 to 12.' },
     ],
     frameStyle: 'matrix',
     doodleColor: '#f43f5e',
@@ -154,6 +155,25 @@ const PartnershipHero = () => {
     setIsMenuOpen(false);
   };
 
+  const handleNavClick = (link) => {
+    if (link.href) {
+      window.location.href = link.href;
+    } else {
+      document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleDownloadBrochure = () => {
+    const link = document.createElement('a');
+    link.href = '/Floyd_School_Brochure.pdf';
+    link.download = 'Floyd_School_Brochure.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <style>{`
@@ -173,16 +193,15 @@ const PartnershipHero = () => {
         <div className="max-w-[1350px] mx-auto px-6 h-20 flex items-center justify-between">
           {/* Left Brand */}
           <div
-            className="flex flex-col items-start leading-none cursor-pointer"
+            className="flex flex-col items-start leading-none cursor-pointer group"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <span className="font-black text-white text-xl tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Floyd School
-            </span>
-            <span className="text-[8px] text-sky-300/80 font-bold tracking-widest mt-0.5 border-t border-white/20 pt-0.5">
-              SCHOOL TECH PARTNER
-            </span>
-          </div>
+            <img
+              src="/logo-white.png"
+              alt="Floyd School"
+              className="h-7 sm:h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            />
+            </div>
 
           {/* Center Links Capsule */}
           <div
@@ -191,8 +210,8 @@ const PartnershipHero = () => {
           >
             {NAV_LINKS.map((link) => (
               <button
-                key={link.id}
-                onClick={() => scrollTo(link.id)}
+                key={link.id || link.href}
+                onClick={() => handleNavClick(link)}
                 className="text-xs font-bold text-white px-3.5 py-1.5 rounded-full hover:bg-white/15 transition-all duration-200"
               >
                 {link.name}
@@ -203,7 +222,7 @@ const PartnershipHero = () => {
           {/* Right Action Buttons */}
           <div className="hidden md:flex items-center gap-2">
             <button
-              onClick={() => alert('Brochure download started!')}
+              onClick={handleDownloadBrochure}
               className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl transition-all duration-200 cursor-pointer text-sky-300 hover:bg-white/10"
             >
               <Download size={14} /> Download Brochure
@@ -217,7 +236,7 @@ const PartnershipHero = () => {
             </button>
 
             <button
-              onClick={() => (window.location.href = '/student/login?mode=login')}
+              onClick={() => (window.location.href = '/login')}
               className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer text-pink-300 border border-pink-400/50 hover:bg-pink-500/10"
             >
               <User size={13} />
@@ -225,7 +244,7 @@ const PartnershipHero = () => {
             </button>
 
             <button
-              onClick={() => (window.location.href = '/student/login?mode=signup')}
+              onClick={() => (window.location.href = '/student/signup')}
               className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold text-white cursor-pointer hover:scale-[1.03] transition-all"
               style={{
                 background: '#B854A2',
@@ -263,8 +282,8 @@ const PartnershipHero = () => {
             >
               {NAV_LINKS.map((link) => (
                 <button
-                  key={link.id}
-                  onClick={() => scrollTo(link.id)}
+                  key={link.id || link.href}
+                  onClick={() => handleNavClick(link)}
                   className="block w-full text-left text-sm font-semibold text-slate-200 py-2 border-b border-white/5"
                 >
                   {link.name}
@@ -272,7 +291,7 @@ const PartnershipHero = () => {
               ))}
               <div className="pt-2 flex flex-col gap-2">
                 <button
-                  onClick={() => alert('Brochure download started!')}
+                  onClick={handleDownloadBrochure}
                   className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/10 text-xs font-bold text-white"
                 >
                   <Download size={14} /> Download Brochure
@@ -315,13 +334,6 @@ const PartnershipHero = () => {
               strokeWidth="2"
               strokeDasharray="8 8"
             />
-            <g opacity="0.4" stroke="#ffffff" strokeWidth="1.5" fill="none">
-              <path d="M 40 280 L 25 295 L 40 310 M 70 280 L 85 295 L 70 310 M 60 275 L 50 315" />
-              <rect x="20" y="240" width="80" height="22" rx="4" />
-              <rect x="1360" y="320" width="50" height="40" rx="8" />
-              <circle cx="1375" cy="336" r="4" fill="#fff" />
-              <circle cx="1395" cy="336" r="4" fill="#fff" />
-            </g>
           </svg>
         </div>
 
@@ -338,104 +350,87 @@ const PartnershipHero = () => {
           >
             {/* Eyebrow badge */}
             <div>
-              <span
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest text-white shadow-sm"
-                style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  border: `1px solid ${currentDesign.eyebrowBorder}`,
-                }}
-              >
-                <Sparkles size={12} style={{ color: currentDesign.accentColor }} />
-                {currentDesign.eyebrow}
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300 bg-white/[0.05] border border-white/10 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="font-semibold text-white">NEP 2020 & CBSE Curriculum</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-400">Classes 6 to 12</span>
               </span>
             </div>
 
-            {/* Headline matching Photo 2 & 3 layout */}
+            {/* Headline — 2 lines */}
             <h1
-              className="font-black text-white leading-[1.05] tracking-tight uppercase"
+              className="font-black text-white tracking-tight uppercase"
               style={{
-                fontSize: 'clamp(2.7rem, 5vw, 4.2rem)',
                 fontFamily: "'Outfit', sans-serif",
+                lineHeight: 1.1,
+                fontSize: 'clamp(2.1rem, 3.8vw, 3.5rem)',
               }}
             >
-              Every Student Has{' '}
-              <motion.span
-                key={currentDesign.accentColor}
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                className="inline-block px-3 py-1 text-sm md:text-base font-black rounded-md tracking-wider align-middle ml-2 shadow-lg"
-                style={{
-                  background: currentDesign.accentColor,
-                  color: currentDesign.accentTextColor,
-                  transform: 'translateY(-6px)',
-                }}
-              >
-                A DESTINATION
-              </motion.span>
-              <br />
-              We Find The Path
+              <span className="block text-white">
+                Every Student Has A Destination.
+              </span>
+              <span className="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
+                We Find The Shortest Path.
+              </span>
             </h1>
 
-            {/* Subtitle / User Tagline */}
-            <div className="space-y-2">
-              <motion.p
-                key={currentDesign.tagline}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="font-black text-transparent bg-clip-text uppercase tracking-widest text-xs md:text-sm"
-                style={{
-                  backgroundImage: currentDesign.taglineGradient,
-                }}
-              >
-                {currentDesign.tagline}
-              </motion.p>
-              <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl">
-                AI and Machine Learning, delivered on your campus by Floyd mentors, with no cost to your school.
-              </p>
-            </div>
+            {/* Subtitle */}
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl">
+              Hands on technology education delivered directly on campus, where students learn with expert mentors, explore emerging technologies and build real projects.
+            </p>
 
-            {/* Dynamic Domain Pills */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            {/* Monotone Domain Pills */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
               {currentDesign.pills.map((pill) => (
-                <motion.span
+                <span
                   key={pill.text}
-                  whileHover={{ scale: 1.05 }}
-                  className="px-5 py-2.5 rounded-full text-xs font-bold text-white shadow-md transition-transform"
-                  style={{ background: pill.bg }}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300 bg-white/[0.04] border border-white/10 hover:border-white/20 hover:text-white transition-colors"
                 >
                   {pill.text}
-                </motion.span>
+                </span>
               ))}
             </div>
 
-            {/* Dynamic CTA Button & Style controls */}
-            <div className="pt-3 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => scrollTo('partner-form')}
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105 cursor-pointer shadow-xl"
-                style={{
-                  background: currentDesign.btnGradient,
-                  boxShadow: `0 10px 30px ${currentDesign.btnGlow}`,
-                }}
-              >
-                <Calendar size={17} />
-                Book a Discovery Session
-              </button>
+            {/* CTA Buttons & Style controls */}
+            <div className="pt-3 space-y-3">
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => scrollTo('partner-form')}
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-slate-950 bg-white hover:bg-slate-200 transition-all duration-200 cursor-pointer shadow-md"
+                >
+                  <Calendar size={16} />
+                  Book a Discovery Session
+                </button>
 
-              {/* Design indicator dots */}
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 border border-white/15">
-                {DYNAMIC_DESIGNS.map((d, i) => (
-                  <button
-                    key={d.id}
-                    onClick={() => setDesignIndex(i)}
-                    className="h-2 rounded-full transition-all duration-300"
-                    style={{
-                      width: i === designIndex ? '20px' : '8px',
-                      background: i === designIndex ? currentDesign.accentColor : 'rgba(255,255,255,0.3)',
-                    }}
-                  />
-                ))}
+                <button
+                  onClick={() => scrollTo('online-focus')}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 border border-white/15 transition-all duration-200 cursor-pointer backdrop-blur-md"
+                >
+                  Explore Programs
+                </button>
+
+                {/* Design indicator dots */}
+                <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 border border-white/15">
+                  {DYNAMIC_DESIGNS.map((d, i) => (
+                    <button
+                      key={d.id}
+                      onClick={() => setDesignIndex(i)}
+                      className="h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: i === designIndex ? '20px' : '8px',
+                        background: i === designIndex ? '#ffffff' : 'rgba(255,255,255,0.3)',
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
+
+              {/* Small subtext */}
+              <p className="text-xs text-slate-400 font-medium flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Begin with a complimentary 1 day technology immersion on campus.
+              </p>
             </div>
           </motion.div>
 
@@ -472,29 +467,50 @@ const PartnershipHero = () => {
                 
                 {currentDesign.frameStyle === 'flower' && (
                   <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-3.5">
-                    <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl border border-white/20">
+                    <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl border border-white/20 group">
                       <img src={currentDesign.photos[0].src} alt="Lab" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+                        <span className="text-[10px] font-black uppercase text-amber-300">{currentDesign.photos[0].title}</span>
+                        <span className="text-[8px] text-slate-300 leading-tight line-clamp-2">{currentDesign.photos[0].desc}</span>
+                      </div>
                     </div>
-                    <div className="relative row-span-2 overflow-hidden rounded-[3rem] shadow-xl border border-white/20">
+                    <div className="relative row-span-2 overflow-hidden rounded-[3rem] shadow-xl border border-white/20 group">
                       <img src={currentDesign.photos[1].src} alt="Robotics" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
+                        <span className="text-xs font-black uppercase text-cyan-300">{currentDesign.photos[1].title}</span>
+                        <span className="text-[9px] text-slate-300 leading-tight mt-0.5">{currentDesign.photos[1].desc}</span>
+                      </div>
                     </div>
-                    <div className="relative overflow-hidden rounded-full shadow-xl border border-white/20">
+                    <div className="relative overflow-hidden rounded-full shadow-xl border border-white/20 group">
                       <img src={currentDesign.photos[2].src} alt="Classroom" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-center text-white">
+                        <span className="text-[9px] font-black uppercase text-pink-300">{currentDesign.photos[2].title}</span>
+                      </div>
                     </div>
                   </div>
                 )}
 
                 {currentDesign.frameStyle === 'arch' && (
                   <div className="w-full h-full grid grid-cols-12 gap-3">
-                    <div className="col-span-7 relative overflow-hidden rounded-t-[5rem] rounded-b-[2.5rem] shadow-xl border border-white/20">
+                    <div className="col-span-7 relative overflow-hidden rounded-t-[5rem] rounded-b-[2.5rem] shadow-xl border border-white/20 group">
                       <img src={currentDesign.photos[0].src} alt="AI" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
+                        <span className="text-xs font-black uppercase text-cyan-300">{currentDesign.photos[0].title}</span>
+                        <span className="text-[10px] text-slate-300 leading-tight mt-1">{currentDesign.photos[0].desc}</span>
+                      </div>
                     </div>
                     <div className="col-span-5 space-y-3 flex flex-col justify-between">
-                      <div className="h-1/2 relative overflow-hidden rounded-[2rem] shadow-xl border border-white/20">
+                      <div className="h-1/2 relative overflow-hidden rounded-[2rem] shadow-xl border border-white/20 group">
                         <img src={currentDesign.photos[1].src} alt="Design" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2.5 text-white">
+                          <span className="text-[9px] font-black uppercase text-pink-300">{currentDesign.photos[1].title}</span>
+                        </div>
                       </div>
-                      <div className="h-1/2 relative overflow-hidden rounded-full shadow-xl border border-white/20">
+                      <div className="h-1/2 relative overflow-hidden rounded-full shadow-xl border border-white/20 group">
                         <img src={currentDesign.photos[2].src} alt="App" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2.5 text-center text-white">
+                          <span className="text-[9px] font-black uppercase text-amber-300">{currentDesign.photos[2].title}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -503,8 +519,12 @@ const PartnershipHero = () => {
                 {currentDesign.frameStyle === 'quad' && (
                   <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-3">
                     {currentDesign.photos.map((p, idx) => (
-                      <div key={idx} className="relative overflow-hidden rounded-[2rem] shadow-xl border border-white/20">
+                      <div key={idx} className="relative overflow-hidden rounded-[2rem] shadow-xl border border-white/20 group">
                         <img src={p.src} alt={p.title} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+                          <span className="text-[10px] font-black uppercase text-cyan-300">{p.title}</span>
+                          <span className="text-[8px] text-slate-300 leading-tight line-clamp-1">{p.desc}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -513,10 +533,10 @@ const PartnershipHero = () => {
                 {currentDesign.frameStyle === 'matrix' && (
                   <div className="w-full h-full relative overflow-hidden rounded-[3.5rem] shadow-2xl border-2 border-white/25">
                     <img src={currentDesign.photos[0].src} alt="Main" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-black/70 backdrop-blur-md border border-white/20 text-white">
                       <p className="text-xs font-bold uppercase tracking-wider text-rose-400">{currentDesign.photos[0].title}</p>
-                      <p className="text-[11px] text-slate-300 mt-0.5">On campus labs installed & operated 100% by Floyd School</p>
+                      <p className="text-[11px] text-slate-300 mt-0.5">{currentDesign.photos[0].desc}</p>
                     </div>
                   </div>
                 )}
