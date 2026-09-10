@@ -22,6 +22,7 @@ import GroupProjects from '../components/SchoolPartnership/GroupProjects';
 import PartnershipRoadmap from '../components/SchoolPartnership/PartnershipRoadmap';
 import PartnershipForm from '../components/SchoolPartnership/PartnershipForm';
 import PartnershipFooter from '../components/SchoolPartnership/PartnershipFooter';
+import StudentTestimonials from '../components/SchoolPartnership/StudentTestimonials';
 
 const SchoolPartnership = () => {
   // Initialize Lenis smooth scroll — only on this page
@@ -96,6 +97,9 @@ const SchoolPartnership = () => {
 
       {/* 8. Testimonials */}
       <TestimonialsSection />
+
+      {/* 8a. Student Video Testimonials */}
+      <StudentTestimonials />
 
       {/* 8b. Transformed By Floyd School */}
       <SuccessStories variant="dark" />
