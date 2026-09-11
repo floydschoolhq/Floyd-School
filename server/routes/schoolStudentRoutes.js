@@ -16,7 +16,8 @@ const {
     getNotifications,
     markNotificationRead,
     getHelpTickets,
-    createHelpTicket
+    createHelpTicket,
+    getBatchMaterials
 } = require('../controllers/schoolStudentController');
 
 // Public endpoints
@@ -33,6 +34,7 @@ router.get('/assignments', getAssignments);
 router.post('/assignments/:id/submit', upload.single('file'), submitAssignment);
 router.get('/quizzes', getQuizzes);
 router.post('/quizzes/:id/submit', submitQuiz);
+router.get('/materials', getBatchMaterials);
 router.get('/profile', getStudentProfile);
 router.put('/profile', updateStudentProfile);
 router.get('/notifications', getNotifications);

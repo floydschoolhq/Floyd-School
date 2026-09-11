@@ -8,6 +8,7 @@ const Quiz = require('../models/Quiz');
 const QuizSubmission = require('../models/QuizSubmission');
 const Notification = require('../models/Notification');
 const SupportTicket = require('../models/SupportTicket');
+const Material = require('../models/Material');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
@@ -667,6 +668,33 @@ const createHelpTicket = async (req, res) => {
     }
 };
 
+// @desc    Get class materials for student's batch
+// @route   GET /api/school-student/materials
+// @access  Private (school_student)
+const getBatchMaterials = async (req, res) => {
+    try {
+        const student = await User.findById(req.user._id).select('batch school');
+        if (!student?.batch) {
+            return res.json({ success: true, data: [] });
+        }
+
+        const materials = await Material.find({
+            batch: student.batch,
+            status: 'published'
+        })
+        .populate('uploadedBy', 'name')
+        .sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            data: materials
+        });
+    } catch (error) {
+        console.error('[schoolStudent:getBatchMaterials] Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch materials' });
+    }
+};
+
 module.exports = {
     getPublicSchools,
     registerStudent,
@@ -681,5 +709,6 @@ module.exports = {
     getNotifications,
     markNotificationRead,
     getHelpTickets,
-    createHelpTicket
+    createHelpTicket,
+    getBatchMaterials
 };
