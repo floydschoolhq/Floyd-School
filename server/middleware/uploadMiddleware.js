@@ -19,20 +19,26 @@ const storage = multer.diskStorage({
 
 // File filter
 const fileFilter = (req, file, cb) => {
-    // Allow common document and code files
+    // Allow common document, spreadsheet, presentation, image and code files
     const allowedTypes = [
         'application/pdf',
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'text/plain',
+        'text/csv',
         'application/zip',
-        'application/x-zip-compressed'
+        'application/x-zip-compressed',
+        'application/json'
     ];
 
-    if (allowedTypes.includes(file.mimetype) || file.originalname.match(/\.(jpg|jpeg|png|pdf|doc|docx|txt|zip|py|js|cpp|java)$/)) {
+    if (allowedTypes.includes(file.mimetype) || file.originalname.match(/\.(jpg|jpeg|png|gif|svg|pdf|doc|docx|ppt|pptx|xls|xlsx|csv|txt|zip|py|js|ts|jsx|tsx|cpp|c|h|ino|html|css|json)$/i)) {
         cb(null, true);
     } else {
-        cb(new Error('Invalid file type. Only documents, images, and code files are allowed.'), false);
+        cb(new Error('Invalid file type. Only documents, spreadsheets, presentations, images, and code files are allowed.'), false);
     }
 };
 

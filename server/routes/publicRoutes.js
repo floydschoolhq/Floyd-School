@@ -14,10 +14,49 @@ router.get('/settings', async (req, res) => {
         res.status(200).json({
             success: true,
             maintenanceMode: settings.maintenanceMode,
+            offlineMaintenance: settings.offlineMaintenance,
             platformName: settings.platformName
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+/**
+ * @desc    Get granular offline portal maintenance status
+ * @route   GET /api/public/maintenance-status
+ * @access  Public
+ */
+router.get('/maintenance-status', async (req, res) => {
+    try {
+        const { portal } = req.query;
+        const settings = await Settings.getInstance();
+        const offlineMaint = settings.offlineMaintenance || {};
+
+        const globalActive = offlineMaint.entirePlatform?.isActive || false;
+        let portalActive = false;
+        let portalMessage = '';
+        let endTime = null;
+
+        if (portal && offlineMaint[portal]) {
+            portalActive = offlineMaint[portal].isActive || false;
+            portalMessage = offlineMaint[portal].message || '';
+            endTime = offlineMaint[portal].endTime || null;
+        }
+
+        const isMaintenance = globalActive || portalActive;
+        const message = globalActive ? (offlineMaint.entirePlatform?.message || 'Platform under maintenance') : portalMessage;
+        const expectedEndTime = globalActive ? (offlineMaint.entirePlatform?.endTime || null) : endTime;
+
+        res.json({
+            success: true,
+            isMaintenance,
+            message,
+            expectedEndTime,
+            details: offlineMaint
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 

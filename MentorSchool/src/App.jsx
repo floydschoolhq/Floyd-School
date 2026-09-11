@@ -20,6 +20,7 @@ import Homework from './pages/Homework';
 import Materials from './pages/Materials';
 import ClassGuides from './pages/ClassGuides';
 import Profile from './pages/Profile';
+import MaintenanceGuard from './components/MaintenanceGuard';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -44,8 +45,9 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ToastProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
+          <MaintenanceGuard>
+            <Routes>
+              <Route path="/login" element={<Login />} />
 
             <Route
               path="/"
@@ -68,8 +70,9 @@ function App() {
               <Route path="profile" element={<Profile />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </MaintenanceGuard>
         </ToastProvider>
       </AuthProvider>
     </BrowserRouter>

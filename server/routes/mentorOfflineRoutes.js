@@ -78,6 +78,14 @@ router.delete('/homework/:id', deleteHomework);
 router.get('/homework/:id/submissions', getHomeworkSubmissions);
 router.post('/homework/:id/grade', gradeHomework);
 
+// Assignments alias
+router.get('/assignments', getHomework);
+router.post('/assignments', createHomework);
+router.put('/assignments/:id', updateHomework);
+router.delete('/assignments/:id', deleteHomework);
+router.get('/assignments/:id/submissions', getHomeworkSubmissions);
+router.post('/assignments/:id/grade', gradeHomework);
+
 // Class Materials Management
 router.get('/materials', getMaterials);
 router.post('/materials', upload.single('file'), uploadMaterial);

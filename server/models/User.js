@@ -23,6 +23,43 @@ const userSchema = new mongoose.Schema({
         default: 'student',
     },
     // Offline School Portal Fields
+    studentId: {
+        type: String,
+        unique: true,
+        sparse: true,
+        trim: true
+    },
+    mentorId: {
+        type: String,
+        unique: true,
+        sparse: true,
+        trim: true
+    },
+    isTemporaryPassword: {
+        type: Boolean,
+        default: false
+    },
+    isArchived: {
+        type: Boolean,
+        default: false
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    assignedSchools: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School'
+    }],
+    assignedBatches: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Batch'
+    }],
+    customPermissions: {
+        type: Map,
+        of: Boolean,
+        default: {}
+    },
     offlineRollNo: {
         type: String,
         unique: true,

@@ -72,6 +72,7 @@ const allowedOrigins = [
     'http://localhost:5178',
     'http://localhost:5179',
     'http://localhost:5180',
+    'http://localhost:5181',
     'http://localhost:3000',
 
     // Vercel
@@ -272,10 +273,11 @@ app.use('/api/scheduled-live', generalLimiter, scheduledLiveRoutes);
 app.use('/api/coupons', generalLimiter, require('./routes/couponRoutes'));
 app.use('/api/public', require('./routes/publicRoutes'));
 
-// Offline Portals (SchoolStudent, PartnerSchool, Mentor Offline)
+// Offline Portals (SchoolStudent, PartnerSchool, Mentor Offline, OfflineAdmin)
 app.use('/api/school-student', generalLimiter, require('./routes/schoolStudentRoutes'));
 app.use('/api/partner-school', generalLimiter, require('./routes/partnerSchoolRoutes'));
 app.use('/api/mentor/offline', generalLimiter, require('./routes/mentorOfflineRoutes'));
+app.use('/api/offline-admin', generalLimiter, require('./routes/offlineAdminRoutes'));
 
 // Catch-all for /review requests
 app.get('/review', (req, res) => {

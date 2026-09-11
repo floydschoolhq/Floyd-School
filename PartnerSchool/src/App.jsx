@@ -12,13 +12,15 @@ import AttendanceOverview from './pages/AttendanceOverview';
 import QuizAssignmentReports from './pages/QuizAssignmentReports';
 import HelpSupport from './pages/HelpSupport';
 import CoordinatorProfile from './pages/CoordinatorProfile';
+import MaintenanceGuard from './components/MaintenanceGuard';
 
 function App() {
   return (
     <Router>
       <ToastProvider>
         <AuthProvider>
-          <Routes>
+          <MaintenanceGuard>
+            <Routes>
             <Route path="/login" element={<Login />} />
 
             <Route path="/" element={
@@ -37,7 +39,8 @@ function App() {
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </AuthProvider>
+        </MaintenanceGuard>
+      </AuthProvider>
       </ToastProvider>
     </Router>
   );

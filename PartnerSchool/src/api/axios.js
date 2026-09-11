@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'https://floyd-school.onrender.com/api';
+let rawUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 if (!rawUrl.endsWith('/api')) {
   rawUrl = `${rawUrl.replace(/\/$/, '')}/api`;
 }

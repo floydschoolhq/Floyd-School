@@ -11,6 +11,7 @@ const SupportTicket = require('../models/SupportTicket');
 const Material = require('../models/Material');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { generateStudentId } = require('../utils/studentIdGenerator');
 
 // Generate JWT helper
 const generateToken = (id, sessionToken) => {
@@ -78,12 +79,14 @@ const registerStudent = async (req, res) => {
         }
 
         const sessionToken = crypto.randomBytes(16).toString('hex');
+        const studentId = await generateStudentId();
 
         const student = await User.create({
             name: name.trim(),
             email: normalizedEmail,
             password,
             role: 'school_student',
+            studentId,
             grade: grade || 'Grade 10',
             section: section || 'A',
             fatherName: fatherName ? fatherName.trim() : '',
@@ -228,6 +231,13 @@ const getDashboard = async (req, res) => {
                     venue: batch.roomVenue || 'Lab 101',
                     scheduleTime: batch.scheduleTime || '10:00 AM - 11:30 AM',
                     scheduleDays: batch.scheduleDays?.length ? batch.scheduleDays : ['Mon', 'Wed', 'Fri']
+                },
+                batch: {
+                    _id: batch._id,
+                    name: batch.name,
+                    code: batch.code,
+                    subject: batch.subject,
+                    roomVenue: batch.roomVenue
                 },
                 stats: {
                     attendancePercentage,

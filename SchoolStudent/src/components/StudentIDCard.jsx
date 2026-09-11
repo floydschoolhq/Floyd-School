@@ -78,10 +78,19 @@ const StudentIDCard = ({ student, onClose }) => {
               {/* Name and Roll */}
               <div className="space-y-1">
                 <p className="text-base font-black text-slate-900 leading-tight">{name}</p>
-                <div className="bg-slate-100 rounded px-2 py-0.5 inline-block border border-slate-200">
-                  <p className="font-mono text-xs font-bold text-slate-900 tracking-wider">
-                    {rollNo}
-                  </p>
+                <div className="flex flex-wrap gap-1.5 items-center">
+                  {student?.studentId && (
+                    <div className="bg-blue-50 text-blue-800 rounded px-2 py-0.5 inline-block border border-blue-200">
+                      <p className="font-mono text-[11px] font-bold tracking-wider">
+                        {student.studentId}
+                      </p>
+                    </div>
+                  )}
+                  <div className="bg-slate-100 rounded px-2 py-0.5 inline-block border border-slate-200">
+                    <p className="font-mono text-[11px] font-bold text-slate-900 tracking-wider">
+                      {rollNo}
+                    </p>
+                  </div>
                 </div>
                 <p className="text-[11px] text-slate-600 font-medium">{school}</p>
               </div>

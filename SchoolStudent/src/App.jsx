@@ -13,13 +13,15 @@ import BatchSchedule from './pages/BatchSchedule';
 import HelpSection from './pages/HelpSection';
 import LearningModules from './pages/LearningModules';
 import StudentProfile from './pages/StudentProfile';
+import MaintenanceGuard from './components/MaintenanceGuard';
 
 function App() {
   return (
     <Router>
       <ToastProvider>
         <AuthProvider>
-          <Routes>
+          <MaintenanceGuard>
+            <Routes>
             <Route path="/login" element={<Login />} />
 
             <Route path="/" element={
@@ -39,7 +41,8 @@ function App() {
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </AuthProvider>
+        </MaintenanceGuard>
+      </AuthProvider>
       </ToastProvider>
     </Router>
   );

@@ -10,6 +10,7 @@ const Material = require('../models/Material');
 const ClassGuide = require('../models/ClassGuide');
 const Notification = require('../models/Notification');
 const { generateUniqueRollNumber } = require('../utils/rollNumberGenerator');
+const { generateStudentId } = require('../utils/studentIdGenerator');
 
 // Helper: resolve batches assigned to this mentor (or all for admin)
 async function getMentorBatchesQuery(req) {
@@ -1715,6 +1716,9 @@ const approveStudent = async (req, res) => {
         // Generate unique roll number [SchoolCode]-[BatchCode]-[001]
         const rollNumber = await generateUniqueRollNumber(school, batch);
 
+        if (!student.studentId) {
+            student.studentId = await generateStudentId();
+        }
         student.approvalStatus = 'approved';
         student.approvedAt = new Date();
         student.approvedBy = req.user._id;

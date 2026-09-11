@@ -8,12 +8,13 @@ const Quiz = require('../models/Quiz');
 const QuizSubmission = require('../models/QuizSubmission');
 const SupportTicket = require('../models/SupportTicket');
 const { generateUniqueRollNumber } = require('../utils/rollNumberGenerator');
+const { generateStudentId } = require('../utils/studentIdGenerator');
 const crypto = require('crypto');
 
 // Helper to resolve school for coordinator
 async function resolveCoordinatorSchool(req) {
     if (req.user.role === 'admin') {
-        const schoolId = req.query.schoolId || req.body.schoolId;
+        const schoolId = req.query?.schoolId || req.query?.school || req.body?.schoolId || req.body?.school;
         if (schoolId) {
             const s = await School.findById(schoolId);
             if (s) return s;
@@ -276,11 +277,13 @@ const createStudent = async (req, res) => {
         const rawPassword = password || 'FloydSchool@123';
         const sessionToken = crypto.randomBytes(16).toString('hex');
 
+        const studentId = await generateStudentId();
         const student = await User.create({
             name: name.trim(),
             email: normalizedEmail,
             password: rawPassword,
             role: 'school_student',
+            studentId,
             grade: grade || 'Grade 10',
             section: section || 'A',
             fatherName: fatherName ? fatherName.trim() : '',
@@ -363,12 +366,14 @@ const bulkImportStudents = async (req, res) => {
                 }
             }
 
+            const studentId = await generateStudentId();
             const sessionToken = crypto.randomBytes(16).toString('hex');
             const newStudent = await User.create({
                 name: s.name.trim(),
                 email: s.email.toLowerCase().trim(),
                 password: s.password || 'FloydSchool@123',
                 role: 'school_student',
+                studentId,
                 grade: s.grade || 'Grade 10',
                 section: s.section || 'A',
                 fatherName: s.fatherName ? s.fatherName.trim() : '',
@@ -413,7 +418,7 @@ const getAttendance = async (req, res) => {
             return res.status(404).json({ success: false, message: 'No school associated with account' });
         }
 
-        const { batchId } = req.query;
+        const batchId = req.query?.batchId || req.query?.batch;
         const query = { school: school._id };
         if (batchId && batchId !== 'all') {
             query.batch = batchId;

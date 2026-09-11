@@ -35,6 +35,7 @@ const StudentProfile = () => {
           setFormData({
             name: s.name || '',
             email: s.email || '',
+            studentId: s.studentId || '',
             offlineRollNo: s.offlineRollNo || 'Pending Allotment',
             schoolName: s.school?.name || s.schoolNameManual || 'Partner School',
             batchName: s.batch?.name || 'Classroom Section',
@@ -119,6 +120,12 @@ const StudentProfile = () => {
             <span>Institutional Academic Credentials (Locked)</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {formData.studentId && (
+              <div>
+                <p className="text-[10px] font-semibold uppercase text-slate-400">Floyd Student ID</p>
+                <p className="font-mono font-bold text-blue-600 text-sm mt-0.5">{formData.studentId}</p>
+              </div>
+            )}
             <div>
               <p className="text-[10px] font-semibold uppercase text-slate-400">Primary Roll Number</p>
               <p className="font-mono font-bold text-slate-900 text-sm mt-0.5">{formData.offlineRollNo}</p>

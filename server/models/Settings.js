@@ -28,6 +28,37 @@ const settingsSchema = new mongoose.Schema({
         chat: { type: Boolean, default: false },
         scheduledLive: { type: Boolean, default: false }
     },
+    offlineMaintenance: {
+        entirePlatform: {
+            isActive: { type: Boolean, default: false },
+            message: { type: String, default: 'Offline platform is undergoing scheduled maintenance. Please check back shortly.' },
+            startTime: { type: Date, default: null },
+            endTime: { type: Date, default: null }
+        },
+        schoolStudent: {
+            isActive: { type: Boolean, default: false },
+            message: { type: String, default: 'Student Portal is undergoing scheduled maintenance. Please check back shortly.' },
+            startTime: { type: Date, default: null },
+            endTime: { type: Date, default: null }
+        },
+        partnerSchool: {
+            isActive: { type: Boolean, default: false },
+            message: { type: String, default: 'Partner School Portal is undergoing scheduled maintenance. Please check back shortly.' },
+            startTime: { type: Date, default: null },
+            endTime: { type: Date, default: null }
+        },
+        mentorSchool: {
+            isActive: { type: Boolean, default: false },
+            message: { type: String, default: 'Mentor Portal is undergoing scheduled maintenance. Please check back shortly.' },
+            startTime: { type: Date, default: null },
+            endTime: { type: Date, default: null }
+        }
+    },
+    academicConfig: {
+        currentAcademicYear: { type: String, default: '2025-2026' },
+        lowAttendanceThreshold: { type: Number, default: 75 },
+        defaultBatchCapacity: { type: Number, default: 50 }
+    },
     globalConfig: {
         supportEmail: { type: String, default: 'support@floydschool.in' },
         contactNumbers: [{ type: String }],
