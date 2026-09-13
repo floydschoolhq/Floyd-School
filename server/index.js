@@ -410,20 +410,73 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
+let statusInterval = null;
+
+function freePortIfHeld(port) {
+    if (process.env.NODE_ENV === 'production') return;
+    try {
+        const { execSync } = require('child_process');
+        if (process.platform === 'win32') {
+            const stdout = execSync(`netstat -ano | findstr :${port}`, { encoding: 'utf8' });
+            const lines = stdout.trim().split('\n');
+            for (const line of lines) {
+                const parts = line.trim().split(/\s+/);
+                const pid = parts[parts.length - 1];
+                if (pid && pid !== '0' && pid !== String(process.pid) && pid !== String(process.ppid)) {
+                    try {
+                        execSync(`taskkill /F /PID ${pid} >nul 2>&1`);
+                        console.log(`[SERVER] Automatically freed port ${port} by terminating stale process (PID: ${pid})`);
+                    } catch (e) {}
+                }
+            }
+        }
+    } catch (e) {
+        // netstat returned non-zero if no process found, ignore
+    }
+}
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.warn(`[SERVER WARNING] Port ${PORT} is currently in use.`);
+        freePortIfHeld(PORT);
+        console.log(`[SERVER] Retrying to bind to port ${PORT} in 1.5 seconds...`);
+        setTimeout(() => {
+            server.close();
+            server.listen(PORT);
+        }, 1500);
+    } else {
+        console.error('[SERVER FATAL ERROR]', err);
+        process.exit(1);
+    }
+});
+
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`CORS allowed origins: ${allowedOrigins.join(', ')}`);
 
     const { checkAndUpdateStatus } = require('./controllers/scheduledLiveController');
-    const statusInterval = setInterval(() => {
+    statusInterval = setInterval(() => {
         checkAndUpdateStatus().catch(err => {
             console.error('[Scheduler] checkAndUpdateStatus error:', err.message);
         });
     }, 60000);
-
-    // Clean up on shutdown
-    process.on('SIGTERM', () => {
-        clearInterval(statusInterval);
-        server.close();
-    });
 });
+
+// Graceful cleanup on shutdown / nodemon restart
+const cleanupAndExit = (signal) => {
+    console.log(`[SERVER] Received ${signal}. Closing HTTP/WebSocket server...`);
+    if (statusInterval) clearInterval(statusInterval);
+    server.close(() => {
+        console.log('[SERVER] Server closed and port released.');
+        if (signal === 'SIGUSR2') {
+            process.kill(process.pid, 'SIGUSR2');
+        } else {
+            process.exit(0);
+        }
+    });
+    setTimeout(() => process.exit(0), 2500);
+};
+
+process.once('SIGUSR2', () => cleanupAndExit('SIGUSR2'));
+process.on('SIGINT', () => cleanupAndExit('SIGINT'));
+process.on('SIGTERM', () => cleanupAndExit('SIGTERM'));

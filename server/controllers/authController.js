@@ -88,7 +88,10 @@ const loginUser = async (req, res) => {
     console.log(`[Auth] Login attempt for email: ${email}`);
 
     try {
-        const user = await User.findOne({ email });
+        const trimmedEmail = email ? email.trim() : '';
+        const user = await User.findOne({
+            email: { $regex: new RegExp(`^${trimmedEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+        });
 
         if (!user) {
             console.warn(`[Auth] User not found: ${email}`);

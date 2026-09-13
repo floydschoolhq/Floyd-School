@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { GraduationCap, Mail, Lock, CheckCircle2, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
+import { GraduationCap, Mail, Lock, CheckCircle2, ArrowRight, ShieldCheck, Cpu, Key } from 'lucide-react';
 
 /* ─── Hand-drawn SVG Blueprint Artwork Panel ─────────────────────────────
    Chalkboard dark background with STEM laboratory circuitry, microcontrollers,
@@ -227,6 +227,30 @@ const Login = () => {
               <ArrowRight size={14} />
             </button>
           </form>
+
+          {/* Quick Demo Credentials helper */}
+          <div className="p-3.5 rounded-xl bg-blue-50/80 border border-blue-200/80 text-[11px] text-slate-700 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-blue-900 flex items-center gap-1.5">
+                <Key size={13} className="text-blue-600" />
+                Demo Mentor Credentials
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('mentor.test@floydschool.in');
+                  setPassword('MentorTest@2026!');
+                }}
+                className="text-[10px] font-bold text-blue-700 bg-blue-100 hover:bg-blue-200 px-2 py-0.5 rounded transition-colors cursor-pointer"
+              >
+                Auto-Fill
+              </button>
+            </div>
+            <div className="font-mono text-[11px] text-slate-600 space-y-0.5 bg-white/70 p-2 rounded border border-blue-100">
+              <p><span className="text-slate-400 font-sans">Email:</span> <span className="font-semibold text-slate-800">mentor.test@floydschool.in</span></p>
+              <p><span className="text-slate-400 font-sans">Password:</span> <span className="font-semibold text-slate-800">MentorTest@2026!</span></p>
+            </div>
+          </div>
 
           {/* Institutional note */}
           <div className="p-3.5 rounded-xl bg-slate-100/80 border border-slate-200/80 text-[11px] text-slate-600 space-y-1">
