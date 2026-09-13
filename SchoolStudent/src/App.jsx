@@ -13,6 +13,7 @@ import BatchSchedule from './pages/BatchSchedule';
 import HelpSection from './pages/HelpSection';
 import LearningModules from './pages/LearningModules';
 import StudentProfile from './pages/StudentProfile';
+import CodingLab from './pages/CodingLab';
 import MaintenanceGuard from './components/MaintenanceGuard';
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
               </ProtectedRoute>
             }>
               <Route index element={<Dashboard />} />
+              <Route path="coding-lab" element={<CodingLab />} />
+              <Route path="coding-lab/:slug" element={<CodingLab />} />
               <Route path="attendance" element={<MyAttendance />} />
               <Route path="quizzes" element={<Quizzes />} />
               <Route path="assignments" element={<Assignments />} />

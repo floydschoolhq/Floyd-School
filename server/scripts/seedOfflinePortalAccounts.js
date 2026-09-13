@@ -89,6 +89,30 @@ const seedOfflineData = async () => {
             await school.save();
         }
 
+        // 2b. Seed DPS Coordinator Account
+        let coordDps = await User.findOne({ email: 'coordinator.dps@floydschool.in' });
+        if (!coordDps) {
+            coordDps = await User.create({
+                name: 'DPS School Coordinator',
+                email: 'coordinator.dps@floydschool.in',
+                password: 'Coordinator@123',
+                role: 'school_coordinator',
+                school: school2._id,
+                mobileNumber: '+91 9876543210'
+            });
+            console.log('Created DPS Coordinator Account:', coordDps.email);
+        } else {
+            coordDps.role = 'school_coordinator';
+            coordDps.password = 'Coordinator@123';
+            coordDps.school = school2._id;
+            await coordDps.save();
+            console.log('DPS Coordinator Account verified:', coordDps.email);
+        }
+        if (!school2.coordinators.includes(coordDps._id)) {
+            school2.coordinators.push(coordDps._id);
+            await school2.save();
+        }
+
         // 3. Seed Batch
         let batch = await Batch.findOne({ school: school._id, code: 'ROB10A' });
         if (!batch) {

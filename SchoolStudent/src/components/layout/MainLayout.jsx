@@ -17,7 +17,8 @@ import {
   Bell,
   User,
   CreditCard,
-  Cpu
+  Cpu,
+  Code2
 } from 'lucide-react';
 
 const MainLayout = () => {
@@ -30,6 +31,7 @@ const MainLayout = () => {
 
   const navItems = [
     { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { label: 'Coding Lab', path: '/coding-lab', icon: Code2 },
     { label: 'Class Attendance', path: '/attendance', icon: CalendarCheck },
     { label: 'Quizzes & Evaluations', path: '/quizzes', icon: Award },
     { label: 'Homework & Projects', path: '/assignments', icon: BookOpen },

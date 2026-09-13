@@ -1,19 +1,19 @@
-﻿{
-  watch: [
-    controllers,
-    middleware,
-    models,
-    routes,
-    utils,
-    index.js
+{
+  "watch": [
+    "controllers",
+    "middleware",
+    "models",
+    "routes",
+    "utils",
+    "index.js"
   ],
-  ext: js,mjs,cjs,json,
-  ignore: [
-    uploads/*,
-    scripts/*,
-    *.log,
-    *.test.js,
-    node_modules/*
+  "ext": "js,mjs,cjs,json",
+  "ignore": [
+    "uploads/*",
+    "scripts/*",
+    "*.log",
+    "*.test.js",
+    "node_modules/*"
   ],
-  delay: 1000
+  "delay": 1000
 }

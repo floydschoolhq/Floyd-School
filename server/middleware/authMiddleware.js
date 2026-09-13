@@ -128,6 +128,11 @@ const checkPermission = (permissionName) => {
             return next();
         }
 
+        // Approved School Students have built-in access to Coding Lab
+        if (permissionName === 'canAccessLabs' && req.user.role === 'school_student' && req.user.approvalStatus === 'approved') {
+            return next();
+        }
+
         // Check if user has the specific permission
         if (req.user.permissions && req.user.permissions[permissionName] === true) {
             return next();

@@ -148,19 +148,19 @@ app.use(express.json({
 
 // ===== RATE LIMITERS =====
 
-// General API rate limit: 100 requests per 15 minutes per IP
+// General API rate limit: Scaled to support school lab cohorts (100+ concurrent students sharing single school IP)
 const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: parseInt(process.env.RATE_LIMIT_MAX, 10) || 10000,
     message: { success: false, message: 'Too many requests, please try again later.' },
     standardHeaders: true,
     legacyHeaders: false
 });
 
-// Auth rate limit: 30 attempts per 15 minutes per IP (prevent brute force)
+// Auth rate limit: Scaled to support concurrent classroom logins (prevent brute force while allowing full batch onboarding)
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 30,
+    max: parseInt(process.env.AUTH_RATE_LIMIT_MAX, 10) || 500,
     message: { success: false, message: 'Too many login attempts, please try again after 15 minutes.' },
     standardHeaders: true,
     legacyHeaders: false
@@ -278,6 +278,7 @@ app.use('/api/school-student', generalLimiter, require('./routes/schoolStudentRo
 app.use('/api/partner-school', generalLimiter, require('./routes/partnerSchoolRoutes'));
 app.use('/api/mentor/offline', generalLimiter, require('./routes/mentorOfflineRoutes'));
 app.use('/api/offline-admin', generalLimiter, require('./routes/offlineAdminRoutes'));
+app.use('/api/coding-lab', generalLimiter, require('./routes/codingLabRoutes'));
 
 // Catch-all for /review requests
 app.get('/review', (req, res) => {
@@ -417,16 +418,20 @@ function freePortIfHeld(port) {
     try {
         const { execSync } = require('child_process');
         if (process.platform === 'win32') {
-            const stdout = execSync(`netstat -ano | findstr :${port}`, { encoding: 'utf8' });
+            const stdout = execSync('netstat -ano', { encoding: 'utf8' });
             const lines = stdout.trim().split('\n');
             for (const line of lines) {
+                if (!line.includes('LISTENING')) continue;
                 const parts = line.trim().split(/\s+/);
-                const pid = parts[parts.length - 1];
-                if (pid && pid !== '0' && pid !== String(process.pid) && pid !== String(process.ppid)) {
-                    try {
-                        execSync(`taskkill /F /PID ${pid} >nul 2>&1`);
-                        console.log(`[SERVER] Automatically freed port ${port} by terminating stale process (PID: ${pid})`);
-                    } catch (e) {}
+                const localAddress = parts[1] || '';
+                if (localAddress.endsWith(`:${port}`)) {
+                    const pid = parts[parts.length - 1];
+                    if (pid && pid !== '0' && pid !== String(process.pid) && pid !== String(process.ppid)) {
+                        try {
+                            execSync(`taskkill /F /PID ${pid} >nul 2>&1`);
+                            console.log(`[SERVER] Automatically freed port ${port} by terminating stale process (PID: ${pid})`);
+                        } catch (e) {}
+                    }
                 }
             }
         }

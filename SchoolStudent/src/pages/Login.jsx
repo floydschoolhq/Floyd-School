@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import api from '../api/axios';
-import { GraduationCap, Mail, Lock, Building2, ArrowRight, User, ChevronRight } from 'lucide-react';
+import { GraduationCap, Mail, Lock, Building2, ArrowRight, User, ChevronRight, Key } from 'lucide-react';
 
 /* ─── Hand-drawn SVG Artwork Panel ────────────────────────────────────────
    Chalkboard dark background with sketch-style robot, circuit doodles,
@@ -415,6 +415,31 @@ const Login = () => {
                 {loading ? 'Authenticating...' : 'Sign In to Student Portal'}
                 <ArrowRight size={14} />
               </button>
+
+              {/* Quick Demo Credentials helper */}
+              <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-[11px] text-slate-700 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-emerald-900 flex items-center gap-1.5">
+                    <Key size={13} className="text-emerald-600" />
+                    Demo Student Credentials
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLoginEmail('student.test@floydschool.in');
+                      setLoginPassword('StudTest@2026!');
+                    }}
+                    className="text-[10px] font-bold text-emerald-700 bg-emerald-100 hover:bg-emerald-200 px-2 py-0.5 rounded transition-colors cursor-pointer"
+                  >
+                    Auto-Fill
+                  </button>
+                </div>
+                <div className="font-mono text-[11px] text-slate-600 space-y-0.5 bg-white/80 p-2 rounded border border-emerald-100">
+                  <p><span className="text-slate-400 font-sans">Email:</span> <span className="font-semibold text-slate-800">student.test@floydschool.in</span></p>
+                  <p><span className="text-slate-400 font-sans">Password:</span> <span className="font-semibold text-slate-800">StudTest@2026!</span></p>
+                </div>
+              </div>
+
               <p className="text-center text-xs text-slate-500">
                 New student?{' '}
                 <button type="button" onClick={() => setIsSignUp(true)}

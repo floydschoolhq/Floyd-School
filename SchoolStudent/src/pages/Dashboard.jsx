@@ -169,6 +169,10 @@ const Dashboard = () => {
         <div className="card-modern rounded-xl p-5 space-y-3">
           <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2.5">Student Quick Links</h2>
           <div className="space-y-2">
+            <a href="/coding-lab" className="block w-full py-2 px-3 bg-slate-900 text-white hover:bg-slate-800 rounded-lg text-xs font-semibold transition-all flex items-center justify-between shadow-xs">
+              <span>💻 Open Coding Lab</span>
+              <span className="text-[10px] bg-slate-800 text-slate-200 px-1.5 py-0.5 rounded uppercase font-mono">Exercises</span>
+            </a>
             <a href="/attendance" className="block w-full py-2 px-3 btn-modern-secondary rounded-lg text-xs font-semibold transition-all">
               📅 View Class Attendance Logs
             </a>
