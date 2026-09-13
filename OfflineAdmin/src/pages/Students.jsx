@@ -179,6 +179,35 @@ export default function Students() {
     }
   };
 
+  const handleQuickApprove = async (student) => {
+    if (!student.batch) {
+      handleOpenMoveBatch(student);
+      return;
+    }
+    try {
+      setLoading(true);
+      await api.put(`/offline-admin/students/${student._id}/status`, { approvalStatus: 'approved' });
+      fetchStudents();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to approve student');
+      setLoading(false);
+    }
+  };
+
+  const handleQuickDeny = async (student) => {
+    if (!window.confirm(`Are you sure you want to deny registration request for ${student.name}?`)) {
+      return;
+    }
+    try {
+      setLoading(true);
+      await api.put(`/offline-admin/students/${student._id}/status`, { approvalStatus: 'rejected' });
+      fetchStudents();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to deny student request');
+      setLoading(false);
+    }
+  };
+
   const columns = [
     {
       header: 'Permanent ID',
@@ -316,6 +345,26 @@ export default function Students() {
         onRowClick={handleViewDetails}
         actions={(student) => (
           <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
+            {student.approvalStatus === 'pending' && (
+              <>
+                <button
+                  onClick={() => handleQuickApprove(student)}
+                  title={student.batch ? "Approve Student" : "Allot Batch & Approve"}
+                  className="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/30"
+                >
+                  <CheckCircle className="w-3.5 h-3.5" />
+                  <span>Approve</span>
+                </button>
+                <button
+                  onClick={() => handleQuickDeny(student)}
+                  title="Deny / Reject Request"
+                  className="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30"
+                >
+                  <XCircle className="w-3.5 h-3.5" />
+                  <span>Deny</span>
+                </button>
+              </>
+            )}
             <button
               onClick={() => handleViewDetails(student)}
               title="View Student File"
@@ -555,7 +604,9 @@ export default function Students() {
                 <ArrowRightLeft className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Reassign Student Batch</h3>
+                <h3 className="text-base font-bold text-white">
+                  {selectedStudent.approvalStatus === 'pending' ? 'Allot Batch & Approve Student' : 'Reassign Student Batch'}
+                </h3>
                 <p className="text-xs text-slate-400">{selectedStudent.name} • {selectedStudent.studentId}</p>
               </div>
             </div>
@@ -601,7 +652,7 @@ export default function Students() {
                   disabled={submitting}
                   className="btn-primary text-xs"
                 >
-                  {submitting ? 'Transferring...' : 'Confirm Cohort Transfer'}
+                  {submitting ? 'Processing...' : (selectedStudent.approvalStatus === 'pending' ? 'Confirm Allotment & Approve' : 'Confirm Cohort Transfer')}
                 </button>
               </div>
             </form>
@@ -631,6 +682,42 @@ export default function Students() {
                 </p>
               </div>
             </div>
+
+            {studentDetails.approvalStatus === 'pending' && (
+              <div className="p-3 my-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>Self-Registration Pending Approval</span>
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    This candidate cannot log in until approved and assigned to an active cohort batch.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => {
+                      setDetailModalOpen(false);
+                      handleQuickApprove(studentDetails);
+                    }}
+                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold flex items-center gap-1 shadow"
+                  >
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    <span>{studentDetails.batch ? 'Approve Candidate' : 'Allot Batch & Approve'}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDetailModalOpen(false);
+                      handleQuickDeny(studentDetails);
+                    }}
+                    className="px-3 py-1.5 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded text-xs font-semibold flex items-center gap-1"
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                    <span>Deny</span>
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Attendance & Quiz Summary */}
             <div className="grid grid-cols-3 gap-3 my-4">

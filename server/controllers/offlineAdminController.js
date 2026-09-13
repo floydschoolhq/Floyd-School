@@ -654,6 +654,13 @@ exports.reassignStudentBatch = async (req, res) => {
         });
 
         student.batch = targetBatch._id;
+        student.approvalStatus = 'approved';
+        if (!student.offlineRollNo) {
+            const schoolDoc = await School.findById(targetBatch.school);
+            const schoolCode = schoolDoc?.code || 'SCH';
+            const count = await User.countDocuments({ batch: targetBatch._id, offlineRollNo: { $exists: true, $ne: null } });
+            student.offlineRollNo = `${schoolCode}-${targetBatch.code || 'B01'}-${String(count + 1).padStart(3, '0')}`;
+        }
         // IMPORTANT: We do NOT wipe past Attendance records! Past attendance stays attached to original batches.
         await student.save();
 
@@ -676,7 +683,7 @@ exports.reassignStudentBatch = async (req, res) => {
 
 exports.updateStudentStatus = async (req, res) => {
     try {
-        const { isActive, isArchived, approvalStatus } = req.body;
+        const { isActive, isArchived, approvalStatus, batchId } = req.body;
         const student = await User.findById(req.params.id);
         if (!student) {
             return res.status(404).json({ success: false, message: 'Student not found' });
@@ -686,10 +693,29 @@ exports.updateStudentStatus = async (req, res) => {
         if (isArchived !== undefined) student.isArchived = Boolean(isArchived);
         if (approvalStatus) student.approvalStatus = approvalStatus;
 
+        if (approvalStatus === 'approved') {
+            const targetBatchId = batchId || student.batch;
+            if (targetBatchId) {
+                const batch = await Batch.findById(targetBatchId);
+                if (batch) {
+                    student.batch = batch._id;
+                    student.school = batch.school;
+                    await Batch.findByIdAndUpdate(batch._id, { $addToSet: { students: student._id } });
+
+                    if (!student.offlineRollNo) {
+                        const schoolDoc = await School.findById(batch.school);
+                        const schoolCode = schoolDoc?.code || 'SCH';
+                        const count = await User.countDocuments({ batch: batch._id, offlineRollNo: { $exists: true, $ne: null } });
+                        student.offlineRollNo = `${schoolCode}-${batch.code || 'B01'}-${String(count + 1).padStart(3, '0')}`;
+                    }
+                }
+            }
+        }
+
         await student.save();
         await logAudit(req, 'CHANGE_STUDENT_STATUS', 'Student', student._id, student.name, req.body);
 
-        res.json({ success: true, message: 'Status updated successfully', data: student });
+        res.json({ success: true, message: `Student status updated to ${approvalStatus || 'saved'}`, data: student });
     } catch (err) {
         console.error('updateStudentStatus error:', err);
         res.status(500).json({ success: false, message: err.message });
