@@ -10,7 +10,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  timeout: 25000
+  timeout: 60000
 });
 
 // Attach JWT token to all outbound requests

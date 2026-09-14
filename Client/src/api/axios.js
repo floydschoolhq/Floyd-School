@@ -49,7 +49,7 @@ const getCacheTTL = (url) => {
 const api = axios.create({
     baseURL: `${baseURL}/api`,
     withCredentials: true,
-    timeout: 15000
+    timeout: 60000
 });
 
 // Request interceptor

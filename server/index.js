@@ -73,40 +73,74 @@ const allowedOrigins = [
     'http://localhost:5179',
     'http://localhost:5180',
     'http://localhost:5181',
+    'http://localhost:5182',
+    'http://localhost:4173',
     'http://localhost:3000',
 
-    // Vercel
-    'https://floyd-school-admin.vercel.app',
-
-    // Website
+    // Domains & Vercel
     'https://floydschool.in',
     'https://www.floydschool.in',
-
-    // If you're still using Floyd School
+    'https://student.floydschool.in',
+    'https://admin.floydschool.in',
+    'https://mentor.floydschool.in',
+    'https://partner.floydschool.in',
+    'https://offlineadmin.floydschool.in',
+    'https://floyd-school-admin.vercel.app',
     'https://floydschool-admin.vercel.app',
-    'https://floydschool.in',
-    'https://www.floydschool.in'
+    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim()) : [])
 ];
+
+const isOriginAllowed = (origin) => {
+    // Allow requests with no origin (mobile apps, Postman, curl, server-to-server)
+    if (!origin) return true;
+
+    const cleanOrigin = origin.replace(/\/$/, "");
+
+    // 1. Check exact matches in allowedOrigins
+    if (allowedOrigins.some(o => o.replace(/\/$/, "").toLowerCase() === cleanOrigin.toLowerCase())) {
+        return true;
+    }
+
+    // 2. Allow all subdomains and root domain of floydschool.in
+    if (/^https?:\/\/([a-zA-Z0-9-]+\.)*floydschool\.in$/i.test(cleanOrigin)) {
+        return true;
+    }
+
+    // 3. Allow all subdomains and root domain of thinkskool.in
+    if (/^https?:\/\/([a-zA-Z0-9-]+\.)*thinkskool\.in$/i.test(cleanOrigin)) {
+        return true;
+    }
+
+    // 4. Allow any Vercel or Render deployment
+    if (cleanOrigin.endsWith('.vercel.app') || cleanOrigin.endsWith('.onrender.com')) {
+        return true;
+    }
+
+    // 5. Allow localhost or 127.0.0.1 or 0.0.0.0 on ANY port for local development
+    if (/^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?$/i.test(cleanOrigin)) {
+        return true;
+    }
+
+    // 6. Allow local private network IP addresses (testing over LAN)
+    if (/^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/i.test(cleanOrigin)) {
+        return true;
+    }
+
+    return false;
+};
+
 const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests with no origin (mobile apps, Postman, etc.)
-        if (!origin) return callback(null, true);
-
-        // Strip trailing slash for comparison
-        const cleanOrigin = origin.replace(/\/$/, "");
-        const cleanAllowed = allowedOrigins.map(o => o.replace(/\/$/, ""));
-
-        // Allow exact matches or any Vercel/Render deployment origins
-        if (cleanAllowed.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app') || cleanOrigin.endsWith('.onrender.com')) {
+        if (isOriginAllowed(origin)) {
             callback(null, true);
         } else {
-            console.error('[CORS ERROR] Blocked Origin:', origin);
-            callback(new Error('Not allowed by CORS'));
+            console.warn('[CORS BLOCKED] Blocked Origin:', origin);
+            callback(null, false);
         }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
     credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept"],
+    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept", "X-Requested-With", "Cache-Control"],
     optionsSuccessStatus: 200
 };
 
@@ -117,9 +151,6 @@ const io = new Server(server, {
 // Make io accessible in routes
 app.set('io', io);
 
-// Admin routes
-app.use('/admin', adminRoutes);
-
 // ===== SECURITY MIDDLEWARE =====
 
 // Helmet: Sets various HTTP headers for security (XSS, clickjacking, MIME sniffing, etc.)
@@ -128,8 +159,11 @@ app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
-// CORS
+// CORS - applies to all routes
 app.use(cors(corsOptions));
+
+// Admin routes (legacy alias)
+app.use('/admin', adminRoutes);
 
 // Morgan: Only use verbose logging in development
 if (process.env.NODE_ENV !== 'production') {
@@ -189,20 +223,19 @@ app.use((req, res, next) => {
     const isConnected = mongoose.connection.readyState === 1;
     req.dbConnected = isConnected;
 
-    // Auth routes are NEVER blocked — the controller handles DB errors gracefully
-    // so that students can always attempt login (they get a proper error from Mongoose, not a 503)
-    const bypassPrefixes = ['/api/auth', '/api/public', '/api/health'];
-    const isBypass = bypassPrefixes.some(prefix => req.path.startsWith(prefix));
-    if (isBypass) return next();
+    // Health check endpoint handles its own status reporting
+    if (req.path === '/api/health') return next();
 
-    // All other data routes require an active DB connection
-    const apiPrefixes = ['/api/dashboard', '/api/courses', '/api/assignments', '/api/students'];
-    const isApiRequest = apiPrefixes.some(prefix => req.path.startsWith(prefix));
+    // If database is disconnected, fail fast instead of hanging indefinitely on Mongoose buffer commands
+    if (!isConnected) {
+        // Allow /api/public to provide non-blocking fallbacks
+        if (req.path.startsWith('/api/public')) return next();
 
-    if (isApiRequest && !isConnected) {
         return res.status(503).json({
             success: false,
-            message: 'Service temporarily unavailable. Please try again in a few moments.',
+            message: process.env.NODE_ENV === 'production'
+                ? 'Database is currently initializing or unavailable. Please try again in a few moments.'
+                : 'Local database is disconnected. Please check MongoDB Atlas IP whitelist (0.0.0.0/0) or verify network connectivity.',
             dbConnected: false
         });
     }
@@ -414,7 +447,7 @@ const PORT = process.env.PORT || 5000;
 let statusInterval = null;
 
 function freePortIfHeld(port) {
-    if (process.env.NODE_ENV === 'production') return;
+    if (process.env.RENDER || process.env.VERCEL) return;
     try {
         const { execSync } = require('child_process');
         if (process.platform === 'win32') {
@@ -440,15 +473,22 @@ function freePortIfHeld(port) {
     }
 }
 
+let bindRetries = 0;
 server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
-        console.warn(`[SERVER WARNING] Port ${PORT} is currently in use.`);
+        bindRetries++;
+        console.warn(`[SERVER WARNING] Port ${PORT} is currently in use (attempt ${bindRetries}/3).`);
         freePortIfHeld(PORT);
-        console.log(`[SERVER] Retrying to bind to port ${PORT} in 1.5 seconds...`);
-        setTimeout(() => {
-            server.close();
-            server.listen(PORT);
-        }, 1500);
+        if (bindRetries < 3) {
+            console.log(`[SERVER] Retrying to bind to port ${PORT} in 1.5 seconds...`);
+            setTimeout(() => {
+                server.close();
+                server.listen(PORT);
+            }, 1500);
+        } else {
+            console.error(`[SERVER FATAL ERROR] Port ${PORT} remains in use. Check running processes or run: Stop-Process -Id (Get-NetTCPConnection -LocalPort ${PORT}).OwningProcess -Force`);
+            process.exit(1);
+        }
     } else {
         console.error('[SERVER FATAL ERROR]', err);
         process.exit(1);

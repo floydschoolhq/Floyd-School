@@ -5,7 +5,7 @@ const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BASE_URL ||
 const api = axios.create({
     baseURL: `${baseURL}/api`,
     withCredentials: true,
-    timeout: 15000 // 15 second timeout to avoid indefinite hangs
+    timeout: 60000 // 60 second timeout for cold starts
 });
 
 // Add a request interceptor to include the token in headers

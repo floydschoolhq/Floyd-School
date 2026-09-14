@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Settings = require('../models/Settings');
 const { getPublicCourseStats } = require('../controllers/courseController');
 
@@ -10,6 +11,14 @@ const { getPublicCourseStats } = require('../controllers/courseController');
  */
 router.get('/settings', async (req, res) => {
     try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(200).json({
+                success: true,
+                maintenanceMode: false,
+                offlineMaintenance: {},
+                platformName: 'Floyd School'
+            });
+        }
         const settings = await Settings.getInstance();
         res.status(200).json({
             success: true,
@@ -29,6 +38,15 @@ router.get('/settings', async (req, res) => {
  */
 router.get('/maintenance-status', async (req, res) => {
     try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.json({
+                success: true,
+                isMaintenance: false,
+                message: 'Platform operational',
+                expectedEndTime: null,
+                details: {}
+            });
+        }
         const { portal } = req.query;
         const settings = await Settings.getInstance();
         const offlineMaint = settings.offlineMaintenance || {};

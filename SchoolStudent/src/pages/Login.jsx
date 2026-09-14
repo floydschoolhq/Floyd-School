@@ -322,7 +322,16 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       console.error('Login error:', error);
-      addToast(error.response?.data?.message || error.message || 'Invalid email or password', 'error');
+      const isTimeout = error.code === 'ECONNABORTED' || error.message?.toLowerCase().includes('timeout');
+      const isNetwork = (error.message === 'Network Error' || error.code === 'ERR_NETWORK') && !error.response;
+
+      if (isTimeout) {
+        addToast('Server is waking up (Render free tier cold start). Please wait a few seconds and try again.', 'error');
+      } else if (isNetwork) {
+        addToast('Cannot connect to server. Please check your internet connection.', 'error');
+      } else {
+        addToast(error.response?.data?.message || error.message || 'Invalid email or password', 'error');
+      }
     } finally { setLoading(false); }
   };
 
